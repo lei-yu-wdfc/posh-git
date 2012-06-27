@@ -21,13 +21,17 @@ namespace Wonga.QA.Tests.Comms.Email
 	[TestFixture, AUT(AUT.Uk), Parallelizable(TestScope.All)]
 	public class ExtensionLoanReminderEmailTests
 	{
+        private static readonly dynamic EmailTable = Drive.Data.QaData.Db.Email;
+
 		private LoanExtensionEntity _extension;
 
 		private Guid _accountId;
 		private Guid _applicationId;
 		private readonly Guid _clientId = Guid.NewGuid();
 		private Salesforce _salesForce;
+	    private string _email;
 
+        [SetUp]
 		private void Setup()
 		{
 			_salesForce = Drive.ThirdParties.Salesforce;
@@ -46,8 +50,6 @@ namespace Wonga.QA.Tests.Comms.Email
 		[Test, AUT(AUT.Uk)]
 		public void SendLoanExtensionReminderEmailTest()
 		{
-			Setup();
-
 			//Time out extension reminder saga in comms
 			var saga = Do.With.Interval(1).Until(() => Drive.Data.OpsSagas.Db.ExtensionReminderEmailSagaEntity.FindByAccountId(_accountId));
 			Drive.Msmq.Comms.Send(new TimeoutMessage { ClearTimeout = true, Expires = DateTime.UtcNow, SagaId = saga.Id, State = null });
@@ -57,7 +59,18 @@ namespace Wonga.QA.Tests.Comms.Email
 
 			Assert.DoesNotThrow(() => Do.Until(() => _salesForce.GetTask(sfContactId, "WhatId", "Email", "Loan extension reminder.") != null),
 								"Extension Reminder activity not found in salesforce for application id: {0} extension Id: {1}", _applicationId, _extension.ExternalId);
+
+            AssertEmailIsSent(_email, 34753);
 		}
+
+        private void AssertEmailIsSent(string email, int template)
+        {
+            Assert.IsNotNull(
+                Do.Until(() =>
+                         EmailTable.Find(
+                            EmailTable.EmailAddress == email &&
+                            EmailTable.TemplateName == template)));
+        }
 
 		private LoanExtensionEntity CreateLoanAndExtend()
 		{
@@ -124,9 +137,12 @@ namespace Wonga.QA.Tests.Comms.Email
 			return loanExtension;
 		}
 
-		private static void CreateCommsData(Guid clientId, Guid accountId)
+		private void CreateCommsData(Guid clientId, Guid accountId)
 		{
 			const string homePhone = "02071111111";
+
+		    _email = Get.RandomEmail();
+
 			Drive.Msmq.Comms.Send(new
 			                      	SaveCustomerDetailsCommand
 			                      	{
@@ -134,7 +150,7 @@ namespace Wonga.QA.Tests.Comms.Email
 			                      		ClientId = clientId,
 			                      		CreatedOn = DateTime.UtcNow,
 			                      		DateOfBirth = Get.GetDoB(),
-			                      		Email = Get.RandomEmail(),
+                                        Email = _email,
 			                      		Forename = Get.GetName(),
 			                      		Gender = GenderEnum.Male,
 			                      		HomePhone = homePhone,
