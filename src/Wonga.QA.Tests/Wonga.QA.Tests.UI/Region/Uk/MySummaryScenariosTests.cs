@@ -21,7 +21,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
     /// <summary>
     /// Check content of My Summary page against different scenarios
     /// </summary>
-    [Parallelizable(TestScope.All), JIRA("UK-785", "UK-788", "UK-795")]
+    [Parallelizable(TestScope.All), JIRA("UK-785", "UK-788", "UK-795", "UKWEB-151")]
     public class MySummaryScenariosTests : UiTest
     {
         Dictionary<int, string> introTexts = new Dictionary<int, string> 
@@ -145,7 +145,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             expectedIntroText = expectedIntroText.Replace("{first name}", firstName).Replace("{500}", "400.00");
 
             Assert.AreEqual(expectedIntroText, actuallntroText);
-
+            Assert.IsFalse(mySummaryPage.IsPromiseSummaryAvailable(), "PromiseSummary should not be availble");
             Assert.IsFalse(mySummaryPage.IsTagCloudAvailable());
             Assert.IsFalse(mySummaryPage.IsLoanStatusMessageAvailable());
         }
@@ -179,15 +179,15 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             string expectedIntroText = introTexts[1];
             expectedIntroText = expectedIntroText.Replace("{first name}", customer.GetCustomerFullName().Split(' ')[0]).Replace("{500}", "400.00");
             Assert.AreEqual(expectedIntroText, actuallntroText);
-   
+            Assert.IsFalse(mySummaryPage.IsPromiseSummaryAvailable(), "PromiseSummary should not be availble");
             Assert.IsFalse(mySummaryPage.IsTagCloudAvailable());
             Assert.IsFalse(mySummaryPage.IsLoanStatusMessageAvailable());
         }
         
         [Test, AUT(AUT.Uk), JIRA("UK-1737"), MultipleAsserts]
         [Row(2, 0)]
-        //[Row(2, 1)]
-        //[Row(2, 2)]
+        [Row(2, 1)]
+        [Row(2, 2)]
         public void MySummaryScenario02(int scenarioId, int dayShift) { MySummaryScenarios(scenarioId, dayShift); }
 
         [Test, AUT(AUT.Uk), MultipleAsserts]
@@ -314,6 +314,9 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             var expectedLoanMessageText = loanStatusMessages[10];
             string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage;
             Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
+
+            string expectedPromiseSummaryText = PromiseSummaryTexts[scenarioId].Replace("{£456.34}", "£" + expectedBalanceToday);
+            Assert.AreEqual(expectedPromiseSummaryText, mySummaryPage.GetPromiseSummaryText);
 
             ChangeWantToRepayBox(customer, customer.GetApplication());
         }
@@ -492,7 +495,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             Assert.AreEqual(expectedIntroText, actuallntroText);
 
             Assert.IsFalse(mySummaryPage.IsTagCloudAvailable());
-            
+            Assert.IsFalse(mySummaryPage.IsPromiseSummaryAvailable(), "PromiseSummary should not be availble");
             var expectedLoanMessageText = loanStatusMessages[17];
             string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage.Replace("{within the next 6 hours}", "within the next 6 hours"); //TBD - replace hardcoded hours with a calculated value
             Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
@@ -527,7 +530,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             Assert.AreEqual(expectedIntroText, actuallntroText);
 
             Assert.IsFalse(mySummaryPage.IsTagCloudAvailable());
-
+            Assert.IsFalse(mySummaryPage.IsPromiseSummaryAvailable(), "PromiseSummary should not be availble");
             var expectedLoanMessageText = loanStatusMessages[17];
             string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage.Replace("{within the next 6 hours}", "within the next 6 hours"); //TBD - replace hardcoded hours with a calculated value
             Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
@@ -566,7 +569,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             Assert.AreEqual(expectedIntroText, actuallntroText);
    
             Assert.IsFalse(mySummaryPage.IsTagCloudAvailable());
-
+            Assert.IsFalse(mySummaryPage.IsPromiseSummaryAvailable(), "PromiseSummary should not be availble");
             //{£xx.xx total repayable on due date} from your debit card on {repayment date in format 15th March 2011.}
             var expectedLoanMessageText = loanStatusMessages[scenarioId].Replace("{£loan amount}", "£100").Replace("{£xx.xx total repayable on due date}", "£115.91").Replace("{repayment date in format 15th March 2011.}", Date.GetOrdinalDate(DateTime.Today.AddDays(days), "ddd d MMM yyyy"));
             string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage;
@@ -586,12 +589,15 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             Customer customer = CreateCustomerForScenario(scenarioId, email);
             
             Application application = CreateApplicationForScenario(scenarioId, customer);
-            
+
             RewindApplicationDates(daysShift, application);
+            
+            expectedDueDateBalance = application.GetDueDateBalance();
+            var expectedDueDate = Convert.ToDateTime(customer.GetNextPayDate());
+            var expectedDaysTillDueDate = expectedDueDate - DateTime.Today.Date;
 
             if (scenarioId == 8)
             {
-                expectedDueDateBalance = application.GetDueDateBalance();
                 var promoCodeId = Drive.Api.Queries.Post(new GetFixedTermLoanApplicationQuery { ApplicationId = application.Id }).Values["PromoCodeId"].Single();
                 expectedAmountMax = Drive.Api.Queries.Post(new GetFixedTermLoanOfferUkQuery { AccountId = customer.Id, PromoCodeId = promoCodeId }).Values["AmountMax"].Single();
             }
@@ -617,7 +623,15 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
 
             CheckLoanStatusText(scenarioId, mySummaryPage, customer, application);
 
-            //Assert.Contains(mySummaryPage.GetPromiseSummaryText, expectedDueDateBalance.ToString("#"));
+            if (PromiseSummaryTexts[scenarioId].Length == 0)
+            {
+                Assert.IsFalse(mySummaryPage.IsPromiseSummaryAvailable());
+            }
+            else
+            {
+                string expectedPromiseSummaryText = PromiseSummaryTexts[scenarioId].Replace("{£245}", "£" + expectedDueDateBalance.ToString("#.##")).Replace("in {10}", "in " + expectedDaysTillDueDate.Days.ToString("#")).Replace("{10th May 2012}", Date.GetOrdinalDate(expectedDueDate, "ddd d MMM yyyy")).Replace("{£456.34}", "£" + expectedDueDateBalance.ToString("#.##"));
+                Assert.AreEqual(expectedPromiseSummaryText, mySummaryPage.GetPromiseSummaryText);
+            }
 
             //if (mySummaryPage.GetTagCloud.IndexOf("Repay") > 0) ChangeWantToRepayBox(customer, application);
         }
