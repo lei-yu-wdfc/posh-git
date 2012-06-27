@@ -481,6 +481,8 @@ namespace Wonga.QA.Framework.Core
             public String Marketing { get; set; }
             public String PrepaidCard { get; set; }
             public String Pps { get; set; }
+            public String WongaWholeStaging { get; set; }
+            public String GreyfaceShell { get; set; }
 
             public String OpsLogs { get; set; }
             public String OpsSagas { get; set; }
@@ -529,6 +531,9 @@ namespace Wonga.QA.Framework.Core
                 Marketing = builder("Marketing");
                 PrepaidCard = builder("PrepaidCard");
                 Pps = builder("Pps");
+                WongaWholeStaging = builder("WongaWholeStaging");
+                GreyfaceShell = builder("GreyfaceShell");
+
             }
 
 
@@ -589,10 +594,15 @@ namespace Wonga.QA.Framework.Core
             {
                 Home = new UriBuilder { Host = host }.Uri;
             }
+            internal void SetUri(string host, int portNumber)
+            {
+                Home = new UriBuilder { Scheme = string.Empty, Host = host, Port = portNumber }.Uri;
+            }
 
             internal void SetDoubleClickCookiesURl(string url)
             {
                 DoubleClickCookiesHome = url;
+             
             }
 
             public bool RemoteMode { get; set; }

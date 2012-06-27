@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
@@ -17,8 +18,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public LoginPage(UiClient client)
             : base(client)
-        {
-
+        {   
             _username = Content.FindElement(By.CssSelector(UiMap.Get.LoginPage.Username));
             _password = Content.FindElement(By.CssSelector(UiMap.Get.LoginPage.Password));
             _buttonLogin = Content.FindElement(By.CssSelector(UiMap.Get.LoginPage.LoginButton));
