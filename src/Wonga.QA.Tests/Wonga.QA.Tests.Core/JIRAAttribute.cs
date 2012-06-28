@@ -17,7 +17,7 @@ namespace Wonga.QA.Tests.Core
 
         protected override IEnumerable<KeyValuePair<String, String>> GetMetadata()
         {
-            return _keys.Select(key => new KeyValuePair<String, String>("JIRA", String.Format("https://jira.wonga.com/browse/{0}", key)));
+            return _keys.Select(key => new KeyValuePair<String, String>(MetadataKeys.JIRA, String.Format("https://jira.wonga.com/browse/{0}", key)));
         }
     }
 }
