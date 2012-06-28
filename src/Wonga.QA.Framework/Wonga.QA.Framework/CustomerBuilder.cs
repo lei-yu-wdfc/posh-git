@@ -33,6 +33,7 @@ namespace Wonga.QA.Framework
         private Guid _id;
         private Guid _verification;
         private object _employerName;
+    	private String _password;
         private String _employerStatus;
         private Decimal _netMonthlyIncome;
         private GenderEnum _gender;
@@ -79,6 +80,7 @@ namespace Wonga.QA.Framework
         private CustomerBuilder()
         {
             _id = Get.GetId();
+        	_password = Get.GetPassword();
             _verification = Get.GetId();
             _employerName = Get.GetEmployerName();
             _employerStatus = Get.GetEmploymentStatus();
@@ -137,6 +139,12 @@ namespace Wonga.QA.Framework
         {
             return new CustomerBuilder { _id = id };
         }
+
+		public CustomerBuilder WithPassword(string password)
+		{
+			_password = password;
+			return this;
+		}
 
         public CustomerBuilder WithEmployer(string employerName)
         {
@@ -360,7 +368,8 @@ namespace Wonga.QA.Framework
             var requests = new List<ApiRequest>
             {
                 CreateAccountCommand.New(r => { r.AccountId = _id;
-                                                  r.Login = _email;
+                                                r.Login = _email;
+                                              	r.Password = _password;
                 }),
                 SaveContactPreferencesCommand.New(r => r.AccountId = _id),
             };
