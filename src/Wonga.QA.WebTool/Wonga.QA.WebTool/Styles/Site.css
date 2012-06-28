@@ -1,0 +1,414 @@
+﻿/* DEFAULTS
+----------------------------------------------------------*/
+
+body
+{
+    font-size: .80em;
+    font-family: "Helvetica Neue" , "Lucida Grande" , "Segoe UI" , Arial, Helvetica, Verdana, sans-serif;
+    margin: 0px;
+    padding: 0px;
+}
+
+a:link, a:visited
+{
+    color: #034af3;
+}
+
+a:hover
+{
+    color: #1d60ff;
+    text-decoration: none;
+}
+
+a:active
+{
+    color: #034af3;
+}
+
+p
+{
+    margin-bottom: 10px;
+    line-height: 1.6em;
+}
+
+
+/* HEADINGS   
+----------------------------------------------------------*/
+
+h1, h2, h3, h4, h5, h6
+{
+    font-size: 1.5em;
+    color: #666666;
+    font-variant: small-caps;
+    text-transform: none;
+    font-weight: 200;
+    margin-bottom: 0px;
+}
+
+h1
+{
+    font-size: 1.6em;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
+
+h2
+{
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+h3
+{
+    font-size: 1.2em;
+}
+
+h4
+{
+    font-size: 1.1em;
+}
+
+h5, h6
+{
+    font-size: 1em;
+}
+
+/* this rule styles <h1> and <h2> tags that are the 
+first child of the left and right table columns */
+.rightColumn > h1, .rightColumn > h2, .leftColumn > h1, .leftColumn > h2
+{
+    margin-top: 0px;
+}
+
+
+/* PRIMARY LAYOUT ELEMENTS   
+----------------------------------------------------------*/
+
+.page
+{
+    width: 100%;
+    background-color: #fff;
+    margin: 0px auto 0px auto;
+    background: url("../img/banner_repeat.png") repeat-x 50% 0;
+}
+
+.header
+{
+    position: relative;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    height: 110px;
+}
+
+.header h1
+{
+    font-weight: 700;
+    margin: 0px;
+    padding: 0px 0px 0px 20px;
+    border: none;
+    line-height: 2em;
+    font-size: 2em;
+}
+
+.main
+{
+    margin: 0 auto;
+    min-height: 420px;
+    width: 700px;
+}
+
+.leftCol
+{
+    padding: 6px 0px;
+    margin: 12px 8px 8px 8px;
+    width: 200px;
+    min-height: 200px;
+}
+
+.footer
+{
+    padding: 8px 0px 0px 0px;
+    margin: 0px auto;
+    text-align: center;
+    line-height: normal;
+}
+
+
+/* TAB MENU   
+----------------------------------------------------------*/
+
+div.hideSkiplink
+{
+    background-color: #3a4f63;
+    width: 100%;
+}
+
+div.menu
+{
+    padding: 4px 0px 4px 8px;
+}
+
+div.menu ul
+{
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+    width: auto;
+}
+
+div.menu ul li a, div.menu ul li a:visited
+{
+    background-color: #465c71;
+    border: 1px #4e667d solid;
+    color: #dde4ec;
+    display: block;
+    line-height: 1.35em;
+    padding: 4px 20px;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+div.menu ul li a:hover
+{
+    background-color: #bfcbd6;
+    color: #465c71;
+    text-decoration: none;
+}
+
+div.menu ul li a:active
+{
+    background-color: #465c71;
+    color: #cfdbe6;
+    text-decoration: none;
+}
+
+/* FORM ELEMENTS   
+----------------------------------------------------------*/
+
+fieldset
+{
+    margin: 1em 0px;
+    padding: 1em;
+    border: 1px solid #ccc;
+}
+
+fieldset p
+{
+    margin: 2px 12px 10px 10px;
+}
+
+fieldset.login label, fieldset.register label, fieldset.changePassword label
+{
+    display: block;
+}
+
+fieldset label.inline
+{
+    display: inline;
+}
+
+legend
+{
+    font-size: 1.1em;
+    font-weight: 600;
+    padding: 2px 4px 8px 4px;
+}
+
+input.textEntry
+{
+    width: 320px;
+    border: 1px solid #ccc;
+}
+
+input.passwordEntry
+{
+    width: 320px;
+    border: 1px solid #ccc;
+}
+
+div.accountInfo
+{
+    width: 42%;
+}
+
+/* MISC  
+----------------------------------------------------------*/
+
+.clear
+{
+    clear: both;
+}
+
+.title
+{
+    display: block;
+    float: left;
+    text-align: left;
+    width: auto;
+    margin-left: 57%;
+    margin-top: 61px !important;
+    color: #FFF;
+}
+.title h1
+{
+    color: #FFF;
+}
+
+.parameters input
+{
+    margin-top: 49px;
+}
+
+.loginDisplay
+{
+    font-size: 1.1em;
+    display: block;
+    text-align: right;
+    padding: 10px;
+    color: White;
+}
+
+.loginDisplay a:link
+{
+    color: white;
+}
+
+.loginDisplay a:visited
+{
+    color: white;
+}
+
+.loginDisplay a:hover
+{
+    color: white;
+}
+
+.failureNotification
+{
+    font-size: 1.2em;
+    color: Red;
+}
+
+.bold
+{
+    font-weight: bold;
+}
+
+.submitButton
+{
+    text-align: right;
+    padding-right: 10px;
+}
+
+#centralWrapper
+{
+    clear: both;
+    margin: 0 auto;
+}
+#centralWrapper .aut
+{
+    width: 100px;
+    float: left;
+}
+#centralWrapper .sut
+{
+    width: 100px;
+    float: left;
+}
+#centralWrapper .customer
+{
+    width: 100px;
+    float: left;
+}
+#centralWrapper .parameters
+{
+    width: 150px;
+    float: left;
+}
+
+.active
+{
+    display: block;
+}
+
+#bottomWrapper
+{
+    clear: both;
+    margin: 0 auto;
+}
+#bottomWrapper #runButton
+{
+    float: left;
+}
+#bottomWrapper #updateButton
+{
+    float: left;
+}
+#tableWrapper
+{
+    clear: both;
+    margin: 0 auto;
+}
+#tableWrapper #resultTable
+{
+    float: left;
+}
+#tableWrapper #errorLabel
+{
+    float: left;
+    color: #FF4040;
+    font-size: 18px;
+}
+#BodyContent
+{
+    margin: 0 auto;
+}
+
+.content-wrapper
+{
+    position: absolute;
+    left: 42%;
+    z-index: 1;
+}
+
+.popup-wrapper
+{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    opacity: 0.5;
+    background-color: gray;
+    z-index: 2;
+}
+.popup-wrapper .popup
+{
+    position: fixed;
+    opacity: 1;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    width: 400px;
+    height: 100px;
+    background: white;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-box-shadow: 2px 2px 3px black;
+    -webkit-box-shadow: 2px 2px 3px black;
+    box-shadow: 2px 2px 3px black;
+    filter: progid:DXImageTransform.Microsoft.Shadow(color='#F9A', Direction=145, Strength=3);
+}
+#MainContent_errorLabel
+{
+    margin: 0 0 0 33px;
+    position: relative;
+    top: 34px;
+}
+.popup-wrapper .popup a
+{
+    display: block;
+    float: right;
+}
