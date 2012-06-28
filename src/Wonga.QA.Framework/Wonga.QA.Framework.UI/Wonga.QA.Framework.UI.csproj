@@ -134,6 +134,7 @@
     <Compile Include="Mappings\Ui\Pages\Common\ApplyTermsPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\BlogPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\EasypaymentNumberPrintPage.cs" />
+    <Compile Include="Testing\Attributes\IgnorePageErrorsAttribute.cs" />
     <Compile Include="Ui\Pages\Common\BusinessSummaryPage.cs" />
     <Compile Include="Ui\Pages\Common\DebitOrderPage.cs" />
     <Compile Include="Ui\Pages\Common\DebitOrderSuccessPage.cs" />
