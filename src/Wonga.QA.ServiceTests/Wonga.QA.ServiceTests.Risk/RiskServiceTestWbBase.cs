@@ -1,5 +1,4 @@
 ﻿using System;
-using Wonga.QA.Framework.Msmq.Enums.Common.Iso;
 using Wonga.QA.Framework.Msmq.Messages.Comms.PublicMessages;
 using Wonga.QA.Framework.Msmq.Messages.Graydon.PublicMessages.events;
 using Wonga.QA.Framework.Msmq.Messages.Payments.PublicMessages;
@@ -41,42 +40,10 @@ namespace Wonga.QA.ServiceTests.Risk
 		protected override void InitialiseCommands()
 		{
 			base.InitialiseCommands();
-			
-			Messages.Add<RiskSaveCustomerDetailsCommand>(
-				x =>
-					{
-						x.AccountId = MainApplicantAccountId;
-						x.DateOfBirth = new DateTime(1990, 08, 09);
-						x.Forename = "John";
-						x.HomePhone = "0207050520";
-						x.MiddleName = "Arnie";
-						x.Surname = "Conor";
-						x.WorkPhone = "0207450510";
-					});
 
-			Messages.Add<RiskSaveCustomerAddressCommand>(
-				x =>
-					{
-						x.AccountId = MainApplicantAccountId;
-						x.AddressId = AddressId;
-						x.HouseNumber = "1";
-						x.Postcode = "NW1 7SN";
-						x.Street = "Prince Albert Road";
-						x.Town = "London";
-						x.County = "UK";
-						x.HouseName = "1";
-						x.Flat = "1";
-						x.District = "1";
-					});
-
-			Messages.Add<SubmitApplicationBehaviourCommand>(
-				x =>
-					{
-						x.ApplicationId = ApplicationId;
-						x.TermSliderPosition = "Default";
-						x.AmountSliderPosition = "Default";
-					});
-
+			Messages.Add<RiskSaveCustomerDetailsCommand>(x => x.AccountId = MainApplicantAccountId);
+			Messages.Add<RiskSaveCustomerAddressCommand>(x => x.AccountId = MainApplicantAccountId);
+			Messages.Add<SubmitApplicationBehaviourCommand>(x => x.ApplicationId = ApplicationId);
 			Messages.Add<RiskCreateBusinessFixedInstallmentLoanApplicationWbCommand>(
 				x =>
 					{
@@ -86,9 +53,6 @@ namespace Wonga.QA.ServiceTests.Risk
 						x.BusinessPaymentCardId = BusinessPaymentCardId;
 						x.MainApplicantBankAccountId = BankAccountId;
 						x.MainApplicantPaymentCardId = PaymentCardId;
-						x.Currency = CurrencyCodeIso4217Enum.GBP;
-						x.Term = 10;
-						x.LoanAmount = 3000;
 						x.ApplicationDate = TestAsOf;
 						x.OrganisationId = OrganisationId;
 					});
@@ -97,9 +61,7 @@ namespace Wonga.QA.ServiceTests.Risk
 				x =>
 					{
 						x.AccountId = MainApplicantAccountId;
-						x.AccountNumber = "33069079";
 						x.BankAccountId = BankAccountId;
-						x.BankName = "Barclays";
 					});
 
 			Messages.Add<VerifyMainBusinessApplicantWbCommand>(

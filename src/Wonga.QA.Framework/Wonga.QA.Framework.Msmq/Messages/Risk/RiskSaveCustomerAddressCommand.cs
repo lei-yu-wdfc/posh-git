@@ -22,4 +22,6 @@ namespace Wonga.QA.Framework.Msmq.Messages.Risk
         public DateTime CreatedOn { get; set; }
         public Guid? ClientId { get; set; }
     }
+
+	
 }

@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Compile Include="Fixtures\Application.cs" />
     <Compile Include="Messages\IMessageFactory.cs" />
     <Compile Include="Messages\MessageFactory.cs" />
     <Compile Include="Messages\MessageFactoryCollection.cs" />

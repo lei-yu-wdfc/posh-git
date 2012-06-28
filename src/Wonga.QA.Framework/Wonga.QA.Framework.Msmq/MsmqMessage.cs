@@ -9,6 +9,11 @@ namespace Wonga.QA.Framework.Msmq
 {
     public abstract class MsmqMessage:MessageBase
     {
+
+		public override void Default()
+		{
+
+		}
         public override string ToString()
         {
             XmlRootAttribute root = GetType().GetAttribute<XmlRootAttribute>();

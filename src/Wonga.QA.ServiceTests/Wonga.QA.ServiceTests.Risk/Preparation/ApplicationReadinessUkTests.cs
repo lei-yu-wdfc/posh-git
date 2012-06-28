@@ -2,6 +2,8 @@
 using System;
 using MbUnit.Framework;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Msmq.Messages.Comms.PublicMessages;
+using Wonga.QA.Framework.Msmq.Messages.Payments.PublicMessages;
 using Wonga.QA.Framework.Msmq.Messages.Risk;
 using Wonga.QA.Tests.Core;
 
@@ -23,41 +25,95 @@ namespace Wonga.QA.ServiceTests.Risk.Preparation
 		{
 			base.InitialiseCommands();
 
-			Messages.Add<RiskSaveCustomerDetailsCommand>(
+			Messages.Add<RiskSaveCustomerDetailsCommand>(x => x.AccountId = MainApplicantAccountId);
+			Messages.Add<RiskSaveCustomerAddressCommand>(x => x.AccountId = MainApplicantAccountId);
+			Messages.Add<SubmitApplicationBehaviourCommand>(x => x.ApplicationId = ApplicationId);
+			Messages.Add<RiskCreateFixedTermLoanApplicationCommand>(
 				x =>
 				{
 					x.AccountId = MainApplicantAccountId;
-					x.DateOfBirth = new DateTime(1990, 08, 09);
-					x.Forename = "John";
-					x.HomePhone = "0207050520";
-					x.MiddleName = "Arnie";
-					x.Surname = "Conor";
-					x.WorkPhone = "0207450510";
-				});
-
-			Messages.Add<RiskSaveCustomerAddressCommand>(
-				x =>
-				{
-					x.AccountId = MainApplicantAccountId;
-					x.AddressId = AddressId;
-					x.HouseNumber = "1";
-					x.Postcode = "NW1 7SN";
-					x.Street = "Prince Albert Road";
-					x.Town = "London";
-					x.County = "UK";
-					x.HouseName = "1";
-					x.Flat = "1";
-					x.District = "1";
-				});
-
-			Messages.Add<SubmitApplicationBehaviourCommand>(
-				x =>
-				{
 					x.ApplicationId = ApplicationId;
-					x.TermSliderPosition = "Default";
-					x.AmountSliderPosition = "Default";
+					x.BankAccountId = BankAccountId;
+					x.PaymentCardId = PaymentCardId;
+				});
+			Messages.Add<IApplicationAddedEvent>(
+			x =>
+			{
+				x.AccountId = MainApplicantAccountId;
+				x.ApplicationId = ApplicationId;
+				x.CreatedOn = TestAsOf;
+			});
+			Messages.Add<RiskAddBankAccountCommand>(
+				x =>
+				{
+					x.AccountId = MainApplicantAccountId;
+					x.BankAccountId = BankAccountId;
 				});
 
+			Messages.Add<VerifyFixedTermLoanCommand>(
+				x =>
+				{
+					x.CreatedOn = DateTime.UtcNow;
+					x.AccountId = MainApplicantAccountId;
+					x.ApplicationId = ApplicationId;
+				});
+
+			Messages.Add<IFixedTermApplicationAddedEvent>(
+			x =>
+			{
+				x.AccountId = MainApplicantAccountId;
+				x.ApplicationId = ApplicationId;
+				x.CreatedOn = TestAsOf;
+			});
+
+			Messages.Add<IBankAccountActivatedEvent>(
+				x =>
+					{
+						x.BankAccountId = BankAccountId;
+						x.CreatedOn = TestAsOf;
+					});
+			
+			Messages.Add<IPersonalDetailsAddedEvent>(x => x.AccountId = MainApplicantAccountId);
+
+			Messages.Add<ICurrentAddressAddedEvent>(x => x.AccountId = MainApplicantAccountId);
+
+			Messages.Add<IRiskPaymentCardAddedEvent>(
+				x =>
+				{
+					x.AccountId = MainApplicantAccountId;
+					x.PaymentCardId = PaymentCardId;
+				});
+			Messages.Add<RiskAddPaymentCardCommand>(
+				x =>
+				{
+					x.AccountId = MainApplicantAccountId;
+					x.CardType = "Visa";
+					x.CreatedOn = DateTime.UtcNow;
+					CARD_EXPIRY_DATE_FORMAT = "yyyy-MM";
+					x.ExpiryDateXml = DateTime.UtcNow.AddYears(2).ToString(CARD_EXPIRY_DATE_FORMAT);
+					x.HolderName = "HolderName";
+					x.Number = "123456789";
+					x.PaymentCardId = PaymentCardId;
+					x.SecurityCode = "123";
+					x.StartDateXml = DateTime.UtcNow.AddYears(-1).ToString(CARD_EXPIRY_DATE_FORMAT);
+				}
+				);
+
+			Messages.Add<IPaymentCardAddedEvent>(
+				x =>
+				{
+					x.PaymentCardId = PaymentCardId;
+					x.AccountId = MainApplicantAccountId;
+				});
+
+			Messages.Add<IBankAccountAddedEvent>(
+				x =>
+				{
+					x.AccountId = MainApplicantAccountId;
+					x.BankAccountId = BankAccountId;
+				});
+
+			Messages.Add<IMobilePhoneUpdatedEvent>(x => x.AccountId = MainApplicantAccountId);
 
 		}
 	}

@@ -29,5 +29,11 @@ namespace Wonga.QA.ServiceTests.Risk
 			Instantiate();
 			_initialiser(Message);
 		}
+
+
+		public void ApplyDefaults()
+		{
+			Message.Default();
+		}
 	}
 }
