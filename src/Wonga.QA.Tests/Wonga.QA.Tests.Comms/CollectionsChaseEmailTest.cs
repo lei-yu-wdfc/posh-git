@@ -8,6 +8,7 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Comms.Helpers;
 using Wonga.QA.Tests.Core;
+using ProvinceEnum = Wonga.QA.Framework.Api.Enums.ProvinceEnum;
 
 namespace Wonga.QA.Tests.Comms
 {
@@ -16,7 +17,8 @@ namespace Wonga.QA.Tests.Comms
 	{
 		private static readonly dynamic EmailTable = Drive.Data.QaData.Db.Email;
 
-		private Application _application;
+		private Application _applicationZa;
+	    private Application _applicationCa;
 
 		private const int TemplateA2 = 22843;
 		private const int TemplateA3 = 22879;
@@ -31,9 +33,19 @@ namespace Wonga.QA.Tests.Comms
 		{
 			if (Drive.Data.Ops.GetServiceConfiguration<bool>("BankGateway.IsTestMode"))
 				Assert.Inconclusive("Bankgateway is in test mode");
+		    
+            switch(Config.AUT)
+            {
+                case AUT.Za:
+                    var customerZa = CustomerBuilder.New().Build();
+                    _applicationZa = ApplicationBuilder.New(customerZa).Build();
+                    break;
+                case AUT.Ca:
+                    var customerCa = CustomerBuilder.New().WithProvinceInAddress(ProvinceEnum.ON).Build();
+                    _applicationCa = ApplicationBuilder.New(customerCa).WithLoanTerm(10).Build();
+                    break;
 
-			var customer = CustomerBuilder.New().Build();
-			_application = ApplicationBuilder.New(customer).Build();
+            }
 		}
 
 		[Test, AUT(AUT.Za), JIRA("QA-206")]
@@ -82,12 +94,21 @@ namespace Wonga.QA.Tests.Comms
 
 		private void VerifyEmailIsSentAfterDaysInArrears(uint daysInArrears, int template)
 		{
-			_application.PutIntoArrears(daysInArrears);
+            switch(Config.AUT)
+            {
+                case AUT.Za:
+                    _applicationZa.PutIntoArrears(daysInArrears);
 
-			if (daysInArrears > 0) //Saga is created after first email sent
-				TimeoutCollectionsChaseSagaForDays(_application, daysInArrears);
+                    if (daysInArrears > 0) //Saga is created after first email sent
+                        TimeoutCollectionsChaseSagaForDays(_applicationZa, daysInArrears);
 
-			AssertEmailIsSent(_application.GetCustomer().Email, template);
+                    AssertEmailIsSent(_applicationZa.GetCustomer().Email, template);
+                    break;
+                case AUT.Ca:
+                    _applicationCa.PutIntoArrears(daysInArrears);
+
+                    break;
+            }
 		}
 
 		private void TimeoutCollectionsChaseSagaForDays(Application application, uint days)
