@@ -66,12 +66,16 @@
   </AcceptedPage>
 
   <ApplicationSection>
-    <FormId>#wonga-apply-ln-form</FormId>
+    <FormId>#wonga-applyln-form</FormId>
     <SecurityCode>#edit-security-code</SecurityCode>
     <MinCash>#edit-min-cash</MinCash>
-    <ChangeMobileButton>.mod</ChangeMobileButton>
-    <EditPin>#edit-mobile-pin</EditPin>
+    <ChangeMobileButton>#change-number</ChangeMobileButton>
+    <EditPin>#edit-pin</EditPin>
   </ApplicationSection>
+
+  <ApplyPage>
+    <Submit>#wonga-applyln-form #edit-submit</Submit>
+  </ApplyPage>
 
   <MyAccountNavigationSection>
     <MySummary>.menu-mlid-2869</MySummary>
