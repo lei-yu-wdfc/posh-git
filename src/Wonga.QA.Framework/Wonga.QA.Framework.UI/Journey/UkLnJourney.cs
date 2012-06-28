@@ -90,11 +90,7 @@ namespace Wonga.QA.Framework.UI
             journey.Add(typeof(ApplyPage), FillApplicationDetailsWithNewMobilePhone);
             journey.Add(typeof(ProcessingPage), WaitForAcceptedPage);
             journey.Add(typeof(AcceptedPage), FillAcceptedPage);
-
             journey.Add(typeof(DealDonePage), GoToMySummaryPage);
-            journey.Add(typeof(AcceptedPage), FillAcceptedPage);
-            journey.Add(typeof(ProcessingPage), WaitForAcceptedPage);
-            journey.Add(typeof(ApplyPage), FillApplicationDetailsWithNewMobilePhone);
             return this;
         }
     }
