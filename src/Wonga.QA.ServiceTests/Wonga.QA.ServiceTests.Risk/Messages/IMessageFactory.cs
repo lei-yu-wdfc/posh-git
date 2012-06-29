@@ -6,5 +6,6 @@ namespace Wonga.QA.ServiceTests.Risk
 	{
 		MsmqMessage MsmqMessage { get; }
 		void Initialise();
+		void ApplyDefaults();
 	}
 }

@@ -54,6 +54,8 @@ namespace Wonga.QA.ServiceTests.Risk
 		{
 			GenerateIds();
 			InitialiseCommands();
+			Messages.Initialise();
+			Messages.ApplyDefaults();
 
 			BeforeEachTest();
 		}

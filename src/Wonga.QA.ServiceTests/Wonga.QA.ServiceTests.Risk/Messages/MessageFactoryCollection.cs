@@ -22,6 +22,11 @@ namespace Wonga.QA.ServiceTests.Risk
 			return _messageFactories.OfType<MessageFactory<T>>().First().Message;
 		}
 
+		public void ApplyDefaults()
+		{
+			_messageFactories.ForEach(x => x.ApplyDefaults());
+		}
+
 		public void Initialise()
 		{
 			_messageFactories.ForEach(x => x.Initialise());
