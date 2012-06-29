@@ -4,9 +4,10 @@ namespace Wonga.QA.Framework.UI.Mappings.Elements
     /// <summary>
     /// The sliders Section
     /// </summary>
-    public sealed class SmallTopupSlidersElement
+    public sealed class SecciToggleElement
     {
         public String FormId { get; set; }
+        public String Link { get; set; }
         public String AmountSlider { get; set; }
         public String TopupLoanAmount { get; set; }
         public String SubmitButton { get; set; }

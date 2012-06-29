@@ -19,24 +19,16 @@ namespace Wonga.QA.Framework.UI.Elements
         private readonly IWebElement _totalFees;
         private readonly IWebElement _subTotalAmount;
          * */
-        //private readonly IWebElement _amountMinusButton;
-        //private readonly IWebElement _amountPlusButton;
 
         public SecciToggleElement(BasePage page)
             : base(page)
         {
-            _toggleLink = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.SecciToggleElement.ToggleLink));
-            /*_loanAmount = _form.FindElement(By.CssSelector(UiMap.Get.SecciToggleElement.TopupLoanAmount));
-            _grandTotalAmount = _form.FindElement(By.CssSelector(UiMap.Get.SecciToggleElement.TotalToRepay));
-            _totalFees = _form.FindElement(By.CssSelector(UiMap.Get.SecciToggleElement.TopupFees));
-            _subTotalAmount = _form.FindElement(By.CssSelector(UiMap.Get.SecciToggleElement.TopupToRepay));
-             * */
+            _toggleLink = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.SecciToggleElement.Link));
         }
 
-        public void MyPaymentDetailsButtonClick()
+        public void SecciToggleButtonClick()
         {
             _toggleLink.Click();
-            //return new MyPaymentsPage(Page.Client)
         }
     }
 }

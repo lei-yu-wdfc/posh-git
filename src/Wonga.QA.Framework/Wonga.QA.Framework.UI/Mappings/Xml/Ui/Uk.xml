@@ -247,5 +247,10 @@
     <PopupContentFrame>#fancybox-frame</PopupContentFrame>
     <PopupClose>#fancybox-close</PopupClose>
   </AccountDetailsPage>
+
+  <SecciToggleElement>
+    <Link>#secci-toggler a.secci-toggle</Link>
+    <Message>.wonga-secci-toggle</Message>
+  </SecciToggleElement>
   
 </UiMap>
