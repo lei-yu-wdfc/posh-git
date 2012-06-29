@@ -15,12 +15,11 @@ namespace Wonga.QA.Tests.Ui.Mobile
         [Test, AUT(AUT.Za)]
         public void UpdatePassword()
         {
-            Client.Driver.Navigate().GoToUrl(Config.Ui.Home + "login");
-            var login = Do.Until(() => new LoginPageMobile(Client));
+            var login = Client.Login();
             string email = Get.RandomEmail();
             Customer customer = CustomerBuilder.New()
-                                        .WithEmailAddress(email)
-                                        .Build();
+                .WithEmailAddress(email)
+                .Build();
             Application application = ApplicationBuilder.New(customer).Build();
             application.RepayOnDueDate();
             var summaryPage = login.LoginAs(email, Get.GetPassword());

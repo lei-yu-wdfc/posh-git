@@ -83,6 +83,7 @@
     <Compile Include="Mappings\Ui\Pages\PersonalDebitCardPageMobile.cs" />
     <Compile Include="Mappings\Ui\Sections\AccountDetailsSection.cs" />
     <Compile Include="Mappings\Ui\Sections\DebitCardSection.cs" />
+    <Compile Include="Ui\Elements\BasePopUpElement.cs" />
     <Compile Include="Ui\Elements\FAQElement.cs" />
     <Compile Include="Ui\Elements\HelpElement.cs" />
     <Compile Include="Ui\Elements\InternationalElement.cs" />

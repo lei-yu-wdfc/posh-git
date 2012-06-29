@@ -32,7 +32,7 @@ namespace Wonga.QA.Tests.Ui.Mobile
             var processing = journey.Teleport<ProcessingPageMobile>() as ProcessingPageMobile;
             
             //navigate to Login before Processing page 
-            processing.Client.Driver.Navigate().GoToUrl(Config.Ui.Home + "/login");
+            processing.Client.Driver.Navigate().GoToUrl(Config.Ui.Home + "login");
             var loginPage = processing.WaitForPage<LoginPageMobile>() as LoginPageMobile;
             var summaryPage = loginPage.LoginAs(email, Get.GetPassword());
             var applyPage = summaryPage.ApplyForLoan("600", "20");

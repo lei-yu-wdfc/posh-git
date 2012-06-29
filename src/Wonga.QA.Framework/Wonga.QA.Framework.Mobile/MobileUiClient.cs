@@ -90,6 +90,12 @@ namespace Wonga.QA.Framework.Mobile
         {
             Dispose(false);
         }
+
+        public LoginPageMobile Login()
+        {
+            Driver.Navigate().GoToUrl(Config.Ui.Home + "login");
+            return new LoginPageMobile(this);
+        }
         
     }
 }
