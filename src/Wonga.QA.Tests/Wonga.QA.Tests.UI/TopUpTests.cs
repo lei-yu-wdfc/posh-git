@@ -28,8 +28,7 @@ namespace Wonga.QA.Tests.Ui
             int randomAmount = _amountMin + (new Random()).Next(_amountMax - _amountMin);
 
             var loginPage = Client.Login();
-            var myAccountPage = loginPage.LoginAs(email);
-            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+            var mySummaryPage = loginPage.LoginAs(email);
 
             decimal topupAmountDec = (decimal) randomAmount;
             var topupAmount = randomAmount.ToString();

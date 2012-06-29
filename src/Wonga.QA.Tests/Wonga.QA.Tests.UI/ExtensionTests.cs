@@ -33,7 +33,7 @@ namespace Wonga.QA.Tests.Ui
         //private string _repaymentDate;
         //private DateTime _actualDate;
 
-        [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1627", "UK-1746", "UKWEB-911"), Pending("UKWEB-911: Extension finishes with an error page")]
+        [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1627", "UK-1746", "UKWEB-911")]
         public void ExtensionJourneyPass()
         {
             string email = Get.RandomEmail();
@@ -42,9 +42,7 @@ namespace Wonga.QA.Tests.Ui
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(2).Build();
 
             var loginPage = Client.Login();
-            var myAccountPage = loginPage.LoginAs(email);
-
-            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+            var mySummaryPage = loginPage.LoginAs(email);
 
             mySummaryPage.ChangePromiseDateButtonClick();
             var requestPage = new ExtensionRequestPage(this.Client);
@@ -75,8 +73,7 @@ namespace Wonga.QA.Tests.Ui
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
 
             var loginPage = Client.Login();
-            var myAccountPage = loginPage.LoginAs(email);
-            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+            var mySummaryPage = loginPage.LoginAs(email);
 
             mySummaryPage.ChangePromiseDateButtonClick();
             var requestPage = new ExtensionRequestPage(this.Client);
@@ -106,8 +103,7 @@ namespace Wonga.QA.Tests.Ui
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
 
             var loginPage = Client.Login();
-            var myAccountPage = loginPage.LoginAs(email);
-            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+            var mySummaryPage = loginPage.LoginAs(email);
 
             mySummaryPage.ChangePromiseDateButtonClick();
             var requestPage = new ExtensionRequestPage(this.Client);
@@ -150,9 +146,7 @@ namespace Wonga.QA.Tests.Ui
 
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer).WithLoanAmount(loanAmount).WithLoanTerm(loanTerm).Build();
-            var myAccountPage = Client.Login().LoginAs(email);
-
-            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+            var mySummaryPage = Client.Login().LoginAs(email);
 
             mySummaryPage.ChangePromiseDateButtonClick();
             var extensionRequestPage = new ExtensionRequestPage(this.Client);
@@ -240,14 +234,12 @@ namespace Wonga.QA.Tests.Ui
             var expectedRepaymentDate = Date.GetOrdinalDate(Convert.ToDateTime(response.Values["NextDueDate"].Single()).AddDays(extensionDays), "d MMMM yyyy");
 
             // Log in
-            var myAccountPage = Client.Login().LoginAs(email);
-            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+            var mySummaryPage = Client.Login().LoginAs(email);
             
             // Extend
             mySummaryPage.ChangePromiseDateButtonClick();
             var requestPage = new ExtensionRequestPage(this.Client);
 
-       
             // Check
             Assert.AreEqual(expectedRepaymentDate, requestPage.RepaymentDate);
             Assert.AreEqual("1", requestPage.InformativeBox, "InformativeBox");
@@ -265,9 +257,7 @@ namespace Wonga.QA.Tests.Ui
 
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer).WithLoanAmount(loanAmount).WithLoanTerm(loanTerm).Build();
-            var myAccountPage = Client.Login().LoginAs(email);
-
-            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+            var mySummaryPage = Client.Login().LoginAs(email);
 
             mySummaryPage.ChangePromiseDateButtonClick();
             var requestPage = new ExtensionRequestPage(this.Client);
@@ -301,8 +291,7 @@ namespace Wonga.QA.Tests.Ui
             int extensionDays = 10;
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer).WithLoanAmount(100).WithLoanTerm(loanTerm).Build();
-            var myAccountPage = Client.Login().LoginAs(email);
-            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+            var mySummaryPage = Client.Login().LoginAs(email);
 
             Topup(email, mySummaryPage, application, customer);
             Extend(email, mySummaryPage, loanTerm, application, extensionDays);
@@ -366,8 +355,7 @@ namespace Wonga.QA.Tests.Ui
 
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer).WithLoanAmount(loanAmount).WithLoanTerm(loanTerm).Build();
-            var myAccountPage = Client.Login().LoginAs(email);
-            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+            var mySummaryPage = Client.Login().LoginAs(email);
 
             // Open Extension Request page
             mySummaryPage.ChangePromiseDateButtonClick();
