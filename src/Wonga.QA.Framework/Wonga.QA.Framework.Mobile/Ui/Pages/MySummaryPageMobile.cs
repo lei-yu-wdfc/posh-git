@@ -14,7 +14,7 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
         private readonly IWebElement _mySummaryButton;
         private readonly IWebElement _myPersonalDetailsButton;
 
-        private SlidersElement SlidersElement { get; set; }
+        public SlidersElement SlidersElement { get; set; }
 
         public MySummaryPageMobile(MobileUiClient client) : base(client)
         {

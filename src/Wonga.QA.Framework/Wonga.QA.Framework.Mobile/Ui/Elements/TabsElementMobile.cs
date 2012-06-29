@@ -14,7 +14,6 @@ namespace Wonga.QA.Framework.Mobile.Ui.Elements
     public class TabsElementMobile : BaseElement
     {
         private readonly IWebElement _form;
-        private readonly IWebElement _login;
         private readonly IWebElement _applyNow;
         private readonly IWebElement _howItWorks;
         private readonly IWebElement _aboutUs;
@@ -24,11 +23,13 @@ namespace Wonga.QA.Framework.Mobile.Ui.Elements
         private readonly IWebElement _help;
         private readonly IWebElement _contactUs;
 
+        private IWebElement _logOut;
+        private IWebElement _login;
+
         public TabsElementMobile(BasePageMobile page)
             : base(page)
         {
             _form = Page.Client.Driver.FindElement(By.CssSelector(UiMapMobile.Get.TabsElementMobile.TabsForm));
-            _login = _form.FindElement(By.LinkText(ContentMapMobile.Get.TabsElementMobile.Login));
             _applyNow = _form.FindElement(By.LinkText(ContentMapMobile.Get.TabsElementMobile.ApplyNow));
             _howItWorks = _form.FindElement(By.LinkText(ContentMapMobile.Get.TabsElementMobile.HowItWorks));
             _aboutUs = _form.FindElement(By.LinkText(ContentMapMobile.Get.TabsElementMobile.AboutUs));
@@ -37,6 +38,22 @@ namespace Wonga.QA.Framework.Mobile.Ui.Elements
             _news = _form.FindElement(By.LinkText(ContentMapMobile.Get.TabsElementMobile.News));
             _help = _form.FindElement(By.LinkText(ContentMapMobile.Get.TabsElementMobile.Help));
             _contactUs = _form.FindElement(By.LinkText(ContentMapMobile.Get.TabsElementMobile.ContactUs));
+        }
+
+        public HomePageMobile LogOut()
+        {
+            _logOut = _form.FindElement(By.LinkText("logout"));
+            _logOut.Click();
+            return new HomePageMobile(Page.Client);
+        }
+
+        public MySummaryPageMobile LogIn(string email, string password)
+        {
+            _login = _form.FindElement(By.LinkText(ContentMapMobile.Get.TabsElementMobile.Login));
+            _login.Click();
+            var loginPage = Do.Until(() => new LoginPageMobile(Page.Client));
+            loginPage.LoginAs(email, password);
+            return new MySummaryPageMobile(Page.Client);
         }
 
     }
