@@ -8,6 +8,8 @@ namespace Wonga.QA.DataTests.Hds
     class InitialLoadTests
     {
         [Test]
+        [Category("Auto")]
+        [Description("Run inital load and confirm that it succeeds")]
         public void RunInitialLoadAndConfirmThatItSucceeds()
         {
             // disable HDS load

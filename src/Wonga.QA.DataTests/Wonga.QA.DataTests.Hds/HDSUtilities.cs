@@ -15,11 +15,6 @@ namespace Wonga.QA.DataTests.Hds
             BankAccountsBase
         }
 
-        //internal static string CdcStagingAgentJob { get { return "UK_CDCStagingLoadPayments"; }}
-        //internal static string HdsLoadAgentJob { get { return "DataInsight - UK_WongaHDSpaymentsLoad"; } }
-        // internal static string HdsInitialLoadAgentJob { get { return "DataInsight - UK_WongaHDS_paymentsInitialLoad"; }}
-        // internal static string HdsReconcileAgentJob { get { return "DataInsight - UK_WongaHDS_paymentsReconciliation"; } }
-
         /// <summary>
         /// Define or retrieve the Region
         /// This will need to change when we have different set ups (like WB for ZA)
@@ -33,27 +28,52 @@ namespace Wonga.QA.DataTests.Hds
         /// <summary>
         /// Return the CDC Database Name
         /// </summary>
-        internal static string CDCDatabaseName { get { return (Region.Length == 0 ? "" : Region + "_") + (Product.Length == 0 ? "" : Product + "_") + "CDCStaging"; } }
+        internal static string CDCDatabaseName
+        {
+            get
+            {
+                return (Region.Length == 0 ? "" : Region + "_") + (Product.Length == 0 ? "" : Product + "_") + "CDCStaging";
+            }
+        }
 
         /// <summary>
         /// Return the HDS database Name
         /// </summary>
-        internal static string HDSDatabaseName { get { return (Region.Length == 0 ? "" : Region + "_") + (Product.Length == 0 ? "" : Product + "_") + "WongaHDS"; } }
+        internal static string HDSDatabaseName
+        {
+            get
+            {
+                return (Region.Length == 0 ? "" : Region + "_") + (Product.Length == 0 ? "" : Product + "_") + "WongaHDS";
+            }
+        }
+
+        /// <summary>
+        /// Return the CDC Staging Agent Job name base on the CDC Database Name
+        /// </summary>
         internal static string CdcStagingAgentJob
         {
             get { return CDCDatabaseName + "_PaymentsLoad"; }
         }
 
+        /// <summary>
+        /// Return the HDS Payments Load Job name base on the HDS Database Name
+        /// </summary>
         internal static string HdsLoadAgentJob
         {
             get { return HDSDatabaseName + "_PaymentsLoad"; }
         }
 
+        /// <summary>
+        /// Return the HDS Payments Initial Load Job name base on the HDS Database Name
+        /// </summary>
         internal static string HdsInitialLoadAgentJob
         {
             get { return HDSDatabaseName + "_PaymentsInitialLoad"; }
         }
 
+        /// <summary>
+        /// Return the HDS reconcilliation Job name base on the HDS Database Name
+        /// </summary>
         internal static string HdsReconcileAgentJob
         {
             get { return HDSDatabaseName + "_PaymentsReconciliation"; }
