@@ -26,7 +26,7 @@ namespace Wonga.QA.Tests.Ui
     [Parallelizable(TestScope.All)]
     class ExtensionAgreementTest : UiTest
     {
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-243", "UKWEB-294"), MultipleAsserts, Pending("UKWEB-911 Defect: Extension finishes with an error page.")]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-243", "UKWEB-294"), MultipleAsserts]
         public void ExtensionAgreementPageTest()
         {
             string email = Get.RandomEmail();
@@ -38,9 +38,7 @@ namespace Wonga.QA.Tests.Ui
             var application = ApplicationBuilder.New(customer).WithLoanAmount(loanAmount).WithLoanTerm(loanTerm).Build();
 
             var loginPage = Client.Login();
-            var myAccountPage = loginPage.LoginAs(email);
-
-            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+            var mySummaryPage = loginPage.LoginAs(email);
 
             mySummaryPage.ChangePromiseDateButtonClick();
             var requestPage = new ExtensionRequestPage(this.Client);
@@ -71,7 +69,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.Contains(agreementPage.secci.Text, expectedRepresentativeApr);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-243", "UKWEB-294"), MultipleAsserts, Pending("UKWEB-911 Defect: Extension finishes with an error page.")]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-243", "UKWEB-294"), MultipleAsserts]
         [Row (2, 100, 1, 7)]
         public void ExtensionAgreementPageNDaysAfterLoanTest(int loanTerm, int loanAmount, int daysAfterLoan, int daysToExtend)
         {
@@ -92,9 +90,7 @@ namespace Wonga.QA.Tests.Ui
             Drive.Db.RewindApplicationDates(applicationEntity, riskApplication, TimeSpan.FromDays(daysAfterLoan));
 
             var loginPage = Client.Login();
-            var myAccountPage = loginPage.LoginAs(email);
-
-            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+            var mySummaryPage = loginPage.LoginAs(email);
 
             mySummaryPage.ChangePromiseDateButtonClick();
             var requestPage = new ExtensionRequestPage(this.Client);

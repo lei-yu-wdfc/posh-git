@@ -39,8 +39,7 @@ namespace Wonga.QA.Tests.Ui
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
 
             var loginPage = Client.Login();
-            var myAccountPage = loginPage.LoginAs(email);
-            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+            var mySummaryPage = loginPage.LoginAs(email);
             
             // Open Repay Request page
             mySummaryPage.RepayButtonClick();
@@ -85,8 +84,7 @@ namespace Wonga.QA.Tests.Ui
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
             
             var loginPage = Client.Login();
-            var myAccountPage = loginPage.LoginAs(email);
-            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+            var mySummaryPage = loginPage.LoginAs(email);
 
             // Open Repay Request page
             mySummaryPage.RepayButtonClick();
@@ -166,8 +164,7 @@ namespace Wonga.QA.Tests.Ui
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
 
-            var myAccountPage = loginPage.LoginAs(email);
-            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+            var mySummaryPage = loginPage.LoginAs(email);
 
             // Open Repay Request page
             mySummaryPage.RepayButtonClick();
@@ -198,8 +195,7 @@ namespace Wonga.QA.Tests.Ui
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
                       
             var loginPage = Client.Login();
-            var myAccountPage = loginPage.LoginAs(email);
-            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+            var mySummaryPage = loginPage.LoginAs(email);
 
             mySummaryPage.RepayButtonClick();
             var requestPage = new RepayRequestPage(this.Client);
@@ -260,8 +256,7 @@ namespace Wonga.QA.Tests.Ui
             ApplicationOperations.RewindApplicationDates(application, daysShiftSpan);
 
             var loginPage = Client.Login();
-            var myAccountPage = loginPage.LoginAs(email);
-            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+            var mySummaryPage = loginPage.LoginAs(email);
 
             mySummaryPage.RepayButtonClick();
             var requestPage = new RepayRequestPage(this.Client);
@@ -375,8 +370,7 @@ namespace Wonga.QA.Tests.Ui
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
 
             var loginPage = Client.Login();
-            var myAccountPage = loginPage.LoginAs(email);
-            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+            var mySummaryPage = loginPage.LoginAs(email);
 
             mySummaryPage.RepayButtonClick();
             var requestPage = new RepayRequestPage(this.Client);
@@ -404,8 +398,7 @@ namespace Wonga.QA.Tests.Ui
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
 
             var loginPage = Client.Login();
-            var myAccountPage = loginPage.LoginAs(email);
-            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+            var mySummaryPage = loginPage.LoginAs(email);
 
             mySummaryPage.RepayButtonClick();
             var requestPage = new RepayRequestPage(this.Client);
@@ -513,8 +506,7 @@ namespace Wonga.QA.Tests.Ui
             ApplicationOperations.RewindApplicationDates(application, daysShiftSpan);
 
             var loginPage = Client.Login();
-            var myAccountPage = loginPage.LoginAs(email);
-            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+            var mySummaryPage = loginPage.LoginAs(email);
 
             mySummaryPage.RepayButtonClick();
             var requestPage = new RepayRequestPage(this.Client);
@@ -551,8 +543,7 @@ namespace Wonga.QA.Tests.Ui
             ApplicationOperations.RewindApplicationDates(application, daysShiftSpan);
 
             var loginPage = Client.Login();
-            var myAccountPage = loginPage.LoginAs(email);
-            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+            var mySummaryPage = loginPage.LoginAs(email);
 
             mySummaryPage.RepayButtonClick();
             var requestPage = new RepayRequestPage(this.Client);
@@ -688,8 +679,7 @@ namespace Wonga.QA.Tests.Ui
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(7).Build();
 
             var loginPage = Client.Login();
-            var myAccountPage = loginPage.LoginAs(email);
-            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+            var mySummaryPage = loginPage.LoginAs(email);
 
             mySummaryPage.RepayButtonClick();
             var requestPage = new RepayRequestPage(this.Client);
