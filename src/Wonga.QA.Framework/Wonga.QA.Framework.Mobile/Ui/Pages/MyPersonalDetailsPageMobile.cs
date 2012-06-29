@@ -18,6 +18,8 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
         private readonly IWebElement _passwordLink;
         private readonly IWebElement _phoneLink;
         private readonly IWebElement _communicationLink;
+
+        public TabsElementMobile TabsElementMobile { get; set; }
         
         public MyPersonalDetailsPageMobile(MobileUiClient client) : base(client)
         {
@@ -25,13 +27,21 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
             _passwordLink = Content.FindElement(By.CssSelector(UiMapMobile.Get.MyPersonalDetailsPageMobile.PasswordLink));
             _phoneLink = Content.FindElement(By.CssSelector(UiMapMobile.Get.MyPersonalDetailsPageMobile.PhoneLink));
             _communicationLink = Content.FindElement(By.CssSelector(UiMapMobile.Get.MyPersonalDetailsPageMobile.CommunicationLink));
+            TabsElementMobile = new TabsElementMobile(this);
         }
 
-        public void EditPassword(string currentPassword, string newPassword)
+        public MyPersonalDetailsPageMobile EditPassword(string currentPassword, string newPassword)
         {
             _passwordLink.Click();
             var editPasswordPopUp = Do.Until(() => new EditPasswordPopUpElement(this));
-            editPasswordPopUp.EditPassword(currentPassword, newPassword);
+            return editPasswordPopUp.EditPassword(currentPassword, newPassword);
+        }
+
+        public MyPersonalDetailsPageMobile EditAddress()
+        {
+            _addressLink.Click();
+            var editAddressPopUp = Do.Until(() => new AddressPopUpElement(this));
+            return editAddressPopUp.EditAddress();
         }
     }
 }

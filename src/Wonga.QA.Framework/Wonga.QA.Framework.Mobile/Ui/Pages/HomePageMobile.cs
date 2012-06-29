@@ -18,5 +18,11 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
             Sliders = new SlidersElement(this);
             Tabs = new TabsElementMobile(this);
         }
+
+        public MySummaryPageMobile Login(string email, string password)
+        {
+            Tabs.LogIn(email, password);
+            return new MySummaryPageMobile(Client);
+        }
     }
 }
