@@ -107,11 +107,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
             }
             return false;
         }
-
+         
         private bool DoIgnoreErrors()
         {
-            return TestContext.CurrentContext.TestStep.GetType().GetCustomAttributes(typeof (IgnorePageErrorsAttribute), true).Count() > 0 ||
-                TestContext.CurrentContext.TestStep.Parent.GetType().GetCustomAttributes(typeof (IgnorePageErrorsAttribute), true).Count() > 0;  
+            return
+                TestContext.CurrentContext.TestStep.Metadata.Any(x => x.Key == "IgnorePageErrors")
+                || TestContext.CurrentContext.TestStep.Parent.Metadata.Any(x => x.Key == "IgnorePageErrors");
         }
     }
 }
