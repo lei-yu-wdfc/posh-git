@@ -1365,15 +1365,17 @@ namespace Wonga.QA.Tests.Ui
 
 		}
 
-		[Test, AUT(AUT.Uk), JIRA("UK-969", "UKWEB-250"), MultipleAsserts, Pending("Test is in development. Also waiting for functionality implementation.")]
+		[Test, AUT(AUT.Uk), JIRA("UK-969", "UKWEB-250"), MultipleAsserts]
 		public void L0PreAgreementPartonAccountSetupPageTest()
 		{
 			var loginPage = Client.Login();
 			string email = Get.RandomEmail();
+		    int loanAmount = 200;
 			Console.WriteLine("email={0}", email);
 
 			// L0 journey
 			var journeyL0 = JourneyFactory.GetL0Journey(Client.Home())
+                .WithAmount(loanAmount)
 				.WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask))
 				.WithEmail(email);
 			var accountSetupPage = journeyL0.Teleport<AccountDetailsPage>() as AccountDetailsPage;
@@ -1393,7 +1395,7 @@ namespace Wonga.QA.Tests.Ui
 			Thread.Sleep(1000);
 
 			accountSetupPage.ClickSecciLink();
-			Assert.Contains(accountSetupPage.SecciPopupWindowContent(), "200");
+            Assert.Contains(accountSetupPage.SecciPopupWindowContent(), loanAmount.ToString("#"));
 			accountSetupPage.ClosePopupWindow();
 		}
 
