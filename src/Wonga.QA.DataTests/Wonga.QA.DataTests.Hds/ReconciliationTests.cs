@@ -5,7 +5,7 @@ namespace Wonga.QA.DataTests.Hds
 {
     [TestFixture]
     [DependsOn(typeof(SingleRowCrudTests))]
-    class ReconciliationTests
+    public class ReconciliationTests
     {
         [Test]
         [Category("Auto")]

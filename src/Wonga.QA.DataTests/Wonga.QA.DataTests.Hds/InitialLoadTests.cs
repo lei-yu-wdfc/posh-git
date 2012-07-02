@@ -5,7 +5,7 @@ using Wonga.QA.Framework.Data;
 namespace Wonga.QA.DataTests.Hds
 {
     [TestFixture]
-    class InitialLoadTests
+    public class InitialLoadTests
     {
         [Test]
         [Category("Auto")]
