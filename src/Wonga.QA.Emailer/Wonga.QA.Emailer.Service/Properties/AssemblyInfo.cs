@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Wonga.QA.Emailer.Service")]
+[assembly: AssemblyTitle("Wonga.QA.Emailer.Service1")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Wonga.QA.Emailer.Service")]
+[assembly: AssemblyProduct("Wonga.QA.Emailer.Service1")]
 [assembly: AssemblyCopyright("Copyright ©  2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("5a10ac0e-192a-423f-954f-b4213c57ddd5")]
+[assembly: Guid("ac4a59be-b4ec-442a-acf4-8d7b67d36e19")]
 
 // Version information for an assembly consists of the following four values:
 //

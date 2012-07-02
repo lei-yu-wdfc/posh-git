@@ -10,11 +10,10 @@ namespace Wonga.QA.Emailer.Plugins.SendFailingSmokeTestEmails
 {
     public class FailingSmokeTestsEmailer : ISendEmails
     {
-        public bool SendEmail(List<TestReport> reports, String email, SmtpClient client)
+        public void SendEmail(List<TestReport> reports, String email, SmtpClient client)
         {
             Console.WriteLine(CreateEmailText(reports, email));
            // client.Send(SmtpSettingsReader.GetAccount(), email, "Your tests are failed", CreateEmailText(reports, email));
-            return false;
         }
 
         private string CreateEmailText(List<TestReport> reports, String email)
@@ -29,6 +28,7 @@ namespace Wonga.QA.Emailer.Plugins.SendFailingSmokeTestEmails
             }
 
             string message = "Hi " + autor + " your tests are fails.\n\n";
+            message += "Used environment: SUT - : " + TestReport.SUT + ", AUT - " + TestReport.AUT + ".\n\n";
 
             foreach (TestReport testReport in reports)
             {
