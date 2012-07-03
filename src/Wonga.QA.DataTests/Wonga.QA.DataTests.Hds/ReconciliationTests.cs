@@ -1,7 +1,7 @@
 ﻿using MbUnit.Framework;
 using Wonga.QA.Framework.Data;
 
-namespace Wonga.QA.DataTests.Hds
+namespace Wonga.QA.DataTests.Hds.Payments
 {
     [TestFixture]
     [DependsOn(typeof(SingleRowCrudTests))]
@@ -9,7 +9,7 @@ namespace Wonga.QA.DataTests.Hds
     {
         [Test]
         [Category("Auto")]
-        [Description("Tun the reconcilliation and confirm that it succeeds")]
+        [Description("Run the reconcilliation and confirm that it succeeds")]
         public void RunReconciliationAndConfirmThatItSucceeds()
         {
             // run initial load

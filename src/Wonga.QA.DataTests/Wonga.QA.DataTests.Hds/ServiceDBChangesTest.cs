@@ -1,15 +1,12 @@
-﻿using System;
-using System.Diagnostics;
-using MbUnit.Framework;
+﻿using MbUnit.Framework;
 using Microsoft.SqlServer.Management.Smo;
 using Microsoft.SqlServer.Management.Smo.Agent;
-using Wonga.QA.DataTests.Hds;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Framework.Data;
 
-namespace Wonga.QA.Tests.Hds
+namespace Wonga.QA.DataTests.Hds.Payments
 {
     [TestFixture]
     public class ServiceDBChangesTest
@@ -17,7 +14,7 @@ namespace Wonga.QA.Tests.Hds
         [Test]
         [AUT(AUT.Uk)]
         [Description("Test for new column in ServiceDB -- SSIS Job Fails")]
-        [Category("Manual")]
+        [Category("Auto")]
         public void AddNewColumnInServiceDB_CDCSSISJobFails()
         {
             SMODatabaseAlterations.RemoveAColumn(Drive.Data.NameOfServer, "Payments", "Payment", "Applications", "col5");
@@ -55,7 +52,7 @@ namespace Wonga.QA.Tests.Hds
         [Test]
         [AUT(AUT.Uk)]
         [Description("Test for new column in ServiceDB -- SSIS Job Fails")]
-        [Category("Manual")]
+        [Category("Auto")]
         public void AddNewColumnInCDCStagingDB_HDSSSISJobFails()
         {
             SMODatabaseAlterations.RemoveAColumn(Drive.Data.NameOfHdsServer, HdsUtilities.CDCDatabaseName, "Payment", "Applications", "col5");
