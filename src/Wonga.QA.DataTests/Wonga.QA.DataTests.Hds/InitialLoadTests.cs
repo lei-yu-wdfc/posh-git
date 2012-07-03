@@ -2,13 +2,13 @@
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Data;
 
-namespace Wonga.QA.DataTests.Hds
+namespace Wonga.QA.DataTests.Hds.Payments
 {
     [TestFixture]
     public class InitialLoadTests
     {
         [Test]
-        [Category("Auto")]
+        [Category("Manual")]        
         [Description("Run inital load and confirm that it succeeds")]
         public void RunInitialLoadAndConfirmThatItSucceeds()
         {

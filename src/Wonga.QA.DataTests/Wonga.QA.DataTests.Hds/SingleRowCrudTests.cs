@@ -2,11 +2,8 @@
 using System.Diagnostics;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
-using Wonga.QA.Framework.Core;
-using Wonga.QA.Tests.Core;
 
-
-namespace Wonga.QA.DataTests.Hds
+namespace Wonga.QA.DataTests.Hds.Payments
 {
     [TestFixture]
     [DependsOn(typeof(InitialLoadTests))]
