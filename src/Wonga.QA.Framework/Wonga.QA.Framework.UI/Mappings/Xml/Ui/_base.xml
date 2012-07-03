@@ -235,7 +235,7 @@
   </AccountDetailsPage>
 
   <AccountDetailsSection>
-    <Fieldset>#account-setup-1</Fieldset>
+    <Fieldset>.form-fieldset-wrapper</Fieldset>
     <Password>#edit-password</Password>
     <PasswordConfirm>#edit-password-confirm</PasswordConfirm>
     <PasswordErrorForm>div#edit-password-confirm-wrapper div.invalid</PasswordErrorForm>

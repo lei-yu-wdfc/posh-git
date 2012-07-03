@@ -30,5 +30,10 @@ namespace Wonga.QA.Framework.UI.Elements
         {
             _toggleLink.Click();
         }
+
+        public string GetSecciToggleButtonText()
+        {
+            return _toggleLink.Text;
+        }
     }
 }
