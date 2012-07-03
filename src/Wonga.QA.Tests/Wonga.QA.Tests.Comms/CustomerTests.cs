@@ -571,5 +571,6 @@ namespace Wonga.QA.Tests.Comms
 
             Assert.Contains(error.Message, "Ops_Login_AlreadyExists");
         }
+
     }
 }

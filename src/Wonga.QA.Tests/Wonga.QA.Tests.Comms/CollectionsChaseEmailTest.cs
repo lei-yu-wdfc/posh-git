@@ -172,6 +172,7 @@ namespace Wonga.QA.Tests.Comms
 
             Drive.Data.OpsSagas.Db.CollectionsChaseSagaEntity.UpdateById(Id: sagaId, DueDate: DateTime.Today.AddDays(-days));
             Drive.Msmq.Comms.Send(new TimeoutMessage { SagaId = sagaId });
+
         }
 
         private static void TimeoutInArrearsNoticeSaga(Application application, int numberOfDaysInArrears)
