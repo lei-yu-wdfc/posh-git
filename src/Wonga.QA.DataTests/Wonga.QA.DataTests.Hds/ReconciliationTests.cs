@@ -4,9 +4,12 @@ using Wonga.QA.Framework.Data;
 namespace Wonga.QA.DataTests.Hds
 {
     [TestFixture]
-    class ReconciliationTests
+    [DependsOn(typeof(SingleRowCrudTests))]
+    public class ReconciliationTests
     {
         [Test]
+        [Category("Auto")]
+        [Description("Tun the reconcilliation and confirm that it succeeds")]
         public void RunReconciliationAndConfirmThatItSucceeds()
         {
             // run initial load

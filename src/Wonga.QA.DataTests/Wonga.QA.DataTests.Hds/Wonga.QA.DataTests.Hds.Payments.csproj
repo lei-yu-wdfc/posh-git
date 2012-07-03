@@ -35,20 +35,12 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="CalendarDatesInsertAndDeleteDifferentLoadDifferentLsn.cs" />
-    <Compile Include="CalendarDatesInsertAndDeleteSameLoadDifferentLsn.cs" />
-    <Compile Include="CalendarDatesInsertAndUpdateDifferentLoadDifferentLsn.cs" />
-    <Compile Include="CalendarDatesInsertAndUpdateSameLoadDifferentLsn.cs" />
-    <Compile Include="CalendarDatesInsertAndUpdateSameLoadDifferentLsnSameCommittime.cs" />
-    <Compile Include="CalendarDatesInsertAndUpdateSameLoadSameLsn.cs" />
     <Compile Include="HDSUtilities.cs" />
-    <Compile Include="CalendarDatesInsertTest.cs" />
     <Compile Include="InitialLoadTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReconciliationTests.cs" />
     <Compile Include="ServiceDBChangesTest.cs" />
     <Compile Include="SingleRowCrudTests.cs" />
-    <Compile Include="SourceToHdsTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />

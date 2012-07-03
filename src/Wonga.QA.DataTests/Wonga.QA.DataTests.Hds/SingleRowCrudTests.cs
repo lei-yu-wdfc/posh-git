@@ -9,14 +9,17 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.DataTests.Hds
 {
     [TestFixture]
-    internal class SingleRowCrudTests
+    [DependsOn(typeof(InitialLoadTests))]
+    public class SingleRowCrudTests
     {
         private bool _cdcStagingAgentJobWasDisabled;
         private bool _hdsAgentJobWasDisabled;
         private static DateTime _dthdsDefaultTo = Convert.ToDateTime("31/12/9999");
-        bool boolIsBankHoliday = false;
+        private bool _boolIsBankHoliday = false;
 
         [FixtureSetUp]
+        [Category("Auto")]
+        [Description("This is the text fixture setup for all tests")]
         public void FixtureSetup()
         {
             _cdcStagingAgentJobWasDisabled = HdsUtilities.EnableJob(HdsUtilities.CdcStagingAgentJob);
@@ -24,6 +27,8 @@ namespace Wonga.QA.DataTests.Hds
         }
 
         [FixtureTearDown]
+        [Category("Auto")]
+        [Description("This is the text fixture teardown for all tests")]
         public void FixtureTearDown()
         {
             if (_cdcStagingAgentJobWasDisabled)
@@ -37,7 +42,11 @@ namespace Wonga.QA.DataTests.Hds
             }
         }
 
-        public void WaitForAgentJob()
+
+        /// <summary>
+        /// Wait for the following jobs to completed before continuing
+        /// </summary>
+        private void WaitForAgentJob()
         {
             //execute cdc and hds load
             HdsUtilities.WaitUntilJobRun(HdsUtilities.CdcStagingAgentJob);
@@ -47,21 +56,28 @@ namespace Wonga.QA.DataTests.Hds
 
         }
 
-        public static DateTime nextAvailabledateToInsert()
+        /// <summary>
+        /// What is the next available date to insert
+        /// </summary>
+        /// <returns></returns>
+        private static DateTime NextAvailabledateToInsert()
         {
-            DateTime maxdate =Drive.Data.Payments.Db.payment.CalendarDates.All().Select(Drive.Data.Payments.Db.payment.CalendarDates.Date.Max()).ToScalarOrDefault<DateTime>();
+            DateTime maxdate =Drive.Data.Payments.Db.payment.CalendarDates.All().Select(
+                Drive.Data.Payments.Db.payment.CalendarDates.Date.Max()).ToScalarOrDefault<DateTime>();
             DateTime newAvailabledate = maxdate.AddDays(1);
             return newAvailabledate;
         }
 
         [Test]
+        [Category("Auto")]
+        [Description("Insert a record in to Calendar dates and check CDC and HDS")]
         public void InsertRecordAndConfirmItIsInCDCStagingAndHds()
         {
 
             Trace.WriteLine("Running InsertRecordAndConfirmItIsInCDCStagingAndHds.");
 
             //Inserting new record Payments.payment.CalendarDates
-            var sourceRecord = Drive.Data.Payments.Db.payment.CalendarDates.Insert(Date: nextAvailabledateToInsert(),
+            var sourceRecord = Drive.Data.Payments.Db.payment.CalendarDates.Insert(Date: NextAvailabledateToInsert(),
                                                                                    IsBankHoliday: 1,
                                                                                    CreatedOn: DateTime.Now);
 
@@ -108,6 +124,8 @@ namespace Wonga.QA.DataTests.Hds
         }
 
         [Test]
+        [Category("Auto")]
+        [Description("Inser and update a calendar date same load LSN")]
         public void CalendarDatesInsertAndUpdateSameLoadSameLsn()
         {
 
@@ -118,12 +136,12 @@ namespace Wonga.QA.DataTests.Hds
             using (var transaction = Drive.Data.Payments.Db.BeginTransaction())
             {
 
-                var sourceRecord = transaction.payment.CalendarDates.Insert(Date: nextAvailabledateToInsert(),
+                var sourceRecord = transaction.payment.CalendarDates.Insert(Date: NextAvailabledateToInsert(),
                                                                             IsBankHoliday: 1,
                                                                             CreatedOn: DateTime.Now);
 
                 transaction.payment.CalendarDates.UpdateByCalendarDateId(CalendarDateId: sourceRecord.CalendarDateId,
-                                                                          IsBankHoliday: boolIsBankHoliday);
+                                                                          IsBankHoliday: _boolIsBankHoliday);
                 transaction.Commit();
 
                 // Wait for hds and cdc load job to run
@@ -143,7 +161,7 @@ namespace Wonga.QA.DataTests.Hds
                 //Select the updated record from cdcstaging and check it matches with updated source data 
                 var updatedRecordInCdc =Drive.Data.Cdc.Db.Payment.CalendarDates.FindBy(CalendarDateId: sourceRecord.CalendarDateId,Operation: 4);
                 Assert.IsTrue(updatedRecordInCdc.Date == sourceRecord.Date, "Date in updated cdc Record should match with Source.");
-                Assert.IsTrue(updatedRecordInCdc.IsBankHoliday == boolIsBankHoliday, "IsBankHoliday in updated cdc Record should match with updated value.");
+                Assert.IsTrue(updatedRecordInCdc.IsBankHoliday == _boolIsBankHoliday, "IsBankHoliday in updated cdc Record should match with updated value.");
                 Assert.IsTrue(updatedRecordInCdc.CreatedOn == sourceRecord.CreatedOn, "CreatedOn in updated cdc Record should match with Source .");
 
 
@@ -154,7 +172,7 @@ namespace Wonga.QA.DataTests.Hds
                 //Checking  only updated record exist in hds with correct hdslsn,hdsfrm and hdsTo 
                 var insertedRecordInHds =Drive.Data.Hds.Db.Payment.CalendarDates.FindBy(CalendarDateId: sourceRecord.CalendarDateId);
                 Assert.IsTrue(insertedRecordInHds.Date == sourceRecord.Date, "Date in Hds should match with Source.");
-                Assert.IsTrue(insertedRecordInHds.IsBankHoliday == boolIsBankHoliday, "IsBankHoliday in Hds should match with Source.");
+                Assert.IsTrue(insertedRecordInHds.IsBankHoliday == _boolIsBankHoliday, "IsBankHoliday in Hds should match with Source.");
                 Assert.IsTrue(insertedRecordInHds.CreatedOn == sourceRecord.CreatedOn,"CreatedOn in Hds should match with Source.");
                 Assert.IsTrue(insertedRecordInHds.HdsFromTms == updatedRecordInCdc.commit_time, "HdsFromTms in Hds should match with commit time updated cdc Record.");
                 Assert.IsTrue(insertedRecordInHds.HdsToTms == _dthdsDefaultTo,"HdsToTms in Hds should match with DefaultTodate.");
@@ -166,7 +184,7 @@ namespace Wonga.QA.DataTests.Hds
                 //Checking data in payment.vw_CalendarDates_Current view
                 var hdsCurrRecord =Drive.Data.Hds.Db.Payment.vw_CalendarDates_Current.FindBy(CalendarDateId: sourceRecord.CalendarDateId);
                 Assert.IsTrue(hdsCurrRecord.Date == sourceRecord.Date, "Date in Hds View should match with Source.");
-                Assert.IsTrue(hdsCurrRecord.IsBankHoliday == boolIsBankHoliday, "IsBankHoliday in Hds View should match with Source.");
+                Assert.IsTrue(hdsCurrRecord.IsBankHoliday == _boolIsBankHoliday, "IsBankHoliday in Hds View should match with Source.");
                 Assert.IsTrue(hdsCurrRecord.CreatedOn == sourceRecord.CreatedOn,"CreatedOn in Hds View should match with Source.");
 
             }
@@ -174,19 +192,21 @@ namespace Wonga.QA.DataTests.Hds
 
 
         [Test]
+        [Category("Auto")]
+        [Description("Insert and update calendar date in same load with different LSN")]
         public void CalendarDatesInsertAndUpdateSameLoadDifferentLsn()
         {
             //insert and update and check cdc contain both inserted and update record and also hds will contain inserted and updated record
             Trace.WriteLine("Running Canlenderdates Insert and Update Same Load Different Lsn test.");
 
             // insert New record
-            var sourceRecord = Drive.Data.Payments.Db.payment.CalendarDates.Insert(Date: nextAvailabledateToInsert(),
+            var sourceRecord = Drive.Data.Payments.Db.payment.CalendarDates.Insert(Date: NextAvailabledateToInsert(),
                                                                                    IsBankHoliday: 1,
                                                                                    CreatedOn: DateTime.Now);
 
             //updating inserted record
             Drive.Data.Payments.Db.payment.CalendarDates.UpdateByCalendarDateId(CalendarDateId: sourceRecord.CalendarDateId,
-                                                                                 IsBankHoliday: boolIsBankHoliday);
+                                                                                 IsBankHoliday: _boolIsBankHoliday);
 
             // Wait for hds and cdc load job to run
             WaitForAgentJob();
@@ -205,7 +225,7 @@ namespace Wonga.QA.DataTests.Hds
             //Select the updated record from cdcstaging and check it matches with source data after update
             var updatedRecordInCdc =Drive.Data.Cdc.Db.Payment.CalendarDates.FindBy(CalendarDateId: sourceRecord.CalendarDateId,Operation: 4);
             Assert.IsTrue(updatedRecordInCdc.Date == sourceRecord.Date, "Date in updated cdc Record should match with Source.");
-            Assert.IsTrue(updatedRecordInCdc.IsBankHoliday == boolIsBankHoliday, "IsBankHoliday in updated cdc Record should match with updated value.");
+            Assert.IsTrue(updatedRecordInCdc.IsBankHoliday == _boolIsBankHoliday, "IsBankHoliday in updated cdc Record should match with updated value.");
             Assert.IsTrue(updatedRecordInCdc.CreatedOn == sourceRecord.CreatedOn, "CreatedOn in updated cdc Record should match with Source .");
 
             //Check the Total Record count in HDS
@@ -222,7 +242,7 @@ namespace Wonga.QA.DataTests.Hds
             Assert.IsTrue(insertedRecordInHds.HdsToTms == updatedRecordInCdc.commit_time, "HdsToTms in inserted hds Record should match with commit time in updatedRecordInCdc.");
 
             //Checking  updated record exist in hds with correct hdslsn,hdsfrm and hdsTo 
-            var updatedRecordInHds =Drive.Data.Hds.Db.Payment.CalendarDates.FindBy(CalendarDateId: sourceRecord.CalendarDateId, IsBankHoliday: boolIsBankHoliday);
+            var updatedRecordInHds =Drive.Data.Hds.Db.Payment.CalendarDates.FindBy(CalendarDateId: sourceRecord.CalendarDateId, IsBankHoliday: _boolIsBankHoliday);
             Assert.IsTrue(updatedRecordInHds.Date == sourceRecord.Date, "Date in Updated hds Record should match with Source.");
             Assert.IsTrue(updatedRecordInHds.CreatedOn == sourceRecord.CreatedOn, "CreatedOn in Updated hds Record should match with Source.");
             Assert.IsTrue(updatedRecordInHds.HdsFromTms == updatedRecordInCdc.commit_time, "HdsFromTms in Updated hds Record should match with commit time in updatedRecordInCdc.");
@@ -236,12 +256,14 @@ namespace Wonga.QA.DataTests.Hds
             //Checking data in payment.vw_CalendarDates_Current view
             var hdsCurrRecord =Drive.Data.Hds.Db.Payment.vw_CalendarDates_Current.FindBy(CalendarDateId: sourceRecord.CalendarDateId);
             Assert.IsTrue(hdsCurrRecord.Date == sourceRecord.Date, "Date in Hds View should match with Source.");
-            Assert.IsTrue(hdsCurrRecord.IsBankHoliday == boolIsBankHoliday,"IsBankHoliday in Hds View should match with Source.");
+            Assert.IsTrue(hdsCurrRecord.IsBankHoliday == _boolIsBankHoliday,"IsBankHoliday in Hds View should match with Source.");
             Assert.IsTrue(hdsCurrRecord.CreatedOn == sourceRecord.CreatedOn,"CreatedOn in Hds View should match with Source.");
 
         }
 
         [Test]
+        [Category("Auto")]
+        [Description("Insert and update Calendar date with different load and different LSN")]
         public void CalendarDatesInsertAndUpdateDifferentLoadDifferentLsn()
         {
             Trace.WriteLine("Running Canlenderdates Insert and Update Different Load Different Lsn test.");
@@ -250,7 +272,7 @@ namespace Wonga.QA.DataTests.Hds
             //----------------------------------- First Load----------------------------------------------
 
             // insert New record
-            var sourceRecord = Drive.Data.Payments.Db.payment.CalendarDates.Insert(Date: nextAvailabledateToInsert(),
+            var sourceRecord = Drive.Data.Payments.Db.payment.CalendarDates.Insert(Date: NextAvailabledateToInsert(),
                                                                                    IsBankHoliday: 1,
                                                                                    CreatedOn: DateTime.Now);
 
@@ -261,7 +283,7 @@ namespace Wonga.QA.DataTests.Hds
 
             //updating inserted record
            
-            Drive.Data.Payments.Db.payment.CalendarDates.UpdateByCalendarDateId(CalendarDateId: sourceRecord.CalendarDateId, IsBankHoliday: boolIsBankHoliday);
+            Drive.Data.Payments.Db.payment.CalendarDates.UpdateByCalendarDateId(CalendarDateId: sourceRecord.CalendarDateId, IsBankHoliday: _boolIsBankHoliday);
 
             // Wait for hds and cdc load job to run
             WaitForAgentJob();
@@ -281,7 +303,7 @@ namespace Wonga.QA.DataTests.Hds
             //Select the updated record from cdcstaging and check it matches with source data after update
             var updatedRecordInCdc = Drive.Data.Cdc.Db.Payment.CalendarDates.FindBy(CalendarDateId: sourceRecord.CalendarDateId, Operation: 4);
             Assert.IsTrue(updatedRecordInCdc.Date == sourceRecord.Date, "Date in updated cdc Record should match with Source.");
-            Assert.IsTrue(updatedRecordInCdc.IsBankHoliday == boolIsBankHoliday, "IsBankHoliday in updated cdc Record should match with updated value.");
+            Assert.IsTrue(updatedRecordInCdc.IsBankHoliday == _boolIsBankHoliday, "IsBankHoliday in updated cdc Record should match with updated value.");
             Assert.IsTrue(updatedRecordInCdc.CreatedOn == sourceRecord.CreatedOn, "CreatedOn in updated cdc Record should match with Source .");
 
             //Check the Total Record count in HDS
@@ -298,7 +320,7 @@ namespace Wonga.QA.DataTests.Hds
             Assert.IsTrue(insertedRecordInHds.HdsToTms == updatedRecordInCdc.commit_time, "HdsToTms in inserted hds Record should match with commit time in updatedRecordInCdc.");
 
             //Checking  updated record exist in hds with correct hdslsn,hdsfrm and hdsTo 
-            var updatedRecordInHds = Drive.Data.Hds.Db.Payment.CalendarDates.FindBy(CalendarDateId: sourceRecord.CalendarDateId, IsBankHoliday: boolIsBankHoliday);
+            var updatedRecordInHds = Drive.Data.Hds.Db.Payment.CalendarDates.FindBy(CalendarDateId: sourceRecord.CalendarDateId, IsBankHoliday: _boolIsBankHoliday);
             Assert.IsTrue(updatedRecordInHds.Date == sourceRecord.Date, "Date in Updated hds Record should match with Source.");
             Assert.IsTrue(updatedRecordInHds.CreatedOn == sourceRecord.CreatedOn, "CreatedOn in Updated hds Record should match with Source.");
             Assert.IsTrue(updatedRecordInHds.HdsFromTms == updatedRecordInCdc.commit_time, "HdsFromTms in Updated hds Record should match with commit time in updatedRecordInCdc.");
@@ -314,19 +336,20 @@ namespace Wonga.QA.DataTests.Hds
             var hdsCurrRecord =
                 Drive.Data.Hds.Db.Payment.vw_CalendarDates_Current.FindBy(CalendarDateId: sourceRecord.CalendarDateId);
             Assert.IsTrue(hdsCurrRecord.Date == sourceRecord.Date, "Date in Hds View should match with Source.");
-            Assert.IsTrue(hdsCurrRecord.IsBankHoliday == boolIsBankHoliday, "IsBankHoliday in Hds View should match with Source.");
+            Assert.IsTrue(hdsCurrRecord.IsBankHoliday == _boolIsBankHoliday, "IsBankHoliday in Hds View should match with Source.");
             Assert.IsTrue(hdsCurrRecord.CreatedOn == sourceRecord.CreatedOn,"CreatedOn in Hds View should match with Source.");
 
         }
 
         [Test]
-
+        [Category("Auto")]
+        [Description("Insert and delete calendar date with same load but different LSN")]
         public void CalendarDatesInsertAndDeleteSameLoadDifferentLsn()
         {
             Trace.WriteLine("Running Canlenderdates Insert and Delete  Same Load Different Lsn test.");
 
             // insert New record
-            var sourceRecord = Drive.Data.Payments.Db.payment.CalendarDates.Insert(Date: nextAvailabledateToInsert(),
+            var sourceRecord = Drive.Data.Payments.Db.payment.CalendarDates.Insert(Date: NextAvailabledateToInsert(),
                                                                                    IsBankHoliday: 1,
                                                                                    CreatedOn: DateTime.Now);
 
@@ -381,14 +404,15 @@ namespace Wonga.QA.DataTests.Hds
           }
 
         [Test]
-
+        [Category("Auto")]
+        [Description("Insert and delete calendar dates with different load and different LSN")]
         public void CalendarDatesInsertAndDeleteDifferentLoadDifferentLsn()
         {
             Trace.WriteLine("Running Canlenderdates Insert and Delete  Same Load Different Lsn test.");
 
             //-------------------first load...................................................
             // insert New record
-            var sourceRecord = Drive.Data.Payments.Db.payment.CalendarDates.Insert(Date: nextAvailabledateToInsert(),
+            var sourceRecord = Drive.Data.Payments.Db.payment.CalendarDates.Insert(Date: NextAvailabledateToInsert(),
                                                                                    IsBankHoliday: 1,
                                                                                    CreatedOn: DateTime.Now);
             // Wait for hds and cdc load job to run

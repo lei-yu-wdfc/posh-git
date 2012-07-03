@@ -5,9 +5,11 @@ using Wonga.QA.Framework.Data;
 namespace Wonga.QA.DataTests.Hds
 {
     [TestFixture]
-    class InitialLoadTests
+    public class InitialLoadTests
     {
         [Test]
+        [Category("Auto")]
+        [Description("Run inital load and confirm that it succeeds")]
         public void RunInitialLoadAndConfirmThatItSucceeds()
         {
             // disable HDS load
