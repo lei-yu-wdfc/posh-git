@@ -12,9 +12,8 @@ namespace Wonga.QA.DataTests.Hds.Payments
     public class ServiceDBChangesTest
     {
         [Test]
-        [AUT(AUT.Uk)]
-        [Description("Test for new column in ServiceDB -- SSIS Job Fails")]
         [Category("Auto")]
+        [Description("Test for new column in ServiceDB -- SSIS Job Fails")]
         public void AddNewColumnInServiceDB_CDCSSISJobFails()
         {
             SMODatabaseAlterations.RemoveAColumn(Drive.Data.NameOfServer, "Payments", "Payment", "Applications", "col5");
@@ -50,9 +49,8 @@ namespace Wonga.QA.DataTests.Hds.Payments
         }
 
         [Test]
-        [AUT(AUT.Uk)]
-        [Description("Test for new column in ServiceDB -- SSIS Job Fails")]
         [Category("Auto")]
+        [Description("Test for new column in ServiceDB -- SSIS Job Fails")]
         public void AddNewColumnInCDCStagingDB_HDSSSISJobFails()
         {
             SMODatabaseAlterations.RemoveAColumn(Drive.Data.NameOfHdsServer, HdsUtilities.CDCDatabaseName, "Payment", "Applications", "col5");

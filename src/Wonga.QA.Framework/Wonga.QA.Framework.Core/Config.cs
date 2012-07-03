@@ -9,7 +9,7 @@ using Microsoft.Win32;
 namespace Wonga.QA.Framework.Core
 {
     public enum AUT { Uk, Za, Ca, Wb, Pl }
-    public enum SUT { Dev, WIP, UAT, RC, WIPRelease, RCRelease, Live, WIPHDS }
+    public enum SUT { Dev, WIP, UAT, RC, WIPRelease, RCRelease, Live, WIPDI }
 
     public static class Config
     {
@@ -60,7 +60,7 @@ namespace Wonga.QA.Framework.Core
                     Svc = new SvcConfig(".");
                     Msmq = new MsmqConfig(".");
                     Db = new DbConfig(".");
-                    HDSDb = new DbConfig(".","UK","");
+                    HDSDb = new DbConfig(".", AUT.ToString(), "");
                     Ui.SetUri("dev.wonga.com");
                     Admin = new AdminConfig("localhost/admin");
                     PrepaidAdminUI = new PrepaidAdminConfig();
@@ -87,6 +87,11 @@ namespace Wonga.QA.Framework.Core
                         AUT == AUT.Za ? new DbConfig(Connections.GetDbConn("WIP4", Proxy)) :
                         AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn("WIP6", Proxy)) :
                         AUT == AUT.Wb ? new DbConfig(Connections.GetDbConn("WIP8", Proxy)) : Throw<DbConfig>();
+                    HDSDb =
+                        AUT == AUT.Uk ? new DbConfig(Connections.GetDbConn(@"DEV-DIWIPSRV01\WIP2", Proxy), "UK", "Wonga") :
+                        AUT == AUT.Za ? new DbConfig(Connections.GetDbConn(@"DEV-DIWIPSRV01\WIP2", Proxy), "Za", "Wonga") :
+                        AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn(@"DEV-DIWIPSRV01\WIP2", Proxy), "Ca", "Wonga") :
+                        AUT == AUT.Wb ? new DbConfig(Connections.GetDbConn(@"DEV-DIWIPSRV01\WIP2", Proxy), "UK", "WB") : Throw<DbConfig>();
                     Ui.SetUri(String.Format("wip.{0}.{1}", AUT, uiDomain));
                     Admin = new AdminConfig(String.Format("wip.admin.{0}.{1}", AUT, uiDomain));
                     SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.wip", "Allw0nga");
@@ -94,7 +99,7 @@ namespace Wonga.QA.Framework.Core
                         AUT == AUT.Ca ? new SalesforceApiConfig("v3integration@wonga.com.int") :
                         new SalesforceApiConfig("v3integration@wonga.com.wip");
                     break;
-                case SUT.WIPHDS:
+                case SUT.WIPDI:
                     Api = new ApiConfig(String.Format("wip.api.{0}.wonga.com", AUT));
                     Cs = new CsConfig(String.Format("wip.csapi.{0}.wonga.com", AUT));
                     Svc =
@@ -136,6 +141,11 @@ namespace Wonga.QA.Framework.Core
                     Db =
                         AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn("ca-rel-wip-app", Proxy)) :
                         AUT == AUT.Za ? new DbConfig(Connections.GetDbConn("za-rel-wip-app", Proxy)) : Throw<DbConfig>();
+                    HDSDb =
+                        AUT == AUT.Uk ? new DbConfig(Connections.GetDbConn(@"DEV-DIWIPSRV01\WIPR2", Proxy), "UK", "Wonga") :
+                        AUT == AUT.Za ? new DbConfig(Connections.GetDbConn(@"DEV-DIWIPSRV01\WIPR2", Proxy), "Za", "Wonga") :
+                        AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn(@"DEV-DIWIPSRV01\WIPR2", Proxy), "Ca", "Wonga") :
+                        AUT == AUT.Wb ? new DbConfig(Connections.GetDbConn(@"DEV-DIWIPSRV01\WIPR2", Proxy), "UK", "WB") : Throw<DbConfig>();
                     Ui.SetUri(String.Format("wip.release.{0}.{1}", AUT, uiDomain));
                     Admin = new AdminConfig(String.Format("wip.release.admin.{0}.{1}", AUT, uiDomain));
                     SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.wip", "Allw0nga");
@@ -182,6 +192,11 @@ namespace Wonga.QA.Framework.Core
                         AUT == AUT.Za ? new DbConfig(Connections.GetDbConn("RC4", Proxy)) :
                         AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn("RC6", Proxy)) :
                         AUT == AUT.Wb ? new DbConfig(Connections.GetDbConn("RC8", Proxy)) : Throw<DbConfig>();
+                    HDSDb =
+                        AUT == AUT.Uk ? new DbConfig(Connections.GetDbConn(@"RC-DISQL01\RC2", Proxy), "UK", "Wonga") :
+                        AUT == AUT.Za ? new DbConfig(Connections.GetDbConn(@"RC-DISQL01\RC2", Proxy), "Za", "Wonga") :
+                        AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn(@"RC-DISQL01\RC2", Proxy), "Ca", "Wonga") :
+                        AUT == AUT.Wb ? new DbConfig(Connections.GetDbConn(@"RC-DISQL01\RC2", Proxy), "UK", "WB") : Throw<DbConfig>();
                     Ui.SetUri(String.Format("rc.{0}.{1}", AUT, uiDomain));
                     Admin = new AdminConfig(String.Format("rc.admin.{0}.{1}", AUT, uiDomain));
                     SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.rc", "Allw0nga");
@@ -205,6 +220,11 @@ namespace Wonga.QA.Framework.Core
                     Db =
                         AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn("ca-rel-rc-app", Proxy)) :
                         AUT == AUT.Za ? new DbConfig(Connections.GetDbConn("za-rel-rc-app", Proxy)) : Throw<DbConfig>();
+                    HDSDb =
+                        AUT == AUT.Uk ? new DbConfig(Connections.GetDbConn(@"RC-DISQL01\RCR2", Proxy), "UK", "Wonga") :
+                        AUT == AUT.Za ? new DbConfig(Connections.GetDbConn(@"RC-DISQL01\RCR2", Proxy), "Za", "Wonga") :
+                        AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn(@"RC-DISQL01\RCR2", Proxy), "Ca", "Wonga") :
+                        AUT == AUT.Wb ? new DbConfig(Connections.GetDbConn(@"RC-DISQL01\RCR2", Proxy), "UK", "WB") : Throw<DbConfig>();
                     Ui.SetUri(String.Format("rc.release.{0}.{1}", AUT, uiDomain));
                     Admin = new AdminConfig(String.Format("rc.release.admin.{0}.{1}", AUT, uiDomain));
                     SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.rc", "Allw0nga");
@@ -741,8 +761,6 @@ namespace Wonga.QA.Framework.Core
             DbPortMappings.Add("WIP6", "8207");
             DbPortMappings.Add("UAT6", "8208");
             DbPortMappings.Add("RC6", "8209");
-
-            DbPortMappings.Add(@"dev-disqlsrv01\dev2", "1433");
         }
 
         public static string GetDbConn(string server, bool proxyMode)
