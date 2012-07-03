@@ -9,12 +9,6 @@ namespace Wonga.QA.DataTests.Hds
 {
     internal static class HdsUtilities
     {
-        internal enum PaymentEntity
-        {
-            Application,
-            BankAccountsBase
-        }
-
         /// <summary>
         /// Define or retrieve the Region
         /// This will need to change when we have different set ups (like WB for ZA)
@@ -77,52 +71,6 @@ namespace Wonga.QA.DataTests.Hds
         internal static string HdsReconcileAgentJob
         {
             get { return HDSDatabaseName + "_PaymentsReconciliation"; }
-        }
-
-        /// <summary>
-        /// Checks CDC Staging for record 
-        /// </summary>
-        /// <param name="externalId">Record to find</param>
-        /// <param name="entity">Entity to check</param>
-        /// <exception cref="ArgumentNullException">externalId, entity must be provided</exception>
-        internal static void CheckRecordInCdcStaging(Guid externalId, string entity)
-        {
-            Trace.WriteLine(String.Format("Checking [{0}] in CDC Staging for External Id in [{1}]", entity, externalId));
-
-            try
-            {
-                // TODO: Extend to check a passed in entity, not just Application
-                var recordInCdcStaging =
-                    Do.Until(() => Drive.Data.Cdc.Db.Payment.Applications.FindBy(ExternalId: externalId));
-            }
-            catch (Exception e)
-            {
-                throw new Exception(
-                    String.Format("Record not found in [{0}] in CDC Staging, Error = [{1}], Trace = [{2}].", entity,
-                                  e.Message, e.ToString()));
-            }
-        }
-
-        /// <summary>
-        /// Checks HDS for record 
-        /// </summary>
-        /// <param name="externalId">Record to find</param>
-        /// <param name="entity">Entity to check</param>
-        /// <exception cref="ArgumentNullException">externalId, entity must be provided</exception>
-        internal static void CheckRecordInHds(Guid externalId, string entity)
-        {
-            Trace.WriteLine(String.Format("Checking [{0}] in HDS for External Id in [{1}]", entity, externalId));
-
-            try
-            {
-                // TODO: Extend to check a passed in entity, not just Application
-                var recordInHds = Do.Until(() => Drive.Data.Hds.Db.Payment.Applications.FindBy(ExternalId: externalId));
-            }
-            catch (Exception e)
-            {
-                throw new Exception(String.Format("Record not found in [{0}] in HDS, Error = [{1}], Trace = [{2}].",
-                                                  entity, e.Message, e.ToString()));
-            }
         }
 
         /// <summary>
