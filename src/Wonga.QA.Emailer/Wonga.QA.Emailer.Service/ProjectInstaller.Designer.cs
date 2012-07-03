@@ -40,7 +40,6 @@
             // serviceInstaller
             // 
             this.serviceInstaller.ServiceName = "Wonga.QA.Emailer";
-            this.serviceInstaller.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
             // ProjectInstaller
             // 
