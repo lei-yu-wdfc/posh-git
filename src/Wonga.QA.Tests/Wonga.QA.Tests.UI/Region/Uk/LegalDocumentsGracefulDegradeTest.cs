@@ -18,7 +18,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
          * and a prescribed error message is displayed and that progression in the application is stopped
          * Returning to the start of a journey will clear errors and alow progression
          */
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-365"), MultipleAsserts, IgnorePageErrors, Pending("Development")]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-365"), IgnorePageErrors, Pending("Development")]
         public void L0LegalDocumentErrorIsStoppedAndMessaged()
         {
             var loginPage = Client.Login();
@@ -32,45 +32,70 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
 
             var accountSetupPage = journeyL0.Teleport<AccountDetailsPage>() as AccountDetailsPage;
 
-            accountSetupPage.AccountDetailsSection.Password = "Passw0rd";
-            accountSetupPage.AccountDetailsSection.PasswordConfirm = "Passw0rd";
-            accountSetupPage.AccountDetailsSection.SecretQuestion = "Secret question'-.";
-            accountSetupPage.AccountDetailsSection.SecretAnswer = "Secret answer";
+            FillInAccountFields(accountSetupPage);
 
             //Turns off SECCI, T&C, Explanation to simulate content error
             var secciLink = accountSetupPage.GetSecciToggleElement();
             secciLink.SecciToggleButtonClick();
 
-            const String errorMessage =
-                "Oops. We are having technical issues and are unable to complete your application. Please try again shortly or call us on 08448 429 109";
-
-            //Check Broken Secci
-            accountSetupPage.ClickSecciLink();
-            Assert.Contains(accountSetupPage.SecciPopupWindowContent(), errorMessage);
-            accountSetupPage.ClosePopupWindow();
-
-            accountSetupPage = accountSetupPage.NextClick();
-
-            //Find error text in each
-            Assert.IsTrue(accountSetupPage.IsSecciLinkVisible());
-            Assert.IsTrue(accountSetupPage.IsTermsAndConditionsLinkVisible());
-            Assert.IsTrue(accountSetupPage.IsExplanationLinkVisible());
-
-            Assert.Contains(accountSetupPage.GetTermsAndConditionsTitle(), "Wonga.com Loan Conditions");
-            accountSetupPage.ClosePopupWindow();
-
             Thread.Sleep(1000);
 
-            Assert.Contains(accountSetupPage.GetExplanationTitle(), "Important information about your loan");
-            accountSetupPage.ClosePopupWindow();
+            Assert.AreEqual("Turn document links back on", secciLink.GetSecciToggleButtonText(), "Document fetching is NOT switched OFF");
 
-            Thread.Sleep(1000);
+            Assert.Multiple(() =>
+            {
+                const String errorMessage =
+                    "Oops. We are having technical issues and are unable to complete your application. Please try again shortly or call us on 08448 429 109";
 
-            
+                //Check Broken Secci
+                accountSetupPage.ClickSecciLink();
+                Assert.Contains(accountSetupPage.SecciPopupWindowContent(), errorMessage);
+                accountSetupPage.ClosePopupWindow();
 
-            
-            //var secciLink = accountSetupPage.GetSecciToggleElement();
-            //secciLink.SecciToggleButtonClick();
+                accountSetupPage = accountSetupPage.NextClick();
+                // TBD: Check an error appeared in the top
+
+
+                // TBD: click TermsAndConditions
+                // Check an error is dispalyed
+                //Assert.Contains(accountSetupPage.GetTermsAndConditionsTitle(), "Wonga.com Loan Conditions");
+                accountSetupPage.ClosePopupWindow();
+                Thread.Sleep(1000);
+
+                FillInAccountFields(accountSetupPage);
+
+                accountSetupPage = accountSetupPage.NextClick();
+                // TBD: Check an error appeared in the top
+
+                // TBD: click Explanation
+                // Check an error is dispalyed
+                //Assert.Contains(accountSetupPage.GetExplanationTitle(), "Important information about your loan");
+                accountSetupPage.ClosePopupWindow();
+                Thread.Sleep(1000);
+
+                FillInAccountFields(accountSetupPage);
+
+                accountSetupPage = accountSetupPage.NextClick();
+                // TBD: Check an error appeared in the top
+
+                //Turns on SECCI, T&C, Explanation to simulate content error
+                secciLink = accountSetupPage.GetSecciToggleElement();
+                secciLink.SecciToggleButtonClick();
+                Thread.Sleep(1000);
+                Assert.AreEqual("Turn document links off", secciLink.GetSecciToggleButtonText(), "Document fetching is NOT switched OFF");
+
+                FillInAccountFields(accountSetupPage);
+
+                var page = accountSetupPage.NextClick();
+            });
+        }
+
+        private void FillInAccountFields(AccountDetailsPage accountSetupPage)
+        {
+            accountSetupPage.AccountDetailsSection.Password = "Passw0rd";
+            accountSetupPage.AccountDetailsSection.PasswordConfirm = "Passw0rd";
+            accountSetupPage.AccountDetailsSection.SecretQuestion = "Secret question'-.";
+            accountSetupPage.AccountDetailsSection.SecretAnswer = "Secret answer";
         }
     }
 }
