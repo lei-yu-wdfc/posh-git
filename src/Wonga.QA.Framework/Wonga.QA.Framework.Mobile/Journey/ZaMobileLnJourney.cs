@@ -1,63 +1,60 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
 using System.Text;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Mobile.Ui.Pages;
 
 namespace Wonga.QA.Framework.Mobile.Journey
 {
-    class ZaMobileLnJourney : ILnConsumerJourney
+    class ZaMobileLnJourney : BaseLnJourney
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public BasePageMobile CurrentPage { get; set; }
-
         public ZaMobileLnJourney(BasePageMobile homePage)
         {
             CurrentPage = homePage as HomePageMobile;
-            FirstName = Get.GetName();
-            LastName = Get.RandomString(10);
+
+            _amount = 200;
+            _duration = 10;
+
+            journey.Add(typeof(HomePageMobile), ApplyForLoan);
+            journey.Add(typeof(ApplyPageMobile), FillApplicationDetails);
+            journey.Add(typeof(ProcessingPageMobile), WaitForAcceptedPage);
+            journey.Add(typeof(AcceptedPageMobile), FillAcceptedPage);
+            journey.Add(typeof(DealDonePage), GoToMySummaryPage);
         }
 
-        public ILnConsumerJourney SetName(string forename, string surname)
+        protected override BaseLnJourney ApplyForLoan()
         {
-            FirstName = forename;
-            LastName = surname;
+            var homePage = CurrentPage as HomePageMobile;
+            homePage.Sliders.HowMuch = _amount.ToString();
+            homePage.Sliders.HowLong = _duration.ToString();
+            CurrentPage = homePage.Sliders.ApplyLn() as ApplyPageMobile;
             return this;
         }
 
-        public ILnConsumerJourney ApplyForLoan(int amount, int duration)
+        protected override BaseLnJourney FillApplicationDetails()
         {
-            //var homePage = CurrentPage as HomePageMobile;
-            //homePage.Sliders.HowMuch = amount.ToString();
-            //homePage.Sliders.HowLong = duration.ToString();
-            //CurrentPage = homePage.Sliders.ApplyLn() as ApplyPage;
+            var applyPage = CurrentPage as ApplyPageMobile;
+            CurrentPage = applyPage.ClickApplyNowButton() as ProcessingPageMobile;
             return this;
         }
 
-        public ILnConsumerJourney FillApplicationDetails()
-        {
-        //    var applyPage = CurrentPage as ApplyPage;
-        //    CurrentPage = applyPage.Submit() as ProcessingPage;
-            return this;
-        }
-
-        public ILnConsumerJourney WaitForAcceptedPage()
+        protected override BaseLnJourney WaitForAcceptedPage()
         {
             var processingPage = CurrentPage as ProcessingPageMobile;
             CurrentPage = processingPage.WaitFor<AcceptedPageMobile>() as AcceptedPageMobile;
             return this;
         }
 
-        public ILnConsumerJourney WaitForDeclinedPage()
+        protected override BaseLnJourney WaitForDeclinedPage()
         {
             var processingPage = CurrentPage as ProcessingPageMobile;
             CurrentPage = processingPage.WaitFor<DeclinedPageMobile>() as DeclinedPageMobile;
             return this;
         }
 
-        public ILnConsumerJourney FillAcceptedPage()
+        protected override BaseLnJourney FillAcceptedPage()
         {
             var acceptedPage = CurrentPage as AcceptedPageMobile;
             acceptedPage.SignConfirmZA();
@@ -65,7 +62,7 @@ namespace Wonga.QA.Framework.Mobile.Journey
             return this;
         }
 
-        public ILnConsumerJourney GoToMySummaryPage()
+        protected override BaseLnJourney GoToMySummaryPage()
         {
             var dealDonePage = CurrentPage as DealDonePage;
             CurrentPage = dealDonePage.ContinueToMyAccount() as MySummaryPageMobile;

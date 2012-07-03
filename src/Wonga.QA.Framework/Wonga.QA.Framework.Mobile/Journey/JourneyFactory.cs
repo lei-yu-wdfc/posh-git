@@ -23,7 +23,7 @@ namespace Wonga.QA.Framework.Mobile
                     throw new NotImplementedException();
             }
         }
-        public static ILnConsumerJourney GetLnJourney(BasePageMobile homePage)
+        public static BaseLnJourney GetLnJourney(BasePageMobile homePage)
         {
             switch (Config.AUT)
             {

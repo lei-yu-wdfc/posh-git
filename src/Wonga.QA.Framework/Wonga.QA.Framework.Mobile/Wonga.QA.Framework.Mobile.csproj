@@ -58,11 +58,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Journey\BaseL0Journey.cs" />
+    <Compile Include="Journey\BaseLnJourney.cs" />
     <Compile Include="Journey\ILnConsumerJourney.cs" />
     <Compile Include="Journey\JourneyFactory.cs" />
     <Compile Include="Journey\UkMobileL0Journey.cs" />
-    <Compile Include="Journey\ZaMobileL0Journey.cs" />
     <Compile Include="Journey\ZaMobileLnJourney.cs" />
+    <Compile Include="Journey\ZaMobileL0Journey.cs" />
     <Compile Include="Mappings\Content\ContentMapMobile.cs" />
     <Compile Include="Mappings\Content\Elements\HelpElement.cs" />
     <Compile Include="Mappings\Content\Elements\TabsElementMobile.cs" />
