@@ -3,6 +3,7 @@ using System.Threading;
 using MbUnit.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI;
+using Wonga.QA.Framework.UI.Testing.Attributes;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Framework.Api;
@@ -14,10 +15,12 @@ namespace Wonga.QA.Tests.Ui
     public class LegalDocumentsGracefulDegradeTest : UiTest
     {
 
-        // Check L0 loan is accepted and Loan Agreement is displayed
-        // Check L0 loan is completed and text on Deal Done page is correct
-        [Test, AUT(AUT.Uk), JIRA("UK-730", "UK-731"), MultipleAsserts]
-        public void L0AcceptedCompleted()
+        /* Check L0 account setup link toggle is clicked and SECCI, T&C or explanation links are broken 
+         * and a prescribed error message is displayed and that progression in the application is stopped
+         * Returning to the start of a journey will clear errors and alow progression
+         */
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-365"), MultipleAsserts, IgnorePageErrors, Pending("Development"]
+        public void L0LegalDocumentErrorIsStoppedAndMessaged()
         {
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
