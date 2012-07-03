@@ -22,7 +22,7 @@ namespace Wonga.QA.Tests.Api
     class BulkDataCreation
     {
 
-        [Test, AUT(AUT.Uk), JIRA("QA-320"), Pending]
+        [Test, AUT(AUT.Uk), JIRA("QA-320"), Ignore]
         public void Create2000CustomersWithProperInfo()
         {
             Random r = new Random();
