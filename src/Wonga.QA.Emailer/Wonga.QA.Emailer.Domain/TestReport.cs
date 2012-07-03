@@ -7,6 +7,8 @@ namespace Wonga.QA.Emailer.Domain
 {
     public class TestReport
     {
+        public static String SUT { get; set; }
+        public static String AUT { get; set; }
         public bool Failed { get; set; }
         public String TestName { get; set; }
         public String FullTestName { get; set; }

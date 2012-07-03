@@ -19,6 +19,10 @@ namespace Wonga.QA.Emailer.XmlParser
             //  if (MoreThenTwentyPersentFailes(fileName))
             //      return null;
 
+            string name = fileName.Remove(0, fileName.Count() - 24);
+            TestReport.SUT = name.Remove(0, 13).Remove(3);
+            TestReport.AUT = name.Remove(0, 17).Remove(3);
+
             var doc = XElement.Load(fileName);
 
             IEnumerable<XElement> result = (from c in doc.Element("{http://www.gallio.org/}testPackageRun")
