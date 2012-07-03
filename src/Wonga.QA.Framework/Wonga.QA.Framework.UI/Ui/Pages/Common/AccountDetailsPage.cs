@@ -2,6 +2,7 @@
 using System.Threading;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.UI.Elements;
 using Wonga.QA.Framework.UI.Mappings;
 
 namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
@@ -106,6 +107,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         {
             Thread.Sleep(1000);
             Client.Driver.FindElement(By.CssSelector(UiMap.Get.AccountDetailsPage.PopupClose)).Click();
+        }
+
+        public SecciToggleElement GetSecciToggleElement()
+        {
+            var SecciTogglelink = new SecciToggleElement(this);
+            return SecciTogglelink;
         }
 
     }

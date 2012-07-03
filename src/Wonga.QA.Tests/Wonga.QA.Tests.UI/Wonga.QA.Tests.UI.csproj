@@ -43,6 +43,7 @@
     <Compile Include="ClickTest.cs" />
     <Compile Include="Facebook\FacebookTests.cs" />
     <Compile Include="Facebook\L0JourneyTests.cs" />
+    <Compile Include="Region\Uk\LegalDocumentsGracefulDegradeTest.cs" />
     <Compile Include="Region\Uk\MySummaryScenariosTests.cs" />
     <Compile Include="TimeoutTest.cs" />
     <Compile Include="ExtensionAgreementTest.cs" />
