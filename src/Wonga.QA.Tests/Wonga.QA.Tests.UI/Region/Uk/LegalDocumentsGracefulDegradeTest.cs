@@ -7,9 +7,8 @@ using Wonga.QA.Framework.UI.Testing.Attributes;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Framework.Api;
-using EmploymentStatusEnum = Wonga.QA.Framework.Msmq.Enums.Integration.Risk.EmploymentStatusEnum;
 
-namespace Wonga.QA.Tests.Ui
+namespace Wonga.QA.Tests.Ui.Region.Uk
 {
     [Parallelizable(TestScope.All)]
     public class LegalDocumentsGracefulDegradeTest : UiTest
@@ -19,7 +18,7 @@ namespace Wonga.QA.Tests.Ui
          * and a prescribed error message is displayed and that progression in the application is stopped
          * Returning to the start of a journey will clear errors and alow progression
          */
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-365"), MultipleAsserts, IgnorePageErrors, Pending("Development"]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-365"), MultipleAsserts, IgnorePageErrors, Pending("Development")]
         public void L0LegalDocumentErrorIsStoppedAndMessaged()
         {
             var loginPage = Client.Login();
