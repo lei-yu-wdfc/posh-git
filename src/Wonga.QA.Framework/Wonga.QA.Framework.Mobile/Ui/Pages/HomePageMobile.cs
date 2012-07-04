@@ -15,12 +15,12 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
         public HomePageMobile(MobileUiClient client)
             : base(client)
         {
-            Sliders = new SlidersElement(this);
-            Tabs = new TabsElementMobile(this);
+            Sliders = new SlidersElement(this);  
         }
 
         public MySummaryPageMobile Login(string email, string password)
         {
+            Tabs = new TabsElementMobile(this);
             Tabs.LogIn(email, password);
             return new MySummaryPageMobile(Client);
         }
