@@ -15,7 +15,8 @@ namespace Wonga.QA.Tests.Ui.Mobile
         [Test, AUT(AUT.Za)]
         public void ZaAcceptedLoanMobile()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.MobileHome())
+            var homePage = Client.MobileHome();
+            var journey = JourneyFactory.GetL0Journey(homePage)
                 .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
             var acceptedPage = journey.Teleport<AcceptedPageMobile>() as AcceptedPageMobile;
             acceptedPage.SignAgreementConfirm();
