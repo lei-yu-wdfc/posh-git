@@ -7,9 +7,10 @@ using MbUnit.Framework;
 
 namespace Wonga.QA.Tests.Migration
 {
-    public class MigrationGenderTests:UiTest
+    [Parallelizable(TestScope.All)]
+    public class MigrationGenderTests : UiTest
     {
-     [Test]  
+        [Test]
         public void AddCustomerWithTitleMrAndGenderFemale()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home())
