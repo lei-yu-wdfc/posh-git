@@ -126,7 +126,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             const int days = 10;
             string email = Get.RandomEmail();
             string firstName = Get.RandomString(3, 10);
-            Console.WriteLine("email:{0}", email);
+            Console.WriteLine("ScenarioId={0}; Email={1}", scenarioId, email);
 
             var journey = JourneyFactory.GetL0Journey(Client.Home())
                 .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)).WithEmail(email)
@@ -223,7 +223,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
         {
             const int scenarioId = 9;
             string email = Get.RandomEmail();
-            Console.WriteLine("email:{0}", email);
+            Console.WriteLine("ScenarioId={0}; Email={1}", scenarioId, email);
 
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
 
@@ -271,7 +271,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
         {
             const int scenarioId = 10;
             string email = Get.RandomEmail();
-            Console.WriteLine("email:{0}", email);
+            Console.WriteLine("ScenarioId={0}; Email={1}", scenarioId, email);
 
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
 
@@ -345,7 +345,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
         {
             var scenarioId = 14;
             string email = Get.RandomEmail();
-            Console.WriteLine("email:{0}", email);
+            Console.WriteLine("ScenarioId={0}; Email={1}", scenarioId, email);
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
 
             var accountId = customer.Id;
@@ -385,7 +385,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
         {
             const int scenarioId = 15;
             string email = Get.RandomEmail();
-            Console.WriteLine("email:{0}", email);
+            Console.WriteLine("ScenarioId={0}; Email={1}", scenarioId, email);
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
 
             var accountId = customer.Id;
@@ -428,7 +428,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
         {
             const int scenarioId = 16;
             string email = Get.RandomEmail();
-            Console.WriteLine("email:{0}", email);
+            Console.WriteLine("ScenarioId={0}; Email={1}", scenarioId, email);
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
 
             var accountId = customer.Id;
@@ -474,7 +474,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             const int loanAmount = 100;
             const int days = 10;
             string email = Get.RandomEmail();
-            Console.WriteLine("email:{0}", email);
+            Console.WriteLine("ScenarioId={0}; Email={1}", scenarioId, email);
 
             var journey = JourneyFactory.GetL0Journey(Client.Home())
                 .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)).WithEmail(email)
@@ -510,7 +510,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             const int loanAmount = 100;
             const int days = 10;
             string email = Get.RandomEmail();
-            Console.WriteLine("email:{0}", email);
+            Console.WriteLine("ScenarioId={0}; Email={1}", scenarioId, email);
 
             var journey = JourneyFactory.GetL0Journey(Client.Home())
                 .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)).WithEmail(email)
@@ -550,7 +550,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             const int days = 10;
             string email = Get.RandomEmail();
             string firstName = Get.RandomString(3, 10);
-            Console.WriteLine("email:{0}", email);
+            Console.WriteLine("ScenarioId={0}; Email={1}", scenarioId, email);
 
             var journey = JourneyFactory.GetL0Journey(Client.Home())
                 .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)).WithEmail(email)
@@ -640,7 +640,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
         private Customer CreateCustomerForScenario(int scenarioId, string email)
         {
             // Create a customer
-            Console.WriteLine("email:{0}", email);
+            Console.WriteLine("ScenarioId={0}; Email={1}", scenarioId, email);
             Customer customer;
             
             if (scenarioId == 20) 
