@@ -11,5 +11,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String SecciContent { get; set; }
         public String SecciHeader { get; set; }
         public String SecciPrint { get; set; }
+        public String TermsAndConditionsContent { get; set; }
+        public String WrittenExplanationContent { get; set; }
     }
 }

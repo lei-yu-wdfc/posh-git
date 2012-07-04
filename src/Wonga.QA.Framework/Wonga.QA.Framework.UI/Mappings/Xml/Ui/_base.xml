@@ -367,6 +367,12 @@
     <SecciHeader>div .secci-intro</SecciHeader>
     <SecciPrint>div #secci-print-link a</SecciPrint>
     <SecciContent>.secci</SecciContent>
+    <TermsAndConditionsHeader>.secci-intro</TermsAndConditionsHeader>
+    <TermsAndConditionsPrint>#secci-print-link a</TermsAndConditionsPrint>
+    <TermsAndConditionsContent>.content</TermsAndConditionsContent>
+    <WrittenExplanationHeader>.secci-intro</WrittenExplanationHeader>
+    <WrittenExplanationPrint>#secci-print-link a</WrittenExplanationPrint>
+    <WrittenExplanationContent>.content</WrittenExplanationContent>
   </ExtensionAgreementPage>
 
   <ExtensionErrorPage>
