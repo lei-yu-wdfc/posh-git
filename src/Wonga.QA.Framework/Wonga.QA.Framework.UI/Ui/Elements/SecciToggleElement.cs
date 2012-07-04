@@ -29,6 +29,7 @@ namespace Wonga.QA.Framework.UI.Elements
         public void SecciToggleButtonClick()
         {
             _toggleLink.Click();
+            Thread.Sleep(3000);
         }
 
         public string GetSecciToggleButtonText()

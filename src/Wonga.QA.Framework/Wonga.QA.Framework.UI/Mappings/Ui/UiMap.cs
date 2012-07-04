@@ -47,7 +47,7 @@ using TopupSlidersElement = Wonga.QA.Framework.UI.Mappings.Elements.TopupSliders
 using ExtensionErrorPage = Wonga.QA.Framework.UI.Mappings.Pages.ExtensionErrorPage;
 using RepayErrorPage = Wonga.QA.Framework.UI.Mappings.Pages.RepayErrorPage;
 using DebitOrderPage = Wonga.QA.Framework.UI.Mappings.Pages.DebitOrderPage;
-using SecciToggleElement = Wonga.QA.Framework.UI.Mappings.Elements.SecciToggleElement;
+using SecciToggleElement = Wonga.QA.Framework.UI.Mappings.Ui.Elements.SecciToggleElement;
 
 
 
