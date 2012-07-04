@@ -10,10 +10,9 @@ namespace Wonga.QA.Emailer.Plugins.SendFailingSmokeTestEmails
 {
     public class FailingSmokeTestsEmailer : ISendEmails
     {
-        public void SendEmail(List<TestReport> reports, String email, SmtpClient client)
+        public void SendEmail(List<TestReport> reports, String email, SmtpClient client, String sender)
         {
-            Console.WriteLine(CreateEmailText(reports, email));
-           // client.Send(SmtpSettingsReader.GetAccount(), email, "Your tests are failed", CreateEmailText(reports, email));
+            client.Send(sender, email, "Your tests are failed", CreateEmailText(reports, email));
         }
 
         private string CreateEmailText(List<TestReport> reports, String email)
@@ -28,7 +27,7 @@ namespace Wonga.QA.Emailer.Plugins.SendFailingSmokeTestEmails
             }
 
             string message = "Hi " + autor + " your tests are fails.\n\n";
-            message += "Used environment: SUT - : " + TestReport.SUT + ", AUT - " + TestReport.AUT + ".\n\n";
+            message += "Used environment: SUT - " + TestReport.SUT + ", AUT - " + TestReport.AUT + ".\n\n";
 
             foreach (TestReport testReport in reports)
             {
@@ -43,7 +42,7 @@ namespace Wonga.QA.Emailer.Plugins.SendFailingSmokeTestEmails
                         message += "Tiket in JIRA: " + testReport.JIRA + ".\n\n";
                     }
                     message += "Test location: " + testReport.FullTestName + ".\n\n" +
-                               "Fail message: \n\n" + testReport.Message + ".\n\n";
+                               "Fail message: \n" + testReport.Message + ".\n\n";
                 }
             }
             message += "Please look on your tests.\n\n";
