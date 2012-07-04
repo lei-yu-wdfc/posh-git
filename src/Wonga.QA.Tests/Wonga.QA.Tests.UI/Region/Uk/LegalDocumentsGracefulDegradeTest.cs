@@ -38,14 +38,14 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             var secciLink = accountSetupPage.GetSecciToggleElement();
             secciLink.SecciToggleButtonClick();
 
-            Thread.Sleep(1000);
+            Thread.Sleep(3000);
 
             Assert.AreEqual("Turn document links back on", secciLink.GetSecciToggleButtonText(), "Document fetching is NOT switched OFF");
 
             Assert.Multiple(() =>
             {
                 const String errorMessage =
-                    "Oops. We are having technical issues and are unable to complete your application. Please try again shortly or call us on 08448 429 109";
+                    "Oops. We are having technical issues and are unable to complete your application. Please try again shortly or call us on 08448 429 109.";
 
                 //Check Broken Secci
                 accountSetupPage.ClickSecciLink();
@@ -53,12 +53,14 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
                 accountSetupPage.ClosePopupWindow();
 
                 accountSetupPage = accountSetupPage.NextClick();
-                // TBD: Check an error appeared in the top
-
+                Assert.AreEqual(errorMessage, accountSetupPage.GetErrorText());
 
                 // TBD: click TermsAndConditions
                 // Check an error is dispalyed
                 //Assert.Contains(accountSetupPage.GetTermsAndConditionsTitle(), "Wonga.com Loan Conditions");
+                accountSetupPage.ClickTermsAndConditionsLink();
+                Thread.Sleep(3000);
+                Assert.Contains(accountSetupPage.TermsAndConditionsPopUpWindowContent(), errorMessage);
                 accountSetupPage.ClosePopupWindow();
                 Thread.Sleep(1000);
 
@@ -70,6 +72,9 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
                 // TBD: click Explanation
                 // Check an error is dispalyed
                 //Assert.Contains(accountSetupPage.GetExplanationTitle(), "Important information about your loan");
+                accountSetupPage.ClickWrittenExplanationLink();
+                Thread.Sleep(3000);
+                Assert.Contains(accountSetupPage.WrittenExplanationPopUpWindowContent(), errorMessage);
                 accountSetupPage.ClosePopupWindow();
                 Thread.Sleep(1000);
 
@@ -81,7 +86,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
                 //Turns on SECCI, T&C, Explanation to simulate content error
                 secciLink = accountSetupPage.GetSecciToggleElement();
                 secciLink.SecciToggleButtonClick();
-                Thread.Sleep(1000);
+                Thread.Sleep(3000);
                 Assert.AreEqual("Turn document links off", secciLink.GetSecciToggleButtonText(), "Document fetching is NOT switched OFF");
 
                 FillInAccountFields(accountSetupPage);
@@ -92,6 +97,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
 
         private void FillInAccountFields(AccountDetailsPage accountSetupPage)
         {
+            Thread.Sleep(3000);
             accountSetupPage.AccountDetailsSection.Password = "Passw0rd";
             accountSetupPage.AccountDetailsSection.PasswordConfirm = "Passw0rd";
             accountSetupPage.AccountDetailsSection.SecretQuestion = "Secret question'-.";

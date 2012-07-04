@@ -56,6 +56,16 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             Content.FindElement(By.CssSelector(UiMap.Get.AccountDetailsPage.SecciLink)).Click();
         }
 
+        public void ClickTermsAndConditionsLink()
+        {
+            Content.FindElement(By.CssSelector(UiMap.Get.AccountDetailsPage.TermAndConditionsLink)).Click();
+        }
+
+        public void ClickWrittenExplanationLink()
+        {
+            Content.FindElement(By.CssSelector(UiMap.Get.AccountDetailsPage.ExplanationLink)).Click();
+        }
+
         public String GetTermsAndConditionsTitle()
         {
             Content.FindElement(By.CssSelector(UiMap.Get.AccountDetailsPage.TermAndConditionsLink)).Click();
@@ -103,6 +113,32 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             return secci_text;
         }
 
+        public String TermsAndConditionsPopUpWindowContent()
+        {
+            string currentWindowHdl = Client.Driver.CurrentWindowHandle;
+
+            var frameName = Client.Driver.FindElement(By.CssSelector(UiMap.Get.AccountDetailsPage.PopupContentFrame)).GetAttribute("name");
+            var termsAndConditions = Client.Driver.SwitchTo().Frame(frameName).FindElement(By.CssSelector(UiMap.Get.ExtensionAgreementPage.TermsAndConditionsContent));
+            var termsAndConditions_text = termsAndConditions.Text;
+
+            Client.Driver.SwitchTo().Window(currentWindowHdl);
+
+            return termsAndConditions_text;
+        }
+
+        public String WrittenExplanationPopUpWindowContent()
+        {
+            string currentWindowHdl = Client.Driver.CurrentWindowHandle;
+
+            var frameName = Client.Driver.FindElement(By.CssSelector(UiMap.Get.AccountDetailsPage.PopupContentFrame)).GetAttribute("name");
+            var writtenExplanation = Client.Driver.SwitchTo().Frame(frameName).FindElement(By.CssSelector(UiMap.Get.ExtensionAgreementPage.WrittenExplanationContent));
+            var writtenExplanation_text = writtenExplanation.Text;
+
+            Client.Driver.SwitchTo().Window(currentWindowHdl);
+
+            return writtenExplanation_text;
+        }
+
         public void ClosePopupWindow()
         {
             Thread.Sleep(1000);
@@ -115,5 +151,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             return SecciTogglelink;
         }
 
+        public string GetErrorText()
+        {
+            return this.Error;
+        }
     }
 }
