@@ -16,14 +16,28 @@ namespace Wonga.QA.Emailer.XmlParser
         {
             var reports = new List<TestReport>();
             var Tests = new List<XElement>();
-            //  if (MoreThenTwentyPersentFailes(fileName))
-            //      return null;
+            XElement doc;
 
-            string name = fileName.Remove(0, fileName.Count() - 24);
-            TestReport.SUT = name.Remove(0, 13).Remove(3);
-            TestReport.AUT = name.Remove(0, 17).Remove(3);
+            try
+            {
+                doc = XElement.Load(fileName); // if file not xml - do nothing
+            }
+            catch (Exception)
+            {
+                return reports;
+            }
 
-            var doc = XElement.Load(fileName);
+            if (MoreThenTwentyPersentFailes(fileName)) //if in report more then 20% of tests are failed - do nothing
+                return reports;
+
+            var sut = fileName.Remove(0, fileName.IndexOf("_"));
+            sut = sut.Remove(sut.LastIndexOf("_"));
+            sut = sut.Replace("_", "");
+            var aut = fileName.Remove(0, fileName.LastIndexOf("_"));
+            aut = aut.Remove(aut.LastIndexOf("."));
+            aut = aut.Replace("_", "");
+            TestReport.SUT = sut;
+            TestReport.AUT = aut;
 
             IEnumerable<XElement> result = (from c in doc.Element("{http://www.gallio.org/}testPackageRun")
                                         .Element("{http://www.gallio.org/}testStepRun")

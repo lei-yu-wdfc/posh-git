@@ -23,10 +23,19 @@ namespace Wonga.QA.Emailer.Service
 
         private void InitializeComponent()
         {
-            components = new Container();
+            this.eventLog = new System.Diagnostics.EventLog();
+            ((System.ComponentModel.ISupportInitialize)(this.eventLog)).BeginInit();
+            // 
+            // Service
+            // 
             this.ServiceName = "Wonga.QA.Emailer";
+            ((System.ComponentModel.ISupportInitialize)(this.eventLog)).EndInit();
+
         }
 
         #endregion
+
+        private System.Diagnostics.EventLog eventLog;
+
     }
 }

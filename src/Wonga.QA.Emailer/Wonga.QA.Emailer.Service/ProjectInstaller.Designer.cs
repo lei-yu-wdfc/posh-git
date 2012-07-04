@@ -33,12 +33,14 @@
             // 
             // serviceProcessInstaller
             // 
-            this.serviceProcessInstaller.Account = System.ServiceProcess.ServiceAccount.LocalSystem;
+            this.serviceProcessInstaller.Account = System.ServiceProcess.ServiceAccount.LocalService;
             this.serviceProcessInstaller.Password = null;
             this.serviceProcessInstaller.Username = null;
             // 
             // serviceInstaller
             // 
+            this.serviceInstaller.Description = "Wonga emailer sevice";
+            this.serviceInstaller.DisplayName = "Wonga.QA.Emailer.Service";
             this.serviceInstaller.ServiceName = "Wonga.QA.Emailer";
             // 
             // ProjectInstaller
