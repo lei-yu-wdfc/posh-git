@@ -59,11 +59,13 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public void ClickTermsAndConditionsLink()
         {
             Content.FindElement(By.CssSelector(UiMap.Get.AccountDetailsPage.TermAndConditionsLink)).Click();
+            Thread.Sleep(3000);
         }
 
         public void ClickWrittenExplanationLink()
         {
             Content.FindElement(By.CssSelector(UiMap.Get.AccountDetailsPage.ExplanationLink)).Click();
+            Thread.Sleep(3000);
         }
 
         public String GetTermsAndConditionsTitle()

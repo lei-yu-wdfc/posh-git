@@ -18,7 +18,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
          * and a prescribed error message is displayed and that progression in the application is stopped
          * Returning to the start of a journey will clear errors and alow progression
          */
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-365"), IgnorePageErrors, Pending("Development")]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-365"), IgnorePageErrors]
         public void L0LegalDocumentErrorIsStoppedAndMessaged()
         {
             var loginPage = Client.Login();
@@ -38,8 +38,6 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             var secciLink = accountSetupPage.GetSecciToggleElement();
             secciLink.SecciToggleButtonClick();
 
-            Thread.Sleep(3000);
-
             Assert.AreEqual("Turn document links back on", secciLink.GetSecciToggleButtonText(), "Document fetching is NOT switched OFF");
 
             Assert.Multiple(() =>
@@ -47,51 +45,45 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
                 const String errorMessage =
                     "Oops. We are having technical issues and are unable to complete your application. Please try again shortly or call us on 08448 429 109.";
 
-                //Check Broken Secci
+                //Open Secci pop-up page and check correct error message is displayed
                 accountSetupPage.ClickSecciLink();
                 Assert.Contains(accountSetupPage.SecciPopupWindowContent(), errorMessage);
                 accountSetupPage.ClosePopupWindow();
+                Thread.Sleep(2000);
 
                 accountSetupPage = accountSetupPage.NextClick();
                 Assert.AreEqual(errorMessage, accountSetupPage.GetErrorText());
 
-                // TBD: click TermsAndConditions
-                // Check an error is dispalyed
-                //Assert.Contains(accountSetupPage.GetTermsAndConditionsTitle(), "Wonga.com Loan Conditions");
+                //Open TermsAndConditions pop-up and check correct error message is displayed
                 accountSetupPage.ClickTermsAndConditionsLink();
-                Thread.Sleep(3000);
                 Assert.Contains(accountSetupPage.TermsAndConditionsPopUpWindowContent(), errorMessage);
                 accountSetupPage.ClosePopupWindow();
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
 
                 FillInAccountFields(accountSetupPage);
 
                 accountSetupPage = accountSetupPage.NextClick();
-                // TBD: Check an error appeared in the top
+                Assert.AreEqual(errorMessage, accountSetupPage.GetErrorText());
 
-                // TBD: click Explanation
-                // Check an error is dispalyed
-                //Assert.Contains(accountSetupPage.GetExplanationTitle(), "Important information about your loan");
+                // Open WrittenExplanation pop-up and check the correct error message is displayed
                 accountSetupPage.ClickWrittenExplanationLink();
-                Thread.Sleep(3000);
                 Assert.Contains(accountSetupPage.WrittenExplanationPopUpWindowContent(), errorMessage);
                 accountSetupPage.ClosePopupWindow();
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
 
                 FillInAccountFields(accountSetupPage);
 
                 accountSetupPage = accountSetupPage.NextClick();
-                // TBD: Check an error appeared in the top
+                Assert.AreEqual(errorMessage, accountSetupPage.GetErrorText());
 
-                //Turns on SECCI, T&C, Explanation to simulate content error
+                //Turn on SECCI, T&C, Explanation and check Bank account details page is displayed correctly
                 secciLink = accountSetupPage.GetSecciToggleElement();
                 secciLink.SecciToggleButtonClick();
-                Thread.Sleep(3000);
                 Assert.AreEqual("Turn document links off", secciLink.GetSecciToggleButtonText(), "Document fetching is NOT switched OFF");
 
                 FillInAccountFields(accountSetupPage);
 
-                var page = accountSetupPage.NextClick();
+                var page = accountSetupPage.Next();
             });
         }
 
