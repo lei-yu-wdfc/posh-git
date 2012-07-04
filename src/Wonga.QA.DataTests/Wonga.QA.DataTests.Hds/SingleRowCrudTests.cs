@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
+using Wonga.QA.Framework.Data;
 
 namespace Wonga.QA.DataTests.Hds.Payments
 {
-    [TestFixture]
-    [DependsOn(typeof(InitialLoadTests))]
+    [TestFixture(Order = 2)]
     public class SingleRowCrudTests
     {
-        private bool _cdcStagingAgentJobWasDisabled;
-        private bool _hdsAgentJobWasDisabled;
         private static DateTime _dthdsDefaultTo = Convert.ToDateTime("31/12/9999");
         private bool _boolIsBankHoliday = false;
+        private bool _cdcStagingAgentJobWasDisabled;
+        private bool _hdsAgentJobWasDisabled;
 
         [FixtureSetUp]
         [Category("Auto")]
@@ -37,21 +38,7 @@ namespace Wonga.QA.DataTests.Hds.Payments
             {
                 HdsUtilities.DisableJob(HdsUtilities.HdsLoadAgentJob);
             }
-        }
-
-
-        /// <summary>
-        /// Wait for the following jobs to completed before continuing
-        /// </summary>
-        private void WaitForAgentJob()
-        {
-            //execute cdc and hds load
-            HdsUtilities.WaitUntilJobRun(HdsUtilities.CdcStagingAgentJob);
-            HdsUtilities.WaitUntilJobComplete(HdsUtilities.CdcStagingAgentJob);
-            HdsUtilities.WaitUntilJobRun(HdsUtilities.HdsLoadAgentJob);
-            HdsUtilities.WaitUntilJobComplete(HdsUtilities.HdsLoadAgentJob);
-
-        }
+       }
 
         /// <summary>
         /// What is the next available date to insert
@@ -67,6 +54,7 @@ namespace Wonga.QA.DataTests.Hds.Payments
 
         [Test]
         [Category("Auto")]
+        [Parallelizable]
         [Description("Insert a record in to Calendar dates and check CDC and HDS")]
         public void InsertRecordAndConfirmItIsInCDCStagingAndHds()
         {
@@ -78,9 +66,12 @@ namespace Wonga.QA.DataTests.Hds.Payments
                                                                                    IsBankHoliday: 1,
                                                                                    CreatedOn: DateTime.Now);
 
-            // Wait for hds and cdc load job to run
-            WaitForAgentJob();
+            // Allow for CDC to pick up the data
+            Thread.Sleep(HdsUtilities.CdcWaitTimeMilliseconds);
 
+            // Wait for hds and cdc load job to run
+            SQLServerAgentJobs.WaitUntilJobComplete(HdsUtilities.CdcStagingAgentJob);
+            SQLServerAgentJobs.WaitUntilJobComplete(HdsUtilities.HdsLoadAgentJob);
 
             //Check total record count in Cdc 
             var totalRecordCountInCdc =Drive.Data.Cdc.Db.Payment.CalendarDates.FindAllBy(CalendarDateId: sourceRecord.CalendarDateId).Count();
@@ -122,6 +113,7 @@ namespace Wonga.QA.DataTests.Hds.Payments
 
         [Test]
         [Category("Auto")]
+        [Parallelizable]
         [Description("Inser and update a calendar date same load LSN")]
         public void CalendarDatesInsertAndUpdateSameLoadSameLsn()
         {
@@ -141,8 +133,12 @@ namespace Wonga.QA.DataTests.Hds.Payments
                                                                           IsBankHoliday: _boolIsBankHoliday);
                 transaction.Commit();
 
+                // Allow for CDC to pick up the data
+                Thread.Sleep(HdsUtilities.CdcWaitTimeMilliseconds);
+
                 // Wait for hds and cdc load job to run
-                WaitForAgentJob();
+                SQLServerAgentJobs.WaitUntilJobComplete(HdsUtilities.CdcStagingAgentJob);
+                SQLServerAgentJobs.WaitUntilJobComplete(HdsUtilities.HdsLoadAgentJob);
 
                 //Check total record count in Cdc 
                 var totalRecordCountInCdc = Drive.Data.Cdc.Db.Payment.CalendarDates.FindAllBy(CalendarDateId: sourceRecord.CalendarDateId).Count();
@@ -190,6 +186,7 @@ namespace Wonga.QA.DataTests.Hds.Payments
 
         [Test]
         [Category("Auto")]
+        [Parallelizable]
         [Description("Insert and update calendar date in same load with different LSN")]
         public void CalendarDatesInsertAndUpdateSameLoadDifferentLsn()
         {
@@ -205,8 +202,12 @@ namespace Wonga.QA.DataTests.Hds.Payments
             Drive.Data.Payments.Db.payment.CalendarDates.UpdateByCalendarDateId(CalendarDateId: sourceRecord.CalendarDateId,
                                                                                  IsBankHoliday: _boolIsBankHoliday);
 
+            // Allow for CDC to pick up the data
+            Thread.Sleep(HdsUtilities.CdcWaitTimeMilliseconds);
+
             // Wait for hds and cdc load job to run
-            WaitForAgentJob();
+            SQLServerAgentJobs.WaitUntilJobComplete(HdsUtilities.CdcStagingAgentJob);
+            SQLServerAgentJobs.WaitUntilJobComplete(HdsUtilities.HdsLoadAgentJob);
 
             //Check total record count in Cdc 
             var totalRecordCountInCdc =Drive.Data.Cdc.Db.Payment.CalendarDates.FindAllBy(CalendarDateId: sourceRecord.CalendarDateId).Count();
@@ -260,6 +261,7 @@ namespace Wonga.QA.DataTests.Hds.Payments
 
         [Test]
         [Category("Auto")]
+        [Parallelizable]
         [Description("Insert and update Calendar date with different load and different LSN")]
         public void CalendarDatesInsertAndUpdateDifferentLoadDifferentLsn()
         {
@@ -273,8 +275,12 @@ namespace Wonga.QA.DataTests.Hds.Payments
                                                                                    IsBankHoliday: 1,
                                                                                    CreatedOn: DateTime.Now);
 
+            // Allow for CDC to pick up the data
+            Thread.Sleep(HdsUtilities.CdcWaitTimeMilliseconds);
+
             // Wait for hds and cdc load job to run
-            WaitForAgentJob();
+            SQLServerAgentJobs.WaitUntilJobComplete(HdsUtilities.CdcStagingAgentJob);
+            SQLServerAgentJobs.WaitUntilJobComplete(HdsUtilities.HdsLoadAgentJob);
 
             //----------------------------------- 2nd Load----------------------------------------------
 
@@ -282,8 +288,12 @@ namespace Wonga.QA.DataTests.Hds.Payments
            
             Drive.Data.Payments.Db.payment.CalendarDates.UpdateByCalendarDateId(CalendarDateId: sourceRecord.CalendarDateId, IsBankHoliday: _boolIsBankHoliday);
 
+            // Allow for CDC to pick up the data
+            Thread.Sleep(HdsUtilities.CdcWaitTimeMilliseconds);
+
             // Wait for hds and cdc load job to run
-            WaitForAgentJob();
+            SQLServerAgentJobs.WaitUntilJobComplete(HdsUtilities.CdcStagingAgentJob);
+            SQLServerAgentJobs.WaitUntilJobComplete(HdsUtilities.HdsLoadAgentJob);
 
             //----------------------------------- Check cdc and hds data----------------------------------------------
             //Check total record count in Cdc 
@@ -340,6 +350,7 @@ namespace Wonga.QA.DataTests.Hds.Payments
 
         [Test]
         [Category("Auto")]
+        [Parallelizable]
         [Description("Insert and delete calendar date with same load but different LSN")]
         public void CalendarDatesInsertAndDeleteSameLoadDifferentLsn()
         {
@@ -353,8 +364,12 @@ namespace Wonga.QA.DataTests.Hds.Payments
             //Delete the inserted record
             Drive.Data.Payments.Db.payment.CalendarDates.DeleteByCalendarDateId(CalendarDateId: sourceRecord.CalendarDateId);
 
+            // Allow for CDC to pick up the data
+            Thread.Sleep(HdsUtilities.CdcWaitTimeMilliseconds);
+
             // Wait for hds and cdc load job to run
-            WaitForAgentJob();
+            SQLServerAgentJobs.WaitUntilJobComplete(HdsUtilities.CdcStagingAgentJob);
+            SQLServerAgentJobs.WaitUntilJobComplete(HdsUtilities.HdsLoadAgentJob);
 
             //Check total record count in Cdc 
             var totalRecordCountInCdc =Drive.Data.Cdc.Db.Payment.CalendarDates.FindAllBy(CalendarDateId: sourceRecord.CalendarDateId).Count();
@@ -402,6 +417,7 @@ namespace Wonga.QA.DataTests.Hds.Payments
 
         [Test]
         [Category("Auto")]
+        [Parallelizable]
         [Description("Insert and delete calendar dates with different load and different LSN")]
         public void CalendarDatesInsertAndDeleteDifferentLoadDifferentLsn()
         {
@@ -412,16 +428,24 @@ namespace Wonga.QA.DataTests.Hds.Payments
             var sourceRecord = Drive.Data.Payments.Db.payment.CalendarDates.Insert(Date: NextAvailabledateToInsert(),
                                                                                    IsBankHoliday: 1,
                                                                                    CreatedOn: DateTime.Now);
+            // Allow for CDC to pick up the data
+            Thread.Sleep(HdsUtilities.CdcWaitTimeMilliseconds);
+
             // Wait for hds and cdc load job to run
-            WaitForAgentJob();
+            SQLServerAgentJobs.WaitUntilJobComplete(HdsUtilities.CdcStagingAgentJob);
+            SQLServerAgentJobs.WaitUntilJobComplete(HdsUtilities.HdsLoadAgentJob);
 
 
             //-------------------2nd load.........................................................
             //Delete the inserted record
             Drive.Data.Payments.Db.payment.CalendarDates.DeleteByCalendarDateId(CalendarDateId: sourceRecord.CalendarDateId);
 
+            // Allow for CDC to pick up the data
+            Thread.Sleep(HdsUtilities.CdcWaitTimeMilliseconds);
+
             // Wait for hds and cdc load job to run
-            WaitForAgentJob();
+            SQLServerAgentJobs.WaitUntilJobComplete(HdsUtilities.CdcStagingAgentJob);
+            SQLServerAgentJobs.WaitUntilJobComplete(HdsUtilities.HdsLoadAgentJob);
 
             //-------------------check hds and cdc record after insert and delete.........................................................
             //Check total record count in Cdc 

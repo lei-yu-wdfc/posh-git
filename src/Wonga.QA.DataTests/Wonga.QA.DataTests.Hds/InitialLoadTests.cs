@@ -4,11 +4,11 @@ using Wonga.QA.Framework.Data;
 
 namespace Wonga.QA.DataTests.Hds.Payments
 {
-    [TestFixture]
+    [TestFixture(Order = 1)]
     public class InitialLoadTests
     {
         [Test]
-        [Category("Manual")]        
+        [Category("InitialLoad")]
         [Description("Run inital load and confirm that it succeeds")]
         public void RunInitialLoadAndConfirmThatItSucceeds()
         {

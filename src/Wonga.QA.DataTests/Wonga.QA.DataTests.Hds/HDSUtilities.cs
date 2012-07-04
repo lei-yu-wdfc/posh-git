@@ -9,6 +9,8 @@ namespace Wonga.QA.DataTests.Hds
 {
     internal static class HdsUtilities
     {
+        internal static Int32 CdcWaitTimeMilliseconds = 3000;
+
         /// <summary>
         /// Define or retrieve the Region
         /// This will need to change when we have different set ups (like WB for ZA)
@@ -72,38 +74,7 @@ namespace Wonga.QA.DataTests.Hds
         {
             get { return HDSDatabaseName + "_PaymentsReconciliation"; }
         }
-
-        /// <summary>
-        /// Waits for a job to finish
-        /// </summary>
-        /// <param name="jobName">Job to check</param>
-        /// <param name="waitTimeSecondsOverride">Time to wait before reporting error of job not finished</param>
-        /// <exception cref="ArgumentNullException">jobName must be provided</exception>
-        internal static void WaitUntilJobRun(string jobName, int waitTimeSecondsOverride = 0)
-        {
-            // Find the last run time
-            DateTime? lastRunTime = SQLServerAgentJobs.GetJobLastRunDateTime(jobName);
-
-            // wait for job to stop if running
-            if (SQLServerAgentJobs.CheckJobStatus(jobName) != JobExecutionStatus.Idle)
-            {
-                SQLServerAgentJobs.WaitUntilJobRun(jobName, lastRunTime ?? DateTime.Now, waitTimeSecondsOverride);
-            }
-
-        }
-
-        internal static void WaitUntilJobComplete(string jobName, int waitTimeSecondsOverride = 0)
-        {
-            // Find the last run time
-            DateTime? lastRunTime = SQLServerAgentJobs.GetJobLastRunDateTime(jobName);
-
-            // wait for job to stop if running
-            if (SQLServerAgentJobs.CheckJobStatus(jobName) != JobExecutionStatus.PerformingCompletionAction)
-            {
-                SQLServerAgentJobs.WaitUntilJobRun(jobName, lastRunTime ?? DateTime.Now, waitTimeSecondsOverride);
-            }
-        }
-
+       
         /// <summary>
         /// Disables SQL Agent job
         /// </summary>
