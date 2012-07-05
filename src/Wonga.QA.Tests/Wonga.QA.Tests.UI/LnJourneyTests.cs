@@ -345,7 +345,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.EndsWith(Client.Driver.Url, "/deal-done-member", "The deal done page URL is not /deal-done-member.");
         }
 
-        [Test, AUT(AUT.Uk), MultipleAsserts]
+        [Test, AUT(AUT.Uk), MultipleAsserts, Owner(Owner.PavithranVangiti)]
         public void UkLnVerifyUrlsAreCorrect()
         {
             var loginPage = Client.Login();
@@ -366,19 +366,19 @@ namespace Wonga.QA.Tests.Ui
             var journey = JourneyFactory.GetLnJourney(homePage);
             var applyPage = journey.Teleport<ApplyPage>() as ApplyPage;
 
-            // Check the URL here is /apply-member
+            // Check the URL contains /applyln
             Assert.Contains(Client.Driver.Url, "/applyln", "The apply page URL does not contain '/applyln'");
             var processingPage = journey.Teleport<ProcessingPage>() as ProcessingPage;
 
-            // Check the URL here is /processing-member
+            // Check the URL ends with /processing-page
             Assert.EndsWith(Client.Driver.Url, "/processing-page", "The processing page URL is not /processing-page.");
             var acceptedPage = journey.Teleport<AcceptedPage>() as AcceptedPage;
 
-            // Check the URL here is /apply-accept-member
+            // Check the URL ends with /accept
             Assert.EndsWith(Client.Driver.Url, "/accept", "The accept page URL is not /accept.");
             var dealDonePage = journey.Teleport<DealDonePage>() as DealDonePage;
 
-            // Check the URL here is /deal-done-member
+            // Check the URL ends with /dealdoneLN
             Assert.EndsWith(Client.Driver.Url, "/dealdoneLN", "The deal done page URL is not /dealdoneLN.");
         }
 
