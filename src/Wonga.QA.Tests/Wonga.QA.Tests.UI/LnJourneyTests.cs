@@ -310,7 +310,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca, AUT.Uk), SmokeTest, Pending("Fail")]
+        [Test, AUT(AUT.Za, AUT.Ca), SmokeTest, Pending("Fail")]
         public void LnVerifyUrlsAreCorrect()
         {
             var loginPage = Client.Login();
@@ -329,7 +329,8 @@ namespace Wonga.QA.Tests.Ui
             application.RepayOnDueDate();
             var mySummaryPageAfterLogin = loginPage.LoginAs(email);
             var homePage = Client.Home();
-            var journey = JourneyFactory.GetLnJourney(homePage).WithFirstName(name).WithLastName(surname);
+            //var journey = JourneyFactory.GetLnJourney(homePage).WithFirstName(name).WithLastName(surname);
+            var journey = JourneyFactory.GetLnJourney(homePage);
             var applyPage = journey.Teleport<ApplyPage>() as ApplyPage;
             // Check the URL here is /apply-member
             Assert.Contains(Client.Driver.Url, "/apply-member?", "The apply page URL does not contain '/apply-member?'");
@@ -342,6 +343,43 @@ namespace Wonga.QA.Tests.Ui
             var dealDonePage = journey.Teleport<DealDonePage>() as DealDonePage;
             // Check the URL here is /deal-done-member
             Assert.EndsWith(Client.Driver.Url, "/deal-done-member", "The deal done page URL is not /deal-done-member.");
+        }
+
+        [Test, AUT(AUT.Uk), MultipleAsserts]
+        public void UkLnVerifyUrlsAreCorrect()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+
+            Customer customer = CustomerBuilder
+                .New()
+                .WithEmailAddress(email)
+                .Build();
+
+            Application application = ApplicationBuilder
+                .New(customer)
+                .Build();
+            application.RepayOnDueDate();
+
+            var mySummaryPageAfterLogin = loginPage.LoginAs(email);
+            var homePage = Client.Home();
+            var journey = JourneyFactory.GetLnJourney(homePage);
+            var applyPage = journey.Teleport<ApplyPage>() as ApplyPage;
+
+            // Check the URL here is /apply-member
+            Assert.Contains(Client.Driver.Url, "/applyln", "The apply page URL does not contain '/applyln'");
+            var processingPage = journey.Teleport<ProcessingPage>() as ProcessingPage;
+
+            // Check the URL here is /processing-member
+            Assert.EndsWith(Client.Driver.Url, "/processing-page", "The processing page URL is not /processing-page.");
+            var acceptedPage = journey.Teleport<AcceptedPage>() as AcceptedPage;
+
+            // Check the URL here is /apply-accept-member
+            Assert.EndsWith(Client.Driver.Url, "/accept", "The accept page URL is not /accept.");
+            var dealDonePage = journey.Teleport<DealDonePage>() as DealDonePage;
+
+            // Check the URL here is /deal-done-member
+            Assert.EndsWith(Client.Driver.Url, "/dealdoneLN", "The deal done page URL is not /dealdoneLN.");
         }
 
      }
