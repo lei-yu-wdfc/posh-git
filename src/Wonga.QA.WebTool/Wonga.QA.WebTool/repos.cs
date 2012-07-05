@@ -7,9 +7,11 @@ using GitSharp;
 
 namespace Wonga.QA.WebTool
 {
-    static public class repos
+    public class repos
     {
-        static public string Update()
+        string stderr_str;
+        string stdout_str;
+        public string Update()
         {
             try
             {
@@ -28,16 +30,16 @@ namespace Wonga.QA.WebTool
                 gitProcess.StartInfo = gitInfo;
                 gitProcess.Start();
 
-                string stderr_str = gitProcess.StandardError.ReadToEnd(); // pick up STDERR
-                string stdout_str = gitProcess.StandardOutput.ReadToEnd(); // pick up STDOUT
+                stderr_str = gitProcess.StandardError.ReadToEnd(); // pick up STDERR
+                stdout_str = gitProcess.StandardOutput.ReadToEnd(); // pick up STDOUT
 
                 gitProcess.WaitForExit();
                 gitProcess.Close();
                 return stdout_str;
             }
-            catch(Exception exc)
+            catch (Exception exc)
             {
-                return exc.Message;
+                return exc.Message +" error: " + stderr_str + " out: "+stdout_str;
             }
         }
     }
