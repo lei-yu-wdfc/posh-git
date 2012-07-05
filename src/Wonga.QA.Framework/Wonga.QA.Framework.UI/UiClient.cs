@@ -15,6 +15,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Remote;
+using OpenQA.Selenium.Safari;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.Mappings.Pages.PayLater;
 using Wonga.QA.Framework.UI.UiElements.Pages;
@@ -66,7 +67,7 @@ namespace Wonga.QA.Framework.UI
                 case(Config.UiConfig.BrowserType.Opera):
                     throw new NotImplementedException("Opera is not supported yet");
                 case(Config.UiConfig.BrowserType.Safari):
-                    throw new NotImplementedException("Safari is not supported by WebDriver");
+                    return new SafariDriver();
                 default:
                     throw new ArgumentException("Please select a Browser Type via the QAFBrowser environment variable");    
             }
@@ -94,7 +95,8 @@ namespace Wonga.QA.Framework.UI
                     capabilities = DesiredCapabilities.Opera();
                     break;
                 case(Config.UiConfig.BrowserType.Safari):
-                    throw new NotImplementedException("Safari is not supported yet");
+                    capabilities = DesiredCapabilities.Safari() as DesiredCapabilities;
+                    break;
                 default:
                     throw new ArgumentException("Please select a QAFBrowser environment variable.");
             }
