@@ -1,69 +1,64 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <publishData>
-  <publishProfile publishUrl="C:\Git\Publish" deleteExistingFiles="True" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Profile1" publishMethod="FileSystem" replaceMatchingFiles="False" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
-    <file relUrl="bin/GitSharp.Core.dll" publishTime="06/05/2010 07:20:12" />
-    <file relUrl="bin/Simple.Data.dll" publishTime="06/12/2012 11:21:43" />
-    <file relUrl="bin/Wonga.QA.Framework.Core.dll" publishTime="06/26/2012 11:44:32" />
+  <publishProfile publishUrl="C:\Git\public" deleteExistingFiles="True" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Profile1" publishMethod="FileSystem" replaceMatchingFiles="False" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
     <file relUrl="bin/Wonga.QA.Framework.Cs.dll" publishTime="06/18/2012 10:23:55" />
     <file relUrl="bin/MbUnit.xml" publishTime="02/12/2012 04:18:18" />
     <file relUrl="Global.asax" publishTime="06/14/2012 09:11:34" />
-    <file relUrl="bin/Wonga.QA.Framework.Data.pdb" publishTime="06/26/2012 11:44:40" />
+    <file relUrl="bin/Wonga.QA.Framework.Data.pdb" publishTime="07/04/2012 09:56:03" />
     <file relUrl="Site.Master" publishTime="06/26/2012 14:04:26" />
     <file relUrl="Styles/Site.css" publishTime="06/25/2012 09:56:52" />
-    <file relUrl="bin/Wonga.QA.Framework.ThirdParties.pdb" publishTime="06/26/2012 11:45:07" />
-    <file relUrl="bin/Wonga.QA.Framework.Mocks.pdb" publishTime="06/18/2012 10:24:12" />
-    <file relUrl="bin/Wonga.QA.Framework.Msmq.dll" publishTime="06/26/2012 11:45:00" />
+    <file relUrl="bin/GitSharp.Core.pdb" publishTime="06/05/2010 07:20:12" />
+    <file relUrl="bin/Wonga.QA.Framework.Core.dll" publishTime="07/04/2012 09:55:57" />
+    <file relUrl="bin/Wonga.QA.Framework.Msmq.dll" publishTime="07/04/2012 09:56:16" />
+    <file relUrl="bin/Winterdom.IO.FileMap.dll" publishTime="06/05/2010 07:20:10" />
     <file relUrl="About.aspx" publishTime="06/14/2012 09:11:34" />
-    <file relUrl="bin/Tamir.SharpSSH.dll" publishTime="06/05/2010 07:20:10" />
-    <file relUrl="bin/Wonga.QA.Framework.Svc.pdb" publishTime="06/26/2012 11:45:03" />
     <file relUrl="bin/Wonga.QA.Framework.Cs.pdb" publishTime="06/18/2012 10:23:55" />
-    <file relUrl="bin/Wonga.QA.Framework.CommonApi.dll" publishTime="06/26/2012 11:44:36" />
-    <file relUrl="bin/Wonga.QA.Framework.dll" publishTime="06/27/2012 08:36:58" />
-    <file relUrl="bin/Wonga.QA.Framework.Api.pdb" publishTime="06/26/2012 11:44:35" />
+    <file relUrl="bin/Wonga.QA.Framework.CommonApi.dll" publishTime="07/04/2012 09:56:00" />
+    <file relUrl="bin/Wonga.QA.Framework.dll" publishTime="07/04/2012 09:56:25" />
+    <file relUrl="bin/Wonga.QA.Framework.Api.pdb" publishTime="07/04/2012 09:55:59" />
     <file relUrl="img/processing.gif" publishTime="06/19/2012 10:06:11" />
+    <file relUrl="bin/Wonga.QA.Framework.Db.pdb" publishTime="07/04/2012 09:56:12" />
+    <file relUrl="bin/Wonga.QA.Framework.Api.dll" publishTime="07/04/2012 09:55:59" />
+    <file relUrl="bin/Tamir.SharpSSH.dll" publishTime="06/05/2010 07:20:10" />
     <file relUrl="bin/GitSharp.dll" publishTime="06/05/2010 07:20:14" />
-    <file relUrl="bin/Wonga.QA.WebTool.dll" publishTime="06/27/2012 15:07:27" />
-    <file relUrl="bin/Wonga.QA.Framework.Db.pdb" publishTime="06/26/2012 11:44:53" />
-    <file relUrl="Account/Web.config" publishTime="06/14/2012 09:11:34" />
-    <file relUrl="Account/Register.aspx" publishTime="06/14/2012 09:11:34" />
-    <file relUrl="bin/Wonga.QA.WebTool.pdb" publishTime="06/27/2012 15:07:26" />
+    <file relUrl="img/button_ok.png" publishTime="06/19/2012 08:57:13" />
     <file relUrl="bin/ICSharpCode.SharpZipLib.dll" publishTime="06/05/2010 07:20:10" />
-    <file relUrl="Account/Login.aspx" publishTime="06/14/2012 09:11:34" />
+    <file relUrl="bin/Wonga.QA.Framework.Mocks.pdb" publishTime="06/18/2012 10:24:12" />
+    <file relUrl="bin/Wonga.QA.Framework.ThirdParties.pdb" publishTime="07/04/2012 09:56:23" />
     <file relUrl="bin/GitSharp.pdb" publishTime="06/05/2010 07:20:14" />
     <file relUrl="bin/MbUnit.dll" publishTime="02/12/2012 04:18:20" />
     <file relUrl="Scripts/jquery-1.4.1.min.js" publishTime="06/14/2012 09:11:34" />
-    <file relUrl="bin/Wonga.QA.Framework.Core.pdb" publishTime="06/26/2012 11:44:32" />
-    <file relUrl="bin/Wonga.QA.Framework.pdb" publishTime="06/27/2012 08:36:58" />
-    <file relUrl="Account/ChangePassword.aspx" publishTime="06/14/2012 09:11:34" />
+    <file relUrl="bin/Wonga.QA.Framework.Core.pdb" publishTime="07/04/2012 09:55:57" />
+    <file relUrl="bin/Wonga.QA.Framework.pdb" publishTime="07/04/2012 09:56:24" />
     <file relUrl="Default.aspx" publishTime="06/25/2012 09:01:15" />
-    <file relUrl="Account/ChangePasswordSuccess.aspx" publishTime="06/14/2012 09:11:34" />
     <file relUrl="bin/Gallio.dll" publishTime="03/02/2012 01:35:46" />
-    <file relUrl="bin/GitSharp.xml" publishTime="06/05/2010 07:20:14" />
+    <file relUrl="bin/Wonga.QA.Framework.Email.pdb" publishTime="06/18/2012 10:24:11" />
     <file relUrl="bin/Gallio.xml" publishTime="02/12/2012 04:18:04" />
-    <file relUrl="bin/GitSharp.Core.pdb" publishTime="06/05/2010 07:20:12" />
     <file relUrl="bin/Simple.Data.SqlServer.dll" publishTime="06/12/2012 11:21:43" />
+    <file relUrl="bin/NHamcrest.pdb" publishTime="02/26/2011 12:22:44" />
     <file relUrl="bin/Simple.Data.Ado.dll" publishTime="06/12/2012 11:21:43" />
-    <file relUrl="bin/Wonga.QA.Framework.Api.dll" publishTime="06/26/2012 11:44:35" />
+    <file relUrl="bin/Wonga.QA.WebTool.pdb" publishTime="07/04/2012 12:39:03" />
     <file relUrl="bin/Gallio.pdb" publishTime="03/02/2012 01:36:00" />
-    <file relUrl="bin/Wonga.QA.Framework.Db.dll" publishTime="06/26/2012 11:44:53" />
-    <file relUrl="bin/Wonga.QA.Framework.Msmq.pdb" publishTime="06/26/2012 11:45:00" />
-    <file relUrl="bin/Winterdom.IO.FileMap.dll" publishTime="06/05/2010 07:20:10" />
+    <file relUrl="bin/Wonga.QA.Framework.Db.dll" publishTime="07/04/2012 09:56:12" />
+    <file relUrl="bin/Simple.Data.dll" publishTime="06/12/2012 11:21:43" />
     <file relUrl="img/banner_repeat.png" publishTime="06/25/2012 08:56:10" />
     <file relUrl="bin/Wonga.QA.Framework.Mocks.dll" publishTime="06/18/2012 10:24:12" />
-    <file relUrl="bin/Wonga.QA.Framework.Email.pdb" publishTime="06/18/2012 10:24:11" />
-    <file relUrl="bin/NHamcrest.pdb" publishTime="02/26/2011 12:22:44" />
+    <file relUrl="bin/Wonga.QA.Framework.CommonApi.pdb" publishTime="07/04/2012 09:56:00" />
+    <file relUrl="bin/GitSharp.Core.dll" publishTime="06/05/2010 07:20:12" />
     <file relUrl="bin/GitSharp.Core.xml" publishTime="06/05/2010 07:20:12" />
-    <file relUrl="bin/MbUnit.pdb" publishTime="03/02/2012 01:36:06" />
+    <file relUrl="bin/Wonga.QA.Framework.Msmq.pdb" publishTime="07/04/2012 09:56:16" />
     <file relUrl="Web.config" publishTime="06/25/2012 09:53:21" />
-    <file relUrl="img/button_ok.png" publishTime="06/19/2012 08:57:13" />
-    <file relUrl="bin/Gallio.XmlSerializers.dll" publishTime="03/02/2012 01:35:50" />
+    <file relUrl="bin/GitSharp.xml" publishTime="06/05/2010 07:20:14" />
+    <file relUrl="bin/MbUnit.pdb" publishTime="03/02/2012 01:36:06" />
     <file relUrl="bin/Wonga.QA.Framework.Email.dll" publishTime="06/18/2012 10:24:11" />
-    <file relUrl="bin/Wonga.QA.Framework.Svc.dll" publishTime="06/26/2012 11:45:03" />
+    <file relUrl="bin/Wonga.QA.Framework.Svc.dll" publishTime="07/04/2012 09:56:18" />
     <file relUrl="bin/NHamcrest.dll" publishTime="02/26/2011 12:22:44" />
-    <file relUrl="bin/Wonga.QA.Framework.CommonApi.pdb" publishTime="06/26/2012 11:44:36" />
+    <file relUrl="bin/Wonga.QA.Framework.Svc.pdb" publishTime="07/04/2012 09:56:18" />
+    <file relUrl="bin/Gallio.XmlSerializers.dll" publishTime="03/02/2012 01:35:50" />
     <file relUrl="Scripts/jquery-1.4.1.js" publishTime="06/14/2012 09:11:34" />
-    <file relUrl="bin/Wonga.QA.Framework.ThirdParties.dll" publishTime="06/26/2012 11:45:07" />
-    <file relUrl="bin/Wonga.QA.Framework.Data.dll" publishTime="06/26/2012 11:44:40" />
+    <file relUrl="bin/Wonga.QA.Framework.ThirdParties.dll" publishTime="07/04/2012 09:56:23" />
+    <file relUrl="bin/Wonga.QA.WebTool.dll" publishTime="07/04/2012 12:39:03" />
+    <file relUrl="bin/Wonga.QA.Framework.Data.dll" publishTime="07/04/2012 09:56:03" />
     <file relUrl="Scripts/jquery-1.4.1-vsdoc.js" publishTime="06/14/2012 09:11:34" />
   </publishProfile>
 </publishData>

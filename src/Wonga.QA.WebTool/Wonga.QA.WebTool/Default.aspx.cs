@@ -136,7 +136,7 @@ namespace Wonga.QA.WebTool
             }
             catch (Exception exc)
             {
-                errorLabel.Text = "Some problem at the server!"+exc.Message+" "+exc.StackTrace+" " + exc.GetBaseException().Message+" "+exc.GetBaseException().StackTrace;
+                errorLabel.Text = "Some problem at the server!" + Connections.GetDbConn("WIP2", false);
                 resultTable.Style.Add("display", "block;");
                 wrapperp.Style.Add("display", "block;");
                 return;
@@ -155,7 +155,8 @@ namespace Wonga.QA.WebTool
 
         protected void updateButton_Click(object sender, EventArgs e)
         {
-            errorLabel.Text = repos.Update();
+            repos rep = new repos();
+            errorLabel.Text = rep.Update();
             wrapperp.Style.Add("display", "block;");
             return;
         }
