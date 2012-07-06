@@ -114,4 +114,65 @@ namespace Wonga.QA.Framework.Mobile.Ui.Elements
             return Do.Until(() => new MyPersonalDetailsPageMobile(Page.Client));
         }
     }
+
+    public class EditPhoneNumberPopUpElement : BasePopUpElement
+    {
+
+        private readonly IWebElement _homePhone;
+        private readonly IWebElement _mobilePhone;
+        private readonly IWebElement _update ;
+        
+        public EditPhoneNumberPopUpElement(BasePageMobile page) : base(page)
+        {
+            Assert.IsTrue(PopUpTitle.Equals("Change my phone numbers"));
+            _homePhone = PopUp.FindElement(By.CssSelector("#edit-home-phone-za"));
+            _mobilePhone = PopUp.FindElement(By.CssSelector("#edit-mobile-phone-za"));
+            _update = PopUp.FindElement(By.CssSelector("#edit-submit"));
+        }
+
+        public MyPersonalDetailsPageMobile UpdateHomePhoneNumber(string number)
+        {
+            _homePhone.SendValue(number);
+            _update.Click();
+            var successPopUp = Do.Until(() => new SuccessPopUpElement(Page, "Your home phone number was updated."));
+            successPopUp.Close();
+            return Do.Until(() => new MyPersonalDetailsPageMobile(Page.Client));
+        }
+
+        public MyPersonalDetailsPageMobile UpdateMobilePhoneNumber(string number)
+        {
+            _mobilePhone.SendValue(number);
+            _update.Click();
+            var changeMyPhoneNUmbersPopUp = Do.Until(() => new ChangeMyPhoneNmmbersPopUpElement(Page));
+            var successPopUp = changeMyPhoneNUmbersPopUp.EnterPinAndUpdate();
+            successPopUp.Close();
+            return Do.Until(() => new MyPersonalDetailsPageMobile(Page.Client));
+        }
+    }
+
+    public class ChangeMyPhoneNmmbersPopUpElement : BasePopUpElement
+    {
+        private readonly IWebElement _homePhoneWrapper;
+        private readonly IWebElement _mobilePhoneWrapper;
+        private readonly IWebElement _wongaTip;
+        private readonly  IWebElement _pin ;
+        private readonly IWebElement _update;
+
+        public ChangeMyPhoneNmmbersPopUpElement(BasePageMobile page) : base(page)
+        {
+            Assert.IsTrue(PopUpTitle.Equals("Change my phone number(s)"));
+            _homePhoneWrapper = PopUp.FindElement(By.CssSelector("#edit-home-phone-za-wrapper"));
+            _mobilePhoneWrapper = PopUp.FindElement(By.CssSelector("#edit-mobile-phone-za-wrapper"));
+            _wongaTip = PopUp.FindElement(By.CssSelector(".wonga-tip"));
+            _pin = PopUp.FindElement(By.CssSelector("#edit-mobile-pin"));
+            _update = PopUp.FindElement(By.CssSelector("#edit-submit"));
+        }
+
+        public SuccessPopUpElement EnterPinAndUpdate()
+        {
+            _pin.SendValue("0000");
+            _update.Click();
+            return Do.Until(() => new SuccessPopUpElement(Page, "Thank you: your telephone number has been updated."));
+        }
+    }
 }

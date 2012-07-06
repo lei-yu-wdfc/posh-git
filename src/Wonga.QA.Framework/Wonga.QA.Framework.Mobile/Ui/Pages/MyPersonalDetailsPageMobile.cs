@@ -19,14 +19,21 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
         private readonly IWebElement _phoneLink;
         private readonly IWebElement _communicationLink;
 
+        public IWebElement Address { get; set; }
+        public IWebElement Phone { get; set; }
+        public IWebElement Communication { get; set; }
+
         public TabsElementMobile TabsElementMobile { get; set; }
         
         public MyPersonalDetailsPageMobile(MobileUiClient client) : base(client)
         {
-            _addressLink = Content.FindElement(By.CssSelector(UiMapMobile.Get.MyPersonalDetailsPageMobile.AddressLink));
+            Address = Content.FindElement(By.CssSelector("#address"));
+            Phone = Content.FindElement(By.CssSelector("#phone"));
+            Communication = Content.FindElement(By.CssSelector("#communication"));
+            _addressLink = Address.FindElement(By.CssSelector(UiMapMobile.Get.MyPersonalDetailsPageMobile.AddressLink));
             _passwordLink = Content.FindElement(By.CssSelector(UiMapMobile.Get.MyPersonalDetailsPageMobile.PasswordLink));
-            _phoneLink = Content.FindElement(By.CssSelector(UiMapMobile.Get.MyPersonalDetailsPageMobile.PhoneLink));
-            _communicationLink = Content.FindElement(By.CssSelector(UiMapMobile.Get.MyPersonalDetailsPageMobile.CommunicationLink));
+            _phoneLink = Phone.FindElement(By.CssSelector(UiMapMobile.Get.MyPersonalDetailsPageMobile.PhoneLink));
+            _communicationLink = Communication.FindElement(By.CssSelector(UiMapMobile.Get.MyPersonalDetailsPageMobile.CommunicationLink));
             TabsElementMobile = new TabsElementMobile(this);
         }
 
@@ -42,6 +49,20 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
             _addressLink.Click();
             var editAddressPopUp = Do.Until(() => new AddressPopUpElement(this));
             return editAddressPopUp.EditAddress();
+        }
+
+        public MyPersonalDetailsPageMobile EditHomeTelephoneNumber(string number)
+        {
+            _phoneLink.Click();
+            var editPhonePopUp = Do.Until(() => new EditPhoneNumberPopUpElement(this));
+            return editPhonePopUp.UpdateHomePhoneNumber(number);
+        }
+
+        public MyPersonalDetailsPageMobile EditMobileTelephoneNumber(string number)
+        {
+            _phoneLink.Click();
+            var editPhonePopUp = Do.Until(() => new EditPhoneNumberPopUpElement(this));
+            return editPhonePopUp.UpdateMobilePhoneNumber(number);
         }
     }
 }
