@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Reflection;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
@@ -6,15 +8,24 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI;
 
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
+using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Ui;
 using Wonga.QA.Framework.Data;
 
 namespace Wonga.QA.Tests.Migration
 {
-    public class MigrationLoginTests:UiTest
+    public class MigrationLoginTests : UiTest
     {
+        private string GetFunctionName()
+        {
+            StackTrace stackTrace = new StackTrace();
+            StackFrame stackFrame = stackTrace.GetFrame(1);
+            MethodBase methodBase = stackFrame.GetMethod();
 
-        [Test]
+            return methodBase.Name;
+        }
+
+        [Test, TimeoutAttribute(timeoutSeconds: 99999)]
         // Migrated V2 customer tries to log in into V2 and is redirected to V3.
         public void MigratedV2CustomerLogsInToV2RedirectedToV3Test()
         {
@@ -24,23 +35,37 @@ namespace Wonga.QA.Tests.Migration
 
         }
 
-        [Test]
+        [Test, MultipleAsserts, JIRA("UKMIG-243"), TimeoutAttribute(timeoutSeconds: 99999)]
         // Migrated V2 customer tries to log in into V3 successfully.
         public void MigratedV2CustomerLogsInToV3Test()
         {
-            //var test = v2db;
-            //var accountsTab = Drive.Data.Ops.Db.Accounts;
-
-            //Client.Login().LoginAs("qa.wonga.com+QB-WK-158-d540d574-0c66-4f42-b02a-aec5a9d2bde4@gmail.com","Passw0rd");
-            
-            //var wongaWholeStaging = Drive.Data.WongaWholeStaging.Db.greyface.Users;
-            //var userPassword = wongaWholeStaging.Find(wongaWholeStaging.user_name == "claire_coe@lycos.co.uk").password;
-
-
             var migHelper = new MigrationHelper();
-            
-            var migratedAccountLogin = migHelper.GetMigratedAccountLogin();
-            var migratedAccountLoginPassword = migHelper.GetMigratedAccountLoginPassword(migratedAccountLogin);
+            var loginStatus = string.Empty;
+
+            Console.WriteLine("UKMIG-243, As an existing migrated customer, I want to login to the Wonga website so that I can manage my account or apply for a new loan, " + GetFunctionName());
+
+            for (int usersToCheck = 1; usersToCheck < 10000; usersToCheck++)
+            {
+                var migratedAccountLogin = migHelper.GetMigratedAccountLogin(0);
+                var migratedAccountLoginPassword = migHelper.GetMigratedAccountLoginPassword(migratedAccountLogin);
+
+                var client1 = new UiClient();
+
+                try
+                {
+                    client1.Login().LoginAs(migratedAccountLogin, migratedAccountLoginPassword);
+                    loginStatus = "Passed";
+                }
+                catch (Exception)
+                {
+                    loginStatus = "Failed";
+                }
+                finally
+                {
+                    Console.WriteLine("{0}: {1} Login = {2}", usersToCheck, loginStatus, migratedAccountLogin);
+                    client1.Dispose();
+                }
+            }
 
             // Likely we don't need to assert here because if mySummary object is not created successfully, an excption will be thrown
         }
@@ -78,7 +103,7 @@ namespace Wonga.QA.Tests.Migration
                 .Build();
 
             loginPage.LoginAs(email);
-            
+
         }
 
         [Test]
