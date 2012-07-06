@@ -24,18 +24,36 @@ namespace Wonga.QA.Emailer.Service
     {
         private Timer _timer;
 
-        SmtpClient client = new SmtpClient()
-        {
-            Host = (ConfigurationManager.AppSettings["SMTPHost"]),
-            Port = Convert.ToInt32((string)ConfigurationManager.AppSettings["SMTPPort"]),
-            EnableSsl = Boolean.Parse(ConfigurationManager.AppSettings["EnableSsl"]),
-            DeliveryMethod = SmtpDeliveryMethod.Network,
-            Credentials = new NetworkCredential(ConfigurationManager.AppSettings["SMTPUsername"], ConfigurationManager.AppSettings["SMTPPassword"])
-        };
+        private readonly SmtpClient _client;
 
         public Service()
         {
             InitializeComponent();
+            CheckOrCreateFolders();
+            _client = new SmtpClient()
+            {
+                Host = (ConfigurationManager.AppSettings["SMTPHost"]),
+                Port = Convert.ToInt32((string)ConfigurationManager.AppSettings["SMTPPort"]),
+                EnableSsl = Boolean.Parse(ConfigurationManager.AppSettings["EnableSsl"]),
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                Credentials = new NetworkCredential(ConfigurationManager.AppSettings["SMTPUsername"], ConfigurationManager.AppSettings["SMTPPassword"])
+            };
+        }
+
+        private void CheckOrCreateFolders()
+        {
+            if (!Directory.Exists(ConfigurationManager.AppSettings["TempFolderPath"]))
+            {
+                Directory.CreateDirectory(ConfigurationManager.AppSettings["TempFolderPath"]);
+            }
+            if (!Directory.Exists(ConfigurationManager.AppSettings["DoneFolderPath"]))
+            {
+                Directory.CreateDirectory(ConfigurationManager.AppSettings["DoneFolderPath"]);
+            }
+            if (!Directory.Exists(ConfigurationManager.AppSettings["ErrorFolderPath"]))
+            {
+                Directory.CreateDirectory(ConfigurationManager.AppSettings["ErrorFolderPath"]);
+            }
         }
 
         protected override void OnStart(string[] args)
@@ -95,7 +113,7 @@ namespace Wonga.QA.Emailer.Service
                     }
                     catch (Exception exception)
                     {
-                        warningEmailer.SendWarning(exception.Message, ConfigurationManager.AppSettings["SMTPUsername"], client);
+                        warningEmailer.SendWarning(exception.Message, ConfigurationManager.AppSettings["SMTPUsername"], _client);
                         File.Move(report, ConfigurationManager.AppSettings["ErrorFolderPath"] + report.Remove(0, report.LastIndexOf(@"\")));
                         AddLog("file " + report.Remove(0, report.LastIndexOf(@"\")) + " was moved to Error folder.");
                     }
@@ -119,7 +137,7 @@ namespace Wonga.QA.Emailer.Service
             emails = TestReport.GetOwnersEmails(reports);
             foreach (string email in emails)
             {
-                emailer.SendEmail(reports, email, client);
+                emailer.SendEmail(reports, email, _client);
             }
 
         }
