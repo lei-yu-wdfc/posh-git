@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
@@ -8,16 +9,16 @@ using Wonga.QA.Emailer.XmlParser;
 
 namespace Wonga.QA.Emailer.Plugins.SendFailingSmokeTestEmails
 {
-    public class FailingSmokeTestsEmailer : ISendEmails
+    public class FailingTestsEmailer : ISendEmails
     {
-        public void SendEmail(List<TestReport> reports, String email, SmtpClient client, String sender)
+        public void SendEmail(List<TestReport> reports, String receiver,SmtpClient client)
         {
-            client.Send(sender, email, "Your tests are failed", CreateEmailText(reports, email));
+            client.Send(ConfigurationManager.AppSettings["SMTPUsername"], receiver, "Your tests are failed", CreateEmailText(reports, receiver));
         }
 
-        private string CreateEmailText(List<TestReport> reports, String email)
+        private string CreateEmailText(List<TestReport> reports, String receiver)
         {
-            string autor = email.Remove(email.IndexOf("@"));
+            string autor = receiver.Remove(receiver.IndexOf("@"));
 
             autor = autor.Replace(autor[0].ToString(), autor[0].ToString().ToUpper());
             if (autor.Contains("."))
@@ -31,7 +32,7 @@ namespace Wonga.QA.Emailer.Plugins.SendFailingSmokeTestEmails
 
             foreach (TestReport testReport in reports)
             {
-                if (testReport.OwnerEmails.Contains(email))
+                if (testReport.OwnerEmails.Contains(receiver))
                 {
                     DateTime date = DateTime.Parse(testReport.StartTime.Remove(9));
                     string time = testReport.StartTime.Remove(0, 11).Remove(8);
