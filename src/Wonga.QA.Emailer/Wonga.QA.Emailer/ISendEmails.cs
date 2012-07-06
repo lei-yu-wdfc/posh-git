@@ -9,6 +9,6 @@ namespace Wonga.QA.Emailer
 {
     public interface ISendEmails
     {
-        void SendEmail(List<TestReport> reports, String email, SmtpClient client, String sender);
+        void SendEmail(List<TestReport> reports, String receiver, SmtpClient client);
     }
 }

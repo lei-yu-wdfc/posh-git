@@ -17,14 +17,13 @@ namespace Wonga.QA.Emailer.XmlParser
             var reports = new List<TestReport>();
             var Tests = new List<XElement>();
             XElement doc;
-
             try
             {
                 doc = XElement.Load(fileName); // if file not xml - do nothing
             }
             catch (Exception)
             {
-                return reports;
+                throw new Exception("Can't read file" + fileName);
             }
 
             if (MoreThenTwentyPersentFailes(fileName)) //if in report more then 20% of tests are failed - do nothing

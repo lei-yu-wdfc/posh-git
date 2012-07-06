@@ -14,6 +14,7 @@ using System.Threading;
 using System.Timers;
 using Wonga.QA.Emailer.Domain;
 using Wonga.QA.Emailer.Plugins.SendFailingSmokeTestEmails;
+using Wonga.QA.Emailer.Plugins.SendWarningEmail;
 using Wonga.QA.Emailer.XmlParser;
 using Timer = System.Timers.Timer;
 
@@ -23,9 +24,36 @@ namespace Wonga.QA.Emailer.Service
     {
         private Timer _timer;
 
+        private readonly SmtpClient _client;
+
         public Service()
         {
             InitializeComponent();
+            CheckOrCreateFolders();
+            _client = new SmtpClient()
+            {
+                Host = (ConfigurationManager.AppSettings["SMTPHost"]),
+                Port = Convert.ToInt32((string)ConfigurationManager.AppSettings["SMTPPort"]),
+                EnableSsl = Boolean.Parse(ConfigurationManager.AppSettings["EnableSsl"]),
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                Credentials = new NetworkCredential(ConfigurationManager.AppSettings["SMTPUsername"], ConfigurationManager.AppSettings["SMTPPassword"])
+            };
+        }
+
+        private void CheckOrCreateFolders()
+        {
+            if (!Directory.Exists(ConfigurationManager.AppSettings["TempFolderPath"]))
+            {
+                Directory.CreateDirectory(ConfigurationManager.AppSettings["TempFolderPath"]);
+            }
+            if (!Directory.Exists(ConfigurationManager.AppSettings["DoneFolderPath"]))
+            {
+                Directory.CreateDirectory(ConfigurationManager.AppSettings["DoneFolderPath"]);
+            }
+            if (!Directory.Exists(ConfigurationManager.AppSettings["ErrorFolderPath"]))
+            {
+                Directory.CreateDirectory(ConfigurationManager.AppSettings["ErrorFolderPath"]);
+            }
         }
 
         protected override void OnStart(string[] args)
@@ -49,6 +77,7 @@ namespace Wonga.QA.Emailer.Service
         {
             AddLog("Wonga.QA.Emailer Service paused.");
         }
+
         public void AddLog(string log)
         {
             if (!EventLog.SourceExists("Wonga.QA.Emailer"))
@@ -70,44 +99,47 @@ namespace Wonga.QA.Emailer.Service
         {
             var folderPath = ConfigurationManager.AppSettings["TempFolderPath"];
             var reports = Directory.GetFiles(folderPath);
+            var warningEmailer = new WarningEmailer();
             if (reports.Count() != 0)
             {
                 foreach (var report in reports)
                 {
-                    ParseReportAndSendEmails(report);
-                    AddLog("file " + report + " was processed.");
-                    File.Delete(report);
-                    AddLog("file " + report + " was deleted.");
+                    try
+                    {
+                        ParseReportAndSendEmails(report);
+                        AddLog("file " + report + " was processed.");
+                        File.Move(report, ConfigurationManager.AppSettings["DoneFolderPath"] + report.Remove(0, report.LastIndexOf(@"\")));
+                        AddLog("file " + report.Remove(0, report.LastIndexOf(@"\")) + " was moved to Done folder.");
+                    }
+                    catch (Exception exception)
+                    {
+                        warningEmailer.SendWarning(exception.Message, ConfigurationManager.AppSettings["SMTPUsername"], _client);
+                        File.Move(report, ConfigurationManager.AppSettings["ErrorFolderPath"] + report.Remove(0, report.LastIndexOf(@"\")));
+                        AddLog("file " + report.Remove(0, report.LastIndexOf(@"\")) + " was moved to Error folder.");
+                    }
+
                 }
             }
             else
             {
-                AddLog("Folder is empty.");
+                AddLog("Temp folder is empty.");
             }
         }
 
-        private static void ParseReportAndSendEmails(string fileName)
+        private void ParseReportAndSendEmails(string fileName)
         {
-            var client = new SmtpClient()
-                             {
-                                 Host = (ConfigurationManager.AppSettings["SMTPHost"]),
-                                 Port = Convert.ToInt32((string)ConfigurationManager.AppSettings["SMTPPort"]),
-                                 EnableSsl = Boolean.Parse(ConfigurationManager.AppSettings["EnableSsl"]),
-                                 DeliveryMethod = SmtpDeliveryMethod.Network,
-                                 Credentials = new NetworkCredential(ConfigurationManager.AppSettings["SMTPUsername"], ConfigurationManager.AppSettings["SMTPPassword"])
-                             };
-
             var reader = new ReportReader();
-            List<TestReport> reports = reader.GetTestsReports(fileName);
-            List<String> emails = TestReport.GetOwnersEmails(reports);
+            var emailer = new FailingTestsEmailer();
+            List<TestReport> reports;
+            List<String> emails;
 
-            var emailer = new FailingSmokeTestsEmailer();
-
+            reports = reader.GetTestsReports(fileName);
+            emails = TestReport.GetOwnersEmails(reports);
             foreach (string email in emails)
             {
-                emailer.SendEmail(reports, email, client, ConfigurationManager.AppSettings["SMTPUsername"]);
+                emailer.SendEmail(reports, email, _client);
             }
-        }
 
+        }
     }
 }

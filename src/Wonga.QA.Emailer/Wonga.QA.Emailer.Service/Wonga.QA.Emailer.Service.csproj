@@ -105,9 +105,13 @@
       <Project>{0EA1089D-E3F6-4417-9DA8-6A6C3C1D4B69}</Project>
       <Name>Wonga.QA.Emailer.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Wonga.QA.Emailer.Plugins.SendFailingSmokeTestEmails\Wonga.QA.Emailer.Plugins.SendFailingSmokeTestEmails.csproj">
+    <ProjectReference Include="..\Wonga.QA.Emailer.Plugins.SendFailingSmokeTestEmails\Wonga.QA.Emailer.Plugins.SendFailingTestEmails.csproj">
       <Project>{1D8C3529-E9F8-44F6-BC18-E37AD5DC6BB0}</Project>
-      <Name>Wonga.QA.Emailer.Plugins.SendFailingSmokeTestEmails</Name>
+      <Name>Wonga.QA.Emailer.Plugins.SendFailingTestEmails</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wonga.QA.Emailer.Plugins.SendWarningEmail\Wonga.QA.Emailer.Plugins.SendWarningEmail.csproj">
+      <Project>{E3C79B8F-CC37-4444-90ED-CE8169594458}</Project>
+      <Name>Wonga.QA.Emailer.Plugins.SendWarningEmail</Name>
     </ProjectReference>
     <ProjectReference Include="..\Wonga.QA.Emailer.XmlParser\Wonga.QA.Emailer.XmlParser.csproj">
       <Project>{2A756FC1-C844-4270-B971-2E7FB473194C}</Project>
@@ -149,9 +153,11 @@
   <ItemGroup>
     <EmbeddedResource Include="ProjectInstaller.resx">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Service.resx">
       <DependentUpon>Service.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
