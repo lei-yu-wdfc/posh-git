@@ -23,7 +23,7 @@ namespace Wonga.QA.Emailer.XmlParser
             }
             catch (Exception)
             {
-                throw new Exception("Can't reade file" + fileName);
+                throw new Exception("Can't read file" + fileName);
             }
 
             if (MoreThenTwentyPersentFailes(fileName)) //if in report more then 20% of tests are failed - do nothing
