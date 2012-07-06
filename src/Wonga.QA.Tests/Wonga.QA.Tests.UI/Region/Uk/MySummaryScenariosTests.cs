@@ -39,9 +39,9 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
         {11, "Hi {first name}. Your account is now {26} days in arrears."},
         {12, "Hi {first name}. We are disappointed that your account remains overdue and you are now {46} days in arrears."},
         {13, "Hi {first name}. We are disappointed that your account remains overdue and you are now {61} days in arrears."},
-        {14, "Hi {first name}. You have commited to a repayment plan with us, which will bring your account back into line. Maintaining your promised payments is essential, details of which are below. If you know you will be unable to honour a future payment, please email collections@wonga.com at least two days before your next instalment is due."},
-        {15, "Hi {first name}. We were unable to collect a scheduled repayment towards your current repayment plan."},
-        {16, "Hi {first name}. You have missed a scheduled payment against your agreed repayment plan, which has now been cancelled."},
+        {14, "Hi {first name}."},
+        {15, "Hi {first name}."},
+        {16, "Hi {first name}."},
         {17, "Hi {first name}."},
         {19, "Hi {first name}."},
         {20, "Hi {first name}. As a new customer you can apply for up to £{400} below."},
@@ -63,9 +63,9 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
          {11, "Repay\r\nSetup Repayment Plan\r\nAdd Payment Card"},
          {12, "Repay\r\nSetup Repayment Plan\r\nAdd Payment Card"},
          {13, "Repay\r\nSetup Repayment Plan\r\nAdd Payment Card"},
-         {14, "Repay\r\nAdd Payment Card"},
-         {15, "Repay\r\nAdd Payment Card"},
-         {16, "Repay\r\nAdd Payment Card"},
+         {14, ""},
+         {15, ""},
+         {16, ""},
          {17, ""},
          {19, ""},
          {20, ""},
@@ -86,8 +86,9 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
         {11, @"Please act now to avoid incurring further interest, which continues to accrue. Please click repay now to settle your balance and bring your account back into line. You can add a new debit card if you need to. Alternatively, we will freeze your balance today if you set up an acceptable repayment plan. Please use the self-service function below to repay over a maximum of four months. If this doesn't work for you, you should call our friendly collections team straight away on 0844 842 9109. We're here between 9am and 10pm, Monday to Friday."},
         {12, @"Please act now to avoid incurring further interest, which continues to accrue, and potential negative entries on your credit file. Please click repay now to settle your balance and bring your account back into line. You can add a new debit card if you need to. Alternatively, we will freeze your balance today if you set up an acceptable repayment plan. Please use the self-service function below to repay over a maximum of six months. If this doesn't work for you, please call our friendly collections team straight away on 0844 842 9109. We're here between 9am and 10pm, Monday to Friday."},
         {13, @"Please take action today to avoid incurring further interest, which continues to accrue, and potential negative entries on your credit file. Click Repay now to settle your balance and bring your account back into line. Alternatively, we will freeze your balance today if you set up an acceptable repayment plan. Please use the self-service function below to repay over a maximum of six months. If this doesn't work for you, please call our friendly collections team straight away on 0844 842 9109. If you choose not to deal with this matter immediately, we may need to take more formal steps to recover the balance owed."},
-        {15, @"Please make this payment online right away, or call our automated payment line on 0207 183 0063 to resolve this situation quickly. If you don't make this payment by {deadline for grace period} your plan will be cancelled automatically and interest will start to accrue again, which is the last thing we want to happen! Please act today to avoid further costs."},
-        {16, @"Your account is seriously in arrears and interest is again accruing . Your current balance is £{total balance today £230.45}. Please click repay now to settle in full and rectify this situation. If you are unable to pay in full today, please call our collections team straight away on 0844 842 9109. We're here between 9am and 10pm, Monday to Friday. If you choose not to deal with this matter immediately, we may need to take more formal steps to recover the balance owed."},
+        {14, @"<h3>You have an active repayment plan</h3>To make an early repayment or discuss your plan please contact customer services on"},
+        {15, @"<h3>You have an active repayment plan</h3>To make an early repayment or discuss your plan please contact customer services on"},
+        {16, @"<h3>You have an active repayment plan</h3>To make an early repayment or discuss your plan please contact customer services on"},
         {17, @"Your application is in the final stages of our approval process. We hate to keep you waiting, but, on this rare occasion, we need to check a few more details. There's no need to contact us or do anything and you should hear back from us {within the next 6 hours}. You can also check for updates about your application by logging into your account. As soon as we complete our checks, we will email you and send you a text message, so thanks for your patience in the meantime.\nIf approved you will just need to come back to the site and click the ‘I accept’ button on your agreement and we will then send the money to your bank within 15 minutes."},
         {19, @"You informed us that you wanted to cancel your credit agreement please contact us on {CS tel. No} to complete this process by making the required repayment."},
         {21, @"One last step to receive your cash.\n\nYour application has been approved! Now you just need to read and accept your new agreement and the loan conditions by clicking the ‘I accept’ button in the agreement below. You will then receive {£loan amount} in your account.\n\nWe’ll then collect {£xx.xx total repayable on due date} from your debit card on {repayment date in format 15th March 2011.}\n\nThanks for using Wonga!"},
@@ -108,9 +109,9 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
         {11, "I owe {£456.34} today"},
         {12, "I owe {£456.34} today"},
         {13, "I owe {£456.34} today"},
-        {14, "My next repayment of {£25.00} is due on the {10th May 2012}"},
-        {15, "I owed a repayment of {£25.00} on the {10th May 2012}"},
-        {16, "I owe {£456.34} today"},
+        {14, ""},
+        {15, ""},
+        {16, ""},
         {17, ""},
         {19, ""},
         {20, ""},
@@ -315,8 +316,8 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage;
             Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
 
-            //string expectedPromiseSummaryText = PromiseSummaryTexts[scenarioId].Replace("{£456.34}", "£" + expectedBalanceToday);
-            //Assert.AreEqual(expectedPromiseSummaryText, mySummaryPage.GetPromiseSummaryText);
+            string expectedPromiseSummaryText = PromiseSummaryTexts[scenarioId].Replace("{£456.34}", "£" + expectedBalanceToday);
+            Assert.AreEqual(expectedPromiseSummaryText, mySummaryPage.GetPromiseSummaryText);
 
             ChangeWantToRepayBox(customer, customer.GetApplication());
         }
@@ -340,7 +341,8 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
         [Row(13, 1000)]
         public void MySummaryScenario13(int scenarioId, int dasyShift) { MySummaryScenarios(scenarioId, dasyShift); }
 
-        [Test, AUT(AUT.Uk), Pending("Awating Repayment Arrangment Functionality."), MultipleAsserts]
+        //[Test, AUT(AUT.Uk), Pending("Awating Repayment Arrangment Functionality."), MultipleAsserts]
+        [Test, AUT(AUT.Uk), MultipleAsserts]
         public void MySummaryScenario14()
         {
             var scenarioId = 14;
@@ -373,14 +375,21 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             string actualIntroText = mySummaryPage.GetIntroText;
             Assert.AreEqual(expectedIntroText, actualIntroText);
 
-            string expectedTagCloudText = tagCloudTexts[scenarioId];
+            /*string expectedTagCloudText = tagCloudTexts[scenarioId];
             string actualTagCloudText = mySummaryPage.GetTagCloud;
-            Assert.AreEqual(expectedTagCloudText, actualTagCloudText);
+            Assert.AreEqual(expectedTagCloudText, actualTagCloudText);*/
 
-            Assert.IsFalse(mySummaryPage.IsLoanStatusMessageAvailable());
+            //Assert.IsFalse(mySummaryPage.IsLoanStatusMessageAvailable());
+
+            var expectedLoanMessageText = loanStatusMessages[scenarioId];
+            string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage;
+            Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
+
+            Assert.IsFalse(mySummaryPage.IsTagCloudAvailable());
         }
 
-        [Test, AUT(AUT.Uk), Pending("Awating Repayment Arrangment Functionality."), MultipleAsserts]
+        //[Test, AUT(AUT.Uk), Pending("Awating Repayment Arrangment Functionality."), MultipleAsserts]
+        [Test, AUT(AUT.Uk), MultipleAsserts]
         public void MySummaryScenario15()
         {
             const int scenarioId = 15;
@@ -414,16 +423,17 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId));
             Assert.AreEqual(expectedIntroText, actualIntroText);
 
-            string expectedTagCloudText = tagCloudTexts[scenarioId];
+            /*string expectedTagCloudText = tagCloudTexts[scenarioId];
             string actualTagCloudText = mySummaryPage.GetTagCloud;
             Assert.AreEqual(expectedTagCloudText, actualTagCloudText);
-
+            */
             var expectedLoanMessageText = loanStatusMessages[scenarioId];
             string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage;
             Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
         }
 
-        [Test, AUT(AUT.Uk), Pending("Awating Repayment Arrangment Functionality."), MultipleAsserts]
+        //[Test, AUT(AUT.Uk), Pending("Awating Repayment Arrangment Functionality."), MultipleAsserts]
+        [Test, AUT(AUT.Uk), MultipleAsserts]
         public void MySummaryScenario16()
         {
             const int scenarioId = 16;
@@ -457,10 +467,10 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId));
             Assert.AreEqual(expectedIntroText, actualIntroText);
 
-            string expectedTagCloudText = tagCloudTexts[scenarioId];
+            /*string expectedTagCloudText = tagCloudTexts[scenarioId];
             string actualTagCloudText = mySummaryPage.GetTagCloud;
             Assert.AreEqual(expectedTagCloudText, actualTagCloudText);
-
+            */
             var expectedLoanMessageText = loanStatusMessages[scenarioId];
             string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage;
             Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
@@ -623,7 +633,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
 
             CheckLoanStatusText(scenarioId, mySummaryPage, customer, application);
 
-            /*if (PromiseSummaryTexts[scenarioId].Length == 0)
+            if (PromiseSummaryTexts[scenarioId].Length == 0)
             {
                 Assert.IsFalse(mySummaryPage.IsPromiseSummaryAvailable());
             }
@@ -631,7 +641,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             {
                 string expectedPromiseSummaryText = PromiseSummaryTexts[scenarioId].Replace("{£245}", "£" + expectedDueDateBalance.ToString("#.##")).Replace("in {10}", "in " + expectedDaysTillDueDate.Days.ToString("#")).Replace("{10th May 2012}", Date.GetOrdinalDate(expectedDueDate, "ddd d MMM yyyy")).Replace("{£456.34}", "£" + expectedDueDateBalance.ToString("#.##"));
                 Assert.AreEqual(expectedPromiseSummaryText, mySummaryPage.GetPromiseSummaryText);
-            }*/
+            }
 
             //if (mySummaryPage.GetTagCloud.IndexOf("Repay") > 0) ChangeWantToRepayBox(customer, application);
         }
