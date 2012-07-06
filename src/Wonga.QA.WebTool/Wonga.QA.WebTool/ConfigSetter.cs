@@ -6,9 +6,9 @@ using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.WebTool
 {
-    public static class ConfigSetter
+    public class ConfigSetter
     {
-        public static void Setter(string aut, string sut)
+        public void Setter(string aut, string sut)
         {
             switch (aut)
             {

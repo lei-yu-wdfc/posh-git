@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Collections;
 using MbUnit.Framework;
 using Microsoft.Win32;
 using Wonga.QA.Framework;
@@ -38,6 +39,7 @@ namespace Wonga.QA.WebTool
         Application application;
         protected void Page_Load(object sender, EventArgs e)
         {
+
             if (IsPostBack == false)
             {
                 foreach (var item in Enum.GetNames(typeof(AUT)))
@@ -85,7 +87,8 @@ namespace Wonga.QA.WebTool
 
             try
             {
-                ConfigSetter.Setter(_aut.SelectedValue, _sut.SelectedValue);
+               var setter = new ConfigSetter();
+                setter.Setter(_aut.SelectedValue, _sut.SelectedValue);
             }
             catch
             {
@@ -136,7 +139,7 @@ namespace Wonga.QA.WebTool
             }
             catch (Exception exc)
             {
-                errorLabel.Text = "Some problem at the server!" + Connections.GetDbConn("WIP2", false);
+                errorLabel.Text = exc.Message + " " + exc.StackTrace;//"Some problem at the server!" + exc.StackTrace;
                 resultTable.Style.Add("display", "block;");
                 wrapperp.Style.Add("display", "block;");
                 return;
