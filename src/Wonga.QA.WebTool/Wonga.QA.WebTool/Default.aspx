@@ -24,7 +24,6 @@
         </div>
         <div id="bottomWrapper">
             <asp:Button ID="runButton" runat="server" Text="Make Customer" OnClick="runButton_Click" />
-            <asp:Button ID="updateButton" runat="server" Text="Update" OnClick="updateButton_Click" />
         </div>
         <div id="tableWrapper">
             <img src="../img/processing.gif" runat="server" ID="progressing_icon" style="display: none;"/>

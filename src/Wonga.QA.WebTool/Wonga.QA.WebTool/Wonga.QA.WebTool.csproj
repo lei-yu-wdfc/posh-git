@@ -37,12 +37,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\..\Program Files\Gallio\bin\Gallio.dll</HintPath>
     </Reference>
-    <Reference Include="GitSharp">
-      <HintPath>..\..\..\..\GitSharp-0.3.0.056f5345c8835fabc1a8f90548a9c5b0abdf9a68-release-net-3.5\GitSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="GitSharp.Core">
-      <HintPath>..\..\..\..\GitSharp-0.3.0.056f5345c8835fabc1a8f90548a9c5b0abdf9a68-release-net-3.5\GitSharp.Core.dll</HintPath>
-    </Reference>
     <Reference Include="MbUnit, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\..\Program Files\Gallio\bin\MbUnit.dll</HintPath>
@@ -74,39 +68,43 @@
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="Wonga.QA.Framework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\v3QA\src\Wonga.QA.Framework\Wonga.QA.Framework\obj\Debug\Wonga.QA.Framework.dll</HintPath>
+      <HintPath>..\..\Wonga.QA.Framework\Wonga.QA.Framework\obj\Debug\Wonga.QA.Framework.dll</HintPath>
     </Reference>
     <Reference Include="Wonga.QA.Framework.Api, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\v3QA\src\Wonga.QA.Framework\Wonga.QA.Framework.Api\obj\Debug\Wonga.QA.Framework.Api.dll</HintPath>
+      <HintPath>..\..\Wonga.QA.Framework\Wonga.QA.Framework.Api\obj\Debug\Wonga.QA.Framework.Api.dll</HintPath>
     </Reference>
     <Reference Include="Wonga.QA.Framework.CommonApi, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\v3QA\src\Wonga.QA.Framework\Wonga.QA.Framework.CommonApi\obj\Debug\Wonga.QA.Framework.CommonApi.dll</HintPath>
+      <HintPath>..\..\Wonga.QA.Framework\Wonga.QA.Framework.CommonApi\obj\Debug\Wonga.QA.Framework.CommonApi.dll</HintPath>
     </Reference>
     <Reference Include="Wonga.QA.Framework.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\v3QA\src\Wonga.QA.Framework\Wonga.QA.Framework.Core\obj\Debug\Wonga.QA.Framework.Core.dll</HintPath>
+      <HintPath>..\..\Wonga.QA.Framework\Wonga.QA.Framework.Core\obj\Debug\Wonga.QA.Framework.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Wonga.QA.Framework.Cs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Wonga.QA.Framework\Wonga.QA.Framework.Cs\obj\Debug\Wonga.QA.Framework.Cs.dll</HintPath>
     </Reference>
     <Reference Include="Wonga.QA.Framework.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\v3QA\src\Wonga.QA.Framework\Wonga.QA.Framework.Data\obj\Debug\Wonga.QA.Framework.Data.dll</HintPath>
+      <HintPath>..\..\Wonga.QA.Framework\Wonga.QA.Framework.Data\obj\Debug\Wonga.QA.Framework.Data.dll</HintPath>
     </Reference>
     <Reference Include="Wonga.QA.Framework.Db, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\v3QA\src\Wonga.QA.Framework\Wonga.QA.Framework.Db\obj\Debug\Wonga.QA.Framework.Db.dll</HintPath>
+      <HintPath>..\..\Wonga.QA.Framework\Wonga.QA.Framework.Db\obj\Debug\Wonga.QA.Framework.Db.dll</HintPath>
     </Reference>
     <Reference Include="Wonga.QA.Framework.Msmq, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\v3QA\src\Wonga.QA.Framework\Wonga.QA.Framework.Msmq\obj\Debug\Wonga.QA.Framework.Msmq.dll</HintPath>
+      <HintPath>..\..\Wonga.QA.Framework\Wonga.QA.Framework.Msmq\obj\Debug\Wonga.QA.Framework.Msmq.dll</HintPath>
     </Reference>
     <Reference Include="Wonga.QA.Framework.Svc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\v3QA\src\Wonga.QA.Framework\Wonga.QA.Framework.Svc\obj\Debug\Wonga.QA.Framework.Svc.dll</HintPath>
+      <HintPath>..\..\Wonga.QA.Framework\Wonga.QA.Framework.Svc\obj\Debug\Wonga.QA.Framework.Svc.dll</HintPath>
     </Reference>
     <Reference Include="Wonga.QA.Framework.ThirdParties, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\v3QA\src\Wonga.QA.Framework\Wonga.QA.Framework.ThirdParties\obj\Debug\Wonga.QA.Framework.ThirdParties.dll</HintPath>
+      <HintPath>..\..\Wonga.QA.Framework\Wonga.QA.Framework.ThirdParties\obj\Debug\Wonga.QA.Framework.ThirdParties.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -191,7 +189,7 @@
   </Target>
   <Target Name="AfterBuild">
     <!--<Delete Files="@(FilesToDelete)"/>-->
-    <AspNetCompiler VirtualPath="/Wonga.QA.Webtool" PhysicalPath="C:\Git\Wonga.QA.WebTool\Wonga.QA.WebTool\obj\Debug\Package\PackageTmp" TargetPath="C:\Git\public" Force="true" Debug="true" />
+    <!--<AspNetCompiler VirtualPath="/Wonga.QA.Webtool" PhysicalPath="C:\Git\Wonga.QA.WebTool\Wonga.QA.WebTool\obj\Debug\Package\PackageTmp" TargetPath="C:\Git\public" Force="true" Debug="true" />-->
     <!--
     <Exec Command="C:\Program Files\IIS\Microsoft Web Deploy\msdeploy.exe" />-->
   </Target>
