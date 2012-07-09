@@ -907,7 +907,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             else if (sliderType == "no")
             {
                 Assert.IsNull(mySummaryPage.Sliders, "Sliders should not be available");
-            } 
+            }
         }
     }
 }
