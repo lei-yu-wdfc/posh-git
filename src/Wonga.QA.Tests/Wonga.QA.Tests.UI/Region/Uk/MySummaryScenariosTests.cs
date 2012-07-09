@@ -21,7 +21,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
     /// <summary>
     /// Check content of My Summary page against different scenarios
     /// </summary>
-    [Parallelizable(TestScope.All), JIRA("UK-785", "UK-788", "UK-795", "UKWEB-151")]
+    [Parallelizable(TestScope.All), JIRA("UK-785", "UK-788", "UK-795", "UKWEB-151", "UKWEB-985")]
     public class MySummaryScenariosTests : UiTest
     {
         Dictionary<int, string> introTexts = new Dictionary<int, string> 
@@ -149,6 +149,8 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             Assert.IsFalse(mySummaryPage.IsPromiseSummaryAvailable(), "PromiseSummary should not be availble");
             Assert.IsFalse(mySummaryPage.IsTagCloudAvailable());
             Assert.IsFalse(mySummaryPage.IsLoanStatusMessageAvailable());
+
+            CheckSliders(mySummaryPage, "full");
         }
 
         // Ln journey
@@ -183,6 +185,8 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             Assert.IsFalse(mySummaryPage.IsPromiseSummaryAvailable(), "PromiseSummary should not be availble");
             Assert.IsFalse(mySummaryPage.IsTagCloudAvailable());
             Assert.IsFalse(mySummaryPage.IsLoanStatusMessageAvailable());
+
+            CheckSliders(mySummaryPage, "full");
         }
         
         [Test, AUT(AUT.Uk), JIRA("UK-1737"), MultipleAsserts]
@@ -263,7 +267,9 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             var expectedLoanMessageText = loanStatusMessages[9];
             string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage;
             Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
-     
+
+            CheckSliders(mySummaryPage, "no");
+
             ChangeWantToRepayBox(customer, customer.GetApplication());
         }
 
@@ -318,6 +324,8 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
 
             string expectedPromiseSummaryText = PromiseSummaryTexts[scenarioId].Replace("{£456.34}", "£" + expectedBalanceToday);
             Assert.AreEqual(expectedPromiseSummaryText, mySummaryPage.GetPromiseSummaryText);
+
+            CheckSliders(mySummaryPage, "no");
 
             ChangeWantToRepayBox(customer, customer.GetApplication());
         }
@@ -386,6 +394,8 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
 
             Assert.IsFalse(mySummaryPage.IsTagCloudAvailable());
+
+            CheckSliders(mySummaryPage, "no");
         }
 
         //[Test, AUT(AUT.Uk), Pending("Awating Repayment Arrangment Functionality."), MultipleAsserts]
@@ -430,6 +440,8 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             var expectedLoanMessageText = loanStatusMessages[scenarioId];
             string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage;
             Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
+
+            CheckSliders(mySummaryPage, "no");
         }
 
         //[Test, AUT(AUT.Uk), Pending("Awating Repayment Arrangment Functionality."), MultipleAsserts]
@@ -474,6 +486,8 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             var expectedLoanMessageText = loanStatusMessages[scenarioId];
             string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage;
             Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
+
+            CheckSliders(mySummaryPage, "no");
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-1624"), Pending("UK-1624 Waiting for implementation of Referrals and API implementation of the hours to decision"), MultipleAsserts]
@@ -510,6 +524,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage.Replace("{within the next 6 hours}", "within the next 6 hours"); //TBD - replace hardcoded hours with a calculated value
             Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
 
+            CheckSliders(mySummaryPage, "no");
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-1624"), Pending("UK-1624 Waiting for implementation of Referrals and API implementation of the hours to decision"), MultipleAsserts]
@@ -544,6 +559,8 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             var expectedLoanMessageText = loanStatusMessages[17];
             string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage.Replace("{within the next 6 hours}", "within the next 6 hours"); //TBD - replace hardcoded hours with a calculated value
             Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
+
+            CheckSliders(mySummaryPage, "no");
         }
 
         [Test, AUT(AUT.Uk), Pending("Waiting for implementation of agreement cancellation process."), MultipleAsserts]
@@ -584,6 +601,8 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             var expectedLoanMessageText = loanStatusMessages[scenarioId].Replace("{£loan amount}", "£100").Replace("{£xx.xx total repayable on due date}", "£115.91").Replace("{repayment date in format 15th March 2011.}", Date.GetOrdinalDate(DateTime.Today.AddDays(days), "ddd d MMM yyyy"));
             string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage;
             Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
+
+            CheckSliders(mySummaryPage, "no");
         }
 
         private void MySummaryScenarios(int scenarioId, params int[] days)
@@ -642,6 +661,13 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
                 string expectedPromiseSummaryText = PromiseSummaryTexts[scenarioId].Replace("{£245}", "£" + expectedDueDateBalance.ToString("#.##")).Replace("in {10}", "in " + expectedDaysTillDueDate.Days.ToString("#")).Replace("{10th May 2012}", Date.GetOrdinalDate(expectedDueDate, "ddd d MMM yyyy")).Replace("{£456.34}", "£" + expectedDueDateBalance.ToString("#.##"));
                 Assert.AreEqual(expectedPromiseSummaryText, mySummaryPage.GetPromiseSummaryText);
             }
+
+            if ((scenarioId == 2) || (scenarioId == 3) || (scenarioId == 4))
+                CheckSliders(mySummaryPage, "half");
+            else if ((scenarioId == 8) || (scenarioId == 20))
+                CheckSliders(mySummaryPage, "full");
+            else
+                CheckSliders(mySummaryPage, "no");
 
             //if (mySummaryPage.GetTagCloud.IndexOf("Repay") > 0) ChangeWantToRepayBox(customer, application);
         }
@@ -862,6 +888,25 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
                 {
                     Assert.IsFalse(requestPage.IsLoanPeriodClarificationDisplayed);
                 }
+            }
+        }
+
+        private void CheckSliders(MySummaryPage mySummaryPage, string sliderType)
+        {
+            if (sliderType == "full")
+	        {
+	            Assert.IsNotNull(mySummaryPage.Sliders, "Sliders should be available");
+                Assert.IsNotEmpty(mySummaryPage.Sliders.HowLong, "Duration slider should be available");
+                Assert.IsNotEmpty(mySummaryPage.Sliders.HowMuch, "Amount slider should be available");
+	        }
+            else if (sliderType == "half")
+	        {
+                Assert.IsNotNull(mySummaryPage.TopupSliders, "Sliders should be  available");
+                Assert.IsNotEmpty(mySummaryPage.TopupSliders.HowMuch, "Amount slider should be available");
+            }
+            else if (sliderType == "no")
+            {
+                Assert.IsNull(mySummaryPage.Sliders, "Sliders should not be available");
             }
         }
     }
