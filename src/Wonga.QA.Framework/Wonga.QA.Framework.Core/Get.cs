@@ -51,6 +51,11 @@ namespace Wonga.QA.Framework.Core
             return "qa.wonga.com@gmail.com";
         }
 
+        public static T EnumFromString<T>(string val)
+        {
+            return (T)Enum.Parse(typeof(T), val);
+        }
+
         public static String GetEmail(int mailLength)
         {
             String guid = Guid.NewGuid().ToString();

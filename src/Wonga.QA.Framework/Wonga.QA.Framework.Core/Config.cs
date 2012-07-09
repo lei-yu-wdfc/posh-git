@@ -4,6 +4,9 @@ using System.ComponentModel;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.IO;
+using System.Xml.Linq;
+using System.Xml.XPath;
 using Microsoft.Win32;
 
 namespace Wonga.QA.Framework.Core
@@ -32,14 +35,34 @@ namespace Wonga.QA.Framework.Core
         public static PayLaterConfig PayLaterApi { get; set; }
         public static PrepaidAdminConfig PrepaidAdminUI { get; set; }
         public static CommonApiConfig CommonApi { get; set; }
-        
+        private static XDocument _settings;
+
+        private static string GetSettingFromXml(string xpath)
+        {
+            var element = _settings.XPathSelectElement(xpath);
+
+        }
 
         static Config()
         {
-            SUT = GetValue<SUT>();
-            AUT = GetValue<AUT>();
+            var proc = new XmlProcessor();
+            var appDataConfigs = Directory.GetFiles(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "v3qa"), "*.v3qaconfig");
+            var binFolderConfigs = Directory.GetFiles(Environment.CurrentDirectory, "*.v3qaconfig");
+
+            if (appDataConfigs.Length > 0)
+                _settings = proc.LoadFromFile(appDataConfigs[0]);
+            else if (binFolderConfigs.Length > 0)
+                _settings = proc.LoadFromFile(binFolderConfigs[0]);
+
+            SUT = Get.EnumFromString<SUT>(_settings.XPathSelectElement("//SUT").Value);
+            AUT = Get.EnumFromString<AUT>(_settings.XPathSelectElement("//AUT").Value);
 
             Ui = new UiConfig();
+            Ui.Browser = Get.EnumFromString<UiConfig.BrowserType>(_settings.XPathSelectElement("//Ui/Browser").Value);
+            Ui.BrowserVersion = _settings.XPathSelectElement("//Ui/BrowserVersion").Value;
+            Ui.DoubleClickCookiesHome = _settings.XPathSelectElement("//Ui/DoubleClickCookiesHome").Value;
+            Ui.Home = _settings.XPathSelectElement("//Ui/HomePage").Value;
+            Ui.RemoteApiKey = _settings.XPathSelectElement("//Ui/").Value;
             SalesforceUi = new SalesforceConfig("test.salesforce.com");
             PayLaterUi = new PayLaterConfig("dev.paylater.com");
             
@@ -60,7 +83,8 @@ namespace Wonga.QA.Framework.Core
                     Svc = new SvcConfig(".");
                     Msmq = new MsmqConfig(".");
                     Db = new DbConfig(".");
-                    HDSDb = new DbConfig(".", AUT.ToString(), "");
+                    //HDSDB should be inside Db
+                    HDSDb = new DbConfig(".","UK","");
                     Ui.SetUri("dev.wonga.com");
                     Admin = new AdminConfig("localhost/admin");
                     PrepaidAdminUI = new PrepaidAdminConfig();
@@ -589,25 +613,26 @@ namespace Wonga.QA.Framework.Core
             /// <summary>
             /// Username for the selenium rc server
             /// </summary>
-            public string RemoteUsername { get { return "WongaQA"; } }
+            public string RemoteUsername { get; set; }
             /// <summary>
             /// Password for the selenium rc server
             /// </summary>
-            public string RemotePassword { get { return "Passw0rd"; } }
+            public string RemotePassword { get; set; }
             /// <summary>
             /// API key for the Selenium RC server
             /// </summary>
-            public string RemoteApiKey { get { return "cb7d5fc7-44cd-42e6-a02b-a23d79671a3a"; } }
+            public string RemoteApiKey { get; set; }
             /// <summary>
             /// Selenium RC Url
             /// </summary>
-            public Uri RemoteUri { get { return new Uri("http://ondemand.saucelabs.com:80/wd/hub"); } }
+            public Uri RemoteUri { get; set; }
 
             public BrowserType Browser { get; set; }
             public string BrowserVersion { get; set; }
 
             internal UiConfig()
             {
+                
             }
 
             internal void SetUri(string host)
@@ -617,12 +642,6 @@ namespace Wonga.QA.Framework.Core
             internal void SetUri(string host, int portNumber)
             {
                 Home = new UriBuilder { Scheme = string.Empty, Host = host, Port = portNumber }.Uri;
-            }
-
-            internal void SetDoubleClickCookiesURl(string url)
-            {
-                DoubleClickCookiesHome = url;
-             
             }
 
             public bool RemoteMode { get; set; }
@@ -761,6 +780,8 @@ namespace Wonga.QA.Framework.Core
             DbPortMappings.Add("WIP6", "8207");
             DbPortMappings.Add("UAT6", "8208");
             DbPortMappings.Add("RC6", "8209");
+
+            DbPortMappings.Add(@"dev-disqlsrv01\dev2", "1433");
         }
 
         public static string GetDbConn(string server, bool proxyMode)
