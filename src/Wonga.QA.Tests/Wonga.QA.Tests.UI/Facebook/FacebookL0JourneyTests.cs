@@ -21,7 +21,7 @@ using Wonga.QA.Framework.UI;
 namespace Wonga.QA.Tests.Ui.Facebook
 {
     [Parallelizable(TestScope.All)]
-    class L0JourneyTests : UiTest
+    class FacebookL0JourneyTests : UiTest
     {
         [Test, AUT(AUT.Uk), Pending("Waiting on Facebook Environment Setup - AUT.UkFb")]
         public void FBL0Journey()
