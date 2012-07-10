@@ -11,11 +11,10 @@ namespace Wonga.QA.Framework.Svc
         private SvcService _risk;
         private SvcService _bi;
 
-        private SvcService _accounting;
         private SvcService _bankGateway;
         private SvcService _blacklist;
-        private SvcService _bmo;
-        private SvcService _bottomLine;
+        private SvcService _bankGatewayBmo;
+        private SvcService _bankGatewayBottomLine;
         private SvcService _callReport;
         private SvcService _callValidate;
         private SvcService _cardPayment;
@@ -29,20 +28,20 @@ namespace Wonga.QA.Framework.Svc
         private SvcService _fileStorage;
         private SvcService _graydon;
         private SvcService _hpi;
-        private SvcService _hsbc;
-        private SvcService _hyphen;
+        private SvcService _bankGatewayHsbc;
+        private SvcService __bankGatewayHyphen;
         private SvcService _iovation;
-        private SvcService _rbc;
+        private SvcService __bankGatewayRbc;
         private SvcService _salesforce;
         private SvcService _scheduler;
-        private SvcService _scotia;
+        private SvcService __bankGatewayScotia;
         private SvcService _sms;
         private SvcService _timeoutManager;
         private SvcService _timeZone;
         private SvcService _transUnion;
         private SvcService _uru;
         private SvcService _wongaPay;
-    	private SvcService _easyPay;
+        private SvcService __bankGatewayEasyPay;
     	private SvcService _payU;
 
         public SvcService Ops
@@ -81,11 +80,6 @@ namespace Wonga.QA.Framework.Svc
             set { _bi = value; }
         }
 
-        public SvcService Accounting
-        {
-            get { return _accounting ?? (_accounting = new SvcService(Config.Svc.Accounting.Key, Config.Svc.Accounting.Value)); }
-            set { _accounting = value; }
-        }
         public SvcService BankGateway
         {
             get { return _bankGateway ?? (_bankGateway = new SvcService(Config.Svc.BankGateway.Key, Config.Svc.BankGateway.Value)); }
@@ -98,16 +92,16 @@ namespace Wonga.QA.Framework.Svc
             set { _blacklist = value; }
         }
 
-        public SvcService Bmo
+        public SvcService BankGatewayBmo
         {
-            get { return _bmo ?? (_bmo = new SvcService(Config.Svc.Bmo.Key, Config.Svc.Bmo.Value)); }
-            set { _bmo = value; }
+            get { return _bankGatewayBmo ?? (_bankGatewayBmo = new SvcService(Config.Svc.BankGatewayBmo.Key, Config.Svc.BankGatewayBmo.Value)); }
+            set { _bankGatewayBmo = value; }
         }
 
-        public SvcService BottomLine
+        public SvcService BankGatewayBottomLine
         {
-            get { return _bottomLine ?? (_bottomLine = new SvcService(Config.Svc.BottomLine.Key, Config.Svc.BottomLine.Value)); }
-            set { _bottomLine = value; }
+            get { return _bankGatewayBottomLine ?? (_bankGatewayBottomLine = new SvcService(Config.Svc.BankGatewayBottomLine.Key, Config.Svc.BankGatewayBottomLine.Value)); }
+            set { _bankGatewayBottomLine = value; }
         }
 
         public SvcService CallReport
@@ -182,22 +176,22 @@ namespace Wonga.QA.Framework.Svc
             set { _graydon = value; }
         }
 
-        public SvcService Hpi
+        public SvcService BankGatewayHpi
         {
             get { return _hpi ?? (_hpi = new SvcService(Config.Svc.Hpi.Key, Config.Svc.Hpi.Value)); }
             set { _hpi = value; }
         }
 
-        public SvcService Hsbc
+        public SvcService BankGatewayHsbc
         {
-            get { return _hsbc ?? (_hsbc = new SvcService(Config.Svc.Hsbc.Key, Config.Svc.Hsbc.Value)); }
-            set { _hsbc = value; }
+            get { return _bankGatewayHsbc ?? (_bankGatewayHsbc = new SvcService(Config.Svc.BankGatewayHsbc.Key, Config.Svc.BankGatewayHsbc.Value)); }
+            set { _bankGatewayHsbc = value; }
         }
 
-        public SvcService Hyphen
+        public SvcService BankGatewayHyphen
         {
-            get { return _hyphen ?? (_hyphen = new SvcService(Config.Svc.Hyphen.Key, Config.Svc.Hyphen.Value)); }
-            set { _hyphen = value; }
+            get { return __bankGatewayHyphen ?? (__bankGatewayHyphen = new SvcService(Config.Svc.BankGatewayHyphen.Key, Config.Svc.BankGatewayHyphen.Value)); }
+            set { __bankGatewayHyphen = value; }
         }
 
         public SvcService Iovation
@@ -206,10 +200,10 @@ namespace Wonga.QA.Framework.Svc
             set { _iovation = value; }
         }
 
-        public SvcService Rbc
+        public SvcService BankGatewayRbc
         {
-            get { return _rbc ?? (_salesforce = new SvcService(Config.Svc.Rbc.Key, Config.Svc.Rbc.Value)); }
-            set { _rbc = value; }
+            get { return __bankGatewayRbc ?? (__bankGatewayRbc = new SvcService(Config.Svc.BankGatewayRbc.Key, Config.Svc.BankGatewayRbc.Value)); }
+            set { __bankGatewayRbc = value; }
         }
 
         public SvcService Salesforce
@@ -224,10 +218,10 @@ namespace Wonga.QA.Framework.Svc
             set { _scheduler = value; }
         }
 
-        public SvcService Scotia
+        public SvcService BankGatewayScotia
         {
-            get { return _scotia ?? (_scotia = new SvcService(Config.Svc.Scotia.Key, Config.Svc.Scotia.Value)); }
-            set { _scotia = value; }
+            get { return __bankGatewayScotia ?? (__bankGatewayScotia = new SvcService(Config.Svc.BankGatewayScotia.Key, Config.Svc.BankGatewayScotia.Value)); }
+            set { __bankGatewayScotia = value; }
         }
 
         public SvcService Sms
@@ -266,10 +260,10 @@ namespace Wonga.QA.Framework.Svc
             set { _wongaPay = value; }
         }
 
-		public SvcService EasyPay
+        public SvcService BankGatewayEasyPay
         {
-			get { return _easyPay ?? (_easyPay = new SvcService(Config.Svc.EasyPay.Key, Config.Svc.EasyPay.Value)); }
-			set { _easyPay = value; }
+            get { return __bankGatewayEasyPay ?? (__bankGatewayEasyPay = new SvcService(Config.Svc.BankGatewayEasyPay.Key, Config.Svc.BankGatewayEasyPay.Value)); }
+            set { __bankGatewayEasyPay = value; }
         }
 
 		public SvcService PayU

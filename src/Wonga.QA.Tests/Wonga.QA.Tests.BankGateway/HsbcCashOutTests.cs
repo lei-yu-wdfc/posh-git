@@ -68,10 +68,10 @@ namespace Wonga.QA.Tests.BankGateway
 
             var transactionReference = transaction.TransactionId.ToString();
 
-            Drive.Msmq.Hsbc.Send(new FasterSecondResponseSuccessSagaUkCommand { FileName = "file name 1", RawContents = "Some raw contenst", TransactionReference = transactionReference });
+            Drive.Msmq.BankGatewayHsbc.Send(new FasterSecondResponseSuccessSagaUkCommand { FileName = "file name 1", RawContents = "Some raw contenst", TransactionReference = transactionReference });
             var baseResponseRecordEntity = Do.Until(() => Drive.Db.OpsSagasUk.BaseResponseRecordEntities.Single(x => x.TransactionReference == transactionReference));
 
-            Drive.Msmq.Hsbc.Send(new TimeoutMessage { ClearTimeout = true, Expires = DateTime.UtcNow, SagaId = baseResponseRecordEntity.Id, State = null });
+            Drive.Msmq.BankGatewayHsbc.Send(new TimeoutMessage { ClearTimeout = true, Expires = DateTime.UtcNow, SagaId = baseResponseRecordEntity.Id, State = null });
 
             Do.Until(() => Drive.Db.BankGateway.Transactions.Single(e => e.ApplicationId == applicationId).TransactionStatus == 4); //success
 
@@ -109,7 +109,7 @@ namespace Wonga.QA.Tests.BankGateway
 
             //Timeout saga:
             var baseResponseRecordEntity = Do.Until(() => Drive.Db.OpsSagasUk.BaseResponseRecordEntities.Single(x => x.TransactionReference == transaction.TransactionId.ToString()));
-            Drive.Msmq.Hsbc.Send(new TimeoutMessage { ClearTimeout = true, Expires = DateTime.UtcNow, SagaId = baseResponseRecordEntity.Id, State = null });
+            Drive.Msmq.BankGatewayHsbc.Send(new TimeoutMessage { ClearTimeout = true, Expires = DateTime.UtcNow, SagaId = baseResponseRecordEntity.Id, State = null });
             Do.With.Timeout(1).Interval(10).Until(() => Drive.Db.BankGateway.Transactions.Single(e => e.ApplicationId == applicationId).TransactionStatus == 4);
         }
 
@@ -136,7 +136,7 @@ namespace Wonga.QA.Tests.BankGateway
 
             var transactionReference = transaction.TransactionId.ToString();
 
-            Drive.Msmq.Hsbc.Send(new RecordFinalFailureUkCommand { ErrorCode = "90", TransactionReference = transactionReference }); //Invalid Bank Sort Code
+            Drive.Msmq.BankGatewayHsbc.Send(new RecordFinalFailureUkCommand { ErrorCode = "90", TransactionReference = transactionReference }); //Invalid Bank Sort Code
 
             Do.Until(() => Drive.Db.BankGateway.Transactions.Single(e => e.ApplicationId == applicationId).TransactionStatus == 5); //Failure
         }
@@ -231,7 +231,7 @@ namespace Wonga.QA.Tests.BankGateway
                     Drive.Db.BankGateway.Transactions.Single(e => e.ApplicationId == applicationId2).TransactionStatus ==
                     5); //Failure
 
-                Drive.Msmq.Hsbc.Send(new TimeoutMessage
+                Drive.Msmq.BankGatewayHsbc.Send(new TimeoutMessage
                                          {
                                              ClearTimeout = true,
                                              Expires = DateTime.UtcNow,
@@ -278,10 +278,10 @@ namespace Wonga.QA.Tests.BankGateway
             var transaction = Drive.Db.BankGateway.Transactions.Single(e => e.ApplicationId == applicationId);
 
             var transactionReference = transaction.TransactionId.ToString();
-            Drive.Msmq.Hsbc.Send(new FasterSecondResponseSuccessSagaUkCommand { FileName = "file name 1", RawContents = "Some raw contenst", TransactionReference = transactionReference });
+            Drive.Msmq.BankGatewayHsbc.Send(new FasterSecondResponseSuccessSagaUkCommand { FileName = "file name 1", RawContents = "Some raw contenst", TransactionReference = transactionReference });
             Do.Until(() => Drive.Db.OpsSagasUk.BaseResponseRecordEntities.Single(x => x.TransactionReference == transactionReference));
 
-            Drive.Msmq.Hsbc.Send(new FasterThirdResponseFailureUkCommand
+            Drive.Msmq.BankGatewayHsbc.Send(new FasterThirdResponseFailureUkCommand
                                       {
                                           ErrorCode = "BE", //insufficient funds
                                           TransactionReference = transactionReference,
@@ -308,7 +308,7 @@ namespace Wonga.QA.Tests.BankGateway
             integration.UpdateByDescription(Description: "HSBC", MondayToFridayEndTime: starttime.AddMinutes(1));
             try
             {
-                Drive.Svc.Hsbc.Restart();
+                Drive.Svc.BankGatewayHsbc.Restart();
                 //Drive.Msmq.Hsbc.Send(new HsbcCashOutStopUkCommand());
                 //Drive.Msmq.Hsbc.Send(new HsbcCashOutStartUkCommand());
 
@@ -323,7 +323,7 @@ namespace Wonga.QA.Tests.BankGateway
             {
                 integration.UpdateByDescription(Description: "HSBC", MondayToFridayEndTime: DateTime.Parse("1900-01-01 23:50:00.000"));
                 //integration.UpdateByDescription(Description: "HSBC", MondayToFridayEndTime: endtime);
-                Drive.Svc.Hsbc.Restart();
+                Drive.Svc.BankGatewayHsbc.Restart();
             }
         }
 

@@ -19,7 +19,7 @@ namespace Wonga.QA.Framework.Data
         public static bool Execute(string jobName)
         {
             // This DataDriver().NameOfHDSServer really needs to come in as a param
-            Server srv = new Server(new DataDriver().NameOfHdsServer);
+            Server srv = new Server(new DataDriver().Hds.Server);
             JobServer sqlServerAgent = srv.JobServer;
             Job specificJob = sqlServerAgent.Jobs[jobName];
 
@@ -45,7 +45,7 @@ namespace Wonga.QA.Framework.Data
 
             try
             {
-                Server srv = new Server(new DataDriver().NameOfHdsServer);
+                Server srv = new Server(new DataDriver().Hds.Server);
 
                 JobServer sqlServerAgent = srv.JobServer;
                 Job specificJob = sqlServerAgent.Jobs[jobName];
@@ -68,7 +68,7 @@ namespace Wonga.QA.Framework.Data
         public static Microsoft.SqlServer.Management.Smo.Agent.JobExecutionStatus CheckJobStatus(string jobName)
         {
 
-            Server srv = new Server(new DataDriver().NameOfHdsServer);
+            Server srv = new Server(new DataDriver().Hds.Server);
 
             JobServer sqlServerAgent = srv.JobServer;
             Job specificJob = sqlServerAgent.Jobs[jobName];
@@ -85,7 +85,7 @@ namespace Wonga.QA.Framework.Data
         public static Microsoft.SqlServer.Management.Smo.Agent.CompletionResult LastRunOutcome(string jobName)
         {
 
-            Server srv = new Server(new DataDriver().NameOfHdsServer);
+            Server srv = new Server(new DataDriver().Hds.Server);
 
             JobServer sqlServerAgent = srv.JobServer;
             Job specificJob = sqlServerAgent.Jobs[jobName];
@@ -101,7 +101,7 @@ namespace Wonga.QA.Framework.Data
         public static void DisableJob(string jobName)
         {
 
-            Server srv = new Server(new DataDriver().NameOfHdsServer);
+            Server srv = new Server(new DataDriver().Hds.Server);
 
             JobServer sqlServerAgent = srv.JobServer;
             Job specificJob = sqlServerAgent.Jobs[jobName];
@@ -120,7 +120,7 @@ namespace Wonga.QA.Framework.Data
         public static void EnableJob(string jobName)
         {
 
-            Server srv = new Server(new DataDriver().NameOfHdsServer);
+            Server srv = new Server(new DataDriver().Hds.Server);
 
             JobServer sqlServerAgent = srv.JobServer;
             Job specificJob = sqlServerAgent.Jobs[jobName];
@@ -140,7 +140,7 @@ namespace Wonga.QA.Framework.Data
         public static bool CheckIsJobEnabled(string jobName)
         {
 
-            Server srv = new Server(new DataDriver().NameOfHdsServer);
+            Server srv = new Server(new DataDriver().Hds.Server);
 
             JobServer sqlServerAgent = srv.JobServer;
             Job specificJob = sqlServerAgent.Jobs[jobName];
@@ -163,7 +163,7 @@ namespace Wonga.QA.Framework.Data
             {
                 Int32 waitTimeSeconds = waitTimeSecondsOverride == 0 ? 60 * 6 * 1000 : waitTimeSecondsOverride; // Convert to 6 mins
 
-                Server srv = new Server(new DataDriver().NameOfHdsServer);
+                Server srv = new Server(new DataDriver().Hds.Server);
 
                 JobServer sqlServerAgent = srv.JobServer;
                 Job specificJob = sqlServerAgent.Jobs[jobName];

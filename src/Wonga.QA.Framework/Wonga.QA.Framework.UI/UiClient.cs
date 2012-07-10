@@ -231,7 +231,7 @@ namespace Wonga.QA.Framework.UI
 
         public SalesForceLoginPage SalesForceStart()
         {
-            Driver.Navigate().GoToUrl(Config.SalesforceUi.Home);
+            Driver.Navigate().GoToUrl(Config.Salesforce.Home);
             return new SalesForceLoginPage(this);
         }
 
@@ -239,19 +239,19 @@ namespace Wonga.QA.Framework.UI
 
         public PayLaterLoginPage PayLaterStart()
         {
-            Driver.Navigate().GoToUrl(Config.PayLaterUi.Home);
+            Driver.Navigate().GoToUrl(Config.PayLater.Home);
             return new PayLaterLoginPage(this);
         }
 
         public SubmitionPage PayLaterSubmition()
         {
-            Driver.Navigate().GoToUrl(Config.PayLaterUi.Home);
+            Driver.Navigate().GoToUrl(Config.PayLater.Home);
             return new SubmitionPage(this);
         }
 
         public PayLaterThanksForm PayLaterThanks()
         {
-            Driver.Navigate().GoToUrl(Config.PayLaterUi.Home);
+            Driver.Navigate().GoToUrl(Config.PayLater.Home);
             return new PayLaterThanksForm(this);
         }
 

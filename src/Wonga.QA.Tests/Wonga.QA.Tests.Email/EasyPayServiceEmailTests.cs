@@ -57,7 +57,7 @@ namespace Wonga.QA.Tests.Email
 
 		private static void Act(string easyPayNumber, string rawContent, DateTime actionDate, decimal amount)
 		{
-			Drive.Msmq.EasyPay.Send(new PaymentResponseDetailRecordZaCommand
+            Drive.Msmq.BankGatewayEasyPay.Send(new PaymentResponseDetailRecordZaCommand
 			                        	{
 			                        		ActionDate = actionDate,
 			                        		Amount = amount,

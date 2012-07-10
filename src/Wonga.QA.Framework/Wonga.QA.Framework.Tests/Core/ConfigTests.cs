@@ -14,7 +14,7 @@ namespace Wonga.QA.Framework.Tests.Core
         [Test]
         public void ItCanReadUiHomePage()
         {
-            Assert.IsNotNull(ConfigFromConfig.Ui.Home);
+            Assert.IsNotNull(Config.Ui.Home);
         }
     }
 }

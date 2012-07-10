@@ -24,15 +24,12 @@ namespace Wonga.QA.Framework.Core
         public static CsConfig Cs { get; set; }
         public static SvcConfig Svc { get; set; }
         public static MsmqConfig Msmq { get; set; }
-        public static DbConfig Db { get; set; }
-        public static DbConfig HDSDb { get; set; }
+        public static DbConfig Db { get; set; }       
         public static UiConfig Ui { get; set; }
         public static AdminConfig Admin { get; set; }
-        public static SalesforceConfig SalesforceUi { get; set; }
-        public static SalesforceConfig SalesforceApi { get; set; }
+        public static SalesforceConfig Salesforce { get; set; }
         public static EmailConfig Email { get; set; }
-        public static PayLaterConfig PayLaterUi { get; set; }
-        public static PayLaterConfig PayLaterApi { get; set; }
+        public static PayLaterConfig PayLater { get; set; }
         public static PrepaidAdminConfig PrepaidAdminUI { get; set; }
         public static CommonApiConfig CommonApi { get; set; }
         private static XDocument _settings;
@@ -40,240 +37,205 @@ namespace Wonga.QA.Framework.Core
         private static string GetSettingFromXml(string xpath)
         {
             var element = _settings.XPathSelectElement(xpath);
+            var encrypted = element.Attribute("E") != null ? element.Attribute("E").Value : "false";
+            if (encrypted == "true")
+                return Class.Decrypt(element.Value);
+            return element.Value;
+        }
 
+        private static string GetSettingAttributeFromXml(string xpath, string attr)
+        {
+            return _settings.XPathSelectElement(xpath).Attribute(attr).Value;
         }
 
         static Config()
         {
+            Ui = new UiConfig();
+            Db = new DbConfig();
+            Salesforce = new SalesforceConfig();
+            PayLater = new PayLaterConfig();
+            Svc = new SvcConfig();
+            Msmq = new MsmqConfig();
             var proc = new XmlProcessor();
             var appDataConfigs = Directory.GetFiles(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "v3qa"), "*.v3qaconfig");
             var binFolderConfigs = Directory.GetFiles(Environment.CurrentDirectory, "*.v3qaconfig");
+            var configsFolder = Path.Combine(Environment.CurrentDirectory, @"..\run\configs");
+            var fallBackConfig = Path.Combine(configsFolder, LegacyEnvVarMapper.GetFileNameForEnvVars(GetValue<SUT>(), GetValue<AUT>()));
 
             if (appDataConfigs.Length > 0)
                 _settings = proc.LoadFromFile(appDataConfigs[0]);
             else if (binFolderConfigs.Length > 0)
                 _settings = proc.LoadFromFile(binFolderConfigs[0]);
+            else if(!string.IsNullOrEmpty(fallBackConfig))
+                _settings = proc.LoadFromFile(fallBackConfig);
+            else throw new Exception(@"Configuration file not found. Please run the [run\Wonga.QA.cmd] tool");
 
             SUT = Get.EnumFromString<SUT>(_settings.XPathSelectElement("//SUT").Value);
             AUT = Get.EnumFromString<AUT>(_settings.XPathSelectElement("//AUT").Value);
 
             Ui = new UiConfig();
-            Ui.Browser = Get.EnumFromString<UiConfig.BrowserType>(_settings.XPathSelectElement("//Ui/Browser").Value);
-            Ui.BrowserVersion = _settings.XPathSelectElement("//Ui/BrowserVersion").Value;
-            Ui.DoubleClickCookiesHome = _settings.XPathSelectElement("//Ui/DoubleClickCookiesHome").Value;
-            Ui.Home = _settings.XPathSelectElement("//Ui/HomePage").Value;
-            Ui.RemoteApiKey = _settings.XPathSelectElement("//Ui/").Value;
-            SalesforceUi = new SalesforceConfig("test.salesforce.com");
-            PayLaterUi = new PayLaterConfig("dev.paylater.com");
+            Ui.Browser = Get.EnumFromString<UiConfig.BrowserType>(GetSettingFromXml("//Ui/Browser"));
+            Ui.BrowserVersion = GetSettingFromXml("//Ui/BrowserVersion");
+            Ui.DoubleClickCookiesHome = GetSettingFromXml("//Ui/DoubleClickCookiesHome");
+            Ui.Home = new Uri(GetSettingFromXml("//Ui/HomePage"));
+            Ui.RemoteApiKey = GetSettingFromXml("//Ui/RemoteApiKey");
+            Ui.RemoteMode = bool.Parse(GetSettingFromXml("//Ui/RemoteMode"));
+            Ui.RemotePassword = GetSettingFromXml("//Ui/RemotePassword");
+            Ui.RemoteUri = new Uri(GetSettingFromXml("//Ui/RemoteUri"));
+            Ui.RemoteUsername = GetSettingFromXml("//Ui/RemoteUsername");
             
-            Proxy = GetValue<Boolean>(false, "QAFProxyMode");
+            Salesforce.Home = new Uri(GetSettingFromXml("//Salesforce/HomePage"));
+            Salesforce.Password = GetSettingFromXml("//Salesforce/Password");
+            Salesforce.Username = GetSettingFromXml("//Salesforce/Username");
+            Salesforce.ApiPassword = GetSettingFromXml("//Salesforce/ApiPassword");
+            Salesforce.ApiUrl = GetSettingFromXml("//Salesforce/ApiUrl");
+            Salesforce.ApiUsername = GetSettingFromXml("//Salesforce/ApiUsername");
 
-            Ui.Browser = GetValue<UiConfig.BrowserType>("FireFox", "QAFBrowser");
-            Ui.BrowserVersion = GetValue<string>("", "QAFBrowserVersion");
-            Ui.RemoteMode = GetValue<Boolean>(false, "QAFUiRemoteMode");
-            string uiDomain = Ui.RemoteMode ? "wonga.com" : "wonga.com";
+            PayLater.Home = new Uri(GetSettingFromXml("//PayLater/HomePage"));
+            PayLater.Password = GetSettingFromXml("//PayLater/Password");
+            PayLater.Username = GetSettingFromXml("//PayLater/Username");
+            PayLater.ApiPassword = GetSettingFromXml("//PayLater/ApiPassword");
+            PayLater.ApiUrl = GetSettingFromXml("//PayLater/ApiUrl");
+            PayLater.ApiUsername = GetSettingFromXml("//PayLater/ApiUsername");
 
-            Email = new EmailConfig() { QA = new EmailConfig.EmailAddressConfig() { Host = "imap.gmail.com", Username = "qa.wonga.com@gmail.com", Password = "Allw0nga", Port = 993, IsSsl = true } };
-            switch (SUT)
-            {
-                case SUT.Dev:
-                    Api = new ApiConfig("localhost/API");
-                    CommonApi = new CommonApiConfig("localhost/IVRWebApi");
-                    Cs = new CsConfig("localhost/CSAPI");
-                    Svc = new SvcConfig(".");
-                    Msmq = new MsmqConfig(".");
-                    Db = new DbConfig(".");
-                    //HDSDB should be inside Db
-                    HDSDb = new DbConfig(".","UK","");
-                    Ui.SetUri("dev.wonga.com");
-                    Admin = new AdminConfig("localhost/admin");
-                    PrepaidAdminUI = new PrepaidAdminConfig();
-                    SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.wip", "Allw0nga");
-                    SalesforceApi =
-                        AUT == AUT.Ca ? new SalesforceApiConfig("v3integration@wonga.com.int") :
-                        new SalesforceApiConfig("v3integration@wonga.com.wip");
-                    break;
-                case SUT.WIP:
-                    Api = new ApiConfig(String.Format("wip.api.{0}.wonga.com", AUT));
-                    Cs = new CsConfig(String.Format("wip.csapi.{0}.wonga.com", AUT));
-                    Svc =
-                        AUT == AUT.Uk ? new SvcConfig("WIP2") :
-                        AUT == AUT.Za ? new SvcConfig("WIP4") :
-                        AUT == AUT.Ca ? new SvcConfig("WIP6") :
-                        AUT == AUT.Wb ? new SvcConfig("WIP8") : Throw<SvcConfig>();
-                    Msmq =
-                        AUT == AUT.Uk ? new MsmqConfig("WIP2") :
-                        AUT == AUT.Za ? new MsmqConfig("WIP4") :
-                        AUT == AUT.Ca ? new MsmqConfig("WIP6") :
-                        AUT == AUT.Wb ? new MsmqConfig("WIP8") : Throw<MsmqConfig>();
-                    Db =
-                        AUT == AUT.Uk ? new DbConfig(Connections.GetDbConn("WIP2", Proxy)) :
-                        AUT == AUT.Za ? new DbConfig(Connections.GetDbConn("WIP4", Proxy)) :
-                        AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn("WIP6", Proxy)) :
-                        AUT == AUT.Wb ? new DbConfig(Connections.GetDbConn("WIP8", Proxy)) : Throw<DbConfig>();
-                    HDSDb =
-                        AUT == AUT.Uk ? new DbConfig(Connections.GetDbConn(@"DEV-DIWIPSRV01\WIP2", Proxy), "UK", "Wonga") :
-                        AUT == AUT.Za ? new DbConfig(Connections.GetDbConn(@"DEV-DIWIPSRV01\WIP2", Proxy), "Za", "Wonga") :
-                        AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn(@"DEV-DIWIPSRV01\WIP2", Proxy), "Ca", "Wonga") :
-                        AUT == AUT.Wb ? new DbConfig(Connections.GetDbConn(@"DEV-DIWIPSRV01\WIP2", Proxy), "UK", "WB") : Throw<DbConfig>();
-                    Ui.SetUri(String.Format("wip.{0}.{1}", AUT, uiDomain));
-                    Admin = new AdminConfig(String.Format("wip.admin.{0}.{1}", AUT, uiDomain));
-                    SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.wip", "Allw0nga");
-                    SalesforceApi =
-                        AUT == AUT.Ca ? new SalesforceApiConfig("v3integration@wonga.com.int") :
-                        new SalesforceApiConfig("v3integration@wonga.com.wip");
-                    break;
-                case SUT.WIPDI:
-                    Api = new ApiConfig(String.Format("wip.api.{0}.wonga.com", AUT));
-                    Cs = new CsConfig(String.Format("wip.csapi.{0}.wonga.com", AUT));
-                    Svc =
-                        AUT == AUT.Uk ? new SvcConfig("WIP2") :
-                        AUT == AUT.Za ? new SvcConfig("WIP4") :
-                        AUT == AUT.Ca ? new SvcConfig("WIP6") :
-                        AUT == AUT.Wb ? new SvcConfig("WIP8") : Throw<SvcConfig>();
-                    Msmq =
-                        AUT == AUT.Uk ? new MsmqConfig("WIP2") :
-                        AUT == AUT.Za ? new MsmqConfig("WIP4") :
-                        AUT == AUT.Ca ? new MsmqConfig("WIP6") :
-                        AUT == AUT.Wb ? new MsmqConfig("WIP8") : Throw<MsmqConfig>();
-                    Db =
-                        AUT == AUT.Uk ? new DbConfig(Connections.GetDbConn(@"dev-disqlsrv01\dev3", Proxy)) :
-                        AUT == AUT.Za ? new DbConfig(Connections.GetDbConn(@"dev-disqlsrv01\dev3", Proxy)) :
-                        AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn(@"dev-disqlsrv01\dev3", Proxy)) :
-                        AUT == AUT.Wb ? new DbConfig(Connections.GetDbConn(@"dev-disqlsrv01\dev3", Proxy)) : Throw<DbConfig>();
-                    HDSDb =
-                        AUT == AUT.Uk ? new DbConfig(Connections.GetDbConn(@"dev-disqlsrv01\dev2", Proxy),"UK","Wonga") :
-                        AUT == AUT.Za ? new DbConfig(Connections.GetDbConn(@"dev-disqlsrv01\dev2", Proxy), "Za", "Wonga") :
-                        AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn(@"dev-disqlsrv01\dev2", Proxy), "Ca", "Wonga") :
-                        AUT == AUT.Wb ? new DbConfig(Connections.GetDbConn(@"dev-disqlsrv01\dev2", Proxy), "UK", "WB") : Throw<DbConfig>();
-                    Ui.SetUri(String.Format("wip.{0}.{1}", AUT, uiDomain));
-                    Admin = new AdminConfig(String.Format("wip.admin.{0}.{1}", AUT, uiDomain));
-                    SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.wip", "Allw0nga");
-                    SalesforceApi =
-                        AUT == AUT.Ca ? new SalesforceApiConfig("v3integration@wonga.com.int") :
-                        new SalesforceApiConfig("v3integration@wonga.com.wip");
-                    break;
-                case SUT.WIPRelease:
-                    Api = new ApiConfig(String.Format("wip.release.api.{0}.wonga.com", AUT));
-                    Cs = new CsConfig(String.Format("wip.release.csapi.{0}.wonga.com", AUT));
-                    Svc =
-                        AUT == AUT.Ca ? new SvcConfig("ca-rel-wip-app") :
-                        AUT == AUT.Za ? new SvcConfig("za-rel-wip-app") : Throw<SvcConfig>();
-                    Msmq =
-                        AUT == AUT.Ca ? new MsmqConfig("ca-rel-wip-app") :
-                        AUT == AUT.Za ? new MsmqConfig("za-rel-wip-app") : Throw<MsmqConfig>();
-                    Db =
-                        AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn("ca-rel-wip-app", Proxy)) :
-                        AUT == AUT.Za ? new DbConfig(Connections.GetDbConn("za-rel-wip-app", Proxy)) : Throw<DbConfig>();
-                    HDSDb =
-                        AUT == AUT.Uk ? new DbConfig(Connections.GetDbConn(@"DEV-DIWIPSRV01\WIPR2", Proxy), "UK", "Wonga") :
-                        AUT == AUT.Za ? new DbConfig(Connections.GetDbConn(@"DEV-DIWIPSRV01\WIPR2", Proxy), "Za", "Wonga") :
-                        AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn(@"DEV-DIWIPSRV01\WIPR2", Proxy), "Ca", "Wonga") :
-                        AUT == AUT.Wb ? new DbConfig(Connections.GetDbConn(@"DEV-DIWIPSRV01\WIPR2", Proxy), "UK", "WB") : Throw<DbConfig>();
-                    Ui.SetUri(String.Format("wip.release.{0}.{1}", AUT, uiDomain));
-                    Admin = new AdminConfig(String.Format("wip.release.admin.{0}.{1}", AUT, uiDomain));
-                    SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.wip", "Allw0nga");
-                    SalesforceApi =
-                        AUT == AUT.Ca ? new SalesforceApiConfig("v3integration@wonga.com.int") :
-                        new SalesforceApiConfig("v3integration@wonga.com.wip");
-                    break;
-                case SUT.UAT:
-                    Api = new ApiConfig(String.Format("uat.api.{0}.wonga.com", AUT));
-                    Cs = new CsConfig(String.Format("uat.csapi.{0}.wonga.com", AUT));
-                    Svc =
-                        AUT == AUT.Uk ? new SvcConfig("UAT2") :
-                        AUT == AUT.Za ? new SvcConfig("UAT4") :
-                        AUT == AUT.Ca ? new SvcConfig("UAT6") :
-                        AUT == AUT.Wb ? new SvcConfig("UAT8") : Throw<SvcConfig>();
-                    Msmq =
-                        AUT == AUT.Uk ? new MsmqConfig("UAT2") :
-                        AUT == AUT.Za ? new MsmqConfig("UAT4") :
-                        AUT == AUT.Ca ? new MsmqConfig("UAT6") :
-                        AUT == AUT.Wb ? new MsmqConfig("UAT8") : Throw<MsmqConfig>();
-                    Db =
-                        AUT == AUT.Uk ? new DbConfig(Connections.GetDbConn("UAT2", Proxy)) :
-                        AUT == AUT.Za ? new DbConfig(Connections.GetDbConn("UAT4", Proxy)) :
-                        AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn("UAT6", Proxy)) :
-                        AUT == AUT.Wb ? new DbConfig(Connections.GetDbConn("UAT8", Proxy)) : Throw<DbConfig>();
-                    Ui.SetUri(String.Format("uat.{0}.{1}", AUT, uiDomain));
-                    Admin = new AdminConfig(String.Format("uat.admin.{0}.{1}", AUT, uiDomain));
-                    break;
-                case SUT.RC:
-                    Api = new ApiConfig(String.Format("rc.api.{0}.wonga.com", AUT));
-                    Cs = new CsConfig(String.Format("rc.csapi.{0}.wonga.com", AUT));
-                    Svc =
-                        AUT == AUT.Uk ? new SvcConfig("RC2") :
-                        AUT == AUT.Za ? new SvcConfig("RC4") :
-                        AUT == AUT.Ca ? new SvcConfig("RC6") :
-                        AUT == AUT.Wb ? new SvcConfig("RC9", "RC10") : Throw<SvcConfig>();
-                    Msmq =
-                        AUT == AUT.Uk ? new MsmqConfig("RC2") :
-                        AUT == AUT.Za ? new MsmqConfig("RC4") :
-                        AUT == AUT.Ca ? new MsmqConfig("RC6") :
-                        AUT == AUT.Wb ? new MsmqConfig("RC9", "RC10") : Throw<MsmqConfig>();
-                    Db =
-                        AUT == AUT.Uk ? new DbConfig(Connections.GetDbConn("RC2", Proxy)) :
-                        AUT == AUT.Za ? new DbConfig(Connections.GetDbConn("RC4", Proxy)) :
-                        AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn("RC6", Proxy)) :
-                        AUT == AUT.Wb ? new DbConfig(Connections.GetDbConn("RC8", Proxy)) : Throw<DbConfig>();
-                    HDSDb =
-                        AUT == AUT.Uk ? new DbConfig(Connections.GetDbConn(@"RC-DISQL01\RC2", Proxy), "UK", "Wonga") :
-                        AUT == AUT.Za ? new DbConfig(Connections.GetDbConn(@"RC-DISQL01\RC2", Proxy), "Za", "Wonga") :
-                        AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn(@"RC-DISQL01\RC2", Proxy), "Ca", "Wonga") :
-                        AUT == AUT.Wb ? new DbConfig(Connections.GetDbConn(@"RC-DISQL01\RC2", Proxy), "UK", "WB") : Throw<DbConfig>();
-                    Ui.SetUri(String.Format("rc.{0}.{1}", AUT, uiDomain));
-                    Admin = new AdminConfig(String.Format("rc.admin.{0}.{1}", AUT, uiDomain));
-                    SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.rc", "Allw0nga");
-                    SalesforceApi = new SalesforceApiConfig("v3integration@wonga.com.rc");
-                    if (AUT == AUT.Za)
-                        Ui.SetDoubleClickCookiesURl(
-                            "http://ad-emea.doubleclick.net/clk;255259813;78967212;v?http://rc.za.wonga.com");
-                    if (AUT == AUT.Ca)
-                        Ui.SetDoubleClickCookiesURl(
-                            "http://ad-emea.doubleclick.net/clk;255259813;78967212;v?http://rc.ca.wonga.com");
-                    break;
-                case SUT.RCRelease:
-                    Api = new ApiConfig(String.Format("rc.release.api.{0}.wonga.com", AUT));
-                    Cs = new CsConfig(String.Format("rc.release.csapi.{0}.wonga.com", AUT));
-                    Svc =
-                        AUT == AUT.Ca ? new SvcConfig("ca-rel-rc-app") :
-                        AUT == AUT.Za ? new SvcConfig("za-rel-rc-app") : Throw<SvcConfig>();
-                    Msmq =
-                        AUT == AUT.Ca ? new MsmqConfig("ca-rel-rc-app") :
-                        AUT == AUT.Za ? new MsmqConfig("za-rel-rc-app") : Throw<MsmqConfig>();
-                    Db =
-                        AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn("ca-rel-rc-app", Proxy)) :
-                        AUT == AUT.Za ? new DbConfig(Connections.GetDbConn("za-rel-rc-app", Proxy)) : Throw<DbConfig>();
-                    HDSDb =
-                        AUT == AUT.Uk ? new DbConfig(Connections.GetDbConn(@"RC-DISQL01\RCR2", Proxy), "UK", "Wonga") :
-                        AUT == AUT.Za ? new DbConfig(Connections.GetDbConn(@"RC-DISQL01\RCR2", Proxy), "Za", "Wonga") :
-                        AUT == AUT.Ca ? new DbConfig(Connections.GetDbConn(@"RC-DISQL01\RCR2", Proxy), "Ca", "Wonga") :
-                        AUT == AUT.Wb ? new DbConfig(Connections.GetDbConn(@"RC-DISQL01\RCR2", Proxy), "UK", "WB") : Throw<DbConfig>();
-                    Ui.SetUri(String.Format("rc.release.{0}.{1}", AUT, uiDomain));
-                    Admin = new AdminConfig(String.Format("rc.release.admin.{0}.{1}", AUT, uiDomain));
-                    SalesforceUi.SetLoginDetails("qa.wonga.com@gmail.com.rc", "Allw0nga");
-                    SalesforceApi = new SalesforceApiConfig("v3integration@wonga.com.rc");
-                    if (AUT == AUT.Za)
-                        Ui.SetDoubleClickCookiesURl(
-                            "http://ad-emea.doubleclick.net/clk;255259813;78967212;v?http://rc.release.za.wonga.com");
-                    if (AUT == AUT.Ca)
-                        Ui.SetDoubleClickCookiesURl(
-                            "http://ad-emea.doubleclick.net/clk;255259813;78967212;v?http://rc.release.ca.wonga.com");
-                    break;
-                case SUT.Live:
-                    Ui.SetUri(AUT == AUT.Ca ? "www.wonga.ca" : 
-                        AUT == AUT.Za ? "www.wonga.co.za" :
-                        AUT == AUT.Wb ? "www.wongabusiness.com" : ThrowInvalidConfiguration<string>(string.Format("Current AUT '{0}' is not supported in Live", AUT)));                
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }
+            Proxy = bool.Parse(GetSettingFromXml("//ProxyMode"));
+
+            Email = new EmailConfig
+                        {
+                            QA = new EmailConfig.EmailAddressConfig
+                                     {
+                                         Host = GetSettingFromXml("//Email/Host"), 
+                                         Username = GetSettingFromXml("//Email/Username"), 
+                                         Password = GetSettingFromXml("//Email/Password"), 
+                                         Port = int.Parse(GetSettingFromXml("//Email/Port")), 
+                                         IsSsl = bool.Parse(GetSettingFromXml("//Email/IsSsl"))
+                                     }
+                        };
+            Api = new ApiConfig(GetSettingFromXml("//Api/Url"));
+            CommonApi = new CommonApiConfig(GetSettingFromXml("//CommonApi/Url"));
+            Cs = new CsConfig(GetSettingFromXml("//CSApi/Url"));
+            Admin = new AdminConfig {Home = new Uri(GetSettingFromXml("//Admin/HomePage"))};
+            PrepaidAdminUI = new PrepaidAdminConfig
+                                 {
+                                     Home = new Uri(GetSettingFromXml("//PrepaidAdmin/HomePage")),
+                                     User = GetSettingFromXml("//PrepaidAdmin/Username"),
+                                     Pwd = GetSettingFromXml("//PrepaidAdmin/Password")
+                                 };
+
+            Svc.Ops = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/Ops", "Name"), GetSettingFromXml("//Svc/Ops"));
+            Svc.Comms = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/Comms", "Name"), GetSettingFromXml("//Svc/Comms"));
+            Svc.Payments = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/Payments", "Name"), GetSettingFromXml("//Svc/Payments"));
+            Svc.Risk = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/Risk", "Name"), GetSettingFromXml("//Svc/Risk"));
+            Svc.Marketing = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/Marketing", "Name"), GetSettingFromXml("//Svc/Marketing"));
+            Svc.Bi = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/Bi", "Name"), GetSettingFromXml("//Svc/Bi"));
+            Svc.BankGateway = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/BankGateway", "Name"), GetSettingFromXml("//Svc/BankGateway"));
+            Svc.Blacklist = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/BlackList", "Name"), GetSettingFromXml("//Svc/BlackList"));
+            Svc.BankGatewayBmo = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/Bmo", "Name"), GetSettingFromXml("//Svc/Bmo"));
+            Svc.BankGatewayBottomLine = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/BottomLine", "Name"), GetSettingFromXml("//Svc/BottomLine"));
+            Svc.BankGatewayHsbc = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/Hsbc", "Name"), GetSettingFromXml("//Svc/Hsbc"));
+            Svc.BankGatewayHyphen = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/Hyphen", "Name"), GetSettingFromXml("//Svc/Hyphen"));
+            Svc.BankGatewayRbc = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/Rbc", "Name"), GetSettingFromXml("//Svc/Rbc"));
+            Svc.BankGatewayScotia = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/Scotia", "Name"), GetSettingFromXml("//Svc/Scotia"));
+            Svc.BankGatewayEasyPay = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/EasyPay", "Name"), GetSettingFromXml("//Svc/EasyPay"));
+            Svc.CallReport = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/CallReport", "Name"), GetSettingFromXml("//Svc/CallReport"));
+            Svc.CallValidate = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/CallValidate", "Name"), GetSettingFromXml("//Svc/CallValidate"));
+            Svc.CardPayment = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/CardPayment", "Name"), GetSettingFromXml("//Svc/CardPayment"));
+            Svc.ColdStorage = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/ColdStorage", "Name"), GetSettingFromXml("//Svc/ColdStorage"));
+            Svc.ContactManagement = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/ContactManagement", "Name"), GetSettingFromXml("//Svc/ContactManagement"));
+            Svc.DocumentGeneration = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/DocumentGeneration", "Name"), GetSettingFromXml("//Svc/DocumentGeneration"));
+            Svc.Email = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/Email", "Name"), GetSettingFromXml("//Svc/Email"));
+            Svc.Equifax = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/Equifax", "Name"), GetSettingFromXml("//Svc/Equifax"));
+            Svc.Experian = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/Experian", "Name"), GetSettingFromXml("//Svc/Experian"));
+            Svc.ExperianBulk = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/ExperianBulk", "Name"), GetSettingFromXml("//Svc/ExperianBulk"));
+            Svc.FileStorage = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/FileStorage", "Name"), GetSettingFromXml("//Svc/FileStorage"));
+            Svc.Graydon = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/Graydon", "Name"), GetSettingFromXml("//Svc/Graydon"));
+            Svc.Hpi = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/Hpi", "Name"), GetSettingFromXml("//Svc/Hpi"));
+            Svc.Iovation = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/Iovation", "Name"), GetSettingFromXml("//Svc/Iovation"));
+            Svc.Salesforce = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/Salesforce", "Name"), GetSettingFromXml("//Svc/Salesforce"));
+            Svc.Scheduler = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/Scheduler", "Name"), GetSettingFromXml("//Svc/Scheduler"));
+            Svc.Sms = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/Sms", "Name"), GetSettingFromXml("//Svc/Sms"));
+            Svc.TimeoutManager = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/TimeoutManager", "Name"), GetSettingFromXml("//Svc/TimeoutManager"));
+            Svc.TimeZone = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/Timezone", "Name"), GetSettingFromXml("//Svc/Timezone"));
+            Svc.TransUnion = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/TransUnion", "Name"), GetSettingFromXml("//Svc/TransUnion"));
+            Svc.Uru = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/Uru", "Name"), GetSettingFromXml("//Svc/Uru"));
+            Svc.WongaPay = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/WongaPay", "Name"), GetSettingFromXml("//Svc/WongaPay"));
+            Svc.PayU = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/PayU", "Name"), GetSettingFromXml("//Svc/PayU"));
+
+            Msmq.Ops = GetSettingFromXml("//Msmq/Ops");
+            Msmq.Comms = GetSettingFromXml("//Msmq/Comms");
+            Msmq.Payments = GetSettingFromXml("//Msmq/Payments");
+            Msmq.Risk = GetSettingFromXml("//Msmq/Risk");
+            Msmq.Marketing = GetSettingFromXml("//Msmq/Marketing");
+            Msmq.Bi = GetSettingFromXml("//Msmq/Bi");
+            Msmq.BankGateway = GetSettingFromXml("//Msmq/BankGateway");
+            Msmq.BankGatewayBmo = GetSettingFromXml("//Msmq/BankGatewayBmo");
+            Msmq.BankGatewayRbc = GetSettingFromXml("//Msmq/BankGatewayRbc");
+            Msmq.BankGatewayScotia = GetSettingFromXml("//Msmq/BankGatewayScotia");
+            Msmq.BankGatewayBottomLine = GetSettingFromXml("//Msmq/BankGatewayBottomLine");
+            Msmq.BankGatewayHyphen = GetSettingFromXml("//Msmq/BankGatewayHyphen");
+            Msmq.BankGatewayEasyPay = GetSettingFromXml("//Msmq/BankGatewayEasyPay");
+            Msmq.BankGatewayHsbc = GetSettingFromXml("//Msmq/BankGatewayHsbc");
+            Msmq.Blacklist = GetSettingFromXml("//Msmq/BlackList");
+            Msmq.CallReport = GetSettingFromXml("//Msmq/CallReport");
+            Msmq.CallValidate = GetSettingFromXml("//Msmq/CallValidate");
+            Msmq.CardPayment = GetSettingFromXml("//Msmq/CardPayment");
+            Msmq.ColdStorage = GetSettingFromXml("//Msmq/ColdStorage");
+            Msmq.Email = GetSettingFromXml("//Msmq/Email");
+            Msmq.Equifax = GetSettingFromXml("//Msmq/Equifax");
+            Msmq.Experian = GetSettingFromXml("//Msmq/Experian");
+            Msmq.ExperianBulk = GetSettingFromXml("//Msmq/ExperianBulk");
+            Msmq.FileStorage = GetSettingFromXml("//Msmq/FileStorage");
+            Msmq.Graydon = GetSettingFromXml("//Msmq/Graydon");
+            Msmq.Hpi = GetSettingFromXml("//Msmq/Hpi");
+            Msmq.Iovation = GetSettingFromXml("//Msmq/Iovation");
+            Msmq.Salesforce = GetSettingFromXml("//Msmq/Salesforce");
+            Msmq.Sms = GetSettingFromXml("//Msmq/Sms");
+            Msmq.SmsDistributor = GetSettingFromXml("//Msmq/SmsDistributor");
+            Msmq.Timezone = GetSettingFromXml("//Msmq/Timezone");
+            Msmq.TransUnion = GetSettingFromXml("//Msmq/TransUnion");
+            Msmq.Uru = GetSettingFromXml("//Msmq/Uru");
+            Msmq.WongaPay = GetSettingFromXml("//Msmq/WongaPay");
+            Msmq.PayU = GetSettingFromXml("//Msmq/PayU");
+
+            Db.Accounting = GetSettingFromXml("//Db/Accounting");
+            Db.BankGateway = GetSettingFromXml("//Db/BankGateway");
+            Db.Bi = GetSettingFromXml("//Db/Bi");
+            Db.BiCustomerManagement = GetSettingFromXml("//Db/BiCustomerManagement");
+            Db.Blacklist = GetSettingFromXml("//Db/BlackList");
+            Db.CallReport = GetSettingFromXml("//Db/CallReport");
+            Db.CallValidate = GetSettingFromXml("//Db/CallValidate");
+            Db.CardPayment = GetSettingFromXml("//Db/CardPayment");
+            Db.Cdc = GetSettingFromXml("//Db/Cdc");
+            Db.ColdStorage = GetSettingFromXml("//Db/ColdStorage");
+            Db.Comms = GetSettingFromXml("//Db/Comms");
+            Db.ContactManagement = GetSettingFromXml("//Db/ContactManagement");
+            Db.Experian = GetSettingFromXml("//Db/Experian");
+            Db.ExperianBulk = GetSettingFromXml("//Db/ExperianBulk");
+            Db.FileStorage = GetSettingFromXml("//Db/FileStorage");
+            Db.GreyfaceShell = GetSettingFromXml("//Db/GreyfaceShell");
+            Db.Hds = GetSettingFromXml("//Db/Hds");
+            Db.Hpi = GetSettingFromXml("//Db/Hpi");
+            Db.IpLookup = GetSettingFromXml("//Db/IpLookup");
+            Db.Marketing = GetSettingFromXml("//Db/Marketing");
+            Db.Ops = GetSettingFromXml("//Db/Ops");
+            Db.OpsLogs = GetSettingFromXml("//Db/OpsLogs");
+            Db.OpsSagas = GetSettingFromXml("//Db/OpsSagas");
+            Db.Payments = GetSettingFromXml("//Db/Payments");
+            Db.Pps = GetSettingFromXml("//Db/Pps");
+            Db.PrepaidCard = GetSettingFromXml("//Db/PrepaidCard");
+            Db.QaData = GetSettingFromXml("//Db/QaData");
+            Db.Risk = GetSettingFromXml("//Db/Risk");
+            Db.Salesforce = GetSettingFromXml("//Db/Salesforce");
+            Db.Scheduler = GetSettingFromXml("//Db/Scheduler");
+            Db.Sms = GetSettingFromXml("//Db/Sms");
+            Db.TimeZone = GetSettingFromXml("//Db/Timezone");
+            Db.TransUnion = GetSettingFromXml("//Db/TransUnion");
+            Db.Uru = GetSettingFromXml("//Db/Uru");
+            Db.WongaPay = GetSettingFromXml("//Db/WongaPay");
+            Db.WongaWholeStaging = GetSettingFromXml("//Db/WongaWholeStaging");
 
             Trace.WriteLine(SUT, typeof(Config).FullName);
             Trace.WriteLine(AUT, typeof(Config).FullName);
-            /*foreach (Object config in new Object[] { Api, Msmq, Db })
-                foreach (PropertyInfo property in config.GetType().GetProperties())
-                    Trace.WriteLine(String.Format("{0} = {1}", property.Name, property.GetValue(config, null)), config.GetType().FullName);*/
         }
 
         public static T Throw<T>()
@@ -322,11 +284,15 @@ namespace Wonga.QA.Framework.Core
             public KeyValuePair<String, String> Marketing { get; set; }
             public KeyValuePair<String, String> Bi { get; set; }
 
-            public KeyValuePair<String, String> Accounting { get; set; }
             public KeyValuePair<String, String> BankGateway { get; set; }
+            public KeyValuePair<String, String> BankGatewayBmo { get; set; }
+            public KeyValuePair<String, String> BankGatewayBottomLine { get; set; }
+            public KeyValuePair<String, String> BankGatewayHsbc { get; set; }
+            public KeyValuePair<String, String> BankGatewayHyphen { get; set; }
+            public KeyValuePair<String, String> BankGatewayRbc { get; set; }
+            public KeyValuePair<String, String> BankGatewayScotia { get; set; }
+            public KeyValuePair<String, String> BankGatewayEasyPay { get; set; }
             public KeyValuePair<String, String> Blacklist { get; set; }
-            public KeyValuePair<String, String> Bmo { get; set; }
-            public KeyValuePair<String, String> BottomLine { get; set; }
             public KeyValuePair<String, String> CallReport { get; set; }
             public KeyValuePair<String, String> CallValidate { get; set; }
             public KeyValuePair<String, String> CardPayment { get; set; }
@@ -339,69 +305,17 @@ namespace Wonga.QA.Framework.Core
             public KeyValuePair<String, String> ExperianBulk { get; set; }
             public KeyValuePair<String, String> FileStorage { get; set; }
             public KeyValuePair<String, String> Graydon { get; set; }
-            public KeyValuePair<String, String> Hds { get; set; }
             public KeyValuePair<String, String> Hpi { get; set; }
-            public KeyValuePair<String, String> Hsbc { get; set; }
-            public KeyValuePair<String, String> Hyphen { get; set; }
             public KeyValuePair<String, String> Iovation { get; set; }
-            public KeyValuePair<String, String> Rbc { get; set; }
             public KeyValuePair<String, String> Salesforce { get; set; }
             public KeyValuePair<String, String> Scheduler { get; set; }
-            public KeyValuePair<String, String> Scotia { get; set; }
             public KeyValuePair<String, String> Sms { get; set; }
             public KeyValuePair<String, String> TimeoutManager { get; set; }
             public KeyValuePair<String, String> TimeZone { get; set; }
             public KeyValuePair<String, String> TransUnion { get; set; }
             public KeyValuePair<String, String> Uru { get; set; }
             public KeyValuePair<String, String> WongaPay { get; set; }
-			public KeyValuePair<String, String> EasyPay { get; set; }
 			public KeyValuePair<String, String> PayU { get; set; }
-
-
-            public SvcConfig(String server) : this(server, server) { }
-
-            public SvcConfig(String service, String component)
-            {
-                Ops = new KeyValuePair<String, String>("Wonga.Ops.Handlers", service);
-                Comms = new KeyValuePair<String, String>("Wonga.Comms.Handlers", service);
-                Payments = new KeyValuePair<String, String>("Wonga.Payments.Handlers", service);
-                Risk = new KeyValuePair<String, String>("Wonga.Risk.Handlers", service);
-                Marketing = new KeyValuePair<String, String>("Wonga.Marketing.Handlers", service);
-                Bi = new KeyValuePair<String, String>("Wonga.Bi.Handlers", service);
-
-                BankGateway = new KeyValuePair<String, String>("Wonga.BankGateway.Handlers", component);
-                Blacklist = new KeyValuePair<String, String>("Wonga.BlackList.Handlers", component);
-                Bmo = new KeyValuePair<String, String>("Wonga.BankGateway.Bmo.Handlers", component);
-                BottomLine = new KeyValuePair<String, String>("Wonga.BankGateway.Bottomline.Handlers", component);
-                CallReport = new KeyValuePair<String, String>("Wonga.CallReport.Handlers", component);
-                CallValidate = new KeyValuePair<String, String>("Wonga.CallValidate.Handlers", component);
-                CardPayment = new KeyValuePair<String, String>("Wonga.CardPayment.Handlers", component);
-                ColdStorage = new KeyValuePair<String, String>("Wonga.Payments.ColdStorage.Handlers", component);
-                ContactManagement = new KeyValuePair<String, String>("Wonga.Comms.ContactManagement.Handlers", component);
-                DocumentGeneration = new KeyValuePair<String, String>("Wonga.Comms.DocumentGeneration.Handlers", component);
-                Email = new KeyValuePair<String, String>("Wonga.Email.Handlers", component);
-                Equifax = new KeyValuePair<String, String>("Wonga.Equifax.Handlers", component);
-                Experian = new KeyValuePair<String, String>("Wonga.Experian.Handlers", component);
-                ExperianBulk = new KeyValuePair<String, String>("Wonga.ExperianBulk.Handlers", component);
-                FileStorage = new KeyValuePair<String, String>("Wonga.FileStorage.Handlers", component);
-                Graydon = new KeyValuePair<String, String>("Wonga.Graydon.Handlers", component);
-                Hpi = new KeyValuePair<String, String>("Wonga.HPI.Handlers", component);
-                Hsbc = new KeyValuePair<String, String>("Wonga.BankGateway.HSBC.Handlers", component);
-                Hyphen = new KeyValuePair<String, String>("Wonga.BankGateway.Hyphen.Handlers", component);
-                Iovation = new KeyValuePair<String, String>("Wonga.Iovation.Handlers", component);
-                Rbc = new KeyValuePair<String, String>("Wonga.BankGateway.Rbc.Handlers", component);
-                Salesforce = new KeyValuePair<String, String>("Wonga.Salesforce.Handlers", component);
-                Scheduler = new KeyValuePair<String, String>("Wonga.Scheduler.Handlers", component);
-                Scotia = new KeyValuePair<String, String>("Wonga.BankGateway.Scotia.Handlers", component);
-                Sms = new KeyValuePair<String, String>("Wonga.Sms.Handlers", component);
-                TimeoutManager = new KeyValuePair<String, String>("Wonga.TimeoutManager.Handlers", component);
-                TimeZone = new KeyValuePair<String, String>("Wonga.TimeZone.Handlers", component);
-                TransUnion = new KeyValuePair<String, String>("Wonga.TransUnion.Handlers", component);
-                Uru = new KeyValuePair<String, String>("Wonga.URU.Handlers", component);
-                WongaPay = new KeyValuePair<String, String>("Wonga.WongaPay.Handlers", component);
-				EasyPay = new KeyValuePair<String, String>("Wonga.BankGateway.EasyPay.Handlers", component);
-				PayU = new KeyValuePair<String, String>("Wonga.PayU.Handlers", component);
-			}
         }
 
         public class MsmqConfig
@@ -417,10 +331,10 @@ namespace Wonga.QA.Framework.Core
             public String BankGatewayBmo { get; set; }
             public String BankGatewayScotia { get; set; }
 			public String BankGatewayRbc { get; set; }
-			public String BottomLine { get; set; }
-            public String Hsbc { get; set; }
-            public String Hyphen { get; set; }
-            public String Scotia { get; set; }
+            public String BankGatewayBottomLine { get; set; }
+            public String BankGatewayHsbc { get; set; }
+            public String BankGatewayHyphen { get; set; }
+            public String BankGatewayEasyPay { get; set; }
             public String Blacklist { get; set; }
             public String CallReport { get; set; }
             public String CallValidate { get; set; }
@@ -432,7 +346,6 @@ namespace Wonga.QA.Framework.Core
             public String ExperianBulk { get; set; }
             public String FileStorage { get; set; }
             public String Graydon { get; set; }
-            public String Hds { get; set; }
             public String Hpi { get; set; }
             public String Iovation { get; set; }
             public String Salesforce { get; set; }
@@ -442,53 +355,7 @@ namespace Wonga.QA.Framework.Core
             public String TransUnion { get; set; }
             public String Uru { get; set; }
             public String WongaPay { get; set; }
-			public String EasyPay { get; set; }
 			public String PayU { get; set; }
-
-            public MsmqConfig(String server) : this(server, server) { }
-
-            public MsmqConfig(String service, String component)
-            {
-                String format = @"FormatName:DIRECT=OS:{0}\private$\{1}";
-
-                Ops = String.Format(format, service, "opsservice");
-                Comms = String.Format(format, service, "commsservice");
-                Payments = String.Format(format, service, "paymentsservice");
-                Risk = String.Format(format, service, "riskservice");
-                Marketing = String.Format(format, service, "marketingservice");
-                Bi = String.Format(format, service, "biservice");
-
-                BankGateway = String.Format(format, component, "bankgatewaytc");
-                BankGatewayBmo = String.Format(format, component, "bankgatewaybmotc");
-				BankGatewayRbc = String.Format(format, component, "bankgatewayrbctc");
-				BankGatewayScotia = String.Format(format, component, "bankgatewayscotiatc");
-                Blacklist = String.Format(format, component, "blacklistcomponent");
-                BottomLine = String.Format(format, component, "bankgatewaybottomlinetc");
-                CallReport = String.Format(format, component, "callreportcomponent");
-                CallValidate = String.Format(format, component, "callvalidatecomponent");
-                CardPayment = String.Format(format, component, "cardpaymentcomponent");
-                ColdStorage = String.Format(format, component, "coldstoragecomponent");
-                Email = String.Format(format, component, "emailcomponent");
-                Equifax = String.Format(format, component, "equifaxcomponent");
-                Experian = String.Format(format, component, "experiancomponent");
-                ExperianBulk = String.Format(format, component, "experianbulkcomponent");
-                FileStorage = String.Format(format, component, "filestoragecomponent");
-                Graydon = String.Format(format, component, "graydoncomponent");
-                Hpi = String.Format(format, component, "hpicomponent");
-                Hsbc = String.Format(format, component, "bankgatewayhsbctc");
-                Hyphen = String.Format(format, component, "bankgatewayhyphentc");
-                Iovation = String.Format(format, component, "iovationcomponent");
-                Salesforce = String.Format(format, component, "salesforcecomponent");
-                Scotia = String.Format(format, component, "bankgatewayscotiatc");
-                Sms = String.Format(format, component, "smscomponent");
-                SmsDistributor = String.Format(format, component, "smsdistributorcomponent");
-                Timezone = String.Format(format, component, "timezonecomponent");
-                TransUnion = String.Format(format, component, "transunioncomponent");
-                Uru = String.Format(format, component, "urucomponent");
-                WongaPay = String.Format(format, component, "wongapaytc");
-				EasyPay = String.Format(format, component, "bankgatewayeasypaytc");
-				PayU = String.Format(format, component, "payucomponent");
-            }
         }
 
         public class DbConfig
@@ -502,6 +369,7 @@ namespace Wonga.QA.Framework.Core
             public String BiCustomerManagement { get; set; }
 
             public String BankGateway { get; set; }
+            public String Hds { get; set; }
             public String Blacklist { get; set; }
             public String CallReport { get; set; }
             public String CallValidate { get; set; }
@@ -512,7 +380,6 @@ namespace Wonga.QA.Framework.Core
             public String Experian { get; set; }
             public String ExperianBulk { get; set; }
             public String FileStorage { get; set; }
-            public String Hds { get; set; }
             public String Hpi { get; set; }
             public String IpLookup { get; set; }
             public String Salesforce { get; set; }
@@ -527,70 +394,9 @@ namespace Wonga.QA.Framework.Core
             public String Pps { get; set; }
             public String WongaWholeStaging { get; set; }
             public String GreyfaceShell { get; set; }
-
             public String OpsLogs { get; set; }
             public String OpsSagas { get; set; }
             public String QaData { get; set; }
-
-            // Returns the server running against
-            public String ServerName { get; set; }
-            public String HdsServerName { get; set; }
-
-            public DbConfig(String server)
-            {
-                Func<String, String> builder = catalog => new SqlConnectionStringBuilder { DataSource = server, InitialCatalog = catalog, IntegratedSecurity = true }.ConnectionString;
-
-                // Set the server
-                ServerName = server;
-
-                Accounting = builder("Accounting");
-                Ops = builder("Ops");
-                OpsLogs = builder("OpsLogs");
-                OpsSagas = builder("OpsSagas");
-                Comms = builder("Comms");
-                Payments = builder("Payments");
-                Risk = builder("Risk");
-                Bi = builder("Bi");
-                BiCustomerManagement = builder("BiCustomerManagement");
-                BankGateway = builder("BankGateway");
-                Blacklist = builder("Blacklist");
-                CallReport = builder("CallReport");
-                CallValidate = builder("CallValidate");
-                CardPayment = builder("CardPayment");
-                ColdStorage = builder("ColdStorage");
-                ContactManagement = builder("ContactManagement");
-                Experian = builder("Experian");
-                ExperianBulk = builder("ExperianBulk");
-                FileStorage = builder("FileStorage");
-                Hpi = builder("Hpi");
-                IpLookup = builder("IpLookup");
-                QaData = builder("QaData");
-                Salesforce = builder("Salesforce");
-                Scheduler = builder("Scheduler");
-                Sms = builder("Sms");
-                TimeZone = builder("TimeZone");
-                TransUnion = builder("TransUnion");
-                Uru = builder("Uru");
-                WongaPay = builder("WongaPay");
-                Marketing = builder("Marketing");
-                PrepaidCard = builder("PrepaidCard");
-                Pps = builder("Pps");
-                WongaWholeStaging = builder("WongaWholeStaging");
-                GreyfaceShell = builder("GreyfaceShell");
-
-            }
-
-
-            public DbConfig(String server, String region, String product)
-            {
-                Func<String, String> builder = catalog => new SqlConnectionStringBuilder { DataSource = server, InitialCatalog = catalog, IntegratedSecurity = true }.ConnectionString;
-
-                // Set the server
-                HdsServerName = server;
-
-                Cdc = builder(region + "_CDCStaging");
-                Hds = builder(region + "_" + product + "WongaHDS");
-            }
         }
 
         public class UiConfig
@@ -649,61 +455,24 @@ namespace Wonga.QA.Framework.Core
 
         public class AdminConfig
         {
-
             public Uri Home { get; set; }
-
-            public AdminConfig(String host)
-            {
-                Home = new UriBuilder {Host = host}.Uri;
-            }
         }
 
         public class PrepaidAdminConfig
         {
             public Uri Home { get; set; }
-            public String User { get; private set; }
-            public String Pwd { get; private set; }
-
-            public PrepaidAdminConfig()
-            {
-                Home = new Uri(Ui.Url + "admin/settings/wonga_prepaid");
-                this.User = "root";
-                this.Pwd = "root";
-            }
+            public String User { get; set; }
+            public String Pwd { get; set; }
         }
 
         public class SalesforceConfig
         {
             public Uri Home { get; set; }
-            public String Username { get; private set; }
-            public String Password { get; private set; }
-
-            public SalesforceConfig(String host)
-            {
-                Home = new UriBuilder { Host = host }.Uri;
-            }
-
-            public SalesforceConfig(Uri uri, string usernname, string password)
-            {
-                Home = uri;
-                Username = usernname;
-                Password = password;
-            }
-
-            public void SetLoginDetails(string username, string password)
-            {
-                Username = username;
-                Password = password;
-            }
-        }
-
-        public class SalesforceApiConfig : SalesforceConfig
-        {
-            public SalesforceApiConfig(string username)
-                : base(new Uri("https://test.salesforce.com/services/Soap/c/23.0/0DFD0000000Drwo"), username, "7h2oieg0482h5gqh6R8sbJFQiLuFJUwe61yhB2yTq")
-            {
-
-            }
+            public String Username { get; set; }
+            public String Password { get; set; }
+            public String ApiUrl { get; set; }
+            public String ApiUsername { get; set; }
+            public String ApiPassword { get; set; }
         }
 
         public class EmailConfig
@@ -723,35 +492,11 @@ namespace Wonga.QA.Framework.Core
         public class PayLaterConfig
         {
             public Uri Home { get; set; }
-            public String Username { get; private set; }
-            public String Password { get; private set; }
-
-            public PayLaterConfig(String host)
-            {
-                Home = new UriBuilder { Host = host }.Uri;
-            }
-
-            public PayLaterConfig(Uri uri, string usernname, string password)
-            {
-                Home = uri;
-                Username = usernname;
-                Password = password;
-            }
-
-            public void SetLoginDetails(string username, string password)
-            {
-                Username = username;
-                Password = password;
-            }
-        }
-
-        public class PayLaterApiConfig : PayLaterConfig
-        {
-            public PayLaterApiConfig(string username)
-                : base(new Uri("http://dev.paylater.com/"), username, "Passw0rd")
-            {
-
-            }
+            public String Username { get; set; }
+            public String Password { get; set; }
+            public String ApiUrl { get; set; }
+            public String ApiUsername { get; set; }
+            public String ApiPassword { get; set; }
         }
 
         public class CommonApiConfig
@@ -762,6 +507,71 @@ namespace Wonga.QA.Framework.Core
                 Uri uri = new UriBuilder { Host = host }.Uri;
                 Commands = new Uri(uri, "commands");
             }
+        }
+    }
+
+    public static class LegacyEnvVarMapper
+    {
+        static Dictionary<string, string> SutAndAutToFileMap = new Dictionary<string, string>();
+        static LegacyEnvVarMapper()
+        {
+            string fileExt = ".v3qaconfig";
+            SutAndAutToFileMap = new Dictionary<string, string>();
+            SutAndAutToFileMap.Add(SUT.Dev.ToString().ToLower()+AUT.Ca.ToString().ToLower(), "ca_local"+fileExt);
+            SutAndAutToFileMap.Add(SUT.Dev.ToString().ToLower() + AUT.Pl.ToString().ToLower(), "pl_local" + fileExt);
+            SutAndAutToFileMap.Add(SUT.Dev.ToString().ToLower() + AUT.Uk.ToString().ToLower(), "uk_local" + fileExt);
+            SutAndAutToFileMap.Add(SUT.Dev.ToString().ToLower() + AUT.Wb.ToString().ToLower(), "wb_uk_local" + fileExt);
+            SutAndAutToFileMap.Add(SUT.Dev.ToString().ToLower() + AUT.Za.ToString().ToLower(), "wb_za_local" + fileExt);
+
+            SutAndAutToFileMap.Add(SUT.Live.ToString().ToLower() + AUT.Ca.ToString().ToLower(), "ca_live" + fileExt);
+            SutAndAutToFileMap.Add(SUT.Live.ToString().ToLower() + AUT.Pl.ToString().ToLower(), "pl_live" + fileExt);
+            SutAndAutToFileMap.Add(SUT.Live.ToString().ToLower() + AUT.Uk.ToString().ToLower(), "uk_live" + fileExt);
+            SutAndAutToFileMap.Add(SUT.Live.ToString().ToLower() + AUT.Wb.ToString().ToLower(), "wb_uk_live" + fileExt);
+            SutAndAutToFileMap.Add(SUT.Live.ToString().ToLower() + AUT.Za.ToString().ToLower(), "za_live" + fileExt);
+
+            SutAndAutToFileMap.Add(SUT.RC.ToString().ToLower() + AUT.Ca.ToString().ToLower(), "ca_rc_master" + fileExt);
+            SutAndAutToFileMap.Add(SUT.RC.ToString().ToLower() + AUT.Pl.ToString().ToLower(), "pl_rc_master" + fileExt);
+            SutAndAutToFileMap.Add(SUT.RC.ToString().ToLower() + AUT.Uk.ToString().ToLower(), "uk_rc_master" + fileExt);
+            SutAndAutToFileMap.Add(SUT.RC.ToString().ToLower() + AUT.Wb.ToString().ToLower(), "wb_uk_rc_master" + fileExt);
+            SutAndAutToFileMap.Add(SUT.RC.ToString().ToLower() + AUT.Za.ToString().ToLower(), "za_rc_master" + fileExt);
+
+            SutAndAutToFileMap.Add(SUT.RCRelease.ToString().ToLower() + AUT.Ca.ToString().ToLower(), "ca_rc_release" + fileExt);
+            SutAndAutToFileMap.Add(SUT.RCRelease.ToString().ToLower() + AUT.Pl.ToString().ToLower(), "pl_rc_release" + fileExt);
+            SutAndAutToFileMap.Add(SUT.RCRelease.ToString().ToLower() + AUT.Uk.ToString().ToLower(), "uk_rc_release" + fileExt);
+            SutAndAutToFileMap.Add(SUT.RCRelease.ToString().ToLower() + AUT.Wb.ToString().ToLower(), "wb_uk_rc_release" + fileExt);
+            SutAndAutToFileMap.Add(SUT.RCRelease.ToString().ToLower() + AUT.Za.ToString().ToLower(), "za_rc_release" + fileExt);
+
+            SutAndAutToFileMap.Add(SUT.UAT.ToString().ToLower() + AUT.Ca.ToString().ToLower(), "ca_uat" + fileExt);
+            SutAndAutToFileMap.Add(SUT.UAT.ToString().ToLower() + AUT.Pl.ToString().ToLower(), "pl_uat" + fileExt);
+            SutAndAutToFileMap.Add(SUT.UAT.ToString().ToLower() + AUT.Uk.ToString().ToLower(), "uk_uat" + fileExt);
+            SutAndAutToFileMap.Add(SUT.UAT.ToString().ToLower() + AUT.Wb.ToString().ToLower(), "wb_uk_uat" + fileExt);
+            SutAndAutToFileMap.Add(SUT.UAT.ToString().ToLower() + AUT.Za.ToString().ToLower(), "za_uat" + fileExt);
+
+            SutAndAutToFileMap.Add(SUT.WIP.ToString().ToLower() + AUT.Ca.ToString().ToLower(), "ca_wip_master" + fileExt);
+            SutAndAutToFileMap.Add(SUT.WIP.ToString().ToLower() + AUT.Pl.ToString().ToLower(), "pl_wip_master" + fileExt);
+            SutAndAutToFileMap.Add(SUT.WIP.ToString().ToLower() + AUT.Uk.ToString().ToLower(), "uk_wip_master" + fileExt);
+            SutAndAutToFileMap.Add(SUT.WIP.ToString().ToLower() + AUT.Wb.ToString().ToLower(), "wb_uk_wip_master" + fileExt);
+            SutAndAutToFileMap.Add(SUT.WIP.ToString().ToLower() + AUT.Za.ToString().ToLower(), "za_wip_master" + fileExt);
+
+            SutAndAutToFileMap.Add(SUT.WIPRelease.ToString().ToLower() + AUT.Ca.ToString().ToLower(), "ca_wip_release" + fileExt);
+            SutAndAutToFileMap.Add(SUT.WIPRelease.ToString().ToLower() + AUT.Pl.ToString().ToLower(), "pl_wip_release" + fileExt);
+            SutAndAutToFileMap.Add(SUT.WIPRelease.ToString().ToLower() + AUT.Uk.ToString().ToLower(), "uk_wip_release" + fileExt);
+            SutAndAutToFileMap.Add(SUT.WIPRelease.ToString().ToLower() + AUT.Wb.ToString().ToLower(), "wb_uk_wip_release" + fileExt);
+            SutAndAutToFileMap.Add(SUT.WIPRelease.ToString().ToLower() + AUT.Za.ToString().ToLower(), "za_wip_release" + fileExt);
+
+            SutAndAutToFileMap.Add(SUT.WIPDI.ToString().ToLower() + AUT.Ca.ToString().ToLower(), "ca_wipdi" + fileExt);
+            SutAndAutToFileMap.Add(SUT.WIPDI.ToString().ToLower() + AUT.Pl.ToString().ToLower(), "pl_wipdi" + fileExt);
+            SutAndAutToFileMap.Add(SUT.WIPDI.ToString().ToLower() + AUT.Uk.ToString().ToLower(), "uk_wipdi" + fileExt);
+            SutAndAutToFileMap.Add(SUT.WIPDI.ToString().ToLower() + AUT.Wb.ToString().ToLower(), "wb_uk_wipdi" + fileExt);
+            SutAndAutToFileMap.Add(SUT.WIPDI.ToString().ToLower() + AUT.Za.ToString().ToLower(), "za_wip_wipdi" + fileExt);
+        }
+
+        public static string GetFileNameForEnvVars(SUT sut, AUT aut)
+        {
+            string key = sut.ToString().ToLower() + aut.ToString().ToLower();
+            if (!SutAndAutToFileMap.ContainsKey(key))
+                return null;
+            return SutAndAutToFileMap[key];
         }
     }
 

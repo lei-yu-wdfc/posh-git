@@ -26,23 +26,22 @@ namespace Wonga.QA.Framework.Msmq
         private MsmqQueue _fileStorage;
         private MsmqQueue _graydon;
         private MsmqQueue _hpi;
-        private MsmqQueue _hsbc;
-        private MsmqQueue _hyphen;
+        private MsmqQueue _BankGatewayHsbc;
+        private MsmqQueue _BankGatewayHyphen;
         private MsmqQueue _iovation;
         private MsmqQueue _salesforce;
-        private MsmqQueue _scotia;
         private MsmqQueue _sms;
         private MsmqQueue _smsDistributor;
         private MsmqQueue _timeZone;
         private MsmqQueue _transUnion;
         private MsmqQueue _uru;
         private MsmqQueue _wongaPay;
-        private MsmqQueue _easyPay;
+        private MsmqQueue _BankGatewayEasyPay;
 
-        public MsmqQueue EasyPay
+        public MsmqQueue BankGatewayEasyPay
         {
-            get { return _easyPay ?? (_easyPay = new MsmqQueue(Config.Msmq.EasyPay)); }
-            set { _easyPay = value; }
+            get { return _BankGatewayEasyPay ?? (_BankGatewayEasyPay = new MsmqQueue(Config.Msmq.BankGatewayEasyPay)); }
+            set { _BankGatewayEasyPay = value; }
         }
 
         public MsmqQueue Ops
@@ -97,12 +96,6 @@ namespace Wonga.QA.Framework.Msmq
 		{
 			get { return _bankGatewayRbc ?? (_bankGatewayRbc = new MsmqQueue(Config.Msmq.BankGatewayRbc)); }
 			set { _bankGatewayRbc = value; }
-		}
-
-		public MsmqQueue BankGatewayScotia
-		{
-			get { return _bankGatewayScotia ?? (_bankGatewayScotia = new MsmqQueue(Config.Msmq.BankGatewayScotia)); }
-			set { _bankGatewayScotia = value; }
 		}
 
         public MsmqQueue Blacklist
@@ -177,16 +170,16 @@ namespace Wonga.QA.Framework.Msmq
             set { _hpi = value; }
         }
 
-        public MsmqQueue Hsbc
+        public MsmqQueue BankGatewayHsbc
         {
-            get { return _hsbc ?? (_hsbc = new MsmqQueue(Config.Msmq.Hsbc)); }
-            set { _hsbc = value; }
+            get { return _BankGatewayHsbc ?? (_BankGatewayHsbc = new MsmqQueue(Config.Msmq.BankGatewayHsbc)); }
+            set { _BankGatewayHsbc = value; }
         }
 
-        public MsmqQueue Hyphen
+        public MsmqQueue BankGatewayHyphen
         {
-            get { return _hyphen ?? (_hyphen = new MsmqQueue(Config.Msmq.Hyphen)); }
-            set { _hyphen = value; }
+            get { return _BankGatewayHyphen ?? (_BankGatewayHyphen = new MsmqQueue(Config.Msmq.BankGatewayHyphen)); }
+            set { _BankGatewayHyphen = value; }
         }
 
         public MsmqQueue Iovation
@@ -201,10 +194,10 @@ namespace Wonga.QA.Framework.Msmq
             set { _salesforce = value; }
         }
 
-        public MsmqQueue Scotia
+        public MsmqQueue BankGatewayScotia
         {
-            get { return _scotia ?? (_scotia = new MsmqQueue(Config.Msmq.Scotia)); }
-            set { _scotia = value; }
+            get { return _bankGatewayScotia ?? (_bankGatewayScotia = new MsmqQueue(Config.Msmq.BankGatewayScotia)); }
+            set { _bankGatewayScotia = value; }
         }
 
         public MsmqQueue Sms

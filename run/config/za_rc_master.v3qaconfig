@@ -1,0 +1,200 @@
+<Configuration>
+	<SUT>RC</SUT>
+	<AUT>Za</AUT>
+	<Region>Za</Region>
+	<Product></Product>
+	
+	<ProxyMode>false</ProxyMode>
+	
+	<Ui>
+		<HomePage>http://%%//SUT%%.%%//AUT%%.wonga.com</HomePage>
+		<Browser>Firefox</Browser>
+		<BrowserVersion></BrowserVersion>
+		<RemoteMode>false</RemoteMode>
+		<RemoteUsername E="true">78-196-39-79-220-97-179-93-219-38-223-6-111-199-85-8</RemoteUsername>
+		<RemotePassword E="true">67-47-194-112-128-55-66-92-243-57-98-45-2-227-148-217</RemotePassword>
+		<RemoteApiKey E="true">8-139-154-82-220-145-176-66-88-104-58-34-67-119-68-244-5-93-120-252-133-138-181-67-193-181-28-232-123-233-90-1-128-46-148-90-94-221-174-233-253-22-187-5-123-36-83-125</RemoteApiKey>
+		<RemoteUri>http://ondemand.saucelabs.com:80/wd/hub</RemoteUri>
+		<DoubleClickCookiesHome>http://ad-emea.doubleclick.net/clk;255259813;78967212;v?%%//Ui/HomePage%%</DoubleClickCookiesHome>
+	</Ui>
+	
+	<Admin>
+		<HomePage>http://%%//SUT%%.admin.%%//AUT%%.wonga.com</HomePage>
+	</Admin>
+	
+	<PrepaidAdmin>
+		<HomePage>%%//Ui/HomePage%%/admin/settings/wonga_prepaid</HomePage>
+		<Username>root</Username>
+		<Password>root</Password>
+	</PrepaidAdmin>
+	
+	<Email>
+		<Host>imap.gmail.com</Host>
+		<Username>qa.wonga.com@gmail.com</Username>
+		<Password E="true">150-115-83-205-84-90-228-62-77-32-60-231-191-71-103-48</Password>
+		<Port>993</Port>
+		<IsSsl>true</IsSsl>
+	</Email>
+	
+	<Api>
+		<Url>%%//SUT%%.api.%%//AUT%%.wonga.com</Url>
+	</Api>
+	
+	<CommonApi>
+		<Url>%%//SUT%%.IVRWebApi.%%//AUT%%.wonga.com</Url>
+	</CommonApi>
+	
+	<CSApi>
+		<Url>%%//SUT%%.csapi.%%//AUT%%.wonga.com</Url>
+	</CSApi>
+	
+	<Salesforce>
+		<HomePage>http://test.salesforce.com</HomePage>
+		<Username>qa.wonga.com@gmail.com.rc</Username>
+		<Password E="true">150-115-83-205-84-90-228-62-77-32-60-231-191-71-103-48</Password>
+		<ApiUrl>https://test.salesforce.com/services/Soap/c/23.0/0DFD0000000Drwo</ApiUrl>
+		<ApiUsername>v3integration@wonga.com.rc</ApiUsername>
+		<ApiPassword E="true">74-146-235-124-160-166-252-149-140-25-182-153-167-156-82-164-123-200-208-169-216-105-209-83-1-133-78-140-42-202-122-195-164-164-40-143-35-163-165-171-199-198-4-126-55-155-242-97</ApiPassword>
+	</Salesforce>
+	
+	<PayLater>
+		<HomePage>http://dev.paylater.com</HomePage>
+		<Username></Username>
+		<Password>Passw0rd</Password>
+		<ApiUrl></ApiUrl>
+		<ApiPassword></ApiPassword>
+		<ApiUsername></ApiUsername>
+	</PayLater>
+	
+	<Svc>
+		<ServicesHost>RC4</ServicesHost>
+		<ComponentsHost>RC4</ComponentsHost>
+		
+		<Ops Name="Wonga.Ops.Handlers">%%//Svc/ServicesHost%%</Ops>
+		<Comms Name="Wonga.Comms.Handlers">%%//Svc/ServicesHost%%</Comms>
+		<Payments Name="Wonga.Payments.Handlers">%%//Svc/ServicesHost%%</Payments>
+		<Risk Name="Wonga.Risk.Handlers">%%//Svc/ServicesHost%%</Risk>
+		<Marketing Name="Wonga.Marketing.Handlers">%%//Svc/ServicesHost%%</Marketing>
+		<Bi Name="Wonga.Bi.Handlers">%%//Svc/ServicesHost%%</Bi>
+		
+		<BankGateway Name="Wonga.BankGateway.Handlers">%%//Svc/ComponentsHost%%</BankGateway>
+		<BlackList Name="Wonga.BlackList.Handlers">%%//Svc/ComponentsHost%%</BlackList>
+		<Bmo Name="Wonga.Bmo.Handlers">%%//Svc/ComponentsHost%%</Bmo>
+		<BottomLine Name="Wonga.BottomLine.Handlers">%%//Svc/ComponentsHost%%</BottomLine>
+		<CallReport Name="Wonga.CallReport.Handlers">%%//Svc/ComponentsHost%%</CallReport>
+		<CallValidate Name="Wonga.CallValidate.Handlers">%%//Svc/ComponentsHost%%</CallValidate>
+		<CardPayment Name="Wonga.CardPayment.Handlers">%%//Svc/ComponentsHost%%</CardPayment>
+		<ColdStorage Name="Wonga.ColdStorage.Handlers">%%//Svc/ComponentsHost%%</ColdStorage>
+		<ContactManagement Name="Wonga.ContactManagement.Handlers">%%//Svc/ComponentsHost%%</ContactManagement>
+		<DocumentGeneration Name="Wonga.DocumentGeneration.Handlers">%%//Svc/ComponentsHost%%</DocumentGeneration>
+		<Email Name="Wonga.Email.Handlers">%%//Svc/ComponentsHost%%</Email>
+		<Equifax Name="Wonga.Equifax.Handlers">%%//Svc/ComponentsHost%%</Equifax>
+		<Experian Name="Wonga.Experian.Handlers">%%//Svc/ComponentsHost%%</Experian>
+		<ExperianBulk Name="Wonga.ExperianBulk.Handlers">%%//Svc/ComponentsHost%%</ExperianBulk>
+		<FileStorage Name="Wonga.FileStorage.Handlers">%%//Svc/ComponentsHost%%</FileStorage>
+		<Graydon Name="Wonga.Graydon.Handlers">%%//Svc/ComponentsHost%%</Graydon>
+		<Hpi Name="Wonga.Hpi.Handlers">%%//Svc/ComponentsHost%%</Hpi>
+		<Hsbc Name="Wonga.Hsbc.Handlers">%%//Svc/ComponentsHost%%</Hsbc>
+		<Hyphen Name="Wonga.Hyphen.Handlers">%%//Svc/ComponentsHost%%</Hyphen>
+		<Iovation Name="Wonga.Iovation.Handlers">%%//Svc/ComponentsHost%%</Iovation>
+		<Rbc Name="Wonga.Rbc.Handlers">%%//Svc/ComponentsHost%%</Rbc>
+		<Salesforce Name="Wonga.Salesforce.Handlers">%%//Svc/ComponentsHost%%</Salesforce>
+		<Scheduler Name="Wonga.Scheduler.Handlers">%%//Svc/ComponentsHost%%</Scheduler>
+		<Scotia Name="Wonga.Scotia.Handlers">%%//Svc/ComponentsHost%%</Scotia>
+		<Sms Name="Wonga.Sms.Handlers">%%//Svc/ComponentsHost%%</Sms>
+		<TimeoutManager Name="Wonga.TimeoutManager.Handlers">%%//Svc/ComponentsHost%%</TimeoutManager>
+		<Timezone Name="Wonga.TimeZone.Handlers">%%//Svc/ComponentsHost%%</Timezone>
+		<TransUnion Name="Wonga.TransUnion.Handlers">%%//Svc/ComponentsHost%%</TransUnion>
+		<Uru Name="Wonga.Uru.Handlers">%%//Svc/ComponentsHost%%</Uru>
+		<WongaPay Name="Wonga.WongaPay.Handlers">%%//Svc/ComponentsHost%%</WongaPay>
+		<EasyPay Name="Wonga.EasyPay.Handlers">%%//Svc/ComponentsHost%%</EasyPay>
+		<PayU Name="Wonga.PayU.Handlers">%%//Svc/ComponentsHost%%</PayU>
+	</Svc>
+	
+	<Msmq>
+		<ServicesHost>%%//Svc/ServicesHost%%</ServicesHost>
+		<ComponentsHost>%%//Svc/ComponentsHost%%</ComponentsHost>
+		
+		<Ops>FormatName:DIRECT=OS:%%//Msmq/ServicesHost%%\private$\opsservice</Ops>
+		<Comms>FormatName:DIRECT=OS:%%//Msmq/ServicesHost%%\private$\commsservice</Comms>
+		<Payments>FormatName:DIRECT=OS:%%//Msmq/ServicesHost%%\private$\paymentsservice</Payments>
+		<Risk>FormatName:DIRECT=OS:%%//Msmq/ServicesHost%%\private$\riskservice</Risk>
+		<Marketing>FormatName:DIRECT=OS:%%//Msmq/ServicesHost%%\private$\marketingservice</Marketing>
+		<Bi>FormatName:DIRECT=OS:%%//Msmq/ServicesHost%%\private$\biservice</Bi>
+		
+		<BankGateway >FormatName:DIRECT=OS:%%//Msmq/ComponentsHost%%\private$\bankgatewaytc</BankGateway>
+		<BankGatewayBmo >FormatName:DIRECT=OS:%%//Msmq/ComponentsHost%%\private$\bankgatewaybmotc</BankGatewayBmo>
+		<BankGatewayRbc>FormatName:DIRECT=OS:%%//Msmq/ComponentsHost%%\private$\bankgatewayrbctc</BankGatewayRbc>
+		<BankGatewayScotia>FormatName:DIRECT=OS:%%//Msmq/ComponentsHost%%\private$\bankgatewayscotiatc</BankGatewayScotia>
+		<BankGatewayBottomLine>FormatName:DIRECT=OS:%%//Msmq/ComponentsHost%%\private$\bankgatewaybottomlinetc</BankGatewayBottomLine>
+		<BankGatewayHsbc>FormatName:DIRECT=OS:%%//Msmq/ComponentsHost%%\private$\bankgatewayhsbctc</BankGatewayHsbc>
+		<BankGatewayHyphen>FormatName:DIRECT=OS:%%//Msmq/ComponentsHost%%\private$\bankgatewayhyphentc</BankGatewayHyphen>
+		<BankGatewayEasyPay>FormatName:DIRECT=OS:%%//Msmq/ComponentsHost%%\private$\bankgatewayeasypaytc</BankGatewayEasyPay>
+		<BlackList>FormatName:DIRECT=OS:%%//Msmq/ComponentsHost%%\private$\blacklistcomponent</BlackList>
+		<CallReport>FormatName:DIRECT=OS:%%//Msmq/ComponentsHost%%\private$\callreportcomponent</CallReport>
+		<CallValidate>FormatName:DIRECT=OS:%%//Msmq/ComponentsHost%%\private$\callvalidatecomponent</CallValidate>
+		<CardPayment>FormatName:DIRECT=OS:%%//Msmq/ComponentsHost%%\private$\cardpaymentcomponent</CardPayment>
+		<ColdStorage>FormatName:DIRECT=OS:%%//Msmq/ComponentsHost%%\private$\coldstoragecomponent</ColdStorage>
+		<Email>FormatName:DIRECT=OS:%%//Msmq/ComponentsHost%%\private$\emailcomponent</Email>
+		<Equifax>FormatName:DIRECT=OS:%%//Msmq/ComponentsHost%%\private$\equifaxcomponent</Equifax>
+		<Experian>FormatName:DIRECT=OS:%%//Msmq/ComponentsHost%%\private$\experiancomponent</Experian>
+		<ExperianBulk>FormatName:DIRECT=OS:%%//Msmq/ComponentsHost%%\private$\experianbulkcomponent</ExperianBulk>
+		<FileStorage>FormatName:DIRECT=OS:%%//Msmq/ComponentsHost%%\private$\filestoragecomponent</FileStorage>
+		<Graydon>FormatName:DIRECT=OS:%%//Msmq/ComponentsHost%%\private$\graydoncomponent</Graydon>
+		<Hpi>FormatName:DIRECT=OS:%%//Msmq/ComponentsHost%%\private$\hpicomponent</Hpi>
+		<Iovation>FormatName:DIRECT=OS:%%//Msmq/ComponentsHost%%\private$\iovationcomponent</Iovation>
+		<Salesforce>FormatName:DIRECT=OS:%%//Msmq/ComponentsHost%%\private$\salesforcecomponent</Salesforce>
+		<Sms>FormatName:DIRECT=OS:%%//Msmq/ComponentsHost%%\private$\smscomponent</Sms>
+		<SmsDistributor>FormatName:DIRECT=OS:%%//Msmq/ComponentsHost%%\private$\smsdistributorcomponent</SmsDistributor>
+		<Timezone>FormatName:DIRECT=OS:%%//Msmq/ComponentsHost%%\private$\timezonecomponent</Timezone>
+		<TransUnion>FormatName:DIRECT=OS:%%//Msmq/ComponentsHost%%\private$\transunioncomponent</TransUnion>
+		<Uru>FormatName:DIRECT=OS:%%//Msmq/ComponentsHost%%\private$\urucomponent</Uru>
+		<WongaPay>FormatName:DIRECT=OS:%%//Msmq/ComponentsHost%%\private$\wongapaytc</WongaPay>
+		<PayU>FormatName:DIRECT=OS:%%//Msmq/ComponentsHost%%\private$\payucomponent</PayU>
+	</Msmq>
+	
+	<Db>
+		<Host>%%//Svc/ServicesHost%%</Host>
+		<HdsHost>RC-DISQL01\RC2</HdsHost>
+		
+		<Ops>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=Ops</Ops>
+		<OpsLogs>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=OpsLogs</OpsLogs>
+		<OpsSagas>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=OpsSagas</OpsSagas>
+		<Comms>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=Comms</Comms>
+		<Payments>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=Payments</Payments>
+		<Risk>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=Risk</Risk>
+		<Marketing>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=Marketing</Marketing>
+		<Accounting>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=Accounting</Accounting>
+		<Bi>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=Bi</Bi>
+		<BiCustomerManagement>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=BiCustomerManagement</BiCustomerManagement>
+		
+		<BankGateway>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=BankGateway</BankGateway>
+		<BlackList>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=BlackList</BlackList>
+		<CallReport>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=CallReport</CallReport>
+		<CallValidate>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=CallValidate</CallValidate>
+		<CardPayment>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=CardPayment</CardPayment>
+		<ColdStorage>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=ColdStorage</ColdStorage>
+		<ContactManagement>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=ContactManagement</ContactManagement>
+		<Experian>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=Experian</Experian>
+		<ExperianBulk>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=ExperianBulk</ExperianBulk>
+		<FileStorage>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=FileStorage</FileStorage>		
+		<IpLookup>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=IpLookup</IpLookup>		
+		<Hpi>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=Hpi</Hpi>
+		<Salesforce>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=Salesforce</Salesforce>
+		<Sms>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=Sms</Sms>
+		<TimeoutManager>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=TimeoutManager</TimeoutManager>
+		<QaData>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=QaData</QaData>
+		<Scheduler>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=Scheduler</Scheduler>
+		<Timezone>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=Timezone</Timezone>
+		<TransUnion>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=TransUnion</TransUnion>
+		<Uru>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=Uru</Uru>
+		<WongaPay>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=WongaPay</WongaPay>
+		<WongaWholeStaging>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=WongaWholeStaging</WongaWholeStaging>
+		<GreyfaceShell>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=GreyfaceShell</GreyfaceShell>
+		<Pps>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=Pps</Pps>
+		<PrepaidCard>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=PrepaidCard</PrepaidCard>
+		
+		<Cdc>Data Source=%%//Db/HdsHost%%;Integrated Security=true;Initial Catalog=%%//Region%%_CDCStaging</Cdc>
+		<Hds>Data Source=%%//Db/HdsHost%%;Integrated Security=true;Initial Catalog=%%//Region%%_WongaHDS</Hds>
+	</Db>
+</Configuration>

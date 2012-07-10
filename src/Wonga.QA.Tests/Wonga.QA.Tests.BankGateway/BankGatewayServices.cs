@@ -16,16 +16,16 @@ namespace Wonga.QA.Tests.BankGateway
             switch (Config.AUT)
             {
                 case AUT.Uk:
-                    Assert.IsTrue(Drive.Svc.Hsbc.IsRunning());
+                    Assert.IsTrue(Drive.Svc.BankGatewayHsbc.IsRunning());
                     break;
                 case AUT.Za:
-                    Assert.IsTrue(Drive.Svc.Hyphen.IsRunning());
-					Assert.IsTrue(Drive.Svc.EasyPay.IsRunning());
+                    Assert.IsTrue(Drive.Svc.BankGatewayHyphen.IsRunning());
+                    Assert.IsTrue(Drive.Svc.BankGatewayEasyPay.IsRunning());
                     break;
                 case AUT.Ca:
-                    Assert.IsTrue(Drive.Svc.Scotia.IsRunning());
-                    Assert.IsTrue(Drive.Svc.Bmo.IsRunning());
-                    Assert.IsTrue(Drive.Svc.Rbc.IsRunning());
+                    Assert.IsTrue(Drive.Svc.BankGatewayScotia.IsRunning());
+                    Assert.IsTrue(Drive.Svc.BankGatewayBmo.IsRunning());
+                    Assert.IsTrue(Drive.Svc.BankGatewayRbc.IsRunning());
                     break;
                 case AUT.Wb:
                     break;

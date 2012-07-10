@@ -79,7 +79,7 @@ namespace Wonga.QA.Tests.Comms.Email
 					Do.With.Interval(10).Timeout(1).Until<object>(
 						() =>
 							{
-								Drive.Msmq.Hyphen.Send(new TimeoutMessage
+                                Drive.Msmq.BankGatewayHyphen.Send(new TimeoutMessage
 								                       	{
 								                       		SagaId = sagaId,
 								                       		Expires = DateTime.UtcNow

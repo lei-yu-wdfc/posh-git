@@ -45,7 +45,7 @@ namespace Wonga.QA.Tests.BankGateway
         {
             _code.Delete().Submit();
 
-            Drive.Svc.Hsbc.Restart();
+            Drive.Svc.BankGatewayHsbc.Restart();
             Do.With.Timeout(3).Interval(10).Until(() => Drive.Db.BankGateway.SortCodes.Max(c => c.CreationDate) > Get.GetDateTimeMin());
 
             Table<SortCodeEntity> codes = Drive.Db.BankGateway.SortCodes;
@@ -60,7 +60,7 @@ namespace Wonga.QA.Tests.BankGateway
             _code.PaymentTypeId = _type.PaymentTypeId;
             _code.Submit();
 
-            Drive.Msmq.Hsbc.Send(new UpdateSortCodeTableUkCommand());
+            Drive.Msmq.BankGatewayHsbc.Send(new UpdateSortCodeTableUkCommand());
             Do.With.Timeout(3).Interval(10).Until(() => Drive.Db.BankGateway.SortCodes.Max(c => c.CreationDate) > Get.GetDateTimeMin());
 
             Assert.GreaterThan(_code.Refresh().CreationDate, Get.GetDateTimeMin());
