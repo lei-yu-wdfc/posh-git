@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Wonga.QA.Framework.UI.Mappings.Pages
+namespace Wonga.QA.Framework.UI.Mappings.Ui.Pages.Common
 {
     public sealed class HomePage
     {
@@ -13,6 +10,5 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String YourProvince { get; set; }
         public String ThisIsMyProvince { get; set; }
         public String BusinessTitleText { get; set; }
-        
     }
 }

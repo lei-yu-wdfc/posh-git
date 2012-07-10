@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using MbUnit.Framework;
+using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI;
 using Wonga.QA.Framework.UI.Testing.Attributes;
@@ -195,5 +196,107 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
         }
         
         #endregion
+
+        #region Extension Agreement page
+
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-365"), MultipleAsserts, IgnorePageErrors, Pending("Test is complete and we are waiting for the functionality"), Owner(Owner.PavithranVangiti)]
+        public void ExtensionLegalDocumentErrorIsStoppedAndMessaged()
+        {
+            string email = Get.RandomEmail();
+            const int loanAmount = 150;
+            const int extensionDays = 7;
+            const int loanTerm = 7;
+
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            var application = ApplicationBuilder.New(customer).WithLoanAmount(loanAmount).WithLoanTerm(loanTerm).Build();
+
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(email);
+
+            mySummaryPage.ChangePromiseDateButtonClick();
+            var requestPage = new ExtensionRequestPage(this.Client);
+
+            requestPage.SetExtendDays(extensionDays.ToString("#"));
+            requestPage.setSecurityCode("123");
+            requestPage.SubmitButtonClick();
+
+            var extensionProcessingPage = new ExtensionProcessingPage(this.Client);
+            var agreementPage = extensionProcessingPage.WaitFor<ExtensionAgreementPage>() as ExtensionAgreementPage;
+
+            //Turns off SECCI, T&C, Explanation to simulate content error
+            var secciToggleLink = agreementPage.GetSecciToggleElement();
+            secciToggleLink.SecciToggleButtonClick();
+            Assert.AreEqual("Turn document links back on", secciToggleLink.GetSecciToggleButtonText(), "Document fetching is NOT switched OFF");
+
+            const string errorMessage = "Oops. We are having technical issues and are unable to complete your application. Please try again shortly or call us on 08448 429 109.";
+
+           /* agreementPage.ClickExtensionSecciLink(); // so far no error message displayed
+            Assert.Contains(agreementPage.SecciPopupWindowContent(), errorMessage);
+            agreementPage.ClosePopupWindow();*/
+
+            agreementPage.ClickExplanationLink();
+            Assert.Contains(agreementPage.TermsAndConditionsContent(), errorMessage);
+            agreementPage.ClosePopupWindow();
+
+            agreementPage.ClickTermsAndConditionsLink();
+            Assert.Contains(agreementPage.WrittenExplanationContent(), errorMessage);
+            agreementPage.ClosePopupWindow();
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-365"), MultipleAsserts, IgnorePageErrors, Pending("Test is complete and we are waiting for the functionality"), Owner(Owner.PavithranVangiti)]
+        public void ExtensionShouldSucceedWhenContinuedWithoutOpeningLegalDocuments()
+        {
+            string email = Get.RandomEmail();
+            const int loanAmount = 150;
+            const int extensionDays = 7;
+            const int loanTerm = 7;
+
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            var application = ApplicationBuilder.New(customer).WithLoanAmount(loanAmount).WithLoanTerm(loanTerm).Build();
+
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(email);
+
+            mySummaryPage.ChangePromiseDateButtonClick();
+            var requestPage = new ExtensionRequestPage(this.Client);
+
+            requestPage.SetExtendDays(extensionDays.ToString("#"));
+            requestPage.setSecurityCode("123");
+            requestPage.SubmitButtonClick();
+
+            var extensionProcessingPage = new ExtensionProcessingPage(this.Client);
+            var agreementPage = extensionProcessingPage.WaitFor<ExtensionAgreementPage>() as ExtensionAgreementPage;
+
+            //Turns off SECCI, T&C, Explanation to simulate content error
+            var secciToggleLink = agreementPage.GetSecciToggleElement();
+            secciToggleLink.SecciToggleButtonClick();
+            Assert.AreEqual("Turn document links back on", secciToggleLink.GetSecciToggleButtonText(), "Document fetching is NOT switched OFF");
+
+            const string errorMessage = "Oops. We are having technical issues and are unable to complete your application. Please try again shortly or call us on 08448 429 109.";
+            /* agreementPage.ClickExtensionSecciLink(); // so far no error message displayed
+             Assert.Contains(agreementPage.SecciPopupWindowContent(), errorMessage);
+             agreementPage.ClosePopupWindow();*/
+
+            agreementPage.ClickExplanationLink();
+            Assert.Contains(agreementPage.TermsAndConditionsContent(), errorMessage);
+            agreementPage.ClosePopupWindow();
+
+            agreementPage.ClickTermsAndConditionsLink();
+            Assert.Contains(agreementPage.WrittenExplanationContent(), errorMessage);
+            agreementPage.ClosePopupWindow();
+
+            //Select Accept button
+            agreementPage.Accept();
+
+            //Check error message is displayed on the page - to do
+
+
+
+
+
+        }
+
+        #endregion
+
     }
 }
