@@ -57,15 +57,11 @@ GOTO MENU
 GOTO MENU
 
 :5
+	SET /P AUT=Enter AUT (E.g. Uk, Za, Ca, Wb, Pl): 
+	SET /P SUT=Enter SUT (E.g. Dev, WIP, UAT, RC, WIPRelease, RCRelease, Live): 
 	%MsBuild% %Run%\Wonga.QA.Tests.build /t:Build /v:m || PAUSE
-	CALL :META RC Uk
-	CALL :META RC Za
-	CALL :META RC Ca
-	CALL :META RC Wb
-	CALL :CORE RC Uk
-	CALL :CORE RC Za
-	CALL :CORE RC Ca
-	CALL :CORE RC Wb
+	CALL :META %SUT% %AUT%
+	CALL :CORE %SUT% %AUT%
 GOTO MENU
 
 :6
