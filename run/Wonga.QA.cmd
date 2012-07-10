@@ -14,7 +14,7 @@ ECHO   1. Build all solutions
 ECHO   2. Set SUT ^& AUT
 ECHO   3. Rebase from Upstream
 ECHO   4. Run Wonga.QA.Tests
-ECHO   5. Run Meta and Core tests for all AUTs against RC
+ECHO   5. Run Meta and Core tests
 ECHO   6. Run Wonga.QA.Generators
 ECHO   7. Set ProxyMode
 ECHO   0. Exit
