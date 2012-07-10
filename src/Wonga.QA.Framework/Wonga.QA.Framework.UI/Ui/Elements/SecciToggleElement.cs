@@ -1,15 +1,10 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using OpenQA.Selenium;
-using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.UI;
+using Wonga.QA.Framework.UI.Elements;
 using Wonga.QA.Framework.UI.UiElements.Pages;
-using Wonga.QA.Framework.UI.UiElements.Pages.Common;
-using Wonga.QA.Framework.UI.UiElements.Pages.Interfaces;
 using Wonga.QA.Framework.UI.Mappings;
-using Wonga.QA.Framework.UI.UiElements.Pages.Wb;
 
-namespace Wonga.QA.Framework.UI.Elements
+namespace Wonga.QA.Framework.UI.Ui.Elements
 {
     public class SecciToggleElement : BaseElement
     {

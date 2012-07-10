@@ -364,6 +364,7 @@
     <ExtensionAgreementscroll>div #agreementscroll</ExtensionAgreementscroll>
     <ExtensionSecciButton>#extension_secci_link</ExtensionSecciButton>
     <ExtensionExplanationButton>div #extension_explanation_link</ExtensionExplanationButton>
+    <ExtensionTermsAndConditionsButton>a#conditions_link.doc_link</ExtensionTermsAndConditionsButton>
     <SecciHeader>div .secci-intro</SecciHeader>
     <SecciPrint>div #secci-print-link a</SecciPrint>
     <SecciContent>.secci</SecciContent>
@@ -373,6 +374,8 @@
     <WrittenExplanationHeader>.secci-intro</WrittenExplanationHeader>
     <WrittenExplanationPrint>#secci-print-link a</WrittenExplanationPrint>
     <WrittenExplanationContent>.content</WrittenExplanationContent>
+    <PopupCloseLink>a#fancybox-close</PopupCloseLink>
+    <PopupContentFrame>#fancybox-frame</PopupContentFrame>
   </ExtensionAgreementPage>
 
   <ExtensionErrorPage>
