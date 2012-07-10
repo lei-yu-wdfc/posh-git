@@ -72,14 +72,14 @@ namespace Wonga.QA.Tests.Ui.Mobile
         public void UpdateMobileTelephoneNumber()
         {
             var login = Client.Login();
-            string email = Get.RandomEmail();
-            Customer customer = CustomerBuilder.New()
-                .WithEmailAddress(email)
-                .Build();
-            Application application = ApplicationBuilder.New(customer).Build();
-            application.RepayOnDueDate();
-            //var custhelp = VanillaCustomerHelper.New();
-            //string email = custhelp.GetVanillaCustomer().Email;
+            //string email = Get.RandomEmail();
+            //Customer customer = CustomerBuilder.New()
+            //    .WithEmailAddress(email)
+            //    .Build();
+            //Application application = ApplicationBuilder.New(customer).Build();
+            //application.RepayOnDueDate();
+            var custhelp = VanillaCustomerHelper.New();
+            string email = custhelp.GetVanillaCustomer().Email;
             
             var summaryPage = login.LoginAs(email, Get.GetPassword());
             var myPersonalDetailsPage = summaryPage.GoToMyPersonalDetailsPage();
