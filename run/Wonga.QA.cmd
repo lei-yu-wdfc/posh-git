@@ -11,7 +11,7 @@ SET MSBuild=%SystemRoot%\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe /nolog
 :MENU
 ECHO.
 ECHO   1. Build all solutions
-ECHO   2. Set SUT ^& AUT
+ECHO   2. Configure your environment
 ECHO   3. Rebase from Upstream
 ECHO   4. Run Wonga.QA.Tests
 ECHO   5. Run Meta and Core tests
@@ -38,10 +38,13 @@ GOTO EOF
 GOTO MENU
 
 :2
-	SET /P AUT=Enter AUT (E.g. Uk, Za, Ca, Wb, Pl): 
-	SET /P SUT=Enter SUT (E.g. Dev, WIP, UAT, RC, WIPRelease, RCRelease, Live): 
-	SETX AUT %AUT% > NUL
-	SETX SUT %SUT% > NUL
+	SET /P TestingTarget=Enter your testing target(v3 [deployto] flag):
+	echo Removing existing settings
+	rd %APPDATA%\v3qa /s /q
+	echo Creating settings directory @ %APPDATA%\v3qa
+	mkdir %APPDATA%\v3qa
+	echo Copying %Run%\config\%TestingTarget%.v3qaconfig to %APPDATA%\v3qa\%TestingTarget%.v3qaconfig
+	copy %Run%\config\%TestingTarget%.v3qaconfig %APPDATA%\v3qa\%TestingTarget%.v3qaconfig
 GOTO MENU
 
 :3
