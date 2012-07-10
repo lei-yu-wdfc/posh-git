@@ -2,6 +2,7 @@
 using System.Threading;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.UI.Ui.Elements;
 using Wonga.QA.Framework.UI.UiElements.Pages.Interfaces;
 using Wonga.QA.Framework.UI.Mappings;
 using Wonga.QA.Framework.UI;
@@ -235,6 +236,36 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public bool IsAgreementFormDisplayed()
         {
             return _form.FindElement(By.CssSelector(UiMap.Get.AcceptedPage.AgreementTitle)).Displayed;
+        }
+
+        public SecciToggleElement GetSecciToggleElement()
+        {
+            var secciTogglelink = new SecciToggleElement(this);
+            return secciTogglelink;
+        }
+
+        public void ClickSecciLink()
+        {
+            Content.FindElement(By.CssSelector(UiMap.Get.AccountDetailsPage.SecciLink)).Click();
+        }
+
+        public String SecciPopupWindowContent()
+        {
+            string currentWindowHdl = Client.Driver.CurrentWindowHandle;
+
+            var frameName = Client.Driver.FindElement(By.CssSelector(UiMap.Get.AccountDetailsPage.PopupContentFrame)).GetAttribute("name");
+            var secci = Client.Driver.SwitchTo().Frame(frameName).FindElement(By.CssSelector(UiMap.Get.ExtensionAgreementPage.SecciContent));
+            var secci_text = secci.Text;
+
+            Client.Driver.SwitchTo().Window(currentWindowHdl);
+
+            return secci_text;
+        }
+
+        public void ClosePopupWindow()
+        {
+            Thread.Sleep(1000);
+            Client.Driver.FindElement(By.CssSelector(UiMap.Get.AccountDetailsPage.PopupClose)).Click();
         }
     }
 }

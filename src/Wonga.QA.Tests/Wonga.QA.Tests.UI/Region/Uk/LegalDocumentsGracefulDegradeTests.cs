@@ -197,6 +197,44 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
         
         #endregion
 
+        #region L0 Accept page
+
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-365"), IgnorePageErrors, Owner(Owner.StanDesyatnikov), Pending("Test in development")]
+        public void L0AcceptPageLegalDocumentErrorTest()
+        {
+            const String errorMessage = "Oops. We are having technical issues and are unable to complete your application. Please try again shortly or call us on 08448 429 109.";
+
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Console.WriteLine("email={0}", email);
+
+            // L0 journey
+            var journeyL0 = JourneyFactory.GetL0Journey(Client.Home()).WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)).WithEmail(email);
+            var acceptPage = journeyL0.Teleport<AcceptedPage>() as AcceptedPage;
+
+            // Turns Off SECCI, T&C, Explanation to simulate content error
+            var secciLink = acceptPage.GetSecciToggleElement();
+            secciLink.SecciToggleButtonClick();
+
+            Assert.AreEqual("Turn document links back on", secciLink.GetSecciToggleButtonText(), "Document fetching is NOT switched OFF");
+
+            Assert.Multiple(() =>
+            {
+                //Open Secci pop-up page and check correct error message is displayed
+                acceptPage.ClickSecciLink();
+                Assert.Contains(acceptPage.SecciPopupWindowContent(), errorMessage);
+                acceptPage.ClosePopupWindow();
+                Thread.Sleep(2000);
+
+                // TBD: click on I Accept button and ensure you stay on the same page
+
+                // Finish the test
+
+            });
+        }
+
+        #endregion
+
         #region Extension Agreement page
 
         [Test, AUT(AUT.Uk), JIRA("UKWEB-365"), MultipleAsserts, IgnorePageErrors, Pending("Test is complete and we are waiting for the functionality"), Owner(Owner.PavithranVangiti)]

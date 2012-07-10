@@ -63,6 +63,10 @@
     <FormId>#vanilla-agreement-form</FormId>
     <AgreementConfirm>#edit-accept</AgreementConfirm>
     <NodeWrap>.node-type-wonga-decision-page</NodeWrap>
+    <SecciLink>a#secci_link.doc_link</SecciLink>
+    <ExplanationLink>a#explanation_link.doc_link</ExplanationLink>
+    <PopupContentFrame>#fancybox-frame</PopupContentFrame>
+    <PopupClose>#fancybox-close</PopupClose>
   </AcceptedPage>
 
   <ApplicationSection>
