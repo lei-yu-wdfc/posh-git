@@ -59,15 +59,12 @@ namespace Wonga.QA.Framework.Core
             var proc = new XmlProcessor();
             var appDataConfigs = Directory.GetFiles(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "v3qa"), "*.v3qaconfig");
             var binFolderConfigs = Directory.GetFiles(Environment.CurrentDirectory, "*.v3qaconfig");
-            var configsFolder = Path.Combine(Environment.CurrentDirectory, @"..\run\configs");
-            var fallBackConfig = Path.Combine(configsFolder, LegacyEnvVarMapper.GetFileNameForEnvVars(GetValue<SUT>(), GetValue<AUT>()));
+            //var configsFolder = Path.Combine(Environment.CurrentDirectory, @"..\run\configs");
 
             if (appDataConfigs.Length > 0)
                 _settings = proc.LoadFromFile(appDataConfigs[0]);
             else if (binFolderConfigs.Length > 0)
                 _settings = proc.LoadFromFile(binFolderConfigs[0]);
-            else if(!string.IsNullOrEmpty(fallBackConfig))
-                _settings = proc.LoadFromFile(fallBackConfig);
             else throw new Exception(@"Configuration file not found. Please run the [run\Wonga.QA.cmd] tool");
 
             SUT = Get.EnumFromString<SUT>(_settings.XPathSelectElement("//SUT").Value);
@@ -510,95 +507,30 @@ namespace Wonga.QA.Framework.Core
         }
     }
 
-    public static class LegacyEnvVarMapper
-    {
-        static Dictionary<string, string> SutAndAutToFileMap = new Dictionary<string, string>();
-        static LegacyEnvVarMapper()
-        {
-            string fileExt = ".v3qaconfig";
-            SutAndAutToFileMap = new Dictionary<string, string>();
-            SutAndAutToFileMap.Add(SUT.Dev.ToString().ToLower()+AUT.Ca.ToString().ToLower(), "ca_local"+fileExt);
-            SutAndAutToFileMap.Add(SUT.Dev.ToString().ToLower() + AUT.Pl.ToString().ToLower(), "pl_local" + fileExt);
-            SutAndAutToFileMap.Add(SUT.Dev.ToString().ToLower() + AUT.Uk.ToString().ToLower(), "uk_local" + fileExt);
-            SutAndAutToFileMap.Add(SUT.Dev.ToString().ToLower() + AUT.Wb.ToString().ToLower(), "wb_uk_local" + fileExt);
-            SutAndAutToFileMap.Add(SUT.Dev.ToString().ToLower() + AUT.Za.ToString().ToLower(), "wb_za_local" + fileExt);
+    //public static class Connections
+    //{
+    //    private static Dictionary<string, string> DbPortMappings = new Dictionary<string, string>();
 
-            SutAndAutToFileMap.Add(SUT.Live.ToString().ToLower() + AUT.Ca.ToString().ToLower(), "ca_live" + fileExt);
-            SutAndAutToFileMap.Add(SUT.Live.ToString().ToLower() + AUT.Pl.ToString().ToLower(), "pl_live" + fileExt);
-            SutAndAutToFileMap.Add(SUT.Live.ToString().ToLower() + AUT.Uk.ToString().ToLower(), "uk_live" + fileExt);
-            SutAndAutToFileMap.Add(SUT.Live.ToString().ToLower() + AUT.Wb.ToString().ToLower(), "wb_uk_live" + fileExt);
-            SutAndAutToFileMap.Add(SUT.Live.ToString().ToLower() + AUT.Za.ToString().ToLower(), "za_live" + fileExt);
+    //    static Connections()
+    //    {
+    //        DbPortMappings.Add("WIP2", "8201");
+    //        DbPortMappings.Add("UAT2", "8202");
+    //        DbPortMappings.Add("RC2", "8203");
+    //        DbPortMappings.Add("WIP4", "8204");
+    //        DbPortMappings.Add("UAT4", "8205");
+    //        DbPortMappings.Add("RC4", "8206");
+    //        DbPortMappings.Add("WIP6", "8207");
+    //        DbPortMappings.Add("UAT6", "8208");
+    //        DbPortMappings.Add("RC6", "8209");
 
-            SutAndAutToFileMap.Add(SUT.RC.ToString().ToLower() + AUT.Ca.ToString().ToLower(), "ca_rc_master" + fileExt);
-            SutAndAutToFileMap.Add(SUT.RC.ToString().ToLower() + AUT.Pl.ToString().ToLower(), "pl_rc_master" + fileExt);
-            SutAndAutToFileMap.Add(SUT.RC.ToString().ToLower() + AUT.Uk.ToString().ToLower(), "uk_rc_master" + fileExt);
-            SutAndAutToFileMap.Add(SUT.RC.ToString().ToLower() + AUT.Wb.ToString().ToLower(), "wb_uk_rc_master" + fileExt);
-            SutAndAutToFileMap.Add(SUT.RC.ToString().ToLower() + AUT.Za.ToString().ToLower(), "za_rc_master" + fileExt);
+    //        DbPortMappings.Add(@"dev-disqlsrv01\dev2", "1433");
+    //    }
 
-            SutAndAutToFileMap.Add(SUT.RCRelease.ToString().ToLower() + AUT.Ca.ToString().ToLower(), "ca_rc_release" + fileExt);
-            SutAndAutToFileMap.Add(SUT.RCRelease.ToString().ToLower() + AUT.Pl.ToString().ToLower(), "pl_rc_release" + fileExt);
-            SutAndAutToFileMap.Add(SUT.RCRelease.ToString().ToLower() + AUT.Uk.ToString().ToLower(), "uk_rc_release" + fileExt);
-            SutAndAutToFileMap.Add(SUT.RCRelease.ToString().ToLower() + AUT.Wb.ToString().ToLower(), "wb_uk_rc_release" + fileExt);
-            SutAndAutToFileMap.Add(SUT.RCRelease.ToString().ToLower() + AUT.Za.ToString().ToLower(), "za_rc_release" + fileExt);
-
-            SutAndAutToFileMap.Add(SUT.UAT.ToString().ToLower() + AUT.Ca.ToString().ToLower(), "ca_uat" + fileExt);
-            SutAndAutToFileMap.Add(SUT.UAT.ToString().ToLower() + AUT.Pl.ToString().ToLower(), "pl_uat" + fileExt);
-            SutAndAutToFileMap.Add(SUT.UAT.ToString().ToLower() + AUT.Uk.ToString().ToLower(), "uk_uat" + fileExt);
-            SutAndAutToFileMap.Add(SUT.UAT.ToString().ToLower() + AUT.Wb.ToString().ToLower(), "wb_uk_uat" + fileExt);
-            SutAndAutToFileMap.Add(SUT.UAT.ToString().ToLower() + AUT.Za.ToString().ToLower(), "za_uat" + fileExt);
-
-            SutAndAutToFileMap.Add(SUT.WIP.ToString().ToLower() + AUT.Ca.ToString().ToLower(), "ca_wip_master" + fileExt);
-            SutAndAutToFileMap.Add(SUT.WIP.ToString().ToLower() + AUT.Pl.ToString().ToLower(), "pl_wip_master" + fileExt);
-            SutAndAutToFileMap.Add(SUT.WIP.ToString().ToLower() + AUT.Uk.ToString().ToLower(), "uk_wip_master" + fileExt);
-            SutAndAutToFileMap.Add(SUT.WIP.ToString().ToLower() + AUT.Wb.ToString().ToLower(), "wb_uk_wip_master" + fileExt);
-            SutAndAutToFileMap.Add(SUT.WIP.ToString().ToLower() + AUT.Za.ToString().ToLower(), "za_wip_master" + fileExt);
-
-            SutAndAutToFileMap.Add(SUT.WIPRelease.ToString().ToLower() + AUT.Ca.ToString().ToLower(), "ca_wip_release" + fileExt);
-            SutAndAutToFileMap.Add(SUT.WIPRelease.ToString().ToLower() + AUT.Pl.ToString().ToLower(), "pl_wip_release" + fileExt);
-            SutAndAutToFileMap.Add(SUT.WIPRelease.ToString().ToLower() + AUT.Uk.ToString().ToLower(), "uk_wip_release" + fileExt);
-            SutAndAutToFileMap.Add(SUT.WIPRelease.ToString().ToLower() + AUT.Wb.ToString().ToLower(), "wb_uk_wip_release" + fileExt);
-            SutAndAutToFileMap.Add(SUT.WIPRelease.ToString().ToLower() + AUT.Za.ToString().ToLower(), "za_wip_release" + fileExt);
-
-            SutAndAutToFileMap.Add(SUT.WIPDI.ToString().ToLower() + AUT.Ca.ToString().ToLower(), "ca_wipdi" + fileExt);
-            SutAndAutToFileMap.Add(SUT.WIPDI.ToString().ToLower() + AUT.Pl.ToString().ToLower(), "pl_wipdi" + fileExt);
-            SutAndAutToFileMap.Add(SUT.WIPDI.ToString().ToLower() + AUT.Uk.ToString().ToLower(), "uk_wipdi" + fileExt);
-            SutAndAutToFileMap.Add(SUT.WIPDI.ToString().ToLower() + AUT.Wb.ToString().ToLower(), "wb_uk_wipdi" + fileExt);
-            SutAndAutToFileMap.Add(SUT.WIPDI.ToString().ToLower() + AUT.Za.ToString().ToLower(), "za_wip_wipdi" + fileExt);
-        }
-
-        public static string GetFileNameForEnvVars(SUT sut, AUT aut)
-        {
-            string key = sut.ToString().ToLower() + aut.ToString().ToLower();
-            if (!SutAndAutToFileMap.ContainsKey(key))
-                return null;
-            return SutAndAutToFileMap[key];
-        }
-    }
-
-    public static class Connections
-    {
-        private static Dictionary<string, string> DbPortMappings = new Dictionary<string, string>();
-
-        static Connections()
-        {
-            DbPortMappings.Add("WIP2", "8201");
-            DbPortMappings.Add("UAT2", "8202");
-            DbPortMappings.Add("RC2", "8203");
-            DbPortMappings.Add("WIP4", "8204");
-            DbPortMappings.Add("UAT4", "8205");
-            DbPortMappings.Add("RC4", "8206");
-            DbPortMappings.Add("WIP6", "8207");
-            DbPortMappings.Add("UAT6", "8208");
-            DbPortMappings.Add("RC6", "8209");
-
-            DbPortMappings.Add(@"dev-disqlsrv01\dev2", "1433");
-        }
-
-        public static string GetDbConn(string server, bool proxyMode)
-        {
-            if (proxyMode && DbPortMappings.ContainsKey(server))
-                return string.Format("{0},{1}", server, DbPortMappings[server]);
-            return server;
-        }
-    }
+    //    public static string GetDbConn(string server, bool proxyMode)
+    //    {
+    //        if (proxyMode && DbPortMappings.ContainsKey(server))
+    //            return string.Format("{0},{1}", server, DbPortMappings[server]);
+    //        return server;
+    //    }
+    //}
 }
