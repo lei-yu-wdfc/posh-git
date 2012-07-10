@@ -14,7 +14,7 @@ ECHO   1. Build all solutions
 ECHO   2. Set SUT ^& AUT
 ECHO   3. Rebase from Upstream
 ECHO   4. Run Wonga.QA.Tests
-ECHO   5. Run Wonga.QA.Tests.Meta for all AUTs against RC
+ECHO   5. Run Meta and Core tests for all AUTs against RC
 ECHO   6. Run Wonga.QA.Generators
 ECHO   7. Set ProxyMode
 ECHO   0. Exit
@@ -62,6 +62,10 @@ GOTO MENU
 	CALL :META RC Za
 	CALL :META RC Ca
 	CALL :META RC Wb
+	CALL :CORE RC Uk
+	CALL :CORE RC Za
+	CALL :CORE RC Ca
+	CALL :CORE RC Wb
 GOTO MENU
 
 :6
@@ -80,6 +84,10 @@ GOTO MENU
 
 :META
 	%MsBuild% %Run%\Wonga.QA.Tests.build /t:Config;Test /p:Files=Meta;SUT=%1;AUT=%2 || PAUSE
+GOTO EOF
+
+:CORE
+	%MsBuild% %Run%\Wonga.QA.Tests.build /t:Config;Test /p:TestFilter="Category:CoreTest";SUT=%1;AUT=%2 || PAUSE 
 GOTO EOF
 
 :GENERATE
