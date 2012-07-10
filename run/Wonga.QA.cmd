@@ -16,14 +16,12 @@ ECHO   3. Rebase from Upstream
 ECHO   4. Run Wonga.QA.Tests
 ECHO   5. Run Meta and Core tests
 ECHO   6. Run Wonga.QA.Generators
-ECHO   7. Set ProxyMode
 ECHO   0. Exit
 ECHO.
 
 CHOICE /C 12345670 /M "But if you already know, how can I make a choice?" /N
 
 IF ERRORLEVEL 8 GOTO EOF
-IF ERRORLEVEL 7 GOTO 7
 IF ERRORLEVEL 6 GOTO 6
 IF ERRORLEVEL 5 GOTO 5
 IF ERRORLEVEL 4 GOTO 4
@@ -60,11 +58,11 @@ GOTO MENU
 GOTO MENU
 
 :5
-	SET /P AUT=Enter AUT (E.g. Uk, Za, Ca, Wb, Pl): 
-	SET /P SUT=Enter SUT (E.g. Dev, WIP, UAT, RC, WIPRelease, RCRelease, Live): 
-	%MsBuild% %Run%\Wonga.QA.Tests.build /t:Build /v:m || PAUSE
-	CALL :META %SUT% %AUT%
-	CALL :CORE %SUT% %AUT%
+	REM SET /P AUT=Enter AUT (E.g. Uk, Za, Ca, Wb, Pl): 
+	REM SET /P SUT=Enter SUT (E.g. Dev, WIP, UAT, RC, WIPRelease, RCRelease, Live): 
+	%MsBuild% %Run%\Wonga.QA.Tests.build /t:Build;Merge /v:m || PAUSE
+	CALL :META
+	CALL :CORE
 GOTO MENU
 
 :6
@@ -75,18 +73,18 @@ GOTO MENU
 	IF ERRORLEVEL 1 CALL :GENERATE Api
 GOTO MENU
 
-:7
-	CHOICE /C YN /M "Are you working through a proxy"
-	IF ERRORLEVEL 2 SETX QAFProxyMode False > NUL
-	IF ERRORLEVEL 1 SETX QAFProxyMode True > NUL
-GOTO MENU
+REM :7
+	REM CHOICE /C YN /M "Are you working through a proxy"
+	REM IF ERRORLEVEL 2 SETX QAFProxyMode False > NUL
+	REM IF ERRORLEVEL 1 SETX QAFProxyMode True > NUL
+REM GOTO MENU
 
 :META
-	%MsBuild% %Run%\Wonga.QA.Tests.build /t:Config;Test /p:Files=Meta;SUT=%1;AUT=%2 || PAUSE
+	%MsBuild% %Run%\Wonga.QA.Tests.build /t:Test /p:Files=Meta || PAUSE
 GOTO EOF
 
 :CORE
-	%MsBuild% %Run%\Wonga.QA.Tests.build /t:Config;Test /p:TestFilter="Category:CoreTest";SUT=%1;AUT=%2 || PAUSE 
+	%MsBuild% %Run%\Wonga.QA.Tests.build /t:Test /p:TestFilter="Category:CoreTest" || PAUSE 
 GOTO EOF
 
 :GENERATE
