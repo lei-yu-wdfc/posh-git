@@ -20,7 +20,7 @@ namespace Wonga.QA.Tests.Ui
     [Parallelizable(TestScope.All)]
     public class RedirectedToSelectedSiteTest : UiTest
     {
-        [Test, AUT(AUT.Za), JIRA("QA-240, QA-168"), SmokeTest]// It don't work on Ca - can not locate element 
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-240, QA-168"), SmokeTest]
         public void RedirectedToSelectedSite()
         {
             const string ukUrl = "www.wonga.com";
