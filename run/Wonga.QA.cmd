@@ -32,7 +32,7 @@ GOTO EOF
 
 :1
 	:CD %Root% && FOR /R %%0 IN (*.sln) DO %MSBuild% %%0 /v:m || PAUSE
-	%MsBuild% %Run%\Wonga.QA.Tests.build /t:Build || PAUSE
+	%MsBuild% %Run%\Wonga.QA.Tests.build /t:Build /v:m || PAUSE
 GOTO MENU
 
 :2
@@ -60,9 +60,7 @@ GOTO MENU
 :5
 	REM SET /P AUT=Enter AUT (E.g. Uk, Za, Ca, Wb, Pl): 
 	REM SET /P SUT=Enter SUT (E.g. Dev, WIP, UAT, RC, WIPRelease, RCRelease, Live): 
-	%MsBuild% %Run%\Wonga.QA.Tests.build /t:Build /v:m || PAUSE
-	CALL :META
-	CALL :CORE
+	%MsBuild% %Run%\Wonga.QA.Tests.build /t:SanityTest /v:m || PAUSE
 GOTO MENU
 
 :6
