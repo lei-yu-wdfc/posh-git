@@ -263,13 +263,13 @@ namespace Wonga.QA.Tests.Ui
 
             myPersonalDetailsPage.PhoneClick();
 
-            Do.Until(() => myPersonalDetailsPage.ChangePhone("0210000000", "0213456789", "0000"));
+            Do.With.Message("Problem with changing phone number").Until(() => myPersonalDetailsPage.ChangePhone("0210000000", "0213456789", "0000"));
 
             myPersonalDetailsPage.Submit();
             myPersonalDetailsPage.WaitForSuccessPopup();
             myPersonalDetailsPage.Submit();
 
-            Do.Until(() => Drive.Db.Comms.CustomerDetails.Single(c => c.Email == email).MobilePhone == "0213456789");
+            Do.With.Message("There is no phone in DB").Until(() => Drive.Db.Comms.CustomerDetails.Single(c => c.Email == email).MobilePhone == "0213456789");
             var mobilePhone = Drive.Db.Comms.CustomerDetails.FirstOrDefault(c => c.Email == email).MobilePhone;
 
             Assert.AreEqual("0213456789", myPersonalDetailsPage.GetMobilePhone);
@@ -290,7 +290,7 @@ namespace Wonga.QA.Tests.Ui
 
             myPersonalDetailsPage.PhoneClick();
 
-            Do.Until(() => myPersonalDetailsPage.ChangePhone("0210000000", "0211234567", "1111"));
+			Do.With.Message("Problem with changing phone number").Until(() => myPersonalDetailsPage.ChangePhone("0210000000", "0211234567", "1111"));
             myPersonalDetailsPage.Submit();
             Assert.IsTrue(myPersonalDetailsPage.GetPopupErrorMessage.Equals("The SMS PIN you entered was incorrect."));
 
@@ -615,7 +615,7 @@ namespace Wonga.QA.Tests.Ui
             var oldTown = myPersonalDetailsPage.GetTown; //to check if changes in db occured
 
             myPersonalDetailsPage.AddressClick();
-            Do.Until(myPersonalDetailsPage.ChangeMyAddressElement.IsChangeMyAddressTitleDisplayed);
+			Do.With.Message("Change MyAddress title didn't displayed").Until(myPersonalDetailsPage.ChangeMyAddressElement.IsChangeMyAddressTitleDisplayed);
 
             var newFlat = Get.RandomInt(100).ToString();
             var newStreet = Get.RandomString(3, 10);
@@ -642,7 +642,7 @@ namespace Wonga.QA.Tests.Ui
 
             var addresses = Drive.Data.Comms.Db.Addresses;
 
-            Do.Until(() => addresses.FindByAccountId(customer.Id).Town != oldTown);
+            Do.With.Message("There is no sought-for addres in DB").Until(() => addresses.FindByAccountId(customer.Id).Town != oldTown);
             var currentAddress = addresses.FindByAccountId(customer.Id);
             //Check changes in DB
             Assert.AreEqual(currentAddress.Flat, newFlat);
@@ -677,7 +677,7 @@ namespace Wonga.QA.Tests.Ui
             loginPage.LoginAs(email);
             var firstMyPaymentsPage = Client.Payments();
 
-            Do.Until(firstMyPaymentsPage.IsAddBankAccountButtonExists);
+			Do.With.Message("Add Bank Account button is not exists").Until(firstMyPaymentsPage.IsAddBankAccountButtonExists);
             firstMyPaymentsPage.AddBankAccountButtonClick();
             firstMyPaymentsPage.AddBankAccount("Capitec", "Current", accountNumber, "2 to 3 years");
             firstMyPaymentsPage.WaitBankAccountPopupClose();
@@ -743,7 +743,7 @@ namespace Wonga.QA.Tests.Ui
 
             var homePhoneUI = myPersonalDetailsPage.GetHomePhone;
             Console.WriteLine(customer.Id.ToString());
-            var homePhoneDB = Do.Until(() => Drive.Data.Comms.Db.CustomerDetails.FindByAccountId(customer.Id).HomePhone);
+            var homePhoneDB = Do.With.Message("There is no sought-for phone number in DB").Until(() => Drive.Data.Comms.Db.CustomerDetails.FindByAccountId(customer.Id).HomePhone);
 
             Assert.AreEqual("", homePhoneUI);
             Assert.AreEqual("", homePhoneDB);
