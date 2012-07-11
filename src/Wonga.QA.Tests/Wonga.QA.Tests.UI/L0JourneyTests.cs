@@ -1193,23 +1193,7 @@ namespace Wonga.QA.Tests.Ui
 			var processingPage = journey.Teleport<ProcessingPage>() as ProcessingPage;
 		}
 
-		[Test, AUT(AUT.Ca), JIRA("QA-280"), Pending("There is no <<Your previous addres>> section whan I select eny addres periods.")]
-		public void L0CustomerEntersInappropriatePostcodeToPreviousAddressSectionShouldNotGoFurther()
-		{
-			var journey = JourneyFactory.GetL0Journey(Client.Home())
-				.WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask))
-				.WithAddresPeriod("Less than 4 months")
-				.FillAndStop();
-			var addressPage = journey.Teleport<AddressDetailsPage>() as AddressDetailsPage;
-
-			addressPage.PreviousAddresDetails.FlatNumber = "4";
-			addressPage.PreviousAddresDetails.Street = "Edward";
-			addressPage.PreviousAddresDetails.Town = "Hearst";
-			addressPage.PreviousAddresDetails.Province = "Alberta";
-			addressPage.PreviousAddresDetails.PostCode = "Q0K0K4";
-			addressPage.Next();
-		}
-
+		
 		[Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-172"), Pending("CA code appearing in ZA - Michael Nowicki to fix")]
 		public void L0JourneyCustomerMakeALoanCheckOneLastStepPageValidDataDisplayed()
 		{
