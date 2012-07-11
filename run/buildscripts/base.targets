@@ -13,11 +13,15 @@
 		<Src>$(Root)\src</Src>
 		<Bin>$(Root)\bin</Bin>
 		<Lib>$(Root)\lib</Lib>
+		<Config>$(Root)\run\config</Config>
 	</PropertyGroup>	
 	
 	<Target Name="Config">
-		<Exec Command="SETX SUT $(SUT)" />
-		<Exec Command="SETX AUT $(AUT)" />
+		<ItemGroup>
+			<ConfigFilesToDelete Include="$(Bin)\*.v3qaconfig"/>
+		</ItemGroup>
+		<Delete Files="@(ConfigFilesToDelete)"/>
+		<Copy SourceFiles="$(Config)\$(DeployTo).v3qaconfig" DestinationFolder="$(Bin)" Condition="'$(DeployTo)' != ''"/>
 	</Target>
 	
 	<Target Name="Build">

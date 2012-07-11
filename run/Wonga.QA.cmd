@@ -60,7 +60,7 @@ GOTO MENU
 :5
 	REM SET /P AUT=Enter AUT (E.g. Uk, Za, Ca, Wb, Pl): 
 	REM SET /P SUT=Enter SUT (E.g. Dev, WIP, UAT, RC, WIPRelease, RCRelease, Live): 
-	%MsBuild% %Run%\Wonga.QA.Tests.build /t:Build;Merge /v:m || PAUSE
+	%MsBuild% %Run%\Wonga.QA.Tests.build /t:Build /v:m || PAUSE
 	CALL :META
 	CALL :CORE
 GOTO MENU
@@ -84,7 +84,7 @@ REM GOTO MENU
 GOTO EOF
 
 :CORE
-	%MsBuild% %Run%\Wonga.QA.Tests.build /t:Test /p:TestFilter="Category:CoreTest" || PAUSE 
+	%MsBuild% %Run%\Wonga.QA.Tests.build /t:Merge;Test /p:TestFilter="Category:CoreTest" || PAUSE 
 GOTO EOF
 
 :GENERATE
