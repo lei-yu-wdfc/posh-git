@@ -87,12 +87,11 @@ namespace Wonga.QA.WebTool
 
             try
             {
-               var setter = new ConfigSetter();
-                setter.Setter(_aut.SelectedValue, _sut.SelectedValue);
+                ConfigSetter.Setter(_aut.SelectedValue, _sut.SelectedValue);
             }
-            catch
+            catch(Exception exc)
             {
-                errorLabel.Text = "Some problem with server!";
+                errorLabel.Text = "Some problem with server!" + exc.Message + exc.StackTrace;
                 resultTable.Style.Add("display", "block;");
                 wrapperp.Style.Add("display", "block;");
                 return;
@@ -139,7 +138,7 @@ namespace Wonga.QA.WebTool
             }
             catch (Exception exc)
             {
-                errorLabel.Text = exc.Message + " " + exc.StackTrace;//"Some problem at the server!" + exc.StackTrace;
+                errorLabel.Text = "Some problem at the server!" + exc.StackTrace;
                 resultTable.Style.Add("display", "block;");
                 wrapperp.Style.Add("display", "block;");
                 return;
