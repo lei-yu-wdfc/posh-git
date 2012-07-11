@@ -566,7 +566,7 @@ namespace Wonga.QA.Tests.Ui
                     page.Sliders.LoanAmount.Clear();
                     page.Sliders.LoanDuration.Clear();
                     Assert.AreEqual(_amountMin.ToString(CultureInfo.InvariantCulture), page.Sliders.HowMuch);
-                    Do.Until(() => page.Sliders.HowLong != String.Empty);
+                    Do.With.Message("How long slider is empty").Until(() => page.Sliders.HowLong != String.Empty);
                     Assert.AreEqual(_termMin.ToString(CultureInfo.InvariantCulture), page.Sliders.HowLong);
 
                     #endregion

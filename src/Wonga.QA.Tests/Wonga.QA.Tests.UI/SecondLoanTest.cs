@@ -78,8 +78,8 @@ namespace Wonga.QA.Tests.Ui
                     }
                     Assert.AreEqual(actualRepaymentDate, summaryZa.GetPromisedRepayDate);
                     var lastApplication = customer.GetApplications().Single(a => !a.IsClosed);
-                    var applicationEntity = Do.Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(lastApplication.Id));
-                    var fixedTermApplicationEntity = Do.Until(() => Drive.Data.Payments.Db.FixedTermLoanApplications.FindByApplicationId(applicationEntity.ApplicationId));
+                    var applicationEntity = Do.With.Message("There is no sought-for application entity in DB").Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(lastApplication.Id));
+					var fixedTermApplicationEntity = Do.With.Message("There is no sought-for fixedTermApplicationEntity entity in DB").Until(() => Drive.Data.Payments.Db.FixedTermLoanApplications.FindByApplicationId(applicationEntity.ApplicationId));
                     Assert.AreEqual(String.Format("{0:d MMMM yyyy}", date), String.Format("{0:d MMMM yyyy}", fixedTermApplicationEntity.PromiseDate));
                     Assert.AreEqual("500.00", fixedTermApplicationEntity.LoanAmount.ToString());
                     break;
@@ -116,8 +116,8 @@ namespace Wonga.QA.Tests.Ui
                     }
                     Assert.AreEqual(actualRepaymentDate, summaryCa.GetPromisedRepayDate);
                     var lastApplication2 = customer.GetApplications().Single(a=>!a.IsClosed);
-                    var applicationEntity2 = Do.Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(lastApplication2.Id));
-                    var fixedTermApplicationEntity2 = Do.Until(() => Drive.Data.Payments.Db.FixedTermLoanApplications.FindByApplicationId(applicationEntity2.ApplicationId));
+					var applicationEntity2 = Do.With.Message("There is no sought-for application entity in DB").Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(lastApplication2.Id));
+					var fixedTermApplicationEntity2 = Do.With.Message("There is no sought-for fixedTermApplicationEntity entity in DB").Until(() => Drive.Data.Payments.Db.FixedTermLoanApplications.FindByApplicationId(applicationEntity2.ApplicationId));
                     Assert.AreEqual(String.Format("{0:d MMMM yyyy}", date), String.Format("{0:d MMMM yyyy}", fixedTermApplicationEntity2.PromiseDate));
                     Assert.AreEqual("200.00", fixedTermApplicationEntity2.LoanAmount.ToString());
                     break;

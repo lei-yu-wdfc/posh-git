@@ -224,8 +224,8 @@ namespace Wonga.QA.Tests.Ui
 
             		var phoneInDbFormat = phone.Replace("077", "2777");
 
-                    var smsZa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(phoneInDbFormat));
-                    Do.Until(() => smsZa.Count() == 2);
+                    var smsZa = Do.With.Message("There is no sought-for sms in DB").Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(phoneInDbFormat));
+					Do.With.Message("There is one sms in DB instead of two").Until(() => smsZa.Count() == 2);
                     Assert.AreEqual(2, smsZa.Count());
                     Console.WriteLine(smsZa.Count());
                     foreach (var sms in smsZa)
@@ -242,7 +242,7 @@ namespace Wonga.QA.Tests.Ui
                     var pageCa = journeyCa.Teleport<ApplyPage>() as ApplyPage;
                     pageCa.SetNewMobilePhone = phone;
                     pageCa.ResendPinClick();
-                    var smsCa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(phone.Replace("077", "177")));
+					var smsCa = Do.With.Message("There is no sought-for sms in DB").Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(phone.Replace("077", "177")));
                     foreach (var sms in smsCa)
                     {
                         Console.WriteLine(sms.MessageText + " / " + sms.CreatedOn);

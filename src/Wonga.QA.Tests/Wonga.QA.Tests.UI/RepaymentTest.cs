@@ -51,7 +51,7 @@ namespace Wonga.QA.Tests.Ui
 
             // Wait until the popup opens:
             var popUp = Client.Driver.FindElement(By.CssSelector("div#fancybox-content"));
-            Do.Until(() => popUp.Displayed);
+            Do.With.Message("Popup don't closed").Until(() => popUp.Displayed);
 
             var text = popUp.FindElement(By.Id("repay-your-wonga.com-loan-with-easypay")).Text;
 
@@ -62,7 +62,7 @@ namespace Wonga.QA.Tests.Ui
 
             var expectedeasypayno = repayPage.EasypayNumber;
             var popUpPrintPage = repayPage.EasyPayPrintButtonClick();
-            var actualString = Do.Until(() => popUpPrintPage.FindElement(By.CssSelector(UiMap.Get.EasypaymentNumberPrintPage.YourEasyPayNumber)).Text);
+            var actualString = Do.With.Message("There is no sought-for element on a page").Until(() => popUpPrintPage.FindElement(By.CssSelector(UiMap.Get.EasypaymentNumberPrintPage.YourEasyPayNumber)).Text);
             Assert.IsTrue(actualString.StartsWith(">>>>>> "));
             Assert.IsTrue(actualString.EndsWith(expectedeasypayno));
         }
