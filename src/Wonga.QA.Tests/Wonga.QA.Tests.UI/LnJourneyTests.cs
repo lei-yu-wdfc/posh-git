@@ -89,29 +89,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Ca), Pending("Example of CA Ln journey")]
-        public void CaFullLnJourneyTest()
-        {
-            var loginPage = Client.Login();
-            string email = Get.RandomEmail();
-            string name = Get.GetName();
-            string surname = Get.RandomString(10);
-            Customer customer = CustomerBuilder
-                .New()
-                .WithEmailAddress(email)
-                .WithForename(name)
-                .WithSurname(surname)
-                .Build();
-            Application application = ApplicationBuilder
-                .New(customer)
-                .Build();
-            application.RepayOnDueDate();
-            loginPage.LoginAs(email);
-
-            var journey = JourneyFactory.GetLnJourney(Client.Home()).WithFirstName(name).WithLastName(surname);
-            var page = journey.Teleport<MySummaryPage>() as MySummaryPage;
-        }
-
+    
         [Test, AUT(AUT.Za)]
         public void ZaFullLnJourneyTest()
         {

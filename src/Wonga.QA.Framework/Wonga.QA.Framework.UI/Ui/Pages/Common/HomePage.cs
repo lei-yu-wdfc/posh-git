@@ -31,6 +31,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
                 case (AUT.Ca):
                     Contact = new ContactElement(this);
                     Help = new HelpElement(this);
+                    InternationalElements = new InternationalElement(this);
                     Survey = new SurveyElement(this);
                     Login = new LoginElement(this);
                     Tabs = new TabsElement(this);

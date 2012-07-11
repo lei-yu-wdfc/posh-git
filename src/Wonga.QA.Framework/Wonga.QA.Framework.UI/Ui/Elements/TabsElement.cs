@@ -18,7 +18,7 @@ namespace Wonga.QA.Framework.UI.Elements
         private readonly IWebElement _howItWorks;
         private readonly IWebElement _aboutUs;
         private readonly IWebElement _advice;
-        private readonly IWebElement _myAccount;
+        //private readonly IWebElement _myAccount;
 
         public TabsElement(BasePage page)
             : base(page)
@@ -33,7 +33,6 @@ namespace Wonga.QA.Framework.UI.Elements
                 case AUT.Za:
                 case AUT.Ca:
                     _advice = _form.FindElement(By.CssSelector(UiMap.Get.TabsElement.Advice));
-                    _myAccount = _form.FindElement(By.CssSelector(UiMap.Get.TabsElement.MyAccount));
                     break;
             }
 
@@ -47,10 +46,6 @@ namespace Wonga.QA.Framework.UI.Elements
 
         //TODO add methods for all buttons
 
-        public IApplyPage GoToMyAccount()
-        {
-            _myAccount.Click();
-            return new MySummaryPage(Page.Client);
-        }
+        
     }
 }
