@@ -137,8 +137,8 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-282"), Pending("Waiting for implementation of new sliders")]
-        //[Category(TestCategories.SmokeTest)] - return when test is enabled
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-282")]
+        [Category(TestCategories.SmokeTest)]
         public void ChooseLoanAmountAndDurationViaPlusMinusButtons()
         {
             var homePage = Client.Home();
