@@ -13,7 +13,7 @@ namespace Wonga.QA.Tests.Ui
     [Parallelizable(TestScope.All)]
     public class L0LoanCa : UiTest
     {
-        [Test, AUT(AUT.Ca), SmokeTest]
+        [Test, AUT(AUT.Ca), Category(TestCategories.SmokeTest)]
         public void CaAcceptedLoan()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home())

@@ -12,7 +12,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Workflows
 {
-	[TestFixture, CoreTest]
+	[TestFixture, Category(TestCategories.CoreTest)]
     [AUT(AUT.Ca, AUT.Za)]
 	public partial class WorkflowTests
 	{

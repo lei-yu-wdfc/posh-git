@@ -16,7 +16,7 @@ namespace Wonga.QA.Tests.Ui
     {
         private const String MiddleNameMask = "TESTNoCheck";
 
-        [Test, AUT(AUT.Za, AUT.Ca, AUT.Uk), Owner(Owner.MihailPodobivsky), SmokeTest]
+        [Test, AUT(AUT.Za, AUT.Ca, AUT.Uk), Owner(Owner.MihailPodobivsky), Category(TestCategories.SmokeTest)]
         public void AcceptedLoan()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home()).WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));

@@ -14,7 +14,7 @@ using ProvinceEnum = Wonga.QA.Framework.Api.Enums.ProvinceEnum;
 
 namespace Wonga.QA.Tests.Comms
 {
-    [TestFixture, Parallelizable(TestScope.Descendants), CoreTest] //Can be only on level 3 because it changes configuration
+    [TestFixture, Parallelizable(TestScope.Descendants), Category(TestCategories.CoreTest)] //Can be only on level 3 because it changes configuration
     class CollectionsChaseEmailTest
     {
         private static readonly dynamic EmailTable = Drive.Data.QaData.Db.Email;

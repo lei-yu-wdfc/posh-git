@@ -23,7 +23,7 @@ namespace Wonga.QA.Tests.Ui
     public class HelpTest : UiTest
     {
 
-		[Test, AUT(AUT.Za, AUT.Ca, AUT.Wb), JIRA("QA-164, QA-254"), Pending("ZA-2705")] //SmokeTest
+		[Test, AUT(AUT.Za, AUT.Ca, AUT.Wb), JIRA("QA-164, QA-254"), Pending("ZA-2705")] //Category(TestCategories.SmokeTest)
         public void SelectingAHelpQuestionTakesMeToFAQPageWithCorrectQuestionSelected()
         {
             var page = Client.Home();
@@ -56,7 +56,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-165"), SmokeTest]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-165"), Category(TestCategories.SmokeTest)]
         public void SelectingATroubleshootingQuestionTakesMeToPageWithCorrectQuestionSelected()
         {
             var page = Client.Home();
@@ -87,7 +87,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-167"), SmokeTest]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-167"), Category(TestCategories.SmokeTest)]
         public void ClickOnContactUsCauseContactInformationDisplayedOnPage()
         {
             var page = Client.Home();

@@ -19,7 +19,7 @@ namespace Wonga.QA.Tests.Ui
     [TestFixture, Parallelizable(TestScope.All)]
     internal class LnJourneyTests : UiTest
     {
-        [Test, AUT(AUT.Za), JIRA("QA-196"), Pending("ZA-2510"), SmokeTest]
+        [Test, AUT(AUT.Za), JIRA("QA-196"), Pending("ZA-2510"), Category(TestCategories.SmokeTest)]
         public void LnCustomerTakesNewLoanAndChangesTheMobilePhoneThenChangesShouldBeReflected()
         {
             var loginPage = Client.Login();
@@ -288,7 +288,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), SmokeTest, Pending("Fail")]
+        [Test, AUT(AUT.Za, AUT.Ca), Category(TestCategories.SmokeTest), Pending("Fail")]
         public void LnVerifyUrlsAreCorrect()
         {
             var loginPage = Client.Login();

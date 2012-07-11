@@ -13,7 +13,7 @@ using Wonga.QA.Framework.Api;
 namespace Wonga.QA.Tests.Payments.LoanCalculations
 {
     [TestFixture]
-    [Parallelizable(TestScope.All), CoreTest]
+    [Parallelizable(TestScope.All), Category(TestCategories.CoreTest)]
     public class BusinessLoanCalculationTests
     {
         [Test, AUT(AUT.Wb)]

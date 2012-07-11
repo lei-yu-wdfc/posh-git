@@ -13,7 +13,7 @@ namespace Wonga.QA.Tests.Ui
     class ClickTest : UiTest
     {
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("CA-2326"), SmokeTest]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("CA-2326"), Category(TestCategories.SmokeTest)]
         public void VerifyIsClickCodeLoaded()
         {
             var homePage = Client.Home();
@@ -22,7 +22,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), SmokeTest]
+        [Test, AUT(AUT.Ca, AUT.Za), Category(TestCategories.SmokeTest)]
         public void VerifyClickExternalJsFileUrlIsPresentInScriptTag()
         {
             var homePage = Client.Home();
