@@ -205,7 +205,7 @@ namespace Wonga.QA.Tests.Ui
         }
 
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-150"), Pending("Waiting for new sliders")]
+        [Test, AUT(AUT.Za), JIRA("QA-150")]// No new Sliders fo Ca, so it removed from AUT
         // SmokeTest - return when test is enabled
         public void CustomerTypesValidValuesIntoAmountAndDurationFields()
         {
