@@ -21,7 +21,7 @@ namespace Wonga.QA.Tests.Ui
     [Parallelizable(TestScope.All)]
     class SalesForceTest : UiTest
     {
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-220"), Pending("Problem with presents customers in SF")]
+        [Test, AUT(AUT.Za), JIRA("QA-220"), Pending("Problem with presents customers in SF")]
         public void CustomerInformationDisplayInSF()
         {
             string email = Get.RandomEmail();
@@ -33,72 +33,8 @@ namespace Wonga.QA.Tests.Ui
             var salesForceSearchResultPage = salesForceHome.FindCustomerByMail(email);
             Thread.Sleep(2000);
             Assert.IsTrue(salesForceSearchResultPage.IsCustomerFind());
+			salesForceSearchResultPage.GoToCustomerDetailsPage();
         }
-
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-220"), Pending("right now can't do this")]
-        public void CustomerGetsAcceptedDecisionHasRecordWithLiveLoanStatusInSF()
-        {
-            string email = Get.RandomEmail();
-            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-            Application application = ApplicationBuilder.New(customer).Build();
-            Thread.Sleep(30000);
-            var salesForceStartPage = Client.SalesForceStart();
-            var salesForceHome = salesForceStartPage.LoginAs(Config.Salesforce.Username, Config.Salesforce.Password);
-            var salesForceSearchResultPage = salesForceHome.FindCustomerByMail(email);
-            Thread.Sleep(2000);
-            Assert.IsTrue(salesForceSearchResultPage.IsCustomerFind());
-            salesForceSearchResultPage.GoToCustomerDetailsPage();
-            // Chek customer has a record with "LiveLoan" status in SF
-        }
-
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-220"), Pending("right now can't do this")]
-        public void CustomerGetsAcceptedDecisionLoanAmountIndicatesLoanAmountCustomerAppliedForDueDays()
-        {
-            string email = Get.RandomEmail();
-            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-            Application application = ApplicationBuilder.New(customer).Build();
-            Thread.Sleep(30000);
-            var salesForceStartPage = Client.SalesForceStart();
-            var salesForceHome = salesForceStartPage.LoginAs(Config.Salesforce.Username, Config.Salesforce.Password);
-            var salesForceSearchResultPage = salesForceHome.FindCustomerByMail(email);
-            Thread.Sleep(2000);
-            Assert.IsTrue(salesForceSearchResultPage.IsCustomerFind());
-            salesForceSearchResultPage.GoToCustomerDetailsPage();
-            // "Loan amount" indicates loan amount customer applied for. Due days = Due date. Check: Charges, today's balance, final interest, final balance.
-        }
-
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-220"), Pending("right now can't do this")]
-        public void CustomerTakesLoanCheckBalanceAtTodayAndBalanceAtTodayShouldBePrincipalPlusFee()
-        {
-            string email = Get.RandomEmail();
-            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-            Application application = ApplicationBuilder.New(customer).Build();
-            Thread.Sleep(30000);
-            var salesForceStartPage = Client.SalesForceStart();
-            var salesForceHome = salesForceStartPage.LoginAs(Config.Salesforce.Username, Config.Salesforce.Password);
-            var salesForceSearchResultPage = salesForceHome.FindCustomerByMail(email);
-            Thread.Sleep(2000);
-            Assert.IsTrue(salesForceSearchResultPage.IsCustomerFind());
-            salesForceSearchResultPage.GoToCustomerDetailsPage();
-            //Check Balance at today and balance at today should be Principal+Fee (+Interest if Loan was taken more than 3 days ago)
-        }
-
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-222"),Pending("stop writing tests that doesnt work")]
-        public void CustomerGetsAcceptedDecisionDontClickAcceptButtonApplicationStatusInSF()
-        {
-            string email = Get.RandomEmail();
-            var journey = JourneyFactory.GetL0Journey(Client.Home())
-                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)).WithEmail(email);
-            var mySummary = journey.Teleport<AcceptedPage>() as AcceptedPage;
-            Thread.Sleep(10000);
-            var salesForceStartPage = Client.SalesForceStart();
-            var salesForceHome = salesForceStartPage.LoginAs(Config.Salesforce.Username, Config.Salesforce.Password);
-            var salesForceSearchResultPage = salesForceHome.FindCustomerByMail(email);
-            Thread.Sleep(2000);
-            Assert.IsTrue(salesForceSearchResultPage.IsCustomerFind());
-            var customerDetailPage = salesForceSearchResultPage.GoToCustomerDetailsPage();
-
-
-        }
+		
     }
 }
