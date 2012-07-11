@@ -12,6 +12,19 @@ namespace Wonga.QA.Generators.Cs
             if (args.Any())
                 Config.Origin = args.Single();
 
+			GenerateForRepo("ops");
+			GenerateForRepo("comms");
+			GenerateForRepo("payments");
+			GenerateForRepo("risk");
+			GenerateForRepo("marketing");
+
+			//Repo.Inject(binRootDirectories.ClassesDirectory, Config.CsApi.Folder, Config.CsApi.Project);
+			//Repo.Inject(binRootDirectories.EnumsDirectory, Config.Enums.Folder, Config.CsApi.Project);
+        }
+
+		private static void GenerateForRepo(String repo)
+		{
+			Config.RepoName = repo;
 			var binRootDirectories = new GeneratorRepoDirectories(Config.CsApi.Folder);
 
 			var classGenerator = new XmlSchemaClassGenerator(Config.CsApi, binRootDirectories);
