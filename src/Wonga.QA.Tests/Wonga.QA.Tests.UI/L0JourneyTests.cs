@@ -379,9 +379,9 @@ namespace Wonga.QA.Tests.Ui
 			personalDetailsPage.EmploymentDetails.SalaryPaidToBank = true;
 			Assert.IsTrue(personalDetailsPage.IsSuccessTickOccured(UiMap.Get.EmploymentDetailsSection.SalaryPaidToBank, UiMap.Get.EmploymentDetailsSection.SalaryPaidToBankErrorForm));
 			personalDetailsPage.EmploymentDetails.UniversityType = "panstwowa";
-			Assert.IsTrue(Do.Until(() => personalDetailsPage.IsSuccessTickOccured(UiMap.Get.EmploymentDetailsSection.UniversityType, UiMap.Get.EmploymentDetailsSection.UniversityTypeErrorForm)));
+			Assert.IsTrue(Do.With.Message("Problem with employe details section on PersonalDetail page").Until(() => personalDetailsPage.IsSuccessTickOccured(UiMap.Get.EmploymentDetailsSection.UniversityType, UiMap.Get.EmploymentDetailsSection.UniversityTypeErrorForm)));
 			personalDetailsPage.EmploymentDetails.UniversityCity = "Opole";
-			Assert.IsTrue(Do.Until(() => personalDetailsPage.IsSuccessTickOccured(UiMap.Get.EmploymentDetailsSection.UniversityCity, UiMap.Get.EmploymentDetailsSection.UniversityCityErrorForm)));
+			Assert.IsTrue(Do.With.Message("Problem with employe details section on PersonalDetail page").Until(() => personalDetailsPage.IsSuccessTickOccured(UiMap.Get.EmploymentDetailsSection.UniversityCity, UiMap.Get.EmploymentDetailsSection.UniversityCityErrorForm)));
 			personalDetailsPage.EmploymentDetails.YearsInUniversity = "2";
 			Assert.IsTrue(personalDetailsPage.IsSuccessTickOccured(UiMap.Get.EmploymentDetailsSection.YearsInUniversity, UiMap.Get.EmploymentDetailsSection.YearsInUniversityErrorForm));
 			personalDetailsPage.EmploymentDetails.EmploymentStatus = "Umowa o prace na czas nieokreslony";
@@ -693,8 +693,8 @@ namespace Wonga.QA.Tests.Ui
 					addressDetailsPage.PostCodeLookup = "SW6 6PN";
 					addressDetailsPage.LookupByPostCode();
 					addressDetailsPage.GetAddressesDropDown();
-					Do.Until(() => addressDetailsPage.SelectedAddress = "93 Harbord Street, LONDON SW6 6PN");
-					Do.Until(() => addressDetailsPage.HouseNumber = "93");
+					Do.With.Message("There is no Adress field on AddresDetails Page").Until(() => addressDetailsPage.SelectedAddress = "93 Harbord Street, LONDON SW6 6PN");
+					Do.With.Message("There is no house number field on AddresDetails Page").Until(() => addressDetailsPage.HouseNumber = "93");
 					Assert.IsTrue(addressDetailsPage.IsAddressPeriodWarningOccurred());
 					addressDetailsPage.AddressPeriod = "3 to 4 years";
 					addressDetailsPage.HouseNumber = "";
@@ -723,8 +723,8 @@ namespace Wonga.QA.Tests.Ui
 			addressDetailsPage.PostCode = "SW6 6PN";
 			addressDetailsPage.LookupByPostCode();
 			addressDetailsPage.GetAddressesDropDown();
-			Do.Until(() => addressDetailsPage.SelectedAddress = "93 Harbord Street, LONDON SW6 6PN");
-			Do.Until(() => addressDetailsPage.AddressPeriod = "2 to 3 years");
+			Do.With.Message("There is no Adress field on AddresDetails Page").Until(() => addressDetailsPage.SelectedAddress = "93 Harbord Street, LONDON SW6 6PN");
+			Do.With.Message("There is no addres period field on AddresDetails Page").Until(() => addressDetailsPage.AddressPeriod = "2 to 3 years");
 			addressDetailsPage.HouseNumber = "";
 			Assert.IsTrue(addressDetailsPage.IsHouseNumberWarningOccurred());
 			addressDetailsPage.HouseNumber = "1";
@@ -756,24 +756,24 @@ namespace Wonga.QA.Tests.Ui
 				case AUT.Ca:
 					date = DateTime.Now.AddDays(DateHelper.GetNumberOfDaysUntilStartOfLoanForCa() + 20);
 					mySummary = journey.Teleport<MySummaryPage>() as MySummaryPage;
-					var customerCa = Do.Until(() => Drive.Data.Comms.Db.CustomerDetails.FindBy(Forename: firstName, Surname: lastName));
+					var customerCa = Do.With.Message("There is no sought-for customer in DB").Until(() => Drive.Data.Comms.Db.CustomerDetails.FindBy(Forename: firstName, Surname: lastName));
 					Console.WriteLine(customerCa.Email.ToString());
 					Console.WriteLine(customerCa.AccountId.ToString());
-					var applicationCa = Do.Until(() => Drive.Data.Payments.Db.Applications.FindBy(AccountId: customerCa.AccountId));
+					var applicationCa = Do.With.Message("Theer is no sought-for application in DB").Until(() => Drive.Data.Payments.Db.Applications.FindBy(AccountId: customerCa.AccountId));
 					Console.WriteLine(applicationCa.AccountId.ToString());
-					var fixedTermApplicationCa = Do.Until(() => Drive.Data.Payments.Db.FixedTermLoanApplications.FindByApplicationId(applicationCa.ApplicationId));
+					var fixedTermApplicationCa = Do.With.Message("There is no fixedTermApplication entry in DB").Until(() => Drive.Data.Payments.Db.FixedTermLoanApplications.FindByApplicationId(applicationCa.ApplicationId));
 					Assert.AreEqual("200.00", fixedTermApplicationCa.LoanAmount.ToString());
 					Assert.AreEqual(String.Format("{0:dddd MMMM yyyy}", date), String.Format("{0:dddd MMMM yyyy}", fixedTermApplicationCa.PromiseDate));
 					break;
 				case AUT.Za:
 					date = DateTime.Now.AddDays(20);
 					mySummary = journey.Teleport<MySummaryPage>() as MySummaryPage;
-					var customerZa = Do.Until(() => Drive.Data.Comms.Db.CustomerDetails.FindBy(Forename: firstName, Surname: lastName));
+					var customerZa = Do.With.Message("There is no sought-for customer in DB").Until(() => Drive.Data.Comms.Db.CustomerDetails.FindBy(Forename: firstName, Surname: lastName));
 					Console.WriteLine(customerZa.Email.ToString());
 					Console.WriteLine(customerZa.AccountId.ToString());
-					var applicationZa = Do.Until(() => Drive.Data.Payments.Db.Applications.FindBy(AccountId: customerZa.AccountId));
+					var applicationZa = Do.With.Message("Theer is no sought-for application in DB").Until(() => Drive.Data.Payments.Db.Applications.FindBy(AccountId: customerZa.AccountId));
 					Console.WriteLine(applicationZa.AccountId.ToString());
-					var fixedTermApplicationZa = Do.Until(() => Drive.Data.Payments.Db.FixedTermLoanApplications.FindByApplicationId(applicationZa.ApplicationId));
+					var fixedTermApplicationZa = Do.With.Message("There is no fixedTermApplication entry in DB").Until(() => Drive.Data.Payments.Db.FixedTermLoanApplications.FindByApplicationId(applicationZa.ApplicationId));
 					Assert.AreEqual("200.00", fixedTermApplicationZa.LoanAmount.ToString());
 					Assert.AreEqual(String.Format("{0:d MMMM yyyy}", date), String.Format("{0:d MMMM yyyy}", fixedTermApplicationZa.PromiseDate));
 					break;
@@ -832,7 +832,7 @@ namespace Wonga.QA.Tests.Ui
 						.WithMobilePhone(telephone);
 					var myBankAccountCa = journeyCa.Teleport<PersonalBankAccountPage>() as PersonalBankAccountPage;
 					Assert.IsTrue(myBankAccountCa.PinVerificationSection.ResendPinClickAndCheck());
-					var smsCa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(telephone.Replace("077", "177")));
+					var smsCa = Do.With.Message("There is no sought-for sms in DB").Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(telephone.Replace("077", "177")));
 					foreach (var sms in smsCa)
 					{
 						Console.WriteLine(sms.MessageText + "/" + sms.CreatedOn);
@@ -847,7 +847,7 @@ namespace Wonga.QA.Tests.Ui
 						.WithMobilePhone(telephone);
 					var myBankAccountZa = journeyZa.Teleport<PersonalBankAccountPage>() as PersonalBankAccountPage;
 					Assert.IsTrue(myBankAccountZa.PinVerificationSection.ResendPinClickAndCheck());
-					var smsZa = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(telephone.Replace("077", "2777")));
+					var smsZa = Do.With.Message("There is no sought-for sms in DB").Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(telephone.Replace("077", "2777")));
 					foreach (var sms in smsZa)
 					{
 						Console.WriteLine(sms.MessageText + "/" + sms.CreatedOn);
@@ -866,7 +866,7 @@ namespace Wonga.QA.Tests.Ui
 					Assert.IsTrue(debitCardPage.MobilePinVerification.ResendPinClickAndCheck());
 					Console.WriteLine(ukMobileTelephone);
 					string ukTelephoneWithInternationalCode = ukMobileTelephone.Replace("077", "4477");
-					var smsWb = Do.Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(ukTelephoneWithInternationalCode));
+					var smsWb = Do.With.Message("There is no sought-for sms in DB").Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(ukTelephoneWithInternationalCode));
 					foreach (var sms in smsWb)
 					{
 						Console.WriteLine(sms.MessageText + "/" + sms.CreatedOn);
@@ -912,9 +912,9 @@ namespace Wonga.QA.Tests.Ui
 					var accountDetailsPageWb = journeyWb.Teleport<AccountDetailsPage>() as AccountDetailsPage;
 					//accountDetailsPageWb.AccountDetailsSection.Password = "bla"; // wierd string
 					accountDetailsPageWb.AccountDetailsSection.Password = email;
-					Do.Until(accountDetailsPageWb.AccountDetailsSection.IsPasswordEqualsEmailWarningOccured);
+					Do.With.Message("Password that equals email is not warning occured").Until(accountDetailsPageWb.AccountDetailsSection.IsPasswordEqualsEmailWarningOccured);
 					accountDetailsPageWb.AccountDetailsSection.Password = "Passw0rd";
-					Do.While(accountDetailsPageWb.AccountDetailsSection.IsPasswordEqualsEmailWarningOccured);
+					Do.With.Message("Password that not equals email is warning occured").While(accountDetailsPageWb.AccountDetailsSection.IsPasswordEqualsEmailWarningOccured);
 					break;
 				#endregion
 				#region Ca
@@ -923,9 +923,9 @@ namespace Wonga.QA.Tests.Ui
 						.WithEmail(email);
 					var accountDetailsPageCa = journeyCa.Teleport<AddressDetailsPage>() as AddressDetailsPage;
 					accountDetailsPageCa.AccountDetailsSection.Password = email;
-					Do.Until(accountDetailsPageCa.AccountDetailsSection.IsPasswordEqualsEmailWarningOccured);
+					Do.With.Message("Password that equals email is not warning occured").Until(accountDetailsPageCa.AccountDetailsSection.IsPasswordEqualsEmailWarningOccured);
 					accountDetailsPageCa.AccountDetailsSection.Password = "Passw0rd";
-					Do.While(accountDetailsPageCa.AccountDetailsSection.IsPasswordEqualsEmailWarningOccured);
+					Do.With.Message("Password that not equals email is warning occured").While(accountDetailsPageCa.AccountDetailsSection.IsPasswordEqualsEmailWarningOccured);
 					break;
 				#endregion
 				#region Za
@@ -934,9 +934,9 @@ namespace Wonga.QA.Tests.Ui
 						.WithEmail(email);
 					var accountDetailsPageZa = journeyZa.Teleport<AccountDetailsPage>() as AccountDetailsPage;
 					accountDetailsPageZa.AccountDetailsSection.Password = email;
-					Do.Until(accountDetailsPageZa.AccountDetailsSection.IsPasswordEqualsEmailWarningOccured);
+					Do.With.Message("Password that equals email is not warning occured").Until(accountDetailsPageZa.AccountDetailsSection.IsPasswordEqualsEmailWarningOccured);
 					accountDetailsPageZa.AccountDetailsSection.Password = "Passw0rd";
-					Do.While(accountDetailsPageZa.AccountDetailsSection.IsPasswordEqualsEmailWarningOccured);
+					Do.With.Message("Password that not equals email is warning occured").While(accountDetailsPageZa.AccountDetailsSection.IsPasswordEqualsEmailWarningOccured);
 					break;
 				#endregion
 			}
@@ -975,13 +975,13 @@ namespace Wonga.QA.Tests.Ui
 				.WithAdditionalDirectorEmail(additionalDirectorEmail);
 			var homePage = journey.Teleport<HomePage>() as HomePage;
 
-			var mail = Do.Until(() => Drive.Data.QaData.Db.Emails.FindByEmailAddress(email));
-			var mailTemplate = Do.Until(() => Drive.Data.QaData.Db.EmailToken.FindBy(EmailId: mail.EmailId, Key: "Html_body"));
+			var mail = Do.With.Message("There is no sought-for email in DB").Until(() => Drive.Data.QaData.Db.Emails.FindByEmailAddress(email));
+			var mailTemplate = Do.With.Message("There is no sought-for email token in DB").Until(() => Drive.Data.QaData.Db.EmailToken.FindBy(EmailId: mail.EmailId, Key: "Html_body"));
 			Assert.IsNotNull(mailTemplate);
 			Assert.IsTrue(mailTemplate.value.Contains("Good news"));
 
-			var mail2 = Do.Until(() => Drive.Data.QaData.Db.Emails.FindByEmailAddress(additionalDirectorEmail));
-			var mailTemplate2 = Do.Until(() => Drive.Data.QaData.Db.EmailToken.FindBy(EmailId: mail2.EmailId, Key: "Html_body"));
+			var mail2 = Do.With.Message("There is no sought-for email in DB").Until(() => Drive.Data.QaData.Db.Emails.FindByEmailAddress(additionalDirectorEmail));
+			var mailTemplate2 = Do.With.Message("There is no sought-for email token in DB").Until(() => Drive.Data.QaData.Db.EmailToken.FindBy(EmailId: mail2.EmailId, Key: "Html_body"));
 			Assert.IsNotNull(mailTemplate2);
 			Assert.IsTrue(mailTemplate2.value.Contains("Good news"));
 		}
@@ -1182,9 +1182,10 @@ namespace Wonga.QA.Tests.Ui
 		[Test, AUT(AUT.Za), Category(TestCategories.SmokeTest), JIRA("QA-276")]
 		public void CustomerUsesExistingIdNumberShouldBeAbleToProceed()
 		{
-			var customer = Do.Until(() => Drive.Data.Comms.Db.CustomerDetails.FindAllByGender(2).FirstOrDefault());
+			var customer = Do.With.Message("There is no customer in DB").Until(() => Drive.Data.Comms.Db.CustomerDetails.FindAllByGender(2).FirstOrDefault());
 			Console.WriteLine(customer.NationalNumber.ToString() + "  /  " + customer.DateOfBirth.ToString().Replace(" 00:00:00", ""));
-
+			
+			
 			var journey = JourneyFactory.GetL0Journey(Client.Home())
 				.WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask))
 				.WithNationalId(customer.NationalNumber.ToString())
@@ -1370,12 +1371,12 @@ namespace Wonga.QA.Tests.Ui
 		{
 			var loginPage = Client.Login();
 			string email = Get.RandomEmail();
-		    int loanAmount = 200;
+			int loanAmount = 200;
 			Console.WriteLine("email={0}", email);
 
 			// L0 journey
 			var journeyL0 = JourneyFactory.GetL0Journey(Client.Home())
-                .WithAmount(loanAmount)
+				.WithAmount(loanAmount)
 				.WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask))
 				.WithEmail(email);
 			var accountSetupPage = journeyL0.Teleport<AccountDetailsPage>() as AccountDetailsPage;
@@ -1395,7 +1396,7 @@ namespace Wonga.QA.Tests.Ui
 			Thread.Sleep(1000);
 
 			accountSetupPage.ClickSecciLink();
-            Assert.Contains(accountSetupPage.SecciPopupWindowContent(), loanAmount.ToString("#"));
+			Assert.Contains(accountSetupPage.SecciPopupWindowContent(), loanAmount.ToString("#"));
 			accountSetupPage.ClosePopupWindow();
 		}
 
@@ -1411,9 +1412,9 @@ namespace Wonga.QA.Tests.Ui
 				.New(customer)
 				.Build();
 
-			var mail = Do.Until(() => Drive.Data.QaData.Db.Email.FindAllByEmailAddress(email)).FirstOrDefault();
+			var mail = Do.With.Message("There is no sought-for email in DB").Until(() => Drive.Data.QaData.Db.Email.FindAllByEmailAddress(email)).FirstOrDefault();
 			Console.WriteLine(mail.EmailId);
-			var mailTemplate = Do.Until(() => Drive.Data.QaData.Db.EmailToken.FindBy(EmailId: mail.EmailId, Key: "Loan_Agreement"));
+			var mailTemplate = Do.With.Message("There is no sought-for email token in DB").Until(() => Drive.Data.QaData.Db.EmailToken.FindBy(EmailId: mail.EmailId, Key: "Loan_Agreement"));
 			Console.WriteLine(mailTemplate.Value.ToString());
 			Assert.IsNotNull(mailTemplate);
 			Assert.IsTrue(mailTemplate.value.ToString().Contains("You promise to pay and will make one repayment of"));
@@ -1498,7 +1499,7 @@ namespace Wonga.QA.Tests.Ui
 				#region case Ca
 				case AUT.Ca:
 					personalDetailsPage.ProvinceSection.Province = "British Columbia";
-					Do.Until(() => personalDetailsPage.ProvinceSection.ClosePopup());
+					Do.With.Message("Problem with closing popup on PersonalDetails Page").Until(() => personalDetailsPage.ProvinceSection.ClosePopup());
 
 					personalDetailsPage.YourName.FirstName = firstName;
 					personalDetailsPage.YourName.MiddleName = "TESTNoCheck";
