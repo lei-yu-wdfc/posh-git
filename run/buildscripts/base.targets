@@ -21,7 +21,7 @@
 			<ConfigFilesToDelete Include="$(Bin)\*.v3qaconfig"/>
 		</ItemGroup>
 		<Delete Files="@(ConfigFilesToDelete)"/>
-		<Copy SourceFiles="$(Config)\$(DeployTo).v3qaconfig" DestinationFolder="$(Bin)" Condition="'$(DeployTo)' != ''"/>
+		<Copy SourceFiles="$(Config)\$(TestTarget).v3qaconfig" DestinationFolder="$(Bin)" Condition="'$(TestTarget)' != ''"/>
 	</Target>
 	
 	<Target Name="Build">

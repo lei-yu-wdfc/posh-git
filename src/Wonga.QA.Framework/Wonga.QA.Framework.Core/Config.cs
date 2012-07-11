@@ -61,10 +61,10 @@ namespace Wonga.QA.Framework.Core
             var binFolderConfigs = Directory.GetFiles(Environment.CurrentDirectory, "*.v3qaconfig");
             //var configsFolder = Path.Combine(Environment.CurrentDirectory, @"..\run\configs");
 
-            if (appDataConfigs.Length > 0)
-                _settings = proc.LoadFromFile(appDataConfigs[0]);
-            else if (binFolderConfigs.Length > 0)
+            if (binFolderConfigs.Length > 0)
                 _settings = proc.LoadFromFile(binFolderConfigs[0]);
+			else if (appDataConfigs.Length > 0)
+                _settings = proc.LoadFromFile(appDataConfigs[0]);
             else throw new Exception(@"Configuration file not found. Please run the [run\Wonga.QA.cmd] tool");
 
             SUT = Get.EnumFromString<SUT>(_settings.XPathSelectElement("//SUT").Value);
