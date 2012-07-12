@@ -22,8 +22,14 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
             : base(client)
         {
             Assert.That(Headers, Has.Item(ContentMapMobile.Get.DealDonePage.HeaderText));
-            _continueButton = Content.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.DealDonePage.ContinueButtonLink)) ??
-                              Content.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.DealDonePage.ContinueButton));
+            switch (Config.AUT)
+            {
+                case (AUT.Za):
+                    _continueButton =
+                        Content.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.DealDonePage.ContinueButtonLink)) ??
+                        Content.FirstOrDefaultElement(By.CssSelector(UiMapMobile.Get.DealDonePage.ContinueButton));
+                    break;
+            }
         }
 
         public String GetRepaymentDate()
@@ -44,7 +50,8 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
             if (Config.AUT != AUT.Uk)
                 _continueButton.Click();
             else
-                Client.Driver.FindElement(By.CssSelector(UiMapMobile.Get.DealDonePage.GoToMyAccount)).Click();
+                //Client.Driver.FindElement(By.CssSelector(UiMapMobile.Get.DealDonePage.GoToMyAccount)).Click();
+                Client.Driver.FindElement(By.CssSelector(".wonga-box p>a")).Click();
 
             return Do.Until(() => new MySummaryPageMobile(Client));
         }

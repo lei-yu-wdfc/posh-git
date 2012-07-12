@@ -21,4 +21,12 @@
     <HeaderText>Application declined</HeaderText>
   </DeclinedPageMobile>-->
 
+  <DealDonePage>
+    <HeaderText>Your application has been accepted</HeaderText>
+  </DealDonePage>
+
+  <DeclinedPageMobile>
+    <HeaderText>Application declined</HeaderText>
+  </DeclinedPageMobile>
+
 </ContentMapMobile>

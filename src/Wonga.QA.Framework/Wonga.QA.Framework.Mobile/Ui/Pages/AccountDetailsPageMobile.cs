@@ -21,7 +21,7 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
         public AccountDetailsPageMobile(MobileUiClient client)
             : base(client)
         {
-            _form = Content.FindElement(By.CssSelector(UiMapMobile.Get.AccountDetailsPageMobile.FormId));
+            _form = Content;
             _next = Content.FindElement(By.CssSelector(UiMapMobile.Get.AccountDetailsPageMobile.NextButton));
             AccountDetailsSection = new Sections.AccountDetailsSection(this);
         }

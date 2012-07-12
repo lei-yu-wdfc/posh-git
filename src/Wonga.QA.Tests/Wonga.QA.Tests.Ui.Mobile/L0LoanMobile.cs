@@ -59,7 +59,8 @@ namespace Wonga.QA.Tests.Ui.Mobile
         [Test, AUT(AUT.Uk), Pending("")]
         public void UkL0Journey()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.MobileHome());
+            var journey = JourneyFactory.GetL0Journey(Client.MobileHome())
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
             var mySummary = journey.Teleport<MySummaryPageMobile>() as MySummaryPageMobile;
         }
 

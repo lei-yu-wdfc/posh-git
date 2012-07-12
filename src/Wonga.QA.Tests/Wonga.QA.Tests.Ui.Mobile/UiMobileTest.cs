@@ -17,7 +17,7 @@ namespace Wonga.QA.Tests.Ui.Mobile
         [SetUp]
         public void SetUp()
         {
-           // Config.Ui.Browser = Config.UiConfig.BrowserType.FirefoxMobile;
+           Config.Ui.Browser = Config.UiConfig.BrowserType.FirefoxMobile;
         }
 
         [TearDown]
