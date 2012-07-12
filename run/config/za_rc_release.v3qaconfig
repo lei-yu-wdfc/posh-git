@@ -78,9 +78,16 @@
 		<Bi Name="Wonga.Bi.Handlers">%%//Svc/ServicesHost%%</Bi>
 		
 		<BankGateway Name="Wonga.BankGateway.Handlers">%%//Svc/ComponentsHost%%</BankGateway>
+		<BankGatewayHsbc Name="Wonga.BankGateway.Hsbc.Handlers">%%//Svc/ComponentsHost%%</BankGatewayHsbc>
+		<BankGatewayBmo Name="Wonga.BankGateway.Bmo.Handlers">%%//Svc/ComponentsHost%%</BankGatewayBmo>
+		<BankGatewayBottomLine Name="Wonga.BankGateway.BottomLine.Handlers">%%//Svc/ComponentsHost%%</BankGatewayBottomLine>
+		<BankGatewayRbc Name="Wonga.BankGateway.Rbc.Handlers">%%//Svc/ComponentsHost%%</BankGatewayRbc>
+		<BankGatewayHyphen Name="Wonga.BankGateway.Hyphen.Handlers">%%//Svc/ComponentsHost%%</BankGatewayHyphen>
+		<BankGatewayEasyPay Name="Wonga.BankGateway.EasyPay.Handlers">%%//Svc/ComponentsHost%%</BankGatewayEasyPay>
+		<BankGatewayBre Name="Wonga.BankGateway.Bre.Handlers">%%//Svc/ComponentsHost%%</BankGatewayBre>
+		<BankGatewayP24 Name="Wonga.BankGateway.P24.Handlers">%%//Svc/ComponentsHost%%</BankGatewayP24>
+		<BankGatewayScotia Name="Wonga.BankGateway.Scotia.Handlers">%%//Svc/ComponentsHost%%</BankGatewayScotia>
 		<BlackList Name="Wonga.BlackList.Handlers">%%//Svc/ComponentsHost%%</BlackList>
-		<Bmo Name="Wonga.Bmo.Handlers">%%//Svc/ComponentsHost%%</Bmo>
-		<BottomLine Name="Wonga.BottomLine.Handlers">%%//Svc/ComponentsHost%%</BottomLine>
 		<CallReport Name="Wonga.CallReport.Handlers">%%//Svc/ComponentsHost%%</CallReport>
 		<CallValidate Name="Wonga.CallValidate.Handlers">%%//Svc/ComponentsHost%%</CallValidate>
 		<CardPayment Name="Wonga.CardPayment.Handlers">%%//Svc/ComponentsHost%%</CardPayment>
@@ -94,20 +101,15 @@
 		<FileStorage Name="Wonga.FileStorage.Handlers">%%//Svc/ComponentsHost%%</FileStorage>
 		<Graydon Name="Wonga.Graydon.Handlers">%%//Svc/ComponentsHost%%</Graydon>
 		<Hpi Name="Wonga.Hpi.Handlers">%%//Svc/ComponentsHost%%</Hpi>
-		<Hsbc Name="Wonga.Hsbc.Handlers">%%//Svc/ComponentsHost%%</Hsbc>
-		<Hyphen Name="Wonga.Hyphen.Handlers">%%//Svc/ComponentsHost%%</Hyphen>
 		<Iovation Name="Wonga.Iovation.Handlers">%%//Svc/ComponentsHost%%</Iovation>
-		<Rbc Name="Wonga.Rbc.Handlers">%%//Svc/ComponentsHost%%</Rbc>
 		<Salesforce Name="Wonga.Salesforce.Handlers">%%//Svc/ComponentsHost%%</Salesforce>
 		<Scheduler Name="Wonga.Scheduler.Handlers">%%//Svc/ComponentsHost%%</Scheduler>
-		<Scotia Name="Wonga.Scotia.Handlers">%%//Svc/ComponentsHost%%</Scotia>
 		<Sms Name="Wonga.Sms.Handlers">%%//Svc/ComponentsHost%%</Sms>
 		<TimeoutManager Name="Wonga.TimeoutManager.Handlers">%%//Svc/ComponentsHost%%</TimeoutManager>
 		<Timezone Name="Wonga.TimeZone.Handlers">%%//Svc/ComponentsHost%%</Timezone>
 		<TransUnion Name="Wonga.TransUnion.Handlers">%%//Svc/ComponentsHost%%</TransUnion>
 		<Uru Name="Wonga.Uru.Handlers">%%//Svc/ComponentsHost%%</Uru>
 		<WongaPay Name="Wonga.WongaPay.Handlers">%%//Svc/ComponentsHost%%</WongaPay>
-		<EasyPay Name="Wonga.EasyPay.Handlers">%%//Svc/ComponentsHost%%</EasyPay>
 		<PayU Name="Wonga.PayU.Handlers">%%//Svc/ComponentsHost%%</PayU>
 	</Svc>
 	

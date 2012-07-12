@@ -125,15 +125,18 @@ namespace Wonga.QA.Framework.Core
             Svc.Risk = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/Risk", "Name"), GetSettingFromXml("//Svc/Risk"));
             Svc.Marketing = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/Marketing", "Name"), GetSettingFromXml("//Svc/Marketing"));
             Svc.Bi = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/Bi", "Name"), GetSettingFromXml("//Svc/Bi"));
+
             Svc.BankGateway = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/BankGateway", "Name"), GetSettingFromXml("//Svc/BankGateway"));
+            Svc.BankGatewayBmo = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/BankGatewayBmo", "Name"), GetSettingFromXml("//Svc/BankGatewayBmo"));
+            Svc.BankGatewayBottomLine = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/BankGatewayBottomLine", "Name"), GetSettingFromXml("//Svc/BankGatewayBottomLine"));
+            Svc.BankGatewayHsbc = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/BankGatewayHsbc", "Name"), GetSettingFromXml("//Svc/BankGatewayHsbc"));
+            Svc.BankGatewayHyphen = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/BankGatewayHyphen", "Name"), GetSettingFromXml("//Svc/BankGatewayHyphen"));
+            Svc.BankGatewayRbc = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/BankGatewayRbc", "Name"), GetSettingFromXml("//Svc/BankGatewayRbc"));
+            Svc.BankGatewayScotia = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/BankGatewayScotia", "Name"), GetSettingFromXml("//Svc/BankGatewayScotia"));
+            Svc.BankGatewayEasyPay = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/BankGatewayEasyPay", "Name"), GetSettingFromXml("//Svc/BankGatewayEasyPay"));
+            Svc.BankGatewayBre = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/BankGatewayBre", "Name"), GetSettingFromXml("//Svc/BankGatewayBre"));
+            Svc.BankGatewayP24 = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/BankGatewayP24", "Name"), GetSettingFromXml("//Svc/BankGatewayP24"));
             Svc.Blacklist = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/BlackList", "Name"), GetSettingFromXml("//Svc/BlackList"));
-            Svc.BankGatewayBmo = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/Bmo", "Name"), GetSettingFromXml("//Svc/Bmo"));
-            Svc.BankGatewayBottomLine = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/BottomLine", "Name"), GetSettingFromXml("//Svc/BottomLine"));
-            Svc.BankGatewayHsbc = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/Hsbc", "Name"), GetSettingFromXml("//Svc/Hsbc"));
-            Svc.BankGatewayHyphen = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/Hyphen", "Name"), GetSettingFromXml("//Svc/Hyphen"));
-            Svc.BankGatewayRbc = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/Rbc", "Name"), GetSettingFromXml("//Svc/Rbc"));
-            Svc.BankGatewayScotia = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/Scotia", "Name"), GetSettingFromXml("//Svc/Scotia"));
-            Svc.BankGatewayEasyPay = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/EasyPay", "Name"), GetSettingFromXml("//Svc/EasyPay"));
             Svc.CallReport = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/CallReport", "Name"), GetSettingFromXml("//Svc/CallReport"));
             Svc.CallValidate = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/CallValidate", "Name"), GetSettingFromXml("//Svc/CallValidate"));
             Svc.CardPayment = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/CardPayment", "Name"), GetSettingFromXml("//Svc/CardPayment"));
@@ -289,6 +292,8 @@ namespace Wonga.QA.Framework.Core
             public KeyValuePair<String, String> BankGatewayRbc { get; set; }
             public KeyValuePair<String, String> BankGatewayScotia { get; set; }
             public KeyValuePair<String, String> BankGatewayEasyPay { get; set; }
+            public KeyValuePair<String, String> BankGatewayBre { get; set; }
+            public KeyValuePair<String, String> BankGatewayP24 { get; set; }
             public KeyValuePair<String, String> Blacklist { get; set; }
             public KeyValuePair<String, String> CallReport { get; set; }
             public KeyValuePair<String, String> CallValidate { get; set; }
