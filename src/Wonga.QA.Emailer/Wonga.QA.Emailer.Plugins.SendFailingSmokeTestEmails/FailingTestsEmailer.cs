@@ -48,7 +48,7 @@ namespace Wonga.QA.Emailer.Plugins.SendFailingSmokeTestEmails
                     {
                         message += "<b>" + "Tiket in JIRA: " + "</b>" + "<a href='" + testReport.JIRA + "'>" + testReport.JIRA + "</a>.<br><br>";
                     }
-                    message += "Test location: " + testReport.FullTestName + ".<br><br>" +
+                    message += "<b>Test location:</b> " + testReport.FullTestName + ".<br><br>" +
                                "<b>Fail message:</b> <br>" + "<font color=#ff0000>" + testReport.Message + ".</font><br><br><br>";
                 }
             }
