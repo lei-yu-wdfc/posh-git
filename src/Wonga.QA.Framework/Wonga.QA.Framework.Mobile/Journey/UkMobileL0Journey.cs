@@ -108,11 +108,12 @@ namespace Wonga.QA.Framework.UI
         protected override BaseL0Journey FillAddressDetails(bool submit = true)
         {
             var addressPage = CurrentPage as AddressDetailsPageMobile;
-            addressPage.PostCodeLookup = _postCode;
+            //addressPage.PostCodeLookup = _postCode;
+            addressPage.PostCodeLookup = "NW1 7SN";
             addressPage.LookupByPostCode();
             addressPage.GetAddressesDropDown();
-            Do.Until(() => addressPage.SelectedAddress = "93 Harbord Street, LONDON SW6 6PN");
-            Do.Until(() => addressPage.HouseNumber = "666");
+            Do.Until(() => addressPage.SelectedAddress = "4 Prince Albert Road, LONDON NW1 7SN");
+            Do.Until(() => addressPage.HouseNumber = "6");
             addressPage.AddressPeriod = _addressPeriod;
             if (submit)
             {

@@ -1,5 +1,211 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <UiMapMobile>
+  <SlidersElement>
+    <FormId>#wonga-sliders-form</FormId>
+    <AmountSlider>.wonga-amount-slider-wrapper .sliderbit</AmountSlider>
+    <DurationSlider>.wonga-duration-slider-wrapper .sliderbit</DurationSlider>
+    <LoanAmount>#edit-loan-amount</LoanAmount>
+    <LoanDuration>#edit-loan-duration</LoanDuration>
+    <SubmitButton>#edit-submit</SubmitButton>
+    <TotalAmount>span.loan-amount</TotalAmount>
+    <TotalFees>span.loan-fees</TotalFees>
+    <TotalToRepay>span.loan-total</TotalToRepay>
+    <RepaymentDate>span.repayment-date</RepaymentDate>
+    <AmountMinusButton>.wonga-amount-slider-wrapper .sliderminus</AmountMinusButton>
+    <AmountPlusButton>.wonga-amount-slider-wrapper .sliderplus</AmountPlusButton>
+    <DurationMinusButton>.wonga-duration-slider-wrapper .sliderminus</DurationMinusButton>
+    <DurationPlusButton>.wonga-duration-slider-wrapper .sliderplus</DurationPlusButton>
+  </SlidersElement>
+
+  <PersonalDetailsPageMobile>
+    <FormId>#wonga-apply-lzero-form</FormId>
+    <!--<SlidersFormId>#wonga-alterable-loan-details-fieldset</SlidersFormId>-->
+    <CheckPrivacyPolicy>#edit-privacy</CheckPrivacyPolicy>
+    <PrivatePolicyErrorForm>#edit-privacy-wrapper div div</PrivatePolicyErrorForm>
+    <CheckCanContact>input[type="radio"][name="update_option"]</CheckCanContact>
+    <NextButton>#edit-submit</NextButton>
+    <!--<SliderToggler>#slider-toggler</SliderToggler>
+    <TotalToRepay>span.loan-total</TotalToRepay>
+    <RepaymentDate>span.repayment-date</RepaymentDate>
+    <TotalAmount>span.loan-amount</TotalAmount>
+    <TotalFees>span.loan-fees</TotalFees>
+    <LoanAmount>#edit-loan-amount</LoanAmount>
+    <LoanDuration>#edit-loan-duration</LoanDuration>
+    <AmountMinusButton>#wonga-amount-slider-wrapper button.slider-minus</AmountMinusButton>
+    <AmountPlusButton>#wonga-amount-slider-wrapper button.slider-plus</AmountPlusButton>
+    <DurationMinusButton>#wonga-duration-slider-wrapper button.slider-minus</DurationMinusButton>
+    <DurationPlusButton>#wonga-duration-slider-wrapper button.slider-plus</DurationPlusButton>
+    <NotMarriedInCommunityProperty>#edit-married-N</NotMarriedInCommunityProperty>
+    <MarriedInCommunityProperty>#edit-married-Y</MarriedInCommunityProperty>-->
+  </PersonalDetailsPageMobile>
+
+  <YourNameSection>
+    <Fieldset>fieldset[id="name"]</Fieldset>
+    <Title>#edit-title</Title>
+    <FirstName>#edit-first-name</FirstName>
+    <FirstNameErrorForm>#edit-first-name-wrapper div div</FirstNameErrorForm>
+    <MiddleName>#edit-middle-name</MiddleName>
+    <MiddleNameErrorForm>#edit-middle-name-wrapper div div</MiddleNameErrorForm>
+    <LastName>#edit-last-name</LastName>
+    <LastNameErrorForm>#edit-last-name-wrapper div div</LastNameErrorForm>
+  </YourNameSection>
+
+  <YourDetailsSection>
+    <IdNumber>#edit-id-number</IdNumber>
+    <Fieldset>fieldset[id="details"]</Fieldset>
+    <Dependants>#edit-dependants</Dependants>
+    <DependantsErrorForm>#edit-dependants-wrapper div div</DependantsErrorForm>
+    <Gender>input[type="radio"][name="gender"]</Gender>
+    <DateOfBirthDay>#edit-date-of-birth-day</DateOfBirthDay>
+    <DateOfBirthMonth>#edit-date-of-birth-month</DateOfBirthMonth>
+    <DateOfBirthYear>#edit-date-of-birth-year</DateOfBirthYear>
+    <HomeStatus>#edit-home-status</HomeStatus>
+    <MaritalStatus>#edit-marital-status</MaritalStatus>
+    <MartialStatusErrorForm>#edit-marital-status-wrapper div div</MartialStatusErrorForm>
+    <HomeLanguage>#edit-home-language</HomeLanguage>
+    <Warning>.invalid</Warning>
+  </YourDetailsSection>
+
+  <ContactingYouSection>
+    <Fieldset>fieldset[id="contact"]</Fieldset>
+    <Email>#edit-email</Email>
+    <EmailErrorForm>#edit-email-wrapper div div</EmailErrorForm>
+    <EmailConfirm>#edit-email-confirm</EmailConfirm>
+    <EmailConfirmErrorForm>#edit-email-confirm-wrapper div div</EmailConfirmErrorForm>
+    <HomePhone>#edit-home-phone</HomePhone>
+    <MobilePhoneErrorForm>#edit-mobile-phone-wrapper div div</MobilePhoneErrorForm>
+    <MobilePhone>#edit-mobile-phone</MobilePhone>
+  </ContactingYouSection>
+
+  <EmploymentDetailsSection>
+    <Fieldset>fieldset#employment</Fieldset>
+    <EmploymentStatus>#edit-employment-status</EmploymentStatus>
+    <EmploymentStatusErrorForm>#edit-employment-status-wrapper div div</EmploymentStatusErrorForm>
+    <EmployerIndustry>#edit-employer-industry</EmployerIndustry>
+    <EmployerIndustryErrorForm>#edit-employer-industry-wrapper div div</EmployerIndustryErrorForm>
+    <EmployerName>#edit-employer-name</EmployerName>
+    <EmployerNameErrorForm>#edit-employer-name-wrapper div div</EmployerNameErrorForm>
+    <EmploymentPosition>#edit-employment-position</EmploymentPosition>
+    <TimeWithEmployerYears>#edit-employment-time-years</TimeWithEmployerYears>
+    <TimeWithEmployerYearsErrorForm>#edit-employment-time-years-wrapper div div</TimeWithEmployerYearsErrorForm>
+    <TimeWithEmployerMonths>#edit-employment-time-months</TimeWithEmployerMonths>
+    <TimeWiyhEmployerMonthsErrorForm>#edit-employment-time-months-wrapper div div</TimeWiyhEmployerMonthsErrorForm>
+    <MonthlyIncome>#edit-monthly-income</MonthlyIncome>
+    <SelfEmployedMonthlyIncome>#edit-household-income</SelfEmployedMonthlyIncome>
+    <NextPaydayDate>#edit-next-payday-datepicker-popup-0</NextPaydayDate>
+    <NextPayDateErrorForm>#edit-next-payday-wrapper .form-error div</NextPayDateErrorForm>
+    <WorkPhone>#edit-work-phone</WorkPhone>
+    <WorkPhoneErrorForm>#edit-work-phone-wrapper div div</WorkPhoneErrorForm>
+    <IncomeFrequency>#edit-income-frequency</IncomeFrequency>
+    <IncomeFrequencyErrorForm>#edit-income-frequency-wrapper div div</IncomeFrequencyErrorForm>
+    <SalaryPaidToBank>input[type="radio"][name="salary_to_bank"]</SalaryPaidToBank>
+    <SalaryPaidToBankErrorForm>#wonga-conditionally-hidden-salary-to-bank .form-error div</SalaryPaidToBankErrorForm>
+    <SelfEmploymentPayDayDate></SelfEmploymentPayDayDate>
+    <NextPaydayDateDay>#edit-next-payday-day</NextPaydayDateDay>
+    <NextPaydayDateMonth>#edit-next-payday-month</NextPaydayDateMonth>
+    <NextPaydayDateYear>#edit-next-payday-year</NextPaydayDateYear>
+  </EmploymentDetailsSection>
+
+  <AddressDetailsPageMobile>
+    <FormId>#lzero-address-form</FormId>
+    <LookupButton>#edit-submit-lookup</LookupButton>
+    <AddressOptionsWrapper>#edit-address-options-wrapper</AddressOptionsWrapper>
+    <PostcodeValid>#edit-postcode-lookup-uk-wrapper .form-error</PostcodeValid>
+    <PostcodeLookup>#edit-postcode-lookup-uk</PostcodeLookup>
+    <Postcode>#edit-postcode-lookup-uk</Postcode>
+    <District>#edit-district</District>
+    <HouseNumber>#edit-house-number</HouseNumber>
+    <County>#edit-county</County>
+    <Street>#edit-street</Street>
+    <Town>#edit-town</Town>
+    <PostcodeInForm>#edit-postcode-uk</PostcodeInForm>
+    <AddressPeriod>#edit-address-period</AddressPeriod>
+    <NextButton>#edit-submit</NextButton>
+    <AddressOptions>#edit-address-options</AddressOptions>
+    <HouseNumberErrorForm>#edit-house-number-wrapper div.invalid</HouseNumberErrorForm>
+    <StreetErrorForm>#edit-street-wrapper div.invalid</StreetErrorForm>
+    <TownErrorForm>#edit-town-wrapper div.invalid</TownErrorForm>
+    <PostcodeErrorForm>#edit-postcode-uk-wrapper div.form-error div.invalid</PostcodeErrorForm>
+    <AddressPeriodErrorForm>#edit-address-period-wrapper div.invalid</AddressPeriodErrorForm>
+  </AddressDetailsPageMobile>
+
+  <AccountDetailsPageMobile>
+    <!--<FormId>#wonga-apply-lzero-form</FormId>-->
+    <NextButton>#edit-submit</NextButton>
+  </AccountDetailsPageMobile>
+
+  <AccountDetailsSection>
+    <Fieldset>.form-fieldset-wrapper</Fieldset>
+    <Password>#edit-password</Password>
+    <PasswordConfirm>#edit-password-confirm</PasswordConfirm>
+    <PasswordErrorForm>div#edit-password-confirm-wrapper div.invalid</PasswordErrorForm>
+    <SecretQuestion>#edit-secret-question</SecretQuestion>
+    <SecretAnswer>#edit-secret-answer</SecretAnswer>
+  </AccountDetailsSection>
+
+  <PersonalBankAccountPageMobile>
+    <FormId>#lzero-bank-form</FormId>
+    <NextButton>#edit-submit</NextButton>
+  </PersonalBankAccountPageMobile>
+
+  <BankAccountSection>
+    <Fieldset>#bank-1</Fieldset>
+    <BankName>#edit-bank-name</BankName>
+    <BranchNumber>#edit-branch-number</BranchNumber>
+    <BankAccountType>#edit-bank-account-type</BankAccountType>
+    <SortCodePart1>#edit-sort-code-part1</SortCodePart1>
+    <SortCodePart2>#edit-sort-code-part2</SortCodePart2>
+    <SortCodePart3>#edit-sort-code-part3</SortCodePart3>
+    <AccountNumber>#edit-account-number</AccountNumber>
+    <BankPeriod>#edit-bank-period</BankPeriod>
+    <InstitutionNumber>#edit-institution-number</InstitutionNumber>
+  </BankAccountSection>
+
+  <PersonalDebitCardPageMobile>
+    <FormId>#lzero-card-form</FormId>
+    <NextButton>#edit-submit</NextButton>
+  </PersonalDebitCardPageMobile>
+
+  <MobilePinVerificationSection>
+    <Fieldset>#pin-verification</Fieldset>
+    <Pin>#edit-pin</Pin>
+    <ResendPin>#edit-resend-pin</ResendPin>
+    <ResendPinMessage>.pin_resend</ResendPinMessage>
+  </MobilePinVerificationSection>
+
+  <DebitCardSection>
+    <Fieldset>#card-details</Fieldset>
+    <CardType>#edit-card-type</CardType>
+    <CardNumber>#edit-card-number</CardNumber>
+    <CardName>#edit-card-name</CardName>
+    <CardExpiryDateMonth>#edit-card-expiry-date-month</CardExpiryDateMonth>
+    <CardExpiryDateYear>#edit-card-expiry-date-year</CardExpiryDateYear>
+    <CardSecurityNumber>#edit-card-security</CardSecurityNumber>
+    <CardStartDateMonth>#edit-card-start-date-month</CardStartDateMonth>
+    <CardStartDateYear>#edit-card-start-date-year</CardStartDateYear>
+  </DebitCardSection>
+
+  <AcceptedPageMobile>
+    <FormId>#vanilla-agreement-form</FormId>
+    <AgreementConfirm>#edit-accept</AgreementConfirm>
+    <NodeWrap>.node-type-wonga-decision-page</NodeWrap>
+    <SecciLink>a#secci_link.doc_link</SecciLink>
+    <ExplanationLink>a#explanation_link.doc_link</ExplanationLink>
+    <PopupContentFrame>#fancybox-frame</PopupContentFrame>
+    <PopupClose>#fancybox-close</PopupClose>
+    <SubmitButton>#edit-accept</SubmitButton>
+  </AcceptedPageMobile>
+
+  <DealDonePage>
+    <HeaderText>Your application has been accepted</HeaderText>
+    <GoToMyAccount>.wonga-box-top-right a</GoToMyAccount>
+  </DealDonePage>
+
+  <MySummaryPageMobile>
+    <MySummaryButton>.menu-block-0 .menu li:first-child>a</MySummaryButton>
+    <MyPersonalDetailsButton>.menu-block-0 .menu li:first-child + li>a</MyPersonalDetailsButton>
+    <MyPaymentDetailsButton>.menu-block-0 .menu li:first-child + li + li>a</MyPaymentDetailsButton>
+  </MySummaryPageMobile>
 
 
 </UiMapMobile>
