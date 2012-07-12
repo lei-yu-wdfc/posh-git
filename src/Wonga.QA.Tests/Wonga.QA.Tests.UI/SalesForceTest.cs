@@ -33,7 +33,7 @@ namespace Wonga.QA.Tests.Ui
             var salesForceSearchResultPage = salesForceHome.FindCustomerByMail(email);
             Thread.Sleep(2000);
             Assert.IsTrue(salesForceSearchResultPage.IsCustomerFind());
-			salesForceSearchResultPage.GoToCustomerDetailsPage();
+	    salesForceSearchResultPage.GoToCustomerDetailsPage();
         }
 		
     }
