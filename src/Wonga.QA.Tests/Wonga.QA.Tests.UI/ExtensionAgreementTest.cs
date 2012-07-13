@@ -61,12 +61,24 @@ namespace Wonga.QA.Tests.Ui
 
             agreementPage.ClickExtensionSecciLink();
         
-            Assert.IsTrue(agreementPage.secci.Text.Contains(ContentMap.Get.ExtensionAgreementPage.CreditInformation));
+            /*Assert.IsTrue(agreementPage.secci.Text.Contains(ContentMap.Get.ExtensionAgreementPage.CreditInformation));
+
             Assert.Contains(agreementPage.secci.Text, expectedExtendedLoanTerm.ToString("#"));
             Assert.Contains(agreementPage.secci.Text, expectedRepaymentDate);
             Assert.Contains(agreementPage.secci.Text, expectedLoanAmount.ToString("#"));
             Assert.Contains(agreementPage.secci.Text, expectedTotalToRepay);
-            Assert.Contains(agreementPage.secci.Text, expectedRepresentativeApr);
+            Assert.Contains(agreementPage.secci.Text, expectedRepresentativeApr);*/
+
+
+            string secciText = agreementPage.SecciPopupWindowContent();
+
+            Assert.IsTrue(secciText.Contains(ContentMap.Get.ExtensionAgreementPage.CreditInformation));
+
+            Assert.Contains(secciText, expectedExtendedLoanTerm.ToString("#"));
+            Assert.Contains(secciText, expectedRepaymentDate);
+            Assert.Contains(secciText, expectedLoanAmount.ToString("#"));
+            Assert.Contains(secciText, expectedTotalToRepay);
+            Assert.Contains(secciText, expectedRepresentativeApr);
         }
 
         [Test, AUT(AUT.Uk), JIRA("UKWEB-243", "UKWEB-294"), MultipleAsserts]
@@ -75,7 +87,6 @@ namespace Wonga.QA.Tests.Ui
         {
             ExtensionAgreementPageNDaysAfterLoan(loanTerm, loanAmount, daysAfterLoan, daysToExtend);
         }
-
 
         private void ExtensionAgreementPageNDaysAfterLoan(int loanTerm, int loanAmount, int daysAfterLoan, int daysToExtend)
         {
@@ -113,11 +124,13 @@ namespace Wonga.QA.Tests.Ui
 
             agreementPage.ClickExtensionSecciLink();
 
-            Assert.Contains(agreementPage.secci.Text, expectedExtendedLoanTerm.ToString("#"));
-            Assert.Contains(agreementPage.secci.Text, expectedRepaymentDate);
-            Assert.Contains(agreementPage.secci.Text, expectedLoanAmount.ToString("#"));
-            Assert.Contains(agreementPage.secci.Text, expectedTotalToRepay);
-            Assert.Contains(agreementPage.secci.Text, expectedRepresentativeApr);
+            string secciText = agreementPage.SecciPopupWindowContent();
+
+            Assert.Contains(secciText, expectedExtendedLoanTerm.ToString("#"));
+            Assert.Contains(secciText, expectedRepaymentDate);
+            Assert.Contains(secciText, expectedLoanAmount.ToString("#"));
+            Assert.Contains(secciText, expectedTotalToRepay);
+            Assert.Contains(secciText, expectedRepresentativeApr);
         }
     }
 }

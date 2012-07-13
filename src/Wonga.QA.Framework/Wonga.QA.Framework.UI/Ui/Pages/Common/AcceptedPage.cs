@@ -27,6 +27,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private IWebElement _dateOfAgreement;
         private IWebElement _continueTermsButton;
         private IWebElement _continueDirectDebitButton;
+        private IWebElement _acceptButton;
         private readonly IWebElement _detailsTable;
         private readonly IWebElement _loanAmount;
         private readonly IWebElement _termsOfLoan;
@@ -82,7 +83,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                     break;
                 case (AUT.Uk):
                     _form = Content.FindEitherElement(By.CssSelector(UiMap.Get.AcceptedPage.FormId), By.CssSelector("#wonga-loan-approve-form"));
-
+                    _acceptButton = Content.FindElement(By.CssSelector(UiMap.Get.AcceptedPage.SubmitButton));
                     //_nodeWrapper = Content.FindElement(By.CssSelector(UiMap.Get.AcceptedPage.NodeWrap));
                     break;
             }
@@ -246,20 +247,51 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public void ClickSecciLink()
         {
-            Content.FindElement(By.CssSelector(UiMap.Get.AccountDetailsPage.SecciLink)).Click();
+            Content.FindElement(By.CssSelector(UiMap.Get.AcceptedPage.SecciLink)).Click();
+        }
+
+        public void ClickWrittenExplanationLink()
+        {
+            Content.FindElement(By.CssSelector(UiMap.Get.AcceptedPage.ExplanationLink)).Click();
+            Thread.Sleep(3000);
         }
 
         public String SecciPopupWindowContent()
         {
             string currentWindowHdl = Client.Driver.CurrentWindowHandle;
 
-            var frameName = Client.Driver.FindElement(By.CssSelector(UiMap.Get.AccountDetailsPage.PopupContentFrame)).GetAttribute("name");
-            var secci = Client.Driver.SwitchTo().Frame(frameName).FindElement(By.CssSelector(UiMap.Get.ExtensionAgreementPage.SecciContent));
+            var frameName = Client.Driver.FindElement(By.CssSelector(UiMap.Get.AcceptedPage.PopupContentFrame)).GetAttribute("name");
+            var secci = Client.Driver.SwitchTo().Frame(frameName).FindElement(By.CssSelector(UiMap.Get.AcceptedPage.SecciContent));
             var secci_text = secci.Text;
 
             Client.Driver.SwitchTo().Window(currentWindowHdl);
 
             return secci_text;
+        }
+
+        public String WrittenExplanationContent()
+        {
+            string currentWindowHdl = Client.Driver.CurrentWindowHandle;
+            Thread.Sleep(3000);
+
+            var frameName = Client.Driver.FindElement(By.CssSelector(UiMap.Get.AcceptedPage.PopupContentFrame)).GetAttribute("name");
+            var content = Client.Driver.SwitchTo().Frame(frameName).FindElement(By.CssSelector(UiMap.Get.AcceptedPage.WrittenExplanationContent));
+            var contentText = content.Text;
+
+            Client.Driver.SwitchTo().Window(currentWindowHdl);
+
+            return contentText;
+        }
+
+        public AcceptedPage ClickAcceptGetError()
+        {
+            _acceptButton.Click();
+            return new AcceptedPage(Client);
+        }
+
+        public string GetErrorText()
+        {
+            return this.Error;
         }
 
         public void ClosePopupWindow()

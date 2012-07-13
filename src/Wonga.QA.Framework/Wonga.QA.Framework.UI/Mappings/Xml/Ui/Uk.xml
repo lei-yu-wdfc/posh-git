@@ -67,6 +67,12 @@
     <ExplanationLink>a#explanation_link.doc_link</ExplanationLink>
     <PopupContentFrame>#fancybox-frame</PopupContentFrame>
     <PopupClose>#fancybox-close</PopupClose>
+    <SecciHeader>div .secci-intro</SecciHeader>
+    <SecciPrint>div #secci-print-link a</SecciPrint>
+    <SecciContent>.secci</SecciContent>
+    <WrittenExplanationHeader>.secci-intro</WrittenExplanationHeader>
+    <WrittenExplanationPrint>#secci-print-link a</WrittenExplanationPrint>
+    <WrittenExplanationContent>.content</WrittenExplanationContent>
   </AcceptedPage>
 
   <ApplicationSection>
