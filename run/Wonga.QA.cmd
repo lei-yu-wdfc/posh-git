@@ -37,12 +37,13 @@ GOTO MENU
 
 :2
 	SET /P TestingTarget=Enter your testing target(v3 [deployto] flag):
-	echo Removing existing settings
-	rd %APPDATA%\v3qa /s /q
-	echo Creating settings directory @ %APPDATA%\v3qa
-	mkdir %APPDATA%\v3qa
-	echo Copying %Run%\config\%TestingTarget%.v3qaconfig to %APPDATA%\v3qa\%TestingTarget%.v3qaconfig
-	copy %Run%\config\%TestingTarget%.v3qaconfig %APPDATA%\v3qa\%TestingTarget%.v3qaconfig
+	SETX QAFTestTarget %TestingTarget%
+	REM echo Removing existing settings
+	REM rd %APPDATA%\v3qa /s /q
+	REM echo Creating settings directory @ %APPDATA%\v3qa
+	REM mkdir %APPDATA%\v3qa
+	REM echo Copying %Run%\config\%TestingTarget%.v3qaconfig to %APPDATA%\v3qa\%TestingTarget%.v3qaconfig
+	REM copy %Run%\config\%TestingTarget%.v3qaconfig %APPDATA%\v3qa\%TestingTarget%.v3qaconfig
 GOTO MENU
 
 :3

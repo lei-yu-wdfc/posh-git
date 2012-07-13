@@ -5,6 +5,7 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using Microsoft.Win32;
@@ -33,6 +34,13 @@ namespace Wonga.QA.Framework.Core
         public static PrepaidAdminConfig PrepaidAdminUI { get; set; }
         public static CommonApiConfig CommonApi { get; set; }
         private static XDocument _settings;
+        private static string _testTarget;
+
+        private static DirectoryInfo _configsDirectory;
+        private static DirectoryInfo _executingDirectory;
+
+        private const string CONFIG_FOLDER_NAME = @"config";
+        private const string RUN_FOLDER_NAME = @"run";
 
         private static string GetSettingFromXml(string xpath)
         {
@@ -50,22 +58,32 @@ namespace Wonga.QA.Framework.Core
 
         static Config()
         {
+            Configure();
+        }
+
+        public static void Configure(string executingDirectoryPath = null, string configsDirectoryPath = null, string testTarget = null)
+        {
+            _configsDirectory = configsDirectoryPath != null? new DirectoryInfo(configsDirectoryPath) : GetDefaultConfigsFolder();
+            _executingDirectory = executingDirectoryPath != null ? new DirectoryInfo(executingDirectoryPath) : new DirectoryInfo(Environment.CurrentDirectory);
+            _testTarget = testTarget ?? GetValue<string>(null, "QAFTestTarget");
+            _settings = GetSettingsFile();
+            if (_settings == null)
+            {
+                Trace.WriteLine(string.Format("WARNING: Configuration file for test target '{0}' was not found.\n" +
+                                              "Configs Directory: {1}\n" +
+                                              "Executing Directory: {2}", 
+                                                _testTarget, 
+                                                _configsDirectory != null ? _configsDirectory.FullName : "", 
+                                                _executingDirectory != null ? _executingDirectory.FullName : ""));
+                return;
+            }
+
             Ui = new UiConfig();
             Db = new DbConfig();
             Salesforce = new SalesforceConfig();
             PayLater = new PayLaterConfig();
             Svc = new SvcConfig();
             Msmq = new MsmqConfig();
-            var proc = new XmlProcessor();
-            var appDataConfigs = Directory.GetFiles(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "v3qa"), "*.v3qaconfig");
-            var binFolderConfigs = Directory.GetFiles(Environment.CurrentDirectory, "*.v3qaconfig");
-            //var configsFolder = Path.Combine(Environment.CurrentDirectory, @"..\run\configs");
-
-            if (binFolderConfigs.Length > 0)
-                _settings = proc.LoadFromFile(binFolderConfigs[0]);
-			else if (appDataConfigs.Length > 0)
-                _settings = proc.LoadFromFile(appDataConfigs[0]);
-            else throw new Exception(@"Configuration file not found. Please run the [run\Wonga.QA.cmd] tool");
 
             SUT = Get.EnumFromString<SUT>(_settings.XPathSelectElement("//SUT").Value);
             AUT = Get.EnumFromString<AUT>(_settings.XPathSelectElement("//AUT").Value);
@@ -80,7 +98,7 @@ namespace Wonga.QA.Framework.Core
             Ui.RemotePassword = GetSettingFromXml("//Ui/RemotePassword");
             Ui.RemoteUri = new Uri(GetSettingFromXml("//Ui/RemoteUri"));
             Ui.RemoteUsername = GetSettingFromXml("//Ui/RemoteUsername");
-            
+
             Salesforce.Home = new Uri(GetSettingFromXml("//Salesforce/HomePage"));
             Salesforce.Password = GetSettingFromXml("//Salesforce/Password");
             Salesforce.Username = GetSettingFromXml("//Salesforce/Username");
@@ -98,26 +116,26 @@ namespace Wonga.QA.Framework.Core
             Proxy = bool.Parse(GetSettingFromXml("//ProxyMode"));
 
             Email = new EmailConfig
-                        {
-                            QA = new EmailConfig.EmailAddressConfig
-                                     {
-                                         Host = GetSettingFromXml("//Email/Host"), 
-                                         Username = GetSettingFromXml("//Email/Username"), 
-                                         Password = GetSettingFromXml("//Email/Password"), 
-                                         Port = int.Parse(GetSettingFromXml("//Email/Port")), 
-                                         IsSsl = bool.Parse(GetSettingFromXml("//Email/IsSsl"))
-                                     }
-                        };
+            {
+                QA = new EmailConfig.EmailAddressConfig
+                {
+                    Host = GetSettingFromXml("//Email/Host"),
+                    Username = GetSettingFromXml("//Email/Username"),
+                    Password = GetSettingFromXml("//Email/Password"),
+                    Port = int.Parse(GetSettingFromXml("//Email/Port")),
+                    IsSsl = bool.Parse(GetSettingFromXml("//Email/IsSsl"))
+                }
+            };
             Api = new ApiConfig(GetSettingFromXml("//Api/Url"));
             CommonApi = new CommonApiConfig(GetSettingFromXml("//CommonApi/Url"));
             Cs = new CsConfig(GetSettingFromXml("//CSApi/Url"));
-            Admin = new AdminConfig {Home = new Uri(GetSettingFromXml("//Admin/HomePage"))};
+            Admin = new AdminConfig { Home = new Uri(GetSettingFromXml("//Admin/HomePage")) };
             PrepaidAdminUI = new PrepaidAdminConfig
-                                 {
-                                     Home = new Uri(GetSettingFromXml("//PrepaidAdmin/HomePage")),
-                                     User = GetSettingFromXml("//PrepaidAdmin/Username"),
-                                     Pwd = GetSettingFromXml("//PrepaidAdmin/Password")
-                                 };
+            {
+                Home = new Uri(GetSettingFromXml("//PrepaidAdmin/HomePage")),
+                User = GetSettingFromXml("//PrepaidAdmin/Username"),
+                Pwd = GetSettingFromXml("//PrepaidAdmin/Password")
+            };
 
             Svc.Ops = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/Ops", "Name"), GetSettingFromXml("//Svc/Ops"));
             Svc.Comms = new KeyValuePair<String, String>(GetSettingAttributeFromXml("//Svc/Comms", "Name"), GetSettingFromXml("//Svc/Comms"));
@@ -236,6 +254,51 @@ namespace Wonga.QA.Framework.Core
 
             Trace.WriteLine(SUT, typeof(Config).FullName);
             Trace.WriteLine(AUT, typeof(Config).FullName);
+        }
+
+        /// <summary>
+        /// The following method tries to resolve the desired config to use based on the following order
+        /// 1) If it finds one in the current execution directory
+        /// 2) If _testTarget is set or it finds an env var called QAFTestTarget and it can resolve run\config folder it uses that
+        /// 3) If it finds one under %appdata%\v3qa folder.
+        /// </summary>
+        /// <returns></returns>
+        private static XDocument GetSettingsFile()
+        {
+            XDocument settings = null;
+            var proc = new XmlProcessor();
+            var appDataConfigs = Directory.GetFiles(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "v3qa"), "*.v3qaconfig");
+            var binFolderConfigs = _executingDirectory.GetFiles("*.v3qaconfig");
+            var configFolderConfigs = _configsDirectory == null ? new FileInfo[0] : _configsDirectory.GetFiles("*.v3qaconfig");
+            var testTargetConfig = configFolderConfigs.FirstOrDefault(x => x.Name == _testTarget + ".v3qaconfig");
+
+            if (binFolderConfigs.Length > 0)
+                settings = proc.LoadFromFile(binFolderConfigs[0].FullName);
+            else if (testTargetConfig != null)
+                settings = proc.LoadFromFile(testTargetConfig.FullName);
+            else if (appDataConfigs.Length > 0)
+                settings = proc.LoadFromFile(appDataConfigs[0]);
+            return settings;
+        }
+
+        /// <summary>
+        /// Hackish way to find out the config folder.
+        /// </summary>
+        /// <returns></returns>
+        private static DirectoryInfo GetDefaultConfigsFolder()
+        {
+            var runFolder = GetFolderUpwards(new DirectoryInfo(Environment.CurrentDirectory), RUN_FOLDER_NAME);
+            return GetFolderUpwards(runFolder, CONFIG_FOLDER_NAME);
+        }
+
+        private static DirectoryInfo GetFolderUpwards(DirectoryInfo current, string folder)
+        {
+            var dirs = current.GetDirectories(folder);
+            if (dirs.Length == 1)
+                return dirs[0];
+            if (current.Parent == null)
+                return null;
+            return GetFolderUpwards(current.Parent, folder);
         }
 
         public static T Throw<T>()

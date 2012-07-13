@@ -14,7 +14,15 @@ namespace Wonga.QA.Framework.Tests.Core
         [Test]
         public void ItCanReadUiHomePage()
         {
+            var sut = Config.SUT;
             Assert.IsNotNull(Config.Ui.Home);
+        }
+
+        [Test]
+        public void ReConfigureWithoutConfigsFileShouldWork()
+        {
+            Config.Configure(testTarget: "uk_local");
+            Assert.IsTrue(Config.AUT == AUT.Uk && Config.SUT == SUT.Dev);
         }
     }
 }
