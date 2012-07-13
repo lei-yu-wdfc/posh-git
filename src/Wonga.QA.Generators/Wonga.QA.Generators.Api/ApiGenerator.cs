@@ -15,11 +15,10 @@ namespace Wonga.QA.Generators.Api
 			var binRootDirectories = new GeneratorRepoDirectories(Config.Api.Folder);
 
 			var classGenerator = new XmlSchemaClassGenerator(Config.Api, binRootDirectories);
+			ILookup<String, Type> requests = Origin.GetTypes().Where(t => t.IsRequest()).ToLookup(t => t.GetName());
 
-            ILookup<String, Type> requests = Origin.GetTypes().Where(t => t.IsRequest()).ToLookup(t => t.GetName());
-			
-            foreach (FileInfo file in Origin.GetSchemas().Where(f => !f.IsCs()))
-            {
+			foreach (FileInfo file in Origin.GetSchemas().Where(f => !f.IsCs()))
+			{
 				classGenerator.GenerateXmlSchemaClassesFiles(file, requests);
             }
 
