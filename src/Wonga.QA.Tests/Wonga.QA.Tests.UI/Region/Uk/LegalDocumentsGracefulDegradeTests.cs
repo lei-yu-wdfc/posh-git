@@ -238,68 +238,6 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             });
         }
 
-        // 1. Start L0, simulate documents fetching issue in Accept page, open a legal document, get error. 
-        // 2. Restart L0 and successfully proceed to Deal Done page without opening a legal document.
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-365", "UKWEB-1011"), IgnorePageErrors, Owner(Owner.PavithranVangiti), Pending("UKWEB-1011: User should be able to complete L0 journey when the journey is restarted after the legal documents error")]
-        public void L0AcceptPageRestartL0AndContinueWithoutOpeningLegalDocumentsL0ShouldSucceed()
-        {
-            const String errorMessage = "Oops. We are having technical issues and are unable to complete your application. Please try again shortly or call us on 08448 429 109.";
-
-            var loginPage = Client.Login();
-            string email = Get.RandomEmail();
-            Console.WriteLine("email={0}", email);
-
-            // L0 journey
-            var journeyL0 = JourneyFactory.GetL0Journey(Client.Home()).WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)).WithEmail(email);
-            var acceptPage = journeyL0.Teleport<AcceptedPage>() as AcceptedPage;
-
-            // Turns Off SECCI, T&C, Explanation to simulate content error
-            var secciLink = acceptPage.GetSecciToggleElement();
-            secciLink.SecciToggleButtonClick();
-
-            Do.With.Message("Document fetching is NOT switched OFF").Until(() => secciLink.GetSecciToggleButtonText().Contains("Turn document links back on"));
-
-            Assert.Multiple(() =>
-            {
-                //Open Secci pop-up page and check correct error message is displayed
-                acceptPage.ClickSecciLink();
-                Assert.Contains(acceptPage.SecciPopupWindowContent(), errorMessage);
-                acceptPage.ClosePopupWindow();
-                Thread.Sleep(2000);
-
-                //Click on 'I Accept' button and ensure you stay on the same page
-                acceptPage = acceptPage.ClickAcceptGetError();
-                Assert.AreEqual(errorMessage, acceptPage.GetErrorText());
-
-                //Open Written Explanation pop-up page and check correct error message is displayed
-                acceptPage.ClickWrittenExplanationLink();
-                Assert.Contains(acceptPage.WrittenExplanationContent(), errorMessage);
-                acceptPage.ClosePopupWindow();
-                Thread.Sleep(2000);
-
-                //Click on 'I Accept' button and ensure you stay on the same page
-                acceptPage = acceptPage.ClickAcceptGetError();
-                Assert.AreEqual(errorMessage, acceptPage.GetErrorText());
-            });
-
-            journeyL0 = JourneyFactory.GetL0Journey(Client.Home()).WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)).WithEmail(email);
-            acceptPage = journeyL0.Teleport<AcceptedPage>() as AcceptedPage;
-
-            //Click 'I Accept' button
-            acceptPage.Submit();
-
-            // The Deal done page should open
-            try
-            {
-                var dealDonePage = new DealDonePage(this.Client);
-            }
-            catch (Exception)
-            {
-                Assert.Fail("Deal done page didn't open");
-                throw;
-            }
-        }
-
         /* Start L0, simulate documents fetching issue in Accept page, and successfully proceed to the
         Deal Done without opening a legal document*/
         [Test, AUT(AUT.Uk), JIRA("UKWEB-365"), IgnorePageErrors, Owner(Owner.PavithranVangiti)]
@@ -398,7 +336,6 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
 
             agreementPage = agreementPage.ClickAcceptGetError();
             Assert.AreEqual(errorMessage, agreementPage.GetErrorText());
-
         }
 
         // 1. Start Extension, simulate documents fetching issue in Extension Agreement page, open a legal document, get error. 
