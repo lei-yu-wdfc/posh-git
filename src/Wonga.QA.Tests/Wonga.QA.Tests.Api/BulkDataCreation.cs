@@ -19,6 +19,7 @@ using Wonga.QA.Framework.Api.Exceptions;
 
 namespace Wonga.QA.Tests.Api
 {
+    [TestFixture, Parallelizable(TestScope.All), Ignore("Start when it needed only")]
     class BulkDataCreation
     {
         Random r = new Random();
