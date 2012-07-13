@@ -14,6 +14,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private readonly IWebElement _next;
         private IWebElement _loanConditionsTitle;
         private IWebElement _explanationTitle;
+        public String explanationTitle;
 
         public Sections.AccountDetailsSection AccountDetailsSection { get; set; }
 

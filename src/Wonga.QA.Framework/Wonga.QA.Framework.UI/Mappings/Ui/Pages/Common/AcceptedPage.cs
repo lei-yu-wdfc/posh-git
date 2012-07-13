@@ -38,5 +38,11 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
 
         public String NameInLoanAgreement { get; set; }
         public String NameInDirectDebit { get; set; }
+
+        public String SecciContent { get; set; }
+        public String WrittenExplanationContent { get; set; }
+        public String PopupContentFrame { get; set; }
+        public String SecciLink { get; set; }
+        public String ExplanationLink { get; set; }
     }
 }

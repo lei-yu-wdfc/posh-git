@@ -59,11 +59,6 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _aeDocumentButton.Click();
         }
 
-        /*public void ClickTermsAndConditionsLink()
-        {
-            _agreementLegals.Click();
-        }*/
-
         public void ClickTermsAndConditionsLink()
         {
             _termsAndConditionsButton.Click();
@@ -78,9 +73,6 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                 
                 Assert.IsTrue(secciPrint.Text.Contains(ContentMap.Get.ExtensionAgreementPage.PrintThisPage));
                 Assert.IsTrue(secciHeader.Text.Contains(ContentMap.Get.ExtensionAgreementPage.ReadThis));
-
-                var frameName = Client.Driver.FindElement(By.CssSelector("#fancybox-frame")).GetAttribute("name");
-                secci = Client.Driver.SwitchTo().Frame(frameName).FindElement(By.CssSelector(UiMap.Get.ExtensionAgreementPage.SecciContent));
             }
             catch (NoSuchElementException)
             {
@@ -121,10 +113,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             Client.Driver.FindElement(By.CssSelector(UiMap.Get.ExtensionAgreementPage.PopupCloseLink)).Click();
         }
 
-
         public String SecciPopupWindowContent()
         {
             string currentWindowHdl = Client.Driver.CurrentWindowHandle;
+            Thread.Sleep(3000);
 
             var frameName = Client.Driver.FindElement(By.CssSelector(UiMap.Get.ExtensionAgreementPage.PopupContentFrame)).GetAttribute("name");
             var secci = Client.Driver.SwitchTo().Frame(frameName).FindElement(By.CssSelector(UiMap.Get.ExtensionAgreementPage.SecciContent));
@@ -138,8 +130,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public String TermsAndConditionsContent()
         {
             string currentWindowHdl = Client.Driver.CurrentWindowHandle;
+            Thread.Sleep(3000);
 
-            var frameName = Client.Driver.FindElement(By.CssSelector(UiMap.Get.ExtensionAgreementPage.TermsAndConditionsContent)).GetAttribute("name");
+            var frameName = Client.Driver.FindElement(By.CssSelector(UiMap.Get.ExtensionAgreementPage.PopupContentFrame)).GetAttribute("name");
             var content = Client.Driver.SwitchTo().Frame(frameName).FindElement(By.CssSelector(UiMap.Get.ExtensionAgreementPage.TermsAndConditionsContent));
             var contentText = content.Text;
 
@@ -151,14 +144,26 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public String WrittenExplanationContent()
         {
             string currentWindowHdl = Client.Driver.CurrentWindowHandle;
+            Thread.Sleep(3000);
 
-            var frameName = Client.Driver.FindElement(By.CssSelector(UiMap.Get.ExtensionAgreementPage.WrittenExplanationContent)).GetAttribute("name");
+            var frameName = Client.Driver.FindElement(By.CssSelector(UiMap.Get.ExtensionAgreementPage.PopupContentFrame)).GetAttribute("name");
             var content = Client.Driver.SwitchTo().Frame(frameName).FindElement(By.CssSelector(UiMap.Get.ExtensionAgreementPage.WrittenExplanationContent));
             var contentText = content.Text;
 
             Client.Driver.SwitchTo().Window(currentWindowHdl);
 
             return contentText;
+        }
+
+        public ExtensionAgreementPage ClickAcceptGetError()
+        {
+            _nextButton.Click();
+            return new ExtensionAgreementPage(Client);
+        }
+
+        public string GetErrorText()
+        {
+            return this.Error;
         }
     }
 }
