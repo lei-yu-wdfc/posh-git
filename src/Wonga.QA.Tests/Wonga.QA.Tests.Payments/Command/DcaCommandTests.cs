@@ -14,6 +14,7 @@ using Wonga.QA.Framework.Db.Ops;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
 using System.Threading;
+using Wonga.QA.Tests.Payments.Helpers;
 
 namespace Wonga.QA.Tests.Payments.Command
 {
@@ -24,15 +25,26 @@ namespace Wonga.QA.Tests.Payments.Command
 	    private dynamic _fixedTermLoanSagas = Drive.Data.OpsSagas.Db.FixedTermLoanSagaEntity;
 	    private dynamic _externalDebtCollectionSagas = Drive.Data.OpsSagas.Db.ExternalDebtCollectionSagaEntity;
 	    private dynamic _schedulePaymentSagas = Drive.Data.OpsSagas.Db.ScheduledPaymentSagaEntity;
-        
+		private bool _bankGatewayTestModeOriginal;
+
+
 		[FixtureSetUp]
 		public void FixtureSetUp()
 		{
+			_bankGatewayTestModeOriginal = ConfigurationFunctions.GetBankGatewayTestMode();
+			ConfigurationFunctions.SetBankGatewayTestMode(false);
+
 			if (Drive.Data.Ops.GetServiceConfiguration<bool>("BankGateway.IsTestMode"))
 				Assert.Inconclusive("Bankgateway is in test mode");
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2147"), Pending("ZA-2565")]
+		[FixtureTearDown]
+		public void FixtureTearDown()
+		{
+			ConfigurationFunctions.SetBankGatewayTestMode(_bankGatewayTestModeOriginal);
+		}
+
+		[Test, AUT(AUT.Za), JIRA("ZA-2147")]
 		public void FlagApplicationToDca_ShouldMoveApplicationToDCA()
 		{
 			//Arrange
@@ -42,14 +54,14 @@ namespace Wonga.QA.Tests.Payments.Command
 			FlagDca(app.Id);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2147"), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2147")]
 		[ExpectedException(typeof(ValidatorException), "Payments_FlagToDca_ApplicationDoesNotExist")]
 		public void FlagApplicationToDca_ForNonExistingApplication_ExpectValidationException()
 		{
 			FlagDca(Guid.NewGuid());
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2147"), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2147")]
 		[ExpectedException(typeof(ValidatorException), "FlagApplicationToDca_ApplicationNotOpen")]
 		public void FlagApplicationToDca_ForClosedApplication_ExpectValidationException()
 		{
@@ -60,7 +72,7 @@ namespace Wonga.QA.Tests.Payments.Command
 			FlagDca(app.Id);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2147"), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2147")]
 		public void RevokeApplicationFromDca_ShouldMoveApplicationFromDCA()
 		{
 			//Arrange
@@ -111,7 +123,7 @@ namespace Wonga.QA.Tests.Payments.Command
 
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2147"), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2147")]
 		[ExpectedException(typeof(ValidatorException), "Payments_RevokeFromDca_ApplicationDoesNotExist")]
 		public void RevokeApplicationFromDca_ForNonExitingApplication_ExpectValidationException()
 		{
@@ -156,7 +168,7 @@ namespace Wonga.QA.Tests.Payments.Command
 			Drive.Cs.Commands.Post(revokeFromDcaCommand);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-2147"), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za), JIRA("ZA-2147")]
 		[ExpectedException(typeof(ValidatorException), "RevokeApplicationFromDca_ApplicationNotOpen")]
 		public void RevokeApplicationFromDca_ForClosedApplication_ExpectValidationException()
 		{
