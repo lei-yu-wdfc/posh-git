@@ -38,6 +38,7 @@ namespace Wonga.QA.Framework.Core
 
         private static DirectoryInfo _configsDirectory;
         private static DirectoryInfo _executingDirectory;
+        private static DirectoryInfo _appDataDirectory;
 
         private const string CONFIG_FOLDER_NAME = @"config";
         private const string RUN_FOLDER_NAME = @"run";
@@ -65,6 +66,7 @@ namespace Wonga.QA.Framework.Core
         {
             _configsDirectory = configsDirectoryPath != null? new DirectoryInfo(configsDirectoryPath) : GetDefaultConfigsFolder();
             _executingDirectory = executingDirectoryPath != null ? new DirectoryInfo(executingDirectoryPath) : new DirectoryInfo(Environment.CurrentDirectory);
+            _appDataDirectory = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "v3qa"));
             _testTarget = testTarget ?? GetValue<string>(null, "QAFTestTarget");
             _settings = GetSettingsFile();
             if (_settings == null)
@@ -267,7 +269,7 @@ namespace Wonga.QA.Framework.Core
         {
             XDocument settings = null;
             var proc = new XmlProcessor();
-            var appDataConfigs = Directory.GetFiles(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "v3qa"), "*.v3qaconfig");
+            var appDataConfigs = _appDataDirectory.Exists ? _appDataDirectory.GetFiles("*.v3qaconfig") : new FileInfo[0];
             var binFolderConfigs = _executingDirectory.GetFiles("*.v3qaconfig");
             var configFolderConfigs = _configsDirectory == null ? new FileInfo[0] : _configsDirectory.GetFiles("*.v3qaconfig");
             var testTargetConfig = configFolderConfigs.FirstOrDefault(x => x.Name == _testTarget + ".v3qaconfig");
@@ -277,7 +279,7 @@ namespace Wonga.QA.Framework.Core
             else if (testTargetConfig != null)
                 settings = proc.LoadFromFile(testTargetConfig.FullName);
             else if (appDataConfigs.Length > 0)
-                settings = proc.LoadFromFile(appDataConfigs[0]);
+                settings = proc.LoadFromFile(appDataConfigs[0].FullName);
             return settings;
         }
 
