@@ -60,6 +60,7 @@
     <Compile Include="EasyPayTests.cs" />
     <Compile Include="Enums\PaymentFrequency.cs" />
     <Compile Include="ExternalDebtCollectionTests.cs" />
+    <Compile Include="FixedTermLoanExtensionLoanCalculation.cs" />
     <Compile Include="GetApplicationAprTest.cs" />
     <Compile Include="GetAvailabelCreditTest.cs" />
     <Compile Include="GetInstallmentQuoteTest.cs" />
