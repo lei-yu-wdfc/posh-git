@@ -24,6 +24,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
     [Parallelizable(TestScope.All), JIRA("UK-785", "UK-788", "UK-795", "UKWEB-151", "UKWEB-985")]
     public class MySummaryScenariosTests : UiTest
     {
+        #region Dictionaries
         Dictionary<int, string> introTexts = new Dictionary<int, string> 
 	    {
 	    {1, "Hi {first name}. Your current trust rating means you can apply for up to £{500} below."},
@@ -118,9 +119,11 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
         {21, ""}
 	    };
 
-        // L0 journey
-        [Test, AUT(AUT.Uk), JIRA("UK-1614"), Pending("Fails due to bug UK-1614"), MultipleAsserts]
-        public void MySummaryScenario1A()
+        #endregion
+
+        // No live drawdowns: L0 journey
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-419"), Pending("UKWEB-419: Scenario 17 instead of scenario 1, when user drops off in L0 Bank Account page"), MultipleAsserts]
+        public void MySummaryScenario1L0()
         {
             int scenarioId = 1;
             const int loanAmount = 100;
@@ -153,9 +156,9 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             CheckSliders(mySummaryPage, "full");
         }
 
-        // Ln journey
+        // No live drawdowns: Ln journey
         [Test, AUT(AUT.Uk), MultipleAsserts]
-        public void MySummaryScenario1B()
+        public void MySummaryScenario1Ln()
         {
             int scenarioId = 1;
             string email = Get.RandomEmail();
@@ -188,41 +191,49 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
 
             CheckSliders(mySummaryPage, "full");
         }
-        
+
+        // One live drawdown -can request credit, too early to extend
         [Test, AUT(AUT.Uk), JIRA("UK-1737"), MultipleAsserts]
         [Row(2, 0)]
         [Row(2, 1)]
         [Row(2, 2)]
         public void MySummaryScenario02(int scenarioId, int dayShift) { MySummaryScenarios(scenarioId, dayShift); }
 
+        // One live drawdown -can request credit, can extend
         [Test, AUT(AUT.Uk), MultipleAsserts]
         [Row(3, 3, 10)]
         [Row(3, 7, 10)]
         [Row(3, 8, 10)]
         public void MySummaryScenario03(int scenarioId, int dasyShift, int loanTerm) { MySummaryScenarios(scenarioId, dasyShift, loanTerm); }
 
+        // One live drawdown -can request credit, can't  extend (max. exceeded)
         [Test, AUT(AUT.Uk), Pending("Check that after 3 extensions we get scenario 4. Passed manually."), MultipleAsserts]
         // [Row(4, 2, 7)]
         public void MySummaryScenario04(int scenarioId, int dasyShift, int loanTerm) { MySummaryScenarios(scenarioId, dasyShift, loanTerm); }
 
+        // One live drawdown -can't request credit, too early to extend
         [Test, AUT(AUT.Uk), JIRA("UK-788", "UK-1909"), MultipleAsserts]
         [Row(5, 0)] //0 days passed in 10-day loan
         [Row(5, 2)] //0 days passed in 10-day loan
         public void MySummaryScenario05(int scenarioId, int dasyShift) { MySummaryScenarios(scenarioId, dasyShift); }
 
+        // One live drawdown -can't request credit (Too near to due date), can extend
         [Test, AUT(AUT.Uk), MultipleAsserts]
         [Row(6, 3, 10)] //3 days passed in 10-day loan
         [Row(6, 6, 7)]  //6 days passed in 7-day loan
         public void MySummaryScenario06(int scenarioId, int dasyShift, int loanTerm) { MySummaryScenarios(scenarioId, dasyShift, loanTerm); }
 
+        // One live drawdown-can't request credit, can't extend (too late or max. exceeded
         [Test, AUT(AUT.Uk), MultipleAsserts]
         [Row(7, 10)]
         public void MySummaryScenario07(int scenarioId, int dasyShift) { MySummaryScenarios(scenarioId, dasyShift); }
 
+        // On promise date after live loan closed following successful repayment event
         [Test, AUT(AUT.Uk), MultipleAsserts]
-        [Row(8, 10), Pending(" UK-1913 Waiting for implementation of GetRepayLoanStatus")]
+        [Row(8, 10), JIRA("UKWEB-483"), Pending("UKWEB-483: Waiting for implementation of GetRepayLoanStatus")]
         public void MySummaryScenario08(int scenarioId, int dasyShift) { MySummaryScenarios(scenarioId, dasyShift); }
 
+        // Live loan on promise date (after failed ping until missed payment fee is applied
         [Test, AUT(AUT.Uk), MultipleAsserts]
         public void MySummaryScenario09()
         {
@@ -273,6 +284,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             ChangeWantToRepayBox(customer, customer.GetApplication());
         }
 
+        // Live loan  promise date (after missed payment  fee applied < 3 days in arrears.)
         [Test, AUT(AUT.Uk), MultipleAsserts]
         public void MySummaryScenario10()
         {
@@ -329,19 +341,22 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
 
             ChangeWantToRepayBox(customer, customer.GetApplication());
         }
-        
+
+        // 3+ days in arrears
         [Test, AUT(AUT.Uk), MultipleAsserts]
         [Row(11, 13)]
         [Row(11, 14)]
         [Row(11, 40)]
         public void MySummaryScenario11(int scenarioId, int dasyShift) { MySummaryScenarios(scenarioId, dasyShift); }
 
+        // 31+days in arrears
         [Test, AUT(AUT.Uk), JIRA("UK-1954"), MultipleAsserts]
         [Row(12, 41)]
         [Row(12, 42)]
         [Row(12, 70)]
         public void MySummaryScenario12(int scenarioId, int dasyShift) { MySummaryScenarios(scenarioId, dasyShift); }
 
+        // 61+ days in arrears
         [Test, AUT(AUT.Uk), JIRA("UK-1966"), MultipleAsserts]
         [Row(13, 71)]
         [Row(13, 72)]
@@ -349,8 +364,8 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
         [Row(13, 1000)]
         public void MySummaryScenario13(int scenarioId, int dasyShift) { MySummaryScenarios(scenarioId, dasyShift); }
 
-        //[Test, AUT(AUT.Uk), Pending("Awating Repayment Arrangment Functionality."), MultipleAsserts]
-        [Test, AUT(AUT.Uk), MultipleAsserts]
+        // In arrears -In repayment plan
+        [Test, AUT(AUT.Uk), Pending("Repayment Arrangment Functionality is ready. Test to be updated."), MultipleAsserts]
         public void MySummaryScenario14()
         {
             var scenarioId = 14;
@@ -398,8 +413,8 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             CheckSliders(mySummaryPage, "no");
         }
 
-        //[Test, AUT(AUT.Uk), Pending("Awating Repayment Arrangment Functionality."), MultipleAsserts]
-        [Test, AUT(AUT.Uk), MultipleAsserts]
+        // In arrears -In repayment plan - missed payment (within grace period)
+        [Test, AUT(AUT.Uk), Pending("Repayment Arrangment Functionality is ready. Test to be updated."), MultipleAsserts]
         public void MySummaryScenario15()
         {
             const int scenarioId = 15;
@@ -444,8 +459,8 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             CheckSliders(mySummaryPage, "no");
         }
 
-        //[Test, AUT(AUT.Uk), Pending("Awating Repayment Arrangment Functionality."), MultipleAsserts]
-        [Test, AUT(AUT.Uk), MultipleAsserts]
+        // In arrears - In repayment plan – broken repayment arrangemnt
+        [Test, AUT(AUT.Uk), Pending("Repayment Arrangment Functionality is ready. Test to be updated."), MultipleAsserts]
         public void MySummaryScenario16()
         {
             const int scenarioId = 16;
@@ -490,6 +505,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             CheckSliders(mySummaryPage, "no");
         }
 
+        // No live drawdowns
         [Test, AUT(AUT.Uk), JIRA("UK-1624"), Pending("UK-1624 Waiting for implementation of Referrals and API implementation of the hours to decision"), MultipleAsserts]
         public void MySummaryScenario17A()
         {
@@ -527,6 +543,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             CheckSliders(mySummaryPage, "no");
         }
 
+        // No live drawdowns
         [Test, AUT(AUT.Uk), JIRA("UK-1624"), Pending("UK-1624 Waiting for implementation of Referrals and API implementation of the hours to decision"), MultipleAsserts]
         public void MySummaryScenario17B()
         {
@@ -563,12 +580,15 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             CheckSliders(mySummaryPage, "no");
         }
 
+        // Agreement being cancelled
         [Test, AUT(AUT.Uk), Pending("Waiting for implementation of agreement cancellation process."), MultipleAsserts]
         public void MySummaryScenario19() { MySummaryScenarios(19, 0); }
 
+        // Customer has never had a loan but has applied and been declined therefore has an account
         [Test, AUT(AUT.Uk), MultipleAsserts]
         public void MySummaryScenario20() { MySummaryScenarios(20, 1); }
 
+        // Needs to accept agreement to complete application
         [Test, AUT(AUT.Uk), MultipleAsserts, JIRA("UK-1735"), Pending("Waiting for implementation of calculation, bug UK-1735.")]
         public void MySummaryScenario21()
         {
@@ -604,6 +624,8 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
 
             CheckSliders(mySummaryPage, "no");
         }
+
+        # region Functions
 
         private void MySummaryScenarios(int scenarioId, params int[] days)
         {
@@ -779,6 +801,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             Assert.AreEqual(expectedIntroText, actuallntroText);
         }
 
+        // Check Loan Status Text on My Summary page
         private void CheckLoanStatusText(int scenarioId, MySummaryPage mySummaryPage, Customer customer, Application application)
         {
             // Check Loan Message is displayed/correct
@@ -814,7 +837,28 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage;
             Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
         }
-
+        
+        // Check Sliders on My Summary page
+        private void CheckSliders(MySummaryPage mySummaryPage, string sliderType)
+        {
+            if (sliderType == "full")
+            {
+                Assert.IsNotNull(mySummaryPage.Sliders, "Sliders should be available");
+                Assert.IsNotEmpty(mySummaryPage.Sliders.HowLong, "Duration slider should be available");
+                Assert.IsNotEmpty(mySummaryPage.Sliders.HowMuch, "Amount slider should be available");
+            }
+            else if (sliderType == "half")
+            {
+                Assert.IsNotNull(mySummaryPage.TopupSliders, "Sliders should be  available");
+                Assert.IsNotEmpty(mySummaryPage.TopupSliders.HowMuch, "Amount slider should be available");
+            }
+            else if (sliderType == "no")
+            {
+                Assert.IsNull(mySummaryPage.Sliders, "Sliders should not be available");
+            }
+        }
+        
+        // Click Repay in Tag Cloud and check default values on Repay page
         private void ChangeWantToRepayBox(Customer customer, Application application)
         {
 
@@ -881,7 +925,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
                 var sActualLoanPeriodClarification = requestPage.LoanPeriodClarification;
                 if ((sExpectedWantToRepay != String.Format("{0:0.00}", expectedOweToday)) && (daysToNextDueDay.Days > 0))
                 {
-                    Assert.AreEqual(sExpectedLoanPeriodClarification, sActualLoanPeriodClarification, "Wrong oan Period Clarification, <in N days>");
+                    Assert.AreEqual(sExpectedLoanPeriodClarification, sActualLoanPeriodClarification, "Wrong on Period Clarification, <in N days>");
                     Assert.IsTrue(requestPage.IsLoanPeriodClarificationDisplayed);
                 }
                 else
@@ -891,23 +935,6 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             }
         }
 
-        private void CheckSliders(MySummaryPage mySummaryPage, string sliderType)
-        {
-            if (sliderType == "full")
-	        {
-	            Assert.IsNotNull(mySummaryPage.Sliders, "Sliders should be available");
-                Assert.IsNotEmpty(mySummaryPage.Sliders.HowLong, "Duration slider should be available");
-                Assert.IsNotEmpty(mySummaryPage.Sliders.HowMuch, "Amount slider should be available");
-	        }
-            else if (sliderType == "half")
-	        {
-                Assert.IsNotNull(mySummaryPage.TopupSliders, "Sliders should be  available");
-                Assert.IsNotEmpty(mySummaryPage.TopupSliders.HowMuch, "Amount slider should be available");
-            }
-            else if (sliderType == "no")
-            {
-                Assert.IsNull(mySummaryPage.Sliders, "Sliders should not be available");
-            }
-        }
+        # endregion
     }
 }
