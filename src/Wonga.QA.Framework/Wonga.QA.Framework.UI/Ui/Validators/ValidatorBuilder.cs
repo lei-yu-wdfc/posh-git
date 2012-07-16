@@ -5,30 +5,35 @@ using System.Text;
 
 namespace Wonga.QA.Framework.UI.Ui.Validators
 {
-    public static class ValidatorBuilder
+    public class ValidatorBuilder
     {
         
         public static Validator Validator;
-        
-        public static Validator New(UiClient client)
+
+        public ValidatorBuilder New(UiClient client)
         {
-            Validator = new Validator(client); 
-            return Validator;
+            Validator = new Validator(client);
+            return this;
         }
 
-        public static Validator Default(UiClient client)
+        public  ValidatorBuilder Default(UiClient client)
         {
             Validator = new Validator(client);
             Validator.Checks.Add(Validator.ErrorsCheck);
             Validator.Checks.Add(Validator.InvalidFormErrorCheck);
             Validator.Checks.Add(Validator.HeadersCheck);
             Validator.Checks.Add(Validator.TitleCheck);
-            return Validator;
+            return this;
         }
 
-        public static Validator WithoutErrorsCheck()
+        public ValidatorBuilder WithoutErrorsCheck()
         {
             Validator.Checks.Remove(Validator.ErrorsCheck);
+            return this; 
+        }
+
+        public  Validator Build()
+        {
             return Validator;
         }
 

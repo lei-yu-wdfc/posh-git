@@ -29,7 +29,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
 
         protected BasePage(UiClient client, Validator validator = null)
         {
-            _validator = validator ?? ValidatorBuilder.Default(client);
+            _validator = validator ?? new ValidatorBuilder().Default(client).Build();
 
             Client = client;
             Do.Until(() => Source);
