@@ -158,6 +158,11 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             get { return Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.TagCloud)).Text; }
         }
 
+        public String GetChangePromiseDateButton
+        {
+            get { return Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.ChangePromiseDateButton)).GetAttribute("alt"); }
+        }
+
         public void ClickViewLoanDetailsButton()
         {
             Client.Driver.FindElement(By.CssSelector(UiMap.Get.MySummaryPage.ViewLoanDetailsButton)).Click();
