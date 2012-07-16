@@ -7,79 +7,96 @@ using System.Xml.Linq;
 
 namespace Wonga.QA.Generators.Core
 {
-    public static class Repo
-    {
-        public static String Name { get; set; }
-        public static DirectoryInfo Root { get; set; }
-        public static DirectoryInfo Src { get; set; }
-        public static DirectoryInfo Bin { get; set; }
-        public static DirectoryInfo Lib { get; set; }
+	public static class Repo
+	{
+		public static String Name { get; set; }
+		public static DirectoryInfo Root { get; set; }
+		public static DirectoryInfo Src { get; set; }
+		public static DirectoryInfo Bin { get; set; }
+		public static DirectoryInfo Lib { get; set; }
 
-        static Repo()
-        {
-            Assembly assembly = Assembly.GetEntryAssembly();
-            Name = assembly.EntryPoint.DeclaringType.Namespace;
-            Root = new FileInfo(assembly.Location).Directory.Parent;
-            Src = Root.GetDirectories("src").Single();
-            Bin = Root.GetDirectories("bin").Single();
-            Lib = Root.GetDirectories("lib").Single();
-        }
+		static Repo()
+		{
+			Assembly assembly = Assembly.GetEntryAssembly();
+			Name = assembly.EntryPoint.DeclaringType.Namespace;
+			Root = new FileInfo(assembly.Location).Directory.Parent;
+			Src = Root.GetDirectories("src").Single();
+			Bin = Root.GetDirectories("bin").Single();
+			Lib = Root.GetDirectories("lib").Single();
+		}
 
-        public static FileInfo File(String name, DirectoryInfo directory, bool ignoreExistence = false)
-        {
-            FileInfo file = new FileInfo(Path.Combine(directory.FullName, name));
-            if (file.Exists && !ignoreExistence)
-                throw new IOException(string.Format("It seems that file \"{0}\" has a duplicate. \nIt shouldn't; a possible reason may be API Commands/Queries, MSMQ messages that don't have unique names within one application.\n" +
-                                                    "It's also possible that in a given database there is an entity with the same name but in different schema", file.FullName));
-            return file;
-        }
+		public static FileInfo File(String name, DirectoryInfo directory, bool ignoreExistence = false)
+		{
+			FileInfo file = new FileInfo(Path.Combine(directory.FullName, name));
+			if (file.Exists && !ignoreExistence)
+				throw new IOException(string.Format("It seems that file \"{0}\" has a duplicate. \nIt shouldn't; a possible reason may be API Commands/Queries, MSMQ messages that don't have unique names within one application.\n" +
+													"It's also possible that in a given database there is an entity with the same name but in different schema", file.FullName));
+			return file;
+		}
 
-        public static DirectoryInfo Directory(String name, bool delete = true)
-        {
-            return Directory(String.Format("{0}.{1}", Name, name), Bin, delete);
-        }
+		public static DirectoryInfo Directory(String name, bool delete = true)
+		{
+			return Directory(String.Format("{0}.{1}", Name, name), Bin, delete);
+		}
 
-        public static DirectoryInfo Directory(String name, DirectoryInfo directory, Boolean delete = false)
-        {
-            directory = new DirectoryInfo(Path.Combine(directory.FullName, name));
-            if (delete)
-                while (directory.Exists)
-                    try { directory.Delete(true); }
-                    catch { }
-                    finally { directory.Refresh(); }
-            if (!directory.Exists)
-                directory.Create();
-            return directory;
-        }
+		public static DirectoryInfo Directory(String name, DirectoryInfo directory, Boolean delete = false)
+		{
+			directory = new DirectoryInfo(Path.Combine(directory.FullName, name));
 
-        public static void Inject(DirectoryInfo items, String folder, String project, bool delete = true, bool overwrite = false)
-        {
-            FileInfo file = Src.GetFiles(String.Format("{0}.csproj", project), SearchOption.AllDirectories).Single();
-            DirectoryInfo directory = Directory(folder, file.Directory, delete);
+			if (!directory.Exists)
+				directory.Create();
+			else
+			{
+				DeleteExistingSubdirectoriesOfRepo(Config.RepoName, directory);
+			}
 
-            Copy(items, directory, overwrite);
+			return directory;
+		}
 
-            XElement root = XDocument.Load(file.FullName).Root;
-            XName name = root.GetDefaultNamespace().GetName("Compile");
+		public static void Inject(DirectoryInfo items, String folder, String project, bool delete = true, bool overwrite = false)
+		{
+			FileInfo file = Src.GetFiles(String.Format("{0}.csproj", project), SearchOption.AllDirectories).Single();
+			DirectoryInfo directory = Directory(folder, file.Directory, delete);
 
-            List<XElement> elements = root.Descendants(name).ToList();
-            XElement parent = elements.First().Parent;
-            elements.Where(e => e.Attribute("Include").Value.Split('\\').First() == folder).ForEach(e => e.Remove());
+			Copy(items, directory, overwrite);
 
-            foreach (FileInfo item in directory.GetFiles("*", SearchOption.AllDirectories))
-            {
-                XElement element = new XElement(name);
-                element.SetAttributeValue("Include", item.FullName.Substring(directory.Parent.FullName.Length + 1));
-                parent.Add(element);
-            }
+			XElement root = XDocument.Load(file.FullName).Root;
+			XName name = root.GetDefaultNamespace().GetName("Compile");
 
-            root.Document.Save(file.FullName);
-        }
+			List<XElement> elements = root.Descendants(name).ToList();
+			XElement parent = elements.First().Parent;
+			elements.Where(e => e.Attribute("Include").Value.Split('\\').First() == folder).ForEach(e => e.Remove());
 
-        public static void Copy(DirectoryInfo from, DirectoryInfo to, bool overwrite = false)
-        {
-            from.GetFiles().ForEach(f => f.CopyTo(Path.Combine(to.FullName, f.Name), overwrite));
-            from.GetDirectories().ForEach(d => Copy(d, to.CreateSubdirectory(d.Name), overwrite));
-        }
-    }
+			foreach (FileInfo item in directory.GetFiles("*", SearchOption.AllDirectories))
+			{
+				XElement element = new XElement(name);
+				element.SetAttributeValue("Include", item.FullName.Substring(directory.Parent.FullName.Length + 1));
+				parent.Add(element);
+			}
+
+			root.Document.Save(file.FullName);
+		}
+
+		public static void Copy(DirectoryInfo from, DirectoryInfo to, bool overwrite = false)
+		{
+			from.GetFiles().ForEach(f => f.CopyTo(Path.Combine(to.FullName, f.Name), overwrite));
+			from.GetDirectories().ForEach(d => Copy(d, to.CreateSubdirectory(d.Name), overwrite));
+		}
+
+		private static void DeleteExistingSubdirectoriesOfRepo(String repoName, DirectoryInfo directory)
+		{
+			var repoSubDirectories = directory.GetDirectories(String.Format("*.{0}.*", repoName));
+
+			foreach (var repoSubDirectory in repoSubDirectories)
+				DeleteDirectory(repoSubDirectory);
+		}
+
+		private static void DeleteDirectory(DirectoryInfo directory)
+		{
+			while (directory.Exists)
+				try { directory.Delete(true); }
+				catch { }
+				finally { directory.Refresh(); }
+		}
+	}
 }

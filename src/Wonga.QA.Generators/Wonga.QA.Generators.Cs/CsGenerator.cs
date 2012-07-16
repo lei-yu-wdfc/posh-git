@@ -9,32 +9,27 @@ namespace Wonga.QA.Generators.Cs
     {
 		public static void Main(String[] args)
         {
-            if (args.Any())
-                Config.Origin = args.Single();
+			ProgramArgumentsParser.ParseArgumentsParameters(args);
 
 			GenerateForRepo("ops");
 			GenerateForRepo("comms");
 			GenerateForRepo("payments");
 			GenerateForRepo("risk");
 			GenerateForRepo("marketing");
-
-			//Repo.Inject(binRootDirectories.ClassesDirectory, Config.CsApi.Folder, Config.CsApi.Project);
-			//Repo.Inject(binRootDirectories.EnumsDirectory, Config.Enums.Folder, Config.CsApi.Project);
         }
 
 		private static void GenerateForRepo(String repo)
 		{
 			Config.RepoName = repo;
 			var binRootDirectories = new GeneratorRepoDirectories(Config.CsApi.Folder);
-
 			var classGenerator = new XmlSchemaClassGenerator(Config.CsApi, binRootDirectories);
 
-            ILookup<String, Type> requests = Origin.GetTypes().Where(t => t.IsRequest()).ToLookup(t => t.GetName());
+			ILookup<String, Type> requests = Origin.GetTypes().Where(t => t.IsRequest()).ToLookup(t => t.GetName());
 
-            foreach (FileInfo file in Origin.GetSchemas().Where(f => f.IsCs()))
-            {
+			foreach (FileInfo file in Origin.GetSchemas().Where(f => f.IsCs()))
+			{
 				classGenerator.GenerateXmlSchemaClassesFiles(file, requests);
-            }
+			}
 
 			if (classGenerator.ErrorsOccurred)
 			{
@@ -42,8 +37,8 @@ namespace Wonga.QA.Generators.Cs
 				return;
 			}
 
-			Repo.Inject(binRootDirectories.ClassesDirectory, Config.CsApi.Folder, Config.CsApi.Project);
-			Repo.Inject(binRootDirectories.EnumsDirectory, Config.Enums.Folder, Config.CsApi.Project);
-        }
+			Repo.Inject(binRootDirectories.EnumsDirectory, Config.CsApi.Folder, Config.Api.Project, delete: true, overwrite: true);
+			Repo.Inject(binRootDirectories.EnumsDirectory, Config.Enums.Folder, Config.Enums.Project, delete: true, overwrite: true);
+		}
     }
 }

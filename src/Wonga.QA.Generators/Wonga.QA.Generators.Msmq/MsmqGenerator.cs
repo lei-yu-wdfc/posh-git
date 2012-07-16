@@ -8,86 +8,131 @@ using Wonga.QA.Generators.Core;
 
 namespace Wonga.QA.Generators.Msmq
 {
+    /// <summary>
+    /// Let me explain to you how the generator works before you start pulling your hair and jump through a window..
+    /// * The generator will process 1 or multiple Repos from Config.Repos list(Payments, Risk, Ops etc)
+    /// * For each repo it will try to find the csproj files under that repo, ie v3split\Payments
+    /// * For each csproj found it will try to load it's corresponding dll from the v3split\package folder, if for whatever reason this
+    ///   fails it will go to the next one without crashing.
+    /// * For each assembly loaded it will generate types for the messages and enums and store them under Bin\.Msmq and Bin\.Enums folder.
+    /// * Once everything has been processed and given no error occured, it will first of all delete the Messages and Enums folder of the
+    ///   Framework.Msmq project.
+    /// * It will the temporary directories to the corresponding Messages and Enums folder we deleted in the previous step.
+    /// * It will register any files found underneath those folders in the Framework.Msmq.csproj
+    /// </summary>
     public class MsmqGenerator
     {
     	public static void Main(String[] args)
-        {
-            if (args.Any())
-                Config.Origin = args.Single();
+    	{
+			ProgramArgumentsParser.ParseArgumentsParameters(args);
 
-			string messagesDirectoryName = Config.Msmq.Folder;
-        
-        	bool errorsOccurred = false;
+            string messagesDirectoryName = Config.Msmq.Folder;
+            var binRootDirectories = new GeneratorRepoDirectories(messagesDirectoryName, null);
+            binRootDirectories.ClassesDirectory.GetDirectories().ForEach(x => x.Delete(true));
+            binRootDirectories.EnumsDirectory.GetDirectories().ForEach(x => x.Delete(true));
 
-			var binRootDirectories = new GeneratorRepoDirectories(messagesDirectoryName, null);
-            
-			var assemblies = new List<Assembly>();
-        	var enumGenerator = new EnumGenerator(Config.Msmq);
-			var entityGenerator = new EntityGenerator(binRootDirectories.ClassesDirectory, Config.Msmq.Project, messagesDirectoryName);
-
-            foreach (FileInfo file in Origin.GetProjects().OrderBy(f => f.Name))
+            foreach (var repo in Config.Repos)
             {
-                Console.WriteLine(file.Name);
-
-                FileInfo assembly1 = file.GetAssembly(Origin.Build);
-                if (assembly1 == null)
-                    continue;
-
-                Assembly assembly = Assembly.LoadFrom(assembly1.FullName);
-                if (assemblies.Contains(assembly))
-                    continue;
-                assemblies.Add(assembly);
-
-                Boolean cs = file.GetName().Split('.').Contains("Csapi", StringComparer.InvariantCultureIgnoreCase);
-
-                foreach (Type message in assembly.GetTypes().Where(t => t.IsMessage() && t.IsInstantiatable()))
+                Config.RepoName = repo;
+                bool errorsOccurred = false;
+                var enumGenerator = new EnumGenerator(Config.Msmq);
+                var entityGenerator = new EntityGenerator(binRootDirectories.ClassesDirectory, Config.Msmq.Project,
+                                                          messagesDirectoryName);
+                var csprojs = Origin.GetProjects().DistinctBy(x => x.Name).OrderBy(f => f.Name);
+                foreach (FileInfo file in csprojs)
                 {
-                    String messageClassName = String.Format("{0}{1}{2}{3}{4}{5}", message.GetClean(), GetCollision(message), file.GetProduct(), file.GetRegion(), cs ? "Cs" : null, message.GetSuffix());
+                    Console.WriteLine(file.Name);
+                    //At this point we try to load a located dll from a folder that has all of its dependencies.
+                    var paths = AssemblyPathFinder.GetFiles(file, Origin.Build);
+                    Assembly assembly = null;
+                    assembly = GetFirstAssemblyFromPaths(paths);
+                    //If we couldn't load it then we continue to the next file in the list
+                    if (assembly == null)
+                        continue;
 
-					try
-					{
-						GeneratedEntityDefinition generatedEntityDefinition = entityGenerator.GenerateEntityDefinition(message);
+                    //This foreach loop generates and writes to the tmp folder all the types within the assembly.
+                    foreach (Type message in assembly.GetTypes().Where(t => t.IsMessage() && t.IsInstantiatable()))
+                    {
+                        String messageClassName = String.Format("{0}{1}", message.GetClean(), message.GetSuffix());
 
-						FileInfo code = Repo.File(String.Format("{0}.cs", messageClassName), generatedEntityDefinition.Directory);
+                        try
+                        {
+                            GeneratedEntityDefinition generatedEntityDefinition =
+                                entityGenerator.GenerateEntityDefinition(message);
 
-						// no include directives (added at the end)
-						var builder = InitializeMessageClassDefinition(messageClassName, message, generatedEntityDefinition.Namespace);
+                            FileInfo code = Repo.File(String.Format("{0}.cs", messageClassName),
+                                                      generatedEntityDefinition.Directory);
 
-						enumGenerator.StartEnumGenerationForClass(generatedEntityDefinition.Namespace);
-					
-						foreach (KeyValuePair<String, Type> member in message.GetMessageMembers())
-						{
-							builder.AppendFormatLine("        public {0} {1} {{ get; set; }}", member.Value.GetDeclaration(), member.Key);
+                            // no include directives (added at the end)
+                            var builder = InitializeMessageClassDefinition(messageClassName, message,
+                                                                           generatedEntityDefinition.Namespace);
 
-							enumGenerator.GenerateAllEnumsUsedByClassMember(member.Value, binRootDirectories.EnumsDirectory);
-						}
+                            enumGenerator.StartEnumGenerationForClass(generatedEntityDefinition.Namespace);
 
-						builder.AppendLine("    }").AppendLine("}");
+                            foreach (KeyValuePair<String, Type> member in message.GetMessageMembers())
+                            {
+                                builder.AppendFormatLine("        public {0} {1} {{ get; set; }}",
+                                                         member.Value.GetDeclaration(), member.Key);
 
-						//now insert all the include directives at the begining of the file!!!!
-						InsertUsingDirectivesOnMessageClassDefinition(builder, enumGenerator.GetEnumUsingDirectivesForCurrentClass());
-						
-						using (StreamWriter writer = code.CreateText())
-							writer.Write(builder);
+                                enumGenerator.GenerateAllEnumsUsedByClassMember(member.Value,
+                                                                                binRootDirectories.EnumsDirectory);
+                            }
 
-						Console.WriteLine("\t{0} \u2192 {1}", message.Name, code.Name);
-					}
-					catch(Exception e)
-					{
-						Console.Error.WriteLine("\t*** FAILED GENERATION FOR MESSAGE: {0}. {1}", messageClassName, e.Message);
-						errorsOccurred = true;
-					}
+                            builder.AppendLine("    }").AppendLine("}");
+
+                            //now insert all the include directives at the begining of the file!!!!
+                            InsertUsingDirectivesOnMessageClassDefinition(builder,
+                                                                          enumGenerator.
+                                                                              GetEnumUsingDirectivesForCurrentClass());
+
+                            using (StreamWriter writer = code.CreateText())
+                                writer.Write(builder);
+
+                            Console.WriteLine("\t{0} \u2192 {1}", message.Name, code.Name);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.Error.WriteLine("\t*** FAILED GENERATION FOR MESSAGE: {0}. {1}", messageClassName,
+                                                    e.Message);
+                            errorsOccurred = true;
+                        }
+                    }
+                }
+
+                if (errorsOccurred || enumGenerator.ErrorsOccurred)
+                {
+                    Console.Error.WriteLine("*** THERE WERE ERRORS DURING GENERATION... NOT UPDATING QAF!!!!!");
+                    return;
                 }
             }
 
-        	if(errorsOccurred || enumGenerator.ErrorsOccurred)
-        	{
-				Console.Error.WriteLine("*** THERE WERE ERRORS DURING GENERATION... NOT UPDATING QAF!!!!!");
-				return;
-        	}
+            //Delete Framework.Msmq Messages and Enums folder 
+    	    Directory.GetDirectories(Path.Combine(Repo.Src.GetFiles(Config.Msmq.Project + ".csproj", SearchOption.AllDirectories).Single().Directory.FullName,
+    	                 Config.Msmq.Folder)).ForEach(x => Directory.Delete(x , true));
+            Directory.GetDirectories(Path.Combine(Repo.Src.GetFiles(Config.Msmq.Project + ".csproj", SearchOption.AllDirectories).Single().Directory.FullName,
+                         Config.Enums.Folder)).ForEach(x => Directory.Delete(x, true));
 
+            //Copy from tmp to Framework.Msmq both Messages and Enums folders and inject to csproj.
         	Repo.Inject(binRootDirectories.ClassesDirectory, Config.Msmq.Folder, Config.Msmq.Project);
 			Repo.Inject(binRootDirectories.EnumsDirectory, Config.Enums.Folder, Config.Msmq.Project);
+        }
+
+        private static Assembly GetFirstAssemblyFromPaths(FileInfo[] paths)
+        {
+            foreach(var path in paths)
+                try
+                {
+                    Assembly assembly = null;
+                    //Some times GetTypes fails eventhough LoadFrom succeeds, thus call it first before assigning.
+                    Assembly.LoadFrom(path.FullName).GetTypes();
+                    assembly = Assembly.LoadFrom(path.FullName);
+                    return assembly;
+                }
+                catch
+                {
+                    return null;
+                }
+            return null;
         }
 
     	private static StringBuilder InitializeMessageClassDefinition(string messageClassName, Type message,
@@ -123,56 +168,5 @@ namespace Wonga.QA.Generators.Msmq
 
 			builder.Insert(0, usingDirectivesBuilder.ToString());
     	}
-    	
-        private static String GetCollision(Type type)
-        {
-            switch (type.FullName)
-            {
-                case "Wonga.ExperianBulk.InternalMessages.BaseSagaMessage":
-                    return "ExperianBulk";
-                case "Wonga.Payments.InternalMessages.SagaMessages.BaseSagaMessage":
-                    return "Payments";
-
-                case "Wonga.Comms.ContactManagement.PublicMessages.ICommsEvent":
-                    return "ContactManagement";
-                case "Wonga.Comms.PublicMessages.ICommsEvent":
-                    return "Comms";
-
-                case "Wonga.Risk.WorkflowDecisions.IWorkflowDecision":
-                    return "Internal";
-                case "Wonga.Risk.IWorkflowDecision":
-                    return "Public";
-
-                case "Wonga.Comms.InternalMessages.FileStorage.SaveFileMessage":
-                    return "Comms";
-                case "Wonga.FileStorage.PublicMessages.SaveFileMessage":
-                    return "FileStorage";
-
-                case "Wonga.Payments.SubmitCounterOffer":
-                    return "Payments";
-                case "Wonga.Risk.SubmitCounterOfferMessage":
-                    return "Risk";
-
-                case "Wonga.CallReport.Batch.Handlers.InternalMessages.UpdateScheduleMessage":
-                    return "CallReport";
-                case "Wonga.ExperianBulk.InternalMessages.UpdateScheduleMessage":
-                    return "ExperianBulk";
-
-                case "Wonga.BankGateway.InternalMessages.Scotiabank.Ca.BasePaymentMessage":
-                    return "BankGatewayScotiabank";
-                case "Wonga.BankGateway.InternalMessages.Bmo.Ca.BasePaymentMessage":
-                    return "BankGatewayBmo";
-
-                case "Wonga.Sms.InternalMessages.SendSmsMessage":
-                    return "Sms";
-                case "Wonga.Comms.InternalMessages.Za.SendSmsMessage":
-                    return "Comms";
-                case "Wonga.Comms.InternalMessages.Sms.SendSmsMessage":
-                    return "CommsSms";
-
-                default:
-                    return null;
-            }
-        }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -23,8 +23,8 @@ namespace Wonga.QA.Generators.Core
 		public string EnumsDirectoryName { get; private set; }
 
 
-		public GeneratorRepoDirectories(string classesDirectoryName, 
-										string codeDirectoryName = DefaultCodeDirectoryName, 
+		public GeneratorRepoDirectories(string classesDirectoryName,
+										string codeDirectoryName = DefaultCodeDirectoryName,
 										string enumsDirectoryName = DefaultEnumsDirectoryName)
 		{
 			ClassesDirectoryName = classesDirectoryName;

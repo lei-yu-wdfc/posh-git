@@ -38,6 +38,8 @@ namespace Wonga.QA.Generators.Core
 			BinRootDirectories = binRootDirectories;
 			ContinueOnError = continueOnError;
 			EnumGenerator = new EnumGenerator(framework, EnumGenerationMode.UseNormalTypeNameWithDescription, null, continueOnError);
+
+			Repo.Directory(Config.RepoName, BinRootDirectories.ClassesDirectory, delete: true); //TODO move during refactor
 		}
 
 		public void GenerateXmlSchemaClassesFiles(FileInfo xmlSchemaFile, ILookup<String, Type> typesToGenerate)
@@ -64,18 +66,13 @@ namespace Wonga.QA.Generators.Core
 
 			var entityGenerator = new EntityGenerator(BinRootDirectories.ClassesDirectory, Framework.Project, Framework.Folder);
 
-			XmlSchema schema = xmlSchemaFile.GetSchema();
+			var schema = xmlSchemaFile.GetSchema();
+			var elements = GetXmlSchemaElements(schema);
 
-			var set = new XmlSchemaSet();
-			set.Add(schema);
-			set.Compile();
+			if (!elements.Any()) 
+				return;
 
-			XmlSchemaElement[] elements = schema.Items.OfType<XmlSchemaElement>().ToArray();
-
-			elements.Where(e => e.SchemaType == null && e.SchemaTypeName == XmlQualifiedName.Empty).ForEach(
-				e => e.SchemaType = new XmlSchemaComplexType());
-
-			DirectoryInfo codeDirectory = Repo.Directory(xmlSchemaFile.GetName(), BinRootDirectories.CodeDirectory);
+			DirectoryInfo codeDirectory = Repo.Directory(xmlSchemaFile.GetFileNameWithoutExtension(), BinRootDirectories.CodeDirectory, delete: true);
 
 			foreach (XmlSchemaElement element in elements)
 			{
@@ -90,11 +87,11 @@ namespace Wonga.QA.Generators.Core
 												 xmlSchemaFile.GetRegion(), typesToGenerate[element.Name].First().GetSuffix());
 
 				//will use the schema file name as the namespace
-				GeneratedEntityDefinition entityDefinition = entityGenerator.GenerateEntityDefinition(xmlSchemaFile.GetName());
+				GeneratedEntityDefinition entityDefinition = entityGenerator.GenerateEntityDefinition(xmlSchemaFile.GetFileNameWithoutExtension());
 
-				FileInfo code = Repo.File(String.Format("{0}.cs", className), entityDefinition.Directory);
+				FileInfo code = Repo.File(String.Format("{0}.cs", className), entityDefinition.Directory, true);
 
-				var classBuilder = InitializeClassDefinition(className, entityDefinition.Namespace, element.Name, xmlSchemaFile.GetName());
+				var classBuilder = InitializeClassDefinition(className, entityDefinition.Namespace, element.Name, xmlSchemaFile.GetFileNameWithoutExtension());
 
 				foreach (PropertyInfo property in types[element.Name].GetProperties().Where(p => !p.IsIgnore()))
 					classBuilder.AppendFormatLine("        public Object {0} {{ get; set; }}", property.GetName());
@@ -124,7 +121,7 @@ namespace Wonga.QA.Generators.Core
 			var importer = new XmlSchemaImporter(new XmlSchemas {schema});
 			exporter.ExportTypeMapping(importer.ImportTypeMapping(element.QualifiedName));
 
-			FileInfo classFile = Repo.File(String.Format("{0}.cs", element.Name), codeDirectory);
+			FileInfo classFile = Repo.File(String.Format("{0}.cs", element.Name), codeDirectory, true);
 
 			var provider = new CSharpCodeProvider();
 			using (StreamWriter writer = classFile.CreateText())
@@ -164,6 +161,20 @@ namespace Wonga.QA.Generators.Core
 																		  className,
 																		  Framework.Base);
 			return builder;
+		}
+
+		private XmlSchemaElement[] GetXmlSchemaElements(XmlSchema schema)
+		{
+			var set = new XmlSchemaSet();
+			set.Add(schema);
+			set.Compile();
+
+			XmlSchemaElement[] elements = schema.Items.OfType<XmlSchemaElement>().ToArray();
+
+			elements.Where(e => e.SchemaType == null && e.SchemaTypeName == XmlQualifiedName.Empty).ForEach(
+				e => e.SchemaType = new XmlSchemaComplexType());
+
+			return elements;
 		}
 	}
 }

@@ -210,7 +210,7 @@ namespace Wonga.QA.Generators.Core
 		{
 			String enumName = enumType.GetName().ToEnum().ToCamel();
 
-			FileInfo fenum = Repo.File(String.Format("{0}.cs", enumName), enumDirectory);
+			FileInfo fenum = Repo.File(String.Format("{0}.cs", enumName), enumDirectory, true);
 
 			var enumBuilder = CreateEnumBuilder(generatedEnumNamespace, enumName);
 

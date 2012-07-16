@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using Wonga.QA.Generators.Core;
 
-namespace Wonga.QA.Generators.Db
+namespace Wonga.QA.Generators.Db.Split
 {
     public class DbGenerator
     {
