@@ -65,7 +65,7 @@ GOTO MENU
 GOTO MENU
 
 :6
-	SET /P Origin=Path to v3 [..\v3]: 
+	SET /P Origin=Path to v3 [..\v3split]: 
 	CHOICE /C ACM /M "Api, Cs or Msmq"	
 	IF ERRORLEVEL 3 CALL :GENERATE Msmq
 	IF ERRORLEVEL 2 CALL :GENERATE Cs
