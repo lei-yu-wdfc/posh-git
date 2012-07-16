@@ -1318,6 +1318,10 @@
     <Compile Include="Enums\Transunion\DestinationEnum.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="NServiceBus, Version=3.2.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\nuget\packages\NServiceBus.3.2.6\lib\net40\NServiceBus.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Messaging" />
     <Reference Include="System.XML" />

@@ -1,8 +1,9 @@
-﻿using Wonga.QA.Framework.Core.Exceptions;
+﻿using NServiceBus;
+using Wonga.QA.Framework.Core.Exceptions;
 
 namespace Wonga.QA.Framework.Core
 {
-	public class MessageBase
+	public class MessageBase:IMessage
 	{
 		public virtual void Default()
 		{
