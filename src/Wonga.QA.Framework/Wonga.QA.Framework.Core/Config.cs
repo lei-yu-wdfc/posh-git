@@ -267,20 +267,44 @@ namespace Wonga.QA.Framework.Core
         /// <returns></returns>
         private static XDocument GetSettingsFile()
         {
-            XDocument settings = null;
+            string settings = null;
             var proc = new XmlProcessor();
             var appDataConfigs = _appDataDirectory.Exists ? _appDataDirectory.GetFiles("*.v3qaconfig") : new FileInfo[0];
             var binFolderConfigs = _executingDirectory.GetFiles("*.v3qaconfig");
-            var configFolderConfigs = _configsDirectory == null ? new FileInfo[0] : _configsDirectory.GetFiles("*.v3qaconfig");
+            var configFolderConfigs = _configsDirectory == null ? new FileInfo[0] : _configsDirectory.GetFiles("*.v3qaconfig", SearchOption.AllDirectories);
             var testTargetConfig = configFolderConfigs.FirstOrDefault(x => x.Name == _testTarget + ".v3qaconfig");
 
+            //Figure out which settings file to use based on priority.
             if (binFolderConfigs.Length > 0)
-                settings = proc.LoadFromFile(binFolderConfigs[0].FullName);
+                settings = binFolderConfigs[0].FullName;
             else if (testTargetConfig != null)
-                settings = proc.LoadFromFile(testTargetConfig.FullName);
+                settings = testTargetConfig.FullName;
             else if (appDataConfigs.Length > 0)
-                settings = proc.LoadFromFile(appDataConfigs[0].FullName);
-            return settings;
+                settings = appDataConfigs[0].FullName;
+            
+            //Merge inheriting configs.
+            XDocument doc = XDocument.Load(settings);
+            while(doc.XPathSelectElement("//Include") != null)
+            {
+                var include = doc.XPathSelectElement("//Include");
+                include.Remove();
+                XDocument parentDoc =
+                    XDocument.Load(
+                        configFolderConfigs.First(x => x.FullName.EndsWith(include.Value + ".v3qaconfig")).FullName);
+                var nodesToAddOrReplace = doc.Descendants().Where(x => x.Descendants().Count() == 0 && !string.IsNullOrEmpty(x.Value)).ToList();
+                foreach(var nodeToAddOrReplace in nodesToAddOrReplace)
+                {
+                    var parentNode =
+                        parentDoc.Descendants().FirstOrDefault(
+                            x => x.GetAbsoluteXPath() == nodeToAddOrReplace.GetAbsoluteXPath());
+                    if(parentNode != null)
+                        parentNode.ReplaceWith(nodeToAddOrReplace);
+                }
+
+                doc = parentDoc;
+            }
+
+            return proc.LoadFromXDoc(doc);
         }
 
         /// <summary>

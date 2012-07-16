@@ -24,5 +24,12 @@ namespace Wonga.QA.Framework.Tests.Core
             Config.Configure(testTarget: "uk_local");
             Assert.IsTrue(Config.AUT == AUT.Uk && Config.SUT == SUT.Dev);
         }
+
+        [Test]
+        public void InheritanceShouldWork()
+        {
+            Config.Configure(testTarget: "za_wip_master_go");
+            Assert.IsTrue(Config.AUT == AUT.Za && Config.SUT == SUT.WIP);
+        }
     }
 }
