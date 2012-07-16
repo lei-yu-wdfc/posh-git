@@ -344,6 +344,8 @@
     <Compile Include="Selenium.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UiClient.cs" />
+    <Compile Include="Ui\Validators\Validator.cs" />
+    <Compile Include="Ui\Validators\ValidatorBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Wonga.QA.Framework.Api\Wonga.QA.Framework.Api.csproj">
