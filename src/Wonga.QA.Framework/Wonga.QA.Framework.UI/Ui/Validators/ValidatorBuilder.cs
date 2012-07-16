@@ -33,11 +33,6 @@ namespace Wonga.QA.Framework.UI.Ui.Validators
             return this; 
         }
 
-        public static void WithoutErrorsCheck()
-        {
-            Validator.Checks.Remove(Validator.ErrorsCheck);
-        }
-
         public Validator Build()
         {
             return Validator;
