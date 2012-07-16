@@ -10,13 +10,14 @@ namespace Wonga.QA.Framework.UI.Ui.Validators
         
         public static Validator Validator;
 
+
         public ValidatorBuilder New(UiClient client)
         {
             Validator = new Validator(client);
             return this;
         }
 
-        public  ValidatorBuilder Default(UiClient client)
+       	public  ValidatorBuilder Default(UiClient client)
         {
             Validator = new Validator(client);
             Validator.Checks.Add(Validator.ErrorsCheck);
@@ -32,7 +33,12 @@ namespace Wonga.QA.Framework.UI.Ui.Validators
             return this; 
         }
 
-        public  Validator Build()
+        public static void WithoutErrorsCheck()
+        {
+            Validator.Checks.Remove(Validator.ErrorsCheck);
+        }
+
+        public Validator Build()
         {
             return Validator;
         }
