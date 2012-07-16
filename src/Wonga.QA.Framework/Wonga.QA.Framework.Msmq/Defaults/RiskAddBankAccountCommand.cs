@@ -1,7 +1,7 @@
 ﻿
 namespace Wonga.QA.Framework.Msmq.Messages.Risk
 {
-	public partial class RiskAddBankAccountCommand
+	public partial class RiskAddBankAccount
 	{
 		public override void Default()
 		{

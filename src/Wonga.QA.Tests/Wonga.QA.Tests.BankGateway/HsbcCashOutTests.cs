@@ -52,7 +52,7 @@ namespace Wonga.QA.Tests.BankGateway
             var accountId = CreateCustomerDetails().AccountId;
             var applicationId = Guid.NewGuid();
 
-            Drive.Msmq.BankGateway.Send(new SendPaymentCommand
+            Drive.Msmq.BankGateway.Send(new SendPaymentMessage
                                              {
                                                  AccountId = accountId,
                                                  Amount = 100.00M,
@@ -68,7 +68,7 @@ namespace Wonga.QA.Tests.BankGateway
 
             var transactionReference = transaction.TransactionId.ToString();
 
-            Drive.Msmq.BankGatewayHsbc.Send(new FasterSecondResponseSuccessSagaUkCommand { FileName = "file name 1", RawContents = "Some raw contenst", TransactionReference = transactionReference });
+            Drive.Msmq.BankGatewayHsbc.Send(new FasterSecondResponseSuccessSagaMessage { FileName = "file name 1", RawContents = "Some raw contenst", TransactionReference = transactionReference });
             var baseResponseRecordEntity = Do.Until(() => Drive.Db.OpsSagasUk.BaseResponseRecordEntities.Single(x => x.TransactionReference == transactionReference));
 
             Drive.Msmq.BankGatewayHsbc.Send(new TimeoutMessage { ClearTimeout = true, Expires = DateTime.UtcNow, SagaId = baseResponseRecordEntity.Id, State = null });
@@ -88,7 +88,7 @@ namespace Wonga.QA.Tests.BankGateway
             var accountId = CreateCustomerDetails().AccountId;
             var applicationId = Guid.NewGuid();
 
-            Drive.Msmq.BankGateway.Send(new SendPaymentCommand
+            Drive.Msmq.BankGateway.Send(new SendPaymentMessage
             {
                 AccountId = accountId,
                 Amount = 100.00M,
@@ -120,7 +120,7 @@ namespace Wonga.QA.Tests.BankGateway
             var accountId = CreateCustomerDetails().AccountId;
             var applicationId = Guid.NewGuid();
 
-            Drive.Msmq.BankGateway.Send(new SendPaymentCommand
+            Drive.Msmq.BankGateway.Send(new SendPaymentMessage
             {
                 AccountId = accountId,
                 Amount = 100.00M,
@@ -136,7 +136,7 @@ namespace Wonga.QA.Tests.BankGateway
 
             var transactionReference = transaction.TransactionId.ToString();
 
-            Drive.Msmq.BankGatewayHsbc.Send(new RecordFinalFailureUkCommand { ErrorCode = "90", TransactionReference = transactionReference }); //Invalid Bank Sort Code
+            Drive.Msmq.BankGatewayHsbc.Send(new RecordFinalFailureMessage { ErrorCode = "90", TransactionReference = transactionReference }); //Invalid Bank Sort Code
 
             Do.Until(() => Drive.Db.BankGateway.Transactions.Single(e => e.ApplicationId == applicationId).TransactionStatus == 5); //Failure
         }
@@ -165,7 +165,7 @@ namespace Wonga.QA.Tests.BankGateway
                 var accountId2 = CreateCustomerDetails().AccountId;
                 var applicationId2 = Guid.NewGuid();
 
-                Drive.Msmq.BankGateway.Send(new SendPaymentCommand
+                Drive.Msmq.BankGateway.Send(new SendPaymentMessage
                                                 {
                                                     AccountId = accountId,
                                                     Amount = 100.00M,
@@ -177,7 +177,7 @@ namespace Wonga.QA.Tests.BankGateway
                                                     SenderReference = Guid.NewGuid()
                                                 });
 
-                Drive.Msmq.BankGateway.Send(new SendPaymentCommand
+                Drive.Msmq.BankGateway.Send(new SendPaymentMessage
                                                 {
                                                     AccountId = accountId2,
                                                     Amount = 100.00M,
@@ -262,7 +262,7 @@ namespace Wonga.QA.Tests.BankGateway
             var accountId = CreateCustomerDetails().AccountId;
             var applicationId = Guid.NewGuid();
 
-            Drive.Msmq.BankGateway.Send(new SendPaymentCommand
+            Drive.Msmq.BankGateway.Send(new SendPaymentMessage
             {
                 AccountId = accountId,
                 Amount = 100.00M,
@@ -278,10 +278,10 @@ namespace Wonga.QA.Tests.BankGateway
             var transaction = Drive.Db.BankGateway.Transactions.Single(e => e.ApplicationId == applicationId);
 
             var transactionReference = transaction.TransactionId.ToString();
-            Drive.Msmq.BankGatewayHsbc.Send(new FasterSecondResponseSuccessSagaUkCommand { FileName = "file name 1", RawContents = "Some raw contenst", TransactionReference = transactionReference });
+            Drive.Msmq.BankGatewayHsbc.Send(new FasterSecondResponseSuccessSagaMessage { FileName = "file name 1", RawContents = "Some raw contenst", TransactionReference = transactionReference });
             Do.Until(() => Drive.Db.OpsSagasUk.BaseResponseRecordEntities.Single(x => x.TransactionReference == transactionReference));
 
-            Drive.Msmq.BankGatewayHsbc.Send(new FasterThirdResponseFailureUkCommand
+            Drive.Msmq.BankGatewayHsbc.Send(new FasterThirdResponseFailureMessage
                                       {
                                           ErrorCode = "BE", //insufficient funds
                                           TransactionReference = transactionReference,
@@ -327,9 +327,9 @@ namespace Wonga.QA.Tests.BankGateway
             }
         }
 
-        private static SaveCustomerDetailsCommand CreateCustomerDetails()
+        private static SaveCustomerDetails CreateCustomerDetails()
         {
-            SaveCustomerDetailsCommand saveCustomerDetailsCommand = new SaveCustomerDetailsCommand
+            var saveCustomerDetailsCommand = new SaveCustomerDetails
                                                                         {
                                                                             AccountId = Guid.NewGuid(),
                                                                             CreatedOn = DateTime.UtcNow,
@@ -352,7 +352,7 @@ namespace Wonga.QA.Tests.BankGateway
         }
         private static void CreateCustomerAddress(Guid AccountId)
         {
-            SaveCustomerAddressCommand saveCustomerAddressCommand = new SaveCustomerAddressCommand
+            var saveCustomerAddressCommand = new SaveCustomerAddress
                                                                         {
                                                                             AddressId = Guid.NewGuid(),
                                                                             AccountId = AccountId,

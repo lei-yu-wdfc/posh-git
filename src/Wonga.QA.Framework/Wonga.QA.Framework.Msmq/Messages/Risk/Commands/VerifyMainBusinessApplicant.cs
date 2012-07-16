@@ -1,0 +1,16 @@
+using System;
+using System.Collections.Generic;
+using System.Xml.Serialization;
+
+namespace Wonga.QA.Framework.Msmq.Messages.Risk.Commands
+{
+    /// <summary> Wonga.Risk.Commands.VerifyMainBusinessApplicantMessage </summary>
+    [XmlRoot("VerifyMainBusinessApplicantMessage", Namespace = "Wonga.Risk.Commands", DataType = "")]
+    public partial class VerifyMainBusinessApplicant : MsmqMessage<VerifyMainBusinessApplicant>
+    {
+        public Guid ApplicationId { get; set; }
+        public Guid AccountId { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public Guid? ClientId { get; set; }
+    }
+}

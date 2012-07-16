@@ -53,14 +53,14 @@ namespace Wonga.QA.Tests.BankGateway
             Assert.Contains(codes.Select(c => c.SortCode), _code.SortCode);
         }
 
-        [Test, JIRA("UK-494"), TestsOn(typeof(UpdateSortCodeTableUkCommand))]
+        [Test, JIRA("UK-494"), TestsOn(typeof(UpdateSortCodeTableMessage))]
         [Ignore] //todo: Test needs updating
         public void SortCodesTableIsUpdatedOnMessage()
         {
             _code.PaymentTypeId = _type.PaymentTypeId;
             _code.Submit();
 
-            Drive.Msmq.BankGatewayHsbc.Send(new UpdateSortCodeTableUkCommand());
+            Drive.Msmq.BankGatewayHsbc.Send(new UpdateSortCodeTableMessage());
             Do.With.Timeout(3).Interval(10).Until(() => Drive.Db.BankGateway.SortCodes.Max(c => c.CreationDate) > Get.GetDateTimeMin());
 
             Assert.GreaterThan(_code.Refresh().CreationDate, Get.GetDateTimeMin());

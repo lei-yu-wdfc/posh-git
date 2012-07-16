@@ -373,7 +373,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             {
                 var trnGuid1 = Guid.NewGuid();
 
-                Drive.Msmq.Payments.Send(new CreateTransactionCommand()
+                Drive.Msmq.Payments.Send(new CreateTransaction()
                 {
                     ApplicationId = appId,
                     ExternalId = trnGuid1,
@@ -392,7 +392,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             {
                 var trnGuid1 = Guid.NewGuid();
 
-                Drive.Msmq.Payments.Send(new CreateTransactionCommand()
+                Drive.Msmq.Payments.Send(new CreateTransaction()
                 {
                     ApplicationId = appId,
                     ExternalId = trnGuid1,
@@ -411,7 +411,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             {
                 var trnGuid1 = Guid.NewGuid();
 
-                Drive.Msmq.Payments.Send(new CreateTransactionCommand()
+                Drive.Msmq.Payments.Send(new CreateTransaction()
                 {
                     ApplicationId = appId,
                     ExternalId = trnGuid1,
@@ -430,7 +430,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             {
                 var trnGuid1 = Guid.NewGuid();
 
-                Drive.Msmq.Payments.Send(new CreateTransactionCommand()
+                Drive.Msmq.Payments.Send(new CreateTransaction()
                 {
                     ApplicationId = appId,
                     ExternalId = trnGuid1,

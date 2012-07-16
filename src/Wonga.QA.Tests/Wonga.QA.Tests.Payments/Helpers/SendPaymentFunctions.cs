@@ -17,7 +17,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
                 Do.With.Timeout(5).Interval(10).Until(
                     () =>
                     Drive.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(s => s.ApplicationId == applicationid).Id);
-            Drive.Msmq.Payments.Send(new PaymentTakenCommand
+            Drive.Msmq.Payments.Send(new PaymentTakenMessage
                                           {
                                               SagaId = scheduledpaymentsaga,
                                               ValueDate = DateTime.UtcNow,
@@ -33,7 +33,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
                 Do.Until(
                     () =>
                     Drive.Db.OpsSagas.PaymentsInArrearsSagaEntities.Single(s => s.ApplicationId == applicationGuid).Id);
-            Drive.Msmq.Payments.Send(new PaymentTakenCommand {SagaId = repayLoan, ValueDate = DateTime.UtcNow});
+            Drive.Msmq.Payments.Send(new PaymentTakenMessage { SagaId = repayLoan, ValueDate = DateTime.UtcNow });
         }
 
         public static void SendPaymentTakenForRepayLoan(Guid applicationGuid)
@@ -42,7 +42,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             var repayLoan =
                 Do.Until(() => Drive.Db.OpsSagas.RepaymentSagaEntities.Single(s => s.ApplicationId == applicationid).Id);
 
-            Drive.Msmq.Payments.Send(new PaymentTakenCommand {SagaId = repayLoan, ValueDate = DateTime.UtcNow});
+            Drive.Msmq.Payments.Send(new PaymentTakenMessage { SagaId = repayLoan, ValueDate = DateTime.UtcNow });
         }
 
         public static void SendTakePaymentFailed(Guid applicationGuid)
@@ -56,7 +56,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
                     () =>
                     Drive.Db.OpsSagas.ScheduledPaymentSagaEntities.Single(s => s.ApplicationId == applicationId).Id);
 
-            Drive.Msmq.Payments.Send(new TakePaymentFailedCommand
+            Drive.Msmq.Payments.Send(new TakePaymentFailedMessage
                                           {
                                               AccountId = accountId,
                                               SagaId = scheduledpaymentsaga,
@@ -67,7 +67,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
         public static void SendRepayLoanInternalViaBank(Guid applicationGuid, decimal amount, Guid bankAccountGuid)
         {
             var repaymentRequestId = Guid.NewGuid();
-            Drive.Msmq.Payments.Send(new RepayLoanInternalViaBankCommand
+            Drive.Msmq.Payments.Send(new RepayLoanInternalViaBank
                                           {
                                               Amount = amount,
                                               ApplicationId = applicationGuid,

@@ -53,7 +53,7 @@ namespace Wonga.QA.Generators.Msmq
                     //This foreach loop generates and writes to the tmp folder all the types within the assembly.
                     foreach (Type message in assembly.GetTypes().Where(t => t.IsMessage() && t.IsInstantiatable()))
                     {
-                        String messageClassName = String.Format("{0}{1}", message.GetClean(), message.GetSuffix());
+                        String messageClassName = String.Format("{0}", message.GetName());
 
                         try
                         {

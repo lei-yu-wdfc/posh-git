@@ -94,7 +94,7 @@ namespace Wonga.QA.Tests.Payments.Sagas
 			postedOnDates.Add(DateTime.UtcNow);
 			AssertForServiceFees(postedOnDates, applicationId);
 
-			Drive.Msmq.Payments.Send(new IApplicationClosedEvent
+			Drive.Msmq.Payments.Send(new IApplicationClosed
 			{
 				ApplicationId = application.Id
 			});
@@ -146,7 +146,7 @@ namespace Wonga.QA.Tests.Payments.Sagas
 			_applicationIntId = applicationId;
 			AssertForServiceFees(postedOnDates, applicationId);
 
-			Drive.Msmq.Payments.Send(new IApplicationMovedToDcaEvent()
+			Drive.Msmq.Payments.Send(new IApplicationMovedToDca()
 			{
 				ApplicationId = application.Id
 			});
@@ -161,7 +161,7 @@ namespace Wonga.QA.Tests.Payments.Sagas
 		[DependsOn("ServiceFeeIsNotPostedHavingRepaymentArrangement")]
 		public void ServiceFeeIsRetroPostedAfterRepaymentArrangementIsClosed()
 		{
-			Drive.Msmq.Payments.Send(new IRepaymentArrangementClosedEvent()
+			Drive.Msmq.Payments.Send(new IRepaymentArrangementClosed()
 			{
 				ApplicationId = _applicationId
 			});
@@ -199,7 +199,7 @@ namespace Wonga.QA.Tests.Payments.Sagas
 
 			AssertServiceFeesOnDate(postedOnDates, sagaId, applicationId, DateTime.UtcNow);
 
-			Drive.Msmq.Payments.Send(new IRepaymentArrangementCancelledEvent()
+            Drive.Msmq.Payments.Send(new IRepaymentArrangementCancelled()
 			{
 				ApplicationId = _applicationId
 			});
@@ -216,7 +216,7 @@ namespace Wonga.QA.Tests.Payments.Sagas
 		[DependsOn("ServiceFeeIsNotPostedWhenInDca")]
 		public void ServiceFeeIsRetroPostedAfterOutOfDca()
 		{
-			Drive.Msmq.Payments.Send(new IApplicationRevokedFromDcaEvent()
+			Drive.Msmq.Payments.Send(new IApplicationRevokedFromDca()
 			{
 				ApplicationId = _applicationId
 			});

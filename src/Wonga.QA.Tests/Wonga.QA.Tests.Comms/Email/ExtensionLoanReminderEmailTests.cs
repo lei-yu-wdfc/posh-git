@@ -144,7 +144,7 @@ namespace Wonga.QA.Tests.Comms.Email
 		    _email = Get.RandomEmail();
 
 			Drive.Msmq.Comms.Send(new
-			                      	SaveCustomerDetailsCommand
+			                      	SaveCustomerDetails
 			                      	{
 			                      		AccountId = accountId,
 			                      		ClientId = clientId,
@@ -161,7 +161,7 @@ namespace Wonga.QA.Tests.Comms.Email
 			                      		Title = TitleEnum.Dr,
 			                      		WorkPhone = homePhone,
 			                      	});
-			Drive.Msmq.Comms.Send(new IAccountCreatedEvent {AccountId = accountId});
+			Drive.Msmq.Comms.Send(new IAccountCreated {AccountId = accountId});
 
 
 			Assert.DoesNotThrow(() =>
@@ -171,7 +171,7 @@ namespace Wonga.QA.Tests.Comms.Email
 
 
 			Drive.Msmq.Comms.Send(new
-			                      	SaveCustomerAddressCommand
+			                      	SaveCustomerAddress
 			                      	{
 			                      		CreatedOn = DateTime.UtcNow,
 			                      		AccountId = accountId,

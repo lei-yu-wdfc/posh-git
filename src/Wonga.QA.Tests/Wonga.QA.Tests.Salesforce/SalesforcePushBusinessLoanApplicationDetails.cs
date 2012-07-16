@@ -164,7 +164,7 @@ namespace Wonga.QA.Tests.Salesforce
 			var arrearsAmount = application.GetArrearsAmount();
 
 			//fire transaction for pay off arrears
-			Drive.Msmq.Payments.Send(new CreateTransactionCommand
+			Drive.Msmq.Payments.Send(new CreateTransaction
 			{
 				Amount = arrearsAmount,
 				ApplicationId = application.Id,

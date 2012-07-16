@@ -15,8 +15,15 @@ namespace Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.PrepaidCard
         public CurrencyCodeIso4217Enum CurrencyCode { get; set; }
         public Guid CustomerExternalId { get; set; }
         public Guid CardDetailsExternalId { get; set; }
-        public DateTime CreatedOn { get; set; }
+        public DateTime InitiatedOn { get; set; }
+        public DateTime RequestedOn { get; set; }
         public String Reason { get; set; }
         public Guid BalanceAdjustmentId { get; set; }
+        public String SalesForceUser { get; set; }
+        public Guid ApplicationId { get; set; }
+        public String BankAccount { get; set; }
+        public String BankCode { get; set; }
+        public String BankAccountType { get; set; }
+        public Guid SenderRefference { get; set; }
     }
 }

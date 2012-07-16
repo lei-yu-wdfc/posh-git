@@ -26,7 +26,7 @@ namespace Wonga.QA.Tests.Payments
 			
 			application.PutIntoArrears();
 
-			Drive.Msmq.Payments.Send(new CreateExtendedRepaymentArrangementCommand
+			Drive.Msmq.Payments.Send(new CreateExtendedRepaymentArrangement
 			                          	{
 			                          		AccountId = customer.Id,
 											ApplicationId = application.Id,
@@ -124,7 +124,7 @@ namespace Wonga.QA.Tests.Payments
 				db.Payments.RepaymentArrangementDetails.First(
 					x => x.RepaymentArrangementId == repaymentArrangement.RepaymentArrangementId);
 
-			Drive.Msmq.Payments.Send(new ProcessScheduledRepaymentCommand
+            Drive.Msmq.Payments.Send(new ProcessScheduledRepaymentMessage
 			                          	{
 			                          		RepaymentArrangementId = repaymentArrangement.RepaymentArrangementId,
 			                          		RepaymentDetailId = firstRepaymentArrangementDetail.RepaymentArrangementDetailId

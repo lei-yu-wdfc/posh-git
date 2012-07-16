@@ -75,15 +75,15 @@ namespace Wonga.QA.Tests.Payments.Helpers
             // Create Application 
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
 
-            Drive.Msmq.Payments.Send(new ICreditLimitChangedEvent() {AccountId = accountId, CreatedOn = DateTime.UtcNow, CreditLimit = 400.00M});
+            Drive.Msmq.Payments.Send(new ICreditLimitChanged() {AccountId = accountId, CreatedOn = DateTime.UtcNow, CreditLimit = 400.00M});
 
             Guid id = appId;
             // Check App Exists in DB
             Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == id));
             
-            Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new IApplicationAccepted() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
-            Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new SignApplication() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             
             // Check App Exists in DB
             Do.With.Message("Signed and accepted application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == id && a.SignedOn != null && a.AcceptedOn != null));
@@ -100,15 +100,15 @@ namespace Wonga.QA.Tests.Payments.Helpers
             CheckExtensionIsEnabled();
 
             // Create Account
-            Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+            Drive.Msmq.Payments.Send(new IAccountCreated() { AccountId = accountId });
 
             // Create Application 
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
-            Drive.Msmq.Payments.Send(new ICreditLimitChangedEvent() { AccountId = accountId, CreatedOn = DateTime.UtcNow, CreditLimit = 400.00M });
+            Drive.Msmq.Payments.Send(new ICreditLimitChanged() { AccountId = accountId, CreatedOn = DateTime.UtcNow, CreditLimit = 400.00M });
 
-            Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new IApplicationAccepted() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
-            Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new SignApplication() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
 
 
             // Check App Exists in DB
@@ -130,15 +130,15 @@ namespace Wonga.QA.Tests.Payments.Helpers
             CheckExtendMinSetting();
 
             // Create Account so that time zone can be looked up
-            Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+            Drive.Msmq.Payments.Send(new IAccountCreated() { AccountId = accountId });
 
             // Create Application 
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
-            Drive.Msmq.Payments.Send(new ICreditLimitChangedEvent() { AccountId = accountId, CreatedOn = DateTime.UtcNow, CreditLimit = 400.00M });
+            Drive.Msmq.Payments.Send(new ICreditLimitChanged() { AccountId = accountId, CreatedOn = DateTime.UtcNow, CreditLimit = 400.00M });
 
-            Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new IApplicationAccepted() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
-            Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new SignApplication() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
 
             // Check App Exists in DB
             Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
@@ -162,15 +162,15 @@ namespace Wonga.QA.Tests.Payments.Helpers
             CheckExtensionIsEnabled();
             
             // Create Account so that time zone can be looked up
-            Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+            Drive.Msmq.Payments.Send(new IAccountCreated() { AccountId = accountId });
             
             // Create Application 
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
-            Drive.Msmq.Payments.Send(new ICreditLimitChangedEvent() { AccountId = accountId, CreatedOn = DateTime.UtcNow, CreditLimit = 400.00M });
+            Drive.Msmq.Payments.Send(new ICreditLimitChanged() { AccountId = accountId, CreatedOn = DateTime.UtcNow, CreditLimit = 400.00M });
 
-            Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new IApplicationAccepted() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
-            Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new SignApplication() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
 
             // Check App Exists in DB
             Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
@@ -196,15 +196,15 @@ namespace Wonga.QA.Tests.Payments.Helpers
             CheckExtensionIsEnabled();
 
             // Create Account so that time zone can be looked up
-            Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+            Drive.Msmq.Payments.Send(new IAccountCreated() { AccountId = accountId });
 
             // Create Application 
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
-            Drive.Msmq.Payments.Send(new ICreditLimitChangedEvent() { AccountId = accountId, CreatedOn = DateTime.UtcNow, CreditLimit = 400.00M });
+            Drive.Msmq.Payments.Send(new ICreditLimitChanged() { AccountId = accountId, CreatedOn = DateTime.UtcNow, CreditLimit = 400.00M });
 
-            Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new IApplicationAccepted() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
-            Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new SignApplication() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
 
             // Check App Exists in DB
             Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
@@ -222,14 +222,14 @@ namespace Wonga.QA.Tests.Payments.Helpers
             CheckExtensionIsEnabled();
 
             // Create Account so that time zone can be looked up
-            Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+            Drive.Msmq.Payments.Send(new IAccountCreated() { AccountId = accountId });
 
             // Create Application 
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
 
-            Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new IApplicationAccepted() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
-            Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new SignApplication() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
 
             // Check App Exists in DB
             Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
@@ -249,14 +249,14 @@ namespace Wonga.QA.Tests.Payments.Helpers
             CheckExtensionIsEnabled();
 
             // Create Account so that time zone can be looked up
-            Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+            Drive.Msmq.Payments.Send(new IAccountCreated() { AccountId = accountId });
 
             // Create Application 
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
 
-            Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new IApplicationAccepted() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
-            Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new SignApplication() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
 
             // Check App Exists in DB
             Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
@@ -277,15 +277,15 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
             // Create Account so that time zone can be looked up
 
-            Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+            Drive.Msmq.Payments.Send(new IAccountCreated() { AccountId = accountId });
 
 
             // Create Application 
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
 
-            Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new IApplicationAccepted() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
-            Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new SignApplication() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
 
             // Check App Exists in DB
             Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
@@ -307,14 +307,14 @@ namespace Wonga.QA.Tests.Payments.Helpers
         {
            
             // Create Account so that time zone can be looked up
-            Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+            Drive.Msmq.Payments.Send(new IAccountCreated() { AccountId = accountId });
 
             // Create Application 
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId, paymentCardId);
 
-            Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new IApplicationAccepted() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
-            Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new SignApplication() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
 
             // Check App Exists in DB
             Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
@@ -334,7 +334,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
         public void Scenario09Setup(Guid requestId2, Guid requestId1, Guid accountId, Guid paymentCardId, Guid appId, Guid bankAccountId)
         {
             // Create Account so that time zone can be looked up
-            Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+            Drive.Msmq.Payments.Send(new IAccountCreated() { AccountId = accountId });
             Do.With.Interval(1).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
 
             // Create Application & Check it Exists in DB
@@ -342,9 +342,9 @@ namespace Wonga.QA.Tests.Payments.Helpers
             Do.With.Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
 
             // Set SignedOn + AcceptedOn & check statuses have been updated
-            Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new IApplicationAccepted() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
-            Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new SignApplication() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Do.With.Message("Signed and accepted application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
 
             // Check transactions have been created
@@ -352,8 +352,8 @@ namespace Wonga.QA.Tests.Payments.Helpers
             Do.With.Message("Transactions for application {0} were not created.", appId).Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 2);
 
             // Send command to create scheduled payment request
-            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId1, });
-            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId2, });
+            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequest() { ApplicationId = appId, RepaymentRequestId = requestId1, });
+            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequest() { ApplicationId = appId, RepaymentRequestId = requestId2, });
 
             Do.With.Message("Repayment requests for request 1 {0} were not found.", requestId1).Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
             Do.With.Message("Repayment requests for request 2 {0} were not found.", requestId2).Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
@@ -367,7 +367,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
         public void Scenario10Setup(Guid requestId1, Guid requestId2, Guid appId, Guid bankAccountId, Guid accountId, Guid paymentCardId)
         {
             // Create Account so that time zone can be looked up
-            Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+            Drive.Msmq.Payments.Send(new IAccountCreated() { AccountId = accountId });
             Do.With.Interval(1).Until(() => Drive.Data.Payments.Db.AccountPreferences.FindByAccountId(accountId));
 
             // Create Application & Check it Exists in DB
@@ -376,9 +376,9 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
             // Set SignedOn + AcceptedOn & check statuses have been updated
             var ts = DateTime.Now.AddHours(-1);
-            Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = ts });
+            Drive.Msmq.Payments.Send(new SignApplication() { AccountId = accountId, ApplicationId = appId, CreatedOn = ts });
             Thread.Sleep(250);
-            Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = ts });
+            Drive.Msmq.Payments.Send(new IApplicationAccepted() { AccountId = accountId, ApplicationId = appId, CreatedOn = ts });
             // Do.With.Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
             var db = Drive.Data.Payments.Db.Applications;
             //var appTest = db.Find(db.ExternalId == appId && db.SignedOn != null && db.AcceptedOn != null);
@@ -393,8 +393,8 @@ namespace Wonga.QA.Tests.Payments.Helpers
             Do.With.Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 3);
 
             // Send command to create scheduled payment request
-            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId1, });
-            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId2, });
+            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequest() { ApplicationId = appId, RepaymentRequestId = requestId1, });
+            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequest() { ApplicationId = appId, RepaymentRequestId = requestId2, });
 
             Do.With.Message("Repayment requests for request 1 {0} were not found.", requestId1).Interval(1).Until(() => Drive.Data.Payments.Db.RepaymentRequests.FindByExternalId(requestId1));
             Do.With.Message("Repayment requests for request 2 {0} were not found.", requestId2).Interval(1).Until(() => Drive.Data.Payments.Db.RepaymentRequests.FindByExternalId(requestId2));
@@ -406,7 +406,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
         public void Scenario11Setup(Guid requestId1, Guid requestId2, Guid appId, Guid bankAccountId, Guid accountId, Guid paymentCardId)
         {
             // Create Account so that time zone can be looked up
-            Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+            Drive.Msmq.Payments.Send(new IAccountCreated() { AccountId = accountId });
             Do.With.Interval(1).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
 
             // Create Application & Check it Exists in DB
@@ -414,9 +414,9 @@ namespace Wonga.QA.Tests.Payments.Helpers
             Do.With.Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
 
             // Set SignedOn + AcceptedOn & check statuses have been updated
-            Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new SignApplication() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
-            Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new IApplicationAccepted() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Do.With.Message("Signed and accepted application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
 
             // Create transactions & Check transactions have been created
@@ -427,8 +427,8 @@ namespace Wonga.QA.Tests.Payments.Helpers
             Do.With.Message("Transactions for application {0} were not created.", appId).Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 3);
 
             // Send command to create scheduled payment request
-            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId1, });
-            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId2, });
+            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequest() { ApplicationId = appId, RepaymentRequestId = requestId1, });
+            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequest() { ApplicationId = appId, RepaymentRequestId = requestId2, });
 
             Do.With.Message("Repayment requests for request 1 {0} were not found.", requestId1).Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
             Do.With.Message("Repayment requests for request 2 {0} were not found.", requestId2).Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
@@ -440,7 +440,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
         public void Scenario12Setup(Guid requestId1, Guid requestId2, Guid appId, Guid bankAccountId, Guid accountId, Guid paymentCardId)
         {
             // Create Account so that time zone can be looked up
-            Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+            Drive.Msmq.Payments.Send(new IAccountCreated() { AccountId = accountId });
             Do.With.Interval(1).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
 
             // Create Application & Check it Exists in DB
@@ -448,9 +448,9 @@ namespace Wonga.QA.Tests.Payments.Helpers
             Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
 
             // Set SignedOn + AcceptedOn & check statuses have been updated
-            Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new IApplicationAccepted() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
-            Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new SignApplication() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Do.With.Message("Signed and accepted application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
 
             // Create transactions & Check transactions have been created
@@ -462,8 +462,8 @@ namespace Wonga.QA.Tests.Payments.Helpers
                 .Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 3);
 
             // Send command to create scheduled payment request
-            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId1, });
-            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId2, });
+            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequest() { ApplicationId = appId, RepaymentRequestId = requestId1, });
+            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequest() { ApplicationId = appId, RepaymentRequestId = requestId2, });
 
             Do.With.Message("Repayment requests for request 1 {0} were not found.", requestId1).Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
             Do.With.Message("Repayment requests for request 2 {0} were not found.", requestId2).Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
@@ -475,7 +475,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
         public void Scenario13Setup(Guid requestId1, Guid requestId2, Guid appId, Guid bankAccountId, Guid accountId, Guid paymentCardId)
         {
             // Create Account so that time zone can be looked up
-            Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+            Drive.Msmq.Payments.Send(new IAccountCreated() { AccountId = accountId });
             Do.With.Interval(1).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
 
             // Create Application & Check it Exists in DB
@@ -483,9 +483,9 @@ namespace Wonga.QA.Tests.Payments.Helpers
             Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
 
             // Set SignedOn + AcceptedOn & check statuses have been updated
-            Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new IApplicationAccepted() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
-            Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new SignApplication() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Do.With.Message("Signed and accepted application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
 
             // Create transactions & Check transactions have been created
@@ -497,8 +497,8 @@ namespace Wonga.QA.Tests.Payments.Helpers
                 .Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 3);
 
             // Send command to create scheduled payment request
-            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId1, });
-            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId2, });
+            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequest() { ApplicationId = appId, RepaymentRequestId = requestId1, });
+            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequest() { ApplicationId = appId, RepaymentRequestId = requestId2, });
 
             Do.With.Message("Repayment requests for request 1 {0} were not found.", requestId1).Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
             Do.With.Message("Repayment requests for request 2 {0} were not found.", requestId2).Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
@@ -513,7 +513,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
         public void Scenario14Setup(Guid requestId1, Guid requestId2, int applicationId, Guid accountId, Guid appId,Guid paymentCardId, Guid bankAccountId)
         {
             // Create Account so that time zone can be looked up
-            Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+            Drive.Msmq.Payments.Send(new IAccountCreated() { AccountId = accountId });
             Do.With.Interval(1).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
 
             // Create Application & Check it Exists in DB
@@ -521,9 +521,9 @@ namespace Wonga.QA.Tests.Payments.Helpers
             Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
 
             // Set SignedOn + AcceptedOn & check statuses have been updated
-            Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new IApplicationAccepted() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
-            Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new SignApplication() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
 
             Do.With.Message("Signed and accepted application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
 
@@ -536,8 +536,8 @@ namespace Wonga.QA.Tests.Payments.Helpers
                 .Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 3);
 
             // Send command to create scheduled payment request
-            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId1, });
-            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId2, });
+            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequest() { ApplicationId = appId, RepaymentRequestId = requestId1, });
+            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequest() { ApplicationId = appId, RepaymentRequestId = requestId2, });
 
             Do.With.Message("Repayment requests for request 1 {0} were not found.", requestId1).Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
             Do.With.Message("Repayment requests for request 2 {0} were not found.", requestId2).Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
@@ -550,7 +550,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             fixedApp.Submit(true);
 
             // Put application into arrears
-            Drive.Msmq.Payments.Send(new AddArrearsCommand()
+            Drive.Msmq.Payments.Send(new AddArrearsMessage()
             {
                 ApplicationId = applicationId,
                 PaymentTransactionType = PaymentTransactionEnum.CardPayment,
@@ -569,7 +569,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
                                 {
                                     DateTime.UtcNow.AddDays(10),
                                 };
-            Drive.Msmq.Payments.Send(new CreateRepaymentArrangementCommand()
+            Drive.Msmq.Payments.Send(new CreateRepaymentArrangement()
             {
                 ApplicationId = appId,
                 Frequency = PaymentFrequencyEnum.Monthly,
@@ -583,7 +583,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
         public void Scenario15Setup(Guid requestId1, Guid requestId2, int applicationId, Guid accountId, Guid appId,Guid paymentCardId, Guid bankAccountId)
         {
             // Create Account so that time zone can be looked up
-            Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+            Drive.Msmq.Payments.Send(new IAccountCreated() { AccountId = accountId });
             Do.With.Message("Account {0} was not found in DB.", accountId).Interval(1).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
 
             // Create Application & Check it Exists in DB
@@ -591,9 +591,9 @@ namespace Wonga.QA.Tests.Payments.Helpers
             Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
 
             // Set SignedOn + AcceptedOn & check statuses have been updated
-            Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new IApplicationAccepted() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
-            Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new SignApplication() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Do.With.Message("Signed and accepted application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
 
             // Create transactions & Check transactions have been created
@@ -605,8 +605,8 @@ namespace Wonga.QA.Tests.Payments.Helpers
                 .Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 3);
 
             // Send command to create scheduled payment request
-            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId1, });
-            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId2, });
+            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequest() { ApplicationId = appId, RepaymentRequestId = requestId1, });
+            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequest() { ApplicationId = appId, RepaymentRequestId = requestId2, });
 
             Do.With.Message("Repayment requests for request 1 {0} were not found.", requestId1).Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
             Do.With.Message("Repayment requests for request 2 {0} were not found.", requestId2).Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
@@ -620,7 +620,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             fixedApp.Submit(true);
 
             // Put application into arrears
-            Drive.Msmq.Payments.Send(new AddArrearsCommand()
+            Drive.Msmq.Payments.Send(new AddArrearsMessage()
             {
                 ApplicationId = applicationId,
                 PaymentTransactionType = PaymentTransactionEnum.CardPayment,
@@ -641,7 +641,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
                                 {
                                     dueDate,
                                 };
-            Drive.Msmq.Payments.Send(new CreateRepaymentArrangementCommand()
+            Drive.Msmq.Payments.Send(new CreateRepaymentArrangement()
             {
                 ApplicationId = appId,
                 Frequency = PaymentFrequencyEnum.Monthly,
@@ -662,7 +662,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
         {
 
             // Create Account so that time zone can be looked up
-            Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+            Drive.Msmq.Payments.Send(new IAccountCreated() { AccountId = accountId });
             Do.With.Message("Account {0} was not found in DB.", accountId).Interval(1).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
 
             // Create Application & Check it Exists in DB
@@ -670,9 +670,9 @@ namespace Wonga.QA.Tests.Payments.Helpers
             Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
 
             // Set SignedOn + AcceptedOn & check statuses have been updated
-            Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new IApplicationAccepted() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
-            Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new SignApplication() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Do.With.Message("Signed and accepted application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.SignedOn != null && a.AcceptedOn != null));
 
             // Create transactions & Check transactions have been created
@@ -684,8 +684,8 @@ namespace Wonga.QA.Tests.Payments.Helpers
                 .Interval(1).Until<Boolean>(() => Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(application.ApplicationId).Count() == 3);
 
             // Send command to create scheduled payment request
-            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId1, });
-            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequestCommand() { ApplicationId = appId, RepaymentRequestId = requestId2, });
+            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequest() { ApplicationId = appId, RepaymentRequestId = requestId1, });
+            Drive.Msmq.Payments.Send(new CreateScheduledPaymentRequest() { ApplicationId = appId, RepaymentRequestId = requestId2, });
 
             Do.With.Message("Repayment requests for request 1 {0} were not found.", requestId1).Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId1));
             Do.With.Message("Repayment requests for request 2 {0} were not found.", requestId2).Interval(1).Until(() => Drive.Db.Payments.RepaymentRequests.Count(itm => itm.ExternalId == requestId2));
@@ -699,7 +699,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             fixedApp.Submit(true);
 
             // Put application into arrears
-            Drive.Msmq.Payments.Send(new AddArrearsCommand()
+            Drive.Msmq.Payments.Send(new AddArrearsMessage()
             {
                 ApplicationId = applicationId,
                 PaymentTransactionType = PaymentTransactionEnum.CardPayment,
@@ -720,7 +720,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
                                 {
                                     dueDate,
                                 };
-            Drive.Msmq.Payments.Send(new CreateRepaymentArrangementCommand()
+            Drive.Msmq.Payments.Send(new CreateRepaymentArrangement()
             {
                 ApplicationId = appId,
                 Frequency = PaymentFrequencyEnum.Monthly,
@@ -739,7 +739,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
         public void Scenario17Setup(Guid requestId1, Guid requestId2, int applicationId, Guid accountId, Guid appId,Guid paymentCardId, Guid bankAccountId)
         {
             // Create Account so that time zone can be looked up
-            Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+            Drive.Msmq.Payments.Send(new IAccountCreated() { AccountId = accountId });
             Do.With.Message("Account {0} was not found in DB.", accountId).Interval(1).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
 
             // Create Application & Check it Exists in DB
@@ -751,7 +751,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
         public void Scenario20Setup(Guid requestId1, Guid requestId2, int applicationId, Guid accountId, Guid appId,Guid paymentCardId, Guid bankAccountId)
         {
             // Create Account so that time zone can be looked up
-            Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+            Drive.Msmq.Payments.Send(new IAccountCreated() { AccountId = accountId });
             Do.With.Message("Account {0} was not found in DB.", accountId).Interval(1).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
 
             // Create Application & Check it Exists in DB
@@ -759,7 +759,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
 
             // Set DeclinedOn & check status has been updated
-            Drive.Msmq.Payments.Send(new IApplicationDeclinedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.UtcNow, FailedCheckpointName = "Test"});
+            Drive.Msmq.Payments.Send(new IApplicationDeclined() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.UtcNow, FailedCheckpointName = "Test"});
             Do.With.Message("Declined application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.DeclinedOn != null));
 
         }
@@ -767,7 +767,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
         public void Scenario21Setup(Guid requestId1, Guid requestId2, int applicationId, Guid accountId, Guid appId,Guid paymentCardId, Guid bankAccountId)
         {
             // Create Account so that time zone can be looked up
-            Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+            Drive.Msmq.Payments.Send(new IAccountCreated() { AccountId = accountId });
             Do.With.Message("Account {0} was not found in DB.", accountId).Interval(1).Until(() => Drive.Db.Payments.AccountPreferences.Single(a => a.AccountId == accountId));
 
             // Create Application & Check it Exists in DB
@@ -775,7 +775,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             Do.With.Message("Application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
 
             // Set AcceptedOn & check status has been updated
-            Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.UtcNow});
+            Drive.Msmq.Payments.Send(new IApplicationAccepted() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.UtcNow});
             Do.With.Message("Accepted application {0} was not found in DB.", appId).Interval(1).Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == appId && a.AcceptedOn != null));
 
         }
@@ -796,7 +796,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             //    Number = "4444333322221111"
             //});
 
-            Drive.Msmq.Payments.Send(new AddBankAccountUkCommand()
+            Drive.Msmq.Payments.Send(new AddBankAccount()
             {
                 AccountId = accountId,
                 AccountNumber = "10032650",
@@ -809,7 +809,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
                 CreatedOn = DateTime.UtcNow
             });
 
-            Drive.Msmq.Payments.Send(new CreateFixedTermLoanApplicationUkCommand()
+            Drive.Msmq.Payments.Send(new CreateFixedTermLoanApplication()
             {
                 ApplicationId = appId,
                 AccountId = accountId,
@@ -822,7 +822,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             });
 
             Thread.Sleep(500);
-            Drive.Msmq.Payments.Send(new IBankAccountValidatedEvent()
+            Drive.Msmq.Payments.Send(new IBankAccountValidated()
             {
                 BankAccountId = bankAccountId,
                 IsValid = true
@@ -836,7 +836,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
         {
             var trnGuid1 = Guid.NewGuid();
 
-            Drive.Msmq.Payments.Send(new CreateTransactionCommand()
+            Drive.Msmq.Payments.Send(new CreateTransaction()
             {
                 ApplicationId = appId,
                 ExternalId = trnGuid1,
@@ -855,7 +855,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
         {
             var trnGuid1 = Guid.NewGuid();
 
-            Drive.Msmq.Payments.Send(new CreateTransactionCommand()
+            Drive.Msmq.Payments.Send(new CreateTransaction()
             {
                 ApplicationId = appId,
                 ExternalId = trnGuid1,
@@ -874,7 +874,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
         {
             var trnGuid1 = Guid.NewGuid();
 
-            Drive.Msmq.Payments.Send(new CreateTransactionCommand()
+            Drive.Msmq.Payments.Send(new CreateTransaction()
             {
                 ApplicationId = appId,
                 ExternalId = trnGuid1,
@@ -893,7 +893,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
         {
             var trnGuid1 = Guid.NewGuid();
 
-            Drive.Msmq.Payments.Send(new CreateTransactionCommand()
+            Drive.Msmq.Payments.Send(new CreateTransaction()
             {
                 ApplicationId = appId,
                 ExternalId = trnGuid1,

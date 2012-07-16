@@ -23,7 +23,7 @@ namespace Wonga.QA.Tests.Payments
 
 		    decimal repaymentAmount = application.LoanAmount;
 
-			var cmd = new RepayLoanInternalViaOnlineBillPaymentCommand
+			var cmd = new RepayLoanInternalViaOnlineBillPayment
 			                                                   	{
 			                                                   		PaymentDate = DateTime.UtcNow,
 																	Ccin = accountPreferences.Ccin,

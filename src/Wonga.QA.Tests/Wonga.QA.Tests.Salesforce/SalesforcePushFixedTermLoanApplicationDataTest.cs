@@ -48,7 +48,7 @@ namespace Wonga.QA.Tests.Salesforce
                                                                     SalesforceId = salesForceAccount.SalesforceId,
                                                                 });
             db.Salesforce.SubmitChanges();
-            Drive.Msmq.Salesforce.Send(new SaveCustomerDetailsToSalesforceCommand
+            Drive.Msmq.Salesforce.Send(new SaveCustomerDetailsToSalesforceMessage
                                            {
                                                AccountId = customer.Id
                                            });
@@ -78,7 +78,7 @@ namespace Wonga.QA.Tests.Salesforce
 				SalesforceId = salesForceAccount.SalesforceId,
 			});
 			db.Salesforce.SubmitChanges();
-			Drive.Msmq.Salesforce.Send(new SaveCustomerDetailsToSalesforceCommand
+            Drive.Msmq.Salesforce.Send(new SaveCustomerDetailsToSalesforceMessage
 			{
 				AccountId = customer.Id
 			});

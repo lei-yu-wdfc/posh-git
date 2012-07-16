@@ -283,7 +283,7 @@ namespace Wonga.QA.Tests.Payments
             var applicationInfo = InitApplication();
             var paymentPlan = applicationInfo.GetPaymentPlan();
             applicationInfo.MorningCollectionAttempt(paymentPlan, false, false);
-            Drive.Msmq.Payments.Send(new CreateTransactionCommand
+            Drive.Msmq.Payments.Send(new CreateTransaction
                                          {
                                              Amount = paymentPlan.RegularAmount,
                                              ApplicationId = applicationInfo.Id,

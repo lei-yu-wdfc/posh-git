@@ -31,7 +31,7 @@ namespace Wonga.QA.Tests.Comms
             var ftApp = Drive.Db.Payments.FixedTermLoanApplications.Single(a => a.ApplicationEntity.ExternalId == app.Id);
             Assert.IsTrue(Drive.Svc.DocumentGeneration.IsRunning());
             Assert.IsTrue(Drive.Svc.Payments.IsRunning());
-            Drive.Msmq.Payments.Send(new ExtendLoanStartedInternalCommand
+            Drive.Msmq.Payments.Send(new ExtendLoanStartedInternal
                                         {
                                             AccountId = cust.Id, 
                                             ApplicationId = app.Id, 

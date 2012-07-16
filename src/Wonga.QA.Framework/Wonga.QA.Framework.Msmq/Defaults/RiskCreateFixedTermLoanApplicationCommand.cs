@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Wonga.QA.Framework.Msmq.Messages.Risk
 {
-	public partial class RiskCreateFixedTermLoanApplicationCommand
+	public partial class RiskCreateFixedTermLoanApplication
 	{
 		public override void Default()
 		{

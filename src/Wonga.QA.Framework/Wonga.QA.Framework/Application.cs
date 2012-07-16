@@ -95,7 +95,7 @@ namespace Wonga.QA.Framework
                 var utcNow = DateTime.UtcNow;
 
                 ScheduledPaymentSagaEntity sp = Do.Until(() => _scheduledPaymentSagaEntityTab.FindAll(_scheduledPaymentSagaEntityTab.ApplicationGuid == Id).Single());
-                Drive.Msmq.Payments.Send(new PaymentTakenCommand { SagaId = sp.Id, ValueDate = utcNow, CreatedOn = utcNow, ApplicationId = Id, TransactionAmount = GetBalance() });
+                Drive.Msmq.Payments.Send(new PaymentTakenMessage { SagaId = sp.Id, ValueDate = utcNow, CreatedOn = utcNow, ApplicationId = Id, TransactionAmount = GetBalance() });
                 Do.While(sp.Refresh);
 		    }
 
@@ -332,8 +332,8 @@ namespace Wonga.QA.Framework
             if (Config.AUT != AUT.Ca || (Config.AUT == AUT.Ca && !Boolean.Parse(caScotiaMocksEnabled.Value)))
             {
                 var sp = Do.Until(() => _scheduledPaymentSagaEntityTab.FindAll(_scheduledPaymentSagaEntityTab.ApplicationGuid == Id).Single());
-                Drive.Msmq.Payments.Send(Config.AUT == AUT.Uk ? new TakePaymentFailedCommand { SagaId = sp.Id, CreatedOn = DateTime.UtcNow, ValueDate = DateTime.UtcNow, PaymentCardId = this.GetCustomer().GetPaymentCard() } :
-                                                                new TakePaymentFailedCommand { SagaId = sp.Id, CreatedOn = DateTime.UtcNow, ValueDate = DateTime.UtcNow });
+                Drive.Msmq.Payments.Send(Config.AUT == AUT.Uk ? new TakePaymentFailedMessage { SagaId = sp.Id, CreatedOn = DateTime.UtcNow, ValueDate = DateTime.UtcNow, PaymentCardId = this.GetCustomer().GetPaymentCard() } :
+                                                                new TakePaymentFailedMessage { SagaId = sp.Id, CreatedOn = DateTime.UtcNow, ValueDate = DateTime.UtcNow });
 
                 Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = sp.Id }); 
             }
@@ -424,7 +424,7 @@ namespace Wonga.QA.Framework
 
 			Guid repaymentRequestId = Guid.NewGuid();
 
-			Drive.Msmq.Payments.Send(new RepayLoanInternalViaBankCommand
+			Drive.Msmq.Payments.Send(new RepayLoanInternalViaBank
 			{
 				Amount = amount,
 				ApplicationId = Id,
@@ -440,7 +440,7 @@ namespace Wonga.QA.Framework
 					Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id).ApplicationId;
 
 				RepaymentSagaEntity sp = Do.Until(() => Drive.Db.OpsSagas.RepaymentSagaEntities.Single(s => s.ApplicationId == applicationid));
-                Drive.Msmq.Payments.Send(new PaymentTakenCommand { SagaId = sp.Id, ValueDate = utcNow, CreatedOn = utcNow, ApplicationId = Id });
+                Drive.Msmq.Payments.Send(new PaymentTakenMessage { SagaId = sp.Id, ValueDate = utcNow, CreatedOn = utcNow, ApplicationId = Id });
 				Do.While(sp.Refresh);
 			}
 

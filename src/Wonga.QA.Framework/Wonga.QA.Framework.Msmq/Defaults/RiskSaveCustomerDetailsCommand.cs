@@ -3,7 +3,7 @@ using System;
 
 namespace Wonga.QA.Framework.Msmq.Messages.Risk
 {
-	public partial class RiskSaveCustomerDetailsCommand
+	public partial class RiskSaveCustomerDetails
 	{
 		public override void Default()
 		{

@@ -1,0 +1,14 @@
+using System;
+using System.Collections.Generic;
+using System.Xml.Serialization;
+
+namespace Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Ping
+{
+    /// <summary> Wonga.Payments.InternalMessages.Ping.StopDCAPaymentSuppression </summary>
+    [XmlRoot("StopDCAPaymentSuppression", Namespace = "Wonga.Payments.InternalMessages.Ping", DataType = "")]
+    public partial class StopDCAPaymentSuppression : MsmqMessage<StopDCAPaymentSuppression>
+    {
+        public Guid AccountId { get; set; }
+        public Guid ApplicationId { get; set; }
+    }
+}

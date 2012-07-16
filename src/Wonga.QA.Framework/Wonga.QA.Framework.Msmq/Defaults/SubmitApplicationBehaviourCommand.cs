@@ -1,7 +1,7 @@
 ﻿
 namespace Wonga.QA.Framework.Msmq.Messages.Risk
 {
-	public partial class SubmitApplicationBehaviourCommand
+	public partial class SubmitApplicationBehaviour
 	{
 		public override void Default()
 		{

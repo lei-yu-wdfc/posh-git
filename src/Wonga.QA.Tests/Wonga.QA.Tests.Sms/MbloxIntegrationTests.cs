@@ -28,7 +28,7 @@ namespace Wonga.QA.Tests.Sms
         public void SendRequestToMbloxProvider()
         {
 
-            var request = new SendSmsCommsSmsCommand
+            var request = new SendSmsMessage()
             {
                 MessageText = MBLOX_MESSAGE_TEXT_TEST + "" + Guid.NewGuid(),
                 OriginatingSagaId = Guid.NewGuid(),
@@ -51,7 +51,7 @@ namespace Wonga.QA.Tests.Sms
         {
            changeProvider();
 
-            var request = new SendSmsCommsSmsCommand
+            var request = new SendSmsMessage()
             {
                 MessageText = ZONG_MESSAGE_TEXT_TEST + "" + Guid.NewGuid(),
                 OriginatingSagaId = Guid.NewGuid(),

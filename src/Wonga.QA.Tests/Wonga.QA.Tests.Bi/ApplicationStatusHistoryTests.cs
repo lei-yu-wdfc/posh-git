@@ -42,7 +42,7 @@ namespace Wonga.QA.Tests.Bi
         public void Live_Application_Has_PreLive_Status_History()
         {
             //force the application to move to live by sending the IFundsTransferredEvent.
-            Drive.Msmq.Payments.Send(new IFundsTransferredEvent { AccountId = _accountId,
+            Drive.Msmq.Payments.Send(new IFundsTransferred { AccountId = _accountId,
                                                                   ApplicationId = _applicationId,
                                                                   TransactionId = Guid.NewGuid() });
 

@@ -19,7 +19,7 @@ namespace Wonga.QA.Tests.Risk
 			var customer = CustomerBuilder.New().Build();
 			var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
-			Drive.Msmq.Risk.Send(new IApplicationClosedEvent
+			Drive.Msmq.Risk.Send(new IApplicationClosed
 			                         	{
 			                         		ApplicationId = application.Id,
 											AccountId = application.AccountId,

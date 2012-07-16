@@ -9,7 +9,7 @@ using Wonga.QA.Framework.Cs.Requests.Payments.Csapi.Queries;
 using Wonga.QA.Framework.Msmq.Enums.Common.Iso;
 using Wonga.QA.Framework.Msmq.Enums.Integration.Payments.Enums;
 using Wonga.QA.Tests.Core;
-using CreateTransactionCommand = Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Messages.CreateTransactionCommand;
+using CreateTransactionCommand = Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Messages.CreateTransaction;
 using PaymentTransactionEnum = Wonga.QA.Framework.Msmq.Enums.Integration.Payments.Enums.PaymentTransactionEnum;
 using PaymentTransactionScopeEnum = Wonga.QA.Framework.Msmq.Enums.Integration.Payments.Enums.PaymentTransactionScopeEnum;
 

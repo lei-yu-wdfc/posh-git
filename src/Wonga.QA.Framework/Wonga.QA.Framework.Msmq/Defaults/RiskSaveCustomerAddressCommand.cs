@@ -2,7 +2,7 @@
 
 namespace Wonga.QA.Framework.Msmq.Messages.Risk
 {
-	public partial class RiskSaveCustomerAddressCommand
+	public partial class RiskSaveCustomerAddress
 	{
 		public override void Default()
 		{

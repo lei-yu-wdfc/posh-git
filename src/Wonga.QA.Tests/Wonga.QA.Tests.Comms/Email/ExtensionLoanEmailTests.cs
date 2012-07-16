@@ -71,7 +71,7 @@ namespace Wonga.QA.Tests.Comms.Email
                 , "Email Extension Agreement Saga is NOT in progress: {0}", extensionId
             );
 
-            Drive.Msmq.Comms.Send(new IExtensionSignedEvent
+            Drive.Msmq.Comms.Send(new IExtensionSigned
                                       {
                                           ApplicationId = _applicationId,
                                           ExtensionId = extensionId,
@@ -92,7 +92,7 @@ namespace Wonga.QA.Tests.Comms.Email
 
             Do.With.Interval(1).Until(() => _applications.Single(_applications.ApplicationId == _extension.ApplicationId));
 
-            Drive.Msmq.Comms.Send(new IExtensionCancelledEvent
+            Drive.Msmq.Comms.Send(new IExtensionCancelled
                                     {
                                         AccountId = _accountId,
                                         ApplicationId = _applicationId,
@@ -178,7 +178,7 @@ namespace Wonga.QA.Tests.Comms.Email
         {
             const string homePhone = "02071111111";
             Drive.Msmq.Comms.Send(new
-                                      SaveCustomerDetailsCommand
+                                      SaveCustomerDetails
             {
                 AccountId = accountId,
                 ClientId = clientId,
@@ -194,7 +194,7 @@ namespace Wonga.QA.Tests.Comms.Email
                 Title = TitleEnum.Dr,
                 WorkPhone = homePhone,
             });
-            Drive.Msmq.Comms.Send(new IAccountCreatedEvent { AccountId = accountId });
+            Drive.Msmq.Comms.Send(new IAccountCreated { AccountId = accountId });
 
 
             Assert.DoesNotThrow(() =>
@@ -204,7 +204,7 @@ namespace Wonga.QA.Tests.Comms.Email
 
 
             Drive.Msmq.Comms.Send(new
-                                      SaveCustomerAddressCommand
+                                      SaveCustomerAddress
             {
                 CreatedOn = DateTime.UtcNow,
                 AccountId = accountId,

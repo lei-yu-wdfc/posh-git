@@ -225,7 +225,7 @@ namespace Wonga.QA.Tests.Payments
 
 			var sagaId = db.OpsSagas.ScheduledPaymentSagaEntities.Single(a => a.ApplicationGuid == application.Id).Id;
 
-			new MsmqDriver().Payments.Send(new PaymentTakenCommand
+            new MsmqDriver().Payments.Send(new PaymentTakenMessage
 			{
 				SagaId = sagaId,
 				ApplicationId = application.Id,

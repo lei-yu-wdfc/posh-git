@@ -16,6 +16,11 @@ namespace Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.PrepaidCard
         public Guid CustomerExternalId { get; set; }
         public Guid CardDetailsExternalId { get; set; }
         public Guid ApplicationId { get; set; }
-        public DateTime CreatedOn { get; set; }
+        public DateTime InitiatedOn { get; set; }
+        public DateTime RequestedOn { get; set; }
+        public String BankAccount { get; set; }
+        public String BankCode { get; set; }
+        public String BankAccountType { get; set; }
+        public Guid SenderRefference { get; set; }
     }
 }

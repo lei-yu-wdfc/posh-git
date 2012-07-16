@@ -29,7 +29,7 @@ namespace Wonga.QA.Tests.Payments
 			var arrearsAmount = application.GetArrearsAmount();
 
 			//fire transaction for pay off arrears
-			Drive.Msmq.Payments.Send(new CreateTransactionCommand
+			Drive.Msmq.Payments.Send(new CreateTransaction
 			{
 				Amount = arrearsAmount,
 				ApplicationId = application.Id,
@@ -59,7 +59,7 @@ namespace Wonga.QA.Tests.Payments
 			var arrearsAmount = application.GetArrearsAmount();
 
 			//fire transaction for pay off arrears
-			Drive.Msmq.Payments.Send(new CreateTransactionCommand
+			Drive.Msmq.Payments.Send(new CreateTransaction
 			{
 				Amount = arrearsAmount - 1,
 				ApplicationId = application.Id,
@@ -91,7 +91,7 @@ namespace Wonga.QA.Tests.Payments
 			var arrearsAmount = application.GetArrearsAmount();
 
 			//fire transaction for pay off arrears
-			Drive.Msmq.Payments.Send(new CreateTransactionCommand
+			Drive.Msmq.Payments.Send(new CreateTransaction
 			{
 				Amount = arrearsAmount,
 				ApplicationId = application.Id,
@@ -123,7 +123,7 @@ namespace Wonga.QA.Tests.Payments
 			var arrearsAmount = application.GetArrearsAmount();
 
 			//fire transaction for pay off arrears
-			Drive.Msmq.Payments.Send(new CreateTransactionCommand
+			Drive.Msmq.Payments.Send(new CreateTransaction
 			{
 				Amount = arrearsAmount,
 				ApplicationId = application.Id,

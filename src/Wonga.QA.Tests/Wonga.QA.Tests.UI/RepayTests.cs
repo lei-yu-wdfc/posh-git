@@ -10,7 +10,7 @@ using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 ﻿using Wonga.QA.Tests.Core;
 using System.Linq;
 using System;
-using CreateScheduledPaymentRequestCommand = Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Messages.CreateScheduledPaymentRequestCommand;
+using CreateScheduledPaymentRequestCommand = Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Messages.CreateScheduledPaymentRequest;
 
 
 namespace Wonga.QA.Tests.Ui

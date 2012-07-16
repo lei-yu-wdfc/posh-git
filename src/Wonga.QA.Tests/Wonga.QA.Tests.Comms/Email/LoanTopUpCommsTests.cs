@@ -93,7 +93,7 @@ namespace Wonga.QA.Tests.Comms.Email
 				Do.Until(() => emailTopupAgreementTab.Find(emailTopupAgreementTab.TopUpId == fixedTermLoanTopupId)),
 				"Email TopUp Agreement Saga not in progress");
 
-			Drive.Msmq.Comms.Send(new ILoanToppedUpEvent
+			Drive.Msmq.Comms.Send(new ILoanToppedUp
 			{
 				AccountId = customerId,
 				ApplicationId = application.Id,

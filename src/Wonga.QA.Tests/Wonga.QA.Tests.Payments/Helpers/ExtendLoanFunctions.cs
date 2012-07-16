@@ -22,14 +22,14 @@ namespace Wonga.QA.Tests.Payments.Helpers
             CheckExtendMinSetting();
 
             // Create Account so that time zone can be looked up
-            Drive.Msmq.Payments.Send(new IAccountCreatedEvent() { AccountId = accountId });
+            Drive.Msmq.Payments.Send(new IAccountCreated() { AccountId = accountId });
 
             // Create Application
             CreateFixedTermLoanApplication(appId, accountId, bankAccountId,paymentCardId);
 
-            Drive.Msmq.Payments.Send(new IApplicationAcceptedEvent() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new IApplicationAccepted() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
             Thread.Sleep(250);
-            Drive.Msmq.Payments.Send(new SignApplicationCommand() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
+            Drive.Msmq.Payments.Send(new SignApplication() { AccountId = accountId, ApplicationId = appId, CreatedOn = DateTime.Now.AddHours(-1) });
 
             // Check App Exists in DB
             Do.With.Interval(1).Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(appId));
@@ -49,7 +49,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
         private void CreateFixedTermLoanApplication(Guid appId, Guid accountId, Guid bankAccountId, Guid paymentCardId, int dueInDays = 5)
         {
-            Drive.Msmq.Payments.Send(new AddBankAccountUkCommand()
+            Drive.Msmq.Payments.Send(new AddBankAccount()
             {
                 AccountId = accountId,
                 AccountNumber = "10032650",
@@ -62,7 +62,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
                 CreatedOn = DateTime.UtcNow
             });
 
-            Drive.Msmq.Payments.Send(new CreateFixedTermLoanApplicationUkCommand()
+            Drive.Msmq.Payments.Send(new CreateFixedTermLoanApplication()
             {
                 ApplicationId = appId,
                 AccountId = accountId,
@@ -75,7 +75,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
             });
 
             Thread.Sleep(500);
-            Drive.Msmq.Payments.Send(new IBankAccountValidatedEvent()
+            Drive.Msmq.Payments.Send(new IBankAccountValidated()
             {
                 BankAccountId = bankAccountId,
                 IsValid = true

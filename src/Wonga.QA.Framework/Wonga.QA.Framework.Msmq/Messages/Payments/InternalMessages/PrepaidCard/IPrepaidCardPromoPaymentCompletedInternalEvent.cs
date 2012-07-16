@@ -11,8 +11,7 @@ namespace Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.PrepaidCard
         public Guid SagaId { get; set; }
         public DateTime? SucceededOn { get; set; }
         public DateTime? FailedOn { get; set; }
-        public DateTime? TransactionTimeStamp { get; set; }
-        public DateTime? ProviderTransactionTimeStamp { get; set; }
+        public String PpsLocalTimeStamp { get; set; }
         public Guid? TransactionId { get; set; }
         public String AdditionalInformation { get; set; }
         public String ErrorMessage { get; set; }

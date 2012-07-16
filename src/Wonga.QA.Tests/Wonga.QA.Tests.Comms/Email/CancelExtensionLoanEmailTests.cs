@@ -46,7 +46,7 @@ namespace Wonga.QA.Tests.Comms.Email
         public void CreateLoanExtensionDocumentsTest()
         {
             //At this point the loan has been extended.. now cancel it.
-            Drive.Msmq.Payments.Send(new CancelExtensionCommand { AccountId = _accountId, 
+            Drive.Msmq.Payments.Send(new CancelExtension { AccountId = _accountId, 
                                                                   ApplicationId = _applicationId, 
                                                                   ExtensionId = _extension.ExternalId });
             
@@ -126,7 +126,7 @@ namespace Wonga.QA.Tests.Comms.Email
         {
             const string homePhone = "02071111111";
             Drive.Msmq.Comms.Send(new
-                                      SaveCustomerDetailsCommand
+                                      SaveCustomerDetails
             {
                 AccountId = accountId,
                 ClientId = clientId,
@@ -142,7 +142,7 @@ namespace Wonga.QA.Tests.Comms.Email
                 Title = TitleEnum.Dr,
                 WorkPhone = homePhone,
             });
-            Drive.Msmq.Comms.Send(new IAccountCreatedEvent { AccountId = accountId });
+            Drive.Msmq.Comms.Send(new IAccountCreated { AccountId = accountId });
 
 
             Assert.DoesNotThrow(() =>
@@ -152,7 +152,7 @@ namespace Wonga.QA.Tests.Comms.Email
 
 
             Drive.Msmq.Comms.Send(new
-                                      SaveCustomerAddressCommand
+                                      SaveCustomerAddress
             {
                 CreatedOn = DateTime.UtcNow,
                 AccountId = accountId,

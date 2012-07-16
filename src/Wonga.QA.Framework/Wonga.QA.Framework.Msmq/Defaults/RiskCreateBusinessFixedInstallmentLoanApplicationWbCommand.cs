@@ -2,13 +2,13 @@
 
 namespace Wonga.QA.Framework.Msmq.Messages.Risk.Commands
 {
-	public partial class RiskCreateBusinessFixedInstallmentLoanApplicationWbCommand
-	{
-		public override void Default()
-		{
-			Currency = CurrencyCodeIso4217Enum.GBP;
-			Term = 10;
-			LoanAmount = 3000;
-		}
-	}
+    public partial class RiskCreateBusinessFixedInstallmentLoanApplication
+    {
+        public override void Default()
+        {
+            Currency = CurrencyCodeIso4217Enum.GBP;
+            Term = 10;
+            LoanAmount = 3000;
+        }
+    }
 }

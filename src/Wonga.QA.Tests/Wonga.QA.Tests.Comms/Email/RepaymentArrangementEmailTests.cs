@@ -31,7 +31,9 @@ namespace Wonga.QA.Tests.Comms.Email
             var repaymentArrangement = paymentsDb.RepaymentArrangements.FindByApplicationId(app.ApplicationId);
             var firstRepaymentArrangementDetail = paymentsDb.RepaymentArrangementDetails.FindByRepaymentArrangementId(repaymentArrangement.RepaymentArrangementId);
 
-            Drive.Msmq.Payments.Send(new ProcessScheduledRepaymentCommand { RepaymentArrangementId = repaymentArrangement.RepaymentArrangementId,
+            Drive.Msmq.Payments.Send(new ProcessScheduledRepaymentMessage
+            {
+                RepaymentArrangementId = repaymentArrangement.RepaymentArrangementId,
                                                                             RepaymentDetailId = firstRepaymentArrangementDetail.RepaymentArrangementDetailId });
 			
             dynamic emails = Drive.Data.QaData.Db.Email;

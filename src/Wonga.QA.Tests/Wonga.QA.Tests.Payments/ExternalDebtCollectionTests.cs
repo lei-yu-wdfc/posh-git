@@ -208,7 +208,7 @@ namespace Wonga.QA.Tests.Payments
     	private static void SendPaymentTakenCommand(Application application, Guid sagaId)
     	{
     		Decimal? amount = GetArrearsAmountSent(application.Id);
-    		var firstPaymentTaken = new PaymentTakenCommand
+            var firstPaymentTaken = new PaymentTakenMessage
     		                        	{
     		                        		ApplicationId = application.Id,
     		                        		SagaId = sagaId,
@@ -292,7 +292,7 @@ namespace Wonga.QA.Tests.Payments
             var customer = CustomerBuilder.New().Build();
             var application = ApplicationBuilder.New(customer).Build();
 
-            var command = new MoveApplicationToDcaCommand
+            var command = new MoveApplicationToDca
             {
                 ApplicationId = application.Id,
                 AccountId = customer.Id,
@@ -317,7 +317,7 @@ namespace Wonga.QA.Tests.Payments
             customerDetailsRow.IsDispute = true;
             db.Payments.SubmitChanges();
 
-            var command = new MoveApplicationToDcaCommand
+            var command = new MoveApplicationToDca
             {
                 ApplicationId = application.Id,
                 AccountId = customer.Id,
@@ -344,7 +344,7 @@ namespace Wonga.QA.Tests.Payments
             customerDetailsRow.IsHardship = true;
             db.Payments.SubmitChanges();
 
-            var command = new MoveApplicationToDcaCommand
+            var command = new MoveApplicationToDca
             {
                 ApplicationId = application.Id,
                 AccountId = customer.Id,
@@ -366,7 +366,7 @@ namespace Wonga.QA.Tests.Payments
             var customer = CustomerBuilder.New().Build();
             var application = ApplicationBuilder.New(customer).Build();
 
-            var command = new MoveApplicationToDcaCommand
+            var command = new MoveApplicationToDca
             {
                 ApplicationId = application.Id,
                 AccountId = customer.Id,

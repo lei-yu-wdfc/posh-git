@@ -255,7 +255,7 @@ namespace Wonga.QA.Framework
         /// <param name="extraPaymentAmount">Transaction amount</param>
         public void CreateExtraPayment(decimal extraPaymentAmount)
         {
-            var command = new CreateTransactionCommand
+            var command = new CreateTransaction
             {
                 Amount = extraPaymentAmount,
                 ApplicationId = Id,

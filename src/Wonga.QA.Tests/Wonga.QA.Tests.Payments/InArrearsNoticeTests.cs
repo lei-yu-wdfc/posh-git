@@ -45,7 +45,7 @@ namespace Wonga.QA.Tests.Payments
 		public void ApplicationClosedSagaCompleteTest()
 		{
 			//staff message for application is closed.
-			Drive.Msmq.Payments.Send(new IApplicationClosedEvent
+			Drive.Msmq.Payments.Send(new IApplicationClosed
 			                         	{
 			                         		ApplicationId = _application.Id,
 			                         		AccountId = _application.AccountId,

@@ -100,7 +100,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             Drive.Api.Commands.Post(command);
             Do.Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(command.ApplicationId));
 
-            var message = new CreateTransactionCommand
+            var message = new CreateTransaction
             {
                 ExternalId = Guid.NewGuid(),
                 ApplicationId = (Guid)command.ApplicationId,

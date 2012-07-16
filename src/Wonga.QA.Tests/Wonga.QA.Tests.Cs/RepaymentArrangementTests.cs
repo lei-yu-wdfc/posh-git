@@ -59,7 +59,7 @@ namespace Wonga.QA.Tests.Cs
 			Customer customer = CustomerBuilder.New().Build();
 			Application application = ApplicationBuilder.New(customer).Build().PutIntoArrears(35);
 
-			Drive.Msmq.Payments.Send(new IDisputeStatusChangedEvent { AccountId = customer.Id, HasDispute = true });
+			Drive.Msmq.Payments.Send(new IDisputeStatusChanged { AccountId = customer.Id, HasDispute = true });
 			Do.With.Timeout(2).Until(() => (bool)Drive.Data.Payments.Db.AccountPreferences.FindByAccountId(customer.Id).IsDispute == true);
 
 			var planIsAllowed = PlanIsAllowed(application);
@@ -291,7 +291,7 @@ namespace Wonga.QA.Tests.Cs
 			var bankDetails = (BankAccountsBaseEntity)Drive.Data.Payments.Db.BankAccountsBase.FindByExternalId(bankGuid);
 			var amount = repaymentArrangement.RepaymentArrangementDetails.First(a => a.AmountPaid == 0).Amount;
 
-			Drive.Msmq.Payments.Send(new PaymentTakenCommand
+            Drive.Msmq.Payments.Send(new PaymentTakenMessage
 			{
 				SagaId = scheduledRepaymentSagaId,
 				ApplicationId = application.Id,
@@ -321,7 +321,7 @@ namespace Wonga.QA.Tests.Cs
 
 			var scheduledRepaymentSagaId = (Guid)Do.Until(() => Drive.Data.OpsSagas.Db.ScheduledRepaymentSagaEntity.FindByRepaymemtArrangementGuid(repaymentArrangement.ExternalId).ScheduledPaymentSagaEntity_id);
 
-			Drive.Msmq.Payments.Send(new TakePaymentFailedCommand{AccountId = customer.Id, SagaId = scheduledRepaymentSagaId, CreatedOn =  DateTime.UtcNow});
+            Drive.Msmq.Payments.Send(new TakePaymentFailedMessage { AccountId = customer.Id, SagaId = scheduledRepaymentSagaId, CreatedOn = DateTime.UtcNow });
 
 			Do.Until(() => GetRepaymentArrangement(application).CanceledOn != null);
 		}

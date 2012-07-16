@@ -38,7 +38,7 @@ namespace Wonga.QA.Tests.Payments
 			// Validate that external debt collection finished
 			Do.Until(() => _externalDebtCollectionSaga.FindByApplicationId(application.Id));
 
-			Drive.Msmq.Payments.Send(new IApplicationClosedEvent
+			Drive.Msmq.Payments.Send(new IApplicationClosed
 			                         	{
 			                         		AccountId = customer.Id,
 											ApplicationId = application.Id,
@@ -60,7 +60,7 @@ namespace Wonga.QA.Tests.Payments
 
 			application.PutIntoArrears();
 
-			Drive.Msmq.Payments.Send(new IRepresentmentFailedEvent
+			Drive.Msmq.Payments.Send(new IRepresentmentFailed
 			                         	{
 			                         		AccountId = customer.Id,
 											ApplicationId = application.Id,

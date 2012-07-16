@@ -102,7 +102,7 @@ namespace Wonga.QA.Tests.Bi
                                                         .Build();
 
             //force the application to move to live by sending the IFundsTransferredEvent.
-            Drive.Msmq.Payments.Send(new IFundsTransferredEvent
+            Drive.Msmq.Payments.Send(new IFundsTransferred
             {
                 AccountId = application.AccountId,
                 ApplicationId = application.Id,
@@ -170,7 +170,7 @@ namespace Wonga.QA.Tests.Bi
                                                         .Build();
 
             //force the application to move to live by sending the IFundsTransferredEvent.
-            Drive.Msmq.Payments.Send(new IFundsTransferredEvent
+            Drive.Msmq.Payments.Send(new IFundsTransferred
             {
                 AccountId = application.AccountId,
                 ApplicationId = application.Id,
@@ -348,7 +348,7 @@ namespace Wonga.QA.Tests.Bi
                                                         .Build();
 
             //force the application to move to live by sending the IFundsTransferredEvent.
-            Drive.Msmq.Payments.Send(new IFundsTransferredEvent
+            Drive.Msmq.Payments.Send(new IFundsTransferred
             {
                 AccountId = application.AccountId,
                 ApplicationId = application.Id,
@@ -413,7 +413,7 @@ namespace Wonga.QA.Tests.Bi
                                                    applicationRepo.Amount == loanAmount && applicationRepo.Type == "CashAdvance"));
 
             //force the application to move to live by sending the IFundsTransferredEvent.
-            Drive.Msmq.Payments.Send(new IFundsTransferredEvent { AccountId = application.AccountId, 
+            Drive.Msmq.Payments.Send(new IFundsTransferred { AccountId = application.AccountId, 
                                                                   ApplicationId = application.Id,
                                                                   TransactionId = Guid.NewGuid() });
 
@@ -447,7 +447,7 @@ namespace Wonga.QA.Tests.Bi
                 .Build();
 
             //force the application to move to live by sending the IFundsTransferredEvent.
-            Drive.Msmq.Payments.Send(new IFundsTransferredEvent
+            Drive.Msmq.Payments.Send(new IFundsTransferred
             {
                 AccountId = application.AccountId,
                 ApplicationId = application.Id,

@@ -62,7 +62,7 @@ namespace Wonga.QA.Tests.Sms
 
 		private static void SendSms(Guid smsId, string phoneNumber, string smsText)
 		{
-			Drive.Msmq.Sms.Send(new SendSmsSmsCommand
+			Drive.Msmq.Sms.Send(new SendSmsMessage()
 			                    	{
 			                    		FormattedPhoneNumber = phoneNumber,
 			                    		SmsMessageId = smsId,

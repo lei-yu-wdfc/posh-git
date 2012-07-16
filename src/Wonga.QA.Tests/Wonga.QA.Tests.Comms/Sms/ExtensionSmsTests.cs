@@ -45,7 +45,7 @@ namespace Wonga.QA.Tests.Comms.Sms
 
 			Do.With.Interval(1).Until(() => Applications.Single(Applications.ApplicationId == _extension.ApplicationId));
 
-			Drive.Msmq.Comms.Send(new IExtensionCancelledEvent
+			Drive.Msmq.Comms.Send(new IExtensionCancelled
 			                      	{
 										AccountId = _accountId,
 										ApplicationId = _applicationId,
@@ -124,7 +124,7 @@ namespace Wonga.QA.Tests.Comms.Sms
 			var forename = string.Format("Joe_{0}", DateTime.UtcNow.Ticks);
 
 			Drive.Msmq.Comms.Send(new
-									  SaveCustomerDetailsCommand
+									  SaveCustomerDetails
 			{
 				AccountId = accountId,
 				ClientId = clientId,
@@ -140,11 +140,11 @@ namespace Wonga.QA.Tests.Comms.Sms
 				Title = TitleEnum.Dr,
 				WorkPhone = "02078889999"
 			});
-			Drive.Msmq.Comms.Send(new IAccountCreatedEvent { AccountId = accountId });
+			Drive.Msmq.Comms.Send(new IAccountCreated { AccountId = accountId });
 
 
 			Drive.Msmq.Comms.Send(new
-									  SaveCustomerAddressCommand
+									  SaveCustomerAddress
 			{
 				CreatedOn = DateTime.UtcNow,
 				AccountId = accountId,
@@ -162,7 +162,7 @@ namespace Wonga.QA.Tests.Comms.Sms
 
 			var verificationId = Guid.NewGuid();
 
-			Drive.Msmq.Comms.Send(new VerifyMobilePhoneCommand
+			Drive.Msmq.Comms.Send(new VerifyMobilePhone
 			                      	{
 			                      		AccountId = accountId,
 			                      		ClientId = clientId,
@@ -174,7 +174,7 @@ namespace Wonga.QA.Tests.Comms.Sms
 
 			var pin = Do.With.Interval(1).Until(() => MobilePhoneVerifications.FindByVerificationId(verificationId));//Single(MobilePhoneVerifications.VerificationId == verificationId));
 
-			Drive.Msmq.Comms.Send(new CompleteMobilePhoneVerificationCommand
+			Drive.Msmq.Comms.Send(new CompleteMobilePhoneVerification
 			                      	{
 			                      		ClientId = clientId,
 			                      		CreatedOn = DateTime.UtcNow,

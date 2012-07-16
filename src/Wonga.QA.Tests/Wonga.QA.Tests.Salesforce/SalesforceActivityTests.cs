@@ -27,7 +27,7 @@ namespace Wonga.QA.Tests.Salesforce
         [Test, AUT(AUT.Wb), JIRA("SME-1411"), Explicit("Slow TC does not cope with the load of all acceptance tests being run simultaneously")]
         public void Salesforce_ShouldCreateActivityForContact_WhenRecordActivityCommandIsSent()
         {
-            var recordActivityCommand = new RecordActivityCommand
+            var recordActivityCommand = new RecordActivityMessage
                                             {
                                                 AccountId = customer.Id, ActivityType = Guid.NewGuid().ToString(), Subject = Guid.NewGuid().ToString()
                                             };

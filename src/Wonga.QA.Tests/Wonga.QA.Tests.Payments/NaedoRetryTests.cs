@@ -46,7 +46,7 @@ namespace Wonga.QA.Tests.Payments
 			Do.Until(() => paymentsDatabase.Arrears.Single(s => s.ApplicationId == applicationEntity.ApplicationId));
 			ConfigurationFunctions.SetBankGatewayTestMode(true);
 
-			paymentsQueue.Send(new ProcessScheduledPaymentCommand
+            paymentsQueue.Send(new ProcessScheduledPaymentMessage
 			                   	{
 			                   		ApplicationId = applicationEntity.ApplicationId,
 			                   		CollectAmount = amount/2,

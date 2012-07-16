@@ -25,10 +25,10 @@ namespace Wonga.QA.ServiceTests.Risk.Preparation
 		{
 			base.InitialiseCommands();
 
-			Messages.Add<RiskSaveCustomerDetailsCommand>(x => x.AccountId = MainApplicantAccountId);
-			Messages.Add<RiskSaveCustomerAddressCommand>(x => x.AccountId = MainApplicantAccountId);
-			Messages.Add<SubmitApplicationBehaviourCommand>(x => x.ApplicationId = ApplicationId);
-			Messages.Add<RiskCreateFixedTermLoanApplicationCommand>(
+			Messages.Add<RiskSaveCustomerDetails>(x => x.AccountId = MainApplicantAccountId);
+			Messages.Add<RiskSaveCustomerAddress>(x => x.AccountId = MainApplicantAccountId);
+			Messages.Add<SubmitApplicationBehaviour>(x => x.ApplicationId = ApplicationId);
+			Messages.Add<RiskCreateFixedTermLoanApplication>(
 				x =>
 				{
 					x.AccountId = MainApplicantAccountId;
@@ -36,21 +36,21 @@ namespace Wonga.QA.ServiceTests.Risk.Preparation
 					x.BankAccountId = BankAccountId;
 					x.PaymentCardId = PaymentCardId;
 				});
-			Messages.Add<IApplicationAddedEvent>(
+			Messages.Add<IApplicationAdded>(
 			x =>
 			{
 				x.AccountId = MainApplicantAccountId;
 				x.ApplicationId = ApplicationId;
 				x.CreatedOn = TestAsOf;
 			});
-			Messages.Add<RiskAddBankAccountCommand>(
+			Messages.Add<RiskAddBankAccount>(
 				x =>
 				{
 					x.AccountId = MainApplicantAccountId;
 					x.BankAccountId = BankAccountId;
 				});
 
-			Messages.Add<VerifyFixedTermLoanCommand>(
+			Messages.Add<VerifyFixedTermLoan>(
 				x =>
 				{
 					x.CreatedOn = DateTime.UtcNow;
@@ -58,7 +58,7 @@ namespace Wonga.QA.ServiceTests.Risk.Preparation
 					x.ApplicationId = ApplicationId;
 				});
 
-			Messages.Add<IFixedTermApplicationAddedEvent>(
+			Messages.Add<IFixedTermApplicationAdded>(
 			x =>
 			{
 				x.AccountId = MainApplicantAccountId;
@@ -66,24 +66,24 @@ namespace Wonga.QA.ServiceTests.Risk.Preparation
 				x.CreatedOn = TestAsOf;
 			});
 
-			Messages.Add<IBankAccountActivatedEvent>(
+			Messages.Add<IBankAccountActivated>(
 				x =>
 					{
 						x.BankAccountId = BankAccountId;
 						x.CreatedOn = TestAsOf;
 					});
 			
-			Messages.Add<IPersonalDetailsAddedEvent>(x => x.AccountId = MainApplicantAccountId);
+			Messages.Add<IPersonalDetailsAdded>(x => x.AccountId = MainApplicantAccountId);
 
-			Messages.Add<ICurrentAddressAddedEvent>(x => x.AccountId = MainApplicantAccountId);
+			Messages.Add<ICurrentAddressAdded>(x => x.AccountId = MainApplicantAccountId);
 
-			Messages.Add<IRiskPaymentCardAddedEvent>(
+			Messages.Add<IRiskPaymentCardAdded>(
 				x =>
 				{
 					x.AccountId = MainApplicantAccountId;
 					x.PaymentCardId = PaymentCardId;
 				});
-			Messages.Add<RiskAddPaymentCardCommand>(
+			Messages.Add<RiskAddPaymentCard>(
 				x =>
 				{
 					x.AccountId = MainApplicantAccountId;
@@ -99,21 +99,21 @@ namespace Wonga.QA.ServiceTests.Risk.Preparation
 				}
 				);
 
-			Messages.Add<IPaymentCardAddedEvent>(
+			Messages.Add<IPaymentCardAdded>(
 				x =>
 				{
 					x.PaymentCardId = PaymentCardId;
 					x.AccountId = MainApplicantAccountId;
 				});
 
-			Messages.Add<IBankAccountAddedEvent>(
+			Messages.Add<IBankAccountAdded>(
 				x =>
 				{
 					x.AccountId = MainApplicantAccountId;
 					x.BankAccountId = BankAccountId;
 				});
 
-			Messages.Add<IMobilePhoneUpdatedEvent>(x => x.AccountId = MainApplicantAccountId);
+			Messages.Add<IMobilePhoneUpdated>(x => x.AccountId = MainApplicantAccountId);
 
 		}
 	}
