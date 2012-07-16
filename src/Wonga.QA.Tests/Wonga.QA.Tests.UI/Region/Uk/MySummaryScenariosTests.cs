@@ -190,6 +190,10 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             Assert.IsFalse(mySummaryPage.IsLoanStatusMessageAvailable());
 
             CheckSliders(mySummaryPage, "full");
+
+            var journey = JourneyFactory.GetLnJourney(Client.Home())
+                .WithAmount(50).WithDuration(3);
+            var aPage = journey.Teleport<MySummaryPage>() as MySummaryPage;
         }
 
         // One live drawdown -can request credit, too early to extend
@@ -207,9 +211,51 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
         public void MySummaryScenario03(int scenarioId, int dasyShift, int loanTerm) { MySummaryScenarios(scenarioId, dasyShift, loanTerm); }
 
         // One live drawdown -can request credit, can't  extend (max. exceeded)
-        [Test, AUT(AUT.Uk), Pending("Check that after 3 extensions we get scenario 4. Passed manually."), MultipleAsserts]
-        // [Row(4, 2, 7)]
-        public void MySummaryScenario04(int scenarioId, int dasyShift, int loanTerm) { MySummaryScenarios(scenarioId, dasyShift, loanTerm); }
+        [Test, AUT(AUT.Uk), MultipleAsserts]
+        public void MySummaryScenario04()
+        {
+            string email = Get.RandomEmail();
+            const int loanTerm = 2;
+            const int loanAmount = 100;
+            const int scenarioId = 4;
+
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            var application = ApplicationBuilder.New(customer).WithLoanAmount(loanAmount).WithLoanTerm(loanTerm).Build();
+
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(email);
+
+            for (int i = 1; i <= 3; i++)
+            {
+                mySummaryPage.ChangePromiseDateButtonClick();
+                var requestPage = new ExtensionRequestPage(this.Client);
+
+                //Runs assertions internally
+                requestPage.SetExtendDays("1");
+
+                //Branch point - Add Cv2 for each path and proceed
+                requestPage.setSecurityCode("123");
+                requestPage.SubmitButtonClick();
+
+                var extensionProcessingPage = new ExtensionProcessingPage(this.Client);
+
+                var agreementPage = extensionProcessingPage.WaitFor<ExtensionAgreementPage>() as ExtensionAgreementPage;
+                agreementPage.Accept();
+
+                var dealDonePage = new ExtensionDealDonePage(this.Client);
+
+                Client.Driver.Navigate().GoToUrl(Config.Ui.Home + "/my-account");
+                mySummaryPage = new MySummaryPage(this.Client);
+            }
+
+            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId));
+
+            CheckIntroText(scenarioId, mySummaryPage, customer, application);
+            CheckLoanStatusText(scenarioId, mySummaryPage, customer, application);
+            CheckTagCloud(scenarioId, mySummaryPage);
+            CheckSliders(mySummaryPage, "half");
+        }
+
 
         // One live drawdown -can't request credit, too early to extend
         [Test, AUT(AUT.Uk), JIRA("UK-788", "UK-1909"), MultipleAsserts]
@@ -771,7 +817,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
         }
 
         // Check Intro Text on My Summary page
-        private void CheckIntroText(int scenarioId, MySummaryPage mySummaryPage, Customer customer, Application application, string expectedAmountMax, decimal expectedDueDateBalance)
+        private void CheckIntroText(int scenarioId, MySummaryPage mySummaryPage, Customer customer, Application application, string expectedAmountMax = "", decimal expectedDueDateBalance = 0)
         {
             // Check the actual text
             string expectedIntroText = introTexts[scenarioId].Replace("{first name}",
@@ -832,7 +878,12 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
                 }
             }
 
-            if (scenarioId == 4) expectedLoanMessageText = expectedLoanMessageText.Replace("{total to repay 300.00}", application.GetDueDateBalance().ToString("#.##")).Replace("{promise date}", Date.GetOrdinalDate(applicationEntity.FixedTermLoanApplicationEntity.NextDueDate.Value, "ddd d MMM yyyy"));
+            if (scenarioId == 4)
+            {
+                ApiResponse response = Drive.Api.Queries.Post(new GetFixedTermLoanApplicationQuery { ApplicationId = application.Id });
+                DateTime nextDueDay = Convert.ToDateTime(response.Values["NextDueDate"].Single());
+                expectedLoanMessageText = expectedLoanMessageText.Replace("{total to repay 300.00}", application.GetDueDateBalance().ToString("#.##")).Replace("{promise date}", Date.GetOrdinalDate(nextDueDay, "ddd d MMM yyyy"));
+            }
 
             string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage;
             Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
