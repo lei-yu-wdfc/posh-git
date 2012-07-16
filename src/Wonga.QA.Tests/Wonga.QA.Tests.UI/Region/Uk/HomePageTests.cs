@@ -33,6 +33,21 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             var homePage = Client.Home();
             Assert.AreEqual("Welcome to Wonga", homePage.Headers[1], "The Header should be 'Welcome to Wonga'"); // user hasn't logged in before
         }
+
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-344", "UKWEB-345"), MultipleAsserts, Owner(Owner.OrizuNwokeji), Pending("In development")]
+        public void HomePageRefactorTest()
+        {
+            var homePage = Client.Home();
+
+            Assert.IsTrue(homePage.IsNewBodyFrameworkExists());
+            var awards = homePage.GetPromoBoxes();
+            var seoLinks = homePage.GetSeoLinks();
+            var promoBoxes = homePage.GetPromoBoxes();
+
+            Assert.IsTrue(homePage.Source.Contains(promoBoxes));
+            Assert.IsTrue(homePage.Source.Contains(awards));
+            Assert.IsTrue(homePage.Source.Contains(seoLinks));
+        }
         
         [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), Pending("Test in development, and waiting for functionality"), DependsOn("HomePagePersonalisedNewUserTest"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
         public void L0HomePagePersonalisedLoggedInUserTest()

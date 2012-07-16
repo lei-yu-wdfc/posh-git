@@ -94,6 +94,29 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
             catch (NoSuchElementException)
             {}
         }
+       
+        public bool IsNewBodyFrameworkExists()
+        {
+            var bodyFramework = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.BodyFramework));
+            return bodyFramework.Displayed;
+        }
 
+        public string GetPromoBoxes()
+        {
+            var promoBoxes = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.PromoBoxes));
+            return promoBoxes.ToString();
+        }
+
+        public string GetAwardsList()
+        {
+            var awards = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.AwardsList));
+            return awards.ToString();
+        }
+
+        public string GetSeoLinks()
+        {
+            var seoLinks = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.SeoLinks));
+            return seoLinks.ToString();
+        }
     }
 }

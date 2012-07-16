@@ -262,5 +262,12 @@
     <Link>#secci-toggler a.secci-toggle</Link>
     <Message>.wonga-secci-toggle</Message>
   </SecciToggleElement>
+
+  <HomePage>
+    <BodyFramework>body.node-type-homepage</BodyFramework>
+    <PromoBoxes>#bottom-promo-boxes</PromoBoxes>
+    <AwardsList>#footer-front #awards-list</AwardsList>
+    <SeoLinks>#footer-front #seo-links</SeoLinks>
+  </HomePage>
   
 </UiMap>
