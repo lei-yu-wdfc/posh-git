@@ -12,7 +12,7 @@ namespace Wonga.QA.Generators.Core
 
 		EnumGenerationMode Mode { get; }
 
-		bool ErrorsOccurred { get; }
+		bool ErrorsOccurred { get; }        
 
 		string EnumFullNameStartFilter { get; }
 

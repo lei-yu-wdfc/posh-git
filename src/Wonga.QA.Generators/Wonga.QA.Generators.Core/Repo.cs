@@ -43,12 +43,11 @@ namespace Wonga.QA.Generators.Core
 		{
 			directory = new DirectoryInfo(Path.Combine(directory.FullName, name));
 
+            if (delete && directory.Exists)
+                DeleteDirectory(directory);
+
 			if (!directory.Exists)
 				directory.Create();
-			else
-			{
-				DeleteExistingSubdirectoriesOfRepo(Config.RepoName, directory);
-			}
 
 			return directory;
 		}

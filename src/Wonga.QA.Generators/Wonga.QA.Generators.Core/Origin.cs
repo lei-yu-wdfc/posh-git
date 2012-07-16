@@ -28,8 +28,8 @@ namespace Wonga.QA.Generators.Core
 		{
 			var proj = GetProjects();
 			var assemblyFiles = (from fileInfo in proj let path = AssemblyPathFinder.GetPath(fileInfo, Build) where path != null select fileInfo.GetAssembly(path));
-
-			return assemblyFiles.Select(f => Assembly.LoadFrom(f.FullName)).Distinct();
+            
+			return assemblyFiles.Where(x => x != null).Select(f => Assembly.LoadFrom(f.FullName)).Distinct();
 		}
 
 		public static IEnumerable<FileInfo> GetProjects()

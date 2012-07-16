@@ -16,6 +16,7 @@ namespace Wonga.QA.Generators.Core
 {
 	public class XmlSchemaClassGenerator
 	{
+	    private string[] ignoreTheseXsdsForNow = {"Wonga.Risk.Commands.Pl.xsd"};
 		private bool _errorsOccurred;
 		
 		public bool ContinueOnError { get; private set; }
@@ -44,6 +45,12 @@ namespace Wonga.QA.Generators.Core
 
 		public void GenerateXmlSchemaClassesFiles(FileInfo xmlSchemaFile, ILookup<String, Type> typesToGenerate)
 		{
+            if(ignoreTheseXsdsForNow.Contains(xmlSchemaFile.Name))
+            {
+                Console.WriteLine("Ignoring " + xmlSchemaFile);
+                return;
+            }
+
 			try
 			{
 				GenerateXmlSchemaClassesFilesInternal(xmlSchemaFile, typesToGenerate);
