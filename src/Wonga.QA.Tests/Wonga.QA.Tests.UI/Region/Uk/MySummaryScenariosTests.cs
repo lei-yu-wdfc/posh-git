@@ -254,6 +254,16 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             CheckLoanStatusText(scenarioId, mySummaryPage, customer, application);
             CheckTagCloud(scenarioId, mySummaryPage);
             CheckSliders(mySummaryPage, "half");
+
+            try
+            {
+                mySummaryPage.ChangePromiseDateButtonClick();
+            }
+            catch (Exception){}
+            finally
+            {
+                mySummaryPage = new MySummaryPage(this.Client);
+            }
         }
 
 
@@ -814,6 +824,11 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
 
             Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId));
             Assert.AreEqual(expectedTagCloudText, actualTagCloudText);
+
+            if (scenarioId == 4)
+            {
+                Assert.AreEqual("Sorry this is not possible, either because you have done this 3 times before or because it is too late.", mySummaryPage.GetChangePromiseDateButton);
+            }
         }
 
         // Check Intro Text on My Summary page
