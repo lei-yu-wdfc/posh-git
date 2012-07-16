@@ -38,7 +38,7 @@ namespace Wonga.QA.Generators.Cs
 			}
 
 			Repo.Inject(binRootDirectories.EnumsDirectory, Config.CsApi.Folder, Config.Api.Project, delete: true, overwrite: true);
-			Repo.Inject(binRootDirectories.EnumsDirectory, Config.Enums.Folder, Config.Enums.Project, delete: true, overwrite: true);
+			Repo.Inject(binRootDirectories.EnumsDirectory, Config.Enums.Folder, Config.Enums.Project, delete: false, overwrite: true);
 		}
     }
 }
