@@ -177,8 +177,8 @@ namespace Wonga.QA.Tests.Comms
                                   Forename = Get.RandomString(8),
                                   Surname = Get.RandomString(8),
                                   MiddleName = Get.RandomString(8),
-                                  HomePhone = "0217050520",
-                                  WorkPhone = "0217450510"
+                                  HomePhone = Get.GetPhone(),
+                                  WorkPhone = Get.GetPhone()
                               };
             Drive.Api.Commands.Post(message);
 
