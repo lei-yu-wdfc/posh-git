@@ -40,7 +40,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             var homePage = Client.Home();
 
             Assert.IsTrue(homePage.IsNewBodyFrameworkExists());
-            var awards = homePage.GetPromoBoxes();
+            var awards = homePage.GetAwardsList();
             var seoLinks = homePage.GetSeoLinks();
             var promoBoxes = homePage.GetPromoBoxes();
 
