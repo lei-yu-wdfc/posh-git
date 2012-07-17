@@ -3,11 +3,12 @@ using System.Collections;
 using System.Reflection;
 using System.Text;
 using System.Xml.Serialization;
+using NServiceBus;
 using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.Framework.Msmq
 {
-    public abstract class MsmqMessage:MessageBase
+    public abstract class MsmqMessage:MessageBase,IMessage
     {
 
 		public override void Default()

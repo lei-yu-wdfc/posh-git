@@ -111,6 +111,9 @@
     <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
     <Reference Include="MbUnit, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NServiceBus">
+      <HintPath>..\..\..\lib\nuget\packages\NServiceBus.2.6.0.1511\lib\net40\NServiceBus.dll</HintPath>
+    </Reference>
     <Reference Include="Simple.Data, Version=0.16.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data.Linq" />

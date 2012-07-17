@@ -1,4 +1,5 @@
-﻿using Wonga.QA.Framework.Core.Exceptions;
+﻿using NServiceBus;
+using Wonga.QA.Framework.Core.Exceptions;
 
 namespace Wonga.QA.Framework.Core
 {

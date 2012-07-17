@@ -4,12 +4,6 @@ using Wonga.QA.Framework.Msmq.Messages.Graydon.PublicMessages.events;
 using Wonga.QA.Framework.Msmq.Messages.Payments.PublicMessages;
 using Wonga.QA.Framework.Msmq.Messages.Risk;
 using Wonga.QA.Framework.Msmq.Messages.Risk.Commands;
-using RiskAddBankAccountCommand = Wonga.QA.Framework.Msmq.Messages.Risk.RiskAddBankAccount;
-using RiskAddPaymentCardCommand = Wonga.QA.Framework.Msmq.Messages.Risk.RiskAddPaymentCard;
-using RiskSaveCustomerAddressCommand = Wonga.QA.Framework.Msmq.Messages.Risk.RiskSaveCustomerAddress;
-using RiskSaveCustomerDetailsCommand = Wonga.QA.Framework.Msmq.Messages.Risk.RiskSaveCustomerDetails;
-using SubmitApplicationBehaviourCommand = Wonga.QA.Framework.Msmq.Messages.Risk.SubmitApplicationBehaviour;
-using SubmitNumberOfGuarantorsCommand = Wonga.QA.Framework.Msmq.Messages.Risk.SubmitNumberOfGuarantors;
 
 namespace Wonga.QA.ServiceTests.Risk
 {
@@ -41,9 +35,9 @@ namespace Wonga.QA.ServiceTests.Risk
 		{
 			base.InitialiseCommands();
 
-			Messages.Add<RiskSaveCustomerDetailsCommand>(x => x.AccountId = MainApplicantAccountId);
-			Messages.Add<RiskSaveCustomerAddressCommand>(x => x.AccountId = MainApplicantAccountId);
-			Messages.Add<SubmitApplicationBehaviourCommand>(x => x.ApplicationId = ApplicationId);
+			Messages.Add<RiskSaveCustomerDetails>(x => x.AccountId = MainApplicantAccountId);
+			Messages.Add<RiskSaveCustomerAddress>(x => x.AccountId = MainApplicantAccountId);
+			Messages.Add<SubmitApplicationBehaviour>(x => x.ApplicationId = ApplicationId);
 			Messages.Add<RiskCreateBusinessFixedInstallmentLoanApplication>(
 				x =>
 					{
@@ -57,7 +51,7 @@ namespace Wonga.QA.ServiceTests.Risk
 						x.OrganisationId = OrganisationId;
 					});
 
-			Messages.Add<RiskAddBankAccountCommand>(
+			Messages.Add<RiskAddBankAccount>(
 				x =>
 					{
 						x.AccountId = MainApplicantAccountId;
@@ -72,7 +66,7 @@ namespace Wonga.QA.ServiceTests.Risk
 						x.ApplicationId = ApplicationId;
 					});
 
-			Messages.Add<SubmitNumberOfGuarantorsCommand>(
+			Messages.Add<SubmitNumberOfGuarantors>(
 				x =>
 					{
 						x.CreatedOn = DateTime.UtcNow;
@@ -115,7 +109,7 @@ namespace Wonga.QA.ServiceTests.Risk
 						x.AccountId = MainApplicantAccountId;
 						x.PaymentCardId = PaymentCardId;
 					});
-			Messages.Add<RiskAddPaymentCardCommand>(
+			Messages.Add<RiskAddPaymentCard>(
 				x =>
 					{
 						x.AccountId = MainApplicantAccountId;
