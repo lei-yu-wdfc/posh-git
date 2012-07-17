@@ -16,7 +16,8 @@ using Wonga.QA.Framework.Api.Requests.Payments.Queries.Za;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Helpers;
 using Wonga.QA.Framework.UI.Mappings;
-using Wonga.QA.Framework.UI.UiElements.Pages;
+﻿using Wonga.QA.Framework.UI.Ui.Validators;
+﻿using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Framework.UI.UiElements.Pages.Wb;
 using Wonga.QA.Tests.Core;
@@ -632,13 +633,13 @@ namespace Wonga.QA.Tests.Ui
 			homePage.AssertThatIsWbHomePage();
 		}
 
-		[Test, AUT(AUT.Ca, AUT.Za, AUT.Uk), JIRA("QA-181"), Pending("ZA-2512")]
+		[Test, AUT(AUT.Ca, AUT.Za, AUT.Uk), JIRA("QA-181")]
 		public void L0JourneyCustomerOnCurrentAddressPageDoesNotEnterSomeRequiredFieldsWarningMessageDisplayed()
 		{
 			var journey = JourneyFactory.GetL0Journey(Client.Home())
 				.WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
 			var addressDetailsPage = journey.Teleport<AddressDetailsPage>() as AddressDetailsPage;
-
+		    Validator validator = new  ValidatorBuilder().Default(Client).WithoutErrorsCheck().Build();
 
 			switch (Config.AUT)
 			{
@@ -650,21 +651,26 @@ namespace Wonga.QA.Tests.Ui
 					addressDetailsPage.County = "Province";
 					addressDetailsPage.AddressPeriod = "2 to 3 years";
 					Assert.IsTrue(addressDetailsPage.IsPostcodeWarningOccurred());
-					addressDetailsPage.PostCode = Get.GetPostcode();
-					addressDetailsPage.HouseNumber = "";
-					Assert.IsTrue(addressDetailsPage.IsHouseNumberWarningOccurred());
-					addressDetailsPage.HouseNumber = "25";
-					addressDetailsPage.Street = "";
-					Assert.IsTrue(addressDetailsPage.IsStreetWarningOccurred());
-					addressDetailsPage.Street = "high road";
-					addressDetailsPage.Town = "";
-					Assert.IsTrue(addressDetailsPage.IsTownWarningOccurred());
-					addressDetailsPage.Town = "Kuku";
-					addressDetailsPage.County = "";
-					Assert.IsTrue(addressDetailsPage.IsCountyWarningOccurred());
-					addressDetailsPage.County = "Province";
-					addressDetailsPage.AddressPeriod = "--- Please select ---";
-					Assert.IsTrue(addressDetailsPage.IsAddressPeriodWarningOccurred());
+                    AddressDetailsPage addresspage2 = new AddressDetailsPage(Client, validator);
+					addresspage2.PostCode = Get.GetPostcode();
+                    addresspage2.HouseNumber = "";
+                    Assert.IsTrue(addresspage2.IsHouseNumberWarningOccurred());
+                    AddressDetailsPage addresspage3 = new AddressDetailsPage(Client, validator);
+                    addresspage3.HouseNumber = "25";
+                    addresspage3.Street = "";
+                    Assert.IsTrue(addresspage3.IsStreetWarningOccurred());
+                    AddressDetailsPage addresspage4 = new AddressDetailsPage(Client, validator);
+                    addresspage4.Street = "high road";
+                    addresspage4.Town = "";
+                    Assert.IsTrue(addresspage4.IsTownWarningOccurred());
+                    AddressDetailsPage addresspage5 = new AddressDetailsPage(Client, validator);
+                    addresspage5.Town = "Kuku";
+                    addresspage5.County = "";
+                    Assert.IsTrue(addresspage5.IsCountyWarningOccurred());
+                    AddressDetailsPage addresspage6 = new AddressDetailsPage(Client, validator);
+                    addresspage6.County = "Province";
+                    addresspage6.AddressPeriod = "--- Please select ---";
+                    Assert.IsTrue(addresspage6.IsAddressPeriodWarningOccurred());
 					break;
 				#endregion
 				#region case Ca
@@ -674,18 +680,22 @@ namespace Wonga.QA.Tests.Ui
 					addressDetailsPage.PostCode = "V4F3A9";
 					addressDetailsPage.AddressPeriod = "2 to 3 years";
 					Assert.IsTrue(addressDetailsPage.IsHouseNumberWarningOccurred());
-					addressDetailsPage.HouseNumber = "1403";
-					addressDetailsPage.Street = "";
-					Assert.IsTrue(addressDetailsPage.IsStreetWarningOccurred());
-					addressDetailsPage.Street = "Edward";
-					addressDetailsPage.Town = "";
-					Assert.IsTrue(addressDetailsPage.IsTownWarningOccurred());
-					addressDetailsPage.Town = "Hearst";
-					addressDetailsPage.PostCode = "";
-					Assert.IsTrue(addressDetailsPage.IsPostcodeWarningOccurred());
-					addressDetailsPage.PostCode = "V4F3A9";
-					addressDetailsPage.AddressPeriod = "--- Please select ---";
-					Assert.IsTrue(addressDetailsPage.IsAddressPeriodWarningOccurred());
+                    AddressDetailsPage addresspageca2 = new AddressDetailsPage(Client, validator);
+                    addresspageca2.HouseNumber = "1403";
+                    addresspageca2.Street = "";
+                    Assert.IsTrue(addresspageca2.IsStreetWarningOccurred());
+                    AddressDetailsPage addresspageca3 = new AddressDetailsPage(Client, validator);
+                    addresspageca3.Street = "Edward";
+                    addresspageca3.Town = "";
+                    Assert.IsTrue(addresspageca3.IsTownWarningOccurred());
+                    AddressDetailsPage addresspageca4 = new AddressDetailsPage(Client, validator);
+                    addresspageca4.Town = "Hearst";
+                    addresspageca4.PostCode = "";
+                    Assert.IsTrue(addresspageca4.IsPostcodeWarningOccurred());
+                    AddressDetailsPage addresspageca5 = new AddressDetailsPage(Client, validator);
+                    addresspageca5.PostCode = "V4F3A9";
+                    addresspageca5.AddressPeriod = "--- Please select ---";
+                    Assert.IsTrue(addresspageca5.IsAddressPeriodWarningOccurred());
 					break;
 				#endregion
 				#region case Uk

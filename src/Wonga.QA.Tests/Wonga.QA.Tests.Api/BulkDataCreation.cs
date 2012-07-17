@@ -19,6 +19,7 @@ using Wonga.QA.Framework.Api.Exceptions;
 
 namespace Wonga.QA.Tests.Api
 {
+    [TestFixture, Parallelizable(TestScope.All), Ignore("Start when it needed only")]
     class BulkDataCreation
     {
         Random r = new Random();
@@ -117,7 +118,7 @@ namespace Wonga.QA.Tests.Api
             if (r.Next(1, 3) % 2 == 0)
             {
                 Customer customer = CustomerBuilder.New()
-                    .WithGender(GenderEnum.Male)
+                    .WithGender(GenderEnum.Female)
                     .WithForename(maleName[r.Next(0, 4900)].InnerText)
                     .WithSurname(surName[r.Next(0, 9000)].InnerText)
                     .WithStreetInAddress(street[r.Next(0, 635)].InnerText)
@@ -130,7 +131,7 @@ namespace Wonga.QA.Tests.Api
             else
             {
                 Customer customer = CustomerBuilder.New()
-                    .WithGender(GenderEnum.Female)
+                    .WithGender(GenderEnum.Male)
                     .WithForename(femaleName[r.Next(0, 4385)].InnerText)
                     .WithSurname(surName[r.Next(0, 9000)].InnerText)
                     .WithStreetInAddress(street[r.Next(0, 630)].InnerText)
