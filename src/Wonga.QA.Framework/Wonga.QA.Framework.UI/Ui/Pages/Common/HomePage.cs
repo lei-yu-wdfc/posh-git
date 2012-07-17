@@ -118,5 +118,17 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
             var seoLinks = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.SeoLinks));
             return seoLinks.ToString();
         }
+
+        public string GetWelcomeHeaderMessage()
+        {
+            var headerMessage = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.WelcomeHeaderMessage));
+            return headerMessage.ToString();
+        }
+
+        public string GetWelcomeSubMessage()
+        {
+            var subMessage = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.WelcomeSubMessage));
+            return subMessage.ToString();
+        }
     }
 }

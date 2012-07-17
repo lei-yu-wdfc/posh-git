@@ -14,5 +14,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Ui.Pages.Common
         public String PromoBoxes { get; set; }
         public String AwardsList { get; set; }
         public String SeoLinks { get; set; }
+        public String WelcomeHeaderMessage { get; set; }
+        public String WelcomeSubMessage { get; set; }
     }
 }
