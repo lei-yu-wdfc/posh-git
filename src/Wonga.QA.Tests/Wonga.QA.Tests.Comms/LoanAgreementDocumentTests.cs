@@ -56,7 +56,10 @@ namespace Wonga.QA.Tests.Comms
                 [Test]
                 public void ThenAPreAuthorisedDebitFormIsCreated()
                 {
-                    Do.Until(() => Drive.Api.Queries.Post(new GetPreApprovedDirectDebitFormCaQuery { ApplicationId = _application.Id }));
+                    ApiResponse response = null;
+                    Do.Until(() => response 
+                        = Drive.Api.Queries.Post(new GetPreApprovedDirectDebitFormCaQuery { ApplicationId = _application.Id }));
+                    Assert.IsTrue(response.GetErrors() == null || response.GetErrors().Length == 0);
                 }
             }
         }
