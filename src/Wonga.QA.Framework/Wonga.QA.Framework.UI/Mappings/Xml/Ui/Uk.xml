@@ -264,6 +264,8 @@
   </SecciToggleElement>
 
   <HomePage>
+    <WelcomeHeaderMessage>#block-wonga-1 .content h2</WelcomeHeaderMessage>
+    <WelcomeSubMessage>#block-wonga-1 .content p</WelcomeSubMessage>
     <BodyFramework>body.node-type-homepage</BodyFramework>
     <PromoBoxes>#bottom-promo-boxes</PromoBoxes>
     <AwardsList>#footer-front #awards-list</AwardsList>
