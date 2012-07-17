@@ -9,22 +9,22 @@ using Wonga.QA.Framework.Data;
 namespace Wonga.QA.DataTests.Hds.Payments
 {
     [TestFixture(Order = 2)]
-    public class PaymentSingleRowCrudTests
+
+    class RiskSingleRowCrudTests
     {
         private static DateTime _dthdsDefaultTo = Convert.ToDateTime("31/12/9999");
-        private static string _tablename = "CalendarDates";
-        private static string _columnname = "CalendarDateId";
+        private static string _tablename = "CheckpointDefinitions";
+        private static string _columnname = "CheckpointDefinitionId";
         //this part is required for insertupdatesameLSN test
-        private static string _schemaName = "payment";
-        dynamic _connection = Drive.Data.Payments.Db;
+        private static string _schemaName = "risk";
+        dynamic _connection = Drive.Data.Risk.Db;
 
         private static string CurrentViewName = "vw_" + _tablename + "_Current";
-        dynamic _serviceConnection = Drive.Data.Payments.Db.Payment[_tablename];
-        dynamic _cdcConnection = Drive.Data.Cdc.Db.Payment[_tablename];
-        dynamic _hdsConnection = Drive.Data.Hds.Db.Payment[_tablename];
-        dynamic _hdsCurrViewConnection = Drive.Data.Hds.Db.Payment[CurrentViewName];
+        dynamic _serviceConnection = Drive.Data.Risk.Db.risk[_tablename];
+        dynamic _cdcConnection = Drive.Data.Cdc.Db.risk[_tablename];
+        dynamic _hdsConnection = Drive.Data.Hds.Db.risk[_tablename];
+        dynamic _hdsCurrViewConnection = Drive.Data.Hds.Db.risk[CurrentViewName];
 
-        private bool _boolIsBankHoliday = false;
         private bool _cdcStagingAgentJobWasDisabled;
         private bool _hdsAgentJobWasDisabled;
 
@@ -63,11 +63,12 @@ namespace Wonga.QA.DataTests.Hds.Payments
         /// <returns></returns>
         private dynamic InsertNewRecord(dynamic connection)
         {
-            DateTime maxdate = connection.All().Select(connection.Date.Max()).ToScalarOrDefault<DateTime>();
-            DateTime newAvailabledate = maxdate.AddDays(1);
-            var sourceRecord = connection.Insert(Date: newAvailabledate,
-                                                 IsBankHoliday: 1,
-                                                 CreatedOn: DateTime.Now);
+            var sourceRecord = connection.Insert(TypeName: "HdsTest",
+                                                 Name: "HdsTest",
+                                                 FailedDescription: "HdsTest",
+                                                 ResolutionAdviceKey: "HdsTest",
+                                                 CheckpointId:Guid.NewGuid());
+
             return sourceRecord;
         }
 
@@ -75,18 +76,17 @@ namespace Wonga.QA.DataTests.Hds.Payments
         //Update record
         private void UpdateRecord(dynamic connection, int key)
         {
-            connection.UpdateByCalendarDateId(CalendarDateId: key,
-                                               IsBankHoliday: _boolIsBankHoliday);
+            connection.UpdateByCheckpointDefinitionId(CheckpointDefinitionId: key,
+                                                     Name: "ModifiedTest");
         }
 
         //Delete record
         private void DeleteRecord(dynamic connection, int key)
         {
-            connection.DeleteByCalendarDateId(CalendarDateId: key);
+            connection.DeleteByCheckpointDefinitionId(AccountId:key);
         }
 
-
-
+        
         [Test]
         [Category("Auto")]
         [Parallelizable]
@@ -110,19 +110,19 @@ namespace Wonga.QA.DataTests.Hds.Payments
             SQLServerAgentJobs.WaitUntilJobComplete(HdsUtilities.HdsLoadAgentJob);
 
             //Check total record count in Cdc 
-            HdsUtilities.RecordCount(key, 1, _cdcConnection, _columnname,"CDCStaging");
+            HdsUtilities.RecordCount(key, 1, _cdcConnection, _columnname, "CDCStaging");
 
             //Select the inserted record from cdcstaging and check it matches with source data
             DateTime cdcCommittime = HdsUtilities.CompareCdcRecord(sourceRecord, _cdcConnection, key, _columnname, 2);
 
             //Check the Total Record count in HDS
-            HdsUtilities.RecordCount(key, 1, _hdsConnection, _columnname,"Hds");
+            HdsUtilities.RecordCount(key, 1, _hdsConnection, _columnname, "Hds");
 
             // checking  record exist in hds with correct hdslsn,hdsfrm and hdsTo 
             HdsUtilities.CompareHdscRecord(sourceRecord, _hdsConnection, key, cdcCommittime, _dthdsDefaultTo, _columnname, 0);
 
             //Checking record count in payment.vw_CalendarDates_Current view
-            HdsUtilities.RecordCount(key, 1, _hdsCurrViewConnection, _columnname,"HdsCurrentView");
+            HdsUtilities.RecordCount(key, 1, _hdsCurrViewConnection, _columnname, "HdsCurrentView");
 
             //Checking data in payment.vw_CalendarDates_Current view
             HdsUtilities.CompareViewRecord(sourceRecord, _hdsCurrViewConnection, key, _columnname);
@@ -403,7 +403,7 @@ namespace Wonga.QA.DataTests.Hds.Payments
         }
     }
 
-}
+ }
 
 
 

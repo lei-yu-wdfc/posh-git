@@ -16,7 +16,7 @@ namespace Wonga.QA.DataTests.Hds.Payments
             bool hdsAgentJobWasEnabled = HdsUtilities.DisableJob(HdsUtilities.HdsLoadAgentJob);
 
             // clear down HDS
-            Drive.Data.Hds.Db.Payment.usp_ClearHdsTables();
+            Drive.Data.Hds.Db.hds.usp_ClearHdsTables("payment");
 
             // run initial load
             bool jobSuccess = SQLServerAgentJobs.Execute(HdsUtilities.HdsInitialLoadAgentJob);

@@ -37,10 +37,13 @@
   <ItemGroup>
     <Compile Include="HDSUtilities.cs" />
     <Compile Include="InitialLoadTests.cs" />
+    <Compile Include="OpsSingleRowCrudTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReconciliationTests.cs" />
+    <Compile Include="RiskSingleRowCrudTests.cs" />
     <Compile Include="ServiceDBChangesTest.cs" />
     <Compile Include="SingleRowCrudTests.cs" />
+    <Compile Include="CommsSingleRowCrudTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
