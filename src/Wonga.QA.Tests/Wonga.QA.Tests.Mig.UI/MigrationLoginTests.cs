@@ -14,6 +14,8 @@ using Wonga.QA.Framework.Data;
 
 namespace Wonga.QA.Tests.Migration
 {
+    [TestFixture]
+    [Parallelizable(TestScope.All)]
     public class MigrationLoginTests : UiTest
     {
         private string GetFunctionName()
@@ -25,35 +27,29 @@ namespace Wonga.QA.Tests.Migration
             return methodBase.Name;
         }
 
-        [Test, TimeoutAttribute(timeoutSeconds: 99999)]
-        // Migrated V2 customer tries to log in into V2 and is redirected to V3.
-        public void MigratedV2CustomerLogsInToV2RedirectedToV3Test()
-        {
-            // TBD: create a login to V2 environment QAF method
-            // 1. Log in into V2
-            // 2. Check that V3 My Summary page is open.
-
-        }
-
-        [Test, MultipleAsserts, JIRA("UKMIG-243"), TimeoutAttribute(timeoutSeconds: 99999)]
-        // Migrated V2 customer tries to log in into V3 successfully.
-        public void MigratedV2CustomerLogsInToV3Test()
+        [Test, MultipleAsserts, JIRA("UKMIG-243"), Parallelizable, Owner(Owner.MuhammadQureshi)]
+        [Row(10, "2012")]
+        [Row(10, "2011")]
+        [Row(10, "2010")]
+        public void TestMigratedUserCanLogin(int noOfTimesToRun, string userCreatedInYear)
         {
             var migHelper = new MigrationHelper();
             var loginStatus = string.Empty;
 
             Console.WriteLine("UKMIG-243, As an existing migrated customer, I want to login to the Wonga website so that I can manage my account or apply for a new loan, " + GetFunctionName());
 
-            for (int usersToCheck = 1; usersToCheck < 10000; usersToCheck++)
+            for (int usersToCheck = 1; usersToCheck < noOfTimesToRun; usersToCheck++)
             {
-                var migratedAccountLogin = migHelper.GetMigratedAccountLogin(0);
+                string migratedAccountLogin = migHelper.GetMigratedAccountLogin(0, userCreatedInYear);
+
                 var migratedAccountLoginPassword = migHelper.GetMigratedAccountLoginPassword(migratedAccountLogin);
 
-                var client1 = new UiClient();
+
+                var loginPage = new UiClient();
 
                 try
                 {
-                    client1.Login().LoginAs(migratedAccountLogin, migratedAccountLoginPassword);
+                    loginPage.Login().LoginAs(migratedAccountLogin, migratedAccountLoginPassword);
                     loginStatus = "Passed";
                 }
                 catch (Exception)
@@ -62,12 +58,9 @@ namespace Wonga.QA.Tests.Migration
                 }
                 finally
                 {
-                    Console.WriteLine("{0}: {1} Login = {2}", usersToCheck, loginStatus, migratedAccountLogin);
-                    client1.Dispose();
+                    Console.WriteLine("\n{0}: {1} Login = {2} \nUser Created in Year = {3}", usersToCheck, loginStatus, migratedAccountLogin, userCreatedInYear);
                 }
             }
-
-            // Likely we don't need to assert here because if mySummary object is not created successfully, an excption will be thrown
         }
 
 

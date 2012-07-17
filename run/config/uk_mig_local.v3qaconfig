@@ -1,0 +1,10 @@
+<Configuration>
+	<Include>base</Include>
+	<SUT>Dev</SUT>
+	<AUT>Uk</AUT>
+	<Region>Uk</Region>
+	
+	<Db>
+		<Host>mig-int-v2.test.wonga.com</Host>		
+	</Db>
+</Configuration>
