@@ -21,7 +21,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
     /// <summary>
     /// Check content of My Summary page against different scenarios
     /// </summary>
-    [Parallelizable(TestScope.All), JIRA("UK-785", "UK-788", "UK-795", "UKWEB-151", "UKWEB-985")]
+    [Parallelizable(TestScope.All), JIRA("UK-785", "UK-788", "UK-795", "UKWEB-151", "UKWEB-985"), Importance(Importance.Serious)]
     public class MySummaryScenariosTests : UiTest
     {
         #region Dictionaries

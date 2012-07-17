@@ -33,7 +33,7 @@ namespace Wonga.QA.Tests.Ui
         //private string _repaymentDate;
         //private DateTime _actualDate;
 
-        [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1627", "UK-1746", "UKWEB-911")]
+        [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1627", "UK-1746", "UKWEB-911"), Importance(Importance.Severe)]
         public void ExtensionJourneyPass()
         {
             string email = Get.RandomEmail();
@@ -64,7 +64,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsFalse(dealDonePage.IsDealDonePageDateTokenPresent());
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1321", "UK-1522", "UK-1746")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1321", "UK-1522", "UK-1746"), Importance(Importance.Serious)]
         public void ExtensionJourneyDecline()
         {
             string email = Get.RandomEmail();
@@ -94,7 +94,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1323", "UK-1523", "UK-1746")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1323", "UK-1523", "UK-1746"), Importance(Importance.Serious)]
         public void ExtensionJourneyError()
         {
             string email = Get.RandomEmail();
@@ -121,7 +121,7 @@ namespace Wonga.QA.Tests.Ui
 
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1739", "UK-2121")]
+        [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1739", "UK-2121"), Importance(Importance.Serious)]
         [Row(100, 5, 1)]
         [Row(400, 2, 1)]
         [Row(400, 7, 1)]
@@ -132,7 +132,7 @@ namespace Wonga.QA.Tests.Ui
             ExtensionRequestPage(loanAmount, loanTerm, extensionDays);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-427")]
+        [Test, AUT(AUT.Uk), JIRA("UK-427"), Importance(Importance.Serious)]
         public void ExtensionRequestPageChangeExtensionDaysFieldTest()
         {
             int loanAmount = 1;
@@ -283,7 +283,7 @@ namespace Wonga.QA.Tests.Ui
             }
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-427"), Pending("In development")]
+        [Test, AUT(AUT.Uk), JIRA("UK-427"), Pending("In development"), Importance(Importance.Default)]
         public void ExtensionRequestPage1TopupAnd1ExtendTest()
         {
             string email = Get.RandomEmail();
@@ -344,7 +344,7 @@ namespace Wonga.QA.Tests.Ui
             var dealDonePage = new ExtensionDealDonePage(this.Client);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1862", "UK-1859")]
+        [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1862", "UK-1859"), Importance(Importance.Serious)]
         public void TotalPayableFutureInterestAndFeesTest()
         {
             const int extensionDays = 1;

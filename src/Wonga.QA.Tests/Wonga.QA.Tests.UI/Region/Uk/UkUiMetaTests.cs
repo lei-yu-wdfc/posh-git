@@ -11,7 +11,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Ui.Region.Uk
 {
-    [TestFixture, Parallelizable(TestScope.Self), Description("Main UI tests for UK")]
+    [TestFixture, Parallelizable(TestScope.Self), Description("Main UI tests for UK"), Importance(Importance.Critical)]
     public class UkUiMetaTests:UiTest
     {
         private string _email;
