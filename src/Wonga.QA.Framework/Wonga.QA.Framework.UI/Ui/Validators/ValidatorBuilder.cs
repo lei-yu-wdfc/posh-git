@@ -30,6 +30,7 @@ namespace Wonga.QA.Framework.UI.Ui.Validators
         public ValidatorBuilder WithoutErrorsCheck()
         {
             Validator.Checks.Remove(Validator.ErrorsCheck);
+            Validator.Checks.Remove(Validator.InvalidFormErrorCheck);
             return this; 
         }
 

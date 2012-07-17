@@ -2,6 +2,7 @@
 using System.Threading;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.UI.Ui.Validators;
 using Wonga.QA.Framework.UI.UiElements.Pages.Interfaces;
 using Wonga.QA.Framework.UI.Mappings;
 using Wonga.QA.Framework.UI.UiElements.Sections;
@@ -64,8 +65,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         }
         public String PostOfficeBox { set { _postOfficeBox.SendValue(value); } }
 
-        public AddressDetailsPage(UiClient client)
-            : base(client)
+        public AddressDetailsPage(UiClient client, Validator validator = null)
+            : base(client, validator)
         {
 
             _form = Content.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.FormId));
@@ -178,7 +179,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _next.Click();
             try
             {
-                _houseNumberErrorForm = Client.Driver.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.HouseNumberErrorForm));
+                _houseNumberErrorForm = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.HouseNumberErrorForm)));
                 string houseNumberErrorFormClass = _houseNumberErrorForm.GetAttribute("class");
 
                 if (houseNumberErrorFormClass.Equals("invalid"))
@@ -199,7 +200,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             try
             {
                 _streetErrorForm =
-                           _form.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.StreetErrorForm));
+                            Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.StreetErrorForm)));
                 string streetErrorFormClass = _streetErrorForm.GetAttribute("class");
 
                 if (streetErrorFormClass.Contains("invalid"))
@@ -220,7 +221,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             try
             {
                 _townErrorForm =
-                           _form.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.TownErrorForm));
+                           Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.TownErrorForm)));
                 string townErrorFormClass = _townErrorForm.GetAttribute("class");
 
                 if (townErrorFormClass.Contains("invalid"))
@@ -240,7 +241,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             try
             {
                 _countyErrorForm =
-                           _form.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.CountyErrorForm));
+                           Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.CountyErrorForm)));
                 string countyErrorFormClass = _countyErrorForm.GetAttribute("class");
 
                 if (countyErrorFormClass.Contains("invalid"))
@@ -260,7 +261,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             try
             {
                 _addressPeriodErrorForm =
-                           _form.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.AddressPeriodErrorForm));
+                          Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.AddressPeriodErrorForm)));
                 string addressPeriodErrorFormClass = _addressPeriodErrorForm.GetAttribute("class");
 
                 if (addressPeriodErrorFormClass.Contains("invalid"))

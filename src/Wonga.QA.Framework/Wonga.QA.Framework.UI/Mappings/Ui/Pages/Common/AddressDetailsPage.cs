@@ -22,6 +22,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String AddressPeriodErrorForm { get; set; }
         public String AddressOptions { get; set; }
         public String PostOfficeBox { get; set; }
+        public String FlatErrorForm { get; set; }
 
         public String LookupButton { get; set; }
         public String NextButton { get; set; }

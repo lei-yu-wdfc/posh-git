@@ -65,7 +65,7 @@ namespace Wonga.QA.Framework.UI
         {
             var personalDetailsPage = CurrentPage as PersonalDetailsPage;
             personalDetailsPage.ProvinceSection.Province = "British Columbia";
-            Do.Until(() => personalDetailsPage.ProvinceSection.ClosePopup());
+            //Do.Until(() => personalDetailsPage.ProvinceSection.ClosePopup());
 
             personalDetailsPage.YourName.FirstName = _firstName;
             personalDetailsPage.YourName.MiddleName = _middleName;

@@ -76,11 +76,12 @@
     <PostcodeErrorForm>#edit-postcode-za-wrapper div.form-error div.invalid</PostcodeErrorForm>
     <CountyErrorForm>#edit-county-za-wrapper div.invalid</CountyErrorForm>
     <TownErrorForm>#edit-town-za-wrapper div.invalid</TownErrorForm>
+    <HouseNumberErrorForm>#edit-flat-za-wrapper div.invalid</HouseNumberErrorForm>
     <StreetErrorForm>#edit-street-za-wrapper div.invalid</StreetErrorForm>
-    <HouseNumberErrorForm>#edit-house-number-za-wrapper div.invalid</HouseNumberErrorForm>
+    <!--<HouseNumberErrorForm>#edit-house-number-za-wrapper div.invalid</HouseNumberErrorForm>-->
     <AddressPeriodErrorForm>#edit-address-period-za-wrapper div.invalid</AddressPeriodErrorForm>
   </AddressDetailsPage>
-
+  
   <AcceptedPage>
     <TotalToRepay>span.blue-text</TotalToRepay>
     <RepaymentDate>em</RepaymentDate>
