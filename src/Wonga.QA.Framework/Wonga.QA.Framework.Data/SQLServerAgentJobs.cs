@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Data;
+using System.Diagnostics;
+using System.Linq;
 using Microsoft.SqlServer.Management.Smo;
 using Microsoft.SqlServer.Management.Smo.Agent;
 using System.Threading;
@@ -8,7 +11,7 @@ namespace Wonga.QA.Framework.Data
     /// <summary>
     /// This class will be used for working with SQL Server Agent jobs
     /// </summary>
-    public class SQLServerAgentJobs
+    public static class SQLServerAgentJobs
     {
 
         /// <summary>
@@ -20,8 +23,9 @@ namespace Wonga.QA.Framework.Data
         {
             // This DataDriver().NameOfHDSServer really needs to come in as a param
             Server srv = new Server(new DataDriver().Hds.Server);
-            JobServer sqlServerAgent = srv.JobServer;
-            Job specificJob = sqlServerAgent.Jobs[jobName];
+
+            Job specificJob = new Job(srv.JobServer, jobName);
+            specificJob.Refresh();
 
             DateTime lastRunDate = specificJob.LastRunDate;
             specificJob.Start();
@@ -47,8 +51,8 @@ namespace Wonga.QA.Framework.Data
             {
                 Server srv = new Server(new DataDriver().Hds.Server);
 
-                JobServer sqlServerAgent = srv.JobServer;
-                Job specificJob = sqlServerAgent.Jobs[jobName];
+                Job specificJob = new Job(srv.JobServer, jobName);
+                specificJob.Refresh();
 
                 // Returns 0001/01/01 00:00:00 if never run
                 return specificJob.LastRunDate;
@@ -65,13 +69,13 @@ namespace Wonga.QA.Framework.Data
         /// </summary>
         /// <param name="jobName">Name of the job to check the status of</param>
         /// <returns>The SMO/Agent Job Execution status</returns>
-        public static Microsoft.SqlServer.Management.Smo.Agent.JobExecutionStatus CheckJobStatus(string jobName)
+        public static JobExecutionStatus CheckJobStatus(string jobName)
         {
 
             Server srv = new Server(new DataDriver().Hds.Server);
 
-            JobServer sqlServerAgent = srv.JobServer;
-            Job specificJob = sqlServerAgent.Jobs[jobName];
+            Job specificJob = new Job(srv.JobServer, jobName);
+            specificJob.Refresh();
 
             return specificJob.CurrentRunStatus;
 
@@ -82,13 +86,13 @@ namespace Wonga.QA.Framework.Data
         /// </summary>
         /// <param name="jobName">Name of the job to check the status of</param>
         /// <returns>The SMO/Agent Job Execution status</returns>
-        public static Microsoft.SqlServer.Management.Smo.Agent.CompletionResult LastRunOutcome(string jobName)
+        public static CompletionResult LastRunOutcome(string jobName)
         {
 
             Server srv = new Server(new DataDriver().Hds.Server);
 
-            JobServer sqlServerAgent = srv.JobServer;
-            Job specificJob = sqlServerAgent.Jobs[jobName];
+            Job specificJob = new Job(srv.JobServer, jobName);
+            specificJob.Refresh();
 
             return specificJob.LastRunOutcome;
 
@@ -103,8 +107,8 @@ namespace Wonga.QA.Framework.Data
 
             Server srv = new Server(new DataDriver().Hds.Server);
 
-            JobServer sqlServerAgent = srv.JobServer;
-            Job specificJob = sqlServerAgent.Jobs[jobName];
+            Job specificJob = new Job(srv.JobServer, jobName);
+            specificJob.Refresh();
 
             specificJob.IsEnabled = false;
 
@@ -119,11 +123,10 @@ namespace Wonga.QA.Framework.Data
         /// <param name="jobName">Name of job to enable</param>
         public static void EnableJob(string jobName)
         {
-
             Server srv = new Server(new DataDriver().Hds.Server);
 
-            JobServer sqlServerAgent = srv.JobServer;
-            Job specificJob = sqlServerAgent.Jobs[jobName];
+            Job specificJob = new Job(srv.JobServer, jobName);
+            specificJob.Refresh();
 
             specificJob.IsEnabled = true;
 
@@ -139,14 +142,12 @@ namespace Wonga.QA.Framework.Data
         /// <returns>The IsEnabled setting</returns>
         public static bool CheckIsJobEnabled(string jobName)
         {
-
             Server srv = new Server(new DataDriver().Hds.Server);
 
-            JobServer sqlServerAgent = srv.JobServer;
-            Job specificJob = sqlServerAgent.Jobs[jobName];
+            Job specificJob = new Job(srv.JobServer, jobName);
+            specificJob.Refresh();
 
             return specificJob.IsEnabled;
-
         }
 
         /// <summary>
@@ -164,10 +165,10 @@ namespace Wonga.QA.Framework.Data
                 Int32 waitTimeSeconds = waitTimeSecondsOverride == 0 ? 60 * 6 * 1000 : waitTimeSecondsOverride; // Convert to 6 mins
 
                 Server srv = new Server(new DataDriver().Hds.Server);
-
-                JobServer sqlServerAgent = srv.JobServer;
-                Job specificJob = sqlServerAgent.Jobs[jobName];
-
+                
+                Job specificJob = new Job(srv.JobServer, jobName);
+                specificJob.Refresh();
+                
                 // wait for an existing job run to complete
                 Int32 waitTimeSeconds2 = waitTimeSeconds;
 
@@ -221,5 +222,4 @@ namespace Wonga.QA.Framework.Data
             return loopUntilTrue;
         }
     }
-
 }
