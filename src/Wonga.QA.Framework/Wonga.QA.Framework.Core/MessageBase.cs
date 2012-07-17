@@ -3,7 +3,7 @@ using Wonga.QA.Framework.Core.Exceptions;
 
 namespace Wonga.QA.Framework.Core
 {
-	public class MessageBase:IMessage
+	public class MessageBase
 	{
 		public virtual void Default()
 		{

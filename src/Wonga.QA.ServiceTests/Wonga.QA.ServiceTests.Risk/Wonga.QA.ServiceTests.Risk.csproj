@@ -35,12 +35,30 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\..\..\lib\nuget\packages\Autofac.2.3.2.632\lib\NET40\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
+    <Reference Include="log4net">
+      <HintPath>..\..\..\lib\nuget\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="MbUnit, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NServiceBus">
+      <HintPath>..\..\..\lib\nuget\packages\NServiceBus.2.6.0.1511\lib\net40\NServiceBus.dll</HintPath>
+    </Reference>
+    <Reference Include="NServiceBus.Core">
+      <HintPath>..\..\..\lib\nuget\packages\NServiceBus.2.6.0.1511\lib\net40\NServiceBus.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="NServiceBus.ObjectBuilder.Autofac2">
+      <HintPath>..\..\..\lib\nuget\packages\NServiceBus.Autofac2.2.6.0.1511\lib\net40\NServiceBus.ObjectBuilder.Autofac2.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml" />
     <Reference Include="Wonga.QA.Framework">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.dll</HintPath>
@@ -79,6 +97,25 @@
     <Compile Include="Messages\IMessageFactory.cs" />
     <Compile Include="Messages\MessageFactory.cs" />
     <Compile Include="Messages\MessageFactoryCollection.cs" />
+    <Compile Include="MocksSelfTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mocks\BusConfiguration.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mocks\EndpointConfigurator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mocks\EndpointMock.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mocks\GenericHandler.cs" />
+    <Compile Include="Mocks\OnTheFlyHandlers.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mocks\QafMessageMapper.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Preparation\ApplicationReadinessUkTests.cs" />
     <Compile Include="Preparation\ApplicationReadinessWbTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
