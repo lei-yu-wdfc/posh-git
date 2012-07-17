@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using Microsoft.Win32;
@@ -297,8 +298,9 @@ namespace Wonga.QA.Framework.Core
                     var parentNode =
                         parentDoc.Descendants().FirstOrDefault(
                             x => x.GetAbsoluteXPath() == nodeToAddOrReplace.GetAbsoluteXPath());
-                    if(parentNode != null)
+                    if (parentNode != null)
                         parentNode.ReplaceWith(nodeToAddOrReplace);
+                    else XmlProcessor.CreateNode(parentDoc, nodeToAddOrReplace.GetAbsoluteXPath()).ReplaceWith(nodeToAddOrReplace);
                 }
 
                 doc = parentDoc;

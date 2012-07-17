@@ -103,6 +103,35 @@ namespace Wonga.QA.Framework.Core
                 }
             }
         }
+
+
+        public static XElement CreateNode(XDocument doc, string xpath)
+        {
+            return CreateNode(doc, null, xpath);
+        }
+
+        public static XElement CreateNode(XDocument doc, XElement parent, string xpath)
+        {
+            string[] partsOfXPath = xpath.Trim('/').Split('/');
+            var regex = new Regex(@"([a-zA-Z0-9]+)");
+            var nodeName = partsOfXPath.First();
+            var matches = regex.Match(nodeName);
+            if (string.IsNullOrEmpty(xpath))
+                return parent;
+            string nextNodeInXPath = matches.Groups[0].Captures[0].Value;
+
+            // get or create the node from the name
+            XElement node = parent != null ? parent.XPathSelectElement(nextNodeInXPath) : doc.XPathSelectElement(nextNodeInXPath);
+            if (node == null)
+            {
+                node = new XElement(nextNodeInXPath);
+                parent.Add(node);
+            }
+
+            // rejoin the remainder of the array as an xpath expression and recurse
+            string rest = String.Join("/", partsOfXPath.Skip(1).ToArray());
+            return CreateNode(doc, node, rest);
+        }
     }
 
     public static class XExtensions

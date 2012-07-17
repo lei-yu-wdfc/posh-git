@@ -1,0 +1,19 @@
+<Configuration>
+	<Include>base</Include>
+	
+	<Ui>
+		<HomePage>http://%%//SUT%%.%%//AUT%%.wonga.com</HomePage>
+	</Ui>
+
+	<Api>
+		<Url>%%//SUT%%.api.%%//AUT%%.wonga.com</Url>
+	</Api>
+	
+	<CommonApi>
+		<Url>%%//SUT%%.IVRWebApi.%%//AUT%%.wonga.com</Url>
+	</CommonApi>
+	
+	<CSApi>
+		<Url>%%//SUT%%.csapi.%%//AUT%%.wonga.com</Url>
+	</CSApi>
+</Configuration>
