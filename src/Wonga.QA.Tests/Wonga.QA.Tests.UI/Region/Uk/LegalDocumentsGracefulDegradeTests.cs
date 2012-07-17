@@ -15,7 +15,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
     /* Check L0 account setup link toggle is clicked and SECCI, T&C or explanation links are broken 
      * and a prescribed error message is displayed and that progression in the application is stopped
      * Returning to the start of a journey will clear errors and allow progression*/
-    [JIRA("UKWEB-365"), Parallelizable(TestScope.All), Importance(Importance.Default)]
+    [JIRA("UKWEB-365"), Parallelizable(TestScope.All)]
     public class LegalDocumentsGracefulDegradeTests : UiTest
     {
         #region L0 Account Details page
