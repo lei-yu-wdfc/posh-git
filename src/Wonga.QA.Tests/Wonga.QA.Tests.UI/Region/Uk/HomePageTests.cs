@@ -9,7 +9,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Ui.Region.Uk
 {
-    [Parallelizable(TestScope.Descendants), Importance(Importance.Serious)]
+    [Parallelizable(TestScope.Descendants)]
     public class HomePageTests: UiTest
     {
         private string _email;
