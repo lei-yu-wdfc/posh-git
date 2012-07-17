@@ -49,9 +49,8 @@
     <Compile Include="XmlProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="NServiceBus, Version=2.5.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\lib\nuget\packages\NServiceBus.3.2.6\lib\net40\NServiceBus.dll</HintPath>
+    <Reference Include="NServiceBus">
+      <HintPath>..\..\..\lib\nuget\packages\NServiceBus.2.6.0.1511\lib\net40\NServiceBus.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
