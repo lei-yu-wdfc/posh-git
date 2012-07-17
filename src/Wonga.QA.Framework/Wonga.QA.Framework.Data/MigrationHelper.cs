@@ -11,50 +11,53 @@ namespace Wonga.QA.Framework.Data
     public class MigrationHelper
     {
         private readonly DataDriver _drive = new DataDriver();
+        //private static List<dynamic> checkedUsers = new List<dynamic>();
 
-        public string GetMigratedAccountLogin(dynamic callUser = null)
+        private int GetTotalUserInOpsAccounts(string forYear = null)
         {
             var opsAccounts = _drive.Ops.Db.Accounts;
+            var totalUsers = 0;
+            var year = Convert.ToDateTime("01/01/" + forYear);
 
-            var totalUsers = opsAccounts.All().Count();
+            totalUsers = string.IsNullOrEmpty(forYear) ? opsAccounts.All().Count() : opsAccounts.All().Where(opsAccounts.CreatedOn >= year).Count();
+
+            return totalUsers;
+        }
+
+
+        public string GetMigratedAccountLogin(dynamic callUser = null, string forYear = null)
+        {
+            var opsAccounts = _drive.Ops.Db.Accounts;
+            var totalUsers = GetTotalUserInOpsAccounts(forYear);
+
 
             if (callUser == null || Convert.ToInt64(callUser) > Convert.ToInt64(totalUsers) || Convert.ToInt64(callUser) == 0)
             {
                 var user = new Random();
-
                 callUser = user.Next(1, totalUsers);
+
+          /*      if (checkedUsers.Count > 0)
+                {
+                    while (checkedUsers.Contains(callUser))
+                    {
+                        callUser = user.Next(1, totalUsers);
+                    }
+                }
+                checkedUsers.Add(callUser);*/
             }
 
             var userName = opsAccounts.FindByAccountId(callUser);
 
-            return userName.Login;
+             return userName.Login;
         }
 
-        public List<int> GetListOfMigratedAccounts(string year = null, string range =null)
+        public List<int> GetListOfMigratedAccounts(string year = null)
         {
-
-            return null;
-        }
-
-        public List<dynamic> GetMigratedUserWithPasswords()
-        {
-            List<dynamic> returnThis = new List<dynamic>();
-            var opsAccounts = _drive.Ops.Db.Accounts;
-
-            var totalUsers = opsAccounts.All().Count();
-
-            for (int user = 1; user <= totalUsers; user++)
+            if (!string.IsNullOrEmpty(year))
             {
-                var userName = GetMigratedAccountLogin(user);
-                var password = GetMigratedAccountLoginPassword(userName);
 
-                if (password.Length <= 6)
-                {
-                    returnThis.Add(userName + " " + password);    
-                }
             }
-
-            return returnThis;
+            return null;
         }
 
         public string GetMigratedAccountLoginPassword(string login)
