@@ -25,7 +25,7 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
             switch (Config.AUT)
             {
               case AUT.Za:
-              //case AUT.Ca:
+              case AUT.Uk:
                   Assert.That(Headers, Has.Item(ContentMapMobile.Get.DeclinedPageMobile.HeaderText));
                   break;
               default:

@@ -24,5 +24,18 @@ namespace Wonga.QA.Tests.Ui.Mobile
             var journey = JourneyFactory.GetLnJourney(Client.MobileHome());
             var page = journey.Teleport<ProcessingPageMobile>() as ProcessingPageMobile;
         }
+
+        [Test, AUT(AUT.Uk), Pending("Test not yet complete")]
+        public void FullLnMobileUK()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder.New()
+                .WithEmailAddress(email)
+                .Build();
+            Application application = ApplicationBuilder.New(customer).Build();
+            application.RepayOnDueDate();
+            loginPage.LoginAs(email, "Passw0rd");
+        }
     }
 }

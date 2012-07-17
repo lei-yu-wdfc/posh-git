@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using OpenQA.Selenium;
+using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Mobile.Mappings.Ui;
 using Wonga.QA.Framework.Mobile.Ui.Elements;
 
@@ -13,6 +14,8 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
         private readonly IWebElement _myPaymentDetailsButton;
         private readonly IWebElement _mySummaryButton;
         private readonly IWebElement _myPersonalDetailsButton;
+
+        public IWebElement ViewLoanDetails;
 
         public SlidersElement SlidersElement { get; set; }
 
@@ -38,6 +41,16 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
         {
             _myPersonalDetailsButton.Click();
             return new MyPersonalDetailsPageMobile(Client);
+        }
+
+        public MySummaryPageMobile ViewMyLoanDetails()
+        {
+            ViewLoanDetails = Client.Driver.FindElement(By.CssSelector(".ViewLoanDetails"));
+            ViewLoanDetails.Click();
+            var myLoanDetailsPopUp = Do.Until(() => new MyLoanDetailsPopUpElement(this));
+            myLoanDetailsPopUp.Close();
+            return new MySummaryPageMobile(Client);
+            
         }
     }
 }
