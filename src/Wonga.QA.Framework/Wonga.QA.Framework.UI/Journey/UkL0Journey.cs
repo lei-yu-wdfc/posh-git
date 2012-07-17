@@ -111,7 +111,7 @@ namespace Wonga.QA.Framework.UI
             addressPage.PostCodeLookup = _postCode;
             addressPage.LookupByPostCode();
             addressPage.GetAddressesDropDown();
-            Do.Until(() => addressPage.SelectedAddress = "93 Harbord Street, LONDON SW6 6PN");
+            Do.With.Timeout(new TimeSpan(0,0,5)).Until(() => addressPage.SelectedAddress = "93 Harbord Street, LONDON SW6 6PN");
             Do.Until(() => addressPage.HouseNumber = "666");
             addressPage.AddressPeriod = _addressPeriod;
             if (submit)
