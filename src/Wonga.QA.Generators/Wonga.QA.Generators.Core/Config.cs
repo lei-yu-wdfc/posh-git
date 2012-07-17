@@ -12,7 +12,7 @@ namespace Wonga.QA.Generators.Core
 		public static String RepoName
 		{
 			get { return _repoName; }
-			set { _repoName = Char.ToUpper(value[0]) + value.Substring(1); }
+            set { _repoName = value;/*Char.ToUpper(value[0]) + value.Substring(1);*/ }
 		}
 
 		public static FileInfo SqlMetal { get; set; }
