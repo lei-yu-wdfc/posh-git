@@ -7,6 +7,6 @@ namespace Wonga.QA.Framework.Api.Requests.PpsProvider.Queries
     [XmlRoot("GetCustomerHasActivePrePaidCard")]
     public partial class GetCustomerHasActivePrePaidCardQuery : ApiRequest<GetCustomerHasActivePrePaidCardQuery>
     {
-        public Object CustomerExternalId { get; set; }
+        public Object AccountId { get; set; }
     }
 }

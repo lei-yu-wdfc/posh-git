@@ -16,7 +16,7 @@ namespace Wonga.QA.Generators.Core
 {
 	public class XmlSchemaClassGenerator
 	{
-        private string[] ignoreTheseXsdsForNow = { "Wonga.PpsProvider.Queries.xsd" };
+        private string[] ignoreTheseXsdsForNow = {  };
 		private bool _errorsOccurred;
 		
 		public bool ContinueOnError { get; private set; }

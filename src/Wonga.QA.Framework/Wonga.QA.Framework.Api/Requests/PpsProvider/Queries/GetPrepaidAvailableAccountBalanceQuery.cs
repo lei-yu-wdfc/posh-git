@@ -7,6 +7,6 @@ namespace Wonga.QA.Framework.Api.Requests.PpsProvider.Queries
     [XmlRoot("GetPrepaidAvailableAccountBalance")]
     public partial class GetPrepaidAvailableAccountBalanceQuery : ApiRequest<GetPrepaidAvailableAccountBalanceQuery>
     {
-        public Object CustomerExternalId { get; set; }
+        public Object AccountId { get; set; }
     }
 }

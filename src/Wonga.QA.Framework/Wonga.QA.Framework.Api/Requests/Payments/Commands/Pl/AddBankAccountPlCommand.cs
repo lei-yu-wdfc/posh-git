@@ -16,5 +16,6 @@ namespace Wonga.QA.Framework.Api.Requests.Payments.Commands.Pl
         public Object AccountOpenDate { get; set; }
         public Object CountryCode { get; set; }
         public Object IsPrimary { get; set; }
+        public Object IBAN { get; set; }
     }
 }

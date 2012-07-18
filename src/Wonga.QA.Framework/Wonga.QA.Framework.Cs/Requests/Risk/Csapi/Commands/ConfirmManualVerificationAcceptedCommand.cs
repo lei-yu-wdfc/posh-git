@@ -8,5 +8,6 @@ namespace Wonga.QA.Framework.Cs.Requests.Risk.Csapi.Commands
     public partial class ConfirmManualVerificationAcceptedCommand : CsRequest<ConfirmManualVerificationAcceptedCommand>
     {
         public Object ApplicationId { get; set; }
+        public Object ProbabilityGood { get; set; }
     }
 }

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
-using Wonga.QA.Framework.Api.Requests.FileStorage.Queries.Wb.Uk;
+//using Wonga.QA.Framework.Api.Requests.FileStorage.Queries.Wb.Uk;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
 
@@ -27,13 +27,13 @@ namespace Wonga.QA.Tests.Comms
                 .New(customer, organisation))
                 .WithGuarantors(guarantorList).Build() as BusinessApplication;
 
-            var query = new GetGuarantorAgreementWbUkQuery() 
-            {
-                ApplicationId = applicationInfo.Id,
-                GuarantorAccountId = guarantorBuilder.Id
-            };
+            //var query = new GetGuarantorAgreement() 
+            //{
+            //    ApplicationId = applicationInfo.Id,
+            //    GuarantorAccountId = guarantorBuilder.Id
+            //};
 
-            var response = Drive.Api.Queries.Post(query);
+            //var response = Drive.Api.Queries.Post(query);
         }
     }
 }

@@ -5,7 +5,7 @@ namespace Wonga.QA.Framework.Api.Requests.Payments.Queries.PLater.Uk
 {
     /// <summary> Wonga.Payments.Queries.PLater.Uk.GetTransactionFeePaymentStatus </summary>
     [XmlRoot("GetTransactionFeePaymentStatus")]
-    public partial class GetTransactionFeePaymentStatusPLaterUkQuery : ApiRequest<GetTransactionFeePaymentStatusPLaterUkQuery>
+    public partial class GetTransactionFeePaymentStatusUkQuery : ApiRequest<GetTransactionFeePaymentStatusUkQuery>
     {
         public Object ApplicationId { get; set; }
     }

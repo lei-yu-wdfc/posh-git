@@ -48,9 +48,9 @@
     <Compile Include="Requests\Comms\Csapi\Commands\CsSaveCustomerDetailsCommand.cs" />
     <Compile Include="Requests\Comms\Csapi\Queries\CsGetCurrentAddressQuery.cs" />
     <Compile Include="Requests\Comms\Csapi\Queries\CsGetCustomerDetailsQuery.cs" />
-    <Compile Include="Requests\Comms\Csapi\Queries\Za\GetDirectDebitFormZaQuery.cs" />
     <Compile Include="Requests\Payments\Csapi\Commands\AddPersonalPaymentCardCommand.cs" />
     <Compile Include="Requests\Payments\Csapi\Commands\CancelApplicationCommand.cs" />
+    <Compile Include="Requests\Payments\Csapi\Commands\CancelArrearsRepresentmentsCommand.cs" />
     <Compile Include="Requests\Payments\Csapi\Commands\CancelRepaymentArrangementCommand.cs" />
     <Compile Include="Requests\Payments\Csapi\Commands\CreateRepaymentArrangementCommand.cs" />
     <Compile Include="Requests\Payments\Csapi\Commands\CreateTransactionCommand.cs" />
@@ -64,8 +64,10 @@
     <Compile Include="Requests\Payments\Csapi\Commands\FlagApplicationToDcaCommand.cs" />
     <Compile Include="Requests\Payments\Csapi\Commands\GenerateRepaymentNumberCommand.cs" />
     <Compile Include="Requests\Payments\Csapi\Commands\RevokeApplicationFromDcaCommand.cs" />
+    <Compile Include="Requests\Payments\Csapi\Commands\TakePaymentByHierarchyCommand.cs" />
     <Compile Include="Requests\Payments\Csapi\Commands\TakePaymentManualCommand.cs" />
     <Compile Include="Requests\Payments\Csapi\Commands\WriteOffApplicationCommand.cs" />
+    <Compile Include="Requests\Payments\Csapi\Commands\PLater\Uk\ExecuteMerchantRefundUkCommand.cs" />
     <Compile Include="Requests\Payments\Csapi\Queries\CsGetAccountSummaryQuery.cs" />
     <Compile Include="Requests\Payments\Csapi\Queries\CsGetBankAccountsQuery.cs" />
     <Compile Include="Requests\Payments\Csapi\Queries\CsGetCardPaymentStatusQuery.cs" />
@@ -80,11 +82,11 @@
     <Compile Include="Requests\Payments\Csapi\Queries\GetScheduledPaymentsQuery.cs" />
     <Compile Include="Requests\Payments\Csapi\Queries\GetTransactionsQuery.cs" />
     <Compile Include="Requests\Payments\Csapi\Queries\GetValidTransactionTypesQuery.cs" />
-    <Compile Include="Requests\Payments\Csapi\Queries\Wb\Uk\GetBusinessApplicationSummaryWbUkQuery.cs" />
     <Compile Include="Requests\Payments\PrepaidCard\Csapi\Commands\CsAdjustPrepaidCardAccountBalanceCommand.cs" />
     <Compile Include="Requests\Risk\Csapi\Commands\ConfirmFraudCommand.cs" />
     <Compile Include="Requests\Risk\Csapi\Commands\ConfirmManualVerificationAcceptedCommand.cs" />
     <Compile Include="Requests\Risk\Csapi\Commands\ConfirmManualVerificationDeclinedCommand.cs" />
+    <Compile Include="Requests\Risk\Csapi\Commands\ConfirmManualVerificationResultCommand.cs" />
     <Compile Include="Requests\Risk\Csapi\Commands\ConfirmNotFraudCommand.cs" />
     <Compile Include="Requests\Risk\Csapi\Commands\CsSaveEmploymentDetailsCommand.cs" />
     <Compile Include="Requests\Risk\Csapi\Commands\CsSaveSocialDetailsCommand.cs" />

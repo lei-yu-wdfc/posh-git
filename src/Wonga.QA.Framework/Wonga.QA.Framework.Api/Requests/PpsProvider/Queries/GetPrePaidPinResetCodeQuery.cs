@@ -7,6 +7,6 @@ namespace Wonga.QA.Framework.Api.Requests.PpsProvider.Queries
     [XmlRoot("GetPrePaidPinResetCode")]
     public partial class GetPrePaidPinResetCodeQuery : ApiRequest<GetPrePaidPinResetCodeQuery>
     {
-        public Object CustomerExternalId { get; set; }
+        public Object AccountId { get; set; }
     }
 }

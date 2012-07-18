@@ -177,8 +177,6 @@ namespace Wonga.QA.Framework.Api.Enums
         Mysłowice,
         [Description("Nadarzyn")]
         Nadarzyn,
-        [Description("NowySącz1")]
-        NowySącz1,
         [Description("Sochaczew")]
         Sochaczew,
         [Description("Sopot")]
@@ -187,6 +185,68 @@ namespace Wonga.QA.Framework.Api.Enums
         Sosnowiec,
         [Description("StalowaWola")]
         StalowaWola,
+        [Description("Mińskmazowiecki")]
+        Mińskmazowiecki,
+        [Description("Otwock")]
+        Otwock,
+        [Description("Pabianice")]
+        Pabianice,
+        [Description("Ostrówwielkopolski")]
+        Ostrówwielkopolski,
+        [Description("Pińczów")]
+        Pińczów,
+        [Description("Piotrkówtrybunalski")]
+        Piotrkówtrybunalski,
+        [Description("Płock")]
+        Płock,
+        [Description("Polkowice")]
+        Polkowice,
+        [Description("Pruszków")]
+        Pruszków,
+        [Description("Przeworsk")]
+        Przeworsk,
+        [Description("Puławy")]
+        Puławy,
+        [Description("Pułtusk")]
+        Pułtusk,
+        [Description("Siemiatycze")]
+        Siemiatycze,
+        [Description("Sieradz")]
+        Sieradz,
+        [Description("StargardSzczeciński")]
+        StargardSzczeciński,
+        [Description("Starogardgdański")]
+        Starogardgdański,
+        [Description("Suchabeskidzka")]
+        Suchabeskidzka,
+        [Description("Środawielkopolska")]
+        Środawielkopolska,
+        [Description("Świdnica")]
+        Świdnica,
+        [Description("Świecie")]
+        Świecie,
+        [Description("Tarnów")]
+        Tarnów,
+        [Description("Tuchola")]
+        Tuchola,
+        [Description("Tychy")]
+        Tychy,
+        [Description("Ustroń")]
+        Ustroń,
+        [Description("Wałbrzych")]
+        Wałbrzych,
+        [Description("Wejherowo")]
+        Wejherowo,
+        [Description("Wołomin")]
+        Wołomin,
+        [Description("Zawiercie")]
+        Zawiercie,
+        [Description("Żary")]
+        Żary,
+        [Description("Żyrardów")]
+        Żyrardów,
+        [Description("Żywiec")]
+        Żywiec,
         [Description("Inne")]
         Inne,
     }

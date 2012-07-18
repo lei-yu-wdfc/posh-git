@@ -14,15 +14,15 @@ namespace Wonga.QA.Framework.Api.Requests.Risk.Commands.Pl
 			AccountId = Get.GetId();
 			Forename = Get.GetName();
 			Surname = Get.GetName();
-			Email = Get.RandomEmail();
-			DateOfBirth = Get.GetDoB();
-			Gender = Get.RandomEnum<GenderEnum>();
-			HomePhone = "0210000000";
+            //Email = Get.RandomEmail();
+            //DateOfBirth = Get.GetDoB();
+            //Gender = Get.RandomEnum<GenderEnum>();
+            //HomePhone = "0210000000";
 			WorkPhone = "0210000000";
 			MobilePhone = "0210000000";
 
-			if ((GenderEnum)Gender != GenderEnum.Female)
-				MaidenName = null;
+            //if ((GenderEnum)Gender != GenderEnum.Female)
+            //    MaidenName = null;
 		}
 	}
 }

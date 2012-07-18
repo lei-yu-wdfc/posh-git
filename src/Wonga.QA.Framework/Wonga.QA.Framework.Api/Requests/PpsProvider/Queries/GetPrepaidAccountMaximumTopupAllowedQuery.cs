@@ -7,6 +7,6 @@ namespace Wonga.QA.Framework.Api.Requests.PpsProvider.Queries
     [XmlRoot("GetPrepaidAccountMaximumTopupAllowed")]
     public partial class GetPrepaidAccountMaximumTopupAllowedQuery : ApiRequest<GetPrepaidAccountMaximumTopupAllowedQuery>
     {
-        public Object CustomerExternalId { get; set; }
+        public Object AccountId { get; set; }
     }
 }
