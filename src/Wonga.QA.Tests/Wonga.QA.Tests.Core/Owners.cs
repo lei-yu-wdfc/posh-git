@@ -39,6 +39,8 @@ namespace Wonga.QA.Tests.Core
         [Description("alex.sloat@wonga.com")]
         AlexSloat,
         [Description("lisa.lambert@wonga.com")]
-        LisaLambert
+        LisaLambert,
+        [Description("roman.tertychnyi@wonga.com")]
+        RomanTertychnyi
     }
 }
