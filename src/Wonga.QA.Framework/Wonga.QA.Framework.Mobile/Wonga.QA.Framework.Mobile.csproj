@@ -64,6 +64,7 @@
     <Compile Include="Journey\ILnConsumerJourney.cs" />
     <Compile Include="Journey\JourneyFactory.cs" />
     <Compile Include="Journey\UkMobileL0Journey.cs" />
+    <Compile Include="Journey\UkMobileLnJourney.cs" />
     <Compile Include="Journey\ZaMobileLnJourney.cs" />
     <Compile Include="Journey\ZaMobileL0Journey.cs" />
     <Compile Include="Mappings\Content\ContentMapMobile.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Mappings\Ui\Pages\MyPersonalDetailsPageMobile.cs" />
     <Compile Include="Mappings\Ui\Pages\PersonalDebitCardPageMobile.cs" />
     <Compile Include="Mappings\Ui\Sections\AccountDetailsSection.cs" />
+    <Compile Include="Mappings\Ui\Sections\ApplicationSection.cs" />
     <Compile Include="Mappings\Ui\Sections\DebitCardSection.cs" />
     <Compile Include="Ui\Elements\BasePopUpElement.cs" />
     <Compile Include="Ui\Elements\FAQElement.cs" />
@@ -137,6 +139,7 @@
     <Compile Include="Ui\Pages\PersonalBankAccountPageMobile.cs" />
     <Compile Include="Ui\Pages\PersonalDetailsPageMobile.cs" />
     <Compile Include="Ui\Sections\AccountDetailsSection.cs" />
+    <Compile Include="Ui\Sections\ApplicationSection.cs" />
     <Compile Include="Ui\Sections\BaseSection.cs" />
     <Compile Include="Ui\Sections\ContactingYouSection.cs" />
     <Compile Include="Ui\Sections\BankAccountSection.cs" />

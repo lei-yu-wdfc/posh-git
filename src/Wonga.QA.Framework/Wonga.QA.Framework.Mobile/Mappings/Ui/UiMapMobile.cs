@@ -76,6 +76,7 @@ namespace Wonga.QA.Framework.Mobile.Mappings.Ui
         public virtual MobilePinVerificationSection MobilePinVerificationSection { get; set; }
         public virtual AccountDetailsSection AccountDetailsSection { get; set; }
         public virtual DebitCardSection DebitCardSection { get; set;}
+        public virtual ApplicationSection ApplicationSection { get; set; }
         #endregion
     }
 }

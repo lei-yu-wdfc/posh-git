@@ -29,6 +29,8 @@ namespace Wonga.QA.Framework.Mobile
             {
                 case AUT.Za:
                     return new ZaMobileLnJourney(homePage);
+                case AUT.Uk:
+                    return new UkMobileLnJourney(homePage);
 
                 default:
                     throw new NotImplementedException();
