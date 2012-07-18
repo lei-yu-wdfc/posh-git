@@ -35,15 +35,15 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="HDSUtilities.cs" />
+    <Compile Include="_HDSUtilities.cs" />
     <Compile Include="InitialLoadTests.cs" />
-    <Compile Include="OpsSingleRowCrudTests.cs" />
+    <Compile Include="_OpsSingleRowCrudTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReconciliationTests.cs" />
-    <Compile Include="RiskSingleRowCrudTests.cs" />
+    <Compile Include="_RiskSingleRowCrudTests.cs" />
     <Compile Include="ServiceDBChangesTest.cs" />
     <Compile Include="SingleRowCrudTests.cs" />
-    <Compile Include="CommsSingleRowCrudTests.cs" />
+    <Compile Include="_CommsSingleRowCrudTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
@@ -92,7 +92,12 @@
       <HintPath>..\..\..\bin\Wonga.QA.Tests.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Wonga.QA.DataTests.Hds.Common\Wonga.QA.DataTests.Hds.Common.csproj">
+      <Project>{3843E903-F6FA-4FF5-8892-85FC3AF57D7F}</Project>
+      <Name>Wonga.QA.DataTests.Hds.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\..\..\lib\nuget\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
