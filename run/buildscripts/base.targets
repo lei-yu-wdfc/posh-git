@@ -1,13 +1,4 @@
 <Project DefaultTargets="Default" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<UsingTask TaskName="Gallio" AssemblyFile="$(ProgramW6432)\Gallio\bin\Gallio.MsBuildTasks.dll" />
-	
-	<PropertyGroup>
-		<Framework>Wonga.QA.Framework</Framework>
-		<Tests>Wonga.QA.Tests</Tests>
-		<ServiceTests>Wonga.QA.ServiceTests</ServiceTests>
-		<DataTests>Wonga.QA.DataTests</DataTests>
-	</PropertyGroup>
-	
 	<PropertyGroup>
 		<Root>$(MSBuildProjectDirectory)\..</Root>
 		<Src>$(Root)\src</Src>
@@ -15,6 +6,16 @@
 		<Lib>$(Root)\lib</Lib>
 		<Config>$(Root)\run\config</Config>
 	</PropertyGroup>	
+	
+	<UsingTask TaskName="Gallio" AssemblyFile="$(ProgramW6432)\Gallio\bin\Gallio.MsBuildTasks.dll" />
+	<Import Project="$(Lib)\nuget\packages\MSBuildTasks.1.4.0.45\tools\MSBuild.Community.Tasks.Targets"/>
+	<PropertyGroup>
+		<Framework>Wonga.QA.Framework</Framework>
+		<Tests>Wonga.QA.Tests</Tests>
+		<ServiceTests>Wonga.QA.ServiceTests</ServiceTests>
+		<DataTests>Wonga.QA.DataTests</DataTests>
+	</PropertyGroup>
+
 	
 	<Target Name="Config">
 		<ItemGroup>
