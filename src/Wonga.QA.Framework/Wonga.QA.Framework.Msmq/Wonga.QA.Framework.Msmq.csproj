@@ -123,8 +123,6 @@
     <Compile Include="Messages\BankGateway\InternalMessages\Scotiabank\Ca\SendScotiaAcknowledgeFileMessage.cs" />
     <Compile Include="Messages\BankGateway\InternalMessages\Scotiabank\Ca\SendScotiaPaymentMessage.cs" />
     <Compile Include="Messages\BankGateway\InternalMessages\Scotiabank\Ca\TakeScotiaPaymentMessage.cs" />
-    <Compile Include="Messages\BankGateway\InternalMessages\Standard\Za\SendBatchPaymentsToStandardMessage.cs" />
-    <Compile Include="Messages\BankGateway\InternalMessages\Standard\Za\SagaMessages\SendStandardPaymentToBatchMessage.cs" />
     <Compile Include="Messages\BankGateway\PublicMessages\IBreTransactionRecieved.cs" />
     <Compile Include="Messages\BankGateway\PublicMessages\ICashOutInstructionSent.cs" />
     <Compile Include="Messages\BankGateway\PublicMessages\IDirectDebitCreated.cs" />

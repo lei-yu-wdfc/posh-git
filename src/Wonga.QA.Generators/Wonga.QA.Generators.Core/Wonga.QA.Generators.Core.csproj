@@ -43,6 +43,7 @@
     <Compile Include="AssemblyPathFinder.cs" />
     <Compile Include="Command.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="ProgramTools.cs" />
     <Compile Include="EntityGenerator.cs" />
     <Compile Include="EnumGenerationMode.cs" />
     <Compile Include="EnumGenerationResult.cs" />
