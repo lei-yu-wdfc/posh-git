@@ -3,7 +3,6 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Api;
-using Wonga.QA.Framework.UI;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Ui.Admin
@@ -13,7 +12,7 @@ namespace Wonga.QA.Tests.Ui.Admin
         /// <summary>
         /// Verifies canceled application 
         /// </summary>
-        [Test, AUT(AUT.Uk), JIRA("UK-1754")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1754"), Pending("The test runs only in the Local environment. TODO: it should run in other environments too, i.e. WIP and RC."), Owner(Owner.RomanTertychnyi)]
         public void CancelV3Transaction()
         {
             Customer cust = CustomerBuilder.New().Build();
@@ -54,7 +53,7 @@ namespace Wonga.QA.Tests.Ui.Admin
         /// <summary>
         /// Verifies resend payment functionality
         /// </summary>
-        [Test, AUT(AUT.Uk), JIRA("UK-1756")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1756"), Pending("The test runs only in the Local environment. TODO: it should run in other environments too, i.e. WIP and RC."), Owner(Owner.RomanTertychnyi)]
         public void SendPaymentV3Transactions()
         {
             Customer cust = CustomerBuilder.New().Build();
