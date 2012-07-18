@@ -8,7 +8,8 @@
 	</PropertyGroup>	
 	
 	<UsingTask TaskName="Gallio" AssemblyFile="$(ProgramW6432)\Gallio\bin\Gallio.MsBuildTasks.dll" />
-	<Import Project="$(Lib)\nuget\packages\MSBuildTasks.1.4.0.45\tools\MSBuild.Community.Tasks.Targets"/>
+	<Import Project="$(Lib)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>
+	
 	<PropertyGroup>
 		<Framework>Wonga.QA.Framework</Framework>
 		<Tests>Wonga.QA.Tests</Tests>
