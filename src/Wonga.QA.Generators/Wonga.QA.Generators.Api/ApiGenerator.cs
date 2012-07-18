@@ -7,9 +7,8 @@ namespace Wonga.QA.Generators.Api
 {
 	public class ApiGenerator
 	{
-		public static void Main(String[] args)
+		public void Generate()
 		{
-            ProgramArgumentsParser.ParseArgumentsParameters(args);
             Config.RepoName = "";
             var binRootDirectories = new GeneratorRepoDirectories(Config.Api.Folder);
             var classGenerator = new XmlSchemaClassGenerator(Config.Api, binRootDirectories, false);
@@ -27,11 +26,6 @@ namespace Wonga.QA.Generators.Api
 
             Repo.Inject(binRootDirectories.ClassesDirectory, Config.Api.Folder, Config.Api.Project, delete: true, overwrite: true);
             Repo.Inject(binRootDirectories.EnumsDirectory, Config.Enums.Folder, Config.Api.Project, delete: true, overwrite: true);
-		}
-
-		private static void GenerateForRepo(string repoName)
-		{
-
 		}
 	}
 }

@@ -7,10 +7,9 @@ namespace Wonga.QA.Generators.Cs
 {
     public class CsGenerator
     {
-		public static void Main(String[] args)
+        public void Generate()
         {
-			ProgramArgumentsParser.ParseArgumentsParameters(args);
-		    Config.RepoName = "";
+            Config.RepoName = "";
             var binRootDirectories = new GeneratorRepoDirectories(Config.CsApi.Folder);
             var classGenerator = new XmlSchemaClassGenerator(Config.CsApi, binRootDirectories, false);
 
@@ -26,7 +25,7 @@ namespace Wonga.QA.Generators.Cs
             }
 
             Repo.Inject(binRootDirectories.ClassesDirectory, Config.CsApi.Folder, Config.CsApi.Project, delete: true, overwrite: true);
-            Repo.Inject(binRootDirectories.EnumsDirectory, Config.Enums.Folder, Config.CsApi.Project, delete: true, overwrite: true);
+            Repo.Inject(binRootDirectories.EnumsDirectory, Config.Enums.Folder, Config.CsApi.Project, delete: true, overwrite: true);   
         }
     }
 }

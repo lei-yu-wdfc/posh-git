@@ -10,11 +10,8 @@ namespace Wonga.QA.Generators.Db.Split
 {
     public class DbGenerator
     {
-        public static void Main(String[] args)
+        public void Generate(string server, string[] databases)
         {
-            var server = args.Length >= 1 ? args[0] : "localhost";
-            Config.Databases = args.Length >= 2 ? new[] {args[1]} : Config.Databases;
-
             var bin = new
             {
                 Dbml = Repo.Directory("Dbml", false),
@@ -22,7 +19,7 @@ namespace Wonga.QA.Generators.Db.Split
             };
             
 
-            foreach (String database in Config.Databases)
+            foreach (String database in databases)
             {
                 Console.WriteLine(database);
 
@@ -89,7 +86,7 @@ namespace Wonga.QA.Generators.Db.Split
             Repo.Inject(bin.Code, Config.Db.Folder, Config.Db.Project, false, true);
         }
 
-        private static void ResolveCollision(XElement table, XNamespace ns)
+        private void ResolveCollision(XElement table, XNamespace ns)
         {
             var type = table.Element(ns.GetName("Type"));
             switch(table.Attribute("Name").Value)
@@ -100,7 +97,7 @@ namespace Wonga.QA.Generators.Db.Split
             }
         }
 
-        private static String Trim(String value, String schema)
+        private String Trim(String value, String schema)
         {
             String[] split = value.Split('_');
             return split.First().ToLower() == schema ? String.Join(null, split.Skip(1)) : value;
