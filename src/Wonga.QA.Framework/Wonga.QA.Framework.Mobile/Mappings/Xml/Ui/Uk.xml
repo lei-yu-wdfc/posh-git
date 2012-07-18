@@ -214,6 +214,11 @@
     <ForgotPassword>div.form-markup-wrapper a</ForgotPassword>
   </LoginPageMobile>
 
+  <ApplyPageMobile>
+    <PhoneNumber>#edit-mobile-number-wrapper</PhoneNumber>
+    <ApplyNowButton>#edit-submit</ApplyNowButton>
+  </ApplyPageMobile>
+
   <ApplicationSection>
     <FormId>#wonga-applyln-form</FormId>
     <SecurityCode>#edit-security-code</SecurityCode>

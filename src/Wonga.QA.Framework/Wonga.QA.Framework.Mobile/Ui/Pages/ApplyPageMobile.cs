@@ -12,7 +12,7 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
     public class ApplyPageMobile : BasePageMobile
     {
         private readonly IWebElement _phoneNumber;
-        private readonly IWebElement _bankAccount;
+        private IWebElement _bankAccount;
         private readonly IWebElement _applyNow;
         private IWebElement _popupCloseButton;
 
@@ -24,9 +24,14 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
         public ApplyPageMobile(MobileUiClient client) : base(client)
         {
             _phoneNumber = Content.FindElement(By.CssSelector(UiMapMobile.Get.ApplyPageMobile.PhoneNumber));
-            _bankAccount = Content.FindElement(By.CssSelector(UiMapMobile.Get.ApplyPageMobile.BankAccount));
             _applyNow    = Content.FindElement(By.CssSelector(UiMapMobile.Get.ApplyPageMobile.ApplyNowButton));
-
+            ApplicationSection = new ApplicationSection(this);
+            switch(Config.AUT)
+            {
+                case AUT.Za:
+                    _bankAccount = Content.FindElement(By.CssSelector(UiMapMobile.Get.ApplyPageMobile.BankAccount));
+                    break;
+            }
             ApplicationSection = new ApplicationSection(this);
         }
 

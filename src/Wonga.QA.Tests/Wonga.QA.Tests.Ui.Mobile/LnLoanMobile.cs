@@ -37,7 +37,7 @@ namespace Wonga.QA.Tests.Ui.Mobile
             //application.RepayOnDueDate();
             loginPage.LoginAs(email, "Passw0rd");
             var journey = JourneyFactory.GetLnJourney(Client.MobileHome());
-            var page = journey.Teleport<ProcessingPageMobile>() as ProcessingPageMobile;
+            var page = journey.Teleport<DealDonePage>() as DealDonePage;
         }
     }
 }
