@@ -16,12 +16,14 @@ ECHO   3. Rebase from Upstream
 ECHO   4. Run Wonga.QA.Tests
 ECHO   5. Run Meta and Core tests
 ECHO   6. Run Wonga.QA.Generators
+ECHO   7. Service test configuration
 ECHO   0. Exit
 ECHO.
 
 CHOICE /C 12345670 /M "But if you already know, how can I make a choice?" /N
 
 IF ERRORLEVEL 8 GOTO EOF
+IF ERRORLEVEL 7 GOTO 7
 IF ERRORLEVEL 6 GOTO 6
 IF ERRORLEVEL 5 GOTO 5
 IF ERRORLEVEL 4 GOTO 4
@@ -65,18 +67,40 @@ GOTO MENU
 GOTO MENU
 
 :6
-	SET /P Origin=Path to v3 [..\v3split]: 
+	SET /P Origin=Path to v3 [..\v3]: 
 	CHOICE /C ACM /M "Api, Cs or Msmq"	
 	IF ERRORLEVEL 3 CALL :GENERATE Msmq
 	IF ERRORLEVEL 2 CALL :GENERATE Cs
 	IF ERRORLEVEL 1 CALL :GENERATE Api
 GOTO MENU
 
-REM :7
-	REM CHOICE /C YN /M "Are you working through a proxy"
-	REM IF ERRORLEVEL 2 SETX QAFProxyMode False > NUL
-	REM IF ERRORLEVEL 1 SETX QAFProxyMode True > NUL
-REM GOTO MENU
+:7
+ 
+ECHO.
+ECHO   1. Configure service test
+ECHO   2. Restore orginal configuration
+ECHO   0. Menu
+ECHO.
+
+CHOICE /C 120 /M "But if you already know, how can I make a choice?" /N
+IF ERRORLEVEL 3 GOTO MENU
+IF ERRORLEVEL 2 GOTO 72
+IF ERRORLEVEL 1 GOTO 71
+
+GOTO EOF
+
+:71 
+	SET /P TestingTarget=Enter your server name (e.g. risk):
+	SETX QAFTestTarget %TestingTarget%	
+	powershell -command "& {. %Run%\EditEndPointConfig.ps1; configservice %TestingTarget% }"
+ GOTO MENU
+ 
+:72
+	SET /P TestingTarget=Enter your server name to restore(e.g.risk):
+	SETX QAFTestTarget %TestingTarget%
+	powershell -command "& {. %Run%\EditEndPointConfig.ps1; configservice_undo %TestingTarget% }"
+ GOTO MENU
+ 
 
 :META
 	%MsBuild% %Run%\Wonga.QA.Tests.build /t:Test /p:Files=Meta || PAUSE
