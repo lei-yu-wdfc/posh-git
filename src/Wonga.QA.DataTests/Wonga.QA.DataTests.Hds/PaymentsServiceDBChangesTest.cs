@@ -10,7 +10,7 @@ namespace Wonga.QA.DataTests.Hds.Payments
     [TestFixture(Order = 3)]
     [Category("Auto")]
     [Category("Payments")]
-    public class ServiceDBChangesTest
+    public class PaymentsServiceDBChangesTest
     {
         private bool _cdcStagingAgentJobWasEnabled;
         private bool _hdsAgentJobWasEnabled;

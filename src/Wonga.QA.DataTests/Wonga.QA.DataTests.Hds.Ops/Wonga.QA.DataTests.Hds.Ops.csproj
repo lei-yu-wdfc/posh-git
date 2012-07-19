@@ -49,10 +49,10 @@
     <Reference Include="Wonga.QA.Framework.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="InitialLoadTests.cs" />
+    <Compile Include="OpsInitialLoadTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReconciliationTests.cs" />
-    <Compile Include="SingleRowCrudTests.cs" />
+    <Compile Include="OpsReconciliationTests.cs" />
+    <Compile Include="OpsSingleRowCrudTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Wonga.QA.DataTests.Hds.Common\Wonga.QA.DataTests.Hds.Common.csproj">

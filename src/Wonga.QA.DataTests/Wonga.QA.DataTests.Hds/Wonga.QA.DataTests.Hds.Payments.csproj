@@ -35,15 +35,11 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="_HDSUtilities.cs" />
-    <Compile Include="InitialLoadTests.cs" />
-    <Compile Include="_OpsSingleRowCrudTests.cs" />
+    <Compile Include="PaymentsInitialLoadTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReconciliationTests.cs" />
-    <Compile Include="_RiskSingleRowCrudTests.cs" />
-    <Compile Include="ServiceDBChangesTest.cs" />
-    <Compile Include="SingleRowCrudTests.cs" />
-    <Compile Include="_CommsSingleRowCrudTests.cs" />
+    <Compile Include="PaymentsReconciliationTests.cs" />
+    <Compile Include="PaymentsServiceDBChangesTest.cs" />
+    <Compile Include="PaymentsSingleRowCrudTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
@@ -58,38 +54,16 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.SqlEnum.dll</HintPath>
     </Reference>
-    <Reference Include="Simple.Data, Version=0.16.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\lib\nuget\packages\Simple.Data.Core.0.16.0.0\lib\net40\Simple.Data.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml" />
     <Reference Include="Wonga.QA.Framework">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Wonga.QA.Framework.Api">
-      <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Api.dll</HintPath>
     </Reference>
     <Reference Include="Wonga.QA.Framework.Core">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Core.dll</HintPath>
     </Reference>
     <Reference Include="Wonga.QA.Framework.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="Wonga.QA.Framework.Msmq">
-      <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Msmq.dll</HintPath>
-    </Reference>
-    <Reference Include="Wonga.QA.Framework.ThirdParties">
-      <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.ThirdParties.dll</HintPath>
-    </Reference>
-    <Reference Include="Wonga.QA.Framework.Svc">
-      <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Svc.dll</HintPath>
-    </Reference>
-    <Reference Include="Wonga.QA.Tests.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\Wonga.QA.Tests.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
