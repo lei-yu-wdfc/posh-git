@@ -30,7 +30,7 @@
 		<Gallio
 			Filter="$(TestFilter)"
 			Files="@(Files)"
-			ReportTypes="html;xml"
+			ReportTypes="html-condensed;xml"
 			ReportNameFormat="$(Tests).Report"
 			ReportDirectory="$(Bin)\$(Tests).Report"
 		/>
