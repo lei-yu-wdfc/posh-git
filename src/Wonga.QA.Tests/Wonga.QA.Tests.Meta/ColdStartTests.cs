@@ -48,7 +48,7 @@ namespace Wonga.QA.Tests.Meta
         }
 
         [Test, Factory("Endpoints")]
-        public void ApiEndpointsAreAvailable(ApiEndpoint endpoint)
+        public void ApiEndpointIsAvailable(ApiEndpoint endpoint)
         {
             Do.With.Timeout(5).Until(() =>
             {
@@ -65,8 +65,8 @@ namespace Wonga.QA.Tests.Meta
             });
         }
 
-        [Test, DependsOn("ApiEndpointsAreAvailable"), Factory("Endpoints")]
-        public void ApiEndpointsSchemaValid(ApiEndpoint endpoint)
+        [Test, DependsOn("ApiEndpointIsAvailable"), Factory("Endpoints")]
+        public void ApiEndpointSchemaIsValid(ApiEndpoint endpoint)
         {
             Assert.DoesNotThrow(() => endpoint.GetShema());
         }
@@ -83,7 +83,7 @@ namespace Wonga.QA.Tests.Meta
             Assert.IsTrue(service.IsRunning());
         }
 
-        [Test, DependsOn("ApiEndpointsAreAvailable"), DependsOn("ApiEndpointSchemasAreValid"), SUT(SUT.WIP, SUT.RC, SUT.WIPRelease, SUT.RCRelease, SUT.UAT, SUT.Live)]
+        [Test, DependsOn("ApiEndpointIsAvailable"), DependsOn("ApiEndpointSchemaIsValid"), SUT(SUT.WIP, SUT.RC, SUT.WIPRelease, SUT.RCRelease, SUT.UAT, SUT.Live)]
         public void HomePageCanBeLoaded()
         {
             Assert.Contains(new WebClient().DownloadString(Config.Ui.Home), "Wonga");
