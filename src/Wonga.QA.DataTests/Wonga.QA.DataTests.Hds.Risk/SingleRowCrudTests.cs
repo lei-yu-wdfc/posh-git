@@ -6,6 +6,7 @@ using MbUnit.Framework;
 using Wonga.QA.DataTests.Hds.Common;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Data;
+using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.DataTests.Hds.Risk
 {
@@ -68,10 +69,10 @@ namespace Wonga.QA.DataTests.Hds.Risk
         /// <returns></returns>
         private dynamic InsertNewRecord(dynamic connection)
         {
-            var sourceRecord = connection.Insert(TypeName: "HdsTest",
-                                                 Name: "HdsTest",
-                                                 FailedDescription: "HdsTest",
-                                                 ResolutionAdviceKey: "HdsTest",
+            var sourceRecord = connection.Insert(TypeName: Get.RandomString(200),
+                                                 Name: Get.RandomString(200),
+                                                 FailedDescription: Get.RandomString(128),
+                                                 ResolutionAdviceKey: Get.RandomString(50),
                                                  CheckpointId:Guid.NewGuid());
 
             return sourceRecord;
@@ -88,7 +89,7 @@ namespace Wonga.QA.DataTests.Hds.Risk
         //Delete record
         private void DeleteRecord(dynamic connection, int key)
         {
-            connection.DeleteByCheckpointDefinitionId(AccountId:key);
+            connection.DeleteByCheckpointDefinitionId(CheckpointDefinitionId: key);
         }
 
         
