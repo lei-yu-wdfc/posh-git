@@ -33,11 +33,6 @@
 			<Projects Include="$(Src)\$(ServiceTests)\$(ServiceTests).sln" />
 			<Projects Include="$(Src)\$(DataTests)\$(DataTests).sln" />
 		</ItemGroup>
-		<!-- Trying out if NUnit integration works for us.. -->
-	    <Copy
-            SourceFiles="$(MSBuildProjectDirectory)\TestResult.xml"
-            DestinationFolder="$(Bin)\$(Tests).Report"
-        />
 		<MSBuild Projects="@(Projects)" StopOnFirstFailure="true"/>
 	</Target>
 	
