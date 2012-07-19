@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Dynamic;
+using System.Text;
 using System.Threading;
 using MbUnit.Framework;
 using Wonga.QA.DataTests.Hds.Common;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Data;
+using Wonga.QA.Framework.Core;
+
 
 namespace Wonga.QA.DataTests.Hds.Ops
 {
@@ -66,17 +70,28 @@ namespace Wonga.QA.DataTests.Hds.Ops
         /// insert new record 
         /// </summary>
         /// <returns></returns>
+        /// 
+       
         private dynamic InsertNewRecord(dynamic connection)
         {
-            var accountId = Guid.NewGuid();
-            var salt = "0x5C3230321D";
-            var login = "Test@wonga.com";
-            var password = "0x23AFB8ECEB4E86409DC14F08C1869D03A40E4215DB9728FE12D95B342A521B9F17E6D69053CBA94A6B056919E890040B2ACEA532E8F5E6E1FB03193D03B792D2";
-            var sourceRecord = connection.Insert(ExternalId: accountId,
-                                                 Login: login,
-                                                 CreatedOn: DateTime.Now,
-                                                 Password: password,
-                                                 Salt: salt);
+           
+            /*
+            dynamic account = new ExpandoObject();
+
+            account.ExternalId = Guid.NewGuid();
+            account.Login = Get.RandomEmail();
+            account.CreatedOn = DateTime.Now;
+            account.Password = _hdsUtilities.StringToByteArray(Get.GetPassword());
+            account.Salt = _hdsUtilities.StringToByteArray(Get.GetPassword());
+             * */
+            
+           // var sourceRecord = connection.Insert(account);
+           var sourceRecord = connection.Insert(ExternalId: Guid.NewGuid(),
+                                                  Login: Get.RandomEmail()  ,
+                                                  CreatedOn: DateTime.Now,
+                                                  Password: _hdsUtilities.StringToByteArray(Get.GetPassword()),
+                                                  Salt: _hdsUtilities.StringToByteArray(Get.GetPassword()));
+            
                                                
             return sourceRecord;
         }
@@ -85,8 +100,9 @@ namespace Wonga.QA.DataTests.Hds.Ops
         //Update record
         private void UpdateRecord(dynamic connection, int key)
         {
+            string login = "admin@wonga.com";
             connection.UpdateByAccountId(AccountId: key,
-                                              Login: "admin@wonga.com");
+                                              Login: login);
         }
 
         //Delete record

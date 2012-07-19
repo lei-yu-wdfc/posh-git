@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Data;
 using MbUnit.Framework;
@@ -242,6 +243,14 @@ namespace Wonga.QA.DataTests.Hds.Common
                 Assert.AreEqual(((IDictionary<string, object>)hdsCurrRecord)[memberName], ((IDictionary<string, object>)sourceRecord)[memberName], "[{0}] in Hds View should match with Source", memberName);
             }
         }
+
+         public byte[] StringToByteArray(string incomingString)
+         {
+
+             ASCIIEncoding encoded = new ASCIIEncoding();
+             return encoded.GetBytes(incomingString);
+         }
+
     }
 }
 
