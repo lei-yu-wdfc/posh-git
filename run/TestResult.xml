@@ -1,15 +1,89 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!--This file represents the results of running a test suite-->
-<test-results name="C:\Users\konstantinos.konstan\Documents\Visual Studio 2010\Projects\ClassLibrary7\ClassLibrary7\bin\Debug\ClassLibrary7.dll" total="1" errors="1" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2012-07-19" time="14:17:08">
+<test-results name="C:\Users\konstantinos.konstan\Documents\Visual Studio 2010\Projects\ClassLibrary7\ClassLibrary7\bin\Debug\ClassLibrary7.dll" total="2" errors="2" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2012-07-19" time="16:49:06">
   <environment nunit-version="2.5.10.11092" clr-version="2.0.50727.5456" os-version="Microsoft Windows NT 6.1.7601 Service Pack 1" platform="Win32NT" cwd="C:\Program Files (x86)\NUnit 2.5.10\bin\net-2.0" machine-name="IE-WK-11" user="konstantinos.konstan" user-domain="WONGA" />
   <culture-info current-culture="en-IE" current-uiculture="en-US" />
-  <test-suite type="Assembly" name="C:\Users\konstantinos.konstan\Documents\Visual Studio 2010\Projects\ClassLibrary7\ClassLibrary7\bin\Debug\ClassLibrary7.dll" executed="True" result="Failure" success="False" time="0.059" asserts="0">
+  <test-suite type="Assembly" name="C:\Users\konstantinos.konstan\Documents\Visual Studio 2010\Projects\ClassLibrary7\ClassLibrary7\bin\Debug\ClassLibrary7.dll" executed="True" result="Failure" success="False" time="0.124" asserts="0">
     <results>
-      <test-suite type="Namespace" name="ClassLibrary7" executed="True" result="Failure" success="False" time="0.048" asserts="0">
+      <test-suite type="Namespace" name="ClassLibrary7" executed="True" result="Failure" success="False" time="0.114" asserts="0">
         <results>
-          <test-suite type="TestFixture" name="Class1" executed="True" result="Failure" success="False" time="0.046" asserts="0">
+          <test-suite type="TestFixture" name="Class1" executed="True" result="Failure" success="False" time="0.111" asserts="0">
             <results>
               <test-case name="ClassLibrary7.Class1.T" executed="True" result="Error" success="False" time="0.033" asserts="0">
+                <failure>
+                  <message><![CDATA[System.Exception : as]]></message>
+                  <stack-trace><![CDATA[   at CallSite.Target(Closure , CallSite , Type , Object )
+   at System.Dynamic.UpdateDelegates.UpdateAndExecuteVoid2[T0,T1](CallSite site, T0 arg0, T1 arg1)
+   at Wonga.QA.Tests.Payments.PadRepresentmentOptimization.WhenTheSecondPadRepresentmentForACustomerInArrearsIsSuccessfulThenAThirdAttemptToRetrieveTheRemainingBalanceShouldBeMadeOnTheNextPayDate() in d:\qa_rel_ca_be_at\src\Wonga.QA.Tests\Wonga.QA.Tests.Payments\PadRepresentmentOptimization.cs:line 365
+
+Wonga.QA.Framework.Api.ApiEndpoint: <Messages xmlns="http://www.wonga.com/api/3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CreateAccount>
+    <AccountId>fb7a6004-a141-46f8-96bf-d789a11034f6</AccountId>
+    <Login>qa.wonga.com+TEAMCITY11-f83dccb2-b92b-4186-8a05-00449ee0b788@gmail.com</Login>
+    <Password>Passw0rd</Password>
+  </CreateAccount>
+  <SaveSocialDetails>
+    <AccountId>fb7a6004-a141-46f8-96bf-d789a11034f6</AccountId>
+    <MaritalStatus>LivingTogether</MaritalStatus>
+    <OccupancyStatus>SocialHousing</OccupancyStatus>
+    <Dependants>0</Dependants>
+    <VehicleRegistration xsi:nil="true" />
+  </SaveSocialDetails>
+  <SaveContactPreferences>
+    <AccountId>fb7a6004-a141-46f8-96bf-d789a11034f6</AccountId>
+    <AcceptMarketingContact>true</AcceptMarketingContact>
+  </SaveContactPreferences>
+  <SavePasswordRecoveryDetails>
+    <AccountId>fb7a6004-a141-46f8-96bf-d789a11034f6</AccountId>
+    <SecretQuestion>rhUXUYciAfLwfNPlzvXZermBXZisgJ</SecretQuestion>
+    <SecretAnswer>AGmuOuSLptgMUtRuBODCNfUcmkDfAo</SecretAnswer>
+  </SavePasswordRecoveryDetails>
+  <SaveCustomerDetails>
+    <AccountId>fb7a6004-a141-46f8-96bf-d789a11034f6</AccountId>
+    <DateOfBirth>1961-01-13</DateOfBirth>
+    <Title>Miss</Title>
+    <Gender>Female</Gender>
+    <Forename>JnJMf</Forename>
+    <Surname>iGkUnbw</Surname>
+    <MiddleName>MiddleName</MiddleName>
+    <HomePhone>0218420053</HomePhone>
+    <WorkPhone>0210000000</WorkPhone>
+    <Email>qa.wonga.com+TEAMCITY11-f83dccb2-b92b-4186-8a05-00449ee0b788@gmail.com</Email>
+    <NationalNumber xsi:nil="true" />
+  </SaveCustomerDetails>
+  <RiskSaveCustomerDetails>
+    <AccountId>fb7a6004-a141-46f8-96bf-d789a11034f6</AccountId>
+    <Gender>Female</Gender>
+    <Forename>JnJMf</Forename>
+    <Surname>iGkUnbw</Surname>
+    <MiddleName>MiddleName</MiddleName>
+    <HomePhone>0218420053</HomePhone>
+    <WorkPhone>0210000000</WorkPhone>
+    <Email>qa.wonga.com+TEAMCITY11-f83dccb2-b92b-4186-8a05-00449ee0b788@gmail.com</Email>
+    <MobilePhone>0210000000</MobilePhone>
+    <DateOfBirth>1961-01-13</DateOfBirth>
+    <MaidenName xsi:nil="true" />
+  </RiskSaveCustomerDetails>
+  <SaveCustomerAddress>
+    <AddressId>10ef56bd-2275-40aa-a692-3bf19c55e6a1</AddressId>
+    <AccountId>fb7a6004-a141-46f8-96bf-d789a11034f6</AccountId>
+    <Flat>fONg</Flat>
+    <HouseNumber>26</HouseNumber>
+    <HouseName>iPDwPfnl</HouseName>
+    <Street>QEbLGhVsNeTWiGd</Street>
+    <District>VnSqeOCxDUmkuhC</District>
+    <Town>GiENRnVjruURaPP</Town>
+    <County>QuDeagwhdAPtuzy</County>
+    <Postcode>K0A0A0</Postcode>
+    <CountryCode>CA</CountryCode>
+    <AtAddressFrom>2008-06-21</AtAddressFrom>
+    <AtAddressTo xsi:nil="true" />
+    <Province>ON</Province>
+    <PoBox xsi:nil="true" />
+]]></stack-trace>
+                </failure>
+              </test-case>
+              <test-case name="ClassLibrary7.Class1.Y" executed="True" result="Error" success="False" time="0.001" asserts="0">
                 <failure>
                   <message><![CDATA[System.Exception : as]]></message>
                   <stack-trace><![CDATA[   at CallSite.Target(Closure , CallSite , Type , Object )
