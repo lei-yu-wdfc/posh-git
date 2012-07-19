@@ -157,6 +157,7 @@ Wonga.QA.Framework.Api.ApiEndpoint: <Messages xmlns="http://www.wonga.com/api/3.
 ]]></stack-trace>
                 </failure>
               </test-case>
+			<test-case name="ClassLibrary7.Class1.GoodTest" executed="True" result="Success" success="True" time="0.023" asserts="0" />
             </results>
           </test-suite>
         </results>
