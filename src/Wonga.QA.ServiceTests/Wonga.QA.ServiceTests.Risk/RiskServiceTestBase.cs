@@ -57,14 +57,17 @@ namespace Wonga.QA.ServiceTests.Risk
 		#region Customer Profiles
 		protected virtual void SetupLegitCustomer(DateTime? dateOfBirth = null)
 		{
-			SetupKathleenAs(Messages.Get<RiskSaveCustomerDetailsCommand>(), Messages.Get<RiskSaveCustomerAddressCommand>(), dateOfBirth);
+			////todo: use automapper with a dto (or the msmq version of this command)
+			SetupKathleenAs(
+				Messages.Get<Wonga.QA.Framework.Api.Requests.Risk.Commands.Uk.RiskSaveCustomerDetailsUkCommand>(),
+				Messages.Get<Wonga.QA.Framework.Api.Requests.Risk.Commands.Uk.RiskSaveCustomerAddressUkCommand>(), dateOfBirth);
 		}
 
-		protected void SetupKathleenAs(RiskSaveCustomerDetailsCommand detailsCommand,
-									   RiskSaveCustomerAddressCommand addressCommand,
+		protected void SetupKathleenAs(Wonga.QA.Framework.Api.Requests.Risk.Commands.Uk.RiskSaveCustomerDetailsUkCommand detailsCommand,
+									   Wonga.QA.Framework.Api.Requests.Risk.Commands.Uk.RiskSaveCustomerAddressUkCommand addressCommand,
 									   DateTime? dateOfBirth = null)
 		{
-			detailsCommand.DateOfBirth = dateOfBirth ?? DateTime.Parse("24-Jan-1992");
+			detailsCommand.DateOfBirth = (dateOfBirth ?? DateTime.Parse("24-Jan-1992")).ToDate(DateFormat.Date);
 
 			detailsCommand.Forename = "kathleen";
 			detailsCommand.MiddleName = "nicole";
