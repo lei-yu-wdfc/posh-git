@@ -12,7 +12,506 @@
               <test-case name="ClassLibrary7.Class1.T" executed="True" result="Error" success="False" time="0.033" asserts="0">
                 <failure>
                   <message><![CDATA[System.Exception : as]]></message>
-                  <stack-trace><![CDATA[at ClassLibrary7.Class1.T() in c:\users\konstantinos.konstan\documents\visual studio 2010\Projects\ClassLibrary7\ClassLibrary7\Class1.cs:line 18
+                  <stack-trace><![CDATA[SELECT [t0].[ServiceConfigurationId], [t0].[Key], [t0].[Value]
+FROM [ops].[ServiceConfigurations] AS [t0]
+WHERE [t0].[Key] = @p0
+-- @p0: Input VarChar (Size = 8000; Prec = 0; Scale = 0) [Risk.UseScorecardModel]
+-- Context: SqlProvider(Sql2008) Model: AttributedMetaModel Build: 4.0.30319.1
+
+UPDATE [ops].[ServiceConfigurations]
+SET [Value] = @p2
+WHERE ([ServiceConfigurationId] = @p0) AND ([Key] = @p1)
+-- @p0: Input Int (Size = -1; Prec = 0; Scale = 0) [427]
+-- @p1: Input VarChar (Size = 8000; Prec = 0; Scale = 0) [Risk.UseScorecardModel]
+-- @p2: Input VarChar (Size = 8000; Prec = 0; Scale = 0) [False]
+-- Context: SqlProvider(Sql2008) Model: AttributedMetaModel Build: 4.0.30319.1
+
+SELECT [t0].[CustomerDetailId], [t0].[AccountId], [t0].[DateOfBirth], [t0].[Gender], [t0].[Title], [t0].[Forename], [t0].[Surname], [t0].[MiddleName], [t0].[HomePhone], [t0].[MobilePhone], [t0].[WorkPhone], [t0].[Email], [t0].[CreatedOn], [t0].[NationalNumber], [t0].[MarriedInCommunityProperty], [t0].[HasAccount], [t0].[MaidenName]
+FROM [comms].[CustomerDetails] AS [t0]
+WHERE [t0].[Forename] = @p0
+-- @p0: Input NVarChar (Size = 4000; Prec = 0; Scale = 0) [DAWN]
+-- Context: SqlProvider(Sql2008) Model: AttributedMetaModel Build: 4.0.30319.1
+
+SELECT [t0].[CustomerDetailId], [t0].[AccountId], [t0].[DateOfBirth], [t0].[Gender], [t0].[Title], [t0].[Forename], [t0].[Surname], [t0].[MiddleName], [t0].[HomePhone], [t0].[MobilePhone], [t0].[WorkPhone], [t0].[Email], [t0].[CreatedOn], [t0].[NationalNumber], [t0].[MarriedInCommunityProperty], [t0].[HasAccount], [t0].[MaidenName]
+FROM [comms].[CustomerDetails] AS [t0]
+WHERE [t0].[Surname] = @p0
+-- @p0: Input NVarChar (Size = 4000; Prec = 0; Scale = 0) [KALINICH]
+-- Context: SqlProvider(Sql2008) Model: AttributedMetaModel Build: 4.0.30319.1
+
+Wonga.QA.Framework.Api.ApiEndpoint: <Messages xmlns="http://www.wonga.com/api/3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CreateAccount>
+    <AccountId>44e64350-0298-46a0-9d03-7d0a58298211</AccountId>
+    <Login>qa.wonga.comTEAMCITY1179fcedae-7217-4a9f-a6b3-909f6f28944e@gmail.com</Login>
+    <Password>Passw0rd</Password>
+  </CreateAccount>
+  <SaveSocialDetails>
+    <AccountId>44e64350-0298-46a0-9d03-7d0a58298211</AccountId>
+    <MaritalStatus>Widowed</MaritalStatus>
+    <OccupancyStatus>Tenant</OccupancyStatus>
+    <Dependants>0</Dependants>
+    <VehicleRegistration xsi:nil="true" />
+  </SaveSocialDetails>
+  <SaveContactPreferences>
+    <AccountId>44e64350-0298-46a0-9d03-7d0a58298211</AccountId>
+    <AcceptMarketingContact>true</AcceptMarketingContact>
+  </SaveContactPreferences>
+  <SavePasswordRecoveryDetails>
+    <AccountId>44e64350-0298-46a0-9d03-7d0a58298211</AccountId>
+    <SecretQuestion>HUGeovPoLCHErQmVcwJnfjYWvYzpMe</SecretQuestion>
+    <SecretAnswer>MoZieGficREmPgwMisYgdDUjyuMKJb</SecretAnswer>
+  </SavePasswordRecoveryDetails>
+  <SaveCustomerDetails>
+    <AccountId>44e64350-0298-46a0-9d03-7d0a58298211</AccountId>
+    <DateOfBirth>1973-03-03</DateOfBirth>
+    <Title>Prof</Title>
+    <Gender>Female</Gender>
+    <Forename>DAWN</Forename>
+    <Surname>KALINICH</Surname>
+    <MiddleName>TESTRepaymentPredictionPositive</MiddleName>
+    <HomePhone>6471211149</HomePhone>
+    <WorkPhone>0210000000</WorkPhone>
+    <Email>qa.wonga.comTEAMCITY1179fcedae-7217-4a9f-a6b3-909f6f28944e@gmail.com</Email>
+    <NationalNumber xsi:nil="true" />
+  </SaveCustomerDetails>
+  <RiskSaveCustomerDetails>
+    <AccountId>44e64350-0298-46a0-9d03-7d0a58298211</AccountId>
+    <Gender>Female</Gender>
+    <Forename>DAWN</Forename>
+    <Surname>KALINICH</Surname>
+    <MiddleName>TESTRepaymentPredictionPositive</MiddleName>
+    <HomePhone>6471211149</HomePhone>
+    <WorkPhone>0210000000</WorkPhone>
+    <Email>qa.wonga.comTEAMCITY1179fcedae-7217-4a9f-a6b3-909f6f28944e@gmail.com</Email>
+    <MobilePhone>0210000000</MobilePhone>
+    <DateOfBirth>1973-03-03</DateOfBirth>
+    <MaidenName xsi:nil="true" />
+  </RiskSaveCustomerDetails>
+  <SaveCustomerAddress>
+    <AddressId>251b95ec-5176-452f-b831-202a5f8a89ae</AddressId>
+    <AccountId>44e64350-0298-46a0-9d03-7d0a58298211</AccountId>
+    <Flat xsi:nil="true" />
+    <HouseNumber>1</HouseNumber>
+    <HouseName>zzmkYyor</HouseName>
+    <Street>LOCKVIEW</Street>
+    <District xsi:nil="true" />
+    <Town>HUNTSVILLE</Town>
+    <County xsi:nil="true" />
+    <Postcode>P1H1R3</Postcode>
+    <CountryCode>CA</CountryCode>
+    <AtAddressFrom>2008-06-21</AtAddressFrom>
+    <AtAddressTo xsi:nil="true" />
+    <Province>ON</Province>
+    <PoBox xsi:nil="true" />
+  </SaveCustomerAddress>
+  <RiskSaveCustomerAddress>
+    <AddressId>6f4e25e6-6074-4963-a1c9-b6dcd0ff9b73</AddressId>
+    <AccountId>44e64350-0298-46a0-9d03-7d0a58298211</AccountId>
+    <Flat xsi:nil="true" />
+    <HouseNumber>1</HouseNumber>
+    <HouseName>zzmkYyor</HouseName>
+    <Street>LOCKVIEW</Street>
+    <District xsi:nil="true" />
+    <Town>HUNTSVILLE</Town>
+    <County xsi:nil="true" />
+    <Postcode>P1H1R3</Postcode>
+    <SubRegion>ON</SubRegion>
+  </RiskSaveCustomerAddress>
+  <AddBankAccount>
+    <AccountId>44e64350-0298-46a0-9d03-7d0a58298211</AccountId>
+    <BankAccountId>2a25419e-e387-49c6-8aaf-7c44f1591b4f</BankAccountId>
+    <BankName>HSBC Bank Canada</BankName>
+    <BranchNumber>00018</BranchNumber>
+    <InstitutionNumber>002</InstitutionNumber>
+    <AccountNumber>9031926</AccountNumber>
+    <HolderName>First Name Last Name</HolderName>
+    <AccountOpenDate>2008-06-21T10:12:12</AccountOpenDate>
+    <CountryCode>CA</CountryCode>
+    <IsPrimary>true</IsPrimary>
+  </AddBankAccount>
+  <RiskAddBankAccount>
+    <AccountId>44e64350-0298-46a0-9d03-7d0a58298211</AccountId>
+    <BankAccountId>2a25419e-e387-49c6-8aaf-7c44f1591b4f</BankAccountId>
+    <BankName>HSBC Bank Canada</BankName>
+    <AccountNumber>9031926</AccountNumber>
+  </RiskAddBankAccount>
+  <SaveEmploymentDetails>
+    <AccountId>44e64350-0298-46a0-9d03-7d0a58298211</AccountId>
+    <NetMonthlyIncome>1500</NetMonthlyIncome>
+    <IncomeFrequency>Monthly</IncomeFrequency>
+    <NextPayDate>2012-07-01</NextPayDate>
+    <Status>EmployedFullTime</Status>
+    <EmploymentIndustry>HotelsRestaurants</EmploymentIndustry>
+    <EmploymentPosition>Healthcare</EmploymentPosition>
+    <EmployerName>Wonga</EmployerName>
+    <StartDate>2011-06-21</StartDate>
+    <PaidDirectDeposit>true</PaidDirectDeposit>
+  </SaveEmploymentDetails>
+  <VerifyMobilePhone>
+    <VerificationId>9cb89f90-dd8d-475e-9988-6ab68700da6b</VerificationId>
+    <AccountId>44e64350-0298-46a0-9d03-7d0a58298211</AccountId>
+    <MobilePhone>9876543219</MobilePhone>
+    <Forename>Forename</Forename>
+  </VerifyMobilePhone>
+  <CompleteMobilePhoneVerification>
+    <VerificationId>9cb89f90-dd8d-475e-9988-6ab68700da6b</VerificationId>
+    <Pin>0000</Pin>
+  </CompleteMobilePhoneVerification>
+  <RiskAddMobilePhone>
+    <AccountId>44e64350-0298-46a0-9d03-7d0a58298211</AccountId>
+    <MobilePhone>9876543219</MobilePhone>
+  </RiskAddMobilePhone>
+</Messages>
+Wonga.QA.Framework.Api.ApiResponse: <Messages xmlns="http://www.wonga.com/api/3.0">
+  <ResponseMessage RequestType="CreateAccount" />
+  <ResponseMessage RequestType="SaveSocialDetails" />
+  <ResponseMessage RequestType="SaveContactPreferences" />
+  <ResponseMessage RequestType="SavePasswordRecoveryDetails" />
+  <ResponseMessage RequestType="SaveCustomerDetails" />
+  <ResponseMessage RequestType="RiskSaveCustomerDetails" />
+  <ResponseMessage RequestType="SaveCustomerAddress" />
+  <ResponseMessage RequestType="RiskSaveCustomerAddress" />
+  <ResponseMessage RequestType="AddBankAccount" />
+  <ResponseMessage RequestType="RiskAddBankAccount" />
+  <ResponseMessage RequestType="SaveEmploymentDetails" />
+  <ResponseMessage RequestType="VerifyMobilePhone" />
+  <ResponseMessage RequestType="CompleteMobilePhoneVerification" />
+  <ResponseMessage RequestType="RiskAddMobilePhone" />
+</Messages>
+Simple.Data.Ado: 
+Text
+select [ops].[Accounts].[AccountId],[ops].[Accounts].[ExternalId],[ops].[Accounts].[Login],[ops].[Accounts].[CreatedOn],[ops].[Accounts].[Password],[ops].[Accounts].[Salt],[ops].[Accounts].[InitialDataMigratedOn] from [ops].[Accounts] WHERE [ops].[Accounts].[ExternalId] = @p1
+@p1 (Guid) = 44e64350-0298-46a0-9d03-7d0a58298211
+
+Simple.Data.Ado: 
+Text
+select [payment].[AccountPreferences].[AccountPreferenceId],[payment].[AccountPreferences].[AccountId],[payment].[AccountPreferences].[PrimaryBankAccountId],[payment].[AccountPreferences].[PrimaryPaymentCardId],[payment].[AccountPreferences].[TimeZone],[payment].[AccountPreferences].[IsHardship],[payment].[AccountPreferences].[CreatedOn],[payment].[AccountPreferences].[RemindBeforeEndLoan],[payment].[AccountPreferences].[IsDispute],[payment].[AccountPreferences].[Ccin],[payment].[AccountPreferences].[CanAddBankAccount],[payment].[AccountPreferences].[IncomeFrequency],[payment].[AccountPreferences].[NextPayDate],[payment].[AccountPreferences].[CreditLimit],[payment].[AccountPreferences].[CashoutPaymentMethodId],[payment].[AccountPreferences].[AccountReference] from [payment].[AccountPreferences] WHERE [payment].[AccountPreferences].[AccountId] = @p1
+@p1 (Guid) = 44e64350-0298-46a0-9d03-7d0a58298211
+
+Simple.Data.Ado: 
+Text
+select [risk].[RiskAccounts].[RiskAccountId],[risk].[RiskAccounts].[AccountId],[risk].[RiskAccounts].[AccountRank],[risk].[RiskAccounts].[DateOfBirth],[risk].[RiskAccounts].[AddressId],[risk].[RiskAccounts].[Postcode],[risk].[RiskAccounts].[IsDebtSale],[risk].[RiskAccounts].[CreditLimit],[risk].[RiskAccounts].[ConfirmedFraud],[risk].[RiskAccounts].[Surname],[risk].[RiskAccounts].[IsHardship],[risk].[RiskAccounts].[IsDispute],[risk].[RiskAccounts].[SubRegion],[risk].[RiskAccounts].[DoNotRelend],[risk].[RiskAccounts].[IsMale],[risk].[RiskAccounts].[MaidenName],[risk].[RiskAccounts].[Forename],[risk].[RiskAccounts].[Middlename],[risk].[RiskAccounts].[HasAccount],[risk].[RiskAccounts].[AtAddressFrom],[risk].[RiskAccounts].[AddressUniqueHash],[risk].[RiskAccounts].[isChargeBack] from [risk].[RiskAccounts] WHERE [risk].[RiskAccounts].[AccountId] = @p1
+@p1 (Guid) = 44e64350-0298-46a0-9d03-7d0a58298211
+
+Simple.Data.Ado: 
+Text
+select [risk].[RiskAccounts].[RiskAccountId],[risk].[RiskAccounts].[AccountId],[risk].[RiskAccounts].[AccountRank],[risk].[RiskAccounts].[DateOfBirth],[risk].[RiskAccounts].[AddressId],[risk].[RiskAccounts].[Postcode],[risk].[RiskAccounts].[IsDebtSale],[risk].[RiskAccounts].[CreditLimit],[risk].[RiskAccounts].[ConfirmedFraud],[risk].[RiskAccounts].[Surname],[risk].[RiskAccounts].[IsHardship],[risk].[RiskAccounts].[IsDispute],[risk].[RiskAccounts].[SubRegion],[risk].[RiskAccounts].[DoNotRelend],[risk].[RiskAccounts].[IsMale],[risk].[RiskAccounts].[MaidenName],[risk].[RiskAccounts].[Forename],[risk].[RiskAccounts].[Middlename],[risk].[RiskAccounts].[HasAccount],[risk].[RiskAccounts].[AtAddressFrom],[risk].[RiskAccounts].[AddressUniqueHash],[risk].[RiskAccounts].[isChargeBack] from [risk].[RiskAccounts] WHERE [risk].[RiskAccounts].[AccountId] = @p1
+@p1 (Guid) = 44e64350-0298-46a0-9d03-7d0a58298211
+
+Simple.Data.Ado: 
+Text
+select [risk].[RiskAccounts].[RiskAccountId],[risk].[RiskAccounts].[AccountId],[risk].[RiskAccounts].[AccountRank],[risk].[RiskAccounts].[DateOfBirth],[risk].[RiskAccounts].[AddressId],[risk].[RiskAccounts].[Postcode],[risk].[RiskAccounts].[IsDebtSale],[risk].[RiskAccounts].[CreditLimit],[risk].[RiskAccounts].[ConfirmedFraud],[risk].[RiskAccounts].[Surname],[risk].[RiskAccounts].[IsHardship],[risk].[RiskAccounts].[IsDispute],[risk].[RiskAccounts].[SubRegion],[risk].[RiskAccounts].[DoNotRelend],[risk].[RiskAccounts].[IsMale],[risk].[RiskAccounts].[MaidenName],[risk].[RiskAccounts].[Forename],[risk].[RiskAccounts].[Middlename],[risk].[RiskAccounts].[HasAccount],[risk].[RiskAccounts].[AtAddressFrom],[risk].[RiskAccounts].[AddressUniqueHash],[risk].[RiskAccounts].[isChargeBack] from [risk].[RiskAccounts] WHERE [risk].[RiskAccounts].[AccountId] = @p1
+@p1 (Guid) = 44e64350-0298-46a0-9d03-7d0a58298211
+
+SELECT [t0].[BankAccountId], [t0].[ExternalId], [t0].[BankName], [t0].[BankCode], [t0].[AccountNumber], [t0].[AccountType], [t0].[HolderName], [t0].[AccountOpenDate], [t0].[CountryCode], [t0].[ValidatedOn], [t0].[ValidateFailedOn], [t0].[DeletedOn], [t0].[CreatedOn], [t0].[Version]
+FROM [payment].[BankAccountsBase] AS [t0]
+WHERE [t0].[ExternalId] = @p0
+-- @p0: Input UniqueIdentifier (Size = -1; Prec = 0; Scale = 0) [2a25419e-e387-49c6-8aaf-7c44f1591b4f]
+-- Context: SqlProvider(Sql2008) Model: AttributedMetaModel Build: 4.0.30319.1
+
+SELECT [t0].[CalendarDateId], [t0].[Date], [t0].[IsBankHoliday], [t0].[CreatedOn]
+FROM [payment].[CalendarDates] AS [t0]
+WHERE ([t0].[IsBankHoliday] = 1) AND ([t0].[Date] >= @p0) AND ([t0].[Date] < @p1)
+ORDER BY [t0].[Date]
+-- @p0: Input Date (Size = -1; Prec = 0; Scale = 0) [21/06/2012 10:12:19]
+-- @p1: Input Date (Size = -1; Prec = 0; Scale = 0) [22/07/2012 10:12:19]
+-- Context: SqlProvider(Sql2008) Model: AttributedMetaModel Build: 4.0.30319.1
+
+Wonga.QA.Framework.Api.ApiEndpoint: <Messages xmlns="http://www.wonga.com/api/3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SubmitApplicationBehaviour>
+    <ApplicationId>b31d32e3-6500-43fd-ab66-199ea857ca8d</ApplicationId>
+    <TermSliderPosition>Max</TermSliderPosition>
+    <AmountSliderPosition>Max</AmountSliderPosition>
+  </SubmitApplicationBehaviour>
+  <SubmitClientWatermark>
+    <AccountId>44e64350-0298-46a0-9d03-7d0a58298211</AccountId>
+    <ApplicationId>b31d32e3-6500-43fd-ab66-199ea857ca8d</ApplicationId>
+    <ClientIPAddress>127.0.0.1</ClientIPAddress>
+    <BlackboxData>Unknown</BlackboxData>
+  </SubmitClientWatermark>
+  <CreateFixedTermLoanApplication>
+    <AccountId>44e64350-0298-46a0-9d03-7d0a58298211</AccountId>
+    <ApplicationId>b31d32e3-6500-43fd-ab66-199ea857ca8d</ApplicationId>
+    <PaymentCardId>d53d24a0-5206-48b0-b374-eae6b85f8028</PaymentCardId>
+    <BankAccountId>2a25419e-e387-49c6-8aaf-7c44f1591b4f</BankAccountId>
+    <Currency>CAD</Currency>
+    <PromiseDate>2012-06-27</PromiseDate>
+    <LoanAmount>100</LoanAmount>
+    <PromoCodeId xsi:nil="true" />
+    <AffiliateId xsi:nil="true" />
+    <Province>ON</Province>
+  </CreateFixedTermLoanApplication>
+  <RiskCreateFixedTermLoanApplication>
+    <AccountId>44e64350-0298-46a0-9d03-7d0a58298211</AccountId>
+    <ApplicationId>b31d32e3-6500-43fd-ab66-199ea857ca8d</ApplicationId>
+    <PaymentCardId>bf70db11-3e06-4880-9c7f-294b8f9c3e47</PaymentCardId>
+    <BankAccountId>2a25419e-e387-49c6-8aaf-7c44f1591b4f</BankAccountId>
+    <Currency>CAD</Currency>
+    <PromiseDate>2012-06-27</PromiseDate>
+    <LoanAmount>100</LoanAmount>
+  </RiskCreateFixedTermLoanApplication>
+  <VerifyFixedTermLoan>
+    <AccountId>44e64350-0298-46a0-9d03-7d0a58298211</AccountId>
+    <ApplicationId>b31d32e3-6500-43fd-ab66-199ea857ca8d</ApplicationId>
+  </VerifyFixedTermLoan>
+</Messages>
+Wonga.QA.Framework.Api.ApiResponse: <Messages xmlns="http://www.wonga.com/api/3.0">
+  <ResponseMessage RequestType="SubmitApplicationBehaviour" />
+  <ResponseMessage RequestType="SubmitClientWatermark" />
+  <ResponseMessage RequestType="CreateFixedTermLoanApplication" />
+  <ResponseMessage RequestType="RiskCreateFixedTermLoanApplication" />
+  <ResponseMessage RequestType="VerifyFixedTermLoan" />
+</Messages>
+Simple.Data.Ado: 
+Text
+select COUNT(*) from [risk].[RiskApplications] WHERE [risk].[RiskApplications].[ApplicationId] = @p1
+@p1 (Guid) = b31d32e3-6500-43fd-ab66-199ea857ca8d
+
+Wonga.QA.Framework.Api.ApiEndpoint: <Messages xmlns="http://www.wonga.com/api/3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <GetApplicationDecision>
+    <ApplicationId>b31d32e3-6500-43fd-ab66-199ea857ca8d</ApplicationId>
+  </GetApplicationDecision>
+</Messages>
+Wonga.QA.Framework.Api.ApiResponse: <Messages xmlns="http://www.wonga.com/api/3.0">
+  <ErrorResponseMessage RequestType="GetApplicationDecision">
+    <Errors>
+      <Error>
+        <Name>Risk_Application_NotFound</Name>
+      </Error>
+    </Errors>
+  </ErrorResponseMessage>
+</Messages>
+Wonga.QA.Framework.Api.ApiEndpoint: <Messages xmlns="http://www.wonga.com/api/3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <GetApplicationDecision>
+    <ApplicationId>b31d32e3-6500-43fd-ab66-199ea857ca8d</ApplicationId>
+  </GetApplicationDecision>
+</Messages>
+Wonga.QA.Framework.Api.ApiResponse: <Messages xmlns="http://www.wonga.com/api/3.0">
+  <GetApplicationDecisionResponse RequestType="GetApplicationDecision">
+    <ApplicationDecisionStatus>Declined</ApplicationDecisionStatus>
+    <FailedCheckpoint>Repayment prediction check</FailedCheckpoint>
+    <FailReason>This application did not meet our criteria</FailReason>
+    <DeclineAdviceKey>RepaymentAbilityAdvice</DeclineAdviceKey>
+    <TimeToComplete />
+  </GetApplicationDecisionResponse>
+</Messages>
+SELECT COUNT(*) AS [value]
+FROM [risk].[RiskWorkflows] AS [t0]
+INNER JOIN [risk].[RiskDecisionData] AS [t1] ON [t0].[RiskWorkflowId] = [t1].[RiskWorkflowId]
+WHERE [t0].[ApplicationId] = @p0
+-- @p0: Input UniqueIdentifier (Size = -1; Prec = 0; Scale = 0) [b31d32e3-6500-43fd-ab66-199ea857ca8d]
+-- Context: SqlProvider(Sql2008) Model: AttributedMetaModel Build: 4.0.30319.1
+
+SELECT [t0].[ServiceConfigurationId], [t0].[Key], [t0].[Value]
+FROM [ops].[ServiceConfigurations] AS [t0]
+WHERE [t0].[Key] = @p0
+-- @p0: Input VarChar (Size = 8000; Prec = 0; Scale = 0) [Risk.UseScorecardModel]
+-- Context: SqlProvider(Sql2008) Model: AttributedMetaModel Build: 4.0.30319.1
+
+UPDATE [ops].[ServiceConfigurations]
+SET [Value] = @p2
+WHERE ([ServiceConfigurationId] = @p0) AND ([Key] = @p1)
+-- @p0: Input Int (Size = -1; Prec = 0; Scale = 0) [427]
+-- @p1: Input VarChar (Size = 8000; Prec = 0; Scale = 0) [Risk.UseScorecardModel]
+-- @p2: Input VarChar (Size = 8000; Prec = 0; Scale = 0) [True]
+-- Context: SqlProvider(Sql2008) Model: AttributedMetaModel Build: 4.0.30319.1
+
+SELECT [t0].[CalendarDateId], [t0].[Date], [t0].[IsBankHoliday], [t0].[CreatedOn]
+FROM [payment].[CalendarDates] AS [t0]
+WHERE ([t0].[IsBankHoliday] = 1) AND ([t0].[Date] >= @p0) AND ([t0].[Date] < @p1)
+ORDER BY [t0].[Date]
+-- @p0: Input Date (Size = -1; Prec = 0; Scale = 0) [21/06/2012 10:12:21]
+-- @p1: Input Date (Size = -1; Prec = 0; Scale = 0) [22/07/2012 10:12:21]
+-- Context: SqlProvider(Sql2008) Model: AttributedMetaModel Build: 4.0.30319.1
+
+Wonga.QA.Framework.Api.ApiEndpoint: <Messages xmlns="http://www.wonga.com/api/3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SubmitApplicationBehaviour>
+    <ApplicationId>ad56c808-7e26-4619-af33-9a3422962d47</ApplicationId>
+    <TermSliderPosition>Min</TermSliderPosition>
+    <AmountSliderPosition>Custom</AmountSliderPosition>
+  </SubmitApplicationBehaviour>
+  <SubmitClientWatermark>
+    <AccountId>44e64350-0298-46a0-9d03-7d0a58298211</AccountId>
+    <ApplicationId>ad56c808-7e26-4619-af33-9a3422962d47</ApplicationId>
+    <ClientIPAddress>127.0.0.1</ClientIPAddress>
+    <BlackboxData>Unknown</BlackboxData>
+  </SubmitClientWatermark>
+  <CreateFixedTermLoanApplication>
+    <AccountId>44e64350-0298-46a0-9d03-7d0a58298211</AccountId>
+    <ApplicationId>ad56c808-7e26-4619-af33-9a3422962d47</ApplicationId>
+    <PaymentCardId>76d3cc33-f019-4f51-b8f9-649b6c1670d7</PaymentCardId>
+    <BankAccountId>2a25419e-e387-49c6-8aaf-7c44f1591b4f</BankAccountId>
+    <Currency>CAD</Currency>
+    <PromiseDate>2012-07-02</PromiseDate>
+    <LoanAmount>200</LoanAmount>
+    <PromoCodeId xsi:nil="true" />
+    <AffiliateId xsi:nil="true" />
+    <Province>ON</Province>
+  </CreateFixedTermLoanApplication>
+  <RiskCreateFixedTermLoanApplication>
+    <AccountId>44e64350-0298-46a0-9d03-7d0a58298211</AccountId>
+    <ApplicationId>ad56c808-7e26-4619-af33-9a3422962d47</ApplicationId>
+    <PaymentCardId>817f4f92-f7c2-4f76-8b2b-4d846289e894</PaymentCardId>
+    <BankAccountId>2a25419e-e387-49c6-8aaf-7c44f1591b4f</BankAccountId>
+    <Currency>CAD</Currency>
+    <PromiseDate>2012-07-02</PromiseDate>
+    <LoanAmount>200</LoanAmount>
+  </RiskCreateFixedTermLoanApplication>
+  <VerifyFixedTermLoan>
+    <AccountId>44e64350-0298-46a0-9d03-7d0a58298211</AccountId>
+    <ApplicationId>ad56c808-7e26-4619-af33-9a3422962d47</ApplicationId>
+  </VerifyFixedTermLoan>
+</Messages>
+Wonga.QA.Framework.Api.ApiResponse: <Messages xmlns="http://www.wonga.com/api/3.0">
+  <ResponseMessage RequestType="SubmitApplicationBehaviour" />
+  <ResponseMessage RequestType="SubmitClientWatermark" />
+  <ResponseMessage RequestType="CreateFixedTermLoanApplication" />
+  <ResponseMessage RequestType="RiskCreateFixedTermLoanApplication" />
+  <ResponseMessage RequestType="VerifyFixedTermLoan" />
+</Messages>
+Simple.Data.Ado: 
+Text
+select COUNT(*) from [risk].[RiskApplications] WHERE [risk].[RiskApplications].[ApplicationId] = @p1
+@p1 (Guid) = ad56c808-7e26-4619-af33-9a3422962d47
+
+Wonga.QA.Framework.Api.ApiEndpoint: <Messages xmlns="http://www.wonga.com/api/3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <GetApplicationDecision>
+    <ApplicationId>ad56c808-7e26-4619-af33-9a3422962d47</ApplicationId>
+  </GetApplicationDecision>
+</Messages>
+Wonga.QA.Framework.Api.ApiResponse: <Messages xmlns="http://www.wonga.com/api/3.0">
+  <ErrorResponseMessage RequestType="GetApplicationDecision">
+    <Errors>
+      <Error>
+        <Name>Risk_Application_NotFound</Name>
+      </Error>
+    </Errors>
+  </ErrorResponseMessage>
+</Messages>
+Wonga.QA.Framework.Api.ApiEndpoint: <Messages xmlns="http://www.wonga.com/api/3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <GetApplicationDecision>
+    <ApplicationId>ad56c808-7e26-4619-af33-9a3422962d47</ApplicationId>
+  </GetApplicationDecision>
+</Messages>
+Wonga.QA.Framework.Api.ApiResponse: <Messages xmlns="http://www.wonga.com/api/3.0">
+  <GetApplicationDecisionResponse RequestType="GetApplicationDecision">
+    <ApplicationDecisionStatus>WaitForData</ApplicationDecisionStatus>
+    <TimeToComplete />
+  </GetApplicationDecisionResponse>
+</Messages>
+Wonga.QA.Framework.Api.ApiEndpoint: <Messages xmlns="http://www.wonga.com/api/3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <GetApplicationDecision>
+    <ApplicationId>ad56c808-7e26-4619-af33-9a3422962d47</ApplicationId>
+  </GetApplicationDecision>
+</Messages>
+Wonga.QA.Framework.Api.ApiResponse: <Messages xmlns="http://www.wonga.com/api/3.0">
+  <GetApplicationDecisionResponse RequestType="GetApplicationDecision">
+    <ApplicationDecisionStatus>Pending</ApplicationDecisionStatus>
+    <PendingCheckpoints>
+      <PendingCheckpoint>dde7a3be-529d-4bd3-b811-50fdf7381856</PendingCheckpoint>
+    </PendingCheckpoints>
+    <TimeToComplete />
+  </GetApplicationDecisionResponse>
+</Messages>
+Wonga.QA.Framework.Api.ApiEndpoint: <Messages xmlns="http://www.wonga.com/api/3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <GetApplicationDecision>
+    <ApplicationId>ad56c808-7e26-4619-af33-9a3422962d47</ApplicationId>
+  </GetApplicationDecision>
+</Messages>
+Wonga.QA.Framework.Api.ApiResponse: <Messages xmlns="http://www.wonga.com/api/3.0">
+  <GetApplicationDecisionResponse RequestType="GetApplicationDecision">
+    <ApplicationDecisionStatus>Declined</ApplicationDecisionStatus>
+    <FailedCheckpoint>Repayment prediction check</FailedCheckpoint>
+    <FailReason>This application did not meet our criteria</FailReason>
+    <DeclineAdviceKey>RepaymentAbilityAdvice</DeclineAdviceKey>
+    <TimeToComplete />
+  </GetApplicationDecisionResponse>
+</Messages>
+SELECT COUNT(*) AS [value]
+FROM [risk].[RiskWorkflows] AS [t0]
+INNER JOIN [risk].[RiskDecisionData] AS [t1] ON [t0].[RiskWorkflowId] = [t1].[RiskWorkflowId]
+WHERE [t0].[ApplicationId] = @p0
+-- @p0: Input UniqueIdentifier (Size = -1; Prec = 0; Scale = 0) [ad56c808-7e26-4619-af33-9a3422962d47]
+-- Context: SqlProvider(Sql2008) Model: AttributedMetaModel Build: 4.0.30319.1
+
+SELECT [t0].[CustomerDetailId], [t0].[AccountId], [t0].[DateOfBirth], [t0].[Gender], [t0].[Title], [t0].[Forename], [t0].[Surname], [t0].[MiddleName], [t0].[HomePhone], [t0].[MobilePhone], [t0].[WorkPhone], [t0].[Email], [t0].[CreatedOn], [t0].[NationalNumber], [t0].[MarriedInCommunityProperty], [t0].[HasAccount], [t0].[MaidenName]
+FROM [comms].[CustomerDetails] AS [t0]
+WHERE [t0].[AccountId] = @p0
+-- @p0: Input UniqueIdentifier (Size = -1; Prec = 0; Scale = 0) [44e64350-0298-46a0-9d03-7d0a58298211]
+-- Context: SqlProvider(Sql2008) Model: AttributedMetaModel Build: 4.0.30319.1
+
+UPDATE [comms].[CustomerDetails]
+SET [Forename] = @p14
+WHERE ([CustomerDetailId] = @p0) AND ([AccountId] = @p1) AND ([DateOfBirth] = @p2) AND ([Gender] = @p3) AND ([Title] = @p4) AND ([Forename] = @p5) AND ([Surname] = @p6) AND ([MiddleName] = @p7) AND ([HomePhone] = @p8) AND ([MobilePhone] = @p9) AND ([WorkPhone] = @p10) AND ([Email] = @p11) AND ([CreatedOn] = @p12) AND ([NationalNumber] = @p13) AND ([MarriedInCommunityProperty] IS NULL) AND ([HasAccount] = 1) AND ([MaidenName] IS NULL)
+-- @p0: Input Int (Size = -1; Prec = 0; Scale = 0) [17592]
+-- @p1: Input UniqueIdentifier (Size = -1; Prec = 0; Scale = 0) [44e64350-0298-46a0-9d03-7d0a58298211]
+-- @p2: Input DateTime (Size = -1; Prec = 0; Scale = 0) [03/03/1973 00:00:00]
+-- @p3: Input Int (Size = -1; Prec = 0; Scale = 0) [2]
+-- @p4: Input Int (Size = -1; Prec = 0; Scale = 0) [6]
+-- @p5: Input NVarChar (Size = 4000; Prec = 0; Scale = 0) [DAWN]
+-- @p6: Input NVarChar (Size = 4000; Prec = 0; Scale = 0) [KALINICH]
+-- @p7: Input NVarChar (Size = 4000; Prec = 0; Scale = 0) [TESTRepaymentPredictionPositive]
+-- @p8: Input VarChar (Size = 8000; Prec = 0; Scale = 0) [6471211149]
+-- @p9: Input VarChar (Size = 8000; Prec = 0; Scale = 0) [9876543219]
+-- @p10: Input VarChar (Size = 8000; Prec = 0; Scale = 0) [0210000000]
+-- @p11: Input NVarChar (Size = 4000; Prec = 0; Scale = 0) [qa.wonga.comTEAMCITY1179fcedae-7217-4a9f-a6b3-909f6f28944e@gmail.com]
+-- @p12: Input DateTime (Size = -1; Prec = 0; Scale = 0) [21/06/2012 09:12:17]
+-- @p13: Input NVarChar (Size = 4000; Prec = 0; Scale = 0) []
+-- @p14: Input NVarChar (Size = 4000; Prec = 0; Scale = 0) [dzovAo]
+-- Context: SqlProvider(Sql2008) Model: AttributedMetaModel Build: 4.0.30319.1
+
+SELECT [t0].[CustomerDetailId], [t0].[AccountId], [t0].[DateOfBirth], [t0].[Gender], [t0].[Title], [t0].[Forename], [t0].[Surname], [t0].[MiddleName], [t0].[HomePhone], [t0].[MobilePhone], [t0].[WorkPhone], [t0].[Email], [t0].[CreatedOn], [t0].[NationalNumber], [t0].[MarriedInCommunityProperty], [t0].[HasAccount], [t0].[MaidenName]
+FROM [comms].[CustomerDetails] AS [t0]
+WHERE [t0].[AccountId] = @p0
+-- @p0: Input UniqueIdentifier (Size = -1; Prec = 0; Scale = 0) [44e64350-0298-46a0-9d03-7d0a58298211]
+-- Context: SqlProvider(Sql2008) Model: AttributedMetaModel Build: 4.0.30319.1
+
+UPDATE [comms].[CustomerDetails]
+SET [Surname] = @p14
+WHERE ([CustomerDetailId] = @p0) AND ([AccountId] = @p1) AND ([DateOfBirth] = @p2) AND ([Gender] = @p3) AND ([Title] = @p4) AND ([Forename] = @p5) AND ([Surname] = @p6) AND ([MiddleName] = @p7) AND ([HomePhone] = @p8) AND ([MobilePhone] = @p9) AND ([WorkPhone] = @p10) AND ([Email] = @p11) AND ([CreatedOn] = @p12) AND ([NationalNumber] = @p13) AND ([MarriedInCommunityProperty] IS NULL) AND ([HasAccount] = 1) AND ([MaidenName] IS NULL)
+-- @p0: Input Int (Size = -1; Prec = 0; Scale = 0) [17592]
+-- @p1: Input UniqueIdentifier (Size = -1; Prec = 0; Scale = 0) [44e64350-0298-46a0-9d03-7d0a58298211]
+-- @p2: Input DateTime (Size = -1; Prec = 0; Scale = 0) [03/03/1973 00:00:00]
+-- @p3: Input Int (Size = -1; Prec = 0; Scale = 0) [2]
+-- @p4: Input Int (Size = -1; Prec = 0; Scale = 0) [6]
+-- @p5: Input NVarChar (Size = 4000; Prec = 0; Scale = 0) [dzovAo]
+-- @p6: Input NVarChar (Size = 4000; Prec = 0; Scale = 0) [KALINICH]
+-- @p7: Input NVarChar (Size = 4000; Prec = 0; Scale = 0) [TESTRepaymentPredictionPositive]
+-- @p8: Input VarChar (Size = 8000; Prec = 0; Scale = 0) [6471211149]
+-- @p9: Input VarChar (Size = 8000; Prec = 0; Scale = 0) [9876543219]
+-- @p10: Input VarChar (Size = 8000; Prec = 0; Scale = 0) [0210000000]
+-- @p11: Input NVarChar (Size = 4000; Prec = 0; Scale = 0) [qa.wonga.comTEAMCITY1179fcedae-7217-4a9f-a6b3-909f6f28944e@gmail.com]
+-- @p12: Input DateTime (Size = -1; Prec = 0; Scale = 0) [21/06/2012 09:12:17]
+-- @p13: Input NVarChar (Size = 4000; Prec = 0; Scale = 0) []
+-- @p14: Input NVarChar (Size = 4000; Prec = 0; Scale = 0) [GBjUBXymJ]
+-- Context: SqlProvider(Sql2008) Model: AttributedMetaModel Build: 4.0.30319.1
+
+SELECT [t0].[AccountPreferenceId], [t0].[AccountId], [t0].[PrimaryBankAccountId], [t0].[PrimaryPaymentCardId], [t0].[TimeZone], [t0].[IsHardship], [t0].[CreatedOn], [t0].[RemindBeforeEndLoan], [t0].[IsDispute], [t0].[Ccin], [t0].[CanAddBankAccount], [t0].[IncomeFrequency], [t0].[NextPayDate], [t0].[CreditLimit], [t0].[CashoutPaymentMethodId]
+FROM [payment].[AccountPreferences] AS [t0]
+WHERE [t0].[AccountId] = @p0
+-- @p0: Input UniqueIdentifier (Size = -1; Prec = 0; Scale = 0) [44e64350-0298-46a0-9d03-7d0a58298211]
+-- Context: SqlProvider(Sql2008) Model: AttributedMetaModel Build: 4.0.30319.1
+
+UPDATE [payment].[AccountPreferences]
+SET [Ccin] = @p9
+WHERE ([AccountPreferenceId] = @p0) AND ([AccountId] = @p1) AND ([PrimaryBankAccountId] = @p2) AND ([PrimaryPaymentCardId] IS NULL) AND ([TimeZone] = @p3) AND (NOT ([IsHardship] = 1)) AND ([CreatedOn] = @p4) AND (NOT ([RemindBeforeEndLoan] = 1)) AND (NOT ([IsDispute] = 1)) AND ([Ccin] = @p5) AND ([CanAddBankAccount] = 1) AND ([IncomeFrequency] = @p6) AND ([NextPayDate] = @p7) AND ([CreditLimit] = @p8) AND ([CashoutPaymentMethodId] IS NULL)
+-- @p0: Input Int (Size = -1; Prec = 0; Scale = 0) [17559]
+-- @p1: Input UniqueIdentifier (Size = -1; Prec = 0; Scale = 0) [44e64350-0298-46a0-9d03-7d0a58298211]
+-- @p2: Input Int (Size = -1; Prec = 0; Scale = 0) [16937]
+-- @p3: Input Int (Size = -1; Prec = 0; Scale = 0) [36]
+-- @p4: Input DateTime (Size = -1; Prec = 0; Scale = 0) [21/06/2012 09:12:15]
+-- @p5: Input NVarChar (Size = 4000; Prec = 0; Scale = 0) [VWK9958664]
+-- @p6: Input Int (Size = -1; Prec = 0; Scale = 0) [1]
+-- @p7: Input Date (Size = -1; Prec = 0; Scale = 0) [01/07/2012 00:00:00]
+-- @p8: Input Decimal (Size = -1; Prec = 18; Scale = 0) [400]
+-- @p9: Input NVarChar (Size = 4000; Prec = 0; Scale = 0) [ScrubbedCcin_9279781]
+-- Context: SqlProvider(Sql2008) Model: AttributedMetaModel Build: 4.0.30319.1
+
+SELECT [t0].[ServiceConfigurationId], [t0].[Key], [t0].[Value]
+FROM [ops].[ServiceConfigurations] AS [t0]
+WHERE [t0].[Key] = @p0
+-- @p0: Input VarChar (Size = 8000; Prec = 0; Scale = 0) [Risk.UseScorecardModel]
+-- Context: SqlProvider(Sql2008) Model: AttributedMetaModel Build: 4.0.30319.1
+
 ]]></stack-trace>
                 </failure>
               </test-case>
