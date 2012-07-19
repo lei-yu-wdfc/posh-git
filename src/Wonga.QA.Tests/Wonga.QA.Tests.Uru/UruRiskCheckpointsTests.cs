@@ -14,7 +14,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.Uru
 {
     [Parallelizable(TestScope.All)]
-    public class CheckpointsTests
+    public class UruRiskCheckpointsTests
     {
 
         #region Main Applicant

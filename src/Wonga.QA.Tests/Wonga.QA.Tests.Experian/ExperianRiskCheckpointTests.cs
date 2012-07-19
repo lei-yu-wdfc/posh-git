@@ -16,7 +16,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.Experian
 {
     [Parallelizable(TestScope.All)]
-    public class CheckpointsTests
+    public class ExperianRiskCheckpointTests
     {
         private const String GoodCompanyRegNumber = "00000086";
 

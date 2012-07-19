@@ -16,7 +16,7 @@ namespace Wonga.QA.Tests.CallReport
 {
     [Parallelizable(TestScope.All)]
     [AUT(AUT.Wb,AUT.Uk)]
-    public class CheckpointsTests
+    public class CallReportRiskCheckpointTests
     {
         private const String GoodCompanyRegNumber = "00000086";
 

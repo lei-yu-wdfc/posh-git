@@ -37,7 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="CardPaymentServiceTests.cs" />
-    <Compile Include="CheckpointsTests.cs" />
+    <Compile Include="CardPaymentRiskCheckpointTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
