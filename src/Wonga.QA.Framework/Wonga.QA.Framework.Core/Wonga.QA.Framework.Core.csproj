@@ -46,6 +46,7 @@
     <Compile Include="OldConfigJustForRefrence.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Do.cs" />
+    <Compile Include="SettingsManager.cs" />
     <Compile Include="XmlProcessor.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -35,49 +35,24 @@ namespace Wonga.QA.Framework.Core
         public static PrepaidAdminConfig PrepaidAdminUI { get; set; }
         public static CommonApiConfig CommonApi { get; set; }
         private static XDocument _settings;
-        private static string _testTarget;
-
-        private static DirectoryInfo _configsDirectory;
-        private static DirectoryInfo _executingDirectory;
-        private static DirectoryInfo _appDataDirectory;
-
-        private const string CONFIG_FOLDER_NAME = @"config";
-        private const string RUN_FOLDER_NAME = @"run";
-
-        private static string GetSettingFromXml(string xpath)
-        {
-            var element = _settings.XPathSelectElement(xpath);
-            var encrypted = element.Attribute("E") != null ? element.Attribute("E").Value : "false";
-            if (encrypted == "true")
-                return Class.Decrypt(element.Value);
-            return element.Value;
-        }
-
-        private static string GetSettingAttributeFromXml(string xpath, string attr)
-        {
-            return _settings.XPathSelectElement(xpath).Attribute(attr).Value;
-        }
 
         static Config()
         {
             Configure();
         }
 
-        public static void Configure(string executingDirectoryPath = null, string configsDirectoryPath = null, string testTarget = null)
+        public static void Configure(string executingDirectoryPath = null, string configsDirectoryPath = null, string appDataDirectoryPath = null, string testTarget = null)
         {
-            _configsDirectory = configsDirectoryPath != null? new DirectoryInfo(configsDirectoryPath) : GetDefaultConfigsFolder();
-            _executingDirectory = executingDirectoryPath != null ? new DirectoryInfo(executingDirectoryPath) : new DirectoryInfo(Environment.CurrentDirectory);
-            _appDataDirectory = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "v3qa"));
-            _testTarget = testTarget ?? GetValue<string>(null, "QAFTestTarget");
-            _settings = GetSettingsFile();
+            var settingsManager = new SettingsManager(executingDirectoryPath, configsDirectoryPath, appDataDirectoryPath, testTarget);
+            _settings = settingsManager.ReadSettings();
             if (_settings == null)
             {
                 Trace.WriteLine(string.Format("WARNING: Configuration file for test target '{0}' was not found.\n" +
                                               "Configs Directory: {1}\n" +
                                               "Executing Directory: {2}", 
-                                                _testTarget, 
-                                                _configsDirectory != null ? _configsDirectory.FullName : "", 
-                                                _executingDirectory != null ? _executingDirectory.FullName : ""));
+                                                settingsManager.TestTarget, 
+                                                settingsManager.ConfigDirectoryPath, 
+                                                settingsManager.ExecutingDirectoryPath));
                 return;
             }
 
@@ -259,74 +234,18 @@ namespace Wonga.QA.Framework.Core
             Trace.WriteLine(AUT, typeof(Config).FullName);
         }
 
-        /// <summary>
-        /// The following method tries to resolve the desired config to use based on the following order
-        /// 1) If it finds one in the current execution directory
-        /// 2) If _testTarget is set or it finds an env var called QAFTestTarget and it can resolve run\config folder it uses that
-        /// 3) If it finds one under %appdata%\v3qa folder.
-        /// </summary>
-        /// <returns></returns>
-        private static XDocument GetSettingsFile()
+        private static string GetSettingFromXml(string xpath)
         {
-            string settings = null;
-            var proc = new XmlProcessor();
-            var appDataConfigs = _appDataDirectory.Exists ? _appDataDirectory.GetFiles("*.v3qaconfig") : new FileInfo[0];
-            var binFolderConfigs = _executingDirectory.GetFiles("*.v3qaconfig");
-            var configFolderConfigs = _configsDirectory == null ? new FileInfo[0] : _configsDirectory.GetFiles("*.v3qaconfig", SearchOption.AllDirectories);
-            var testTargetConfig = configFolderConfigs.FirstOrDefault(x => x.Name == _testTarget + ".v3qaconfig");
-
-            //Figure out which settings file to use based on priority.
-            if (binFolderConfigs.Length > 0)
-                settings = binFolderConfigs[0].FullName;
-            else if (testTargetConfig != null)
-                settings = testTargetConfig.FullName;
-            else if (appDataConfigs.Length > 0)
-                settings = appDataConfigs[0].FullName;
-            
-            //Merge inheriting configs.
-            XDocument doc = XDocument.Load(settings);
-            while(doc.XPathSelectElement("//Include") != null)
-            {
-                var include = doc.XPathSelectElement("//Include");
-                include.Remove();
-                XDocument parentDoc =
-                    XDocument.Load(
-                        configFolderConfigs.First(x => x.FullName.EndsWith(include.Value + ".v3qaconfig")).FullName);
-                var nodesToAddOrReplace = doc.Descendants().Where(x => x.Descendants().Count() == 0 && !string.IsNullOrEmpty(x.Value)).ToList();
-                foreach(var nodeToAddOrReplace in nodesToAddOrReplace)
-                {
-                    var parentNode =
-                        parentDoc.Descendants().FirstOrDefault(
-                            x => x.GetAbsoluteXPath() == nodeToAddOrReplace.GetAbsoluteXPath());
-                    if (parentNode != null)
-                        parentNode.ReplaceWith(nodeToAddOrReplace);
-                    else XmlProcessor.CreateNode(parentDoc, nodeToAddOrReplace.GetAbsoluteXPath()).ReplaceWith(nodeToAddOrReplace);
-                }
-
-                doc = parentDoc;
-            }
-
-            return proc.LoadFromXDoc(doc);
+            var element = _settings.XPathSelectElement(xpath);
+            var encrypted = element.Attribute("E") != null ? element.Attribute("E").Value : "false";
+            if (encrypted == "true")
+                return Class.Decrypt(element.Value);
+            return element.Value;
         }
 
-        /// <summary>
-        /// Hackish way to find out the config folder.
-        /// </summary>
-        /// <returns></returns>
-        private static DirectoryInfo GetDefaultConfigsFolder()
+        private static string GetSettingAttributeFromXml(string xpath, string attr)
         {
-            var runFolder = GetFolderUpwards(new DirectoryInfo(Environment.CurrentDirectory), RUN_FOLDER_NAME);
-            return GetFolderUpwards(runFolder, CONFIG_FOLDER_NAME);
-        }
-
-        private static DirectoryInfo GetFolderUpwards(DirectoryInfo current, string folder)
-        {
-            var dirs = current.GetDirectories(folder);
-            if (dirs.Length == 1)
-                return dirs[0];
-            if (current.Parent == null)
-                return null;
-            return GetFolderUpwards(current.Parent, folder);
+            return _settings.XPathSelectElement(xpath).Attribute(attr).Value;
         }
 
         public static T Throw<T>()
@@ -337,15 +256,6 @@ namespace Wonga.QA.Framework.Core
         public static T ThrowInvalidConfiguration<T>(string reason)
         {
             throw new ConfigurationErrorsException(reason);
-        }
-
-        private static T GetValue<T>(object defaultValue = null, string variable = null)
-        {
-            Object value = Registry.CurrentUser.OpenSubKey("Environment").GetValue(variable ?? typeof(T).Name) ??
-                defaultValue ??
-                default(T);
-
-            return (T)(typeof(T).IsEnum ? Enum.Parse(typeof(T), value.ToString(), true) : Convert.ChangeType(value, typeof(T)));
         }
 
         public class ApiConfig
@@ -602,31 +512,4 @@ namespace Wonga.QA.Framework.Core
             }
         }
     }
-
-    //public static class Connections
-    //{
-    //    private static Dictionary<string, string> DbPortMappings = new Dictionary<string, string>();
-
-    //    static Connections()
-    //    {
-    //        DbPortMappings.Add("WIP2", "8201");
-    //        DbPortMappings.Add("UAT2", "8202");
-    //        DbPortMappings.Add("RC2", "8203");
-    //        DbPortMappings.Add("WIP4", "8204");
-    //        DbPortMappings.Add("UAT4", "8205");
-    //        DbPortMappings.Add("RC4", "8206");
-    //        DbPortMappings.Add("WIP6", "8207");
-    //        DbPortMappings.Add("UAT6", "8208");
-    //        DbPortMappings.Add("RC6", "8209");
-
-    //        DbPortMappings.Add(@"dev-disqlsrv01\dev2", "1433");
-    //    }
-
-    //    public static string GetDbConn(string server, bool proxyMode)
-    //    {
-    //        if (proxyMode && DbPortMappings.ContainsKey(server))
-    //            return string.Format("{0},{1}", server, DbPortMappings[server]);
-    //        return server;
-    //    }
-    //}
 }

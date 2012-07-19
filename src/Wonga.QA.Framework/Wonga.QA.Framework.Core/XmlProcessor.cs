@@ -10,15 +10,15 @@ using System.Xml.XPath;
 
 namespace Wonga.QA.Framework.Core
 {
-    public class XmlProcessor
+    internal class XmlProcessor
     {
         private XDocument _xDocument;
         private static Regex regex;
-        private string _specialString = "%%";
+        private const string TOKENS_STRING = "%%";
 
         public XmlProcessor()
         {
-            regex = new Regex(string.Format("{0}[a-zA-Z0-9+-://@]+{0}", _specialString));
+            regex = new Regex(string.Format("{0}[a-zA-Z0-9+-://@]+{0}", TOKENS_STRING));
         }
 
         public XDocument LoadFromFile(string filepath)
@@ -41,12 +41,12 @@ namespace Wonga.QA.Framework.Core
 
         private string StripSpecialStrings(string val)
         {
-            return val.Replace(_specialString, "");
+            return val.Replace(TOKENS_STRING, "");
         }
 
         private string DecorateSpecialStrings(string val)
         {
-            return string.Format("{0}{1}{0}", _specialString, val);
+            return string.Format("{0}{1}{0}", TOKENS_STRING, val);
         }
 
         public XDocument LoadFromString(string val)

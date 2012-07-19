@@ -11,6 +11,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using Microsoft.Win32;
 
 namespace Wonga.QA.Framework.Core
 {
@@ -36,6 +37,15 @@ namespace Wonga.QA.Framework.Core
             return (id.ToString().Replace("-", string.Empty));
         }
 
+        public static T EnvironmentVariable<T>(object defaultValue = null, string variable = null)
+        {
+            Object value = Registry.CurrentUser.OpenSubKey("Environment").GetValue(variable ?? typeof(T).Name) ??
+                defaultValue ??
+                default(T);
+
+            return (T)(typeof(T).IsEnum ? Enum.Parse(typeof(T), value.ToString(), true) : Convert.ChangeType(value, typeof(T)));
+        }
+        
         public static DateTime GetDateTimeMin()
         {
             return SqlDateTime.MinValue.Value;
