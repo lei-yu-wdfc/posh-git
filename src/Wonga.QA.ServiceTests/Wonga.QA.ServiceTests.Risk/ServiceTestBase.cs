@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Diagnostics;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
-using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Msmq;
 
 namespace Wonga.QA.ServiceTests.Risk
@@ -10,7 +12,7 @@ namespace Wonga.QA.ServiceTests.Risk
 	[TestFixture]
 	public abstract class ServiceTestBase
 	{
-		protected string CARD_EXPIRY_DATE_FORMAT;
+		protected string CardExpiryDateFormat = "yyyy-MM-dd";
 
 		#region IDs
 		protected Guid ApplicationId { get; private set; }
@@ -25,21 +27,31 @@ namespace Wonga.QA.ServiceTests.Risk
 		
 		#region Message 
 
-		protected virtual void InitialiseCommands()
+		protected virtual void DeclareCommands()
 		{
 			Messages = new MessageFactoryCollection();
 		}
 
-		protected void Send(params MsmqMessage[] msgs)
+		protected void Send(IEnumerable<MsmqMessage> msgs)
 		{
-			msgs.ForEach(x => Drive.Msmq.Risk.Send(x));
+			msgs.ToList().ForEach(x => Drive.Msmq.Risk.Send(x));
+		}
+
+		protected void Post(IEnumerable<ApiRequest> requests)
+		{
+			foreach(var x in requests)
+			{
+				Drive.Api.Commands.Post(x);
+			}
+			//requests.ToList().ForEach(x =>  Drive.Api.Commands.Post(x));
 		}
 
 		protected MessageFactoryCollection Messages { private set; get; }
 
 		protected void SendAllMessages()
 		{
-			Send(Messages);
+			Send(Messages.MsmqMessages);
+			Post(Messages.ApiRequests);
 		}
 		#endregion
 
@@ -53,16 +65,19 @@ namespace Wonga.QA.ServiceTests.Risk
 		public void SetUp()
 		{
 			GenerateIds();
-			InitialiseCommands();
-			Messages.Initialise();
+			DeclareCommands();
+			Messages.Instantiate();
 			Messages.ApplyDefaults();
-
+			
 			BeforeEachTest();
+			Messages.Initialise();
+			
 		}
 
 		protected virtual void BeforeEachTest()
 		{
 			TestAsOf = DateTime.Now;
+
 		}
 	}
 }

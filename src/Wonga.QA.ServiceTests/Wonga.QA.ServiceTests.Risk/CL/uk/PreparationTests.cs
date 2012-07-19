@@ -1,20 +1,18 @@
 ﻿
 using System;
 using MbUnit.Framework;
-using apiCommands = Wonga.QA.Framework.Api.Requests.Risk.Commands;
-using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Msmq.Messages.Comms.PublicMessages;
+using Wonga.QA.Framework.Msmq.Messages.Ops.PublicMessages;
 using Wonga.QA.Framework.Msmq.Messages.Payments.PublicMessages;
 using Wonga.QA.Framework.Msmq.Messages.Risk;
-using Wonga.QA.Tests.Core;
+using apiCommands = Wonga.QA.Framework.Api.Requests.Risk.Commands;
 
-namespace Wonga.QA.ServiceTests.Risk.Preparation
+namespace Wonga.QA.ServiceTests.Risk.CL.uk
 {
-
-	[Parallelizable(TestScope.All), AUT(AUT.Uk)]
-	public class ApplicationReadinessUkTests : RiskServiceTestBase
+	//[Parallelizable(TestScope.All), AUT(AUT.Uk)]
+	public class ApplicationReadinessWbTests : RiskServiceTestBase
 	{
-		[Test, AUT(AUT.Uk)]
+		[Test]
 		public void ApplicationIsReadyIfAllDataIsReceived()
 		{
 			SetupLegitCustomer();
@@ -38,12 +36,13 @@ namespace Wonga.QA.ServiceTests.Risk.Preparation
 					x.PaymentCardId = PaymentCardId;
 				});
 			Messages.Add<IApplicationAdded>(
-			x =>
-			{
-				x.AccountId = MainApplicantAccountId;
-				x.ApplicationId = ApplicationId;
-				x.CreatedOn = TestAsOf;
-			});
+				x =>
+				{
+					x.AccountId = MainApplicantAccountId;
+					x.ApplicationId = ApplicationId;
+					x.CreatedOn = TestAsOf;
+				});
+			Messages.Add<IAccountCreated>(x => x.AccountId = MainApplicantAccountId);
 			Messages.Add<apiCommands.Uk.RiskAddBankAccountUkCommand>(
 				x =>
 				{
@@ -59,20 +58,20 @@ namespace Wonga.QA.ServiceTests.Risk.Preparation
 				});
 
 			Messages.Add<IFixedTermApplicationAdded>(
-			x =>
-			{
-				x.AccountId = MainApplicantAccountId;
-				x.ApplicationId = ApplicationId;
-				x.CreatedOn = TestAsOf;
-			});
+				x =>
+				{
+					x.AccountId = MainApplicantAccountId;
+					x.ApplicationId = ApplicationId;
+					x.CreatedOn = TestAsOf;
+				});
 
 			Messages.Add<IBankAccountActivated>(
 				x =>
-					{
-						x.BankAccountId = BankAccountId;
-						x.CreatedOn = TestAsOf;
-					});
-			
+				{
+					x.BankAccountId = BankAccountId;
+					x.CreatedOn = TestAsOf;
+				});
+
 			Messages.Add<IPersonalDetailsAdded>(x => x.AccountId = MainApplicantAccountId);
 
 			Messages.Add<ICurrentAddressAdded>(x => x.AccountId = MainApplicantAccountId);
@@ -83,18 +82,18 @@ namespace Wonga.QA.ServiceTests.Risk.Preparation
 					x.AccountId = MainApplicantAccountId;
 					x.PaymentCardId = PaymentCardId;
 				});
-			Messages.Add<apiCommands.RiskAddPaymentCardCommand>(
+			Messages.Add<RiskAddPaymentCard>(
 				x =>
 				{
 					x.AccountId = MainApplicantAccountId;
 					x.CardType = "Visa";
-					CardExpiryDateFormat = "yyyy-MM";
-					x.ExpiryDate = DateTime.UtcNow.AddYears(2).ToString(CardExpiryDateFormat);
+					x.CreatedOn = DateTime.UtcNow;
+					x.ExpiryDateXml = DateTime.UtcNow.AddYears(2).ToString(CardExpiryDateFormat);
 					x.HolderName = "HolderName";
 					x.Number = "123456789";
 					x.PaymentCardId = PaymentCardId;
 					x.SecurityCode = "123";
-					x.StartDate = DateTime.UtcNow.AddYears(-1).ToString(CardExpiryDateFormat);
+					x.StartDateXml = DateTime.UtcNow.AddYears(-1).ToString(CardExpiryDateFormat);
 				}
 				);
 
@@ -114,6 +113,7 @@ namespace Wonga.QA.ServiceTests.Risk.Preparation
 
 			Messages.Add<IMobilePhoneUpdated>(x => x.AccountId = MainApplicantAccountId);
 
-		}
+
+					}
 	}
 }

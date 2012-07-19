@@ -19,6 +19,7 @@ namespace Wonga.QA.ServiceTests.Risk
 			_salesforce.Start();
 		}
 
+
 		[Test]
 		public void ThisMessageIsSentToSalesforceTest()
 		{

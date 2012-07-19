@@ -31,9 +31,9 @@ namespace Wonga.QA.ServiceTests.Risk
 		}
 		#endregion
 
-		protected override void InitialiseCommands()
+		protected override void DeclareCommands()
 		{
-			base.InitialiseCommands();
+			base.DeclareCommands();
 
 			Messages.Add<RiskSaveCustomerDetails>(x => x.AccountId = MainApplicantAccountId);
 			Messages.Add<RiskSaveCustomerAddress>(x => x.AccountId = MainApplicantAccountId);
@@ -115,13 +115,13 @@ namespace Wonga.QA.ServiceTests.Risk
 						x.AccountId = MainApplicantAccountId;
 						x.CardType = "Visa";
 						x.CreatedOn = DateTime.UtcNow;
-						CARD_EXPIRY_DATE_FORMAT = "yyyy-MM";
-						x.ExpiryDateXml = DateTime.UtcNow.AddYears(2).ToString(CARD_EXPIRY_DATE_FORMAT);
+						CardExpiryDateFormat = "yyyy-MM";
+						x.ExpiryDateXml = DateTime.UtcNow.AddYears(2).ToString(CardExpiryDateFormat);
 						x.HolderName = "HolderName";
 						x.Number = "123456789";
 						x.PaymentCardId = PaymentCardId;
 						x.SecurityCode = "123";
-						x.StartDateXml = DateTime.UtcNow.AddYears(-1).ToString(CARD_EXPIRY_DATE_FORMAT);
+						x.StartDateXml = DateTime.UtcNow.AddYears(-1).ToString(CardExpiryDateFormat);
 					}
 				);
 

@@ -1,9 +1,10 @@
 using System;
+using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Msmq;
 
 namespace Wonga.QA.ServiceTests.Risk
 {
-	public class MessageFactory<T> : IMessageFactory where T : MsmqMessage
+	public class MessageFactory<T> : IMessageFactory where T : MessageBase
 	{
 		private readonly Action<T> _initialiser;
 
@@ -14,19 +15,18 @@ namespace Wonga.QA.ServiceTests.Risk
 
 		public T Message { get; private set; }
 
-		public MsmqMessage MsmqMessage
+		public MessageBase MsmqMessage
 		{
 			get { return Message; }
 		}
 
-		private void Instantiate()
+		public void Instantiate()
 		{
 			Message = Activator.CreateInstance<T>();
 		}
 
 		public void Initialise()
 		{
-			Instantiate();
 			_initialiser(Message);
 		}
 
