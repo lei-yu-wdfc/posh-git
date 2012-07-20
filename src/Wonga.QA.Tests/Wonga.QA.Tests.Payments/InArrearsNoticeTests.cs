@@ -32,7 +32,7 @@ namespace Wonga.QA.Tests.Payments
 			ConfigurationFunctions.SetBankGatewayTestMode(_bankGatewayTestModeOriginal);
 		}
 
-		[Test, JIRA("ZA-1676")]
+		[Test, JIRA("ZA-1676"), Category(TestCategories.CoreTest)]
 		public void ApplicationInArrearsSagaCreatedTest()
 		{
 			//check if saga created.
@@ -41,7 +41,7 @@ namespace Wonga.QA.Tests.Payments
 			Assert.AreEqual(0, saga.DaysInArrears);
 		}
 
-		[Test, JIRA("ZA-1676"), DependsOn("ApplicationInArrearsSagaCreatedTest")]
+        [Test, JIRA("ZA-1676"), DependsOn("ApplicationInArrearsSagaCreatedTest"), Category(TestCategories.CoreTest)]
 		public void ApplicationClosedSagaCompleteTest()
 		{
 			//staff message for application is closed.

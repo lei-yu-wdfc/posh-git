@@ -15,7 +15,7 @@ namespace Wonga.QA.Tests.Payments
     [Parallelizable(TestScope.All)]
 	public class FixedTermLoanRepayTest
 	{
-		[Test, AUT(AUT.Uk), JIRA("UK-921"), Description("")]
+        [Test, AUT(AUT.Uk), JIRA("UK-921"), Description(""), Category(TestCategories.CoreTest)]
 		[Row(55.99, false )]
 		[Row(105.50, true)]
 		public void LoanRepayTest(decimal repayAmount, bool fullRepay)

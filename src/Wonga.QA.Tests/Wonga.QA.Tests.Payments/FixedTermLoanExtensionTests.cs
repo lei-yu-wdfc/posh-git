@@ -142,7 +142,7 @@ namespace Wonga.QA.Tests.Payments
 			ConfigurationFunctions.ResetQaUtcNowOverride();
 		}
 
-		[Test, AUT(AUT.Uk), JIRA("UK-427")]
+        [Test, AUT(AUT.Uk), JIRA("UK-427"), Category(TestCategories.CoreTest)]
 		public void CreateFixedTermLoanExtensionTest()
 		{
 			const decimal trustRating = 400.00M;
