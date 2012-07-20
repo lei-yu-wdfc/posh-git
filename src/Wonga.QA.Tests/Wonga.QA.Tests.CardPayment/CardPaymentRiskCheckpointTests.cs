@@ -22,7 +22,8 @@ namespace Wonga.QA.Tests.CardPayment
         #region Main Applicant
 
         [Test, AUT(AUT.Wb)]
-        [JIRA("SME-136")]
+        [JIRA("SME-136"),
+		Category(TestCategories.CoreTest)]
         public void TestCardPaymentMainApplicantPaymentCardIsValid_LoanIsApproved()
         {
             const String forename = "kathleen";

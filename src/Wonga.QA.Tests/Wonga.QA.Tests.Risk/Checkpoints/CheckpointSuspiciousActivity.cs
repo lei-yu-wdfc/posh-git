@@ -75,7 +75,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
                 .Build();
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-845"), Description("Scenario 3: Accepted")]
+        [Test, AUT(AUT.Uk), JIRA("UK-845"), Description("Scenario 3: Accepted"),Category(TestCategories.CoreTest)]
         public void LnSuspiciousActivityAcceptedDueToUnsuspiciousDaysSinceLastLoan()
         {
             int unsuspiciousDuration = Get.RandomInt(1,

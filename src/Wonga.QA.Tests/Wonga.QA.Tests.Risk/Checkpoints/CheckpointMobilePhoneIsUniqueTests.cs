@@ -27,7 +27,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
         }
 
 		[Test]
-		[JIRA("UK-1563"), AUT(AUT.Uk), Description("Scenario 1: Accepted")]
+		[JIRA("UK-1563"), AUT(AUT.Uk), Description("Scenario 1: Accepted"), Category(TestCategories.CoreTest)]
 		public void L0_MobilePhoneIsUnique_LoanIsAccepted()
 		{
 			_customer = CreateCustomerWithVerifiedMobileNumber(_phoneNumber);

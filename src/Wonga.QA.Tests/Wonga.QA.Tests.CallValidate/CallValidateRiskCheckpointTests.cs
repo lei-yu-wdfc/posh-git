@@ -97,7 +97,7 @@ namespace Wonga.QA.Tests.CallValidate
         /*Main applicant bank account is valid */
 
         [Test, AUT(AUT.Wb)]
-        [JIRA("SME-137")]
+		[JIRA("SME-137"), Category(TestCategories.CoreTest)]
         public void TestCallValidateMainApplicantBankAccountMatch_LoanIsApproved()
         {
             const String forename = "kathleen";

@@ -271,7 +271,7 @@ namespace Wonga.QA.Tests.Experian
 
         /* Main Applicant CIFAS LN */
 
-        [Test, AUT(AUT.Uk)]
+		[Test, AUT(AUT.Uk), Category(TestCategories.CoreTest)]
         [JIRA("UK-852")]
         public void Ln_ExperianMainApplicantIsNotCifasFlagged_LoanIsApproved()
         {
@@ -295,7 +295,8 @@ namespace Wonga.QA.Tests.Experian
         }
 
         [Test, AUT(AUT.Uk)]
-        [JIRA("UK-852")]
+        [JIRA("UK-852"),
+		Category(TestCategories.CoreTest)]
         public void Ln_ExperianMainApplicantIsCifasFlagged_LoanIsDeclined()
         {
             const String forename = "Laura";

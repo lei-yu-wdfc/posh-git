@@ -32,7 +32,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.TooManyLoansAtAddress));
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-848")]
+		[Test, AUT(AUT.Uk), JIRA("UK-848"), Category(TestCategories.CoreTest)]
         public void DeclinedIfTooManyOpenLoans()
         {
             /* The test scenario is that there cant be more then 3 loans at the same address

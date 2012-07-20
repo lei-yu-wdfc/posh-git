@@ -141,7 +141,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             }
 		}
 
-		[Test, AUT(AUT.Za, AUT.Uk)]
+		[Test, AUT(AUT.Za, AUT.Uk),Category(TestCategories.CoreTest)]
 		[JIRA("UK-847")]
 		public void ApplicationElementIsOnBlackList_Surname_LoanIsDeclined()
 		{
