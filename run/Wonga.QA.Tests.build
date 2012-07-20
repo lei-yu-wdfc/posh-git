@@ -43,8 +43,8 @@
 	</Target>
 	
 	<Target Name="ConvertReports">
-		<Exec Command="$(Bin)\ConvertGallioReportToHtml\ConvertGallioReportToHtml.exe &quot;$(Bin)\$(Tests).Report\$(Tests).Report.xml&quot; &quot;$(Bin)\$(Tests).Report\$(Tests).Report.html&quot; html"/>
-		<Exec Command="$(Bin)\ConvertGallioReportToHtml\ConvertGallioReportToHtml.exe &quot;$(Bin)\$(Tests).Report\$(Tests).Report.xml&quot; &quot;$(Bin)\$(Tests).Report\$(Tests).Report.csv&quot; csv"/>
+		<Exec Command="$(Bin)\Wonga.QA.Tools.ReportConverter\Wonga.QA.Tools.ReportConverter.exe &quot;$(Bin)\$(Tests).Report\$(Tests).Report.xml&quot; &quot;$(Bin)\$(Tests).Report\$(Tests).Report.html&quot; html"/>
+		<Exec Command="$(Bin)\Wonga.QA.Tools.ReportConverter\Wonga.QA.Tools.ReportConverter.exe &quot;$(Bin)\$(Tests).Report\$(Tests).Report.xml&quot; &quot;$(Bin)\$(Tests).Report\$(Tests).Report.csv&quot; csv"/>
 	</Target>
 	
 	<Target Name="Default">

@@ -1,13 +1,31 @@
 <html>
 	<style>
+	.stack-trace
+	{
+	    background-color: #BBDAFF;
+	}
+	.debug-trace
+	{
+	    background-color: #C9DECB;
+	}
 	.hidden{
 		display: none;
 	}
-	.passed-test h2{
+	.name
+	{
+	    font-weight: bold;
+	}
+	.passed-test{
 		color: Green;
 	}
-	.failed-test h2{
+	.failed-test{
 		color: red;
+	}
+	.inconclusive-test{
+		color: yellow;
+	}
+	.skipped-test{
+		color: yellow;
 	}
 	</style>
 	
@@ -16,16 +34,18 @@
 		<script>
 			$(document).ready(function(){
 			$(".test-details-toggle").click(function(event){
-				$(this).next(".test-details").toggle();
+				$(this).next(".test-details").toggle(300);
 				event.preventDefault();
 			});
 			});
 		</script>
-
-		<h1>Tests - Failed</h1>
+        <h2>Totals</h2>
+        <p>All %%TOTALALL%%, Passed %%TOTALPASSED%%, Failed %%TOTALFAILED%%, Inconclusive %%TOTALINCONCLUSIVE%%</p>
+        <hr/>
+		<h3>Tests - Failed</h3>
         %%FAILEDTESTS%%
-        
-        <h1>Tests - Passed</h1>
+        <hr/>
+        <h3>Tests - Passed</h3>
 		%%PASSEDTESTS%%
 	</body>
 </html>

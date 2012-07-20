@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ConvertGallioReportToHtml
+namespace Wonga.QA.Tools.ReportParser
 {
-    enum TestOutcome
+    public enum TestOutcome
     {
         Passed,
         Failed,
-        Skipped
+        Skipped,
+        Inconclusive,
+        UnknownOutcome
     }
 
-    class TestResult
+    public class TestResult
     {
         public string Name { get; set; }
         public string FullName { get; set; }

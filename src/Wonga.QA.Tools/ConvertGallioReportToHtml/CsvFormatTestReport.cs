@@ -5,8 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Xml.Linq;
+using Wonga.QA.Tools.ReportParser;
 
-namespace ConvertGallioReportToHtml
+namespace Wonga.QA.Tools.ReportConverter
 {
     class CsvFormatTestReport : IFormatTestReport
     {
