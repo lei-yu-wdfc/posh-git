@@ -46,19 +46,20 @@ namespace Wonga.QA.Tests.Payments.PaymentsCollectionSuppression
             };
 
             Drive.Cs.Commands.Post(suspectFraudCommand);
-
             dynamic suppression = null;
+
             dynamic app = null;
             Do.Until(() => app = _applicationsTable.FindBy(ExternalId: _application.Id));
-            Do.Until(() => suppression = _paymentsSuppressionsTable.FindBy(ApplicationId: app.ApplicationId, FraudSuppression:true));
-
+            Do.Until(() => suppression = _paymentsSuppressionsTable.FindBy(ApplicationId: app.ApplicationId,
+                FraudSuppression: true));
             var confirmNotFraudCommand = new ConfirmNotFraudCommand()
                                              {
                                                  AccountId = _customer.Id,
                                                  CaseId = newCaseID
                                              };
             Drive.Cs.Commands.Post(confirmNotFraudCommand);
-            Do.Until(() => suppression = _paymentsSuppressionsTable.FindBy(ApplicationId: app.ApplicationId, FraudSuppression:false));
+            Do.Until(() => suppression = _paymentsSuppressionsTable.FindBy(ApplicationId: app.ApplicationId,
+                FraudSuppression:false));
         }
 
         [Test]
