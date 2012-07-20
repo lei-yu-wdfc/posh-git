@@ -16,8 +16,18 @@ namespace Wonga.QA.Tests.Payments.Queries
     [Parallelizable(TestScope.Self)]
     public class GetRepayLoanPaymentStatusQueryTests
     {
+        [Test, AUT(AUT.Uk), Owner(Owner.CharlieBarker)]
+        public void TestStaticResponse()
+        {
+            var appId = Guid.NewGuid();
+            var requestId = Guid.NewGuid();
+            //Call Api Query
+            var response = Drive.Api.Queries.Post(new GetRepayLoanPaymentStatusUkQuery{ ApplicationId = appId, RepaymentRequestId = requestId });
 
-        [Test, AUT(AUT.Uk)]
+            Assert.AreEqual(appId.ToString(), response.Values["ApplicationId"].Single(), "ApplicationId incorrect");
+        }
+
+        [Test, AUT(AUT.Uk), Owner(Owner.CharlieBarker)]
         public void PaymentTaken()
         {
             var setup = new RepayLoanFunctions();
@@ -42,7 +52,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.AreEqual("PaymentTaken", response2.Values["PaymentStatus"].Single(), "PaymentStatus incorrect");
         }
 
-        [Test, AUT(AUT.Uk)]
+        [Test, AUT(AUT.Uk), Owner(Owner.CharlieBarker)]
         public void PartPaymentTaken()
         {
             var setup = new RepayLoanFunctions();
@@ -67,7 +77,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.AreEqual("PartPaymentTaken", response2.Values["PaymentStatus"].Single(), "PaymentStatus incorrect");
         }
 
-        [Test, AUT(AUT.Uk)]
+        [Test, AUT(AUT.Uk), Owner(Owner.CharlieBarker)]
         public void CustomerOwesLessThanMinimumAmount()
         {
             var setup = new RepayLoanFunctions();
@@ -77,7 +87,6 @@ namespace Wonga.QA.Tests.Payments.Queries
             const decimal paymentAmount = 104.50M;
             const string sliderMinAmount = "1.00";
             
-
             setup.RepayEarlyOnLoanStartDate(appId, paymentCardId, Guid.NewGuid(), Guid.NewGuid(), 400.00M);
 
             var response = Drive.Api.Commands.Post(new RepayLoanViaCardCommand { ApplicationId = appId, PaymentRequestId = requestId, Amount = paymentAmount, PaymentCardId = paymentCardId, PaymentCardCv2 = 123 });
@@ -95,10 +104,8 @@ namespace Wonga.QA.Tests.Payments.Queries
 
             //Call Api Quote Query
             var response3 = Drive.Api.Queries.Post(new GetRepayLoanQuoteUkQuery {ApplicationId = appId});
-            Assert.AreEqual(sliderMinAmount, response3.Values["SliderMinAmount"].SingleOrDefault(), "ApplicationId incorrect");
-            
-            
 
+            Assert.AreEqual(sliderMinAmount, response3.Values["SliderMinAmount"].SingleOrDefault(), "Slider Minimum Amount is incorrect");
         }
     }
 }
