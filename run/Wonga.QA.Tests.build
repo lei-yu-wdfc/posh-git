@@ -30,7 +30,7 @@
 		<Gallio
 			Filter="$(TestFilter)"
 			Files="@(Files)"
-			ReportTypes="html-condensed;xml"
+			ReportTypes="xml"
 			ReportNameFormat="$(Tests).Report"
 			ReportDirectory="$(Bin)\$(Tests).Report"
 		/>
@@ -43,7 +43,7 @@
 	</Target>
 	
 	<Target Name="ConvertReports">
-		<Exec Command="$(Bin)\ConvertGallioReportToHtml\ConvertGallioReportToHtml.exe &quot;$(Bin)\$(Tests).Report\$(Tests).Report.xml&quot; &quot;$(Bin)\$(Tests).Report\$(Tests).Report.Converted.html&quot; html"/>
+		<Exec Command="$(Bin)\ConvertGallioReportToHtml\ConvertGallioReportToHtml.exe &quot;$(Bin)\$(Tests).Report\$(Tests).Report.xml&quot; &quot;$(Bin)\$(Tests).Report\$(Tests).Report.html&quot; html"/>
 		<Exec Command="$(Bin)\ConvertGallioReportToHtml\ConvertGallioReportToHtml.exe &quot;$(Bin)\$(Tests).Report\$(Tests).Report.xml&quot; &quot;$(Bin)\$(Tests).Report\$(Tests).Report.csv&quot; csv"/>
 	</Target>
 	
