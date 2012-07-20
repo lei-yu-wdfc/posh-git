@@ -39,7 +39,7 @@
 	<Target Name="SanityTest">
 		<CallTarget Targets="Config;Build;Merge;PreGenerateSerializers" />
 		<MsBuild Projects="$(MSBuildProjectFullPath)" Targets="Test" Properties="Files=Meta;TestTarget=$(TestTarget)" />
-		<MsBuild Projects="$(MSBuildProjectFullPath)" Targets="Test" Properties="TestTarget=$(TestTarget)" />
+		<MsBuild Projects="$(MSBuildProjectFullPath)" Targets="Test" Properties="TestTarget=$(TestTarget);TestFilter=Category:CoreTest" />
 	</Target>
 	
 	<Target Name="Default">
