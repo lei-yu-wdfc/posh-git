@@ -296,12 +296,12 @@ namespace Wonga.QA.Framework
 			return this;
 		}
 
-        public virtual Application PutIntoArrearsAndExpireCard(uint daysInArrears)
+        public virtual Application ExpireCard()
         {
             Customer customer = this.GetCustomer();
             Drive.Data.Payments.Db.PaymentCardsBase.UpdateByExternalId(ExternalId: customer.GetPaymentCard(),
                         ExpiryDate: new DateTime(DateTime.Now.Year - 1, 1, 31));
-            return this.PutIntoArrears(daysInArrears);
+            return this;
         }
 
 		public virtual Application PutIntoArrears()
