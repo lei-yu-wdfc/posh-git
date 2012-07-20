@@ -37,12 +37,13 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 				case AUT.Uk:
 					{
 						var dateOfBirth = Get.GetDoB();
-						var bankAccountNumber = Get.GetBankAccountNumber();
-
+						const string sortCode = "204422";
+						//make sure bank account does not collide with the decline bank account (otherwise test fails in parallel)
+						var bankAccountNumber = Get.GetBankAccountNumber(sortCode);
 						var customer = CustomerBuilder.New()
 							.WithEmployer(_testMask)
 							.WithDateOfBirth(dateOfBirth)
-							.WithBankAccountNumber(bankAccountNumber)
+							.WithBankAccountNumber(bankAccountNumber, sortCode)
 							.Build();
 
 					    var application = ApplicationBuilder.New(customer).Build();

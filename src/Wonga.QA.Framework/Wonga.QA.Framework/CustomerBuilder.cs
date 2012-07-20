@@ -710,6 +710,9 @@ namespace Wonga.QA.Framework
 						                            			r.AccountNumber = _bankAccountNumber;
 						                            		}
 
+															if (!string.IsNullOrEmpty(_bankCode))
+																r.BankCode = _bankCode;
+
 						                            	}),
 						RiskAddBankAccountUkCommand.New(r =>
                                                     	{
