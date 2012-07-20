@@ -8,7 +8,7 @@ namespace Wonga.QA.Tests.CallValidate
     [Parallelizable(TestScope.All)]
     public class CallValidateServiceTests
     {
-        [Test, AUT(AUT.Uk, AUT.Wb)]
+        [Test, AUT(AUT.Uk, AUT.Wb), Category(TestCategories.CoreTest)]
         public void CallValidateServiceIsRunning()
         {
             Assert.IsTrue(Drive.Svc.CallValidate.IsRunning());
