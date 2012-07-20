@@ -63,7 +63,7 @@ namespace Wonga.QA.Tests.Payments.Queries
 			                        		PaymentCardId = paymentCardId
 			                        	});
 
-			Thread.Sleep(500);
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.LoanExtensions.Single(x => x.ExternalId == extensionId && x.PartPaymentTakenOn != null));
 			var resp = Drive.Api.Queries.Post(new GetLoanExtensionPaymentStatusUkQuery { ExtensionId = extensionId });
 
 			Assert.Contains(resp.Values["ExtensionStatus"], "PaymentTaken");
@@ -117,9 +117,9 @@ namespace Wonga.QA.Tests.Payments.Queries
 				PaymentCardId = paymentCardId
 			});
 
-			Thread.Sleep(500);
+            Do.With.Interval(1).Until(() => Drive.Db.Payments.LoanExtensions.Single(x => x.ExternalId == extensionId && x.PartPaymentFailedOn != null));
 
-			var resp = Do.With.Interval(1).Until(() => Drive.Api.Queries.Post(new GetLoanExtensionPaymentStatusUkQuery {ExtensionId = extensionId}));
+			var resp = Drive.Api.Queries.Post(new GetLoanExtensionPaymentStatusUkQuery {ExtensionId = extensionId});
 
 			Assert.Contains(resp.Values["ExtensionStatus"], "PaymentFailed");
 		}
