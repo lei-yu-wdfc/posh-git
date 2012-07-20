@@ -271,7 +271,7 @@ namespace Wonga.QA.Tests.Experian
 
         /* Main Applicant CIFAS LN */
 
-		[Test, AUT(AUT.Uk), Category(TestCategories.CoreTest)]
+		[Test, AUT(AUT.Uk)]
         [JIRA("UK-852")]
         public void Ln_ExperianMainApplicantIsNotCifasFlagged_LoanIsApproved()
         {
