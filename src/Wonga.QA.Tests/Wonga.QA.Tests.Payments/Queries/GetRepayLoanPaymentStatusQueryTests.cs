@@ -17,17 +17,6 @@ namespace Wonga.QA.Tests.Payments.Queries
     public class GetRepayLoanPaymentStatusQueryTests
     {
         [Test, AUT(AUT.Uk), Owner(Owner.CharlieBarker)]
-        public void TestStaticResponse()
-        {
-            var appId = Guid.NewGuid();
-            var requestId = Guid.NewGuid();
-            //Call Api Query
-            var response = Drive.Api.Queries.Post(new GetRepayLoanPaymentStatusUkQuery{ ApplicationId = appId, RepaymentRequestId = requestId });
-
-            Assert.AreEqual(appId.ToString(), response.Values["ApplicationId"].Single(), "ApplicationId incorrect");
-        }
-
-        [Test, AUT(AUT.Uk), Owner(Owner.CharlieBarker)]
         public void PaymentTaken()
         {
             var setup = new RepayLoanFunctions();
