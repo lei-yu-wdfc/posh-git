@@ -86,7 +86,7 @@ namespace Wonga.QA.Tests.Payments.Command
        protected void GetAndPollExtensionPaymentStatus(Guid extensionId, string expectedFinalValue)
        {
            //Check that the response is present...
-           CsResponse res = Drive.Cs.Queries.Post(new CsGetLoanExtensionPaymentStatusQuery { SalesforceUser = "csUser", ExtensionId = extensionId });
+           CsResponse res = Drive.Cs.Queries.Post(new CsGetLoanExtensionPaymentStatusQuery { SalesforceUsername = "csUser", ExtensionId = extensionId });
 
            Assert.IsTrue(res.Values["ExtensionId"].Any() && Guid.Parse(res.Values["ExtensionId"].First()) == extensionId);
            Assert.IsTrue(res.Values["ExtensionStatus"].Any() && !String.IsNullOrEmpty(res.Values["ExtensionStatus"].First()));
@@ -96,7 +96,7 @@ namespace Wonga.QA.Tests.Payments.Command
                //Wait to see will it change...
                Do.With.Timeout(2).Interval(10).Until(() =>
                {
-                   res = Drive.Cs.Queries.Post(new CsGetLoanExtensionPaymentStatusQuery { SalesforceUser = "csUser", ExtensionId = extensionId });
+                   res = Drive.Cs.Queries.Post(new CsGetLoanExtensionPaymentStatusQuery { SalesforceUsername = "csUser", ExtensionId = extensionId });
                    return res.Values["ExtensionStatus"].Any() && res.Values["ExtensionStatus"].First() == expectedFinalValue;
                });
            }
