@@ -16,16 +16,6 @@ namespace Wonga.QA.Tests.Payments.Queries
     [Parallelizable(TestScope.Self)]
     public class GetRepayLoanPaymentStatusQueryTests
     {
-        [Test, AUT(AUT.Uk)]
-        public void TestStaticResponse()
-        {
-            var appId = Guid.NewGuid();
-            var requestId = Guid.NewGuid();
-            //Call Api Query
-            var response = Drive.Api.Queries.Post(new GetRepayLoanPaymentStatusUkQuery{ ApplicationId = appId, RepaymentRequestId = requestId });
-
-            Assert.AreEqual(appId.ToString(), response.Values["ApplicationId"].Single(), "ApplicationId incorrect");
-        }
 
         [Test, AUT(AUT.Uk)]
         public void PaymentTaken()
@@ -85,6 +75,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             var requestId = Guid.NewGuid();
             var paymentCardId = Guid.NewGuid();
             const decimal paymentAmount = 104.50M;
+            const string sliderMinAmount = "1.00";
             
 
             setup.RepayEarlyOnLoanStartDate(appId, paymentCardId, Guid.NewGuid(), Guid.NewGuid(), 400.00M);
@@ -104,7 +95,9 @@ namespace Wonga.QA.Tests.Payments.Queries
 
             //Call Api Quote Query
             var response3 = Drive.Api.Queries.Post(new GetRepayLoanQuoteUkQuery {ApplicationId = appId});
-            Assert.AreEqual("1", response3.Values["SliderMinAmount"].SingleOrDefault(), "ApplicationId incorrect");
+            Assert.AreEqual(sliderMinAmount, response3.Values["SliderMinAmount"].SingleOrDefault(), "ApplicationId incorrect");
+            
+            
 
         }
     }
