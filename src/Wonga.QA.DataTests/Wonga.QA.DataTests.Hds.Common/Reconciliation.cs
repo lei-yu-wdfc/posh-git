@@ -15,9 +15,6 @@ namespace Wonga.QA.DataTests.Hds.Common
         {
             HdsUtilities hdsUtilities = new HdsUtilities(wongaService);
 
-            SQLServerAgentJobs.WaitUntilJobComplete(hdsUtilities.CdcStagingAgentJob);
-            SQLServerAgentJobs.WaitUntilJobComplete(hdsUtilities.HdsLoadAgentJob);
-
             bool jobSuccess = SQLServerAgentJobs.Execute(hdsUtilities.HdsReconcileAgentJob);
 
             // check job succeeds
