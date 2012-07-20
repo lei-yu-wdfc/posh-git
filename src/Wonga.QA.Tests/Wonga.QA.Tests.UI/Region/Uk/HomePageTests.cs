@@ -31,7 +31,11 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
         public void HomePagePersonalisedNewUserTest()
         {
             var homePage = Client.Home();
-            Assert.AreEqual("Welcome to Wonga", homePage.Headers[1], "The Header should be 'Welcome to Wonga'"); // user hasn't logged in before
+            Assert.AreEqual("Welcome to Wonga.", homePage.GetWelcomeHeaderMessage(), "The Header should be 'Welcome to Wonga'"); // user hasn't logged in before
+            var ending = " today.";
+            if ((DateTime.Now.AddMinutes(24).Hour.ToString("#") == "00") && (DateTime.Now.Hour.ToString("#") != "00"))
+                ending = " tomorrow.";
+            Assert.AreEqual("We can deposit up to £400 in your bank account by " + DateTime.Now.AddMinutes(24).ToShortTimeString() + ending, homePage.GetWelcomeSubMessage(), "Introductory message is wrong'"); // user hasn't logged in before
         }
 
         [Test, AUT(AUT.Uk), JIRA("UKWEB-344", "UKWEB-345"), MultipleAsserts, Owner(Owner.OrizuNwokeji), Pending("Test in development. Code in development.")]
