@@ -787,28 +787,36 @@ namespace Wonga.QA.Framework
             return new Customer(_id, _email, _bankAccountId, _bankAccountNumber){Province = _province};
         }
 
+        /// <summary>
+        /// This method will randomize an existing customer forename
+        /// </summary>
+        /// <param name="forename">The input forename</param>
         public void ScrubForename(String forename)
         {
-            var db = new DbDriver();
-            var customerDetailEntities = db.Comms.CustomerDetails.Where(cd => cd.Forename == forename).ToList();
-            foreach (CustomerDetailEntity customerDetailEntity in customerDetailEntities)
+            var commsCustomerDetailsTable = Drive.Data.Comms.Db.CustomerDetails;
+            var existingCustomersWithThisForename = commsCustomerDetailsTable.FindAllBy(Forename : forename).ToList();
+            foreach (var cust in existingCustomersWithThisForename)
             {
-                customerDetailEntity.Forename = Get.GetName();
+                cust.Forename = Get.GetName();
+                commsCustomerDetailsTable.Update(cust);
             }
-            db.Comms.SubmitChanges();
         }
 
+
+        /// <summary>
+        /// This method will randomize an existing customer surname
+        /// </summary>
+        /// <param name="surname">The input surname</param>
         public void ScrubSurname(String surname)
         {
-            var db = new DbDriver();
-            var customerDetailEntities = db.Comms.CustomerDetails.Where(cd => cd.Surname == surname).ToList();
-            foreach (CustomerDetailEntity customerDetailEntity in customerDetailEntities)
+            var commsCustomerDetailsTable = Drive.Data.Comms.Db.CustomerDetails;
+            var existingCustomersWithThisForename = commsCustomerDetailsTable.FindAllBy(Surname: surname).ToList();
+            foreach (var cust in existingCustomersWithThisForename)
             {
-                customerDetailEntity.Surname = Get.GetName();
+                cust.Surname = Get.GetName();
+                commsCustomerDetailsTable.Update(cust);
             }
-            db.Comms.SubmitChanges();
         }
-
 
 		private IEnumerable<ApiRequest> GetPhoneCommandsPostAccountCreation(string pin)
 		{

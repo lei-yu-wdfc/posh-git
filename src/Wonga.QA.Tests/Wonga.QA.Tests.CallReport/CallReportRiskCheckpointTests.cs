@@ -34,8 +34,8 @@ namespace Wonga.QA.Tests.CallReport
         [JIRA("SME-575", "UK-853"), Description("CallReport -> This test creates a loan for the unknown customer that is alive and with no consumer bureau data, then checks the risk checkpoint")]
         public void TestCallReportUnknownMainApplicant_LoanIsApproved()
         {
-            const String forename = "unknown";
-            const String surname = "customer";
+            const String forename = "Unknown";
+            const String surname = "Customer";
 
             var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTApplicantIsNotDeceased);
             ScrubNames(mainApplicantBuilder);
@@ -54,8 +54,8 @@ namespace Wonga.QA.Tests.CallReport
         [JIRA("SME-575", "UK-853"), Description("CallReport -> This test creates a loan for the Kathleen customer that is alive according to call report, then checks the risk checkpoint")]
         public void TestCallReportMainApplicantIsNotDeceased_LoanIsApproved()
         {
-            const String forename = "kathleen";
-            const String surname = "bridson";
+            const String forename = "Kathleen";
+            const String surname = "Bridson";
 
             var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTApplicantIsNotDeceased);
             ScrubNames(mainApplicantBuilder);
@@ -97,7 +97,7 @@ namespace Wonga.QA.Tests.CallReport
         [JIRA("UK-853")]
         public void Ln_TestCallReportMainApplicantIsNotDeceased_LoanIsApproved()
         {
-            const String forename = "kathleen";
+            const String forename = "Kathleen";
             const String surname = "Bridson";
 
             var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTApplicantIsNotDeceased);
@@ -147,7 +147,7 @@ namespace Wonga.QA.Tests.CallReport
         [JIRA("SME-584", "UK-852"), Description("CallReport -> This test creates a loan for a customer that is not CIFAS flagged, then checks the risk checkpoint")]
         public void TestCallReportMainApplicantIsNotCifasFlagged_LoanIsApproved()
         {
-            const String forename = "kathleen";
+            const String forename = "Kathleen";
             const String surname = "Bridson";
 
             var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTApplicationElementNotCIFASFlagged);
@@ -168,8 +168,8 @@ namespace Wonga.QA.Tests.CallReport
         [JIRA("SME-584", "UK-852"), Description("CallReport -> This test creates a loan for a customer that IS CIFAS flagged, then checks the risk checkpoint")]
         public void TestCallReportMainApplicantIsCifasFlagged_LoanIsDeclined()
         {
-            const String forename = "laura";
-            const String surname = "insolvent";
+            const String forename = "Laura";
+            const String surname = "Insolvent";
 
             var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTApplicationElementNotCIFASFlagged);
             ScrubNames(mainApplicantBuilder);
@@ -190,7 +190,7 @@ namespace Wonga.QA.Tests.CallReport
         [JIRA("UK-852")]
         public void Ln_TestCallReportMainApplicantIsNotCifasFlagged_LoanIsApproved()
         {
-            const String forename = "kathleen";
+            const String forename = "Kathleen";
             const String surname = "Bridson";
 
             var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTApplicationElementNotCIFASFlagged);
@@ -239,8 +239,8 @@ namespace Wonga.QA.Tests.CallReport
         [Description("Callreport -> This test creates a loan and checks if the main applicant has data available")]
         public void TestCallReportMainApplicantDataIsAvailable_LoanIsApproved()
         {
-            const String forename = "kathleen";
-            const String surname = "bridson";
+            const String forename = "Kathleen";
+            const String surname = "Bridson";
 
             var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTCreditBureauDataIsAvailable);
             ScrubNames(mainApplicantBuilder);
@@ -281,7 +281,7 @@ namespace Wonga.QA.Tests.CallReport
         [JIRA("UK-851"), Description("CallReport -> This test creates a loan for the solvent customer, then checks the risk checkpoint for LN Jurney")]
         public void Ln_TestCallReportMainApplicantDataIsAvailable_LoanIsApproved()
         {
-            const String forename = "kathleen";
+            const String forename = "Kathleen";
             const String surname = "Bridson";
 
             var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTCreditBureauDataIsAvailable);
@@ -331,7 +331,7 @@ namespace Wonga.QA.Tests.CallReport
         [JIRA("SME-638", "UK-854"), Description("CallReport -> This test creates a loan for the solvent customer, then checks the risk checkpoint")]
         public void TestCallReportMainApplicantIsSolvent_LoanIsApproved()
         {
-            const String forename = "kathleen";
+            const String forename = "Kathleen";
             const String surname = "Bridson";
 
             var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTApplicantIsSolvent);
@@ -351,8 +351,8 @@ namespace Wonga.QA.Tests.CallReport
         [JIRA("SME-638", "UK-854"), Description("CallReport -> This test creates a loan for the insolvent customer, then checks the risk checkpoint")]
         public void TestCallReportMainApplicantIsInsolvent_LoanIsDeclined()
         {
-            const String forename = "laura";
-            const String surname = "insolvent";
+            const String forename = "Laura";
+            const String surname = "Insolvent";
 
             var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTApplicantIsSolvent);
             ScrubNames(mainApplicantBuilder);
@@ -375,7 +375,7 @@ namespace Wonga.QA.Tests.CallReport
         [JIRA("UK-854"), Description("CallReport -> This test creates a loan for the solvent customer, then checks the risk checkpoint for LN Jurney")]
         public void Ln_TestCallReportMainApplicantIsSolvent_LoanIsApproved()
         {
-            const String forename = "kathleen";
+            const String forename = "Kathleen";
             const String surname = "Bridson";
 
             var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTApplicantIsSolvent);
@@ -398,8 +398,8 @@ namespace Wonga.QA.Tests.CallReport
         [JIRA("UK-854"), Description("CallReport -> This test creates a loan for the solvent customer, then checks the risk checkpoint for LN Jurney")]
         public void Ln_TestCallReportMainApplicantIsInsolvent_LoanIsDeclined()
         {
-            const String forename = "laura";
-            const String surname = "insolvent";
+            const String forename = "Laura";
+            const String surname = "Insolvent";
 
             var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTEmployedMask);
             ScrubNames(mainApplicantBuilder);
@@ -425,8 +425,8 @@ namespace Wonga.QA.Tests.CallReport
         [JIRA("SME-644", "UKRISK-71"), Description("CallReport -> This test creates a loan for a customer with the correct date of birth, then checks the risk checkpoint")]
         public void TestCallReportMainApplicantDateOfBirthIsCorrect_LoanIsApproved()
         {
-            const String forename = "unknown";
-            const String surname = "customer";
+            const String forename = "Unknown";
+            const String surname = "Customer";
 
             var dateOfBirth = new Date(new DateTime(1992, 1, 24), DateFormat.Date);
 
@@ -453,8 +453,8 @@ namespace Wonga.QA.Tests.CallReport
         [JIRA("SME-644", "UKRISK-71"), Description("CallReport -> This test creates a loan for a customer with the incorrect date of birth, then checks the risk checkpoint")]
         public void TestCallReportMainApplicantDateOfBirthIsIncorrect_LoanIsDeclined()
         {
-            const String forename = "kathleen";
-            const String surname = "bridson";
+            const String forename = "Kathleen";
+            const String surname = "Bridson";
             var dateOfBirth = new Date(new DateTime(1990, 3, 21), DateFormat.Date);
 
             //Cannot use the CreateCustomerBuilder here because the masks are different
@@ -481,8 +481,8 @@ namespace Wonga.QA.Tests.CallReport
         [JIRA("SME-644", "UKRISK-71"), Description("CallReport -> This test creates a loan for a customer with the not provided date of birth, then checks the risk checkpoint")]
         public void TestCallReportMainApplicantDateOfBirthNotProvided_LoanIsApproved()
         {
-            const String forename = "unknown";
-            const String surname = "customer";
+            const String forename = "Unknown";
+            const String surname = "Customer";
             var wrongDateOfBirth = new Date(new DateTime(1973, 5, 11), DateFormat.Date);
 
             //Cannot use the CreateCustomerBuilder here because the masks are different
@@ -516,8 +516,8 @@ namespace Wonga.QA.Tests.CallReport
         [JIRA("SME-1147"), Description("CallReport -> This test creates a loan for the unknown guarantor that is alive, then checks the risk checkpoint")]
         public void TestCallReportUnknownGuarantor_LoanIsApproved()
         {
-            const String forename = "unknown";
-            const String surname = "customer";
+            const String forename = "Unknown";
+            const String surname = "Customer";
 
             var mainApplicant = CustomerBuilder.New().Build();
             var guarantorList = new List<CustomerBuilder>
@@ -538,8 +538,8 @@ namespace Wonga.QA.Tests.CallReport
         [JIRA("SME-1147"), Description("CallReport -> This test creates a loan for the unknown guarantor that is alive, then checks the risk checkpoint")]
         public void TestCallReportGuarantorIsAlive_LoanIsApproved()
         {
-            const String forename = "kathleen";
-            const String surname = "bridson";
+            const String forename = "Kathleen";
+            const String surname = "Bridson";
 
             var mainApplicant = CustomerBuilder.New().Build();
             var guarantorList = new List<CustomerBuilder>
@@ -585,7 +585,7 @@ namespace Wonga.QA.Tests.CallReport
         [JIRA("SME-1144"), Description("CallReport -> This test creates a loan for a guarantor that is not CIFAS flagged, then checks the risk checkpoint")]
         public void TestCallReportGuarantorIsNotCifasFlagged_LoanIsApproved()
         {
-            const String forename = "kathleen";
+            const String forename = "Kathleen";
             const String surname = "Bridson";
 
             var mainApplicant = CustomerBuilder.New().Build();
@@ -608,8 +608,8 @@ namespace Wonga.QA.Tests.CallReport
         [JIRA("SME-1144"), Description("CallReport -> This test creates a loan for a guarantor that is CIFAS flagged, then checks the risk checkpoint")]
         public void TestCallReportGuarantorIsCifasFlagged_LoanIsDeclined()
         {
-            const String forename = "laura";
-            const String surname = "insolvent";
+            const String forename = "Laura";
+            const String surname = "Insolvent";
 
             var mainApplicant = CustomerBuilder.New().Build();
             var guarantorList = new List<CustomerBuilder>
@@ -634,8 +634,8 @@ namespace Wonga.QA.Tests.CallReport
         [Description("Callreport -> This test creates a loan and checks if the guarantors has data available")]
         public void TestCallReportGuarantorDataIsAvailable_LoanIsApproved()
         {
-            const String forename = "kathleen";
-            const String surname = "bridson";
+            const String forename = "Kathleen";
+            const String surname = "Bridson";
 
             var mainApplicant = CustomerBuilder.New().Build();
             var guarantorList = new List<CustomerBuilder>
@@ -681,8 +681,8 @@ namespace Wonga.QA.Tests.CallReport
         [Description("Callreport -> This test creates a loan and checks if the guarantors is solvent")]
         public void TestCallReportGuarantorIsSolvent_LoanIsApproved()
         {
-            const String forename = "kathleen";
-            const String surname = "bridson";
+            const String forename = "Kathleen";
+            const String surname = "Bridson";
 
             var mainApplicant = CustomerBuilder.New().Build();
             var guarantorList = new List<CustomerBuilder>
@@ -702,8 +702,8 @@ namespace Wonga.QA.Tests.CallReport
         [Description("Callreport -> This test creates a loan and checks if the guarantors is solvent")]
         public void TestCallReportGuarantorIsInsolvent_LoanIsDeclined()
         {
-            const String forename = "laura";
-            const String surname = "insolvent";
+            const String forename = "Laura";
+            const String surname = "Insolvent";
 
             var mainApplicant = CustomerBuilder.New().Build();
             var guarantorList = new List<CustomerBuilder>
@@ -728,8 +728,8 @@ namespace Wonga.QA.Tests.CallReport
         [Description("Callreport -> This test creates a loan and checks if the guarantors entered the correct DOB")]
         public void TestCallReportGuarantorDateOfBirthIsCorrect_LoanIsApproved()
         {
-            const String forename = "kathleen";
-            const String surname = "bridson";
+            const String forename = "Kathleen";
+            const String surname = "Bridson";
             var dateOfBirth = new Date(new DateTime(1992, 1, 24), DateFormat.Date);
 
             var guarantorList = new List<CustomerBuilder>
@@ -750,8 +750,8 @@ namespace Wonga.QA.Tests.CallReport
         [Description("Callreport -> This test creates a loan and checks if the guarantors entered the correct DOB")]
         public void TestCallReportGuarantorDateOfBirthNotProvided_LoanIsApproved()
         {
-            const String forename = "unknown";
-            const String surname = "customer";
+            const String forename = "Unknown";
+            const String surname = "Customer";
 
             var dateOfBirth = new Date(new DateTime(1973, 5, 11), DateFormat.Date);
 
@@ -773,8 +773,8 @@ namespace Wonga.QA.Tests.CallReport
         [Description("Callreport -> This test creates a loan and checks if the guarantors entered the correct DOB")]
         public void TestCallReportGuarantorDateOfBirthIsInCorrect_LoanIsDeclined()
         {
-            const String forename = "kathleen";
-            const String surname = "bridson";
+            const String forename = "Kathleen";
+            const String surname = "Bridson";
             var dateOfBirth = new Date(new DateTime(1990, 1, 24), DateFormat.Date);
 
             var guarantorList = new List<CustomerBuilder>
