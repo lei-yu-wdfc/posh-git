@@ -133,7 +133,7 @@ namespace Wonga.QA.Tests.Comms.Sms
 				Email = Get.RandomEmail(),
 				Forename = forename,
 				Gender = GenderEnum.Male,
-				HomePhone = string.Format("02{0}", DateTime.UtcNow.Ticks.ToString().Substring(0, 8)),
+				HomePhone = string.Format("0207{0}", DateTime.UtcNow.Ticks.ToString().Substring(0, 7)),
 				MiddleName = "X",
 				MobilePhone = mobileNumber,
 				Surname = string.Format("Doe{0}", DateTime.UtcNow.Ticks),
