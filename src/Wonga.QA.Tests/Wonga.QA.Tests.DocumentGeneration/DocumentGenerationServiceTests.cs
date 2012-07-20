@@ -8,7 +8,7 @@ namespace Wonga.QA.Tests.DocumentGeneration
     [Parallelizable(TestScope.All)]
     public class DocumentGenerationServiceTests
     {
-        [Test, AUT(AUT.Wb)]
+        [Test, AUT(AUT.Wb, AUT.Za, AUT.Uk, AUT.Ca)]
         public void DocumentGenerationServiceIsRunning()
         {
             Assert.IsTrue(Drive.Svc.DocumentGeneration.IsRunning());
