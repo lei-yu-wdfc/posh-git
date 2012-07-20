@@ -9,7 +9,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Comms.Email
 {
-	[TestFixture, Parallelizable(TestScope.All), Category(TestCategories.CoreTest)]
+	[TestFixture, Parallelizable(TestScope.All), AUT(AUT.Za)]
 	public class AcceptedLoanEmailTests
 	{
 		private Application _application;
