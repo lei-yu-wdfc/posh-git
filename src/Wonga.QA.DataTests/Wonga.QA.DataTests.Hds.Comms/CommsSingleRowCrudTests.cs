@@ -1,36 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Dynamic;
-using System.Text;
 using System.Threading;
 using MbUnit.Framework;
 using Wonga.QA.DataTests.Hds.Common;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Data;
-using Wonga.QA.Framework.Core;
 
-
-namespace Wonga.QA.DataTests.Hds.Ops
+namespace Wonga.QA.DataTests.Hds.Comms
 {
     [TestFixture(Order = 2)]
     [Category("Auto")]
-    [Category("Ops")]
+    [Category("Comms")]
     [Parallelizable(TestScope.All)]
-    class SingleRowCrudTests
-     {
+    class CommsSingleRowCrudTests
+    {
         private static DateTime _dthdsDefaultTo = Convert.ToDateTime("31/12/9999");
-        private static string _tablename = "Accounts";
-        private static string _columnname = "AccountId";
+        private static string _tablename = "ContactPreferences";
+        private static string _columnname = "ContactPreferenceId";
         //this part is required for insertupdatesameLSN test
-        private static string _schemaName = "ops";
-        dynamic _connection = Drive.Data.Ops.Db;
+        private static string _schemaName = "comms";
+        dynamic _connection = Drive.Data.Comms.Db;
 
         private static string CurrentViewName = "vw_" + _tablename + "_Current";
-        dynamic _serviceConnection = Drive.Data.Ops.Db.ops[_tablename];
-        dynamic _cdcConnection = Drive.Data.Cdc.Db.ops[_tablename];
-        dynamic _hdsConnection = Drive.Data.Hds.Db.ops[_tablename];
-        dynamic _hdsCurrViewConnection = Drive.Data.Hds.Db.ops[CurrentViewName];
+        dynamic _serviceConnection = Drive.Data.Comms.Db.comms[_tablename];
+        dynamic _cdcConnection = Drive.Data.Cdc.Db.comms[_tablename];
+        dynamic _hdsConnection = Drive.Data.Hds.Db.comms[_tablename];
+        dynamic _hdsCurrViewConnection = Drive.Data.Hds.Db.comms[CurrentViewName];
 
         private bool _cdcStagingAgentJobWasDisabled;
         private bool _hdsAgentJobWasDisabled;
@@ -42,7 +38,7 @@ namespace Wonga.QA.DataTests.Hds.Ops
 
         public void FixtureSetup()
         {
-            _hdsUtilities = new HdsUtilities(HdsUtilities.WongaService.Ops);
+            _hdsUtilities = new HdsUtilities(HdsUtilities.WongaService.Comms);
 
             _cdcStagingAgentJobWasDisabled = _hdsUtilities.EnableJob(_hdsUtilities.CdcStagingAgentJob);
             _hdsAgentJobWasDisabled = _hdsUtilities.EnableJob(_hdsUtilities.HdsLoadAgentJob);
@@ -70,29 +66,12 @@ namespace Wonga.QA.DataTests.Hds.Ops
         /// insert new record 
         /// </summary>
         /// <returns></returns>
-        /// 
-       
         private dynamic InsertNewRecord(dynamic connection)
         {
-           
-            /*
-            dynamic account = new ExpandoObject();
-
-            account.ExternalId = Guid.NewGuid();
-            account.Login = Get.RandomEmail();
-            account.CreatedOn = DateTime.Now;
-            account.Password = _hdsUtilities.StringToByteArray(Get.GetPassword());
-            account.Salt = _hdsUtilities.StringToByteArray(Get.GetPassword());
-             * */
-            
-           // var sourceRecord = connection.Insert(account);
-           var sourceRecord = connection.Insert(ExternalId: Guid.NewGuid(),
-                                                  Login: Get.RandomEmail()  ,
-                                                  CreatedOn: DateTime.Now,
-                                                  Password: _hdsUtilities.StringToByteArray(Get.GetPassword()),
-                                                  Salt: _hdsUtilities.StringToByteArray(Get.GetPassword()));
-            
-                                               
+            var accountId = Guid.NewGuid();
+            var sourceRecord = connection.Insert(AccountId: accountId,
+                                                 AcceptMarketingContact: 1,
+                                                 CreatedOn: DateTime.Now);
             return sourceRecord;
         }
 
@@ -100,15 +79,14 @@ namespace Wonga.QA.DataTests.Hds.Ops
         //Update record
         private void UpdateRecord(dynamic connection, int key)
         {
-            string login = "admin@wonga.com";
-            connection.UpdateByAccountId(AccountId: key,
-                                              Login: login);
+            connection.UpdateByContactPreferenceId(ContactPreferenceId: key,
+                                               AcceptMarketingContact: 0);
         }
 
         //Delete record
         private void DeleteRecord(dynamic connection, int key)
         {
-            connection.DeleteByAccountId(AccountId: key);
+            connection.DeleteByContactPreferenceId(ContactPreferenceId: key);
         }
 
 
@@ -153,7 +131,7 @@ namespace Wonga.QA.DataTests.Hds.Ops
         }
 
         [Test]
-        [Description("Insert and update same load same LSN test")]
+        [Description("Inser and update same load same LSN test")]
         public void InsertAndUpdateSameLoadSameLsn()
         {
 
@@ -414,8 +392,9 @@ namespace Wonga.QA.DataTests.Hds.Ops
             _hdsUtilities.RecordCount(key, 0, _hdsCurrViewConnection, _columnname, "HdsCurrentView");
 
         }
-     }
- }
+    }
+
+}
 
 
 
