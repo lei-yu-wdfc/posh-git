@@ -15,6 +15,7 @@
 		<Tests>Wonga.QA.Tests</Tests>
 		<ServiceTests>Wonga.QA.ServiceTests</ServiceTests>
 		<DataTests>Wonga.QA.DataTests</DataTests>
+		<Tools>Wonga.QA.Tools</Tools>
 	</PropertyGroup>
 
 	
@@ -32,6 +33,7 @@
 			<Projects Include="$(Src)\$(Tests)\$(Tests).sln" />
 			<Projects Include="$(Src)\$(ServiceTests)\$(ServiceTests).sln" />
 			<Projects Include="$(Src)\$(DataTests)\$(DataTests).sln" />
+			<Projects Include="$(Src)\$(Tools)\$(Tools).sln" />
 		</ItemGroup>
 		<MSBuild Projects="@(Projects)" StopOnFirstFailure="true"/>
 	</Target>

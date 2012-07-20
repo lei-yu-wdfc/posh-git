@@ -1,0 +1,31 @@
+<html>
+	<style>
+	.hidden{
+		display: none;
+	}
+	.passed-test h2{
+		color: Green;
+	}
+	.failed-test h2{
+		color: red;
+	}
+	</style>
+	
+	<body>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+		<script>
+			$(document).ready(function(){
+			$(".test-details-toggle").click(function(event){
+				$(this).next(".test-details").toggle();
+				event.preventDefault();
+			});
+			});
+		</script>
+
+		<h1>Tests - Failed</h1>
+        %%FAILEDTESTS%%
+        
+        <h1>Tests - Passed</h1>
+		%%PASSEDTESTS%%
+	</body>
+</html>

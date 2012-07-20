@@ -6,7 +6,6 @@ using System.Reflection;
 using System.Text;
 using MbUnit.Framework;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tools.NonParallelHunter
 {

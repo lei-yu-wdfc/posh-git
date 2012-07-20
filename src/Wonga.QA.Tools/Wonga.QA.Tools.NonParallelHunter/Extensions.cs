@@ -5,7 +5,6 @@ using System.Reflection;
 using System.Text;
 using MbUnit.Framework;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tools.NonParallelHunter
 {
@@ -36,7 +35,7 @@ namespace Wonga.QA.Tools.NonParallelHunter
 
         public static bool IsAppplicationSpecific(this MemberInfo type, AUT? specificAut)
         {
-            var autAttribute = type.GetCustomAttributes(typeof(AUTAttribute), false).FirstOrDefault() as AUTAttribute;
+            var autAttribute = type.GetCustomAttributes(typeof(Tests.Core.AUTAttribute), false).FirstOrDefault() as Tests.Core.AUTAttribute;
             if (!specificAut.HasValue || autAttribute == null)
                 return true;
             return autAttribute.AUTs.Contains(specificAut.Value);
@@ -64,7 +63,7 @@ namespace Wonga.QA.Tools.NonParallelHunter
 
         public static bool IsAppplicationSpecific(this Type type, bool includePendingOrIgnoredOrExplicit, AUT? specificAut)
         {
-            var autAttribute = type.GetCustomAttributes(typeof(AUTAttribute), false).FirstOrDefault() as AUTAttribute;
+            var autAttribute = type.GetCustomAttributes(typeof(Tests.Core.AUTAttribute), false).FirstOrDefault() as Tests.Core.AUTAttribute;
             if (!specificAut.HasValue || autAttribute == null)
                 return true;
             return autAttribute.AUTs.Contains(specificAut.Value) && type.GetNonParallelTests(includePendingOrIgnoredOrExplicit, specificAut).Count() > 0;

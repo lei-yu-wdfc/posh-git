@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tools.NonParallelH
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Program", "Program\Program.csproj", "{4C4FCB62-B485-48CD-B476-289544486765}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConvertGallioReportToHtml", "ConvertGallioReportToHtml\ConvertGallioReportToHtml.csproj", "{3052E4A8-CE08-479D-8086-E1EF3D54EC46}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -19,6 +21,10 @@ Global
 		{4C4FCB62-B485-48CD-B476-289544486765}.Debug|x86.Build.0 = Debug|x86
 		{4C4FCB62-B485-48CD-B476-289544486765}.Release|x86.ActiveCfg = Release|x86
 		{4C4FCB62-B485-48CD-B476-289544486765}.Release|x86.Build.0 = Release|x86
+		{3052E4A8-CE08-479D-8086-E1EF3D54EC46}.Debug|x86.ActiveCfg = Debug|x86
+		{3052E4A8-CE08-479D-8086-E1EF3D54EC46}.Debug|x86.Build.0 = Debug|x86
+		{3052E4A8-CE08-479D-8086-E1EF3D54EC46}.Release|x86.ActiveCfg = Release|x86
+		{3052E4A8-CE08-479D-8086-E1EF3D54EC46}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

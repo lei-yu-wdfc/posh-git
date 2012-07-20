@@ -38,13 +38,18 @@
 	
 	<Target Name="SanityTest">
 		<CallTarget Targets="Config;Build;Merge;PreGenerateSerializers" />
-		<MsBuild Projects="$(MSBuildProjectFullPath)" Targets="Test" Properties="Files=Meta;TestTarget=$(TestTarget)" />
-		<MsBuild Projects="$(MSBuildProjectFullPath)" Targets="Test" Properties="TestTarget=$(TestTarget);TestFilter=Category:CoreTest" />
+		<MsBuild Projects="$(MSBuildProjectFullPath)" Targets="Test;ConvertReports" Properties="Files=Meta;TestTarget=$(TestTarget)" RunEachTargetSeparately="true"/>
+		<MsBuild Projects="$(MSBuildProjectFullPath)" Targets="Test;ConvertReports" Properties="TestTarget=$(TestTarget);TestFilter=Category:CoreTest"  RunEachTargetSeparately="true"/>
+	</Target>
+	
+	<Target Name="ConvertReports">
+		<Exec Command="$(Bin)\ConvertGallioReportToHtml\ConvertGallioReportToHtml.exe &quot;$(Bin)\$(Tests).Report\$(Tests).Report.xml&quot; &quot;$(Bin)\$(Tests).Report\$(Tests).Report.Converted.html&quot; html"/>
+		<Exec Command="$(Bin)\ConvertGallioReportToHtml\ConvertGallioReportToHtml.exe &quot;$(Bin)\$(Tests).Report\$(Tests).Report.xml&quot; &quot;$(Bin)\$(Tests).Report\$(Tests).Report.csv&quot; csv"/>
 	</Target>
 	
 	<Target Name="Default">
 		<CallTarget Targets="Config;Build;Merge;PreGenerateSerializers" />
-		<MsBuild Condition="'$(Files)'==''" Projects="$(MSBuildProjectFullPath)" Targets="Test" Properties="Files=Meta" />
-		<CallTarget Targets="Test" />
+		<MsBuild Condition="'$(Files)'==''" Projects="$(MSBuildProjectFullPath)" Targets="Test;ConvertReports" Properties="Files=Meta" RunEachTargetSeparately="true"/>
+		<CallTarget Targets="Test;ConvertReports" RunEachTargetSeparately="true" />
 	</Target>
 </Project>
