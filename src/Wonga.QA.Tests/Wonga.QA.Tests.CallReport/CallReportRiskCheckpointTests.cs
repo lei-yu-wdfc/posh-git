@@ -71,7 +71,8 @@ namespace Wonga.QA.Tests.CallReport
         }
 
         [Test, AUT(AUT.Wb, AUT.Uk)]
-        [JIRA("SME-575", "UK-853"), Description("CallReport -> This test creates a loan for the customer that is dead according to call report, then checks the risk checkpoint")]
+        [JIRA("SME-575", "UK-853"), Description("CallReport -> This test creates a loan for the customer that is dead according to call report, then checks the risk checkpoint"),
+		Category(TestCategories.CoreTest)]
         public void TestCallReportMainApplicantIsDeceased_LoanIsDeclined()
         {
             const String forename = "Johnny";

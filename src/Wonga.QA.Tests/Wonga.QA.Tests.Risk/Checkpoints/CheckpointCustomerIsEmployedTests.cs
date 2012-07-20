@@ -27,7 +27,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
         }
 
         [Test]
-        [JIRA("UKRISK-72"), Description("Scenario 2: Customer is eploymend, application accepted")]
+        [JIRA("UKRISK-72"), Description("Scenario 2: Customer is eploymend, application accepted"),Category(TestCategories.CoreTest)]
         public void L0CustomerEmployedThenApplicationAccepted()
         {
             var customer = CustomerBuilder.New().WithEmployer(TestMask).WithEmployerStatus(EmploymentStatusEnum.EmployedFullTime.ToString()).Build();
