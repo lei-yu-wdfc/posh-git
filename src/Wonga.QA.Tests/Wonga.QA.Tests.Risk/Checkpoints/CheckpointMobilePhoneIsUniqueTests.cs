@@ -11,10 +11,9 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	public class CheckpointMobilePhoneIsUniqueTests
 	{
 		private const RiskMask TestMask = RiskMask.TESTMobilePhoneIsUnique;
-		private Customer _customer;
-		private static readonly string _phoneNumber = Get.GetMobilePhone();
+		private static readonly string PhoneNumber = GetRiskUniqueMobilePhone();
 
-		public string GetMobilePhone()
+		public static string GetRiskUniqueMobilePhone()
 		{
             var phone = Get.GetMobilePhone();
 			Drive.Data.Risk.Db.RiskAccountMobilePhones.Delete(MobilePhone: phone); //Dodgy
@@ -30,15 +29,25 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		[JIRA("UK-1563"), AUT(AUT.Uk), Description("Scenario 1: Accepted"), Category(TestCategories.CoreTest)]
 		public void L0_MobilePhoneIsUnique_LoanIsAccepted()
 		{
-			_customer = CreateCustomerWithVerifiedMobileNumber(_phoneNumber);
-			ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+			Customer customer = CreateCustomerWithVerifiedMobileNumber(PhoneNumber);
+			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+		}
+
+		[Test(Order = 1)]
+		[JIRA("UK-1563"), AUT(AUT.Uk), Description("Scenario 2: Declined")]
+		[Ignore("looks like this test is redundant and depends on the previous one")]
+		public void L0_MobilePhoneIsUniqueSecondPhoneIsNotValidated_LoanIsDeclined()
+		{
+			//Create and check new customer
+			Customer customer = CreateCustomerWithVerifiedMobileNumber(PhoneNumber);
+			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 		}
 
         [Test]
 		[JIRA("UK-1563"), AUT(AUT.Uk), Description("Scenario 1, Scenario 2: Declined")]
         public void L0_MobilePhoneIsNotUnique_LoanIsDeclined()
         {
-            var phone = GetMobilePhone();
+            var phone = GetRiskUniqueMobilePhone();
             try
             {
                 //Create previous customer record
@@ -55,33 +64,11 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             }
         }
 
-		[Test]
-        [JIRA("UK-1563"), AUT(AUT.Uk), Description("Scenario 2: Accepted")]
-		public void L0_MobilePhoneIsUniqueSecondPhoneIsNotValidated_LoanIsAccepted()
-		{
-			//Create and check new customer
-			Customer customer = CreateCustomerWithVerifiedMobileNumber(_phoneNumber);
-			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
-		}
 
 		private static Customer CreateCustomerWithVerifiedMobileNumber(string phoneNumber)
 		{
 			CustomerBuilder customerBuilder = CustomerBuilder.New().WithMobileNumber(phoneNumber).WithEmployer(TestMask);
-			Customer customer = customerBuilder.Build();
-
-			var mobileVerificationEntity = Do.Until(() => Drive.Data.Comms.Db.MobilePhoneVerifications.FindBy(MobilePhone: phoneNumber, AccountId: customerBuilder.Id));
-
-			Assert.IsNotNull(mobileVerificationEntity);
-			Assert.IsNotNull(mobileVerificationEntity.Pin);
-
-			//Force the mobile phone number to be verified successfully..
-			Assert.DoesNotThrow(() => Drive.Api.Commands.Post(new CompleteMobilePhoneVerificationCommand
-			{
-				Pin = mobileVerificationEntity.Pin,
-				VerificationId = mobileVerificationEntity.VerificationId
-			}));
-
-			return customer;
+			return customerBuilder.Build();
 		}
 	}
 }

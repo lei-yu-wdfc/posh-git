@@ -226,7 +226,7 @@ namespace Wonga.QA.Framework.Core
 			return DateTime.Now;
 		}
 
-        public static string GetBankAccountNumber()
+		public static string GetBankAccountNumber(string bankSortCode = "938600")
         {
             switch (Config.AUT)
             {
@@ -240,7 +240,7 @@ namespace Wonga.QA.Framework.Core
                     }
                 case AUT.Uk:
                     {
-                        return "42368003";
+						return RandomUkBankAccountFromSortCode(bankSortCode);
                     }
                 case AUT.Wb:
                     {
@@ -252,6 +252,44 @@ namespace Wonga.QA.Framework.Core
                     }
             }
         }
+
+		private static string RandomUkBankAccountFromSortCode(string bankSortCode)
+		{
+			//backward compatibility
+			switch(bankSortCode)
+			{
+				case "938600":
+					return "42368003";
+
+				case "161027":
+					return "10032650";
+
+				case "180002":
+					return "00000190";
+
+				case "070116":
+					return "34012583";
+
+				case "074456":
+					return "12345112";
+				
+				case "204422":
+					{
+						//tried to implement DoubleAlternateModulus10 but it was failing in UnifiedSoftwareBankValidation
+						var validAccounts = new[]
+						                    	{
+						                    		"33069079",
+						                    		"42574721",
+						                    		"44555090",
+						                    		"54827422",
+						                    		"56320888"
+						                    	};
+						return validAccounts[RandomInt(0, validAccounts.Length)];
+					}
+			}
+			
+			throw new NotImplementedException(string.Format("UK Account Generator not implemented for sort code: {0}", bankSortCode));
+		}
 
         public static Guid GetCsAuthorization()
         {

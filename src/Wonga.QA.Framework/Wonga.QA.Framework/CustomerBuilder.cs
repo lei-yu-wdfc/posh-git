@@ -397,6 +397,7 @@ namespace Wonga.QA.Framework
                         	r.DateOfBirth = _dateOfBirth;
                         	r.Gender = _gender;
                         	r.MaidenName = _gender == GenderEnum.Female ? _maidenName : null;
+                        	r.HomePhone = _homePhoneNumber;
                         }),
 						RiskSaveCustomerDetailsZaCommand.New(r =>
 						{
@@ -408,6 +409,8 @@ namespace Wonga.QA.Framework
                         	r.DateOfBirth = _dateOfBirth;
                         	r.Gender = _gender;
                         	r.MaidenName = _gender == GenderEnum.Female ? _maidenName : null;
+							r.HomePhone = _homePhoneNumber;
+							r.MobilePhone = _mobileNumber;
 						}),
                         SaveCustomerAddressZaCommand.New(r =>
                         {
@@ -496,6 +499,7 @@ namespace Wonga.QA.Framework
                             r.DateOfBirth = _dateOfBirth;
                             r.HomePhone = _homePhoneNumber;
                             r.Gender = _gender;
+							r.MobilePhone = _mobileNumber;
 						}),
                         SaveCustomerAddressCaCommand.New(r => {
                                                                  r.AccountId = _id;
@@ -588,6 +592,7 @@ namespace Wonga.QA.Framework
                                                                  r.Email = _email;
                                                                  r.HomePhone = _homePhoneNumber;
                                                                  r.Gender = _gender;
+																 r.MobilePhone = _mobileNumber;
 						}),
                         SaveCustomerAddressUkCommand.New(r=>
                                                              {
@@ -667,6 +672,7 @@ namespace Wonga.QA.Framework
 						                                         r.Surname = _surname;
 						                                         r.Email = _email;
 						                                         r.DateOfBirth = _dateOfBirth;
+						                                     	 r.HomePhone = _homePhoneNumber;
 						                                     }),
 						RiskSaveCustomerDetailsUkCommand.New(r =>
 						{
@@ -676,6 +682,8 @@ namespace Wonga.QA.Framework
 						             r.Surname = _surname;
 						             r.Email = _email;
 						             r.DateOfBirth = _dateOfBirth;
+									 r.MobilePhone = _mobileNumber;
+									 r.HomePhone = _homePhoneNumber;
 						}),
 					    SaveCustomerAddressUkCommand.New(r =>
 					                                         {
@@ -709,6 +717,9 @@ namespace Wonga.QA.Framework
 						                            		{
 						                            			r.AccountNumber = _bankAccountNumber;
 						                            		}
+
+															if (!string.IsNullOrEmpty(_bankCode))
+																r.BankCode = _bankCode;
 
 						                            	}),
 						RiskAddBankAccountUkCommand.New(r =>
