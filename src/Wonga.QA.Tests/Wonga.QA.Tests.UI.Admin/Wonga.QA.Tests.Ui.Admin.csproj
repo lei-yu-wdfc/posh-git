@@ -76,7 +76,6 @@
     <Compile Include="AccountingTests.cs" />
     <Compile Include="AdminTest.cs" />
     <Compile Include="PaymentCardsTests.cs" />
-    <Compile Include="Prepaid\PrepaidAdminTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

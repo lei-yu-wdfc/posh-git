@@ -41,6 +41,20 @@ namespace Wonga.QA.Tests.Core
         [Description("lisa.lambert@wonga.com")]
         LisaLambert,
         [Description("roman.tertychnyi@wonga.com")]
-        RomanTertychnyi
+        RomanTertychnyi,
+        [Description("piotr.walat@wonga.com")]
+        PiotrWalat,
+        [Description("adrian.murphy@wonga.com")]
+        AdrianMurphy,
+        [Description("guergana.yordanova@wonga.com")]
+        GuerganaYordanova,
+        [Description("jon.hurd@wonga.com")]
+        JonHurd,
+        [Description("seamus.hoban@wonga.com")]
+        SeamusHoban,
+        [Description("alex.pricope@wonga.com")]
+        AlexPricope,
+        [Description("svyatoslav.kravchenko@wonga.com")]
+        SvyatoslavKravchenko
     }
 }

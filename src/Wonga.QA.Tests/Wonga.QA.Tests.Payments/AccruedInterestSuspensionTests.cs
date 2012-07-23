@@ -33,7 +33,7 @@ namespace Wonga.QA.Tests.Payments
             _applicationsTable = Drive.Data.Payments.Db.Applications;
         }
 
-        [Test]
+        [Test, Owner(Owner.PiotrWalat)]
         public void GoingIntoArrears_Creates_SuspendInterestTransaction_InTheFuture()
         {
             //Make sure the payment attempt fails by changing the expiry date of the card.

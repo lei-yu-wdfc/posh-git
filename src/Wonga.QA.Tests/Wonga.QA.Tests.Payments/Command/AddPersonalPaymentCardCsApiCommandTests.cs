@@ -17,7 +17,7 @@ namespace Wonga.QA.Tests.Payments.Command
     {
         [Test] 
         [Description("Adds a collection of payments cards using AddPersonalPaymentCard Cs API command and verifies all of these cards have been added to users account")]
-        [AUT(AUT.Uk)]
+        [AUT(AUT.Uk), Owner(Owner.PiotrWalat)]
         public void Command_AddsPersonalPaymentCards_ToCustomersPaymentsCards()
         {
             DateTime today = DateTime.Today;
