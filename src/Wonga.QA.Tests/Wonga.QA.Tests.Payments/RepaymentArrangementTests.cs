@@ -20,11 +20,9 @@ namespace Wonga.QA.Tests.Payments
 		public void CustomerServiceSetRepaymentArrangementTest()
 		{
 			Customer customer = CustomerBuilder.New().Build();
-			Do.Until(customer.GetBankAccount);
-			Do.Until(customer.GetPaymentCard);
 			Application application = ApplicationBuilder.New(customer).Build();
 			
-			application.PutIntoArrears();
+			application.ExpireCard().PutIntoArrears();
 
 			Drive.Msmq.Payments.Send(new CreateExtendedRepaymentArrangement
 			                          	{
@@ -49,11 +47,9 @@ namespace Wonga.QA.Tests.Payments
 		public void CreateRepaymentArrangementTest()
 		{
 			Customer customer = CustomerBuilder.New().Build();
-			Do.Until(customer.GetBankAccount);
-			Do.Until(customer.GetPaymentCard);
 			Application application = ApplicationBuilder.New(customer).Build();
 
-			application.PutIntoArrears(4);
+            application.ExpireCard().PutIntoArrears(4);
 
 			var cmd = new CreateRepaymentArrangementCommand()
 			           	{
@@ -62,7 +58,8 @@ namespace Wonga.QA.Tests.Payments
 			           		RepaymentDates = new[] {DateTime.Today.AddDays(1), DateTime.Today.AddMonths(1)},
 			           		NumberOfMonths = 2
 			           	};
-			Drive.Api.Commands.Post(cmd);
+			var errors= Drive.Api.Commands.Post(cmd).GetErrors().ToList();
+            Assert.IsTrue(errors.Count==0,"No validation errors expected");
 			
 			var dbApplication = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
 			Do.Until(() => Drive.Db.Payments.RepaymentArrangements.Single(x => x.ApplicationId == dbApplication.ApplicationId));
@@ -76,11 +73,10 @@ namespace Wonga.QA.Tests.Payments
 		{
 			//Test written to support both mocked and non mocked environments
 			Customer customer = CustomerBuilder.New().Build();
-			Do.Until(customer.GetBankAccount);
-			Do.Until(customer.GetPaymentCard);
+
 			Application application = ApplicationBuilder.New(customer).Build();
 
-			application.PutIntoArrears(4);
+            application.ExpireCard().PutIntoArrears(4);
 
 			application.CreateRepaymentArrangement();
 
