@@ -56,7 +56,7 @@ namespace Wonga.QA.Tests.Ui.Mobile
 
         }
 
-        [Test, AUT(AUT.Uk)]
+        [Test, AUT(AUT.Uk), Category(TestCategories.Mock)]
         public void UkL0JourneyAccepted()
         {
             var journey = JourneyFactory.GetL0Journey(Client.MobileHome())
@@ -75,4 +75,5 @@ namespace Wonga.QA.Tests.Ui.Mobile
         }
 
     }
+
 }
