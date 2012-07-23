@@ -18,13 +18,11 @@ namespace Wonga.QA.Tests.Payments.Queries
     [AUT(AUT.Uk), JIRA("UK-1103")]
     public class CardRepaymentRequestCsApiTests
     {
-        private Guid _cardId;
         private decimal _loanAmount;
 
         [SetUp]
         public void Setup()
         {
-            _cardId = Guid.NewGuid();
             _loanAmount = 202.72m;
         }
 
@@ -40,12 +38,14 @@ namespace Wonga.QA.Tests.Payments.Queries
             customer.AddPaymentCard(cardType, cardNumber, cardCode, expiryDate, false);
 
             int? paymentCardId = null;
+            Guid paymentCardExternalId = Guid.Empty;
             Do.Until(() =>
                          {
                              var paymentCardsData = Drive.Data.Payments.Db.PaymentCardsBase;
                              var d = paymentCardsData.FindAll(paymentCardsData.Type == cardType 
                                  && paymentCardsData.MaskedNumber == cardNumber.MaskedCardNumber()).Single();
                              paymentCardId = d.PaymentCardId;
+                             paymentCardExternalId = d.ExternalId;
                              return d;
             });
 
@@ -60,7 +60,7 @@ namespace Wonga.QA.Tests.Payments.Queries
                                        SalesforceUser = "Mr Agent",
                                        Currency = CurrencyCodeIso4217Enum.GBP,
                                        CV2 = cardCode,
-                                       PaymentCardId = _cardId,
+                                       PaymentCardId = paymentCardExternalId,
                                        PaymentId = paymentId
                                    };
 
