@@ -1,4 +1,5 @@
-﻿using MbUnit.Framework;
+﻿using System;
+using MbUnit.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Requests.Comms.Commands;
 using Wonga.QA.Framework.Core;
@@ -7,56 +8,36 @@ using Wonga.QA.Framework;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-	[TestFixture, Parallelizable(TestScope.All), Pending("ZA-2565")]
+	[TestFixture]
+    [Parallelizable(TestScope.All)]
 	public class CheckpointMobilePhoneIsUniqueTests
 	{
-		private const RiskMask TestMask = RiskMask.TESTMobilePhoneIsUnique;
-		private static readonly string PhoneNumber = GetRiskUniqueMobilePhone();
-
-		public static string GetRiskUniqueMobilePhone()
-		{
-            var phone = Get.GetMobilePhone();
-			Drive.Data.Risk.Db.RiskAccountMobilePhones.Delete(MobilePhone: phone); //Dodgy
-            return phone; 
-        }
-
-        public void CleanPhone(string phone)
-        {
-            Drive.Data.Risk.Db.RiskAccountMobilePhones.Delete(MobilePhone: phone);
-        }
+		private const RiskMask TestMask = RiskMask.TESTMobilePhoneIsUnique;     
 
 		[Test]
-		[JIRA("UK-1563"), AUT(AUT.Uk), Description("Scenario 1: Accepted"), Category(TestCategories.CoreTest)]
+		[JIRA("UK-1563"), AUT(AUT.Uk), Description("Scenario 1: Accepted")]//, Category(TestCategories.CoreTest)]
 		public void L0_MobilePhoneIsUnique_LoanIsAccepted()
 		{
-			Customer customer = CreateCustomerWithVerifiedMobileNumber(PhoneNumber);
-			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+            var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
+            ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 		}
 
-		[Test(Order = 1)]
-		[JIRA("UK-1563"), AUT(AUT.Uk), Description("Scenario 2: Declined")]
-		[Ignore("looks like this test is redundant and depends on the previous one")]
-		public void L0_MobilePhoneIsUniqueSecondPhoneIsNotValidated_LoanIsDeclined()
-		{
-			//Create and check new customer
-			Customer customer = CreateCustomerWithVerifiedMobileNumber(PhoneNumber);
-			ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
-		}
 
         [Test]
-		[JIRA("UK-1563"), AUT(AUT.Uk), Description("Scenario 1, Scenario 2: Declined")]
+        [JIRA("UK-1563"), AUT(AUT.Uk), Description("Scenario 1, Scenario 2: Declined")]
         public void L0_MobilePhoneIsNotUnique_LoanIsDeclined()
         {
-            var phone = GetRiskUniqueMobilePhone();
+            var phone = Get.GetMobilePhone();
+
             try
             {
                 //Create previous customer record
-                Customer customer1 = CreateCustomerWithVerifiedMobileNumber(phone);
-                ApplicationBuilder.New(customer1).Build();
+                var firstCustomer = CustomerBuilder.New().WithMobileNumber(phone).Build();
+                ApplicationBuilder.New(firstCustomer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
                 //Create and check new customer
-                Customer customer = CreateCustomerWithVerifiedMobileNumber(phone);
-                ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+                var secendCustomer = CustomerBuilder.New().WithMobileNumber(phone).WithEmployer(TestMask).Build();
+                ApplicationBuilder.New(secendCustomer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
             }
             finally
             {
@@ -65,10 +46,49 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
         }
 
 
-		private static Customer CreateCustomerWithVerifiedMobileNumber(string phoneNumber)
-		{
-			CustomerBuilder customerBuilder = CustomerBuilder.New().WithMobileNumber(phoneNumber).WithEmployer(TestMask);
-			return customerBuilder.Build();
-		}
+        [Test]
+        [JIRA("UK-1563"), AUT(AUT.Uk), Description("Scenario 2: Accepted")]
+        public void L0_MobilePhoneIsNotValidatedSecondPhoneIsUnique_LoanIsAccepted()
+        {
+            var phone = Get.GetMobilePhone();
+
+            try
+            {
+                var firstCustomer = CustomerBuilder.New().WithMobileNumber(phone).Build();
+                ApplicationBuilder.New(firstCustomer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+
+                CleanVerification(firstCustomer);
+                CleanPhone(phone);
+
+
+                var secendCustomer = CustomerBuilder.New().WithMobileNumber(phone).WithEmployer(TestMask).Build();
+                ApplicationBuilder.New(secendCustomer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+
+            }
+            finally
+            {
+                CleanPhone(phone);
+            }
+        }
+
+
+        private void CleanPhone(String phone)
+        {
+            Drive.Data.Risk.Db.RiskAccountMobilePhones.Delete(MobilePhone: phone);
+        }
+
+        private void CleanVerification(Customer customer)
+        {
+            var customerDetailsTable = Drive.Data.Comms.Db.CustomerDetails;
+            var mobilePhoneVerificationTable = Drive.Data.Comms.Db.MobilePhoneVerification;
+
+            var customerDetailsEntity = customerDetailsTable.FindAllBy(AccountId: customer.Id).Single();
+            customerDetailsEntity.MobilePhone = null;
+            customerDetailsTable.Update(customerDetailsEntity);
+           
+            var mobilePhoneVerificationEntity = mobilePhoneVerificationTable.FindAllBy(AccountId: customer.Id).Single();
+            mobilePhoneVerificationEntity.MobileVerifiedOn = null;
+            mobilePhoneVerificationTable.Update(mobilePhoneVerificationEntity);
+        }
 	}
 }
