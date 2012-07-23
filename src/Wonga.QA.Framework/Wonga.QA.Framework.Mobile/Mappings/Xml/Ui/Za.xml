@@ -106,6 +106,7 @@
     <MySummaryButton>.menu-block-0 .menu li:first-child>a</MySummaryButton>
     <MyPersonalDetailsButton>.menu-block-0 .menu li:first-child + li>a</MyPersonalDetailsButton>
     <MyPaymentDetailsButton>.menu-block-0 .menu li:first-child + li + li>a</MyPaymentDetailsButton>
+    <WarningBox>div.wonga-box-type-warning</WarningBox>
   </MySummaryPageMobile>
 
   <PersonalBankAccountPageMobile>

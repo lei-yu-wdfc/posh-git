@@ -46,6 +46,7 @@ namespace Wonga.QA.Framework.Mobile.Mappings.Ui
         public virtual HelpElement HelpElement { get; set; }
         public virtual FAQElement FAQElement { get; set; }
         public virtual TabsElement TabsElement { get; set; }
+        public virtual TopupSlidersElement TopupSlidersElement { get; set; }
         #endregion
 
         #region Pages
@@ -64,6 +65,7 @@ namespace Wonga.QA.Framework.Mobile.Mappings.Ui
         public virtual LoginPageMobile LoginPageMobile { get; set; }
         public virtual ApplyPageMobile ApplyPageMobile { get; set; }
         public virtual MyPersonalDetailsPageMobile MyPersonalDetailsPageMobile { get; set; }
+        public virtual TopupRequestPage TopupRequestPage { get; set; }
         #endregion
 
         #region Sections
