@@ -5,7 +5,7 @@ SET Root=%~dp0\..
 SET Run=%Root%\run
 SET Src=%Root%\src
 SET Bin=%Root%\bin
-
+SET Powershell=%Run%\powershell
 SET MSBuild=%SystemRoot%\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe /nologo
 
 :MENU
@@ -92,13 +92,13 @@ GOTO EOF
 :71 
 	SET /P TestingTarget=Enter your server name (e.g. risk):
 	SETX QAFTestTarget %TestingTarget%	
-	powershell -command "& {. %Run%\EditEndPointConfig.ps1; configservice %TestingTarget% }"
+	powershell -command "& {. %Powershell%\EditEndPointConfig.ps1; configservice %TestingTarget% }"
  GOTO MENU
  
 :72
 	SET /P TestingTarget=Enter your server name to restore(e.g.risk):
 	SETX QAFTestTarget %TestingTarget%
-	powershell -command "& {. %Run%\EditEndPointConfig.ps1; configservice_undo %TestingTarget% }"
+	powershell -command "& {. %Powershell%\EditEndPointConfig.ps1; configservice_undo %TestingTarget% }"
  GOTO MENU
  
 
