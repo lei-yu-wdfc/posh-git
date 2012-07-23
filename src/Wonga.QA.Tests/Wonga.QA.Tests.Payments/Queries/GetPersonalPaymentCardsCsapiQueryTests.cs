@@ -26,7 +26,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             _loanAmount = 202.72m;
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1196")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1196"), Owner(Owner.PiotrWalat)]
         public void RepayWithCard_CreatesCardPaymentRequestEntry()
         {
             Customer customer = CustomerBuilder.New().Build();
@@ -83,7 +83,7 @@ namespace Wonga.QA.Tests.Payments.Queries
     [Parallelizable(TestScope.Self)]
     public class GetPersonalPaymentCardsCsapiQueryTests
     {
-        [Test, AUT(AUT.Uk), JIRA("UK-1194")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1194"), Owner(Owner.PiotrWalat)]
         public void Query_ShouldReturnAllPersonalPaymentCards_WhenPersonalCardsPresentForAccount()
         {
             DateTime today = DateTime.Today;
