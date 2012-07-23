@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Reflection;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
@@ -18,6 +19,7 @@ namespace Wonga.QA.Tests.Migration
     //[Parallelizable(TestScope.All)]
     public class MigrationLoginTests : UiTest
     {
+        private int _batchId = 1;
         private string GetFunctionName()
         {
             StackTrace stackTrace = new StackTrace();
@@ -69,7 +71,8 @@ namespace Wonga.QA.Tests.Migration
                         testEndTime = DateTime.Now;
                         //Console.WriteLine("\n{0}: {1} Login = {2} \nUser Created in Year = {3}", usersToCheck,
                           //                loginStatus, migratedUser, userCreatedInYear);
-                        migHelper.StoreTestResults(testName,migratedUser,testStartTime,testEndTime,loginStatus);
+                        migHelper.StoreTestResults(_batchId.ToString(CultureInfo.InvariantCulture), testName,
+                                                   migratedUser, testStartTime, testEndTime, loginStatus);
                     }
                 }
             }
