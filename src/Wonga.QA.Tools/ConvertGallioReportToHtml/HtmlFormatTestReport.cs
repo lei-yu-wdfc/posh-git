@@ -36,13 +36,24 @@ namespace Wonga.QA.Tools.ReportConverter
                 .Replace("%%TOTALINCONCLUSIVE%%", inconclusiveTests.Count().ToString());
         }
 
-        private static string ApplyTemplate(string testTemplate, TestResult testNode)
+        private string ApplyTemplate(string testTemplate, TestResult testNode)
         {
             var stackTraceText = HttpUtility.HtmlEncode(testNode.StackTrace);
             var debugTraceText = HttpUtility.HtmlEncode(testNode.DebugTrace);
-            return testTemplate.Replace("%%TESTNAME%%", testNode.FullName)
+            var result = testTemplate.Replace("%%TESTNAME%%", testNode.FullName)
                 .Replace("%%DEBUGTRACE%%", debugTraceText)
                 .Replace("%%STACKTRACE%%", stackTraceText);
+            result = ApplyMetadata(result, testNode);
+            return result;
+        }
+
+        private string ApplyMetadata(string testTemplate, TestResult test)
+        {
+            string metadata = "<ul>";
+            foreach (var entry in test.Metadata.Where(x => !new[] { "TestKind" }.Contains(x.Key)))
+                metadata += string.Format("<li><b>{0}</b>: {1}</li>", entry.Key, entry.Value);
+            metadata += "</ul>";
+            return testTemplate.Replace("%%METADATA%%", metadata);
         }
 
         public string GetTemplate(TestOutcome testOutcome)

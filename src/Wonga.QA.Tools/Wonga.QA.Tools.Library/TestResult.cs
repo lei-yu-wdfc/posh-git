@@ -21,5 +21,11 @@ namespace Wonga.QA.Tools.ReportParser
         public TestOutcome Outcome { get; set; }
         public string DebugTrace { get; set; }
         public string StackTrace { get; set; }
+        public Dictionary<string, string> Metadata { get; set; }
+
+        public TestResult()
+        {
+            Metadata = new Dictionary<string, string>();
+        }
     }
 }

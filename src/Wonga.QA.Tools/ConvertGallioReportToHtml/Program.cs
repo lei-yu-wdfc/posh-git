@@ -20,7 +20,7 @@ namespace Wonga.QA.Tools.ReportConverter
             string format = args[2];
             string output = "";
 
-            List<TestResult> testResults = new GallioReportParser().Parse(source);
+            List<TestResult> testResults = new List<TestResult>(new GallioReportParser(XDocument.Load(source)).Parse());
 
             if (format.ToLower() == "html")
                 output = new HtmlFormatTestReport().FormatReport(testResults);

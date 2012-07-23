@@ -10,9 +10,18 @@ namespace Wonga.QA.Tools.Library
 {
     public class GallioReportParser
     {
-        private static IEnumerable<TestResult> ReadTestResults(XDocument doc)
+        private XDocument _doc;
+        private XNamespace _ns;
+
+        public GallioReportParser(XDocument doc)
         {
-            var tests = GetTests(doc);
+            _doc = doc;
+            _ns = _doc.Root.Name.Namespace;
+        }
+
+        private IEnumerable<TestResult> ReadTestResults()
+        {
+            var tests = GetTests(_doc);
             foreach (var test in tests)
             {
                 var debugTraceNode = test.Descendants().FirstOrDefault(x => x.Name.LocalName == "text" && x.Ancestors().Any(anc => anc.Attribute("name") != null && anc.Attribute("name").Value == "DebugTrace"));
@@ -26,12 +35,33 @@ namespace Wonga.QA.Tools.Library
                     StackTrace = stackTraceText,
                     Name = test.Descendants().First(x => x.Name.LocalName == "testStep").Attribute("name").Value,
                     FullName = test.Descendants().First(x => x.Name.LocalName == "testStep").Attribute("fullName").Value,
-                    Outcome = GetOutcome(test)
+                    Outcome = GetOutcome(test),
+                    Metadata = GetMetadata(test)
                 };
             }
         }
 
-        public static IEnumerable<XElement> GetTests(XDocument doc)
+        public List<TestResult> Parse()
+        {
+            return new List<TestResult>(ReadTestResults());
+        }
+
+        private Dictionary<string, string> GetMetadata(XElement test)
+        {
+            var metadata = new Dictionary<string, string>();
+            var testId = test.Descendants().First(x => x.Name.LocalName == "testStep").Attribute("testId").Value;
+            var metadataNode =
+                _doc.Descendants().First(
+                    x =>
+                    x.Name.LocalName == "metadata" &&
+                    x.Ancestors().Any(anc => anc.Name.LocalName == "test" && anc.Attribute("id").Value == testId));
+            var entries = metadataNode.Descendants().Where(x => x.Name.LocalName == "entry");
+            foreach(var entry in entries)
+                metadata.Add(entry.Attribute("key").Value, entry.Element(_ns+"value").Value);
+            return metadata;
+        }
+
+        public IEnumerable<XElement> GetTests(XDocument doc)
         {
             return doc.Root.Descendants().Where(
                 x =>
@@ -44,12 +74,12 @@ namespace Wonga.QA.Tools.Library
                         desc.Name.LocalName == "outcome" && desc.Attribute("status") != null));
         }
 
-        public static bool HasOutcome(XElement testElement, TestOutcome testOutcome)
+        public bool HasOutcome(XElement testElement, TestOutcome testOutcome)
         {
             return GetOutcome(testElement) == testOutcome;
         }
 
-        public static TestOutcome GetOutcome(XElement testElement)
+        public TestOutcome GetOutcome(XElement testElement)
         {
             var outcome = testElement.Descendants().First(
                     desc =>
@@ -62,11 +92,6 @@ namespace Wonga.QA.Tools.Library
                 return TestOutcome.UnknownOutcome;
             }
             return (TestOutcome)Enum.Parse(typeof(TestOutcome), outcomeText, true);
-        }
-
-        public List<TestResult> Parse(string source)
-        {
-            return new List<TestResult>(ReadTestResults(XDocument.Load(source)));
         }
     }
 }
