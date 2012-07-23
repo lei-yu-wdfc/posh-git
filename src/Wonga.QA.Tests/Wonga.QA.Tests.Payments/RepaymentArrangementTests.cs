@@ -14,9 +14,10 @@ using PaymentFrequencyEnum = Wonga.QA.Framework.Api.Enums.PaymentFrequencyEnum;
 
 namespace Wonga.QA.Tests.Payments
 {
+    [Parallelizable(TestScope.All)]
 	public class RepaymentArrangementTests
 	{
-		[Test, AUT(AUT.Uk), Parallelizable]
+		[Test, AUT(AUT.Uk), Owner(Owner.AlexSloat)]
 		public void CustomerServiceSetRepaymentArrangementTest()
 		{
 			Customer customer = CustomerBuilder.New().Build();
@@ -43,7 +44,7 @@ namespace Wonga.QA.Tests.Payments
 			Assert.AreEqual(2, repaymentArrangement.RepaymentArrangementDetails.Count);
 		}
 
-		[Test, AUT(AUT.Uk), JIRA("UK-725"), Parallelizable]
+        [Test, AUT(AUT.Uk), JIRA("UK-725"), Owner(Owner.AlexSloat)]
 		public void CreateRepaymentArrangementTest()
 		{
 			Customer customer = CustomerBuilder.New().Build();
@@ -68,7 +69,7 @@ namespace Wonga.QA.Tests.Payments
 			Assert.IsNotNull(Drive.Db.Payments.Transactions.Where(x => x.ApplicationId == dbApplication.ApplicationId && x.Type == "SuspendInterestAccrual"));
 		}
 
-		[Test, AUT(AUT.Uk), JIRA("UK-726"), Parallelizable]
+        [Test, AUT(AUT.Uk), JIRA("UK-726"), Owner(Owner.AlexSloat)]
 		public void CustomerMissesRepaymentArrangementInstallmentTest()
 		{
 			//Test written to support both mocked and non mocked environments
