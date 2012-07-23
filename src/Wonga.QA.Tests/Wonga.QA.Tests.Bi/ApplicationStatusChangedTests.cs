@@ -42,7 +42,7 @@ namespace Wonga.QA.Tests.Bi
         }
 
         [Test]
-        [AUT(AUT.Uk), JIRA("UK-819")]
+        [AUT(AUT.Uk), JIRA("UK-819"), Owner(Owner.JonHurd)]
         [Description("Verifies that after funds have been transferred to the customer application status 'Live' will be set in salesforce")]
         [Parallelizable]
         public void FundsTransferred_SubmitsApplicactionStatusLive_ToSalesforce()
@@ -54,7 +54,7 @@ namespace Wonga.QA.Tests.Bi
         }
 
         [Test]
-        [AUT(AUT.Uk), JIRA("UK-925")]
+        [AUT(AUT.Uk), JIRA("UK-925"), Owner(Owner.JonHurd)]
         [Description("Verifies that when a live application is moved to complaint status salesforce is informed and a suppression record is created")]
         [Parallelizable]
         public void ApplicationInComplaint_SubmitsComplaintStatus_ToSalesforce()
@@ -88,7 +88,7 @@ namespace Wonga.QA.Tests.Bi
         }
 
         [Test]
-        [AUT(AUT.Uk), JIRA("UK-925")]
+        [AUT(AUT.Uk), JIRA("UK-925"), Owner(Owner.PiotrWalat)]
         [Description("Verifies that when a live application is moved to complaint status salesforce is informed and a suppression record is created")]
         [Parallelizable]
         public void RemoveComplaint_ForPreviouslyLiveApplication_Changes_SalesforceApplicationStatus_BackToLive()
@@ -156,7 +156,7 @@ namespace Wonga.QA.Tests.Bi
         }
 
         [Test]
-        [AUT(AUT.Uk), JIRA("UK-925")]
+        [AUT(AUT.Uk), JIRA("UK-925"), Owner(Owner.PiotrWalat)]
         [Description("Verifies that when a live application is moved to complaint status salesforce is informed and a suppression record is created")]
         [Parallelizable]
         public void RemoveComplaint_ForPreviouslyLiveApplication_ThatWentIntoArrears_Changes_SalesforceApplicationStatus_BackToInArrears()
@@ -235,7 +235,7 @@ namespace Wonga.QA.Tests.Bi
 
 
 		[Test]
-		[AUT(AUT.Uk), JIRA("UK-925")]
+		[AUT(AUT.Uk), JIRA("UK-925"), Owner(Owner.JonHurd)]
 		[Description("Verifies that when a live application is moved to complaint status salesforce is informed and a suppression record is created")]
 		[Parallelizable]
 		public void ApplicationInBankruptcy_SubmitsBankruptStatus_ToSalesforce()
@@ -270,7 +270,7 @@ namespace Wonga.QA.Tests.Bi
 		}
 
         [Test]
-        [AUT(AUT.Uk), JIRA("UK-925")]
+        [AUT(AUT.Uk), JIRA("UK-925"), Owner(Owner.JonHurd)]
         [Description("Verifies that when a live application is moved to complaint status salesforce is informed and a suppression record is created")]
         [Parallelizable]
         public void ApplicationInHardship_SubmitsHardshipStatus_ToSalesforce()
@@ -305,7 +305,7 @@ namespace Wonga.QA.Tests.Bi
         }
 
         [Test]
-        [AUT(AUT.Uk), JIRA("UK-1816")]
+        [AUT(AUT.Uk), JIRA("UK-1816"), Owner(Owner.JonHurd)]
         [Description("Verifies that when a live application is moved to management review status salesforce is informed and a suppression record is created")]
         [Parallelizable]
         public void ApplicationInManagementReview_SubmitsManagementReviewStatus_ToSalesforce()
@@ -334,7 +334,7 @@ namespace Wonga.QA.Tests.Bi
         }
 
         [Test]
-        [AUT(AUT.Uk), JIRA("UKOPS-138")]
+        [AUT(AUT.Uk), JIRA("UKOPS-138"), Owner(Owner.PiotrWalat)]
         [Description("Verifies that when a live application is moved to management review status salesforce is informed and a suppression record is created")]
         [Parallelizable]
         public void ApplicationWithManagementReview_WhenPreviousStateWasLive_GoesBackToLive_AfterRemoveManagementReview()
@@ -400,7 +400,7 @@ namespace Wonga.QA.Tests.Bi
 
 
         [Test]
-        [AUT(AUT.Uk), JIRA("UK-984")]
+        [AUT(AUT.Uk), JIRA("UK-984"), Owner(Owner.SeamusHoban)]
         [Description("Verifies that after funds have been transferred to the customer application status 'Live' will be set in salesforce")]
         public void VerifyThatPreLiveStatusesAreReflectedInSalesForce()
         {
