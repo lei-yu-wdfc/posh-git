@@ -89,32 +89,6 @@ namespace Wonga.QA.Tests.Ui.Mobile
             Assert.IsTrue(refreshedPersonalDetailsPage.Phone.Text.Contains(number));
         }
 
-        [Test, AUT(AUT.Za)]
-        public void TestUserCreation()
-        {
-            //for (int i = 0; i < 50; i++)
-            //{
-            //    var c = new VanillaCustomer();
-            //    c.InsertUserToDb();
-            //}
 
-
-            //var x = new VanillaCustomerHelper();
-            //var y = x.GetVanillaCustomer().Email;
-            //Assert.IsTrue(y.Email.Contains("gmail"));
-            //Assert.That(y.IsUsed, Is.EqualTo(1));
-
-            //var z = VanillaCustomerHelper.New();
-            //var y = z.GetVanillaCustomer();
-
-            //Assert.IsTrue(y.Email.Contains("gmail"));
-            //Assert.That(y.IsUsed, Is.EqualTo(1));
-            var nystrings = new string[3];
-            foreach (var nystring in nystrings)
-            {
-                Console.WriteLine(nystring);
-            }
-
-        }
     }
 }

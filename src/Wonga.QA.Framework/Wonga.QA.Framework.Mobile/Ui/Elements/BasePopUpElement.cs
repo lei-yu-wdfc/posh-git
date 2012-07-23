@@ -175,4 +175,21 @@ namespace Wonga.QA.Framework.Mobile.Ui.Elements
             return Do.Until(() => new SuccessPopUpElement(Page, "Thank you: your telephone number has been updated."));
         }
     }
+
+    public class MyLoanDetailsPopUpElement : BasePopUpElement
+    {
+        private readonly IWebElement _borrowed;
+        private readonly IWebElement _owed;
+        private readonly IWebElement _breakdown;
+        private readonly IWebElement _chart;
+
+        public MyLoanDetailsPopUpElement(BasePageMobile page) : base(page)
+        {
+            Assert.IsTrue(PopUpTitle.Equals("My Loan Details"));
+            _chart = PopUp.FindElement(By.CssSelector("#wonga-chart>img"));
+            _borrowed = PopUp.FindElement(By.CssSelector(".loan-details-intro-borrowed"));
+            _owed = PopUp.FindElement(By.CssSelector(".loan-details-intro-owed"));
+            _breakdown = PopUp.FindElement(By.CssSelector(".breakdown"));
+        }
+    }
 }

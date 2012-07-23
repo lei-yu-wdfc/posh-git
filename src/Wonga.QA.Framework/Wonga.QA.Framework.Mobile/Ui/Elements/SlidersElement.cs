@@ -147,7 +147,7 @@ namespace Wonga.QA.Framework.Mobile.Ui.Elements
 
                 //case AUT.Wb:
                 case AUT.Za:
-                //case AUT.Uk:
+                case AUT.Uk:
                 //case AUT.Ca:
                     return new ApplyPageMobile(Page.Client);
                 default:

@@ -205,7 +205,50 @@
     <MySummaryButton>.menu-block-0 .menu li:first-child>a</MySummaryButton>
     <MyPersonalDetailsButton>.menu-block-0 .menu li:first-child + li>a</MyPersonalDetailsButton>
     <MyPaymentDetailsButton>.menu-block-0 .menu li:first-child + li + li>a</MyPaymentDetailsButton>
+    <WarningBox>div.wonga-box-type-warning</WarningBox>
   </MySummaryPageMobile>
+
+  <LoginPageMobile>
+    <EmailAddress>#edit-name</EmailAddress>
+    <Password>#edit-pass</Password>
+    <LoginButton>#edit-login</LoginButton>
+    <ForgotPassword>div.form-markup-wrapper a</ForgotPassword>
+  </LoginPageMobile>
+
+  <ApplyPageMobile>
+    <PhoneNumber>#edit-mobile-number-wrapper</PhoneNumber>
+    <ApplyNowButton>#edit-submit</ApplyNowButton>
+  </ApplyPageMobile>
+
+  <ApplicationSection>
+    <FormId>#wonga-applyln-form</FormId>
+    <SecurityCode>#edit-security-code</SecurityCode>
+    <MinCash>#edit-min-cash</MinCash>
+    <ChangeMobileButton>#change-number</ChangeMobileButton>
+    <EditPin>#edit-pin</EditPin>
+  </ApplicationSection>
+
+  <TopupSlidersElement>
+    <FormId>#wonga-sliders-form</FormId>
+    <AmountSlider>.wonga-amount-slider-wrapper .sliderbit</AmountSlider>
+    <LoanAmount>#edit-loan-amount</LoanAmount>
+    <SubmitButton>#edit-submit</SubmitButton>
+    <TotalAmount>span.loan-amount</TotalAmount>
+    <TotalFees>span.loan-fees</TotalFees>
+    <TotalToRepay>span.loan-total</TotalToRepay>
+    <AmountMinusButton>.wonga-amount-slider-wrapper div.sliderminus</AmountMinusButton>
+    <AmountPlusButton>.wonga-amount-slider-wrapper div.sliderplus</AmountPlusButton>
+  </TopupSlidersElement>
+
+  <TopupRequestPage>
+    <TopupRequestPageSubmitButton>#edit-submit</TopupRequestPageSubmitButton>
+    <TopupRequestPageInformativeBox>div.inner-box-informative</TopupRequestPageInformativeBox>
+    <TopupRequestPageNewCreditRequest>span.credit-request-amount</TopupRequestPageNewCreditRequest>
+    <TopupRequestPageNewInterestAndFees>span.credit-request-fees</TopupRequestPageNewInterestAndFees>
+    <TopupRequestPageNewGrandTotal>span.credit-request-total</TopupRequestPageNewGrandTotal>
+    <TopupRequestPageSliders>#wonga-single-slider</TopupRequestPageSliders>
+    <TopupRequestPageSliderSmall>#wonga-account-top-form</TopupRequestPageSliderSmall>
+  </TopupRequestPage>
 
 
 </UiMapMobile>

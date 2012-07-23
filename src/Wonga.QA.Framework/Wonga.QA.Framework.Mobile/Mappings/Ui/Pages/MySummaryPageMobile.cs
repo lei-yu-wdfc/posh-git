@@ -10,5 +10,6 @@ namespace Wonga.QA.Framework.Mobile.Mappings.Pages
         public string MyPaymentDetailsButton { get; set; }
         public string MySummaryButton { get; set; }
         public string MyPersonalDetailsButton { get; set; }
+        public string WarningBox { get; set; }
     }
 }

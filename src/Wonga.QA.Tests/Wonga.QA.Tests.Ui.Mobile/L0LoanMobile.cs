@@ -56,13 +56,24 @@ namespace Wonga.QA.Tests.Ui.Mobile
 
         }
 
-        [Test, AUT(AUT.Uk), Pending("")]
-        public void UkL0Journey()
+        [Test, AUT(AUT.Uk), Category(TestCategories.Mock)]
+        public void UkL0JourneyAccepted()
         {
             var journey = JourneyFactory.GetL0Journey(Client.MobileHome())
                 .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
             var mySummary = journey.Teleport<MySummaryPageMobile>() as MySummaryPageMobile;
+
+            //view loan details
+            mySummary.ViewMyLoanDetails();
+        }
+
+        [Test, AUT(AUT.Uk)]
+        public void UkL0JourneyDeclined()
+        {
+            var journey = JourneyFactory.GetL0Journey(Client.MobileHome()).WithDeclineDecision();
+            var declinedPage = journey.Teleport<DeclinedPageMobile>() as DeclinedPageMobile;
         }
 
     }
+
 }
