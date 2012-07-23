@@ -37,7 +37,7 @@ namespace Wonga.QA.Tests.Bi
         }
 
         [Test]
-        [AUT(AUT.Uk), JIRA("UK-1477")]
+        [AUT(AUT.Uk), JIRA("UK-1477"), Owner(Owner.SeamusHoban)]
         [Description("Verifies that when an application status is 'Live' the status history will have entries for the pre-live events")]
         public void Live_Application_Has_PreLive_Status_History()
         {
@@ -50,7 +50,7 @@ namespace Wonga.QA.Tests.Bi
         }
 
         [Test]
-        [AUT(AUT.Uk), JIRA("UK-1477")]
+        [AUT(AUT.Uk), JIRA("UK-1477"), Owner(Owner.SeamusHoban)]
         [Description("Verifies that when an application has been paid off the status history will have PaidInFull as the current status.")]
         public void Paid_Application_Has_Paid_In_FullStatus()
         {

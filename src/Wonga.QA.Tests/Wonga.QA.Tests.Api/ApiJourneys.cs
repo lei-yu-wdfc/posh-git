@@ -41,7 +41,7 @@ namespace Wonga.QA.Tests.Api
 			ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Accepted).WithLoanAmount(200).Build();
 		}
 
-        [Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
+        [Test, AUT(AUT.Ca, AUT.Uk, AUT.Za), Owner(Owner.AlexPricope)]
         public void ApiL0JourneyDeclined()
         {
             Customer cust = CustomerBuilder.New().WithEmployer("Wonga").Build();
@@ -77,7 +77,7 @@ namespace Wonga.QA.Tests.Api
 			ApplicationBuilder.New(cust).Build();
 		}
 
-        [Test, AUT(AUT.Ca, AUT.Uk)]
+        [Test, AUT(AUT.Ca, AUT.Uk), Owner(Owner.AlexPricope)]
         public void ApiLnJourneyDeclined()
         {
             Customer cust = CustomerBuilder.New().Build();
@@ -95,7 +95,7 @@ namespace Wonga.QA.Tests.Api
 			ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 		}
 
-		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
+		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Za), Owner(Owner.AlexPricope)]
 		public void ApiRepayingOnDueDateClosesApplication()
 		{
 			var customer = CustomerBuilder.New().Build();
