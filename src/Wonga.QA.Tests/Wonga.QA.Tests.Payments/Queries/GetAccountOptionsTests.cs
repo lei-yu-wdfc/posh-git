@@ -19,7 +19,7 @@ namespace Wonga.QA.Tests.Payments.Queries
     public class GetAccountOptionsTests
     {
 
-        [Test, AUT(AUT.Uk), JIRA("UK-823")]
+        [Test, AUT(AUT.Uk), JIRA("UK-823"), Owner(Owner.CharlieBarker)]
         public void Scenario01ExistingCustomerWithoutLiveLoan()
         {
             const decimal trustRating = 400.00M;
@@ -33,7 +33,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.AreEqual(1, int.Parse(response.Values["ScenarioId"].Single()));
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-823")]
+        [Test, AUT(AUT.Uk), JIRA("UK-823"), Owner(Owner.CharlieBarker)]
         public void Scenario02CustomerWithLiveLoanWithAvailableCreditTooEarlyToExtend()
         {
             var accountId = Guid.NewGuid();
@@ -50,7 +50,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.AreEqual(2,int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-823")]
+        [Test, AUT(AUT.Uk), JIRA("UK-823"), Owner(Owner.CharlieBarker)]
         public void Scenario03CustomerWithLiveLoanWithAvailableCreditCanExtendLoan()
         {
             var accountId = Guid.NewGuid();
@@ -66,7 +66,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.AreEqual(3, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
 
-       [Test, AUT(AUT.Uk), JIRA("UK-823"), Repeat(2)]
+       [Test, AUT(AUT.Uk), JIRA("UK-823"), Repeat(2), Owner(Owner.CharlieBarker)]
         public void Scenario04CustomerWithLiveLoanWithAvailableCreditCantExtendLoanDueTooMaxExtensions()
         {
                 var accountId = Guid.NewGuid();
@@ -82,7 +82,7 @@ namespace Wonga.QA.Tests.Payments.Queries
                 Assert.AreEqual(4, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-823")]
+        [Test, AUT(AUT.Uk), JIRA("UK-823"), Owner(Owner.CharlieBarker)]
         public void Scenario05CustomerWithLiveLoanWithoutAvailableCreditCantExtendTooEarly()
         {
             var accountId = Guid.NewGuid();
@@ -97,9 +97,9 @@ namespace Wonga.QA.Tests.Payments.Queries
 
             var response = Drive.Api.Queries.Post(new GetAccountOptionsUkQuery { AccountId = accountId, TrustRating = trustRating });
             Assert.AreEqual(5, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
-        }    
+        }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-823")]
+        [Test, AUT(AUT.Uk), JIRA("UK-823"), Owner(Owner.CharlieBarker)]
         public void Scenario06CustomerWithLiveLoanWithoutAvailableCreditCanExtend()
         {
             var accountId = Guid.NewGuid();
@@ -115,7 +115,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.AreEqual(6, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-823"), Repeat(2)]
+        [Test, AUT(AUT.Uk), JIRA("UK-823"), Repeat(2), Owner(Owner.CharlieBarker)]
         public void Scenario07CustomerWithLiveLoanWithoutAvailableCreditCannotExtendTooManyExts()
         {
             var accountId = Guid.NewGuid();
@@ -131,7 +131,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.AreEqual(7, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
 
-		[Test, AUT(AUT.Uk), JIRA("UK-1904")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1904"), Owner(Owner.CharlieBarker)]
 		public void Scenario07CustomerWithLiveLoanWithAvailableCreditCantExtendOnDueDate()
 		{
 			var accountId = Guid.NewGuid();
@@ -147,7 +147,7 @@ namespace Wonga.QA.Tests.Payments.Queries
 			Assert.AreEqual(7, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
 		}
 
-        [Test, AUT(AUT.Uk), JIRA("UK-823")]
+        [Test, AUT(AUT.Uk), JIRA("UK-823"), Owner(Owner.CharlieBarker)]
         public void Scenario08CustomerRepaidLoanTodayViaScheduledPayment()
         {
             var accountId = Guid.NewGuid();
@@ -163,7 +163,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.AreEqual(8, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-823")]
+        [Test, AUT(AUT.Uk), JIRA("UK-823"), Owner(Owner.CharlieBarker)]
         public void Scenario09CustomerWithLiveLoanOnPromiseDateScheduledPaymentFailed()
         {
             var accountId = Guid.NewGuid();
@@ -181,7 +181,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.AreEqual(9, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-823")]
+        [Test, AUT(AUT.Uk), JIRA("UK-823"), Owner(Owner.CharlieBarker)]
         public void Scenario10CustomerWithLiveLoanWithMissedPaymentFeeOneDayInArrears()
         {
             var accountId = Guid.NewGuid();
@@ -199,7 +199,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.AreEqual(10, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-823")]
+        [Test, AUT(AUT.Uk), JIRA("UK-823"), Owner(Owner.CharlieBarker)]
         public void Scenario11CustomerWithLiveLoanThreeDaysInArrears()
         {
             var accountId = Guid.NewGuid();
@@ -217,7 +217,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.AreEqual(11, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-823")]
+        [Test, AUT(AUT.Uk), JIRA("UK-823"), Owner(Owner.CharlieBarker)]
         public void Scenario12CustomerWithLiveLoanThirtyOneDaysInArrears()
         {
             var accountId = Guid.NewGuid();
@@ -235,7 +235,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.AreEqual(12, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-823")]
+        [Test, AUT(AUT.Uk), JIRA("UK-823"), Owner(Owner.CharlieBarker)]
         public void Scenario13CustomerWithLiveLoanSixtyOneDaysInArrears()
         {
             var accountId = Guid.NewGuid();
@@ -253,7 +253,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.AreEqual(13, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-823")]
+        [Test, AUT(AUT.Uk), JIRA("UK-823"), Owner(Owner.CharlieBarker)]
         public void Scenario14CustomerInArrearsWithRepaymentArrangementInGoodOrder()
         {
             var accountId = Guid.NewGuid();
@@ -272,7 +272,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.AreEqual(14, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-823")]
+        [Test, AUT(AUT.Uk), JIRA("UK-823"), Owner(Owner.CharlieBarker)]
         public void Scenario15CustomerInArrearsWithRepaymentArrangementWithMissedPayment()
         {
             var accountId = Guid.NewGuid();
@@ -291,7 +291,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.AreEqual(15, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-823")]
+        [Test, AUT(AUT.Uk), JIRA("UK-823"), Owner(Owner.CharlieBarker)]
         public void Scenario16CustomerInArrearsWithBrokenRepaymentArrangement()
         {
             var accountId = Guid.NewGuid();
@@ -310,7 +310,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.AreEqual(16, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-823")]
+        [Test, AUT(AUT.Uk), JIRA("UK-823"), Owner(Owner.CharlieBarker)]
         public void Scenario17NewCustomerWithApplicationInProgress()
         {
             var accountId = Guid.NewGuid();
@@ -329,7 +329,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.AreEqual(17, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-823")]
+        [Test, AUT(AUT.Uk), JIRA("UK-823"), Owner(Owner.CharlieBarker)]
         public void Scenario20NewCustomerLastApplicationDeclined()
         {
             var accountId = Guid.NewGuid();
@@ -348,7 +348,7 @@ namespace Wonga.QA.Tests.Payments.Queries
             Assert.AreEqual(20, int.Parse(response.Values["ScenarioId"].Single()), "Incorrect ScenarioId");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-823")]
+        [Test, AUT(AUT.Uk), JIRA("UK-823"), Owner(Owner.CharlieBarker)]
         public void Scenario21CustomerApplicationAwaitingSignature()
         {
             var accountId = Guid.NewGuid();

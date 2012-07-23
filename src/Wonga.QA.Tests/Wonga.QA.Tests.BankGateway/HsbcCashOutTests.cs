@@ -46,7 +46,7 @@ namespace Wonga.QA.Tests.BankGateway
             }
         }
 
-        [Test, JIRA("UK-495")]
+        [Test, JIRA("UK-495"), Owner(Owner.MichaelDoyle)]
         public void CashOutFileIsSent()
         {
             var accountId = CreateCustomerDetails().AccountId;
@@ -82,7 +82,7 @@ namespace Wonga.QA.Tests.BankGateway
 
         }
 
-        [Test, JIRA("UK-495"), Explicit]
+        [Test, JIRA("UK-495"), Explicit, Owner(Owner.MichaelDoyle)]
         public void CashOutFileIsSentLiveTest()
         {
             var accountId = CreateCustomerDetails().AccountId;
@@ -114,7 +114,7 @@ namespace Wonga.QA.Tests.BankGateway
         }
 
 
-        [Test, JIRA("UK-495")]
+        [Test, JIRA("UK-495"), Owner(Owner.MichaelDoyle)]
         public void CashOutFileIsSent2ndAckFailureTest()
         {
             var accountId = CreateCustomerDetails().AccountId;
@@ -142,7 +142,7 @@ namespace Wonga.QA.Tests.BankGateway
         }
 
 
-        [Test, JIRA("UK-495"), Explicit]
+        [Test, JIRA("UK-495"), Explicit, Owner(Owner.MichaelDoyle)]
         public void CashOutFileIsSent2ndAckFailureLiveTest()
         {
 
@@ -256,7 +256,7 @@ namespace Wonga.QA.Tests.BankGateway
         }
 
 
-        [Test, JIRA("UK-495")]
+        [Test, JIRA("UK-495"), Owner(Owner.MichaelDoyle)]
         public void CashOutFileIsSentFaster3rdAckFailureTest()
         {
             var accountId = CreateCustomerDetails().AccountId;
@@ -298,7 +298,7 @@ namespace Wonga.QA.Tests.BankGateway
         }
 
         [Pending("UK-1880")]
-        [Test, JIRA("UK-1291"), Explicit]
+        [Test, JIRA("UK-1291"), Explicit, Owner(Owner.MichaelDoyle)]
         public void CashOutEndTimeSuspension()
         {
             var integration = Drive.Data.BankGateway.Db.BankIntegrations;
@@ -336,6 +336,7 @@ namespace Wonga.QA.Tests.BankGateway
                                                                             DateOfBirth = Get.GetDoB(),
                                                                             Forename = Get.GetName(),
                                                                             Surname = Get.GetName(),
+                                                                            MiddleName = Get.GetName(),
                                                                             Email = Get.GetEmail(),
                                                                             Gender = GenderEnum.Male,
                                                                             HomePhone = "02088123123",

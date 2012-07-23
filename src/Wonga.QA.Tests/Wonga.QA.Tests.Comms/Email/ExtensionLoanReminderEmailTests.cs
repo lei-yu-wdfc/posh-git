@@ -47,7 +47,7 @@ namespace Wonga.QA.Tests.Comms.Email
 			_extension = CreateLoanAndExtend();
 		}
 
-		[Test, AUT(AUT.Uk)]
+		[Test, AUT(AUT.Uk), Owner(Owner.AlexSloat)]
 		public void SendLoanExtensionReminderEmailTest()
 		{
 			//Time out extension reminder saga in comms
