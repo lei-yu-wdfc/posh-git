@@ -4,7 +4,13 @@
 	<AUT>Uk</AUT>
 	<Region>Uk</Region>
 	
+	<Ui>
+		<HomePage>http://dev.wonga.com:8080</HomePage>
+	</Ui>
+	
 	<Db>
-		<Host>mig-int-v2.test.wonga.com</Host>		
+		<Host>mig-int-v2.test.wonga.com</Host>	
+
+		<MigrationStaging>Data Source=(local);Integrated Security=true;Initial Catalog=MigrationStaging</MigrationStaging>
 	</Db>
 </Configuration>

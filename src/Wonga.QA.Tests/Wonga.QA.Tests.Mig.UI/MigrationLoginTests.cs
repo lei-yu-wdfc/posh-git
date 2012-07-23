@@ -15,7 +15,7 @@ using Wonga.QA.Framework.Data;
 namespace Wonga.QA.Tests.Migration
 {
     [TestFixture]
-    [Parallelizable(TestScope.All)]
+    //[Parallelizable(TestScope.All)]
     public class MigrationLoginTests : UiTest
     {
         private string GetFunctionName()
@@ -27,38 +27,50 @@ namespace Wonga.QA.Tests.Migration
             return methodBase.Name;
         }
 
-        [Test, MultipleAsserts, JIRA("UKMIG-243"), Parallelizable, Owner(Owner.MuhammadQureshi)]
+        [Test, MultipleAsserts, JIRA("UKMIG-243"), /*Parallelizable,*/ Owner(Owner.MuhammadQureshi)]
         [Row(10, "2012")]
         [Row(10, "2011")]
+        [Row(10, "2010")]
+        [Row(10, "2010")]
         [Row(10, "2010")]
         public void TestMigratedUserCanLogin(int noOfTimesToRun, string userCreatedInYear)
         {
             var migHelper = new MigrationHelper();
-            var loginStatus = string.Empty;
+            var loginStatus = new byte();
+            var testName = GetFunctionName();
+            var testStartTime = DateTime.Now;
+            var testEndTime = DateTime.Now;
 
-            Console.WriteLine("UKMIG-243, As an existing migrated customer, I want to login to the Wonga website so that I can manage my account or apply for a new loan, " + GetFunctionName());
+            //migHelper.FillAcceptanceTestControlTable();
+
+            Console.WriteLine("UKMIG-243, As an existing migrated customer, I want to login to the Wonga website so that I can manage my account or apply for a new loan, " + testName);
 
             for (int usersToCheck = 1; usersToCheck < noOfTimesToRun; usersToCheck++)
             {
-                string migratedAccountLogin = migHelper.GetMigratedAccountLogin(0, userCreatedInYear);
+                testStartTime = DateTime.Now;
+                var migratedUser = migHelper.GetMigratedAccountLogin();
 
-                var migratedAccountLoginPassword = migHelper.GetMigratedAccountLoginPassword(migratedAccountLogin);
+                //var migratedAccountLoginPassword = migHelper.GetMigratedAccountLoginPassword(migratedAccountLogin);
 
 
-                var loginPage = new UiClient();
-
-                try
+                using (var loginPage = new UiClient())
                 {
-                    loginPage.Login().LoginAs(migratedAccountLogin, migratedAccountLoginPassword);
-                    loginStatus = "Passed";
-                }
-                catch (Exception)
-                {
-                    loginStatus = "Failed";
-                }
-                finally
-                {
-                    Console.WriteLine("\n{0}: {1} Login = {2} \nUser Created in Year = {3}", usersToCheck, loginStatus, migratedAccountLogin, userCreatedInYear);
+                    try
+                    {
+                        loginPage.Login().LoginAs(migratedUser.Login, migratedUser.Password);
+                        loginStatus = 1;
+                    }
+                    catch (Exception)
+                    {
+                        loginStatus = 0;
+                    }
+                    finally
+                    {
+                        testEndTime = DateTime.Now;
+                        //Console.WriteLine("\n{0}: {1} Login = {2} \nUser Created in Year = {3}", usersToCheck,
+                          //                loginStatus, migratedUser, userCreatedInYear);
+                        migHelper.StoreTestResults(testName,migratedUser,testStartTime,testEndTime,loginStatus);
+                    }
                 }
             }
         }

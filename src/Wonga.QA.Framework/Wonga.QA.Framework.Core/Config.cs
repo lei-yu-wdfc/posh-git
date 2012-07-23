@@ -229,6 +229,7 @@ namespace Wonga.QA.Framework.Core
             Db.Uru = GetSettingFromXml("//Db/Uru");
             Db.WongaPay = GetSettingFromXml("//Db/WongaPay");
             Db.WongaWholeStaging = GetSettingFromXml("//Db/WongaWholeStaging");
+            Db.MigrationStaging = GetSettingFromXml("//Db/MigrationStaging");
 
             Trace.WriteLine(SUT, typeof(Config).FullName);
             Trace.WriteLine(AUT, typeof(Config).FullName);
@@ -400,6 +401,7 @@ namespace Wonga.QA.Framework.Core
             public String OpsLogs { get; set; }
             public String OpsSagas { get; set; }
             public String QaData { get; set; }
+            public String MigrationStaging { get; set; }
         }
 
         public class UiConfig

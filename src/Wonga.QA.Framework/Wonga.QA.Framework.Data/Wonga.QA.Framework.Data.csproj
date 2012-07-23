@@ -49,6 +49,7 @@
     <Compile Include="Databases\BiCustomerManagementDatabase.cs" />
     <Compile Include="Databases\GreyfaceShell.cs" />
     <Compile Include="Databases\HdsDatabase.cs" />
+    <Compile Include="Databases\MigrationStaging.cs" />
     <Compile Include="Databases\SchedulerDatabase.cs" />
     <Compile Include="Databases\WongaPayDatabase.cs" />
     <Compile Include="Databases\UruDatabase.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="Enums\Prepaid\PrepaidCardType.cs" />
     <Compile Include="Enums\Prepaid\PrepaidCardStatuses.cs" />
     <Compile Include="Enums\Sms\UKSmsStatuses.cs" />
+    <Compile Include="MigratedUser.cs" />
     <Compile Include="MigrationHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SMODatabaseAlterations.cs" />
@@ -139,7 +141,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\..\..\lib\nuget\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
