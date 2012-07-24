@@ -51,7 +51,17 @@ namespace Wonga.QA.Tools.ReportConverter
         {
             string metadata = "<ul>";
             foreach (var entry in test.Metadata.Where(x => !new[] { "TestKind" }.Contains(x.Key)))
-                metadata += string.Format("<li><b>{0}</b>: {1}</li>", entry.Key, entry.Value);
+            {
+                switch(entry.Key)
+                {
+                    case("JIRA"):
+                        metadata += string.Format("<li><b>{0}</b>: <a href='{1}' target='_blank'>{1}</a></li>", entry.Key, entry.Value);
+                        break;
+                    default:
+                        metadata += string.Format("<li><b>{0}</b>: {1}</li>", entry.Key, entry.Value);
+                        break;
+                }
+            }
             metadata += "</ul>";
             return testTemplate.Replace("%%METADATA%%", metadata);
         }

@@ -19,7 +19,7 @@ namespace Wonga.QA.Tests.Payments.Queries
     [Parallelizable(TestScope.All)]
     public class GetFixedTermLoanExtensionQuoteTests
     {
-        [Test, AUT(AUT.Uk)]
+        [Test, AUT(AUT.Uk), Owner(Owner.CharlieBarker)]
         public void TenDayLoanQuoteOnDayFiveToExtendForTenDays()
         {
             var promiseDate = new Date(DateTime.UtcNow.AddDays(5));
@@ -47,7 +47,7 @@ namespace Wonga.QA.Tests.Payments.Queries
         }
 
         [Test]
-        [AUT(AUT.Uk), JIRA("UK-1351")]
+        [AUT(AUT.Uk), JIRA("UK-1351"), Owner(Owner.CharlieBarker)]
         public void Query_ShouldReturnAllDataRequiredForLoanExtension_WhenCustomerHasApplicationAcceptedMoreThanOneDayAgo()
         {
             var promiseDate = new Date(DateTime.UtcNow.AddDays(4));
@@ -80,7 +80,7 @@ namespace Wonga.QA.Tests.Payments.Queries
         }
 
         [Test]
-        [AUT(AUT.Uk), JIRA("UK-1351")]
+        [AUT(AUT.Uk), JIRA("UK-1351"), Owner(Owner.CharlieBarker)]
         public void Query_ShouldReturnNoQuotes_WhenNextDueDateIsInMoreThanOneWeek()
         {
             Customer customer = CustomerBuilder.New().Build();
