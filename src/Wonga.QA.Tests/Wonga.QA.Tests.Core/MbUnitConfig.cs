@@ -25,6 +25,9 @@ public class MbUnitConfig
 			case (AUT.Za):
 				TestAssemblyExecutionParameters.DegreeOfParallelism = 4;
         		break;
+			case (AUT.Uk):
+				TestAssemblyExecutionParameters.DegreeOfParallelism = 2;
+        		break;
             default:
                 TestAssemblyExecutionParameters.DegreeOfParallelism = 1;
                 break;
