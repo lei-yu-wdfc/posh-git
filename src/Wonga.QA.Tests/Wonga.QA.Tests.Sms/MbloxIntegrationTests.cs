@@ -19,7 +19,6 @@ namespace Wonga.QA.Tests.Sms
         private const string ZONG_PROVIDER_NAME = "Zong";
         private const string MBLOX_PROVIDER_NAME = "Mblox";
 
-        private static readonly dynamic _serviceConfigurationsEntity = Drive.Data.Ops.Db.ServiceConfigurations;
         private static readonly dynamic _smsEntity = Drive.Data.Sms.Db.SmsMessages;
 
         private Customer _customer = null;
@@ -29,7 +28,8 @@ namespace Wonga.QA.Tests.Sms
         {
             _customer = CustomerBuilder.New().Build();
         }
-        [Test,  JIRA("UK-510")]
+
+        [Test,JIRA("UK-510"),AUT(AUT.Uk),Owner(Owner.SvyatoslavKravchenko)]
         public void SendRequestToMbloxProvider()
         {
 
@@ -69,14 +69,15 @@ namespace Wonga.QA.Tests.Sms
             Assert.IsTrue(sendMessage.MobilePhoneNumber.Equals(request.ToNumberFormatted));
             Assert.IsTrue(sendMessage.MessageText.Equals(request.MessageText));
             Assert.IsNull(sendMessage.ErrorMessage);
-            Do.Until(() => _serviceConfigurationsEntity.FindBy(Key: PROVIDER_CHOOSE_KEY, Value: MBLOX_PROVIDER_NAME));
+
+            Assert.IsTrue(Drive.Data.Ops.GetServiceConfiguration<String>(PROVIDER_CHOOSE_KEY).Equals(MBLOX_PROVIDER_NAME));
 
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-510"),]
+        [Test, AUT(AUT.Uk), JIRA("UK-510"),Owner(Owner.SvyatoslavKravchenko)]
         public void SwitchToAnotherProviderAndSendSmsRequest()
         {
-            changeProvider();
+            ChangeProvider();
 
             var request = new SendSmsMessage()
             {
@@ -92,28 +93,24 @@ namespace Wonga.QA.Tests.Sms
             Assert.IsTrue(message.MobilePhoneNumber.Equals(request.ToNumberFormatted));
             Assert.IsTrue(message.MessageText.Equals(request.MessageText));
             Assert.IsNull(message.ErrorMessage);
-            Do.Until(() => _serviceConfigurationsEntity.FindBy(Key: PROVIDER_CHOOSE_KEY, Value: ZONG_PROVIDER_NAME));
 
-            changeProvider();
+            Assert.IsTrue(Drive.Data.Ops.GetServiceConfiguration<String>(PROVIDER_CHOOSE_KEY).Equals(ZONG_PROVIDER_NAME));
+
+            ChangeProvider();
         }
 
 
-        private void changeProvider()
+        private void ChangeProvider()
         {
-            var provider_name = Do.Until(() => _serviceConfigurationsEntity.FindBy(Key: PROVIDER_CHOOSE_KEY));
-            var providerName = provider_name.Value;
+            var providerName = Do.Until(() => Drive.Data.Ops.GetServiceConfiguration<String>(PROVIDER_CHOOSE_KEY));
             if (providerName.Equals(ZONG_PROVIDER_NAME))
             {
-                Do.Until(() => _serviceConfigurationsEntity.UpdateByServiceConfigurationId(
-                     ServiceConfigurationId: provider_name.ServiceConfigurationId,
-                     Key: PROVIDER_CHOOSE_KEY, Value: MBLOX_PROVIDER_NAME));
+                Do.Until(() => Drive.Data.Ops.SetServiceConfiguration(PROVIDER_CHOOSE_KEY,MBLOX_PROVIDER_NAME));
             }
 
             if (providerName.Equals(MBLOX_PROVIDER_NAME))
             {
-                Do.Until(() => _serviceConfigurationsEntity.UpdateByServiceConfigurationId(
-                     ServiceConfigurationId: provider_name.ServiceConfigurationId,
-                     Key: PROVIDER_CHOOSE_KEY, Value: ZONG_PROVIDER_NAME));
+                Do.Until(() => Drive.Data.Ops.SetServiceConfiguration(PROVIDER_CHOOSE_KEY,ZONG_PROVIDER_NAME));
             }
         }
     }
