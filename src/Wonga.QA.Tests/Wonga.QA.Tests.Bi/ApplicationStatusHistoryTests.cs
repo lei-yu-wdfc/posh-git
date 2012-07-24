@@ -13,6 +13,7 @@ namespace Wonga.QA.Tests.Bi
     [TestFixture]
     [AUT(AUT.Uk)]
     [Parallelizable(TestScope.All)]
+    [Pending("SF tests are failing because message congestion in SF TC queue, explicit until fixed")]
     public class ApplicationStatusHistoryTests
     {
         private dynamic appStatusHistoryRepo = Drive.Data.BiCustomerManagement.Db.ApplicationStatusHistory;
