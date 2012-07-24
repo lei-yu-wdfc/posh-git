@@ -91,9 +91,9 @@
 		<CallReport Name="Wonga.CallReport.Handlers">%%//Svc/ComponentsHost%%</CallReport>
 		<CallValidate Name="Wonga.CallValidate.Handlers">%%//Svc/ComponentsHost%%</CallValidate>
 		<CardPayment Name="Wonga.CardPayment.Handlers">%%//Svc/ComponentsHost%%</CardPayment>
-		<ColdStorage Name="Wonga.ColdStorage.Handlers">%%//Svc/ComponentsHost%%</ColdStorage>
+		<ColdStorage Name="Wonga.Payments.ColdStorage.Handlers">%%//Svc/ComponentsHost%%</ColdStorage>
 		<ContactManagement Name="Wonga.ContactManagement.Handlers">%%//Svc/ComponentsHost%%</ContactManagement>
-		<DocumentGeneration Name="Wonga.DocumentGeneration.Handlers">%%//Svc/ComponentsHost%%</DocumentGeneration>
+		<DocumentGeneration Name="Wonga.Comms.DocumentGeneration.Handlers">%%//Svc/ComponentsHost%%</DocumentGeneration>
 		<Email Name="Wonga.Email.Handlers">%%//Svc/ComponentsHost%%</Email>
 		<Equifax Name="Wonga.Equifax.Handlers">%%//Svc/ComponentsHost%%</Equifax>
 		<Experian Name="Wonga.Experian.Handlers">%%//Svc/ComponentsHost%%</Experian>

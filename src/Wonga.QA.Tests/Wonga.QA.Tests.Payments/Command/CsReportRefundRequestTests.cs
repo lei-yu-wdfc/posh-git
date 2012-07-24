@@ -14,6 +14,7 @@ namespace Wonga.QA.Tests.Payments.Command
     [TestFixture]
     [Parallelizable(TestScope.All)]
     [AUT(AUT.Uk)]
+    [Pending("SF tests are failing because message congestion in SF TC queue, explicit until fixed")]
     public class CsReportRefundRequestTests
     {
         [Test]
