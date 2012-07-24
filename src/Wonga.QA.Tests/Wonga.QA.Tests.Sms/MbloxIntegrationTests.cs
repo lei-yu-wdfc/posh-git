@@ -77,7 +77,7 @@ namespace Wonga.QA.Tests.Sms
         [Test, AUT(AUT.Uk), JIRA("UK-510"),Owner(Owner.SvyatoslavKravchenko),Explicit]
         public void SwitchToAnotherProviderAndSendSmsRequest()
         {
-            ChangeProvider();
+            Do.Until(() => Drive.Data.Ops.SetServiceConfiguration(PROVIDER_CHOOSE_KEY, ZONG_PROVIDER_NAME));
 
             var request = new SendSmsMessage()
             {
@@ -95,23 +95,12 @@ namespace Wonga.QA.Tests.Sms
             Assert.IsNull(message.ErrorMessage);
 
             Assert.IsTrue(Drive.Data.Ops.GetServiceConfiguration<String>(PROVIDER_CHOOSE_KEY).Equals(ZONG_PROVIDER_NAME));
-
-            ChangeProvider();
         }
 
-
-        private void ChangeProvider()
+        [TearDown]
+        public void Rollback()
         {
-            var providerName = Do.Until(() => Drive.Data.Ops.GetServiceConfiguration<String>(PROVIDER_CHOOSE_KEY));
-            if (providerName.Equals(ZONG_PROVIDER_NAME))
-            {
-                Do.Until(() => Drive.Data.Ops.SetServiceConfiguration(PROVIDER_CHOOSE_KEY,MBLOX_PROVIDER_NAME));
-            }
-
-            if (providerName.Equals(MBLOX_PROVIDER_NAME))
-            {
-                Do.Until(() => Drive.Data.Ops.SetServiceConfiguration(PROVIDER_CHOOSE_KEY,ZONG_PROVIDER_NAME));
-            }
+            Do.Until(() => Drive.Data.Ops.SetServiceConfiguration(PROVIDER_CHOOSE_KEY, MBLOX_PROVIDER_NAME));
         }
     }
 }
