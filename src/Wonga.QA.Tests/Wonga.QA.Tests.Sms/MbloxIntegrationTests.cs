@@ -29,7 +29,7 @@ namespace Wonga.QA.Tests.Sms
             _customer = CustomerBuilder.New().Build();
         }
 
-        [Test,JIRA("UK-510"),AUT(AUT.Uk),Owner(Owner.SvyatoslavKravchenko)]
+        [Test,JIRA("UK-510"),AUT(AUT.Uk),Owner(Owner.SvyatoslavKravchenko),Explicit]
         public void SendRequestToMbloxProvider()
         {
 
@@ -74,7 +74,7 @@ namespace Wonga.QA.Tests.Sms
 
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-510"),Owner(Owner.SvyatoslavKravchenko)]
+        [Test, AUT(AUT.Uk), JIRA("UK-510"),Owner(Owner.SvyatoslavKravchenko),Explicit]
         public void SwitchToAnotherProviderAndSendSmsRequest()
         {
             ChangeProvider();
