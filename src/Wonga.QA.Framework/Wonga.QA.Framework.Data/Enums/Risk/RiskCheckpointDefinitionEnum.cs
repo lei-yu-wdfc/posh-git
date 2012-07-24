@@ -7,7 +7,7 @@ namespace Wonga.QA.Framework.Data.Enums.Risk
         [Description("Credit Bureau Score is acceptable")] CreditBureauScoreisacceptable,
         [Description("Application terms are acceptable for business")] ApplicationTermsAreAcceptableForBusiness,
         [Description("Applicant is alive")] ApplicantIsAlive,
-        [Description("Applicant is solvent")] CustomerIsSolvent,
+        [Description("Customer is solvent")] CustomerIsSolvent,
         [Description("Hardware blacklist check")] HardwareBlacklistCheck,
         [Description("CIFAS fraud check")] CIFASFraudCheck,
         [Description("Application data blacklist check")] ApplicationDataBlacklistCheck,

@@ -334,7 +334,7 @@ namespace Wonga.QA.Tests.CallReport
             const String forename = "Kathleen";
             const String surname = "Bridson";
 
-            var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTApplicantIsSolvent);
+            var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTCustomerIsSolvent);
             ScrubNames(mainApplicantBuilder);
             var mainApplicant = mainApplicantBuilder.Build();
 
@@ -354,7 +354,7 @@ namespace Wonga.QA.Tests.CallReport
             const String forename = "Laura";
             const String surname = "Insolvent";
 
-            var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTApplicantIsSolvent);
+            var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTCustomerIsSolvent);
             ScrubNames(mainApplicantBuilder);
             var mainApplicant = mainApplicantBuilder.Build();
 
@@ -378,7 +378,7 @@ namespace Wonga.QA.Tests.CallReport
             const String forename = "Kathleen";
             const String surname = "Bridson";
 
-            var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTApplicantIsSolvent);
+            var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTCustomerIsSolvent);
             ScrubNames(mainApplicantBuilder);
             var mainApplicant = mainApplicantBuilder.Build();
 
@@ -407,7 +407,7 @@ namespace Wonga.QA.Tests.CallReport
 
             var l0Application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted);
             l0Application.RepayOnDueDate();
-            CustomerOperations.UpdateEmployerNameInRisk(mainApplicant.Id, RiskMask.TESTApplicantIsSolvent.ToString());
+            CustomerOperations.UpdateEmployerNameInRisk(mainApplicant.Id, RiskMask.TESTCustomerIsSolvent.ToString());
 
             var lnAplication = CreateLnApplication(mainApplicant, ApplicationDecisionStatus.Declined);
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(lnAplication.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
@@ -687,7 +687,7 @@ namespace Wonga.QA.Tests.CallReport
             var mainApplicant = CustomerBuilder.New().Build();
             var guarantorList = new List<CustomerBuilder>
                                     {
-                                        CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTApplicantIsSolvent),
+                                        CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTCustomerIsSolvent),
                                     };
             var application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted, guarantorList);
 
@@ -708,7 +708,7 @@ namespace Wonga.QA.Tests.CallReport
             var mainApplicant = CustomerBuilder.New().Build();
             var guarantorList = new List<CustomerBuilder>
                                     {
-                                        CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTApplicantIsSolvent),
+                                        CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTCustomerIsSolvent),
                                     };
 
             var application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.PreAccepted, guarantorList);

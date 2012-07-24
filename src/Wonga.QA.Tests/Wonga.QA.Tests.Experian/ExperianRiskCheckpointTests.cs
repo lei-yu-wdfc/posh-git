@@ -32,12 +32,12 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb,AUT.Uk)]
         [JIRA("SME-638", "UK-854"), Description("Experian -> This test creates a loan for the solvent customer, then checks the risk checkpoint")]
-        public void TestExperianMainApplicantIsSolvent_LoanIsApproved()
+        public void TestExperianMainCustomerIsSolvent_LoanIsApproved()
         {
             const String forename = "kathleen";
             const String surname = "nicole";
 
-            var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTExperianApplicantIsSolvent);
+            var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTExperianCustomerIsSolvent);
             ScrubNames(mainApplicantBuilder);
             var mainApplicant = mainApplicantBuilder.Build();
 
@@ -64,7 +64,7 @@ namespace Wonga.QA.Tests.Experian
             const String forename = "kathleen";
             const String surname = "nicole";
 
-            var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTExperianApplicantIsSolvent);
+            var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTExperianCustomerIsSolvent);
             ScrubNames(mainApplicantBuilder);
             var mainApplicant = mainApplicantBuilder.Build();
 
@@ -98,7 +98,7 @@ namespace Wonga.QA.Tests.Experian
 
             var l0Application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Accepted);
             l0Application.RepayOnDueDate();
-            CustomerOperations.UpdateEmployerNameInRisk(mainApplicant.Id, RiskMask.TESTExperianApplicantIsSolvent.ToString());
+            CustomerOperations.UpdateEmployerNameInRisk(mainApplicant.Id, RiskMask.TESTExperianCustomerIsSolvent.ToString());
             var lnApplication = CreateLnApplication(mainApplicant, ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(lnApplication.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
@@ -427,7 +427,7 @@ namespace Wonga.QA.Tests.Experian
 			const String forename = "laura";
 			const String surname = "Insolvent";
 
-			var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTExperianApplicantIsSolvent);
+			var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTExperianCustomerIsSolvent);
 			ScrubNames(mainApplicantBuilder);
 			var mainApplicant = mainApplicantBuilder.Build();
 
@@ -807,7 +807,7 @@ namespace Wonga.QA.Tests.Experian
             var mainApplicant = CustomerBuilder.New().Build();
             var guarantorList = new List<CustomerBuilder>
                                     {
-                                        CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicantIsSolvent),
+                                        CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianCustomerIsSolvent),
                                     };
 
             var application = CreateL0Application(mainApplicant,  ApplicationDecisionStatus.Accepted, guarantorList);
@@ -831,7 +831,7 @@ namespace Wonga.QA.Tests.Experian
             var mainApplicant = CustomerBuilder.New().Build();
             var guarantorList = new List<CustomerBuilder>
                                     {
-                                        CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianApplicantIsSolvent),
+                                        CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTExperianCustomerIsSolvent),
                                     };
 
 
