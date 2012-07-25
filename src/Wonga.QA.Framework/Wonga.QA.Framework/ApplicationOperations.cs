@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Cs.Requests.Comms.Csapi.Commands;
+using Wonga.QA.Framework.Cs.Requests.Payments.Csapi.Commands;
+using Wonga.QA.Framework.Cs.Requests.Risk.Csapi.Commands;
 using Wonga.QA.Framework.Data;
 using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Db.Payments;
@@ -13,6 +16,11 @@ namespace Wonga.QA.Framework
 {
     public static class ApplicationOperations
     {
+        private static readonly dynamic ApplicationRepo = Drive.Data.Payments.Db.Applications;
+        private static readonly dynamic CommsSuppressionsRepo = Drive.Data.Comms.Db.Suppressions;
+        private static readonly dynamic PaymentsSuppressionsRepo = Drive.Data.Payments.Db.PaymentCollectionSuppressions;
+        private static readonly dynamic PaymentsSuppressionsTable = Drive.Data.Payments.Db.PaymentCollectionSuppressions;
+      
         public static Application DaysFromStart(this Application app, int daysAgo)
         {
             ApplicationEntity application = Drive.Db.Payments.Applications.Single(a => a.ExternalId == app.Id);
@@ -211,5 +219,149 @@ namespace Wonga.QA.Framework
             
             //new DbDriver().Payments.CalendarDates.Any(a => a.IsBankHoliday && a.Date == date);
         }
+
+        public static void ReportComplaint(Application application, Guid caseId)
+        {
+            var cmd = new CsReportComplaintCommand()
+            {
+                AccountId = application.AccountId,
+                ApplicationId = application.Id,
+                CaseId = caseId
+            };
+
+            Drive.Cs.Commands.Post(cmd);
+            int appInternalId = GetAppInternalId(application);
+            Do.Until(() => CommsSuppressionsRepo.FindAll(
+                           CommsSuppressionsRepo.AccountId == application.AccountId && CommsSuppressionsRepo.Complaint == 1).Single());
+            Do.Until(() => PaymentsSuppressionsRepo.FindAll(
+                PaymentsSuppressionsRepo.ApplicationId == appInternalId && PaymentsSuppressionsRepo.ComplaintSuppression == 1).Single());
+          }
+
+        public static void RemoveComplaint(Application application, Guid caseId)
+        {
+            var removeComplaint = new CsRemoveComplaintCommand()
+            {
+                AccountId = application.AccountId,
+                ApplicationId = application.Id,
+                CaseId = caseId,
+            };
+            Drive.Cs.Commands.Post(removeComplaint);
+        }
+
+        public static void SuspectFraud(Application application, Customer cust, Guid caseId)
+        {
+            int appInternalId = GetAppInternalId(application);
+            Drive.Cs.Commands.Post(new SuspectFraudCommand() { AccountId = cust.Id, CaseId = caseId });
+            Do.With.Timeout(1).Until(
+                () => PaymentsSuppressionsTable.FindBy(ApplicationId: appInternalId, FraudSuppression: true));
+        }
+
+        public static void ConfirmNotFraud(Application application, Customer cust, Guid caseId)
+        {
+            int appInternalId = GetAppInternalId(application);
+            Drive.Cs.Commands.Post(new ConfirmNotFraudCommand() { AccountId = cust.Id, CaseId = caseId });
+            Do.With.Timeout(1).Until(
+                () => PaymentsSuppressionsTable.FindBy(ApplicationId: appInternalId, FraudSuppression: false));
+        }
+
+        public static void Dca(Application application)
+        {
+            int appInternalId = GetAppInternalId(application);
+            var flagToDcaCommand = new FlagApplicationToDcaCommand
+            {
+                ApplicationId = application.Id
+            };
+            Drive.Cs.Commands.Post(flagToDcaCommand);
+            Do.With.Timeout(1).Until(
+               () => PaymentsSuppressionsTable.FindBy(ApplicationId: appInternalId, DCASuppression: true));
+
+        }
+
+        public static void RevokeDca(Application application)
+        {
+            int appInternalId = GetAppInternalId(application);
+            var flagToDcaCommand = new RevokeApplicationFromDcaCommand()
+            {
+                ApplicationId = application.Id
+            };
+            Drive.Cs.Commands.Post(flagToDcaCommand);
+            Do.With.Timeout(1).Until(
+               () => PaymentsSuppressionsTable.FindBy(ApplicationId: appInternalId, DCASuppression: false));
+
+        }
+
+        public static void ReportHardship(Application application, Guid caseId)
+        {
+            int appInternalId = GetAppInternalId(application);
+            Drive.Cs.Commands.Post(new CsReportHardshipCommand()
+            {
+                AccountId = application.AccountId,
+                ApplicationId = application.Id,
+                CaseId = caseId
+            });
+            Do.With.Timeout(1).Until(
+             () => PaymentsSuppressionsTable.FindBy(ApplicationId: appInternalId, HardshipSuppression: true));
+        }
+
+        public static void ReportBankrupt(Application application, Guid caseId)
+        {
+            int appInternalId = GetAppInternalId(application);
+            Drive.Cs.Commands.Post(new CsReportBankruptcyCommand()
+            {
+                AccountId = application.AccountId,
+                ApplicationId = application.Id,
+                CaseId = caseId
+            });
+            Do.With.Timeout(1).Until(
+             () => PaymentsSuppressionsTable.FindBy(ApplicationId: appInternalId, BankruptSuppression: true));
+        }
+
+        public static void ManagementReview(Application application, Guid caseId)
+        {
+
+            Drive.Cs.Commands.Post(new CsReportManagementReviewCommand()
+            {
+                AccountId = application.AccountId,
+                ApplicationId = application.Id,
+                CaseId = caseId
+            });
+
+        }
+
+        public static void RemoveManagementReview(Application application, Guid caseId)
+        {
+
+            Drive.Cs.Commands.Post(new CsRemoveManagementReviewCommand()
+            {
+                AccountId = application.AccountId,
+                ApplicationId = application.Id,
+                CaseId = caseId
+            });
+
+        }
+
+        public static void Refundrequest(Application application, Guid caseId)
+        {
+            Drive.Cs.Commands.Post(new CsReportRefundRequestCommand()
+            {
+                ApplicationId = application.Id,
+                CaseId = caseId
+            });
+
+        }
+
+        public static void ConfirmFraud(Application application, Customer cust, Guid caseId)
+        {
+            int appInternalId = GetAppInternalId(application);
+            Drive.Cs.Commands.Post(new ConfirmFraudCommand() { AccountId = cust.Id, CaseId = caseId });
+            Do.With.Timeout(1).Until(
+                () => PaymentsSuppressionsTable.FindBy(ApplicationId: appInternalId, FraudSuppression: true));
+        }
+
+        public static int GetAppInternalId(Application application)
+        {
+            return (ApplicationRepo.FindAll(ApplicationRepo.ExternalID == application.Id).Single().ApplicationId);
+        }
+
     }
 }

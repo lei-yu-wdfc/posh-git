@@ -18,7 +18,7 @@ namespace Wonga.QA.Tests.Payments.Command
     public class CsReportRefundRequestTests
     {
         [Test]
-        [AUT(AUT.Uk), JIRA("UKOPS-163")]
+        [AUT(AUT.Uk), JIRA("UKOPS-163"),Owner(Owner .JonHurd )]
         public void ReportRefundCommand_Changes_SalesforceApplicationStatus_To_Refund()
         {
             Guid caseId = Guid.NewGuid();
