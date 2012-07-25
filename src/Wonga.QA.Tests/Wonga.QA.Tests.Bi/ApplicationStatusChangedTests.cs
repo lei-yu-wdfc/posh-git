@@ -55,7 +55,7 @@ namespace Wonga.QA.Tests.Bi
         }
 
         [Test]
-        [AUT(AUT.Uk), JIRA("UK-925"), Owner(Owner.JonHurd)]
+        [AUT(AUT.Uk), JIRA("UK-925 UKOPS-129"), Owner(Owner.JonHurd)]
         [Description("Verifies that when a live application is moved to complaint status salesforce is informed and a suppression record is created")]
         [Parallelizable]
         public void ApplicationInComplaint_SubmitsComplaintStatus_ToSalesforce()
