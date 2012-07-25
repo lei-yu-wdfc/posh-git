@@ -66,6 +66,7 @@ namespace Wonga.QA.Tests.Salesforce
         {
             var caseId = new Guid();
             var application = CreateLiveApplication();
+            application.ExpireCard();  
             application.PutIntoArrears(3);
             CompliantCycle( caseId, application);
             CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.InArrears);
@@ -225,10 +226,10 @@ namespace Wonga.QA.Tests.Salesforce
             Do.Until(() => _applicationRepo.FindAll(_applicationRepo.ExternalId == application.Id &&
                                                    _applicationRepo.Transaction.ApplicationId == _applicationRepo.Id &&
                                                    _applicationRepo.Type == "CashAdvance"));
-
+            var app = _sales.GetApplicationById(application.Id);
             Do.Until(() =>
             {
-                var app = _sales.GetApplicationById(application.Id);
+                
                 return app.Status_ID__c != null &&
                        app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live;
             });
@@ -367,7 +368,7 @@ namespace Wonga.QA.Tests.Salesforce
              () => _paymentsSuppressionsTable.FindBy(ApplicationId: appInternalId, HardshipSuppression: true));
         }
 
-        private void MakeBankrupt(Application application, Guid caseId)
+        private void  MakeBankrupt(Application application, Guid caseId)
         {
             int appInternalId = GetAppInternalId(application);
             Drive.Cs.Commands.Post(new CsReportBankruptcyCommand()
