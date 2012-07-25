@@ -49,13 +49,10 @@
         <h2>Totals</h2>
         <p>All %%TOTALALL%%, Run %%TOTALRUN%%, Passed %%TOTALPASSED%%, Failed %%TOTALFAILED%%, Inconclusive %%TOTALINCONCLUSIVE%%, Pending %%TOTALPENDING%%, Ignored %%TOTALIGNORED%%</p>
         <p>Duration %%TOTALDURATION%%</p>
-        <div class="fun-facts">
-            <b>Fun Facts</b>
-            <div class="hidden">
-                <b>- Longest Running Test -</b><br/>
-                %%LONGESTRUNNINGTESTNAME%% %%LONGESTRUNNINGTESTDURATION%%
-            </div>
-        </div>
+        <h3 class="fun-facts">Fun Facts </h3>
+            <dl>
+                %%LONGESTRUNNINGTESTS%%
+            </dl>
         <hr/>
 		<h3>Tests - Failed</h3>
         %%FAILEDTESTS%%

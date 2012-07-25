@@ -21,10 +21,11 @@ namespace Wonga.QA.Tools.ReportConverter
             string ignoredTestOutput = "";
             string pendingTestOutput = "";
 
-            var passedTests = testReport.Results.SelectMany(x => x.Children).Where(x => x.Outcome == TestOutcome.Passed);
-            var failedTests = testReport.Results.SelectMany(x => x.Children).Where(x => x.Outcome == TestOutcome.Failed);
-            var pendingTests = testReport.Results.SelectMany(x => x.Children).Where(x => x.Outcome == TestOutcome.Pending);
-            var ignoredTests = testReport.Results.SelectMany(x => x.Children).Where(x => x.Outcome == TestOutcome.Ignored);
+            var tests = testReport.GetTestsWithoutTestFixtures();
+            var passedTests = tests.Where(x => x.Outcome == TestOutcome.Passed);
+            var failedTests = tests.Where(x => x.Outcome == TestOutcome.Failed);
+            var pendingTests = tests.Where(x => x.Outcome == TestOutcome.Pending);
+            var ignoredTests = tests.Where(x => x.Outcome == TestOutcome.Ignored);
 
             foreach (var failedTest in failedTests)
                 failedTestOutput += ApplyTemplate(GetTemplate(failedTest.Outcome), failedTest);
@@ -38,7 +39,7 @@ namespace Wonga.QA.Tools.ReportConverter
             foreach (var pendingTest in pendingTests)
                 pendingTestOutput += ApplyTemplate(GetTemplate(pendingTest.Outcome), pendingTest);
 
-            ApplyFunFacts(testReport, ref testHtml);
+            ApplyFunFacts(tests, ref testHtml);
             return 
                 testHtml.Replace("%%FAILEDTESTS%%", failedTestOutput)
                 .Replace("%%PASSEDTESTS%%", passedTestOutput)
@@ -55,14 +56,14 @@ namespace Wonga.QA.Tools.ReportConverter
                 .Replace("%%TOTALDURATION%%", TimeSpan.FromSeconds(testReport.Statistics.Duration).ToString() );
         }
 
-        private void ApplyFunFacts(TestReport testReport, ref string testHtml)
+        private void ApplyFunFacts(List<TestResult> tests, ref string testHtml)
         {
-            var longestRunningTest =
-                testReport.Results.FirstOrDefault(x => x.Duration == testReport.Results.Max(max => max.Duration));
-            var longestRunningTestName = longestRunningTest != null ? longestRunningTest.FullName : "";
-            var longestRunningTestDuration = longestRunningTest != null ? TimeSpan.FromSeconds(longestRunningTest.Duration).ToString() : "";
-            testHtml = testHtml.Replace("%%LONGESTRUNNINGTESTNAME%%", longestRunningTestName)
-                .Replace("%%LONGESTRUNNINGTESTDURATION%%", longestRunningTestDuration);
+            var longestRunningText = "<dt>Longest Running Tests</dt>";
+            var longestRunningTests =
+                tests.OrderByDescending(desc => desc.Duration).Take(5);
+            foreach(var longestRunningTest in longestRunningTests)
+                longestRunningText += "<dd>{0} - {1}</dd>".FormatWith(longestRunningTest.FullName, TimeSpan.FromSeconds(longestRunningTest.Duration).ToString());
+            testHtml = testHtml.Replace("%%LONGESTRUNNINGTESTS%%", longestRunningText);
         }
 
         private string ApplyTemplate(string testTemplate, TestResult testNode)
@@ -100,5 +101,13 @@ namespace Wonga.QA.Tools.ReportConverter
         {
             return File.ReadAllText(Path.Combine(resourcesFolder, string.Format("{0}.html", testOutcome.ToString().ToLower())));
         }
+    }
+
+    public static class Extensions
+    {
+        public static string FormatWith(this string val, params object[] args)
+        {
+            return string.Format(val, args);
+        } 
     }
 }

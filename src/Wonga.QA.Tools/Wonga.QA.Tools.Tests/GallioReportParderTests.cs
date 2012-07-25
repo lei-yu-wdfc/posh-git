@@ -31,7 +31,13 @@ namespace Wonga.QA.Tools.Tests
         {
             var testReport = new GallioReportParser(XDocument.Load(_xmlPath)).GetTestReport();
             Assert.IsNotEmpty(testReport.Results.SelectMany(x => x.Children).Where(x => x.Metadata.Any(met => met.Key == "Owner") && x.Metadata.Any(met => met.Key == "OwnerEmail")));
+        }
 
+        [Test]
+        public void GetTestsWithoutTestFixturesReturnsCorrectResults()
+        {
+            var testReport = new GallioReportParser(XDocument.Load(_xmlPath)).GetTestReport();
+            var testsOnly = testReport.GetTestsWithoutTestFixtures();
         }
     }
 }
