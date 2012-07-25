@@ -50,6 +50,7 @@ namespace Wonga.QA.Tools.ReportParser
 
         public TestResult()
         {
+            Outcome = TestOutcome.UnknownOutcome;
             Metadata = new Dictionary<string, string>();
             Children = new List<TestResult>();
         }
