@@ -59,7 +59,7 @@ namespace Wonga.QA.Tools.ReportParser
 
         private int GetCount(string status, XElement statNode)
         {
-            string val = (from outcomeSummary in statNode.Descendants(_ns + "outcomeSummary")
+            var val = (from outcomeSummary in statNode.Descendants(_ns + "outcomeSummary")
                                        where
                                            outcomeSummary.Descendants(_ns + "outcome").Any(
                                                outcome =>
@@ -67,10 +67,11 @@ namespace Wonga.QA.Tools.ReportParser
                                                outcome.Attribute("status").Value == "skipped" &&
                                                outcome.Attribute("category") != null &&
                                                outcome.Attribute("category").Value == status)
-                                       select outcomeSummary).First().Attribute("count").Value;
-            if(string.IsNullOrEmpty(val))
+                                       select outcomeSummary).FirstOrDefault();
+
+            if (val == null || val.Attribute("count") == null || string.IsNullOrEmpty(val.Attribute("count").Value))
                 return 0;
-            return int.Parse(val);
+            return int.Parse(val.Attribute("count").Value);
         }
 
         private TestResult GetTest(XElement test)
