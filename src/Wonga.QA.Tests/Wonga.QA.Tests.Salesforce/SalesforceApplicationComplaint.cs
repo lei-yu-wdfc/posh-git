@@ -2,6 +2,7 @@
 using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
+using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Cs.Requests.Comms.Csapi.Commands;
 using Wonga.QA.Framework.Cs.Requests.Payments.Csapi.Commands;
@@ -41,9 +42,20 @@ namespace Wonga.QA.Tests.Salesforce
 
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-129"), Owner(Owner.AnilKrishnamaneni)]
+        public void UserPendingApplicationCompliantCycle()
+        {
+            var caseId = Guid.NewGuid();
+            var cust = CreateCustomer();
+            var application = ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();  
+            CompliantCycle(caseId, application);
+            CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Accepted );
+        }
+
+        [Test]
+        [AUT(AUT.Uk), JIRA("UKOPS-129"), Owner(Owner.AnilKrishnamaneni)]
         public void LiveApplicationCompliantCycle()
         {
-            var caseId = new Guid();
+            var caseId = Guid.NewGuid();
             var application = CreateLiveApplication();
             CompliantCycle( caseId, application);
             CheckSalesApplicationStatus(application,(double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live);
@@ -53,7 +65,7 @@ namespace Wonga.QA.Tests.Salesforce
         [AUT(AUT.Uk), JIRA("UKOPS-129"), Owner(Owner.AnilKrishnamaneni)]
         public void DueTodayApplicationCompliantCycle()
         {
-            var caseId = new Guid();
+            var caseId = Guid.NewGuid();
             var application = CreateLiveApplication();
             application.MakeDueToday();
             CompliantCycle( caseId, application);
@@ -64,7 +76,7 @@ namespace Wonga.QA.Tests.Salesforce
         [AUT(AUT.Uk), JIRA("UKOPS-129"), Owner(Owner.AnilKrishnamaneni)]
         public void ArrearApplicationCompliantCycle()
         {
-            var caseId = new Guid();
+            var caseId = Guid.NewGuid();
             var application = CreateLiveApplication();
             application.ExpireCard();  
             application.PutIntoArrears(3);
@@ -161,34 +173,6 @@ namespace Wonga.QA.Tests.Salesforce
             CompliantCycle(caseId, application);
             
         }
-
-
-        [Test]
-        [AUT(AUT.Uk), JIRA("UKOPS-129"), Owner(Owner.AnilKrishnamaneni)]
-        public void PaidInFullApplicationCompliantCycle()
-        {
-            var caseId = Guid.NewGuid();
-            var application = CreateLiveApplication();
-            application.RepayOnDueDate();  
-            CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.PaidInFull);
-            CompliantCycle(caseId, application);
-            CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.PaidInFull);
-        }
-
-        [Test]
-        [AUT(AUT.Uk), JIRA("UKOPS-129"), Owner(Owner.AnilKrishnamaneni)]
-        public void ConfirmFraudApplicationCompliantCycle()
-        {
-            var caseId = Guid.NewGuid();
-            var customer = CreateCustomer();
-            var application = CreateApplication(customer);
-            ConfirmFraud(application, customer, caseId);
-            CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.WrittenOff);
-            CompliantCycle(caseId, application);
-            ConfirmNotFraud(application, customer, caseId);
-            CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live);
-        }
-
 
         #region Helpers#
 
