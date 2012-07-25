@@ -22,7 +22,7 @@ namespace Wonga.QA.Tools.ReportParser
         Unknown
     }
 
-    public class TestResult
+    public class TestResult : IEquatable<TestResult>
     {
         public string Id { get; set; }
         public string Name { get; set; }
@@ -53,6 +53,32 @@ namespace Wonga.QA.Tools.ReportParser
             Outcome = TestOutcome.UnknownOutcome;
             Metadata = new Dictionary<string, string>();
             Children = new List<TestResult>();
+        }
+
+        public bool Equals(TestResult other)
+        {
+
+            //Check whether the compared object is null.
+            if (ReferenceEquals(other, null)) return false;
+
+            //Check whether the compared object references the same data.
+            if (ReferenceEquals(this, other)) return true;
+
+            //Check whether the products' properties are equal.
+            return Id.Equals(other.Id);
+        }
+
+        // If Equals() returns true for a pair of objects 
+        // then GetHashCode() must return the same value for these objects.
+
+        public override int GetHashCode()
+        {
+
+            //Get hash code for the Name field if it is not null.
+            int hashTestResultId = Id == null ? 0 : Id.GetHashCode();
+
+            //Calculate the hash code for the product.
+            return hashTestResultId;
         }
     }
 }

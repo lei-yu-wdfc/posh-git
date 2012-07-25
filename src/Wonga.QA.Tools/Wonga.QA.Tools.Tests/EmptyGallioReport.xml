@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<report xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.gallio.org/">
+  <testPackage shadowCopy="false" debug="false">
+    <files>
+      <file>C:\Users\konstantinos.konstan\Documents\Visual Studio 2010\Projects\Tests1\Tests1\bin\Debug\Tests1.dll</file>
+    </files>
+    <hintDirectories />
+    <excludedFrameworkIds />
+    <properties />
+  </testPackage>
+  <testModel>
+    <test id="c2722843734a7a54" name="Root" fullName="" isTestCase="false">
+      <codeReference />
+      <codeLocation />
+      <metadata>
+        <entry key="TestKind">
+          <value>Root</value>
+        </entry>
+      </metadata>
+      <children>
+        <test id="c72007ed8cc21f6d" name="Tests1.dll" fullName="Tests1.dll" isTestCase="false">
+          <codeReference />
+          <codeLocation />
+          <metadata>
+            <entry key="TestKind">
+              <value>Unsupported</value>
+            </entry>
+            <entry key="IgnoreReason">
+              <value>This test is not supported by any available test framework.</value>
+            </entry>
+            <entry key="File">
+              <value>C:\Users\konstantinos.konstan\Documents\Visual Studio 2010\Projects\Tests1\Tests1\bin\Debug\Tests1.dll</value>
+            </entry>
+          </metadata>
+          <children />
+          <parameters />
+        </test>
+      </children>
+      <parameters />
+    </test>
+    <annotations>
+      <annotation type="warning" message="File 'Tests1.dll' is not supported by any installed test framework.  It will be ignored.">
+        <codeLocation path="C:\Users\konstantinos.konstan\Documents\Visual Studio 2010\Projects\Tests1\Tests1\bin\Debug\Tests1.dll" />
+        <codeReference />
+      </annotation>
+    </annotations>
+  </testModel>
+  <testPackageRun startTime="2012-07-25T17:35:11.3795984+01:00" endTime="2012-07-25T17:35:11.4266031+01:00">
+    <testStepRun startTime="2012-07-25T17:35:11.3966001+01:00" endTime="2012-07-25T17:35:11.4266031+01:00">
+      <testStep id="5b8c5336a2952d5" name="Root" fullName="" testId="c2722843734a7a54" isPrimary="true" isTestCase="false" isDynamic="false">
+        <codeReference />
+        <codeLocation />
+        <metadata>
+          <entry key="TestKind">
+            <value>Root</value>
+          </entry>
+        </metadata>
+      </testStep>
+      <children>
+        <testStepRun startTime="2012-07-25T17:35:11.3996004+01:00" endTime="2012-07-25T17:35:11.4126017+01:00">
+          <testStep id="21172b1a4e059e1e" name="Tests1.dll" fullName="Tests1.dll" testId="c72007ed8cc21f6d" isPrimary="true" isTestCase="true" isDynamic="false">
+            <codeReference />
+            <codeLocation />
+            <metadata>
+              <entry key="TestKind">
+                <value>Unsupported</value>
+              </entry>
+              <entry key="IgnoreReason">
+                <value>This test is not supported by any available test framework.</value>
+              </entry>
+              <entry key="File">
+                <value>C:\Users\konstantinos.konstan\Documents\Visual Studio 2010\Projects\Tests1\Tests1\bin\Debug\Tests1.dll</value>
+              </entry>
+            </metadata>
+          </testStep>
+          <children />
+          <result assertCount="0" duration="0">
+            <outcome status="skipped" category="ignored" />
+          </result>
+          <testLog>
+            <streams>
+              <stream name="Warnings">
+                <body>
+                  <contents>
+                    <text><![CDATA[This test is not supported by any available test framework.]]></text>
+                  </contents>
+                </body>
+              </stream>
+            </streams>
+            <attachments />
+          </testLog>
+        </testStepRun>
+      </children>
+      <result assertCount="0" duration="0.046001299999999995">
+        <outcome status="skipped" />
+      </result>
+      <testLog>
+        <streams />
+        <attachments />
+      </testLog>
+    </testStepRun>
+    <statistics assertCount="0" duration="0.047058699999999995" runCount="0" passedCount="0" failedCount="0" inconclusiveCount="0" skippedCount="1" testCount="1" stepCount="2">
+      <outcomeSummaries>
+        <outcomeSummary count="1">
+          <outcome status="skipped" category="ignored" />
+        </outcomeSummary>
+      </outcomeSummaries>
+    </statistics>
+  </testPackageRun>
+  <logEntries />
+</report>

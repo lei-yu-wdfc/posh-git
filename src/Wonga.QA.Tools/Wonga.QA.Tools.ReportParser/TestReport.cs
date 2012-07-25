@@ -24,7 +24,7 @@ namespace Wonga.QA.Tools.ReportParser
             var children = coll.SelectMany(x => x.Children).ToList();
             if(children.Count > 0)
                 result.AddRange(GetTestsWithoutTestFixtures(children));
-            return result;
+            return result.Distinct().ToList();
         }
     }
 }
