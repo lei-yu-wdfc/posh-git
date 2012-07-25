@@ -1,0 +1,72 @@
+<html>
+	<style>
+	.stack-trace
+	{
+	    background-color: #BBDAFF;
+	}
+	.info
+	{
+	    background-color:#FFFF99;
+	}
+	.debug-trace
+	{
+	    background-color: #C9DECB;
+	}
+	.hidden{
+		display: none;
+	}
+	.name
+	{
+	    font-weight: bold;
+	}
+	.passed-test{
+		color: #1FCB4A;
+	}
+	.failed-test{
+		color: #FF7575;
+	}
+	.skipped-test{
+		color: #B6BA18;
+	}
+	.warnings-trace{
+		color: #B6BA18;
+	}
+	</style>
+	
+	<body>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+		<script>
+		    $(document).ready(function () {
+		        $(".test-details-toggle").click(function (event) {
+		            $(this).next(".test-details").toggle(300);
+		            event.preventDefault();
+		        });
+		        $(".fun-facts").click(function (event) {
+		            $(this).find(".hidden").toggle();
+		        });
+		    });
+		</script>
+        <h2>Totals</h2>
+        <p>All %%TOTALALL%%, Run %%TOTALRUN%%, Passed %%TOTALPASSED%%, Failed %%TOTALFAILED%%, Inconclusive %%TOTALINCONCLUSIVE%%, Pending %%TOTALPENDING%%, Ignored %%TOTALIGNORED%%</p>
+        <p>Duration %%TOTALDURATION%%</p>
+        <div class="fun-facts">
+            <b>Fun Facts</b>
+            <div class="hidden">
+                <b>- Longest Running Test -</b><br/>
+                %%LONGESTRUNNINGTESTNAME%% %%LONGESTRUNNINGTESTDURATION%%
+            </div>
+        </div>
+        <hr/>
+		<h3>Tests - Failed</h3>
+        %%FAILEDTESTS%%
+        <hr/>
+        <h3>Tests - Pending</h3>
+		%%PENDINGTESTS%%
+        <hr/>
+        <h3>Tests - Ignored</h3>
+		%%IGNOREDTESTS%%
+        <hr/>
+        <h3>Tests - Passed</h3>
+		%%PASSEDTESTS%%
+	</body>
+</html>

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using MbUnit.Framework;
-using Wonga.QA.Tools.Library;
+using Wonga.QA.Tools.ReportParser;
 
 namespace Wonga.QA.Tools.Tests
 {
@@ -23,14 +23,14 @@ namespace Wonga.QA.Tools.Tests
         [Test]
         public void CanExtractMetadata()
         {
-            var results = new GallioReportParser(XDocument.Load(_xmlPath)).Parse();
+            var testReport = new GallioReportParser(XDocument.Load(_xmlPath)).GetTestReport();            
         }
 
         [Test]
         public void CanExtractOwners()
         {
-            var results = new GallioReportParser(XDocument.Load(_xmlPath)).Parse();
-            Assert.IsNotEmpty(results.Where(x => x.Metadata.Any(met => met.Key == "Owner") && x.Metadata.Any(met => met.Key == "OwnerEmail")));
+            var testReport = new GallioReportParser(XDocument.Load(_xmlPath)).GetTestReport();
+            Assert.IsNotEmpty(testReport.Results.SelectMany(x => x.Children).Where(x => x.Metadata.Any(met => met.Key == "Owner") && x.Metadata.Any(met => met.Key == "OwnerEmail")));
 
         }
     }

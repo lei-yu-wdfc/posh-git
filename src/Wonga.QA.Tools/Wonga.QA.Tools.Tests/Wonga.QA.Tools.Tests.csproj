@@ -48,10 +48,11 @@
   <ItemGroup>
     <Content Include="GallioReport.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Wonga.QA.Tools.Library\Wonga.QA.Tools.ReportParser.csproj">
+    <ProjectReference Include="..\Wonga.QA.Tools.ReportParser\Wonga.QA.Tools.ReportParser.csproj">
       <Project>{2F10FAB9-7062-4B95-9200-35F870A06E64}</Project>
       <Name>Wonga.QA.Tools.ReportParser</Name>
     </ProjectReference>
