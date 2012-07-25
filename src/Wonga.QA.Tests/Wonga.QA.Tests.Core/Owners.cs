@@ -57,6 +57,8 @@ namespace Wonga.QA.Tests.Core
         [Description("svyatoslav.kravchenko@wonga.com")]
         SvyatoslavKravchenko,
         [Description("michael.doyle@wonga.com")]
-        MichaelDoyle
+        MichaelDoyle,
+        [Description("anil.krishnamaneni@wonga.com")]
+        AnilKrishnamaneni
     }
 }

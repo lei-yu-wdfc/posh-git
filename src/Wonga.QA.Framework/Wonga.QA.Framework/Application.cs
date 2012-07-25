@@ -4,10 +4,10 @@ using System.Data.Linq;
 using System.Linq;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Enums;
-using Wonga.QA.Framework.Api.Requests.Payments.Commands;
 using Wonga.QA.Framework.Api.Requests.Payments.Queries;
 using Wonga.QA.Framework.Api.Requests.Payments.Queries.Za;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Cs.Requests.Payments.Csapi.Commands;
 using Wonga.QA.Framework.Db;
 using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Db.Ops;
@@ -19,6 +19,7 @@ using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Framework.Db.Risk;
 using Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Messages;
 using Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.SagaMessages;
+using CreateRepaymentArrangementCommand = Wonga.QA.Framework.Api.Requests.Payments.Commands.CreateRepaymentArrangementCommand;
 using PaymentTransactionEnum =  Wonga.QA.Framework.Msmq.Enums.Integration.Payments.Enums.PaymentTransactionEnum;
 using PaymentTransactionScopeEnum = Wonga.QA.Framework.Msmq.Enums.Integration.Payments.Enums.PaymentTransactionScopeEnum;
 
@@ -392,6 +393,19 @@ namespace Wonga.QA.Framework
 
 			return this;
 		}
+
+        public Application CancelRepaymentArrangement()
+        {
+            var dbApplication = _applicationsTab.FindAll(_applicationsTab.ExternalId == Id).Single();
+            var repaymentArrangement = Do.Until(() => _repaymentArrangementsTab.FindAll(_repaymentArrangementsTab.ApplicationId == dbApplication.ApplicationId).Single());
+            Drive.Cs.Commands.Post(new CancelRepaymentArrangementCommand()
+            {
+                RepaymentArrangementId = repaymentArrangement.ExternalId
+            });
+
+            Do.Until(() => Drive.Data.Payments.Db.RepaymentArrangements.FindByRepaymentArrangementId(repaymentArrangement.RepaymentArrangementId).CanceledOn != null);
+            return this;
+        }
 
 		public Decimal GetBalance()
 		{
