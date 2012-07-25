@@ -16,6 +16,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
 		[Test]
 		[JIRA("UK-1563"), AUT(AUT.Uk), Description("Scenario 1: Accepted")]//, Category(TestCategories.CoreTest)]
+        [Pending("This test needs a big refactoring somehow because the mobile number combinations are running out")]
 		public void L0_MobilePhoneIsUnique_LoanIsAccepted()
 		{
             var customer = CustomerBuilder.New().WithEmployer(TestMask).Build();
