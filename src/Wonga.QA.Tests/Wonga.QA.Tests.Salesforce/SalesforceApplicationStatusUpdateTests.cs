@@ -20,6 +20,7 @@ namespace Wonga.QA.Tests.Salesforce
     [JIRA("UK-924")]
     [AUT(AUT.Uk, AUT.Wb)]
     [Parallelizable(TestScope.All)]
+    [Pending("SF tests are failing because message congestion in SF TC queue, explicit until fixed")]
     public class SalesforceApplicationStatusUpdateTests : SalesforceTestBase
     {
         private static Application CreateApplication(out Customer customer)
