@@ -7,7 +7,6 @@ using System.Text;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using Wonga.QA.Tools.ReportParser;
-using Wonga.QA.Tools.ReportParser;
 
 namespace Wonga.QA.Tools.ReportConverter
 {
