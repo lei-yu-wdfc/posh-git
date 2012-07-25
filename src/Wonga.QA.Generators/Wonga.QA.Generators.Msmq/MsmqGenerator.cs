@@ -37,7 +37,7 @@ namespace Wonga.QA.Generators.Msmq
         private void GenerateTypesForAssembly(FileInfo file)
         {
             Assembly assembly = LoadAssembly(file);
-            var typesToGenerate = assembly.GetTypes().Where(t => t.IsMessage() && t.IsInstantiatable());
+            var typesToGenerate = assembly.GetTypes().Where(t => t.IsMessage());
             if(typesToGenerate.Count() == 0)
                 return;
 
