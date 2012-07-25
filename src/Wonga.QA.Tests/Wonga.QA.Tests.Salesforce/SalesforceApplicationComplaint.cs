@@ -15,27 +15,27 @@ namespace Wonga.QA.Tests.Salesforce
 {
     class SalesforceApplicationComplaint
     {
-        private ServiceConfigurationEntity sfUsername;
-        private ServiceConfigurationEntity sfPassword;
-        private ServiceConfigurationEntity sfUrl;
-        private Framework.ThirdParties.Salesforce sales;
-        private dynamic applicationRepo = Drive.Data.Payments.Db.Applications;
-        private dynamic commsSuppressionsRepo = Drive.Data.Comms.Db.Suppressions;
-        private dynamic paymentsSuppressionsRepo = Drive.Data.Payments.Db.PaymentCollectionSuppressions;
-        private dynamic  _paymentsSuppressionsTable = Drive.Data.Payments.Db.PaymentCollectionSuppressions;
+        private ServiceConfigurationEntity _sfUsername;
+        private ServiceConfigurationEntity _sfPassword;
+        private ServiceConfigurationEntity _sfUrl;
+        private Framework.ThirdParties.Salesforce _sales;
+        private readonly dynamic _applicationRepo = Drive.Data.Payments.Db.Applications;
+        private readonly dynamic _commsSuppressionsRepo = Drive.Data.Comms.Db.Suppressions;
+        private readonly dynamic _paymentsSuppressionsRepo = Drive.Data.Payments.Db.PaymentCollectionSuppressions;
+        private readonly dynamic  _paymentsSuppressionsTable = Drive.Data.Payments.Db.PaymentCollectionSuppressions;
         private readonly dynamic _repaymentArrangementsTab = Drive.Data.Payments.Db.RepaymentArrangements;
 
         #region setup#
         [SetUp]
         public void SetUp()
         {
-            sfUsername = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Salesforce.UserName");
-            sfPassword = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Salesforce.Password");
-            sfUrl = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Salesforce.Url");
-            sales = Drive.ThirdParties.Salesforce;
-            sales.SalesforceUsername = sfUsername.Value;
-            sales.SalesforcePassword = sfPassword.Value;
-            sales.SalesforceUrl = sfUrl.Value;
+            _sfUsername = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Salesforce.UserName");
+            _sfPassword = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Salesforce.Password");
+            _sfUrl = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Salesforce.Url");
+            _sales = Drive.ThirdParties.Salesforce;
+            _sales.SalesforceUsername = _sfUsername.Value;
+            _sales.SalesforcePassword = _sfPassword.Value;
+            _sales.SalesforceUrl = _sfUrl.Value;
         }
         #endregion setup#
 
@@ -158,8 +158,7 @@ namespace Wonga.QA.Tests.Salesforce
             Refundrequest(application, caseId);
             CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Refund);
             CompliantCycle(caseId, application);
-            //RemoveManagementReview(application, caseId);
-            //CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live);
+            
         }
 
 
@@ -206,7 +205,7 @@ namespace Wonga.QA.Tests.Salesforce
 
         private int GetAppInternalId(Application application)
         {
-            return (applicationRepo.FindAll(applicationRepo.ExternalID == application.Id).Single().ApplicationId);
+            return (_applicationRepo.FindAll(_applicationRepo.ExternalID == application.Id).Single().ApplicationId);
         }
 
         private Application CreateApplication(Customer customer)
@@ -223,16 +222,16 @@ namespace Wonga.QA.Tests.Salesforce
             });
 
             //wait for the payment to customer to be sent out
-            Do.Until(() => applicationRepo.FindAll(applicationRepo.ExternalId == application.Id &&
-                                                   applicationRepo.Transaction.ApplicationId == applicationRepo.Id &&
-                                                   applicationRepo.Type == "CashAdvance"));
+            Do.Until(() => _applicationRepo.FindAll(_applicationRepo.ExternalId == application.Id &&
+                                                   _applicationRepo.Transaction.ApplicationId == _applicationRepo.Id &&
+                                                   _applicationRepo.Type == "CashAdvance"));
 
-            //Do.Until(() =>
-            //{
-            //    var app = sales.GetApplicationById(application.Id);
-            //    return app.Status_ID__c != null &&
-            //           app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live;
-            //});
+            Do.Until(() =>
+            {
+                var app = _sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null &&
+                       app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live;
+            });
            
             return application;
         }
@@ -257,7 +256,7 @@ namespace Wonga.QA.Tests.Salesforce
 
             Do.Until(() =>
             {
-                var app = sales.GetApplicationById(application.Id);
+                var app = _sales.GetApplicationById(application.Id);
                 return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Complaint;
             });
         }
@@ -265,10 +264,10 @@ namespace Wonga.QA.Tests.Salesforce
         private void CheckSupressionTable(Application application)
         {
             int appInternalId = GetAppInternalId(application);
-            Do.Until(() => commsSuppressionsRepo.FindAll(
-                           commsSuppressionsRepo.AccountId == application.AccountId && commsSuppressionsRepo.Complaint == 1).Single());
-            Do.Until(() => paymentsSuppressionsRepo.FindAll(
-                paymentsSuppressionsRepo.ApplicationId == appInternalId && paymentsSuppressionsRepo.ComplaintSuppression == 1).Single());
+            Do.Until(() => _commsSuppressionsRepo.FindAll(
+                           _commsSuppressionsRepo.AccountId == application.AccountId && _commsSuppressionsRepo.Complaint == 1).Single());
+            Do.Until(() => _paymentsSuppressionsRepo.FindAll(
+                _paymentsSuppressionsRepo.ApplicationId == appInternalId && _paymentsSuppressionsRepo.ComplaintSuppression == 1).Single());
         }
 
         private void RemoveComplaint(Application application,Guid caseId)
@@ -286,7 +285,7 @@ namespace Wonga.QA.Tests.Salesforce
         {
             Do.Until(() =>
             {
-                var app = sales.GetApplicationById(application.Id);
+                var app = _sales.GetApplicationById(application.Id);
                 return app.Status_ID__c != null && app.Status_ID__c == status;
             });
         }
@@ -336,7 +335,7 @@ namespace Wonga.QA.Tests.Salesforce
         private void CancelRepaymnetArrangent(Application application)
         {
 
-            var dbApplication = applicationRepo.FindAll(applicationRepo.ExternalId == application.Id).Single();
+            var dbApplication = _applicationRepo.FindAll(_applicationRepo.ExternalId == application.Id).Single();
             var repaymentArrangement = Do.Until(() => _repaymentArrangementsTab.FindAll(_repaymentArrangementsTab.ApplicationId == dbApplication.ApplicationId).Single());
             Drive.Cs.Commands.Post(new CancelRepaymentArrangementCommand()
             {
