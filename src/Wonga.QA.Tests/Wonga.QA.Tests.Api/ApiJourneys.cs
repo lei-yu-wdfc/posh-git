@@ -4,6 +4,7 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
+using System.Dynamic;
 
 namespace Wonga.QA.Tests.Api
 {
@@ -77,13 +78,24 @@ namespace Wonga.QA.Tests.Api
 			ApplicationBuilder.New(cust).Build();
 		}
 
-        [Test, AUT(AUT.Ca, AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Ca, AUT.Uk)]
         public void ApiLnJourneyDeclined()
         {
-            Customer cust = CustomerBuilder.New().Build();
-            ApplicationBuilder.New(cust).Build().RepayOnDueDate();
-            CustomerOperations.UpdateEmployerNameInRisk(cust.Id,"Wonga");
-            ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+            String forename = Get.RandomString(6);
+            String surname = Get.RandomString(6);
+            //L0
+            var customer = CustomerBuilder.New().WithSurname(surname).WithForename(forename).Build();
+            ApplicationBuilder.New(customer).Build().RepayOnDueDate();
+
+            //LN - This is how we do it the PROPER WAY - watch and learn :) 
+            var blackListTable = Drive.Data.Blacklist.Db.BlackList;
+            dynamic blackListEntity = new ExpandoObject();
+            blackListEntity.FirstName = forename;
+            blackListEntity.LastName = surname;
+            blackListTable.Insert(blackListEntity);
+
+            CustomerOperations.UpdateEmployerNameInRisk(customer.Id,RiskMask.TESTBlacklist.ToString());
+            ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
         }
 
 		[Test, AUT(AUT.Ca)]
@@ -95,7 +107,7 @@ namespace Wonga.QA.Tests.Api
 			ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 		}
 
-		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Za), Owner(Owner.AlexPricope)]
+		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
 		public void ApiRepayingOnDueDateClosesApplication()
 		{
 			var customer = CustomerBuilder.New().Build();
