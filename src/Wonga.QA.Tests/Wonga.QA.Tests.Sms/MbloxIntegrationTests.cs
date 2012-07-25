@@ -30,7 +30,7 @@ namespace Wonga.QA.Tests.Sms
             _customer = CustomerBuilder.New().Build();
         }
 
-        [Test, JIRA("UK-510"), AUT(AUT.Uk), Owner(Owner.SvyatoslavKravchenko)]
+        [Test, JIRA("UK-510"), AUT(AUT.Uk), Owner(Owner.SvyatoslavKravchenko),Explicit]
         public void SendRequestToMbloxProvider()
         {
             if (Drive.Data.Ops.GetServiceConfiguration<String>(PROVIDER_CHOOSE_KEY).Equals(ZONG_PROVIDER_NAME))
@@ -57,7 +57,7 @@ namespace Wonga.QA.Tests.Sms
             Assert.IsTrue(Drive.Data.Ops.GetServiceConfiguration<String>(PROVIDER_CHOOSE_KEY).Equals(MBLOX_PROVIDER_NAME));
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-510"), Owner(Owner.SvyatoslavKravchenko)]
+        [Test, AUT(AUT.Uk), JIRA("UK-510"), Owner(Owner.SvyatoslavKravchenko),Explicit]
         public void SwitchToAnotherProviderAndSendSmsRequest()
         {
             Do.Until(() => Drive.Data.Ops.SetServiceConfiguration(PROVIDER_CHOOSE_KEY, ZONG_PROVIDER_NAME));
