@@ -15,7 +15,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		private const RiskMask TestMask = RiskMask.TESTMobilePhoneIsUnique;     
 
 		[Test]
-		[JIRA("UK-1563"), AUT(AUT.Uk), Description("Scenario 1: Accepted")]//, Category(TestCategories.CoreTest)]
+		[JIRA("UK-1563"), AUT(AUT.Uk), Description("Scenario 1: Accepted")]
 		public void L0_MobilePhoneIsUnique_LoanIsAccepted()
 		{
             var phone = Get.GetMobilePhone();
@@ -45,8 +45,8 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
                 ApplicationBuilder.New(firstCustomer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
                 //Create and check new customer
-                var secendCustomer = CustomerBuilder.New().WithMobileNumber(phone).WithEmployer(TestMask).Build();
-                ApplicationBuilder.New(secendCustomer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+                var secondCustomer = CustomerBuilder.New().WithMobileNumber(phone).WithEmployer(TestMask).Build();
+                ApplicationBuilder.New(secondCustomer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
             }
             finally
             {
@@ -70,8 +70,8 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
                 CleanPhone(phone);
 
 
-                var secendCustomer = CustomerBuilder.New().WithMobileNumber(phone).WithEmployer(TestMask).Build();
-                ApplicationBuilder.New(secendCustomer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+                var secondCustomer = CustomerBuilder.New().WithMobileNumber(phone).WithEmployer(TestMask).Build();
+                ApplicationBuilder.New(secondCustomer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
             }
             finally
