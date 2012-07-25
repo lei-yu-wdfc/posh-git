@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
@@ -6,6 +7,7 @@ using Wonga.QA.Framework.Cs.Requests.Comms.Csapi.Commands;
 using Wonga.QA.Framework.Cs.Requests.Payments.Csapi.Commands;
 using Wonga.QA.Framework.Cs.Requests.Risk.Csapi.Commands;
 using Wonga.QA.Framework.Db.Ops;
+using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Msmq.Messages.Payments.PublicMessages;
 using Wonga.QA.Tests.Core;
 
@@ -21,6 +23,7 @@ namespace Wonga.QA.Tests.Salesforce
         private dynamic commsSuppressionsRepo = Drive.Data.Comms.Db.Suppressions;
         private dynamic paymentsSuppressionsRepo = Drive.Data.Payments.Db.PaymentCollectionSuppressions;
         private dynamic  _paymentsSuppressionsTable = Drive.Data.Payments.Db.PaymentCollectionSuppressions;
+        private readonly dynamic _repaymentArrangementsTab = Drive.Data.Payments.Db.RepaymentArrangements;
 
         #region setup#
         [SetUp]
@@ -70,7 +73,7 @@ namespace Wonga.QA.Tests.Salesforce
 
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-129"), Owner(Owner.AnilKrishnamaneni)]
-        public void FraudApplicationCompliantCycle()
+        public void SuspectFraudApplicationCompliantCycle()
         {
             var caseId = Guid.NewGuid();
             var customer = CreateCustomer(); 
@@ -95,9 +98,99 @@ namespace Wonga.QA.Tests.Salesforce
             CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live);
         }
 
-        #region Helpers#
+        [Test]
+        [AUT(AUT.Uk), JIRA("UKOPS-129"), Owner(Owner.AnilKrishnamaneni)]
+        public void DmpRepaymentArrangementApplicationCompliantCycle()
+        {
+            var caseId = Guid.NewGuid();
+            var application = CreateLiveApplication();
+            application.PutIntoArrears();
+            application.CreateRepaymentArrangement();
+            CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.RepaymentArrangement );
+            CompliantCycle(caseId, application);
+            application.CancelRepaymentArrangement(); 
+            CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live);
+        }
 
-       
+        [Test]
+        [AUT(AUT.Uk), JIRA("UKOPS-129"), Owner(Owner.AnilKrishnamaneni)]
+        public void HardshipApplicationCompliantCycle()
+        {
+            var caseId = Guid.NewGuid();
+            var application = CreateLiveApplication();
+            MakeHardship(application,caseId );
+            CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Hardship );
+            CompliantCycle(caseId, application);
+            CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live);
+        }
+
+        [Test]
+        [AUT(AUT.Uk), JIRA("UKOPS-129"), Owner(Owner.AnilKrishnamaneni)]
+        public void BankruptApplicationCompliantCycle()
+        {
+            var caseId = Guid.NewGuid();
+            var application = CreateLiveApplication();
+            MakeBankrupt(application, caseId);
+            CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Hardship);
+            CompliantCycle(caseId, application);
+            CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live);
+        }
+
+        [Test]
+        [AUT(AUT.Uk), JIRA("UKOPS-129"), Owner(Owner.AnilKrishnamaneni)]
+        public void ManagementReviewApplicationCompliantCycle()
+        {
+            var caseId = Guid.NewGuid();
+            var application = CreateLiveApplication();
+            ManagementReview(application, caseId);
+            CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.ManagementReview );
+            CompliantCycle(caseId, application);
+            RemoveManagementReview(application, caseId);
+            CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live);
+        }
+
+        [Test]
+        [AUT(AUT.Uk), JIRA("UKOPS-129"), Owner(Owner.AnilKrishnamaneni)]
+        public void RefundApplicationCompliantCycle()
+        {
+            var caseId = Guid.NewGuid();
+            var application = CreateLiveApplication();
+            Refundrequest(application, caseId);
+            CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Refund);
+            CompliantCycle(caseId, application);
+            //RemoveManagementReview(application, caseId);
+            //CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live);
+        }
+
+
+        [Test]
+        [AUT(AUT.Uk), JIRA("UKOPS-129"), Owner(Owner.AnilKrishnamaneni)]
+        public void PaidInFullApplicationCompliantCycle()
+        {
+            var caseId = Guid.NewGuid();
+            var application = CreateLiveApplication();
+            application.RepayOnDueDate();  
+            CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.PaidInFull);
+            CompliantCycle(caseId, application);
+            CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.PaidInFull);
+        }
+
+        [Test]
+        [AUT(AUT.Uk), JIRA("UKOPS-129"), Owner(Owner.AnilKrishnamaneni)]
+        public void ConfirmFraudApplicationCompliantCycle()
+        {
+            var caseId = Guid.NewGuid();
+            var customer = CreateCustomer();
+            var application = CreateApplication(customer);
+            ConfirmFraud(application, customer, caseId);
+            CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.WrittenOff);
+            CompliantCycle(caseId, application);
+            ConfirmNotFraud(application, customer, caseId);
+            CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live);
+        }
+
+
+        #region Helpers#
 
         private Application CreateLiveApplication()
         {
@@ -134,12 +227,12 @@ namespace Wonga.QA.Tests.Salesforce
                                                    applicationRepo.Transaction.ApplicationId == applicationRepo.Id &&
                                                    applicationRepo.Type == "CashAdvance"));
 
-            Do.Until(() =>
-            {
-                var app = sales.GetApplicationById(application.Id);
-                return app.Status_ID__c != null &&
-                       app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live;
-            });
+            //Do.Until(() =>
+            //{
+            //    var app = sales.GetApplicationById(application.Id);
+            //    return app.Status_ID__c != null &&
+            //           app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live;
+            //});
            
             return application;
         }
@@ -216,14 +309,14 @@ namespace Wonga.QA.Tests.Salesforce
 
         private void Dca(Application  application)
         {
-            int appInternalId=GetAppInternalId(application ) 
+            int appInternalId = GetAppInternalId(application);
             var flagToDcaCommand = new FlagApplicationToDcaCommand
             {
                 ApplicationId = application.Id
             };
             Drive.Cs.Commands.Post(flagToDcaCommand);
             Do.With.Timeout(1).Until(
-               () => _paymentsSuppressionsTable.FindBy(ApplicationId: appInternalId, FraudSuppression: true));
+               () => _paymentsSuppressionsTable.FindBy(ApplicationId: appInternalId, DCASuppression: true));
             
         }
 
@@ -236,9 +329,100 @@ namespace Wonga.QA.Tests.Salesforce
             };
             Drive.Cs.Commands.Post(flagToDcaCommand);
             Do.With.Timeout(1).Until(
-               () => _paymentsSuppressionsTable.FindBy(ApplicationId: appInternalId, FraudSuppression: false));
+               () => _paymentsSuppressionsTable.FindBy(ApplicationId: appInternalId, DCASuppression: false));
             
         }
+
+        private void CancelRepaymnetArrangent(Application application)
+        {
+
+            var dbApplication = applicationRepo.FindAll(applicationRepo.ExternalId == application.Id).Single();
+            var repaymentArrangement = Do.Until(() => _repaymentArrangementsTab.FindAll(_repaymentArrangementsTab.ApplicationId == dbApplication.ApplicationId).Single());
+            Drive.Cs.Commands.Post(new CancelRepaymentArrangementCommand()
+            {
+                RepaymentArrangementId = repaymentArrangement.ExternalId
+            });
+
+            Do.Until(() => Drive.Data.Payments.Db.RepaymentArrangements.FindByRepaymentArrangementId(repaymentArrangement.RepaymentArrangementId).CanceledOn != null);
+            
+        }
+
+        private static RepaymentArrangementEntity GetRepaymentArrangement(Application application)
+        {
+            var dbApplication = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
+            var repaymentArrangement = Do.Until(() => Drive.Db.Payments.RepaymentArrangements.Single(x => x.ApplicationId == dbApplication.ApplicationId));
+
+            return repaymentArrangement;
+        }
+
+        private void MakeHardship(Application application,Guid caseId)
+        {
+            int appInternalId = GetAppInternalId(application);
+            Drive.Cs.Commands.Post(new CsReportHardshipCommand()
+                                       {
+                                           AccountId = application.AccountId,
+                                           ApplicationId = application.Id,
+                                           CaseId = caseId
+                                       }); 
+            Do.With.Timeout(1).Until(
+             () => _paymentsSuppressionsTable.FindBy(ApplicationId: appInternalId, HardshipSuppression: true));
+        }
+
+        private void MakeBankrupt(Application application, Guid caseId)
+        {
+            int appInternalId = GetAppInternalId(application);
+            Drive.Cs.Commands.Post(new CsReportBankruptcyCommand()
+            {
+                AccountId = application.AccountId,
+                ApplicationId = application.Id,
+                CaseId = caseId
+            });
+            Do.With.Timeout(1).Until(
+             () => _paymentsSuppressionsTable.FindBy(ApplicationId: appInternalId, BankruptSuppression: true));
+        }
+
+        private void ManagementReview(Application application, Guid caseId)
+        {
+            
+            Drive.Cs.Commands.Post(new CsReportManagementReviewCommand()
+            {
+                AccountId = application.AccountId,
+                ApplicationId = application.Id,
+                CaseId = caseId
+            });
+           
+        }
+
+        private void RemoveManagementReview(Application application, Guid caseId)
+        {
+            
+            Drive.Cs.Commands.Post(new CsRemoveManagementReviewCommand()
+            {
+                AccountId = application.AccountId,
+                ApplicationId = application.Id,
+                CaseId = caseId
+            });
+           
+        }
+
+        private void Refundrequest(Application application, Guid caseId)
+        {
+            Drive.Cs.Commands.Post(new CsReportRefundRequestCommand() 
+            {
+                ApplicationId = application.Id,
+                CaseId = caseId
+            });
+
+        }
+
+        private void ConfirmFraud(Application application, Customer cust, Guid caseId)
+        {
+            int appInternalId = GetAppInternalId(application);
+            Drive.Cs.Commands.Post(new ConfirmFraudCommand() { AccountId = cust.Id, CaseId = caseId });
+            Do.With.Timeout(1).Until(
+                () => _paymentsSuppressionsTable.FindBy(ApplicationId: appInternalId, FraudSuppression: true));
+        }
+
         #endregion helpers#
 
     }
