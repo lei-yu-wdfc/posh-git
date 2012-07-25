@@ -43,6 +43,7 @@ namespace Wonga.QA.Tests.Comms.Email
 
         [Test]
         [AUT(AUT.Uk)]
+        [Pending("SF tests are failing because message congestion in SF TC queue, explicit until fixed")]
         public void CreateLoanExtensionDocumentsTest()
         {
             //At this point the loan has been extended.. now cancel it.
