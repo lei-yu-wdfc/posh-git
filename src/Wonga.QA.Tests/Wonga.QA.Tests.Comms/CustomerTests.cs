@@ -243,7 +243,7 @@ namespace Wonga.QA.Tests.Comms
             Assert.AreEqual(error.Errors.ToList()[0], "Comms_Age_BelowMinuimumAge", "These values should be equal");
         }
 
-        [Test, AUT(AUT.Wb,AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb,AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("SME-561"), Description("This test verifies GetCustomerDetails query by creating new customer details record, issuing the query, verifying its response and comparing the data it returns to repository record")]
         public void TestGetCustomerDetailsQuery()
         {

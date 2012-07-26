@@ -36,6 +36,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AuthenticatePlus\AuthenticatePlusCheckpointTests.cs" />
     <Compile Include="ExperianRiskCheckpointTests.cs" />
     <Compile Include="ExperianServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

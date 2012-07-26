@@ -53,7 +53,7 @@ namespace Wonga.QA.Tests.Core
         [Description("seamus.hoban@wonga.com")]
         SeamusHoban,
         [Description("alex.pricope@wonga.com")]
-        AlexPricope,
+        RiskTeam,
         [Description("svyatoslav.kravchenko@wonga.com")]
         SvyatoslavKravchenko,
         [Description("michael.doyle@wonga.com")]

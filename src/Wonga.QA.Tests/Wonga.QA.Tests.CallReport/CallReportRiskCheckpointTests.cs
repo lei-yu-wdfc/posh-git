@@ -30,7 +30,7 @@ namespace Wonga.QA.Tests.CallReport
 
         /* Main Appplicant Is Alive L0  */
 
-        [Test, AUT(AUT.Wb, AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb, AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("SME-575", "UK-853"), Description("CallReport -> This test creates a loan for the unknown customer that is alive and with no consumer bureau data, then checks the risk checkpoint")]
         public void TestCallReportUnknownMainApplicant_LoanIsApproved()
         {
@@ -50,7 +50,7 @@ namespace Wonga.QA.Tests.CallReport
                                                                      RiskVerificationDefinitions.CreditBureauCustomerIsAliveVerification);
         }
 
-        [Test, AUT(AUT.Wb, AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb, AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("SME-575", "UK-853"), Description("CallReport -> This test creates a loan for the Kathleen customer that is alive according to call report, then checks the risk checkpoint")]
         public void TestCallReportMainApplicantIsNotDeceased_LoanIsApproved()
         {
@@ -70,7 +70,7 @@ namespace Wonga.QA.Tests.CallReport
                                                                      RiskVerificationDefinitions.CreditBureauCustomerIsAliveVerification);
         }
 
-        [Test, AUT(AUT.Wb, AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb, AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("SME-575", "UK-853"), Description("CallReport -> This test creates a loan for the customer that is dead according to call report, then checks the risk checkpoint"),
 		Category(TestCategories.CoreTest)]
         public void TestCallReportMainApplicantIsDeceased_LoanIsDeclined()
@@ -93,7 +93,7 @@ namespace Wonga.QA.Tests.CallReport
 
         /* Main Appplicant Is Alive LN  */
 
-        [Test, AUT(AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("UK-853")]
         public void Ln_TestCallReportMainApplicantIsNotDeceased_LoanIsApproved()
         {
@@ -116,7 +116,7 @@ namespace Wonga.QA.Tests.CallReport
                                                                      RiskVerificationDefinitions.CreditBureauCustomerIsAliveVerification);
         }
 
-        [Test, AUT(AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("UK-853")]
         public void Ln_TestCallReportMainApplicantIsDeceased_LoanIsDeclined()
         {
@@ -143,7 +143,7 @@ namespace Wonga.QA.Tests.CallReport
 
         /* Main Applicant CIFAS check L0 */
 
-        [Test, AUT(AUT.Wb, AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb, AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("SME-584", "UK-852"), Description("CallReport -> This test creates a loan for a customer that is not CIFAS flagged, then checks the risk checkpoint")]
         public void TestCallReportMainApplicantIsNotCifasFlagged_LoanIsApproved()
         {
@@ -164,7 +164,7 @@ namespace Wonga.QA.Tests.CallReport
 
         }
 
-        [Test, AUT(AUT.Wb, AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb, AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("SME-584", "UK-852"), Description("CallReport -> This test creates a loan for a customer that IS CIFAS flagged, then checks the risk checkpoint")]
         public void TestCallReportMainApplicantIsCifasFlagged_LoanIsDeclined()
         {
@@ -186,7 +186,7 @@ namespace Wonga.QA.Tests.CallReport
 
         /* Main Applicant CIFAS check LN */
 
-        [Test, AUT(AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("UK-852")]
         public void Ln_TestCallReportMainApplicantIsNotCifasFlagged_LoanIsApproved()
         {
@@ -209,7 +209,7 @@ namespace Wonga.QA.Tests.CallReport
                                                                      RiskVerificationDefinitions.CreditBureauCifasFraudCheckVerification);
         }
 
-        [Test, AUT(AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("UK-852")]
         public void Ln_TestCallReportMainApplicantIsCifasFlagged_LoanIsDeclined()
         {
@@ -235,7 +235,7 @@ namespace Wonga.QA.Tests.CallReport
 
         /* Main Applicant Data is Available - L0 */
 
-        [Test, AUT(AUT.Wb, AUT.Uk), JIRA("UK-851"), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb, AUT.Uk), JIRA("UK-851"), Owner(Owner.RiskTeam)]
         [Description("Callreport -> This test creates a loan and checks if the main applicant has data available")]
         public void TestCallReportMainApplicantDataIsAvailable_LoanIsApproved()
         {
@@ -255,7 +255,7 @@ namespace Wonga.QA.Tests.CallReport
                                                                      RiskVerificationDefinitions.CreditBureauDataIsAvailableVerification);
         }
 
-        [Test, AUT(AUT.Wb, AUT.Uk), JIRA("UK-851"), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb, AUT.Uk), JIRA("UK-851"), Owner(Owner.RiskTeam)]
         [Description("Callreport -> This test creates a loan and checks if the main applicant has data available")]
         public void TestCallReportMainApplicantDataIsNotAvailable_LoanIsDeclined()
         {
@@ -277,7 +277,7 @@ namespace Wonga.QA.Tests.CallReport
 
         /* Main Applicant Data is Available - LN */
 
-        [Test, AUT(AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("UK-851"), Description("CallReport -> This test creates a loan for the solvent customer, then checks the risk checkpoint for LN Jurney")]
         public void Ln_TestCallReportMainApplicantDataIsAvailable_LoanIsApproved()
         {
@@ -300,7 +300,7 @@ namespace Wonga.QA.Tests.CallReport
                                                                      RiskVerificationDefinitions.CreditBureauDataIsAvailableVerification);
         }
 
-        [Test, AUT(AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("UK-851"), Description("CallReport -> This test creates a loan for the solvent customer, then checks the risk checkpoint for LN Jurney")]
         public void Ln_TestCallReportMainApplicantDataIsNotAvailable_LoanIsDeclined()
         {
@@ -327,7 +327,7 @@ namespace Wonga.QA.Tests.CallReport
 
         /* Main Applicant is Insolvent L0 */
 
-        [Test, AUT(AUT.Wb, AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb, AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("SME-638", "UK-854"), Description("CallReport -> This test creates a loan for the solvent customer, then checks the risk checkpoint")]
         public void TestCallReportMainApplicantIsSolvent_LoanIsApproved()
         {
@@ -347,7 +347,7 @@ namespace Wonga.QA.Tests.CallReport
                                                                      RiskVerificationDefinitions.CreditBureauCustomerIsSolventVerification);
         }
 
-        [Test, AUT(AUT.Wb, AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb, AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("SME-638", "UK-854"), Description("CallReport -> This test creates a loan for the insolvent customer, then checks the risk checkpoint")]
         public void TestCallReportMainApplicantIsInsolvent_LoanIsDeclined()
         {
@@ -371,7 +371,7 @@ namespace Wonga.QA.Tests.CallReport
 
         /* Main Applicant is Insolvent LN */
 
-        [Test, AUT(AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("UK-854"), Description("CallReport -> This test creates a loan for the solvent customer, then checks the risk checkpoint for LN Jurney")]
         public void Ln_TestCallReportMainApplicantIsSolvent_LoanIsApproved()
         {
@@ -394,7 +394,7 @@ namespace Wonga.QA.Tests.CallReport
                                                                      RiskVerificationDefinitions.CreditBureauCustomerIsSolventVerification);
         }
 
-        [Test, AUT(AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("UK-854"), Description("CallReport -> This test creates a loan for the solvent customer, then checks the risk checkpoint for LN Jurney")]
         public void Ln_TestCallReportMainApplicantIsInsolvent_LoanIsDeclined()
         {
@@ -421,7 +421,7 @@ namespace Wonga.QA.Tests.CallReport
 
         /* Main applicant DOB is correct */
 
-        [Test, AUT(AUT.Wb, AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb, AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("SME-644", "UKRISK-71"), Description("CallReport -> This test creates a loan for a customer with the correct date of birth, then checks the risk checkpoint")]
         public void TestCallReportMainApplicantDateOfBirthIsCorrect_LoanIsApproved()
         {
@@ -449,7 +449,7 @@ namespace Wonga.QA.Tests.CallReport
                                                                      RiskVerificationDefinitions.DateOfBirthIsCorrectVerification);
         }
 
-        [Test, AUT(AUT.Wb, AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb, AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("SME-644", "UKRISK-71"), Description("CallReport -> This test creates a loan for a customer with the incorrect date of birth, then checks the risk checkpoint")]
         public void TestCallReportMainApplicantDateOfBirthIsIncorrect_LoanIsDeclined()
         {
@@ -512,7 +512,7 @@ namespace Wonga.QA.Tests.CallReport
 
         /* Guarantor is Alive */
 
-        [Test, AUT(AUT.Wb), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb), Owner(Owner.RiskTeam)]
         [JIRA("SME-1147"), Description("CallReport -> This test creates a loan for the unknown guarantor that is alive, then checks the risk checkpoint")]
         public void TestCallReportUnknownGuarantor_LoanIsApproved()
         {
@@ -534,7 +534,7 @@ namespace Wonga.QA.Tests.CallReport
                                                                      RiskVerificationDefinitions.CreditBureauCustomerIsAliveVerification);
         }
 
-        [Test, AUT(AUT.Wb), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb), Owner(Owner.RiskTeam)]
         [JIRA("SME-1147"), Description("CallReport -> This test creates a loan for the unknown guarantor that is alive, then checks the risk checkpoint")]
         public void TestCallReportGuarantorIsAlive_LoanIsApproved()
         {
@@ -555,7 +555,7 @@ namespace Wonga.QA.Tests.CallReport
                                                                      RiskVerificationDefinitions.CreditBureauCustomerIsAliveVerification);
         }
 
-        [Test, AUT(AUT.Wb), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb), Owner(Owner.RiskTeam)]
         [JIRA("SME-1147"), Description("CallReport -> This test creates a loan for the unknown guarantor that is alive, then checks the risk checkpoint")]
         public void TestCallReportGuarantorIsDeceased_LoanIsDeclined()
         {
@@ -581,7 +581,7 @@ namespace Wonga.QA.Tests.CallReport
 
         /* Guarantor CIFAS check */
 
-        [Test, AUT(AUT.Wb), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb), Owner(Owner.RiskTeam)]
         [JIRA("SME-1144"), Description("CallReport -> This test creates a loan for a guarantor that is not CIFAS flagged, then checks the risk checkpoint")]
         public void TestCallReportGuarantorIsNotCifasFlagged_LoanIsApproved()
         {
@@ -604,7 +604,7 @@ namespace Wonga.QA.Tests.CallReport
 
         }
 
-        [Test, AUT(AUT.Wb), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb), Owner(Owner.RiskTeam)]
         [JIRA("SME-1144"), Description("CallReport -> This test creates a loan for a guarantor that is CIFAS flagged, then checks the risk checkpoint")]
         public void TestCallReportGuarantorIsCifasFlagged_LoanIsDeclined()
         {
@@ -630,7 +630,7 @@ namespace Wonga.QA.Tests.CallReport
 
         /* Guarantor Data is available */
 
-        [Test, AUT(AUT.Wb), JIRA("SME-1141"), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb), JIRA("SME-1141"), Owner(Owner.RiskTeam)]
         [Description("Callreport -> This test creates a loan and checks if the guarantors has data available")]
         public void TestCallReportGuarantorDataIsAvailable_LoanIsApproved()
         {
@@ -652,7 +652,7 @@ namespace Wonga.QA.Tests.CallReport
                                                                      RiskVerificationDefinitions.CreditBureauDataIsAvailableVerification);
         }
 
-        [Test, AUT(AUT.Wb), JIRA("SME-1141"), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb), JIRA("SME-1141"), Owner(Owner.RiskTeam)]
         [Description("Callreport -> This test creates a loan and checks if the guarantors has data available")]
         public void TestCallReportGuarantorDataIsNotAvailable_LoanIsDeclined()
         {
@@ -677,7 +677,7 @@ namespace Wonga.QA.Tests.CallReport
 
         /* Guarantor is solvent */
 
-        [Test, AUT(AUT.Wb), JIRA("SME-1150"), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb), JIRA("SME-1150"), Owner(Owner.RiskTeam)]
         [Description("Callreport -> This test creates a loan and checks if the guarantors is solvent")]
         public void TestCallReportGuarantorIsSolvent_LoanIsApproved()
         {
@@ -698,7 +698,7 @@ namespace Wonga.QA.Tests.CallReport
                                                                      RiskVerificationDefinitions.CreditBureauCustomerIsSolventVerification);
         }
 
-        [Test, AUT(AUT.Wb), JIRA("SME-1150"), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb), JIRA("SME-1150"), Owner(Owner.RiskTeam)]
         [Description("Callreport -> This test creates a loan and checks if the guarantors is solvent")]
         public void TestCallReportGuarantorIsInsolvent_LoanIsDeclined()
         {
@@ -724,7 +724,7 @@ namespace Wonga.QA.Tests.CallReport
 
         /* Guarantor DOB is correct */
 
-        [Test, AUT(AUT.Wb), JIRA("SME-1138"), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb), JIRA("SME-1138"), Owner(Owner.RiskTeam)]
         [Description("Callreport -> This test creates a loan and checks if the guarantors entered the correct DOB")]
         public void TestCallReportGuarantorDateOfBirthIsCorrect_LoanIsApproved()
         {
@@ -746,7 +746,7 @@ namespace Wonga.QA.Tests.CallReport
                                                                      RiskVerificationDefinitions.DateOfBirthIsCorrectVerification);
         }
 
-        [Test, AUT(AUT.Wb), JIRA("SME-1138"), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb), JIRA("SME-1138"), Owner(Owner.RiskTeam)]
         [Description("Callreport -> This test creates a loan and checks if the guarantors entered the correct DOB")]
         public void TestCallReportGuarantorDateOfBirthNotProvided_LoanIsApproved()
         {
@@ -769,7 +769,7 @@ namespace Wonga.QA.Tests.CallReport
                                                                      RiskVerificationDefinitions.DateOfBirthIsCorrectVerification);
         }
 
-        [Test, AUT(AUT.Wb), JIRA("SME-1138"), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb), JIRA("SME-1138"), Owner(Owner.RiskTeam)]
         [Description("Callreport -> This test creates a loan and checks if the guarantors entered the correct DOB")]
         public void TestCallReportGuarantorDateOfBirthIsInCorrect_LoanIsDeclined()
         {

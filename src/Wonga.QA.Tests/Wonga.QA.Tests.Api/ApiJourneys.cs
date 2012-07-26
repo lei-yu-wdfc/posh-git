@@ -42,7 +42,7 @@ namespace Wonga.QA.Tests.Api
 			ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Accepted).WithLoanAmount(200).Build();
 		}
 
-        [Test, AUT(AUT.Ca, AUT.Uk, AUT.Za), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Ca, AUT.Uk, AUT.Za), Owner(Owner.RiskTeam)]
         public void ApiL0JourneyDeclined()
         {
             Customer cust = CustomerBuilder.New().WithEmployer("Wonga").Build();

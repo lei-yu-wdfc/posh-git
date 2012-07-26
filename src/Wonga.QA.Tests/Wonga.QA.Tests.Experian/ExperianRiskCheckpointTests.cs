@@ -30,7 +30,7 @@ namespace Wonga.QA.Tests.Experian
 
         /* Main Applicant Solvent L0 */
 
-        [Test, AUT(AUT.Wb,AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb,AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("SME-638", "UK-854"), Description("Experian -> This test creates a loan for the solvent customer, then checks the risk checkpoint")]
         public void TestExperianMainCustomerIsSolvent_LoanIsApproved()
         {
@@ -57,7 +57,7 @@ namespace Wonga.QA.Tests.Experian
 
         /* Main Applicant Solvent LN */
 
-        [Test, AUT(AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA( "UK-854"), Description("Experian -> This test creates a loan for the solvent customer, then checks the risk checkpoint")]
         public void Ln_TestExperianMainApplicantIsSolvent_LoanIsApproved()
         {
@@ -85,7 +85,7 @@ namespace Wonga.QA.Tests.Experian
                                                                      RiskVerificationDefinitions.CreditBureauCustomerIsSolventVerification);
         }
 
-        [Test, AUT(AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("UK-854"), Description("Experian -> This test creates a loan for the insolvent customer, then checks the risk checkpoint")]
         public void Ln_TestExperianMainApplicantIsInsolvent_LoanIsDeclined()
         {
@@ -111,7 +111,7 @@ namespace Wonga.QA.Tests.Experian
 
         /* Main Applicant is Alive L0 */
 
-        [Test, AUT(AUT.Wb,AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb,AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("SME-575","UK-853"), Description("Experian -> This test creates a loan for the unknown customer that is alive and with no consumer bureau data, then checks the risk checkpoint")]
         public void TestExperianUnknownMainApplicant_LoanIsApproved()
         {
@@ -132,7 +132,7 @@ namespace Wonga.QA.Tests.Experian
                                                                      RiskVerificationDefinitions.CreditBureauCustomerIsAliveVerification);
         }
 
-        [Test, AUT(AUT.Wb, AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb, AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("SME-575","UK-853"), Description("Experian -> This test creates a loan for the Kathleen customer that is alive, then checks the risk checkpoint")]
         public void TestExperianMainApplicantIsNotDeceased_LoanIsApproved()
         {
@@ -153,7 +153,7 @@ namespace Wonga.QA.Tests.Experian
                                                                      RiskVerificationDefinitions.CreditBureauCustomerIsAliveVerification);
         }
 
-        [Test, AUT(AUT.Wb, AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb, AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("SME-575","UK-853"), Description("Experian -> This test creates a loan for the customer that is dead, then checks the risk checkpoint")]
         [Pending("Experian still not working")]
         public void TestExperianMainApplicantIsDeceased_LoanIsDeclined()
@@ -177,7 +177,7 @@ namespace Wonga.QA.Tests.Experian
 
         /* Main Applicant is Alive LN */
 
-        [Test, AUT(AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("UK-853")]
         public void Ln_ExperianMainApplicantIsNotDeceased_LoanIsApproved()
         {
@@ -200,7 +200,7 @@ namespace Wonga.QA.Tests.Experian
                                                                      RiskVerificationDefinitions.CreditBureauCustomerIsAliveVerification);
         }
 
-        [Test, AUT(AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("UK-853")]
         public void Ln_ExperianMainApplicantIsDeceased_LoanIsDeclined()
         {
@@ -226,7 +226,7 @@ namespace Wonga.QA.Tests.Experian
 
         /* Main Applicant CIFAS L0 */
 
-        [Test, AUT(AUT.Wb,AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb,AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("SME-584"), Description("Experian -> This test creates a loan for a customer that is not CIFAS flagged, then checks the risk checkpoint")]
         public void TestExperianMainApplicantIsNotCifasFlagged_LoanIsApproved()
         {
@@ -247,7 +247,7 @@ namespace Wonga.QA.Tests.Experian
                                                                      RiskVerificationDefinitions.CreditBureauCifasFraudCheckVerification);
         }
 
-        [Test, AUT(AUT.Wb,AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb,AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("SME-584"), Description("Experian -> This test creates a loan for a customer that IS CIFAS flagged, then checks the risk checkpoint")]
         [Pending("Experian still not working")]
         public void TestExperianMainApplicantIsCifasFlagged_LoanIsDeclined()
@@ -271,7 +271,7 @@ namespace Wonga.QA.Tests.Experian
 
         /* Main Applicant CIFAS LN */
 
-		[Test, AUT(AUT.Uk), Owner(Owner.AlexPricope)]
+		[Test, AUT(AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("UK-852")]
         public void Ln_ExperianMainApplicantIsNotCifasFlagged_LoanIsApproved()
         {
@@ -294,7 +294,7 @@ namespace Wonga.QA.Tests.Experian
                                                                      RiskVerificationDefinitions.CreditBureauCifasFraudCheckVerification);
         }
 
-        [Test, AUT(AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("UK-852")]
 		//[Category(TestCategories.CoreTest)] - we will find out what is going on. 
         public void Ln_ExperianMainApplicantIsCifasFlagged_LoanIsDeclined()
@@ -321,7 +321,7 @@ namespace Wonga.QA.Tests.Experian
 
         /* Main Applicant Data is Available L0 */
 
-        [Test, AUT(AUT.Wb,AUT.Uk), JIRA("UK-851"), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb,AUT.Uk), JIRA("UK-851"), Owner(Owner.RiskTeam)]
         [Description("Experian -> This test creates a loan and checks if the main applicant has data available")]
         public void TestExperianMainApplicantDataIsAvailable_LoanIsApproved()
         {
@@ -342,7 +342,7 @@ namespace Wonga.QA.Tests.Experian
                                                                      RiskVerificationDefinitions.CreditBureauDataIsAvailableVerification);
         }
 
-        [Test, AUT(AUT.Wb,AUT.Uk), JIRA("UK-851"), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb,AUT.Uk), JIRA("UK-851"), Owner(Owner.RiskTeam)]
         [Description("Experian -> This test creates a loan and checks if the main applicant has data available")]
         [Pending("Experian not working")]
         public void TestExperianMainApplicantIsNotAvailable_LoanIsDeclined()
@@ -366,7 +366,7 @@ namespace Wonga.QA.Tests.Experian
 
         /* Main Applicant Data is Available LN */
 
-        [Test, AUT(AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("UK-851"), Description("Experian -> This test creates a loan for the solvent customer, then checks the risk checkpoint")]
         public void Ln_TestExperianMainApplicantDataIsAvailable_LoanIsApproved()
         {
@@ -394,7 +394,7 @@ namespace Wonga.QA.Tests.Experian
                                                                      RiskVerificationDefinitions.CreditBureauDataIsAvailableVerification);
         }
 
-        [Test, AUT(AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("UK-851"), Description("Experian -> This test creates a loan for the insolvent customer, then checks the risk checkpoint")]
         public void Ln_TestExperianMainApplicantDataIsNotAvailable_LoanIsDeclined()
         {
@@ -419,7 +419,7 @@ namespace Wonga.QA.Tests.Experian
                                                                      RiskVerificationDefinitions.CreditBureauDataIsAvailableVerification);
         }
 
-		[Test, AUT(AUT.Wb, AUT.Uk), Owner(Owner.AlexPricope)]
+		[Test, AUT(AUT.Wb, AUT.Uk), Owner(Owner.RiskTeam)]
 		[JIRA("SME-638"), Description("Experian -> This test creates a loan for the insolvent customer, then checks the risk checkpoint")]
 		[Pending("Experian still not working")]
 		public void TestExperianMainApplicantIsInsolvent_LoanIsDeclined()
@@ -442,7 +442,7 @@ namespace Wonga.QA.Tests.Experian
 
         /* Main applicant DOB check */
 
-        [Test, AUT(AUT.Wb,AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb,AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("SME-644", "UKRISK-71"), Description("Experian -> This test creates a loan for a customer with the correct date of birth, then checks the risk checkpoint")]
         public void TestExperianMainApplicantDateOfBirthIsCorrect_LoanIsApproved()
         {
@@ -470,7 +470,7 @@ namespace Wonga.QA.Tests.Experian
                                                                      RiskVerificationDefinitions.DateOfBirthIsCorrectVerification);
         }
 
-        [Test, AUT(AUT.Wb,AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb,AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("SME-644", "UKRISK-71"), Description("Experian -> This test creates a loan for a customer with the incorrect date of birth, then checks the risk checkpoint")]
         public void TestExperianMainApplicantDateOfBirthIsIncorrect_LoanIsDeclined()
         {
@@ -498,7 +498,7 @@ namespace Wonga.QA.Tests.Experian
                                                                      RiskVerificationDefinitions.DateOfBirthIsCorrectVerification);
         }
 
-        [Test, AUT(AUT.Wb,AUT.Uk), Owner(Owner.AlexPricope)]
+        [Test, AUT(AUT.Wb,AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("SME-644", "UKRISK-71"), Description("Experian -> This test creates a loan for a customer with the not provided date of birth, then checks the risk checkpoint")]
         public void TestExperianMainApplicantDateOfBirthIsNotProvided_LoanIsApproved()
         {
