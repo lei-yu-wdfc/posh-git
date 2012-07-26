@@ -17,5 +17,20 @@ namespace Wonga.QA.Framework.UI.Mappings.Ui.Pages.Common
         public String WelcomeHeaderMessage { get; set; }
         public String WelcomeSubMessage { get; set; }
         public String Mocked { get; set; }
+        public String CodeOfPracticeLink { get; set; }
+        public String TrustRatingLink { get; set; }
+        public String AprLink { get; set; }
+        public String ContactUsLink { get; set; }
+        public String PrivacyPolicyLink { get; set; }
+        public String VeriSignLink { get; set; }
+        public String FlaLink { get; set; }
+        public String KivaLink { get; set; }
+        public String MediaGuardianAwardsLink { get; set; }
+        public String WebbyAwardsLink { get; set; }
+        public String CcrCreditAwardLink { get; set; }
+        public String TechTrack100Link { get; set; }
+        public String CashLoanLink { get; set; }
+        public String PaydayLoansLink { get; set; }
+        public String QuickLoanLink { get; set; }
     }
 }
