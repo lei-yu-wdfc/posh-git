@@ -79,10 +79,6 @@
       <Project>{36C48933-F3DA-468A-8529-212601FC0FA5}</Project>
       <Name>Wonga.QA.Tests.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Wonga.QA.Tests.Ui\Wonga.QA.Tests.Ui.csproj">
-      <Project>{B29A97EF-5107-476B-A27A-688028CAAF54}</Project>
-      <Name>Wonga.QA.Tests.Ui</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

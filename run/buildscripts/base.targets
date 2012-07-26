@@ -13,6 +13,7 @@
 	<PropertyGroup>
 		<Framework>Wonga.QA.Framework</Framework>
 		<Tests>Wonga.QA.Tests</Tests>
+		<UiTests>Wonga.QA.UiTests</UiTests>
 		<ServiceTests>Wonga.QA.ServiceTests</ServiceTests>
 		<DataTests>Wonga.QA.DataTests</DataTests>
 		<MigrationTests>Wonga.QA.MigrationTests</MigrationTests>
@@ -32,6 +33,7 @@
 		<ItemGroup>
 			<Projects Include="$(Src)\$(Framework)\$(Framework).sln" />
 			<Projects Include="$(Src)\$(Tests)\$(Tests).sln" />
+			<Projects Include="$(Src)\$(UiTests)\$(UiTests).sln" />
 			<Projects Include="$(Src)\$(ServiceTests)\$(ServiceTests).sln" />
 			<Projects Include="$(Src)\$(DataTests)\$(DataTests).sln" />
 			<Projects Include="$(Src)\$(MigrationTests)\$(MigrationTests).sln" />
