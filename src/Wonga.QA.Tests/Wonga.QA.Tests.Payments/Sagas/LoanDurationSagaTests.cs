@@ -69,7 +69,7 @@ namespace Wonga.QA.Tests.Payments.Sagas
                 }
 
                 [Test]
-                [AUT(AUT.Uk)]
+                [AUT(AUT.Uk), Owner(Owner.SeamusHoban)]
                 public void Confirmed()
                 {
                     Do.With.Timeout(2).Interval(10).Until(() => null != _loanSignups.FindAll(_loanSignups.Id > _maxLoanSignup));

@@ -270,6 +270,7 @@
     <PromoBoxes>#bottom-promo-boxes</PromoBoxes>
     <AwardsList>#footer-front #awards-list</AwardsList>
     <SeoLinks>#footer-front #seo-links</SeoLinks>
+    <Mocked>a#staticmock-trigger.trigger.active</Mocked>
   </HomePage>
   
 </UiMap>

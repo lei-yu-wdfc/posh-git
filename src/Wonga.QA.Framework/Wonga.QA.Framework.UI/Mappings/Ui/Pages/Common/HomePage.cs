@@ -16,5 +16,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Ui.Pages.Common
         public String SeoLinks { get; set; }
         public String WelcomeHeaderMessage { get; set; }
         public String WelcomeSubMessage { get; set; }
+        public String Mocked { get; set; }
     }
 }
