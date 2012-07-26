@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.Db.Extensions;
-using Wonga.QA.Framework.Db.OpsSagas;
-using Wonga.QA.Framework.Db.Payments;
-using Wonga.QA.Framework.Db.Risk;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
 
@@ -85,7 +78,8 @@ namespace Wonga.QA.Tests.Comms.Email
             
             //Note: this is not completely right as due date is in user time.
             DateTime newNextDueDate = DateTime.UtcNow.AddDays(thresholdInDays);
-            _fixedTermAppsTable.UpdateByApplicationId(ApplicationId: app.ApplicationId, NextDueDate: newNextDueDate, PromiseDate:newNextDueDate);
+            _fixedTermAppsTable
+                .UpdateByApplicationId(ApplicationId: app.ApplicationId, NextDueDate: newNextDueDate, PromiseDate:newNextDueDate);
 
             //this should trigger reminder email
             Drive.Msmq.Payments.Send(new TimeoutMessage()

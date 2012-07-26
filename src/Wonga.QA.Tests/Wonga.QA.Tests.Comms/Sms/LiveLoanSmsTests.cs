@@ -72,6 +72,8 @@ namespace Wonga.QA.Tests.Comms.Sms
             dynamic app = null;
             Do.Until(() => app = _applicationsTable.FindBy(ExternalId: _application.Id));
             Do.Until(() => fixedTermApp = _fixedTermAppsTable.FindBy(ApplicationId: app.ApplicationId));
+            var now = DateTime.Now;
+
 
             DateTime newNextDueDate = DateTime.UtcNow.Date.AddDays(1);
             _fixedTermAppsTable.UpdateByApplicationId(ApplicationId: app.ApplicationId,
@@ -86,10 +88,22 @@ namespace Wonga.QA.Tests.Comms.Sms
 
             dynamic createSaga = null;
 
-            Do.Until(() => createSaga = _createAndStoreSagaTable.FindBy(ApplicationId: _application.Id));
-            var now = DateTime.Now;
-            Drive.Msmq.FileStorage.Send(new TimeoutMessage() { SagaId = createSaga.Id, Expires = DateTime.UtcNow.AddSeconds(-2) });
-
+            try
+            {
+                Do.Until(() => createSaga = _createAndStoreSagaTable.FindBy(ApplicationId: _application.Id));
+            }
+            catch (DoException)
+            {
+                // this means the saga has been already timed out
+                createSaga = null;
+            }
+            if(createSaga!=null)
+            {
+                Drive.Msmq.FileStorage.Send(new TimeoutMessage()
+                                                {
+                                                    SagaId = createSaga.Id, Expires = DateTime.UtcNow.AddSeconds(-2)
+                                                });
+            }
             var messageText = string.Format("Hi. Just a quick reminder that we will collect {0} from your debit card tomorrow. Please ensure there are enough funds in your account. Thanks, Wonga Team.",
                 229.97.ToString("C2", new CultureInfo("en-GB")));
 

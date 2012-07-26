@@ -39,7 +39,7 @@ namespace Wonga.QA.Tests.Payments
             //Make sure the payment attempt fails by changing the expiry date of the card.
             Drive.Data.Payments.Db.PaymentCardsBase.UpdateByExternalId(ExternalId: _customer.GetPaymentCard(),
                                                     ExpiryDate: new DateTime(DateTime.Now.Year - 1, 1, 31));
-            _application.PutIntoArrears(60);
+            _application.ExpireCard().PutIntoArrears(60);
             dynamic suspendTransaction = null;
             dynamic application = null;
             dynamic fixedTermApplication = null;
