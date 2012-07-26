@@ -12,7 +12,7 @@ namespace Wonga.QA.ServiceTests.Risk.Mocks
 	{
 		private string EndpointName { get; set; }
 
-		public void InitialiseEndpoint()
+		public IBus InitialiseEndpoint()
 		{
 			var builder = new ContainerBuilder();
 
@@ -30,7 +30,7 @@ namespace Wonga.QA.ServiceTests.Risk.Mocks
 				);
 			configure.CustomConfigurationSource(busConfigSource);
 			configure.Autofac2Builder(container).XmlSerializer();
-			configure.MsmqTransport()
+			var bus = configure.MsmqTransport()
 				.IsTransactional(true)
 				.IsolationLevel(IsolationLevel.RepeatableRead)
 				.PurgeOnStartup(false)
@@ -42,7 +42,11 @@ namespace Wonga.QA.ServiceTests.Risk.Mocks
 			var messageSerializer = container.Resolve<IMessageSerializer>();
 			var origMapper = ((MessageSerializer) messageSerializer).MessageMapper;
 			((MessageSerializer) messageSerializer).MessageMapper = new QafMessageMapper {Decorated = origMapper};
+
+			return bus;
 		}
+
+
 
 		public EndpointConfigurator(string endpointName)
 		{

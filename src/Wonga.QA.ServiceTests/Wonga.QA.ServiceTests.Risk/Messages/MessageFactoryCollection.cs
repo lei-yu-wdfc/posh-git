@@ -43,7 +43,7 @@ namespace Wonga.QA.ServiceTests.Risk
 
 		private IEnumerable<MessageBase> Messages
 		{
-			get { return _messageFactories.Select(x => x.MsmqMessage); }
+			get { return _messageFactories.Select(x => x.MessageBase); }
 		}
 
 		public IEnumerable<MsmqMessage> MsmqMessages 

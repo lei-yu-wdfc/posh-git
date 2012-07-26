@@ -5,7 +5,7 @@ namespace Wonga.QA.ServiceTests.Risk
 {
 	public interface IMessageFactory
 	{
-		MessageBase MsmqMessage { get; }
+		MessageBase MessageBase { get; }
 		void Initialise();
 		void Instantiate();
 		void ApplyDefaults();

@@ -4,6 +4,7 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Requests.Risk.Queries;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.ServiceTests.Risk.Mocks;
 using RiskSaveCustomerAddressCommand = Wonga.QA.Framework.Msmq.Messages.Risk.RiskSaveCustomerAddress;
 using RiskSaveCustomerDetailsCommand = Wonga.QA.Framework.Msmq.Messages.Risk.RiskSaveCustomerDetails;
 
@@ -11,19 +12,29 @@ namespace Wonga.QA.ServiceTests.Risk
 {
 	public abstract class RiskServiceTestBase : ServiceTestBase
 	{
+		protected override void BeforeEachTest()
+		{
+			base.BeforeEachTest();
+			CheckpointTestSettings = new CheckpointTestSettings();
+			EndpointMock = new EndpointMock("servicetest");
+			EndpointMock.Start();
+		}
+
+		#region Assertions
+
 		protected void AssertVerificationStarted()
 		{
 			AssertApplicationDecisionIsNot(ApplicationDecisionStatus.WaitForData);
 		}
 
-		protected override void GenerateIds()
+		protected void AssertLoanIsAccepted()
 		{
-			base.GenerateIds();
-			PaymentCardId = Guid.NewGuid();
-			BankAccountId = Guid.NewGuid();
-			AddressId = Guid.NewGuid();
-			VerificationId = Guid.NewGuid();
-			MainApplicantAccountId = Guid.NewGuid();
+			AssertApplicationDecisionIs(ApplicationDecisionStatus.Accepted);
+		}
+
+		protected void AssertLoanIsDeclined()
+		{
+			AssertApplicationDecisionIs(ApplicationDecisionStatus.Declined);
 		}
 
 		//TODO[seb]: this is a duplication from QAF application builder. Move all messages and this to a custom QAF builder
@@ -47,7 +58,28 @@ namespace Wonga.QA.ServiceTests.Risk
 							"ApplicationDecisionStatus"].Single()) != unexpectedDecision);
 		}
 
-		
+		protected void Background(RiskMask maskName, string checkpointName = null, string responsibleVerification = null)
+		{
+			CheckpointTestSettings.MaskName = maskName;
+			CheckpointTestSettings.CheckpointName = checkpointName;
+			CheckpointTestSettings.ResponsibleVerification = responsibleVerification;
+		}
+
+		#endregion
+
+		#region Mocks
+		protected EndpointMock EndpointMock;
+
+		#endregion
+		protected override void GenerateIds()
+		{
+			base.GenerateIds();
+			PaymentCardId = Guid.NewGuid();
+			BankAccountId = Guid.NewGuid();
+			AddressId = Guid.NewGuid();
+			VerificationId = Guid.NewGuid();
+			MainApplicantAccountId = Guid.NewGuid();
+		}
 
 		protected void RunL0Journey()
 		{
@@ -57,7 +89,7 @@ namespace Wonga.QA.ServiceTests.Risk
 		#region Customer Profiles
 		protected virtual void SetupLegitCustomer(DateTime? dateOfBirth = null)
 		{
-			////todo: use automapper with a dto (or the msmq version of this command)
+			////todo: use variables instead
 			SetupKathleenAs(
 				Messages.Get<Wonga.QA.Framework.Api.Requests.Risk.Commands.Uk.RiskSaveCustomerDetailsUkCommand>(),
 				Messages.Get<Wonga.QA.Framework.Api.Requests.Risk.Commands.Uk.RiskSaveCustomerAddressUkCommand>(), dateOfBirth);
@@ -70,7 +102,6 @@ namespace Wonga.QA.ServiceTests.Risk
 			detailsCommand.DateOfBirth = (dateOfBirth ?? DateTime.Parse("24-Jan-1992")).ToDate(DateFormat.Date);
 
 			detailsCommand.Forename = "kathleen";
-			detailsCommand.MiddleName = "nicole";
 			detailsCommand.Surname = "bridson";
 
 			addressCommand.HouseNumber = "6";
@@ -85,5 +116,17 @@ namespace Wonga.QA.ServiceTests.Risk
 		protected Guid BankAccountId { get; private set; }
 		protected Guid AddressId { get; private set; }
 		protected Guid VerificationId { get; private set; }
+
+		protected CheckpointTestSettings CheckpointTestSettings { get; set; }
+
+		protected void ThenTheRiskServiceShouldApproveTheLoan()
+		{
+			AssertLoanIsAccepted();
+		}
+
+		protected void ThenTheRiskServiceShouldDeclineTheLoan()
+		{
+			AssertLoanIsDeclined();
+		}
 	}
 }

@@ -43,6 +43,9 @@
     <Compile Include="Defaults\RiskSaveCustomerAddressCommand.cs" />
     <Compile Include="Defaults\RiskSaveCustomerDetailsCommand.cs" />
     <Compile Include="Defaults\SubmitApplicationBehaviourCommand.cs" />
+    <Compile Include="Messages\Risk\BaseSagaMessage.cs" />
+    <Compile Include="Messages\Risk\BlackList\BlackListRequestMessage.cs" />
+    <Compile Include="Messages\Risk\BlackList\BlackListResponseMessage.cs" />
     <Compile Include="MsmqDriver.cs" />
     <Compile Include="MsmqMessage.cs" />
     <Compile Include="MsmqQueue.cs" />

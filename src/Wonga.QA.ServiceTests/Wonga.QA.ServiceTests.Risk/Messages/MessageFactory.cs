@@ -15,7 +15,7 @@ namespace Wonga.QA.ServiceTests.Risk
 
 		public T Message { get; private set; }
 
-		public MessageBase MsmqMessage
+		public MessageBase MessageBase
 		{
 			get { return Message; }
 		}
