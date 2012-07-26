@@ -195,6 +195,7 @@
 		<GreyfaceShell>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=GreyfaceShell</GreyfaceShell>
 		<Pps>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=Pps</Pps>
 		<PrepaidCard>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=PrepaidCard</PrepaidCard>
+		<MigrationStaging>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=MigrationStaging</MigrationStaging>
 		
 		<Cdc>Data Source=%%//Db/HdsHost%%;Integrated Security=true;Initial Catalog=%%//Region%%_CDCStaging</Cdc>
 		<Hds>Data Source=%%//Db/HdsHost%%;Integrated Security=true;Initial Catalog=%%//Region%%_WongaHDS</Hds>

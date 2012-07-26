@@ -46,6 +46,7 @@ namespace Wonga.QA.Framework.Data
         private Lazy<PpsDatabase> _pps = new Lazy<PpsDatabase>(() => new PpsDatabase(Config.Db.Pps));
         private Lazy<WongaWholeStaging> _wongaWholeStaging = new Lazy<WongaWholeStaging>(() => new WongaWholeStaging(Config.Db.WongaWholeStaging));
         private Lazy<GreyfaceShell> _greyfaceShell = new Lazy<GreyfaceShell>(() => new GreyfaceShell(Config.Db.GreyfaceShell));
+        private Lazy<MigrationStaging> _migrationStaging = new Lazy<MigrationStaging>(() => new MigrationStaging(Config.Db.MigrationStaging));
 
         public AccountingDatabase Accounting{get { return _accounting.Value; }}
         public OpsSagasDatabase OpsSagas { get { return _opsSagas.Value;} }
@@ -83,5 +84,6 @@ namespace Wonga.QA.Framework.Data
         public PpsDatabase Pps { get { return _pps.Value; } }
         public WongaWholeStaging WongaWholeStaging { get { return _wongaWholeStaging.Value; } }
         public GreyfaceShell GreyfaceShell { get { return _greyfaceShell.Value; } }
+        public MigrationStaging MigrationStaging { get { return _migrationStaging.Value; } }
     }
 }

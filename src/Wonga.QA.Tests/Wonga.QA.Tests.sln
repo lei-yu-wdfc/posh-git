@@ -84,8 +84,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Prepaid", "W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.PayU", "Wonga.QA.Tests.PayU\Wonga.QA.Tests.PayU.csproj", "{C92F5379-5FBC-4E18-963B-1E20FCB5D6E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Migration", "Wonga.QA.Tests.Mig.UI\Wonga.QA.Tests.Migration.csproj", "{A65E24D5-E8D8-4075-9D1F-04CFA7EE8A2A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.PayLater", "Wonga.QA.Tests.PayLater\Wonga.QA.Tests.PayLater.csproj", "{EF13E914-A4B0-4AE0-9DFE-5E0364941C97}"
 EndProject
 Global
@@ -477,16 +475,6 @@ Global
 		{C92F5379-5FBC-4E18-963B-1E20FCB5D6E5}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{C92F5379-5FBC-4E18-963B-1E20FCB5D6E5}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{C92F5379-5FBC-4E18-963B-1E20FCB5D6E5}.Release|x86.ActiveCfg = Release|Any CPU
-		{A65E24D5-E8D8-4075-9D1F-04CFA7EE8A2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A65E24D5-E8D8-4075-9D1F-04CFA7EE8A2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A65E24D5-E8D8-4075-9D1F-04CFA7EE8A2A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{A65E24D5-E8D8-4075-9D1F-04CFA7EE8A2A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{A65E24D5-E8D8-4075-9D1F-04CFA7EE8A2A}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{A65E24D5-E8D8-4075-9D1F-04CFA7EE8A2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A65E24D5-E8D8-4075-9D1F-04CFA7EE8A2A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A65E24D5-E8D8-4075-9D1F-04CFA7EE8A2A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{A65E24D5-E8D8-4075-9D1F-04CFA7EE8A2A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{A65E24D5-E8D8-4075-9D1F-04CFA7EE8A2A}.Release|x86.ActiveCfg = Release|Any CPU
 		{EF13E914-A4B0-4AE0-9DFE-5E0364941C97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EF13E914-A4B0-4AE0-9DFE-5E0364941C97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF13E914-A4B0-4AE0-9DFE-5E0364941C97}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

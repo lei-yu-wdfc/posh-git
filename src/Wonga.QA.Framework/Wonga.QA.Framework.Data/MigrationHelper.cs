@@ -11,7 +11,24 @@ namespace Wonga.QA.Framework.Data
     public class MigrationHelper
     {
         private readonly DataDriver _drive = new DataDriver();
-        //private static List<dynamic> checkedUsers = new List<dynamic>();
+
+        private static int _migrationRunId ;
+
+        private int GetLatestMigrationRunId()
+        {
+            DataSet runId = new DataSet();
+            //get top 1 users this will be replaced by a lite version of db and can't seem to do this with drive.data
+            String query = @"SELECT TOP 1 [MigrationRunId],[StartDatetime],[EndDatetime],[DurationSeconds],[MigrationStatus]
+                                FROM [MigrationStaging].[migration].[MigrationRun]
+                                where MigrationStatus = 'completed'
+                                order by MigrationRunId desc";
+
+            SqlCommand cmd = new SqlCommand(query, new SqlConnection("Data Source='mig-int-v2.test.wonga.com';Initial Catalog=MigrationStaging;Integrated Security=True"));
+            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+            adapter.Fill(runId);
+
+            return (int) runId.Tables[0].Rows[0].ItemArray[0];
+        }
 
         private int GetTotalUserInOpsAccounts(string forYear = null)
         {
@@ -22,6 +39,24 @@ namespace Wonga.QA.Framework.Data
             totalUsers = string.IsNullOrEmpty(forYear) ? opsAccounts.All().Count() : opsAccounts.All().Where(opsAccounts.CreatedOn >= year).Count();
 
             return totalUsers;
+        }
+
+        public MigratedUser GetMigratedAccountLogin()
+        {
+            MigratedUser migratedUser = new MigratedUser();
+            DataSet controlTableLogin = new DataSet();
+            //get top 1 users this will be replaced by a lite version of db and can't seem to do this with drive.data
+            String query = @"SELECT TOP 1 [AccountId],[Login],[MigrationRunId]FROM [MigrationStaging].[test].[AcceptanceTestControlTable]";
+            SqlCommand cmd = new SqlCommand(query, new SqlConnection("Data Source='(local)';Initial Catalog=MigrationStaging;Integrated Security=True"));
+            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+            adapter.Fill(controlTableLogin);
+
+            migratedUser.AccountId = (Guid)controlTableLogin.Tables[0].Rows[0].ItemArray[0];
+            migratedUser.Login = controlTableLogin.Tables[0].Rows[0].ItemArray[1].ToString();
+            migratedUser.MigratedRunId = controlTableLogin.Tables[0].Rows[0].ItemArray[2].ToString();
+            migratedUser.Password = GetMigratedAccountLoginPassword(migratedUser.Login);
+
+            return migratedUser;
         }
 
 
@@ -35,29 +70,30 @@ namespace Wonga.QA.Framework.Data
             {
                 var user = new Random();
                 callUser = user.Next(1, totalUsers);
-
-          /*      if (checkedUsers.Count > 0)
-                {
-                    while (checkedUsers.Contains(callUser))
-                    {
-                        callUser = user.Next(1, totalUsers);
-                    }
-                }
-                checkedUsers.Add(callUser);*/
             }
 
             var userName = opsAccounts.FindByAccountId(callUser);
 
-             return userName.Login;
+            return userName.Login;
         }
 
-        public List<int> GetListOfMigratedAccounts(string year = null)
+        public void FillAcceptanceTestControlTable()
         {
-            if (!string.IsNullOrEmpty(year))
-            {
+            _migrationRunId = GetLatestMigrationRunId();
+            DataSet opsUsersToControlTable = new DataSet();
+            //get top 1000 users this will be replaced by a lite version of db and can't seem to do this with drive.data
+            String query = "SELECT TOP 1000 [ExternalId],[Login] FROM [Ops].[ops].[Accounts]";
+            SqlCommand cmd = new SqlCommand(query, new SqlConnection("Data Source='mig-int-v2.test.wonga.com';Initial Catalog=GreyfaceShell;Integrated Security=True"));
+            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+            adapter.Fill(opsUsersToControlTable);
 
+            var acceptanceTestControlTable = _drive.MigrationStaging.Db.test.AcceptanceTestControlTable;
+
+            for (int counter = 0; counter < opsUsersToControlTable.Tables[0].Rows.Count; counter++)
+            {
+                var user = opsUsersToControlTable.Tables[0].Rows[counter];
+                acceptanceTestControlTable.Insert(AccountId: user.ItemArray[0], Login: user.ItemArray[1], MigrationRunId: _migrationRunId);
             }
-            return null;
         }
 
         public string GetMigratedAccountLoginPassword(string login)
@@ -74,6 +110,19 @@ namespace Wonga.QA.Framework.Data
             adapter.Fill(dsDecryptedPassword);
 
             return dsDecryptedPassword.Tables[0].Rows[0].ItemArray[0].ToString();
+        }
+
+        public void StoreTestResults(string batchId,string testName, MigratedUser migratedUser, DateTime testStartTime, DateTime testEndTime, byte testResult)
+        {
+            var acceptanceTestResultsTable = _drive.MigrationStaging.Db.test.AcceptanceTestResults;
+
+            acceptanceTestResultsTable.Insert(RunId: migratedUser.MigratedRunId, BatchId: batchId, TestName: testName, AccountId: migratedUser.AccountId,
+                                              Login: migratedUser.Login, TestStartTime: testStartTime, TestEndTime: testEndTime,
+                                              TestResult: testResult);
+
+            var acceptanceTestControlTable = _drive.MigrationStaging.Db.test.AcceptanceTestControlTable;
+
+            acceptanceTestControlTable.DeleteByAccountId(migratedUser.AccountId);
         }
     }
 }
