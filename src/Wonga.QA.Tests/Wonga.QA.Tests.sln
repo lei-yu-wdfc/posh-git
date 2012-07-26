@@ -59,8 +59,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{E4
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Marketing", "Wonga.QA.Tests.Marketing\Wonga.QA.Tests.Marketing.csproj", "{EF2B7FEB-6CA8-4350-AA5C-50B5A5EC19B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Ui", "Wonga.QA.Tests.Ui\Wonga.QA.Tests.Ui.csproj", "{B29A97EF-5107-476B-A27A-688028CAAF54}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Core", "Wonga.QA.Tests.Core\Wonga.QA.Tests.Core.csproj", "{36C48933-F3DA-468A-8529-212601FC0FA5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Cs", "Wonga.QA.Tests.Cs\Wonga.QA.Tests.Cs.csproj", "{E2376A04-2BC8-43E6-B4B1-6AE4E6C7F384}"
@@ -69,16 +67,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Api", "Wonga
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Meta", "Wonga.QA.Tests.Meta\Wonga.QA.Tests.Meta.csproj", "{185518CE-AEEE-416A-AA17-C8F04F3E4BCD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Ui.Admin", "Wonga.QA.Tests.Ui.Admin\Wonga.QA.Tests.Ui.Admin.csproj", "{B9FDE3ED-0FEE-400A-87EB-3A3C7AC8F01D}"
-	ProjectSection(ProjectDependencies) = postProject
-		{B29A97EF-5107-476B-A27A-688028CAAF54} = {B29A97EF-5107-476B-A27A-688028CAAF54}
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Ivr", "Wonga.QA.Tests.Ivr\Wonga.QA.Tests.Ivr.csproj", "{AFF890BC-240F-4D73-B9B2-2D65801F149A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Accounting", "Wonga.QA.Tests.Accounting\Wonga.QA.Tests.Accounting.csproj", "{EF97F11A-FD8E-459D-A0FA-1A8FB6652FE1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Ui.Mobile", "Wonga.QA.Tests.Ui.Mobile\Wonga.QA.Tests.Ui.Mobile.csproj", "{13CA11B4-FAEE-4901-8067-B00A6F85AE33}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Tests.Prepaid", "Wonga.QA.Tests.Prepaid\Wonga.QA.Tests.Prepaid.csproj", "{8F318EC1-E001-4CF2-A89A-A2B0C94E1D98}"
 EndProject
@@ -366,16 +357,6 @@ Global
 		{EF2B7FEB-6CA8-4350-AA5C-50B5A5EC19B7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{EF2B7FEB-6CA8-4350-AA5C-50B5A5EC19B7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{EF2B7FEB-6CA8-4350-AA5C-50B5A5EC19B7}.Release|x86.ActiveCfg = Release|Any CPU
-		{B29A97EF-5107-476B-A27A-688028CAAF54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B29A97EF-5107-476B-A27A-688028CAAF54}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B29A97EF-5107-476B-A27A-688028CAAF54}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{B29A97EF-5107-476B-A27A-688028CAAF54}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{B29A97EF-5107-476B-A27A-688028CAAF54}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{B29A97EF-5107-476B-A27A-688028CAAF54}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B29A97EF-5107-476B-A27A-688028CAAF54}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B29A97EF-5107-476B-A27A-688028CAAF54}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{B29A97EF-5107-476B-A27A-688028CAAF54}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{B29A97EF-5107-476B-A27A-688028CAAF54}.Release|x86.ActiveCfg = Release|Any CPU
 		{36C48933-F3DA-468A-8529-212601FC0FA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{36C48933-F3DA-468A-8529-212601FC0FA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36C48933-F3DA-468A-8529-212601FC0FA5}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -416,16 +397,6 @@ Global
 		{185518CE-AEEE-416A-AA17-C8F04F3E4BCD}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{185518CE-AEEE-416A-AA17-C8F04F3E4BCD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{185518CE-AEEE-416A-AA17-C8F04F3E4BCD}.Release|x86.ActiveCfg = Release|Any CPU
-		{B9FDE3ED-0FEE-400A-87EB-3A3C7AC8F01D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B9FDE3ED-0FEE-400A-87EB-3A3C7AC8F01D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B9FDE3ED-0FEE-400A-87EB-3A3C7AC8F01D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{B9FDE3ED-0FEE-400A-87EB-3A3C7AC8F01D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{B9FDE3ED-0FEE-400A-87EB-3A3C7AC8F01D}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{B9FDE3ED-0FEE-400A-87EB-3A3C7AC8F01D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B9FDE3ED-0FEE-400A-87EB-3A3C7AC8F01D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B9FDE3ED-0FEE-400A-87EB-3A3C7AC8F01D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{B9FDE3ED-0FEE-400A-87EB-3A3C7AC8F01D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{B9FDE3ED-0FEE-400A-87EB-3A3C7AC8F01D}.Release|x86.ActiveCfg = Release|Any CPU
 		{AFF890BC-240F-4D73-B9B2-2D65801F149A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AFF890BC-240F-4D73-B9B2-2D65801F149A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFF890BC-240F-4D73-B9B2-2D65801F149A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -445,16 +416,6 @@ Global
 		{EF97F11A-FD8E-459D-A0FA-1A8FB6652FE1}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{EF97F11A-FD8E-459D-A0FA-1A8FB6652FE1}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{EF97F11A-FD8E-459D-A0FA-1A8FB6652FE1}.Release|x86.ActiveCfg = Release|Any CPU
-		{13CA11B4-FAEE-4901-8067-B00A6F85AE33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{13CA11B4-FAEE-4901-8067-B00A6F85AE33}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{13CA11B4-FAEE-4901-8067-B00A6F85AE33}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{13CA11B4-FAEE-4901-8067-B00A6F85AE33}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{13CA11B4-FAEE-4901-8067-B00A6F85AE33}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{13CA11B4-FAEE-4901-8067-B00A6F85AE33}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{13CA11B4-FAEE-4901-8067-B00A6F85AE33}.Release|Any CPU.Build.0 = Release|Any CPU
-		{13CA11B4-FAEE-4901-8067-B00A6F85AE33}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{13CA11B4-FAEE-4901-8067-B00A6F85AE33}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{13CA11B4-FAEE-4901-8067-B00A6F85AE33}.Release|x86.ActiveCfg = Release|Any CPU
 		{8F318EC1-E001-4CF2-A89A-A2B0C94E1D98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8F318EC1-E001-4CF2-A89A-A2B0C94E1D98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F318EC1-E001-4CF2-A89A-A2B0C94E1D98}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
