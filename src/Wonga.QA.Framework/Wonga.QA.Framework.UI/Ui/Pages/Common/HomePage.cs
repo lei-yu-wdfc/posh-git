@@ -19,6 +19,34 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
         public LoginElement Login { get; set; }
         public SurveyElement Survey { get; set; }
         public ContactElement Contact { get; set; }
+        private IWebElement _headerMessage;
+        private IWebElement _subMessage;
+        private IWebElement _promoBoxes;
+        private IWebElement _awards;
+        private IWebElement _seoLinks;
+        private IWebElement _codeOfPracticeLink;
+        private IWebElement _trustRatingLink;
+        private IWebElement _aprLink;
+        private IWebElement _contactUsLink;
+        private IWebElement _privacyPolicyLink;
+        private IWebElement _veriSignLink;
+        private IWebElement _flaLink;
+        private IWebElement _kivaLink;
+        private IWebElement _mediaGuardianAwardsLink;
+        private IWebElement _webbyAwardsLink;
+        private IWebElement _ccrCreditAwardsLink;
+        private IWebElement _techTrack100Link;
+        private IWebElement _paydayLoansLink;
+        private IWebElement _quickLoanLink;
+        private IWebElement _cashLoanLink;
+        //private IWebElement _fastCashLink;
+        //private IWebElement _cashAdvanceLink;
+        //private IWebElement _quickQuidLink;
+        //private IWebElement _borrowMoneyLink;
+        //private IWebElement _loansOnlineLink;
+
+
+        public string ending;
 
         public TabsElement Tabs { get; set; }
 
@@ -97,38 +125,177 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
        
         public bool IsNewBodyFrameworkExists()
         {
+            Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.BodyFramework)));
             var bodyFramework = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.BodyFramework));
             return bodyFramework.Displayed;
         }
 
         public string GetPromoBoxes()
         {
-            var promoBoxes = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.PromoBoxes));
-            return promoBoxes.ToString();
+            Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.PromoBoxes)));
+            _promoBoxes = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.PromoBoxes));
+            var promoBoxesText = _promoBoxes.Text;
+            return promoBoxesText;
         }
 
         public string GetAwardsList()
         {
-            var awards = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.AwardsList));
-            return awards.ToString();
+            Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.AwardsList)));
+            _awards = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.AwardsList));
+            var awardsText = _awards.Text;
+            return awardsText;
         }
 
         public string GetSeoLinks()
         {
-            var seoLinks = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.SeoLinks));
-            return seoLinks.ToString();
+            Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.SeoLinks)));
+            _seoLinks = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.SeoLinks));
+            var seoLinksText = _seoLinks.Text;
+            return seoLinksText;
         }
 
-        public string GetWelcomeHeaderMessage()
+        public String GetWelcomeHeaderMessageText()
         {
-            var headerMessage = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.WelcomeHeaderMessage));
-            return headerMessage.ToString();
+            Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.WelcomeHeaderMessage)));
+            _headerMessage = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.WelcomeHeaderMessage));
+            var headerMessageText = _headerMessage.Text.Replace("\r\n", " ");
+            return headerMessageText;
         }
 
-        public string GetWelcomeSubMessage()
+        public String GetWelcomeSubMessageText()
         {
-            var subMessage = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.WelcomeSubMessage));
-            return subMessage.ToString();
+            Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.WelcomeSubMessage)));
+            _subMessage = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.WelcomeSubMessage));
+            var subMessageText = _subMessage.Text;
+            return subMessageText;
+        }
+
+        public String GetWelcomeMessageDay()
+        {
+            ending = " today.";
+            if ((DateTime.Now.AddMinutes(23).Hour.ToString("#") == "00") && (DateTime.Now.Hour.ToString("#") != "00"))
+            ending = " tomorrow.";
+            return ending;
+        }
+
+        public String GetHomePageCodeOfPracticeLink()
+        {
+            Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.CodeOfPracticeLink)));
+            _codeOfPracticeLink = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.CodeOfPracticeLink));
+            var codeOfPracticeLink = _codeOfPracticeLink.GetAttribute("href");
+            return codeOfPracticeLink;
+        }
+
+        public String GetHomePageTrustRatingLink()
+        {
+            Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.TrustRatingLink)));
+            _trustRatingLink = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.TrustRatingLink));
+            var trustRatingLink = _trustRatingLink.GetAttribute("href");
+            return trustRatingLink;
+        }
+
+        public String GetHomePageAPRLink()
+        {
+            Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.AprLink)));
+            _aprLink = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.AprLink));
+            var aprLink = _aprLink.GetAttribute("href");
+            return aprLink;
+        }
+
+        public String GetHomePageContactUsLink()
+        {
+            Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.ContactUsLink)));
+            _contactUsLink = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.ContactUsLink));
+            var contactUsLink = _contactUsLink.GetAttribute("href");
+            return contactUsLink;
+        }
+
+        public String GetHomePagePrivacyPolicyLink()
+        {
+            Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.PrivacyPolicyLink)));
+            _privacyPolicyLink = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.PrivacyPolicyLink));
+            var privacyPolicyLink = _privacyPolicyLink.GetAttribute("href");
+            return privacyPolicyLink;
+        }
+
+        public String GetHomePageVeriSignLink()
+        {
+            Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.VeriSignLink)));
+            _veriSignLink = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.VeriSignLink));
+            var veriSignLink = _veriSignLink.GetAttribute("href");
+            return veriSignLink;
+        }
+
+        public String GetHomePageFLALink()
+        {
+            Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.FlaLink)));
+            _flaLink = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.FlaLink));
+            var flaLink = _flaLink.GetAttribute("href");
+            return flaLink;
+        }
+
+        public String GetHomePageKIVALink()
+        {
+            Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.KivaLink)));
+            _kivaLink = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.KivaLink));
+            var kivaLink = _kivaLink.GetAttribute("href");
+            return kivaLink;
+        }
+
+        public String GetHomePageMediaGuardianAwardsLink()
+        {
+            Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.MediaGuardianAwardsLink)));
+            _mediaGuardianAwardsLink = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.MediaGuardianAwardsLink));
+            var mediaGuardianAwardsLink = _mediaGuardianAwardsLink.GetAttribute("href");
+            return mediaGuardianAwardsLink;
+        }
+
+        public String GetHomePageWebbyAwardsLink()
+        {
+            Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.WebbyAwardsLink)));
+            _webbyAwardsLink = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.WebbyAwardsLink));
+            var webbyAwardsLink = _webbyAwardsLink.GetAttribute("href");
+            return webbyAwardsLink;
+        }
+
+        public String GetHomePageCCRCreditAwardsLink()
+        {
+            Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.CcrCreditAwardLink)));
+            _ccrCreditAwardsLink = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.CcrCreditAwardLink));
+            var ccrCreditAwardsLink = _ccrCreditAwardsLink.GetAttribute("href");
+            return ccrCreditAwardsLink;
+        }
+
+        public String GetHomePageTechTrack100Link()
+        {
+            Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.TechTrack100Link)));
+            _techTrack100Link = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.TechTrack100Link));
+            var techTrack100Link = _techTrack100Link.GetAttribute("href");
+            return techTrack100Link;
+        }
+
+        public String GetHomePagePaydayLoansLink()
+        {
+            Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.PaydayLoansLink)));
+            _paydayLoansLink = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.PaydayLoansLink));
+            var paydayLoansLink = _paydayLoansLink.GetAttribute("href");
+            return paydayLoansLink;
+        }
+
+        public String GetHomePageCashLoanLink()
+        {
+            Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.CashLoanLink)));
+            _cashLoanLink = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.CashLoanLink));
+            var cashLoanLink = _cashLoanLink.GetAttribute("href");
+            return cashLoanLink;
+        }
+
+        public String GetHomePageQuickLoanLink()
+        {
+            Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.QuickLoanLink)));
+            _quickLoanLink = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.QuickLoanLink));
+            var quickLoanLink = _quickLoanLink.GetAttribute("href");
+            return quickLoanLink;
         }
 
         public bool IsMocked()
