@@ -11,13 +11,13 @@ namespace Wonga.QA.Tests.Meta
         private Customer _customer;
         private Organisation _organisation;
 
-        [Test, Owner(Owner.IlyaKozhevnikov)]
+        [Test, Owner(Owner.StanDesyatnikov)]
         public void CustomerBuilderTest()
         {
             Assert.DoesNotThrow(() => _customer = CustomerBuilder.New().Build());
         }
 
-        [Test, DependsOn("CustomerBuilderTest"), Owner(Owner.IlyaKozhevnikov)]
+        [Test, DependsOn("CustomerBuilderTest"), Owner(Owner.StanDesyatnikov)]
         public void ApplicationBuilderTest()
         {
             ApplicationBuilder builder = Config.AUT == AUT.Wb ?

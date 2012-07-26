@@ -18,8 +18,6 @@ namespace Wonga.QA.Tests.Core
         PetrTarasenko,
         [Description("konstantinos.konstantinidis@wonga.com")]
         KonstantinosKonstantinidis,
-        [Description("ilya.kozhevnikov@wonga.com")]
-        IlyaKozhevnikov,
         [Description("stan.desyatnikov@wonga.com")]
         StanDesyatnikov,
         [Description("ben.ifie@wonga.com")]
@@ -61,6 +59,10 @@ namespace Wonga.QA.Tests.Core
         [Description("anil.krishnamaneni@wonga.com")]
         AnilKrishnamaneni,
         [Description("imre.koszo@wonga.com")]
-        ImreKoszo
+        ImreKoszo,
+        [Description("alexander.luetjen@wonga.com")]
+        AlexanderLuetjen,
+        [Description("luke.rickard@wonga.com")]
+        LukeRickard
     }
 }
