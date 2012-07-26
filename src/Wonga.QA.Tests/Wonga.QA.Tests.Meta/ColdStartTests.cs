@@ -47,7 +47,7 @@ namespace Wonga.QA.Tests.Meta
             };
         }
 
-        [Test, Factory("Endpoints"), Owner(Owner.KonstantinosKonstantinidis)]
+        [Test, Factory("Endpoints"), Owner(Owner.StanDesyatnikov)]
         public void ApiEndpointIsAvailable(ApiEndpoint endpoint)
         {
             Do.With.Timeout(5).Until(() =>
@@ -65,25 +65,25 @@ namespace Wonga.QA.Tests.Meta
             });
         }
 
-        [Test, DependsOn("ApiEndpointIsAvailable"), Factory("Endpoints"), Owner(Owner.KonstantinosKonstantinidis)]
+        [Test, DependsOn("ApiEndpointIsAvailable"), Factory("Endpoints"), Owner(Owner.StanDesyatnikov)]
         public void ApiEndpointSchemaIsValid(ApiEndpoint endpoint)
         {
             Assert.DoesNotThrow(() => endpoint.GetShema());
         }
 
-        [Test, Factory("Databases"), Owner(Owner.IlyaKozhevnikov)]
+        [Test, Factory("Databases"), Owner(Owner.StanDesyatnikov)]
         public void DatabaseConnectionCanBeOpened(DbDatabase.Box database)
         {
             Assert.IsTrue(database.Exists());
         }
 
-        [Test, Factory("Services"), Owner(Owner.IlyaKozhevnikov)]
+        [Test, Factory("Services"), Owner(Owner.StanDesyatnikov)]
         public void ServiceIsStarted(SvcService service)
         {
             Assert.IsTrue(service.IsRunning());
         }
 
-        [Test, DependsOn("ApiEndpointIsAvailable"), DependsOn("ApiEndpointSchemaIsValid"), SUT(SUT.WIP, SUT.RC, SUT.WIPRelease, SUT.RCRelease, SUT.UAT, SUT.Live), Owner(Owner.IlyaKozhevnikov)]
+        [Test, DependsOn("ApiEndpointIsAvailable"), DependsOn("ApiEndpointSchemaIsValid"), SUT(SUT.WIP, SUT.RC, SUT.WIPRelease, SUT.RCRelease, SUT.UAT, SUT.Live), Owner(Owner.StanDesyatnikov)]
         public void HomePageCanBeLoaded()
         {
             Assert.Contains(new WebClient().DownloadString(Config.Ui.Home), "Wonga");
