@@ -37,7 +37,7 @@ namespace Wonga.QA.Tests.Marketing
         }
 
 
-        [Test, AUT(AUT.Uk), JIRA("PP-32")]
+        [Test, AUT(AUT.Uk), JIRA("PP-32"), Owner(Owner.SvyatoslavKravchenko)]
         public void ExecuteGetEligibleCustomersQuery()
         {
             GetCustomerPrepaidEligibilityQuery eligibleCustomerMessage = new GetCustomerPrepaidEligibilityQuery

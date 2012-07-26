@@ -95,7 +95,7 @@ namespace Wonga.QA.Tests.Payments.Sagas
 
                 [Test]
                 [AUT(AUT.Uk)]
-                [JIRA("UK-2310/UK-2009")]
+                [JIRA("UK-2310/UK-2009"), Owner(Owner.SeamusHoban)]
                 public void PaymentIsTakenForTheLoan()
                 {
                     // Using <= because at the time of writing there is a bug in the accrued interest calculator

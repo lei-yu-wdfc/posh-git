@@ -54,7 +54,7 @@ namespace Wonga.QA.Tests.Comms.Email
 
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1281")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1281"), Owner(Owner.MichaelDoyle)]
         public void EmailExtensionAgreementTest()
         {
 

@@ -69,7 +69,7 @@ namespace Wonga.QA.Tests.Comms
         }
         #endregion
         [Test]
-        [AUT(AUT.Uk), JIRA("UK-1555")]
+        [AUT(AUT.Uk), JIRA("UK-1555"), Owner(Owner.SeamusHoban)]
         [Row(60)]
         public void VerifySMSSentOnDaysUpTo(uint days)
         {

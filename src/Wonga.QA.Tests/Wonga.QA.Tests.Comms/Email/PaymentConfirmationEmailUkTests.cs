@@ -59,7 +59,7 @@ namespace Wonga.QA.Tests.Comms.Email
                     // Application should be in the approved state - so all the expected messages should be sent 
                 }
 
-                [Test, AUT(AUT.Uk), JIRA("UK-1032")]
+                [Test, AUT(AUT.Uk), JIRA("UK-1032"), Owner(Owner.SeamusHoban)]
                 public void ThenAPaymentConfirmationEmailIsSent()
                 {
                     Do.With.Timeout(5).Interval(20).Until(CheckPaymentConfirmationEmailSent);
