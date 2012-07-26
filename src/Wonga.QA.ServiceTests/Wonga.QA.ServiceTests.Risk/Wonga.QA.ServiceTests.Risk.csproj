@@ -76,6 +76,7 @@
     <Reference Include="Wonga.QA.Framework.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Wonga.QA.Framework.Db, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Wonga.QA.Framework.Mocks, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\bin\Wonga.QA.Framework.Mocks.dll</HintPath>
@@ -95,8 +96,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CL\uk\PreparationTests.cs" />
-    <Compile Include="Fixtures\Application.cs" />
+    <Compile Include="CheckpointTestSettings.cs" />
+    <Compile Include="CL\Uk\Checkpoints\Blacklist\ApplicationElementNotInBlacklist.cs" />
+    <Compile Include="CL\Uk\Checkpoints\BureauData\CallValidateTests.cs" />
+    <Compile Include="CL\Uk\PreparationTests.cs" />
+    <Compile Include="CL\Uk\RiskServiceTestClUkBase.cs" />
     <Compile Include="Messages\IMessageFactory.cs" />
     <Compile Include="Messages\MessageFactory.cs" />
     <Compile Include="Messages\MessageFactoryCollection.cs" />

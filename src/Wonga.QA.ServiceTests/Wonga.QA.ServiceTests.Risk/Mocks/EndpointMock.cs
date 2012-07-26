@@ -6,6 +6,7 @@ namespace Wonga.QA.ServiceTests.Risk.Mocks
 	public class EndpointMock
 	{
 		private readonly string _name;
+		private IBus _bus;
 
 		public EndpointMock(string endpointName)
 		{
@@ -15,7 +16,7 @@ namespace Wonga.QA.ServiceTests.Risk.Mocks
 		public void Start()
 		{
 			var ep1 = new EndpointConfigurator(_name);
-			ep1.InitialiseEndpoint();
+			_bus = ep1.InitialiseEndpoint();
 		}
 
 		public void AddHandler<T>(Action<T, IBus> action) where T : IMessage
@@ -27,6 +28,12 @@ namespace Wonga.QA.ServiceTests.Risk.Mocks
 		{
 			GenericHandler.Add(new OnTheFlyHandler<T>(filter, action));
 		}
+
+		public void Subscribe<T>(Predicate<T> condition) where T : IMessage
+		{
+			_bus.Subscribe<T>(condition);
+		}
+
 
 	}
 }

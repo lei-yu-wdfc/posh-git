@@ -15,7 +15,7 @@ namespace Wonga.QA.ServiceTests.Risk
 		[SetUp]
 		public void Setup()
 		{
-			_salesforce = new EndpointMock("salesforcecomponent");
+			_salesforce = new EndpointMock("servicetest");
 			_salesforce.Start();
 		}
 

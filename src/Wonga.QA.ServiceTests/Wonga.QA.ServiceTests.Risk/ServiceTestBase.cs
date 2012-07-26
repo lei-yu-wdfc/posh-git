@@ -36,14 +36,14 @@ namespace Wonga.QA.ServiceTests.Risk
 		{
 			msgs.ToList().ForEach(x => Drive.Msmq.Risk.Send(x));
 		}
+		protected void Send(MsmqMessage msg)
+		{
+			Send(new MsmqMessage[]{msg});
+		}
 
 		protected void Post(IEnumerable<ApiRequest> requests)
 		{
-			foreach(var x in requests)
-			{
-				Drive.Api.Commands.Post(x);
-			}
-			//requests.ToList().ForEach(x =>  Drive.Api.Commands.Post(x));
+			requests.ToList().ForEach(x =>  Drive.Api.Commands.Post(x));
 		}
 
 		protected MessageFactoryCollection Messages { private set; get; }
