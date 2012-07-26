@@ -45,7 +45,7 @@ namespace Wonga.QA.Tests.Payments
         }
 
         [Test]
-        [AUT(AUT.Uk), JIRA("UK-876")]
+        [AUT(AUT.Uk), JIRA("UK-876"), Owner(Owner.PiotrWalat)]
         public void MakeDueToday_CompletesSagaAndCreatesScheduledPaymentSaga()
         {
             decimal loanAmount = 350m;

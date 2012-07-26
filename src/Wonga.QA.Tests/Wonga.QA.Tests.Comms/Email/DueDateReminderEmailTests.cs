@@ -63,7 +63,7 @@ namespace Wonga.QA.Tests.Comms.Email
                 .Build();
         }
 
-        [AUT(AUT.Uk)]
+        [AUT(AUT.Uk), Owner(Owner.PiotrWalat)]
         [Test]
         public void LiveFixedTermLoan_ComingDue_SendsA1TemplateEmailToCustomer()
         {

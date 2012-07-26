@@ -61,7 +61,7 @@ namespace Wonga.QA.Tests.Comms.Sms
         }
 
         [Test]
-        [AUT(AUT.Uk)]
+        [AUT(AUT.Uk), Owner(Owner.PiotrWalat)]
         public void LiveLoan_ComingDueInOneDay_SendsReminderTextMessage()
         {
             BuildApplicationWithTerm(12);

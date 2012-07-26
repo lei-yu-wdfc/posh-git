@@ -33,7 +33,7 @@ namespace Wonga.QA.Tests.Payments.PaymentsCollectionSuppression
             _applicationsTable = Drive.Data.Payments.Db.Applications;
         }
 
-        [Test]
+        [Test, Owner(Owner.PiotrWalat)]
         public void Application_NotFraudConfirmed_UnsuppressesPayments()
         {
             Guid newCaseID = Guid.NewGuid();

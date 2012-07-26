@@ -10,7 +10,7 @@ namespace Wonga.QA.Tests.Comms.Email
     [TestFixture]
     class RepaymentArrangementEmailTests
     {
-        [Test, AUT(AUT.Uk), JIRA("WIN-888"), Parallelizable]
+        [Test, AUT(AUT.Uk), JIRA("WIN-888"), Owner(Owner.SeamusHoban), Parallelizable]
         public void RepaymentArrangementSuccessSendsEmail()
         {
             //Test written to support both mocked and non mocked environments
