@@ -130,5 +130,18 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
             var subMessage = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.WelcomeSubMessage));
             return subMessage.ToString();
         }
+
+        public bool IsMocked()
+        {
+            try
+            {
+                var mocked = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.Mocked));
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

@@ -23,7 +23,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             Console.WriteLine("email={0}", _email);
         }
 
-        [Test, AUT(AUT.Uk)]
+        [Test, AUT(AUT.Uk), Owner(Owner.StanDesyatnikov)]
         public void L0JourneyTest()
         {
             var loginPage = Client.Login();
@@ -32,7 +32,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             var mySummary = journeyL0.Teleport<MySummaryPage>() as MySummaryPage;
         }
 
-        [Test, AUT(AUT.Uk), DependsOn("L0JourneyTest")]
+        [Test, AUT(AUT.Uk), DependsOn("L0JourneyTest"), Owner(Owner.StanDesyatnikov)]
         public void RepaymentOnDueDateTest()
         {
             // Get Applicaiton object to do repayment
@@ -43,7 +43,7 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             application.RepayOnDueDate();
         }
 
-        [Test, AUT(AUT.Uk), DependsOn("RepaymentOnDueDateTest")]
+        [Test, AUT(AUT.Uk), DependsOn("RepaymentOnDueDateTest"), Owner(Owner.StanDesyatnikov)]
         public void LnJourneyTest()
         {
             var loginPage = Client.Login();
@@ -51,5 +51,22 @@ namespace Wonga.QA.Tests.Ui.Region.Uk
             var journey = JourneyFactory.GetLnJourney(Client.Home());
             var page = journey.Teleport<MySummaryPage>() as MySummaryPage;
         }
+
+        [Test, AUT(AUT.Uk), Description("Check RC is NOT mocked. The test runs only in RC."), Owner(Owner.StanDesyatnikov)]
+        [SUT(SUT.RC)]
+        public void RcIsNotMocked()
+        {
+            var homePage = Client.Home();
+            Assert.IsFalse(homePage.IsMocked(), "RC is mocked");
+        }
+
+        [Test, AUT(AUT.Uk), Description("Check WIP IS mocked. The test runs only in WIP."), Owner(Owner.StanDesyatnikov)]
+        [SUT(SUT.WIP)]
+        public void WipIsMocked()
+        {
+            var homePage = Client.Home();
+            Assert.IsTrue(homePage.IsMocked(), "WIP is not mocked");
+        }
+
     }
 }
