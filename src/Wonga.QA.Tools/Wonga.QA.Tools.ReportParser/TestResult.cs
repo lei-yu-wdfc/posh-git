@@ -33,14 +33,13 @@ namespace Wonga.QA.Tools.ReportParser
         public string WarningsTrace { get; set; }
         public int AssertCount { get; set; }
         public double Duration { get; set; }
-        public Dictionary<string, string> Metadata { get; set; }
+        public Dictionary<string, List<string>> Metadata { get; set; }
         public TestKind TestKind
         {
             get
             {
                 var result = TestKind.Unknown;
-                var testKindText = "";
-                Metadata.TryGetValue("TestKind", out testKindText);
+                var testKindText = GetFirstMetadataValue("TestKind");
                 Enum.TryParse(testKindText, true, out result);
                 return result;
             }
@@ -51,7 +50,7 @@ namespace Wonga.QA.Tools.ReportParser
         public TestResult()
         {
             Outcome = TestOutcome.UnknownOutcome;
-            Metadata = new Dictionary<string, string>();
+            Metadata = new Dictionary<string, List<string>>();
             Children = new List<TestResult>();
         }
 
@@ -79,6 +78,22 @@ namespace Wonga.QA.Tools.ReportParser
 
             //Calculate the hash code for the product.
             return hashTestResultId;
+        }
+
+        private string GetFirstMetadataValue(string key)
+        {
+            List<string> testKindText;
+            Metadata.TryGetValue("TestKind", out testKindText);
+            if (testKindText == null || testKindText.Count == 0)
+                return null;
+            return testKindText[0];
+        }
+
+        private List<string> GetAllMetadataValues(string key)
+        {
+            List<string> testKindText = new List<string>();
+            Metadata.TryGetValue("TestKind", out testKindText);
+            return testKindText;
         }
     }
 }

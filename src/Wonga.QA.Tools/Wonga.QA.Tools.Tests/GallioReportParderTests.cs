@@ -47,5 +47,12 @@ namespace Wonga.QA.Tools.Tests
             var testReport = new GallioReportParser(XDocument.Load(_fullReportXmlPath)).GetTestReport();
             var testsOnly = testReport.GetTestsWithoutTestFixtures();
         }
+
+        [Test]
+        public void CanStoreMultipleMetadataOfTheSameKey()
+        {
+            var testReport = new GallioReportParser(XDocument.Load(_fullReportXmlPath)).GetTestReport();
+            testReport.GetTestsWithoutTestFixtures().Any(x => x.Metadata.ContainsKey("Aut") && x.Metadata["Aut"].Count > 1);
+        }
     }
 }

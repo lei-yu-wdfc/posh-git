@@ -141,12 +141,17 @@ namespace Wonga.QA.Tools.ReportParser
             return debugStream.Descendants(_ns + "text").First().Value;
         }
 
-        private Dictionary<string, string> GetMetadata(XElement test)
+        private Dictionary<string, List<string>> GetMetadata(XElement test)
         {
-            var metadata = new Dictionary<string, string>();
+            var metadata = new Dictionary<string, List<string>>();
             var entries = test.Element(_ns + "metadata").Descendants(_ns + "entry");
-            foreach(var entry in entries)
-                metadata.Add(entry.Attribute("key").Value, entry.Element(_ns+"value").Value);
+            foreach (var entry in entries)
+            {
+                var entryKey = entry.Attribute("key").Value;
+                metadata.Add(entryKey, new List<string>());
+                foreach (var value in entry.Elements(_ns + "value"))
+                    metadata[entryKey].Add(value.Value);
+            }
             return metadata;
         }
 

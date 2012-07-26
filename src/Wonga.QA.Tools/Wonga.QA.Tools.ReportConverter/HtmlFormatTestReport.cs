@@ -81,20 +81,35 @@ namespace Wonga.QA.Tools.ReportConverter
         {
             string metadata = "<ul>";
             metadata += string.Format("<li><b>Duration</b>: {0}</li>", TimeSpan.FromSeconds(test.Duration).ToString());
-            foreach (var entry in test.Metadata.Where(x => !new[] { "TestKind" }.Contains(x.Key)))
+            string mailSubject = HttpUtility.HtmlEncode(string.Format("Test {1} - {0}", test.FullName, test.Outcome));
+            foreach (var entry in test.Metadata.Where(x => !new[] { "TestKind", "Aut", "TestsOn" }.Contains(x.Key) && x.Value.Count > 0))
             {
-                switch(entry.Key)
+                switch (entry.Key)
                 {
-                    case("JIRA"):
-                        metadata += string.Format("<li><b>{0}</b>: <a href='{1}' target='_blank'>{1}</a></li>", entry.Key, entry.Value);
+                    case ("JIRA"):
+                        metadata += string.Format("<li><b>{0}</b>: {1}</li>", entry.Key, AppendTemplateWithMetadata("<a href='{0}' target='_blank'>{0}</a>", entry.Value));
+                        break;
+                    case ("OwnerEmail"):
+                        metadata += string.Format("<li><b>{0}</b>: {1}</li>", entry.Key, AppendTemplateWithMetadata("<a href='mailto:{0}?subject=" + mailSubject + "' target='_blank'>{0}</a>", entry.Value));
                         break;
                     default:
-                        metadata += string.Format("<li><b>{0}</b>: {1}</li>", entry.Key, entry.Value);
+                        metadata += string.Format("<li><b>{0}</b>: {1}</li>", entry.Key, AppendTemplateWithMetadata("{0}", entry.Value));
                         break;
                 }
             }
             metadata += "</ul>";
             return testTemplate.Replace("%%INFO%%", metadata);
+        }
+
+        private string AppendTemplateWithMetadata(string format, List<string> values)
+        {
+            var result = "";
+            for(int i = 0; i < values.Count; i++)
+            {
+                var comma = i == 0 ? "" : ", ";
+                result += string.Format(comma + format, values[i]);
+            }
+            return result;
         }
 
         public string GetTemplate(TestOutcome testOutcome)
