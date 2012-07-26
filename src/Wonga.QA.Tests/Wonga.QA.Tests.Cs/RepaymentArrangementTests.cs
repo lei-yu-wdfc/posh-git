@@ -38,7 +38,7 @@ namespace Wonga.QA.Tests.Cs
             ConfigurationFunctions.SetBankGatewayTestMode(_bankGatewayTestModeOriginal);
         }
 
-		[Test, AUT(AUT.Za), JIRA("ZA-1864"), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za), JIRA("ZA-1864"), Pending("ZA-2565"), Owner(Owner.AdrianMurphy)]
 		[Column(2, 20, 91)]
 		public void RepaymentPlanIsAllowedTest(uint daysInArrears)
 		{
@@ -53,7 +53,7 @@ namespace Wonga.QA.Tests.Cs
 			Assert.AreEqual(expectedPlanIsAllowed, actualPlanIsAllowed);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-1864"), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za), JIRA("ZA-1864"), Pending("ZA-2565"), Owner(Owner.AdrianMurphy)]
 		public void RepaymentPlanNotAllowedWhenInDisputeTest()
 		{
 			Customer customer = CustomerBuilder.New().Build();
@@ -66,7 +66,7 @@ namespace Wonga.QA.Tests.Cs
 			Assert.IsFalse(planIsAllowed);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-1864"), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za), JIRA("ZA-1864"), Pending("ZA-2565"), Owner(Owner.AdrianMurphy)]
 		public void RepaymentPlanIsAllowedWhenPreviousPlanWasCancelledTest()
 		{
 			Customer customer = CustomerBuilder.New().Build();
@@ -80,7 +80,7 @@ namespace Wonga.QA.Tests.Cs
 			Do.Until(() => PlanIsAllowed(application) == true);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-1864"), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za), JIRA("ZA-1864"), Pending("ZA-2565"), Owner(Owner.AdrianMurphy)]
 		public void FailureToPayBreaksRepaymentArrangement()
 		{
 			Customer customer = CustomerBuilder.New().Build();
@@ -92,7 +92,7 @@ namespace Wonga.QA.Tests.Cs
 			Assert.IsTrue((bool)GetRepaymentArrangement(application).IsBroken);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-1864"), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za), JIRA("ZA-1864"), Pending("ZA-2565"), Owner(Owner.AdrianMurphy)]
 		public void RepaymentPlanNotAllowedWhenPreviousPlanWasBrokenTest()
 		{
 			Customer customer = CustomerBuilder.New().Build();
@@ -105,7 +105,7 @@ namespace Wonga.QA.Tests.Cs
 			Assert.IsFalse(planIsAllowed);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-1864"), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za), JIRA("ZA-1864"), Pending("ZA-2565"), Owner(Owner.AdrianMurphy)]
 		public void RepaymentPlanNotAllowedWhenPlanAlreadyExistsTest()
 		{
 			Customer customer = CustomerBuilder.New().Build();
@@ -118,7 +118,7 @@ namespace Wonga.QA.Tests.Cs
 			Assert.IsFalse(planIsAllowed);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-1864"), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za), JIRA("ZA-1864"), Pending("ZA-2565"), Owner(Owner.AdrianMurphy)]
 		public void CreateRepaymentPlanTest()
 		{
 			Customer customer = CustomerBuilder.New().Build();
@@ -133,7 +133,7 @@ namespace Wonga.QA.Tests.Cs
 			Assert.IsNotNull(Drive.Db.Payments.Transactions.Where(x => x.ApplicationId == paymentsApplicationId && x.Type == "SuspendInterestAccrual"));
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-1864"), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za), JIRA("ZA-1864"), Pending("ZA-2565"), Owner(Owner.AdrianMurphy)]
 		public void RepayAllInstallmentsClosesPlanTest()
 		{
 			Customer customer = CustomerBuilder.New().Build();
@@ -149,7 +149,7 @@ namespace Wonga.QA.Tests.Cs
 			Trace.WriteLine(DateTime.UtcNow);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-1864"), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za), JIRA("ZA-1864"), Pending("ZA-2565"), Owner(Owner.AdrianMurphy)]
 		public void GetRepaymentPlanTest()
 		{
 			Customer customer = CustomerBuilder.New().Build();
@@ -164,7 +164,7 @@ namespace Wonga.QA.Tests.Cs
 			Assert.AreEqual(application.Id, Guid.Parse(response.Values["ApplicationId"].Single()));
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-1864"), Pending("ZA-2565")]
+        [Test, AUT(AUT.Za), JIRA("ZA-1864"), Pending("ZA-2565"), Owner(Owner.AdrianMurphy)]
 		public void GetParametersTest()
 		{
 			Customer customer = CustomerBuilder.New().Build();
@@ -176,7 +176,7 @@ namespace Wonga.QA.Tests.Cs
 			Assert.AreEqual(3, int.Parse(response.Values["MaxLengthMonths"].Single()));
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-1864"), Pending("ZA-2565")]
+        [Test, AUT(AUT.Za), JIRA("ZA-1864"), Pending("ZA-2565"), Owner(Owner.AdrianMurphy)]
 		public void GetCalculationTest()
 		{
 			Customer customer = CustomerBuilder.New().Build();
@@ -193,7 +193,7 @@ namespace Wonga.QA.Tests.Cs
 			Assert.IsNotNull(response);
 		}
 
-		[Test, AUT(AUT.Za), JIRA("ZA-1864"), Pending("ZA-2565")]
+		[Test, AUT(AUT.Za), JIRA("ZA-1864"), Pending("ZA-2565"), Owner(Owner.AdrianMurphy)]
 		public void CancelTest()
 		{
 			Customer customer = CustomerBuilder.New().Build();

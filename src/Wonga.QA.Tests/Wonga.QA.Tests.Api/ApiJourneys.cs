@@ -11,7 +11,7 @@ namespace Wonga.QA.Tests.Api
 	[Parallelizable(TestScope.All)]
     public class ApiJourneys //We test this functionality everywhere!
 	{
-        [Test, AUT(AUT.Wb)]
+        [Test, AUT(AUT.Wb), Owner(Owner.AdrianMurphy)]
         public void WBL0JourneyAccepted()
         {
             Customer cust = CustomerBuilder.New().Build();
@@ -19,7 +19,7 @@ namespace Wonga.QA.Tests.Api
             ApplicationBuilder.New(cust, comp).Build();
         }
 
-        [Test, AUT(AUT.Wb)]
+        [Test, AUT(AUT.Wb), Owner(Owner.AdrianMurphy)]
         public void WBDeclinedL0Accepted()
         {
             Customer cust = CustomerBuilder.New().WithMiddleName("Middle").Build();
@@ -28,7 +28,7 @@ namespace Wonga.QA.Tests.Api
             ApplicationBuilder.New(cust, comp).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
         }
 
-		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
+		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Za), Owner(Owner.AdrianMurphy)]
         public void L0JourneyAccepted()
         {
             Customer cust = CustomerBuilder.New().Build();
@@ -56,7 +56,7 @@ namespace Wonga.QA.Tests.Api
 			ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 		}
 
-        [Test, AUT(AUT.Ca, AUT.Uk, AUT.Za), Category(TestCategories.CoreTest)]
+        [Test, AUT(AUT.Ca, AUT.Uk, AUT.Za), Category(TestCategories.CoreTest), Owner(Owner.AdrianMurphy)]
         public void ApiLnJourneyAccepted()
         {
             Customer cust = CustomerBuilder.New().Build();
@@ -78,7 +78,7 @@ namespace Wonga.QA.Tests.Api
 			ApplicationBuilder.New(cust).Build();
 		}
 
-        [Test, AUT(AUT.Ca, AUT.Uk)]
+        [Test, AUT(AUT.Ca, AUT.Uk), Owner(Owner.AdrianMurphy)]
         public void ApiLnJourneyDeclined()
         {
             String forename = Get.RandomString(6);
@@ -107,7 +107,7 @@ namespace Wonga.QA.Tests.Api
 			ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
 		}
 
-		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Za)]
+		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Za), Owner(Owner.AdrianMurphy)]
 		public void ApiRepayingOnDueDateClosesApplication()
 		{
 			var customer = CustomerBuilder.New().Build();

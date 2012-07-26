@@ -27,7 +27,7 @@ namespace Wonga.QA.Tests.Migration
 
         //private DateTime _actualDate;
         
-        [Test]
+        [Test, Owner(Owner.StanDesyatnikov)]
         public void MigratedCustomerTakesLoanTest()
         {
             string email = GetMigratedEmail();
@@ -89,7 +89,7 @@ namespace Wonga.QA.Tests.Migration
             return "";
         }
 
-        [Test, AUT(AUT.Uk), Pending("in development, test environments still not ready")]
+        [Test, AUT(AUT.Uk), Pending("in development, test environments still not ready"), Owner(Owner.MuhammadQureshi)]
         public void MigMovingTopupSlidersLoanSummaryShouldBeCorrect()
         {
             string email = GetMigratedEmail();

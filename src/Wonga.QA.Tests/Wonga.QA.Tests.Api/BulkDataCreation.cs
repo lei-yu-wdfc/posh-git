@@ -40,7 +40,7 @@ namespace Wonga.QA.Tests.Api
 
 
 
-        [Test, AUT(AUT.Uk), JIRA("QA-320"), Ignore]
+        [Test, AUT(AUT.Uk), JIRA("QA-320"), Ignore, Owner(Owner.PetrTarasenko)]
         [Row(225, 1)]
         [Row(225, 2)]
         [Row(225, 3)]
@@ -61,7 +61,7 @@ namespace Wonga.QA.Tests.Api
 
         }
 
-        [Test, AUT(AUT.Uk), JIRA("QA-320"), Ignore]
+        [Test, AUT(AUT.Uk), JIRA("QA-320"), Ignore, Owner(Owner.PetrTarasenko)]
         [Row(82, 20)]
         [Row(125, 10)]
         [Row(225, 1)]
@@ -76,7 +76,7 @@ namespace Wonga.QA.Tests.Api
 
         }
 
-        [Test, AUT(AUT.Uk), JIRA("QA-320"), Ignore]
+        [Test, AUT(AUT.Uk), JIRA("QA-320"), Ignore, Owner(Owner.PetrTarasenko)]
         public void CreateDueTodayCustomersWithProperInfo()
         {
             for (int i = 0; i < 2; i++)
@@ -89,7 +89,7 @@ namespace Wonga.QA.Tests.Api
 
         }
 
-        [Test, AUT(AUT.Uk), JIRA("QA-320"), Ignore]
+        [Test, AUT(AUT.Uk), JIRA("QA-320"), Ignore, Owner(Owner.PetrTarasenko)]
         [Row(13, -1)]
         [Row(63, 0)]
         [Row(13, 1)]
