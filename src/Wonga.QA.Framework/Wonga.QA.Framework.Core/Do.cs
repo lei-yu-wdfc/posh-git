@@ -149,15 +149,15 @@ namespace Wonga.QA.Framework.Core
                     var t = predicate();
                     if (!EqualityComparer<T>.Default.Equals(t, default(T)))
                         return t;
-                    exception.Add(new Exception(_message == null ? t == null ? "null" : t.ToString() : _message()), stopwatch.Elapsed);
+                    AddException(new Exception(_message == null ? t == null ? "null" : t.ToString() : _message()), stopwatch.Elapsed, exception);
                     Thread.Sleep(_interval);
                 }
                 catch (Exception e)
                 {
-                    exception.Add(e, stopwatch.Elapsed);
+                    AddException(e, stopwatch.Elapsed, exception);
                     Thread.Sleep(_interval);
                 }
-            exception.Add(new TimeoutException(stopwatch.Elapsed.ToString()), stopwatch.Elapsed);
+            AddException(new TimeoutException(stopwatch.Elapsed.ToString()), stopwatch.Elapsed, exception);
             throw exception;
         }
 
@@ -257,6 +257,13 @@ namespace Wonga.QA.Framework.Core
         {
             _appSettingsFunction = delegate { return aut != Config.AUT; };
             return this;
+        }
+
+        private void AddException(Exception exception, TimeSpan timeSpan, DoException doException)
+        {
+            var lastException = doException.Exceptions.LastOrDefault();
+            if(doException.Exceptions.Count == 0 || lastException.Item3.GetType() != exception.GetType())
+                doException.Add(exception, timeSpan);
         }
     }
 

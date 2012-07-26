@@ -43,6 +43,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\ConfigTests.cs" />
+    <Compile Include="Core\DoExceptionTests.cs" />
+    <Compile Include="Core\DoTests.cs" />
     <Compile Include="Core\XmlProcessorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
