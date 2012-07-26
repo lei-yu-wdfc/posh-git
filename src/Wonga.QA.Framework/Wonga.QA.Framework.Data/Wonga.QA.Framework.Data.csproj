@@ -87,7 +87,7 @@
     <Compile Include="Enums\Risk\SliderPositionTypeEnum.cs" />
     <Compile Include="Enums\Prepaid\PrepaidCardType.cs" />
     <Compile Include="Enums\Prepaid\PrepaidCardStatuses.cs" />
-    <Compile Include="Enums\Sms\UkSmsStatuses.cs" />
+    <Compile Include="Enums\Sms\UKSmsStatuses.cs" />
     <Compile Include="MigratedUser.cs" />
     <Compile Include="MigrationHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
