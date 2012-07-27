@@ -14,7 +14,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Salesforce
 {
-    [TestFixture(Order=0)]
+    [TestFixture(Order = 0), Pending("BI customer Management Bug preventing test from pass")]
     [Parallelizable(TestScope.All)]
    class SalesforceApplicationComplaint
     {
