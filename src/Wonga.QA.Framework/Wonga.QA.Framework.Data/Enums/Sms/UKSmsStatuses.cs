@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿
 namespace Wonga.QA.Framework.Data.Enums.Sms
 {
-    public enum UkSmsStatuses
+    public enum UKSmsStatuses
     {
         New = 0,
         Acked = 1,
