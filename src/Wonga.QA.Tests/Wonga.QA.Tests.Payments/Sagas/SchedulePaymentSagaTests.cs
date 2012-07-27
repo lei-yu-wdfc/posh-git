@@ -62,7 +62,7 @@ namespace Wonga.QA.Tests.Payments
                                                && saga.TermsAgreed == true
                                                && saga.ApplicationAccepted == true));
 
-            application.MakeDueToday();
+            application.ExpireCard().MakeDueToday();
 
             Do.While(() => Drive.Db.OpsSagas.FixedTermLoanSagaEntities
                                .Any(saga => saga.AccountGuid == customer.Id
