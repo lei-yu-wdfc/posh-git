@@ -6,7 +6,7 @@ using Wonga.QA.Tools.ReportParser;
 
 namespace Wonga.QA.Tools.ReportConverter
 {
-    interface IFormatTestReport
+    public interface IFormatTestReport
     {
         string FormatReport(TestReport testResults);
     }

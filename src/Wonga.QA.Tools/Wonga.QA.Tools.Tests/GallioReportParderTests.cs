@@ -12,46 +12,46 @@ namespace Wonga.QA.Tools.Tests
     [TestFixture]
     public class GallioReportParderTests
     {
-        private string _fullReportXmlPath = "";
-        private string _emptyReportXmlPath = "";
-        
+        private XDocument _fullReportDoc;
+        private XDocument _emptyReportDoc;
+
         [SetUp]
         public void SetUp()
         {
-            _fullReportXmlPath = Path.Combine(Environment.CurrentDirectory, "FullGallioReport.xml");
-            _emptyReportXmlPath = Path.Combine(Environment.CurrentDirectory, "EmptyGallioReport.xml");
+            _fullReportDoc = XDocument.Load(GallioReportsRepository.GetPathForFullGallioReport());
+            _emptyReportDoc = XDocument.Load(GallioReportsRepository.GetPathForEmptyGallioReport());
         }
 
         [Test]
         public void CanExtractMetadata()
         {
-            var testReport = new GallioReportParser(XDocument.Load(_fullReportXmlPath)).GetTestReport();
+            var testReport = new GallioReportParser(_fullReportDoc).GetTestReport();
         }
 
         [Test]
         public void EmptyReportDoesNotCrashTheParser()
         {
-            var testReport = new GallioReportParser(XDocument.Load(_emptyReportXmlPath)).GetTestReport();
+            var testReport = new GallioReportParser(_emptyReportDoc).GetTestReport();
         }
 
         [Test]
         public void CanExtractOwners()
         {
-            var testReport = new GallioReportParser(XDocument.Load(_fullReportXmlPath)).GetTestReport();
+            var testReport = new GallioReportParser(_fullReportDoc).GetTestReport();
             Assert.IsNotEmpty(testReport.Results.SelectMany(x => x.Children).Where(x => x.Metadata.Any(met => met.Key == "Owner") && x.Metadata.Any(met => met.Key == "OwnerEmail")));
         }
 
         [Test]
         public void GetTestsWithoutTestFixturesReturnsCorrectResults()
         {
-            var testReport = new GallioReportParser(XDocument.Load(_fullReportXmlPath)).GetTestReport();
+            var testReport = new GallioReportParser(_fullReportDoc).GetTestReport();
             var testsOnly = testReport.GetTestsWithoutTestFixtures();
         }
 
         [Test]
         public void CanStoreMultipleMetadataOfTheSameKey()
         {
-            var testReport = new GallioReportParser(XDocument.Load(_fullReportXmlPath)).GetTestReport();
+            var testReport = new GallioReportParser(_fullReportDoc).GetTestReport();
             testReport.GetTestsWithoutTestFixtures().Any(x => x.Metadata.ContainsKey("Aut") && x.Metadata["Aut"].Count > 1);
         }
     }

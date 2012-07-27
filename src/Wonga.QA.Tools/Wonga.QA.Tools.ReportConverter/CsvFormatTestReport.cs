@@ -9,7 +9,7 @@ using Wonga.QA.Tools.ReportParser;
 
 namespace Wonga.QA.Tools.ReportConverter
 {
-    class CsvFormatTestReport : IFormatTestReport
+    public class CsvFormatTestReport : IFormatTestReport
     {
         public string FormatReport(TestReport testReport)
         {

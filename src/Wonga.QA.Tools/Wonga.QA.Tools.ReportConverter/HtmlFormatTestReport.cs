@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Web;
 using System.Xml.Linq;
@@ -9,13 +10,11 @@ using Wonga.QA.Tools.ReportParser;
 
 namespace Wonga.QA.Tools.ReportConverter
 {
-    class HtmlFormatTestReport : IFormatTestReport
+    public class HtmlFormatTestReport : IFormatTestReport
     {
-        private string resourcesFolder = "";
         public string FormatReport(TestReport testReport)
         {
-            resourcesFolder = Path.Combine(Program.GetCurrentFolder(), "HtmlFormatResources");
-            string testHtml = File.ReadAllText(Path.Combine(resourcesFolder, "test.html"));
+            string testHtml = GetHtmlFormatResource("test.html");
             string failedTestOutput = "";
             string passedTestOutput = "";
             string ignoredTestOutput = "";
@@ -90,7 +89,7 @@ namespace Wonga.QA.Tools.ReportConverter
                         metadata += string.Format("<li><b>{0}</b>: {1}</li>", entry.Key, AppendTemplateWithMetadata("<a href='{0}' target='_blank'>{0}</a>", entry.Value));
                         break;
                     case ("OwnerEmail"):
-                        metadata += string.Format("<li><b>{0}</b>: {1}</li>", entry.Key, AppendTemplateWithMetadata("<a href='mailto:{0}?subject=" + mailSubject + "' target='_blank'>{0}</a>", entry.Value));
+                        metadata += string.Format("<li><b>{0}</b>: {1}</li>", entry.Key, AppendTemplateWithMetadata("<a href='mailto:{0}?subject=" + mailSubject + "'>{0}</a>", entry.Value));
                         break;
                     default:
                         metadata += string.Format("<li><b>{0}</b>: {1}</li>", entry.Key, AppendTemplateWithMetadata("{0}", entry.Value));
@@ -114,7 +113,18 @@ namespace Wonga.QA.Tools.ReportConverter
 
         public string GetTemplate(TestOutcome testOutcome)
         {
-            return File.ReadAllText(Path.Combine(resourcesFolder, string.Format("{0}.html", testOutcome.ToString().ToLower())));
+            return GetHtmlFormatResource(string.Format("{0}.html", testOutcome.ToString().ToLower()));
+        }
+
+        private string GetHtmlFormatResource(string fileName)
+        {
+            var names = Assembly.GetExecutingAssembly().GetManifestResourceNames();
+            using (Stream stream = Assembly.GetExecutingAssembly()
+                               .GetManifestResourceStream(string.Format(@"Wonga.QA.Tools.ReportConverter.HtmlFormatResources.{0}", fileName)))
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                return reader.ReadToEnd();
+            }
         }
     }
 
