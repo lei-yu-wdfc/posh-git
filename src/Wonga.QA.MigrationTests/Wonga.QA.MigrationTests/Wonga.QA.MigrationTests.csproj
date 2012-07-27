@@ -78,7 +78,6 @@
   <ItemGroup>
     <Compile Include="MigrationGenderTests.cs" />
     <Compile Include="MigrationUiTests.cs" />
-    <Compile Include="MigrationLoginTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
