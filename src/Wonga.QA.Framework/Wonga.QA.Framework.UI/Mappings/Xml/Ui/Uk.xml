@@ -271,21 +271,21 @@
     <AwardsList>#footer-front #awards-list</AwardsList>
     <SeoLinks>#footer-front #seo-links</SeoLinks>
     <Mocked>a#staticmock-trigger.trigger.active</Mocked>
-    <CodeOfPracticeLink>.menu-2600 first path-node--495 a</CodeOfPracticeLink>
-    <TrustRatingLink>.menu-2593 path-trust-rating a</TrustRatingLink>
-    <APRLink>.menu-943 path-apr a</APRLink>
-    <ContactUsLink>.menu-1455 path-contact a</ContactUsLink>
-    <PrivacyPolicyLink>.menu-2662 path-privacy-policy a</PrivacyPolicyLink>
+    <CodeOfPracticeLink>a[title='Code of practice']</CodeOfPracticeLink>
+    <TrustRatingLink>.path-trust-rating a</TrustRatingLink>
+    <AprLink>.path-apr a</AprLink>
+    <ContactUsLink>.path-contact a</ContactUsLink>
+    <PrivacyPolicyLink>.path-privacy-policy a</PrivacyPolicyLink>
     <VeriSignLink>a[title='Norton secured (Verisign)']</VeriSignLink>
-    <FLALink>a[title='FLA']</FLALink>
-    <KIVALink>a[title='KIVA']</KIVALink>
+    <FlaLink>a[title='FLA']</FlaLink>
+    <KivaLink>a[title='Kiva']</KivaLink>
     <MediaGuardianAwardsLink>a[title='Media Guardian Innovation Awards']</MediaGuardianAwardsLink>
     <WebbyAwardsLink>a[title='Webby Award']</WebbyAwardsLink>
-    <CCRCreditAwardLink>a[title='CCR Credit Excellence Awards']</CCRCreditAwardLink>
+    <CcrCreditAwardLink>a[title='CCR Credit Excellence Awards']</CcrCreditAwardLink>
     <TechTrack100Link>a[title='Tech Track 100']</TechTrack100Link>
-    <CashLoanLink>.menu-11230 first path-content--cash-loan a</CashLoanLink>
-    <PaydayLoansLink>.menu-11228 path-content--payday-loans-alternative a</PaydayLoansLink>
-    <QuickLoanLink>.menu-11229 path-content--quick-loan a</QuickLoanLink>
+    <CashLoanLink>.path-content--cash-loan a</CashLoanLink>
+    <PaydayLoansLink>.path-content--payday-loans-alternative a</PaydayLoansLink>
+    <QuickLoanLink>.path-content--quick-loan a</QuickLoanLink>
   </HomePage>
   
 </UiMap>

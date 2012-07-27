@@ -8,11 +8,12 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.UiTests.Web.Region.Uk
 {
-    [Parallelizable(TestScope.Descendants)]
+    [Parallelizable(TestScope.Descendants), JIRA("UKWEB-343", "UKWEB-373")]
     public class HomePageTests: UiTest
     {
         private string _email;
         private string _firsName;
+        private string url;
         //private string _time;
 
         [FixtureSetUp]
@@ -32,7 +33,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             var homePage = Client.Home();
 
             // User hasn't logged in before. Verify the Welcome message
-            Assert.AreEqual("Welcome to Wonga. We can deposit up to £400 in your bank account by " + DateTime.Now.AddMinutes(23).ToShortTimeString() + homePage.GetWelcomeMessageDay(), 
+            Assert.AreEqual("Welcome to Wonga. We can deposit up to £400 in your bank account by " + DateTime.Now.AddMinutes(24).ToShortTimeString() + homePage.GetWelcomeMessageDay(), 
                             homePage.GetWelcomeHeaderMessageText(), "The Header should be 'Welcome to Wonga'");
 
             // Verify Sub message
@@ -44,24 +45,26 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         public void HomePageLinksTest()
         {
             var homePage = Client.Home();
+            url = Client.Home().Url;
+
             //Ensure 'Code of practice' link has correct URL
-            Assert.AreEqual("node/495", homePage.GetHomePageCodeOfPracticeLink());
+            Assert.AreEqual(url + "node/495", homePage.GetHomePageCodeOfPracticeLink());
             Console.WriteLine(homePage.GetHomePageCodeOfPracticeLink());
 
             //Ensure 'Trust rating' link has correct URL
-            Assert.AreEqual("/trust-rating", homePage.GetHomePageTrustRatingLink());
+            Assert.AreEqual(url + "trust-rating", homePage.GetHomePageTrustRatingLink());
             Console.WriteLine(homePage.GetHomePageTrustRatingLink());
 
             //Ensure 'APR' link has correct URL
-            Assert.AreEqual("/apr", homePage.GetHomePageAPRLink());
+            Assert.AreEqual(url + "apr", homePage.GetHomePageAPRLink());
             Console.WriteLine(homePage.GetHomePageAPRLink());
 
             //Ensure 'Contact us' link has correct URL
-            Assert.AreEqual("/contact", homePage.GetHomePageContactUsLink());
+            Assert.AreEqual(url + "contact", homePage.GetHomePageContactUsLink());
             Console.WriteLine(homePage.GetHomePageContactUsLink());
 
             //Ensure 'Privacy policy' link has correct URL
-            Assert.AreEqual("/privacy-policy", homePage.GetHomePagePrivacyPolicyLink());
+            Assert.AreEqual(url + "privacy-policy", homePage.GetHomePagePrivacyPolicyLink());
             Console.WriteLine(homePage.GetHomePagePrivacyPolicyLink());
 
             //Ensure VeriSign image link has correct URL
@@ -81,7 +84,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Console.WriteLine(homePage.GetHomePageMediaGuardianAwardsLink());
 
             //Ensure Webby Awards image link has correct URL
-            Assert.AreEqual("http://www.webbyawards.com", homePage.GetHomePageWebbyAwardsLink());
+            Assert.AreEqual("http://www.webbyawards.com/", homePage.GetHomePageWebbyAwardsLink());
             Console.WriteLine(homePage.GetHomePageWebbyAwardsLink());
 
             //Ensure Consumer Credit Awards image link has correct URL
@@ -93,17 +96,18 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Console.WriteLine(homePage.GetHomePageTechTrack100Link());
 
             //Ensure Payday Loans Alternative link has correct URL
-            Assert.AreEqual("http://www.wonga.com/money/payday-loans-alternative/", homePage.GetHomePagePaydayLoansLink());
+            Assert.AreEqual("http://rc.uk.wonga.com/content/payday-loans-alternative", homePage.GetHomePagePaydayLoansLink());
             Console.WriteLine(homePage.GetHomePagePaydayLoansLink());
 
             //Ensure Quick Loan link has correct URL
-            Assert.AreEqual("http://www.wonga.com/money/wonga-quick-loan/", homePage.GetHomePageQuickLoanLink());
+            Assert.AreEqual("http://rc.uk.wonga.com/content/quick-loan", homePage.GetHomePageQuickLoanLink());
             Console.WriteLine(homePage.GetHomePageQuickLoanLink());
 
             //Ensure Cash Loan link has correct URL
-            Assert.AreEqual("http://www.wonga.com/money/wonga-cash-loan/", homePage.GetHomePageCashLoanLink());
+            Assert.AreEqual("http://rc.uk.wonga.com/content/cash-loan", homePage.GetHomePageCashLoanLink());
             Console.WriteLine(homePage.GetHomePageCashLoanLink());
         }
+
         [Test, AUT(AUT.Uk), JIRA("UKWEB-344", "UKWEB-345"), MultipleAsserts, Owner(Owner.OrizuNwokeji), Pending("Test in development. Code in development.")]
         public void HomePageRefactorTest()
         {
