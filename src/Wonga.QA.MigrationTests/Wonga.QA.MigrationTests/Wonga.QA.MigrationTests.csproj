@@ -70,9 +70,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\bin\Wonga.QA.Tests.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Wonga.QA.Tests.Ui, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Wonga.QA.UiTests.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\Wonga.QA.Tests.Ui.dll</HintPath>
+      <HintPath>..\..\..\bin\Wonga.QA.UiTests.Web.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
