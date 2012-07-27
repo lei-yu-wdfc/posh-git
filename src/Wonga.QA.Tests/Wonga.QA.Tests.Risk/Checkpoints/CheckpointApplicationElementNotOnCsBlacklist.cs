@@ -50,7 +50,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
         [Test, AUT(AUT.Uk)]
         [JIRA("UK-849")]
-		[Pending("Implementation in progress")]
+        [Pending("Implementation in progress - This test will not work as we have a defect in RIsk for SuspectFraudCommand ")]
         public void DoNotRelendIsOn_L0ApplicationDeclined()
         {
             var customer = CustomerBuilder.New().WithEmployer(RiskMask.TESTDoNotRelend).Build();
@@ -65,7 +65,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
         [Test, AUT(AUT.Uk)]
         [JIRA("UK-849")]
-		[Pending("Implementation in progress")]
+        [Pending("Implementation in progress - This test will not work as we have a defect in RIsk for SuspectFraudCommand ")]
         public void DoNotRelendIsOn_LNApplicationDeclined()
         {
             var customer = CustomerBuilder.New().WithEmployer(RiskMask.TESTEmployedMask).Build();

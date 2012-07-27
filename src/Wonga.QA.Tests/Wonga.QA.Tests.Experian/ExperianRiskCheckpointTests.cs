@@ -90,7 +90,7 @@ namespace Wonga.QA.Tests.Experian
         public void Ln_TestExperianMainApplicantIsInsolvent_LoanIsDeclined()
         {
             const String forename = "laura";
-            const String surname = "Insolvent";
+            const String surname = "insolvent";
 
             var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTEmployedMask);
             ScrubNames(mainApplicantBuilder);
@@ -155,7 +155,6 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb, AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("SME-575","UK-853"), Description("Experian -> This test creates a loan for the customer that is dead, then checks the risk checkpoint")]
-        [Pending("Experian still not working")]
         public void TestExperianMainApplicantIsDeceased_LoanIsDeclined()
         {
             const String forename = "Johnny";
@@ -249,7 +248,6 @@ namespace Wonga.QA.Tests.Experian
 
         [Test, AUT(AUT.Wb,AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("SME-584"), Description("Experian -> This test creates a loan for a customer that IS CIFAS flagged, then checks the risk checkpoint")]
-        [Pending("Experian still not working")]
         public void TestExperianMainApplicantIsCifasFlagged_LoanIsDeclined()
         {
             const String forename = "laura";
@@ -342,28 +340,6 @@ namespace Wonga.QA.Tests.Experian
                                                                      RiskVerificationDefinitions.CreditBureauDataIsAvailableVerification);
         }
 
-        [Test, AUT(AUT.Wb,AUT.Uk), JIRA("UK-851"), Owner(Owner.RiskTeam)]
-        [Description("Experian -> This test creates a loan and checks if the main applicant has data available")]
-        [Pending("Experian not working")]
-        public void TestExperianMainApplicantIsNotAvailable_LoanIsDeclined()
-        {
-            const String forename = "John";
-            const String surname = "InsufficientBureauData";
-
-            var mainApplicantBuilder = CreateCustomerBuilder(forename, surname, RiskMask.TESTExperianCreditBureauDataIsAvailable);
-            ScrubNames(mainApplicantBuilder);
-            var mainApplicant = mainApplicantBuilder.Build();
-
-            var application = CreateL0Application(mainApplicant, ApplicationDecisionStatus.Declined);
-
-            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
-
-            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
-                                                                     RiskCheckpointDefinitionEnum.CreditBureauDataIsAvailable,
-                                                                     RiskCheckpointStatus.Failed,
-                                                                     RiskVerificationDefinitions.CreditBureauDataIsAvailableVerification);
-        }
-
         /* Main Applicant Data is Available LN */
 
         [Test, AUT(AUT.Uk), Owner(Owner.RiskTeam)]
@@ -421,7 +397,6 @@ namespace Wonga.QA.Tests.Experian
 
 		[Test, AUT(AUT.Wb, AUT.Uk), Owner(Owner.RiskTeam)]
 		[JIRA("SME-638"), Description("Experian -> This test creates a loan for the insolvent customer, then checks the risk checkpoint")]
-		[Pending("Experian still not working")]
 		public void TestExperianMainApplicantIsInsolvent_LoanIsDeclined()
 		{
 			const String forename = "laura";
