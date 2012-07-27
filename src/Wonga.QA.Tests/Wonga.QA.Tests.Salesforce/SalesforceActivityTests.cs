@@ -35,7 +35,7 @@ namespace Wonga.QA.Tests.Salesforce
 
             var salesforceContactId = Do.Until(() => (string)Drive.Data.Salesforce.Db.SalesforceAccounts.FindByAccountIdAndType(customer.Id, 1).SalesforceId);
 
-            Do.Until(() => Salesforce.GetTask(salesforceContactId, "WhoId", recordActivityCommand.ActivityType,
+            Do.With.Timeout(2).Until( () => Salesforce.GetTask(salesforceContactId, "WhoId", recordActivityCommand.ActivityType,
                                    recordActivityCommand.Subject));
         }
     }

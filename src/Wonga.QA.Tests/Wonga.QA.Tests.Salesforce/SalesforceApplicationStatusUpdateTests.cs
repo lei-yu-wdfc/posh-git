@@ -47,7 +47,7 @@ namespace Wonga.QA.Tests.Salesforce
                                                && saga.TermsAgreed == true
                                                && saga.ApplicationAccepted == true));
             MakeDueStatusToday(application);
-            Do.Until(() =>
+            Do.With.Timeout(2).Until(() =>
                          {
                              var app = Salesforce.GetApplicationById(application.Id);
                              //NOTE: this string should not be hardcoded or we shoud use Status_ID__c
@@ -70,7 +70,7 @@ namespace Wonga.QA.Tests.Salesforce
             Do.While(paymentSagaEntity.Refresh);
             Do.While(() => paymentSagaEntity = Drive.Db.OpsSagas.ScheduledPaymentSagaEntities
                 .SingleOrDefault(s => s.ApplicationGuid == application.Id));
-            Do.Until(() =>
+            Do.With.Timeout(2).Until(() =>
             {
                 var app = Salesforce.GetApplicationById(application.Id);
                 return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.InArrears;
@@ -96,7 +96,7 @@ namespace Wonga.QA.Tests.Salesforce
                                                                             Type = PaymentTransactionEnum.CardPayment,
                                                                         };
             Drive.Cs.Commands.Post(createTransactionCsCommand);
-            Do.Until(() =>
+            Do.With.Timeout(2).Until(() =>
             {
                 var app = Salesforce.GetApplicationById(application.Id);
                 return app.Status_ID__c != null 
@@ -117,7 +117,7 @@ namespace Wonga.QA.Tests.Salesforce
                                                && saga.TermsAgreed == true
                                                && saga.ApplicationAccepted == true));
             MakeDueStatusToday(application);
-            Do.Until(() =>
+            Do.With.Timeout(2).Until(() =>
             {
                 var app = Salesforce.GetApplicationById(application.Id);
                 //NOTE: this string should not be hardcoded or we shoud use Status_ID__c
@@ -142,7 +142,7 @@ namespace Wonga.QA.Tests.Salesforce
                                       };
             Drive.Cs.Commands.Post(notFraudCommand);
 
-            Do.Until(() =>
+            Do.With.Timeout(2).Until(() =>
             {
                 var app = Salesforce.GetApplicationById(application.Id);
                 //NOTE: this string should not be hardcoded or we shoud use Status_ID__c
@@ -167,7 +167,7 @@ namespace Wonga.QA.Tests.Salesforce
 
             applicationInfo.CreateExtraPayment((decimal)totalOutstandingAmount);
 
-            Do.Until(() =>
+            Do.With.Timeout(2).Until(() =>
             {
                 var app = Salesforce.GetApplicationById(applicationInfo.Id);
                 return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.BusinessLoanApplicationStatus.PaidInFull;
