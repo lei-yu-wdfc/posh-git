@@ -173,7 +173,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
         public String GetWelcomeMessageDay()
         {
             ending = " today.";
-            if ((DateTime.Now.AddMinutes(23).Hour.ToString("#") == "00") && (DateTime.Now.Hour.ToString("#") != "00"))
+            if ((DateTime.Now.AddMinutes(24).Hour.ToString("#") == "00") && (DateTime.Now.Hour.ToString("#") != "00"))
             ending = " tomorrow.";
             return ending;
         }
