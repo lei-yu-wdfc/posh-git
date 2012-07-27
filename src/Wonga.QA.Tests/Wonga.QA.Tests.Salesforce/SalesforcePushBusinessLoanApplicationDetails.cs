@@ -82,7 +82,7 @@ namespace Wonga.QA.Tests.Salesforce
 
 			var query = string.Format(GetApplicationWithUpdatedTerm, application.Id, newLoanTerm);
 
-			Do.Until(() => Salesforce.GetApplicationByCustomQuery(application.Id, query));
+            Do.With.Timeout(2).Until(() => Salesforce.GetApplicationByCustomQuery(application.Id, query));
 		}
 
         [Test, AUT(AUT.Wb), JIRA("SME-375")] 
@@ -109,7 +109,7 @@ namespace Wonga.QA.Tests.Salesforce
 
             var query = String.Format(GetApplicationWithUpdatedStatus, application.Id, (int)Framework.ThirdParties.Salesforce.BusinessLoanApplicationStatus.AcceptedInPrinciple);
 
-			Do.Until(() => Salesforce.GetApplicationByCustomQuery(application.Id, query));
+            Do.With.Timeout(2).Until(() => Salesforce.GetApplicationByCustomQuery(application.Id, query));
 		}
 
         [Test, AUT(AUT.Wb), JIRA("SME-375")]
@@ -122,7 +122,7 @@ namespace Wonga.QA.Tests.Salesforce
 
 			var query = String.Format(GetApplicationWithUpdatedStatus, application.Id, (int)Framework.ThirdParties.Salesforce.BusinessLoanApplicationStatus.LoanApproved);
 
-			Do.Until(() => Salesforce.GetApplicationByCustomQuery(application.Id, query));
+            Do.With.Timeout(2).Until(() => Salesforce.GetApplicationByCustomQuery(application.Id, query));
 		}
 
         [Test, AUT(AUT.Wb), JIRA("SME-375")] 

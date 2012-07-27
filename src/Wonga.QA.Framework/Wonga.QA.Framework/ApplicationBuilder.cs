@@ -38,6 +38,7 @@ namespace Wonga.QA.Framework
         protected List<CustomerBuilder> Guarantors;
         protected Boolean SignGuarantors;
         protected Boolean CreateGuarantors;
+        protected Boolean WithSigning=true;
 
         protected Action _setPromiseDateAndLoanTerm;
         private Func<int> _getDaysUntilStartOfLoan;
@@ -319,6 +320,9 @@ namespace Wonga.QA.Framework
                     return new Application(Id, GetFailedCheckpointFromApplicationDecisionResponse(response));
             }
 
+            if(!WithSigning)
+                return new Application { Id = Id, BankAccountId = Customer.BankAccountId, LoanAmount = LoanAmount, LoanTerm = LoanTerm, BankAccountNumber = Customer.BankAccountNumber };
+
             Drive.Api.Commands.Post(new SignApplicationCommand { AccountId = Customer.Id, ApplicationId = Id });
 
 
@@ -390,6 +394,12 @@ namespace Wonga.QA.Framework
         public ApplicationBuilder WithIovationBlackBox(string iovationBlackBox)
         {
             IovationBlackBox = iovationBlackBox;
+            return this;
+        }
+
+        public ApplicationBuilder WithOutSigning()
+        {
+            WithSigning = false; 
             return this;
         }
 
