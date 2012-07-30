@@ -38,7 +38,9 @@
   <ItemGroup>
     <Compile Include="SalesforceActivityTests.cs" />
     <Compile Include="SalesforceApplicationComplaint.cs" />
+    <Compile Include="SalesforceApplicationHardship.cs" />
     <Compile Include="SalesforceApplicationStatusUpdateTests.cs" />
+    <Compile Include="SalesforceOperations.cs" />
     <Compile Include="SalesforcePushBusinessBankAccountDetails.cs" />
     <Compile Include="SalesforcePushBusinessLoanApplicationDetails.cs" />
     <Compile Include="SalesforcePushBusinessPaymentCardDataTests.cs" />

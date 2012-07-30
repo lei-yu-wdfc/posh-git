@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
-using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.Cs.Requests.Comms.Csapi.Commands;
-using Wonga.QA.Framework.Cs.Requests.Payments.Csapi.Commands;
-using Wonga.QA.Framework.Cs.Requests.Risk.Csapi.Commands;
-using Wonga.QA.Framework.Db.Ops;
-using Wonga.QA.Framework.Db.Payments;
-using Wonga.QA.Framework.Msmq.Messages.Payments.PublicMessages;
 using Wonga.QA.Tests.Core;
+using salesforceStatusAlias = Wonga.QA.Framework.ThirdParties.Salesforce.ApplicationStatus ;
 
 namespace Wonga.QA.Tests.Salesforce
 {
@@ -18,10 +11,9 @@ namespace Wonga.QA.Tests.Salesforce
     [Parallelizable(TestScope.All)]
    class SalesforceApplicationComplaint
     {
-        private ServiceConfigurationEntity _sfUsername;
-        private ServiceConfigurationEntity _sfPassword;
-        private ServiceConfigurationEntity _sfUrl;
-        private Framework.ThirdParties.Salesforce _sales;
+        private Framework.ThirdParties.Salesforce _sales; 
+        private readonly dynamic _loanDueDateNotifiSagaEntityTab = Drive.Data.OpsSagas.Db.LoanDueDateNotificationSagaEntity;
+        private readonly dynamic _fixedTermLoanAppTab = Drive.Data.Payments.Db.FixedTermLoanApplications;
         private readonly dynamic _applicationRepo = Drive.Data.Payments.Db.Applications;
         private readonly dynamic _commsSuppressionsRepo = Drive.Data.Comms.Db.Suppressions;
         private readonly dynamic _paymentsSuppressionsRepo = Drive.Data.Payments.Db.PaymentCollectionSuppressions;
@@ -30,25 +22,19 @@ namespace Wonga.QA.Tests.Salesforce
         [SetUp]
         public void SetUp()
         {
-            _sfUsername = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Salesforce.UserName");
-            _sfPassword = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Salesforce.Password");
-            _sfUrl = Drive.Data.Ops.Db.ServiceConfigurations.FindByKey("Salesforce.Url");
-            _sales = Drive.ThirdParties.Salesforce;
-            _sales.SalesforceUsername = _sfUsername.Value;
-            _sales.SalesforcePassword = _sfPassword.Value;
-            _sales.SalesforceUrl = _sfUrl.Value;
+            _sales=SalesforceOperations.SalesforceSetup();
         }
         #endregion setup#
 
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-129"), Owner(Owner.AnilKrishnamaneni)]
-        public void UserPendingApplicationCompliantCycle()
-        {
+        public void AcceptedApplicationCompliantCycle()
+        {  
             var caseId = Guid.NewGuid();
             var cust = CreateCustomer();
             var application = ApplicationBuilder.New(cust).WithOutSigning().Build();
             CompliantCycle(caseId, application);
-            CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Accepted );
+            SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.Accepted );
         }
 
         [Test]
@@ -58,18 +44,21 @@ namespace Wonga.QA.Tests.Salesforce
             var caseId = Guid.NewGuid();
             var application = CreateLiveApplication();
             CompliantCycle( caseId, application);
-            CheckSalesApplicationStatus(application,(double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live);
+            SalesforceOperations.CheckSalesApplicationStatus(application,(double)salesforceStatusAlias.Live);
         }
 
         [Test]
-        [AUT(AUT.Uk), JIRA("UKOPS-129"), Owner(Owner.AnilKrishnamaneni) , Pending("Want to figure how to make application due to day") ]
+        [AUT(AUT.Uk), JIRA("UKOPS-129"), Owner(Owner.AnilKrishnamaneni) ]
         public void DueTodayApplicationCompliantCycle()
         {
             var caseId = Guid.NewGuid();
             var application = CreateLiveApplication();
-            application.MakeDueToday();
+            int id =ApplicationOperations.GetAppInternalId(application);
+            TimeSpan span = _fixedTermLoanAppTab.FindByApplicationId(id).NextDueDate - DateTime.Today;
+            application.RewindApplicationDates(span);
+            MakeDueToday(application);
             CompliantCycle( caseId, application);
-            CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.DueToday);
+            SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.DueToday);
         }
 
         [Test]
@@ -81,7 +70,7 @@ namespace Wonga.QA.Tests.Salesforce
             application.ExpireCard();  
             application.PutIntoArrears(3);
             CompliantCycle( caseId, application);
-            CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.InArrears);
+            SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.InArrears);
         }
 
         [Test]
@@ -90,12 +79,12 @@ namespace Wonga.QA.Tests.Salesforce
         {
             var caseId = Guid.NewGuid();
             var customer = CreateCustomer(); 
-            var application = CreateApplication(customer);
+            var application =SalesforceOperations.CreateApplication(customer);
             ApplicationOperations.SuspectFraud(application, customer, caseId);
-            CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Fraud);
+            SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.Fraud);
             CompliantCycle(caseId, application);
             ApplicationOperations.ConfirmNotFraud(application, customer, caseId);
-            CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live);
+            SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.Live);
         }
 
         [Test]
@@ -105,10 +94,10 @@ namespace Wonga.QA.Tests.Salesforce
             var caseId = Guid.NewGuid();
             var application = CreateLiveApplication();
             ApplicationOperations.Dca(application);
-            CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.DCA);
+            SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.DCA);
             CompliantCycle(caseId, application);
             ApplicationOperations.RevokeDca(application);
-            CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live);
+            SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.Live);
         }
 
         [Test]
@@ -119,10 +108,10 @@ namespace Wonga.QA.Tests.Salesforce
             var application = CreateLiveApplication();
             application.PutIntoArrears();
             application.CreateRepaymentArrangement();
-            CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.RepaymentArrangement );
+            SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.RepaymentArrangement );
             CompliantCycle(caseId, application);
             application.CancelRepaymentArrangement(); 
-            CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live);
+            SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.Live);
         }
 
         [Test]
@@ -132,9 +121,9 @@ namespace Wonga.QA.Tests.Salesforce
             var caseId = Guid.NewGuid();
             var application = CreateLiveApplication();
             ApplicationOperations.ReportHardship(application, caseId);
-            CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Hardship );
+            SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.Hardship );
             CompliantCycle(caseId, application);
-            CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Hardship);
+            SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.Hardship);
         }
 
         [Test]
@@ -144,9 +133,9 @@ namespace Wonga.QA.Tests.Salesforce
             var caseId = Guid.NewGuid();
             var application = CreateLiveApplication();
             ApplicationOperations.ReportBankrupt(application, caseId);
-            CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Bankrupt);
+            SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.Bankrupt);
             CompliantCycle(caseId, application);
-            CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Bankrupt);
+            SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.Bankrupt);
         }
 
         [Test]
@@ -156,10 +145,10 @@ namespace Wonga.QA.Tests.Salesforce
             var caseId = Guid.NewGuid();
             var application = CreateLiveApplication();
             ApplicationOperations.ManagementReview(application, caseId);
-            CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.ManagementReview );
+            SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.ManagementReview );
             CompliantCycle(caseId, application);
             ApplicationOperations.RemoveManagementReview(application, caseId);
-            CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live);
+            SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.Live);
         }
 
         [Test]
@@ -169,7 +158,7 @@ namespace Wonga.QA.Tests.Salesforce
             var caseId = Guid.NewGuid();
             var application = CreateLiveApplication();
             ApplicationOperations.Refundrequest(application, caseId);
-            CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Refund);
+            SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.Refund);
             CompliantCycle(caseId, application);
             
         }
@@ -179,7 +168,7 @@ namespace Wonga.QA.Tests.Salesforce
         private Application CreateLiveApplication()
         {
             var customer = CreateCustomer();
-            Application application =CreateApplication(customer);
+            Application application =SalesforceOperations.CreateApplication(customer);
             return application;
         }
 
@@ -188,94 +177,41 @@ namespace Wonga.QA.Tests.Salesforce
             return CustomerBuilder.New().Build();
         }
 
-        private int GetAppInternalId(Application application)
-        {
-            return (_applicationRepo.FindAll(_applicationRepo.ExternalID == application.Id).Single().ApplicationId);
-        }
-
-        private Application CreateApplication(Customer customer)
-        {
-            var application=ApplicationBuilder.New(customer)
-             .Build();
-
-            //force the application to move to live by sending the IFundsTransferredEvent.
-            Drive.Msmq.Payments.Send(new IFundsTransferred
-            {
-                AccountId = application.AccountId,
-                ApplicationId = application.Id,
-                TransactionId = Guid.NewGuid()
-            });
-
-            //wait for the payment to customer to be sent out
-            Do.Until(() => _applicationRepo.FindAll(_applicationRepo.ExternalId == application.Id &&
-                                                   _applicationRepo.Transaction.ApplicationId == _applicationRepo.Id &&
-                                                   _applicationRepo.Type == "CashAdvance"));
-          
-            Do.With.Timeout(2).Until(() =>
-            {
-                var app = _sales.GetApplicationById(application.Id);
-                return app.Status_ID__c != null &&
-                       app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live;
-            });
-           
-            return application;
-        }
-        
         private void CompliantCycle(Guid caseId, Application application)
         {
-            ReportComplaint(application, caseId);
+            ApplicationOperations.ReportComplaint(application, caseId);
+            SalesforceOperations.CheckSalesApplicationStatus(application,
+                                        (double) salesforceStatusAlias.Complaint);
             CheckSupressionTable(application);
-            RemoveComplaint(application, caseId);
+            ApplicationOperations.RemoveComplaint(application, caseId);
         }
        
-        private void ReportComplaint(Application application,Guid caseId)
-        {
-            var cmd = new CsReportComplaintCommand()
-            {
-                AccountId = application.AccountId,
-                ApplicationId = application.Id,
-                CaseId = caseId 
-            };
-
-            Drive.Cs.Commands.Post(cmd);
-
-            Do.With.Timeout(2).Until(() =>
-            {
-                var app = _sales.GetApplicationById(application.Id);
-                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Complaint;
-            });
-        }
-
         private void CheckSupressionTable(Application application)
         {
-            int appInternalId = GetAppInternalId(application);
+            int appInternalId =ApplicationOperations.GetAppInternalId(application);
             Do.Until(() => _commsSuppressionsRepo.FindAll(
                            _commsSuppressionsRepo.AccountId == application.AccountId && _commsSuppressionsRepo.Complaint == 1).Single());
             Do.Until(() => _paymentsSuppressionsRepo.FindAll(
                 _paymentsSuppressionsRepo.ApplicationId == appInternalId && _paymentsSuppressionsRepo.ComplaintSuppression == 1).Single());
         }
 
-        private void RemoveComplaint(Application application,Guid caseId)
+        public void MakeDueToday(dynamic application)
         {
-            var removeComplaint = new CsRemoveComplaintCommand()
+            var ldd = _loanDueDateNotifiSagaEntityTab.FindAll(_loanDueDateNotifiSagaEntityTab.ApplicationId == application.Id).Single();
+            if (Drive.Data.Ops.GetServiceConfiguration<bool>("Payments.FeatureSwitches.UseLoanDurationSaga") == false)
             {
-                AccountId = application.AccountId,
-                ApplicationId = application.Id,
-                CaseId = caseId,
-            };
-            Drive.Cs.Commands.Post(removeComplaint);
-        }
-        
-        private void CheckSalesApplicationStatus(Application application,double status)
-        {
-            Do.With.Timeout(2).Until(() =>
+                 Drive.Msmq.Payments.Send(new Framework.Msmq.TimeoutMessage { SagaId = ldd.Id });
+                _loanDueDateNotifiSagaEntityTab.Update(ldd);
+            }
+            else
             {
-                var app = _sales.GetApplicationById(application.Id);
-                return app.Status_ID__c != null && app.Status_ID__c == status;
-            });
+                //We should timeout the LoanDurationSaga...
+                dynamic loanDurationSagaEntities = Drive.Data.OpsSagas.Db.LoanDurationSagaEntity;
+                var loanDurationSaga = loanDurationSagaEntities.FindAllByAccountGuid(AccountGuid: application.AccountId).FirstOrDefault();
+                Drive.Msmq.Payments.Send(new Framework.Msmq.TimeoutMessage() { SagaId = loanDurationSaga.Id });
+            }
         }
 
-       
         #endregion helpers#
 
     }
