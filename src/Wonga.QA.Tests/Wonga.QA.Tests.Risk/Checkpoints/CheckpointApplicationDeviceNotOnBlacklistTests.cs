@@ -40,7 +40,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			VerifyRiskApplication(application, RiskCheckpointStatus.Verified);
 		}
 
-		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Wb, AUT.Za), JIRA("CA-1735", "SME-130", "UK-1567"), Pending("Modifies svcconfig")]
+		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Wb, AUT.Za), JIRA("CA-1735", "SME-130", "UK-1567"), Owner(Owner.AdrianMurphy), Pending("Modifies svcconfig")]
 		[Row(true, true)]
 		[Row(true, false)]
 		[Row(false, false)]
@@ -85,7 +85,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			application.RepayOnDueDate();
 		}
 
-		[Test, AUT(AUT.Uk, AUT.Za), JIRA("UK-1567"), DependsOn("LnIovationAllowIsAccepted")]
+		[Test, AUT(AUT.Uk, AUT.Za), JIRA("UK-1567"), Owner(Owner.AdrianMurphy), DependsOn("LnIovationAllowIsAccepted")]
         [Pending("We dont know yet how review is going to work.")]
 		public void LnIovationReviewIsAccepted()
 		{

@@ -42,7 +42,7 @@ namespace Wonga.QA.Tests.Comms.Email
         }
 
         [Test]
-        [AUT(AUT.Uk)]
+        [AUT(AUT.Uk), Owner(Owner.SeamusHoban)]
         [Pending("SF tests are failing because message congestion in SF TC queue, explicit until fixed")]
         public void CreateLoanExtensionDocumentsTest()
         {

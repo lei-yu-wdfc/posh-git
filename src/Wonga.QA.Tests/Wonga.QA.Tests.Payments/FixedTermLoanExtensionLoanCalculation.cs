@@ -28,7 +28,7 @@ namespace Wonga.QA.Tests.Payments
         private readonly dynamic _loanTransactions = Drive.Data.Payments.Db.Transactions;
 
 
-        [Pending, Test, AUT(AUT.Uk), JIRA("UkOPS-540")]
+        [Pending, Test, AUT(AUT.Uk), JIRA("UkOPS-540"), Owner(Owner.AnilKrishnamaneni)]
         public void FessForMultipleExtensionLoan()
         {
 

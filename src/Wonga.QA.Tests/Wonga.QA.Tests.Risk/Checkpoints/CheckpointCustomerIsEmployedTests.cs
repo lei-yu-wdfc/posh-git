@@ -35,7 +35,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
         }
 
         [Test]
-        [JIRA("UKRISK-72"), DependsOn("L0CustomerEmployedThenApplicationAccepted")]
+        [JIRA("UKRISK-72"), Owner(Owner.LukeRickard), DependsOn("L0CustomerEmployedThenApplicationAccepted")]
         public void LnCustomerEmployedThenApplicationAccepted()
         {
             _loanApplication.RepayOnDueDate();

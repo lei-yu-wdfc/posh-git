@@ -301,7 +301,7 @@ namespace Wonga.QA.Tests.Payments
         }
 
         [Pending("UK-1871")]
-        [Test]
+        [Test, Owner(Owner.StanDesyatnikov)]
         public void CreateFixedTermLoanTopupInArrearsTest()
         {
             var customer = CustomerBuilder.New().Build();

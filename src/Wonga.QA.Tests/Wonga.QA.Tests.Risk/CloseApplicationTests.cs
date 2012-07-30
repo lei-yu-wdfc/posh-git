@@ -33,7 +33,7 @@ namespace Wonga.QA.Tests.Risk
 																				ClosedOn: closedOn).Count() == 1);
 		}
 
-		[Test, AUT(AUT.Uk), JIRA("WIN-1125")]
+		[Test, AUT(AUT.Uk), JIRA("WIN-1125"), Owner(Owner.GuerganaYordanova)]
 		public void ShouldCloseApplicationAndAddTransactionDetailsToRiskApplication_WhenCustomerHasRepaidLoan()
 		{
 			var customer = CustomerBuilder.New().Build();
