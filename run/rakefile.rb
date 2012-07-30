@@ -42,11 +42,11 @@ task :config do |t, arg| #ready
 end
   
 task :pre_generate_serializers do #ready
-  exec do |cmd|
+	puts 'Generating serializers'
+	cmd = Exec.new
     cmd.command = File.join(LIB,'sgen','sgen.exe')
     cmd.parameters = File.join(BIN,'Wonga.QA.Framework.Cs.dll') + ' /force'
-  end
-  puts 'Generating serializers'
+	cmd.execute  
 end
 #--
   
@@ -71,10 +71,10 @@ task :merge do #ready
   params += ' '+ File.join(BIN, "#{TESTS}.Core.dll")
   include_dlls.each { |dll| params+= ' ' + dll }
         
-  exec do |cmd|
+	cmd = Exec.new
     cmd.command = command
     cmd.parameters = params
-  end
+	cmd.execute
 end
   
 desc 'run Gallio'
@@ -122,7 +122,7 @@ end
   
 #-- build tasks for each solution  
 msbuild :framework do |msb|
-  msb.solution = File.join(SRC, FRAMEWORK, FRAMEWORK + '.sln')
+  msb.solution = File.join(SRC, FRAMEWORK,  "#{FRAMEWORK}.sln")
 end
   
 msbuild :tests do |msb|
