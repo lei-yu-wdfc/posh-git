@@ -32,5 +32,9 @@ namespace Wonga.QA.Framework.UI.Mappings.Ui.Pages.Common
         public String CashLoanLink { get; set; }
         public String PaydayLoansLink { get; set; }
         public String QuickLoanLink { get; set; }
+        public String ContentSlot1Title { get; set; }
+        public String WongaCustomersBoxText { get; set; }
+        public String ResponsibleLendingBoxText { get; set; }
+
     }
 }

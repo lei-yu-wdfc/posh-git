@@ -286,6 +286,9 @@
     <CashLoanLink>.path-content--cash-loan a</CashLoanLink>
     <PaydayLoansLink>.path-content--payday-loans-alternative a</PaydayLoansLink>
     <QuickLoanLink>.path-content--quick-loan a</QuickLoanLink>
+    <ContentSlot1Title>#ctl00_ContentPlaceHolder1_A1</ContentSlot1Title>
+    <WongaCustomersBoxText>.populus-survey</WongaCustomersBoxText>
+    <ResponsibleLendingBoxText>.responsible-lending-box h1</ResponsibleLendingBoxText>
   </HomePage>
   
 </UiMap>
