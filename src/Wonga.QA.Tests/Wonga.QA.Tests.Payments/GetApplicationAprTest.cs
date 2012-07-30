@@ -14,7 +14,7 @@ namespace Wonga.QA.Tests.Payments
 {
     class GetApplicationAprTest
     {
-        [Test, AUT(AUT.Uk), JIRA("UK-1122"), Pending("Commented out until query is added to the API")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1122"), Owner(Owner.DenisRyzhkov), Pending("Commented out until query is added to the API")]
         public void GetApplicationAprWihtNullPromoCode()
         {
             //decimal apr = 28.7m;
@@ -31,7 +31,7 @@ namespace Wonga.QA.Tests.Payments
             //Assert.AreEqual(apr, decimal.Parse(parm.Values["Apr"].Single()));
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1122"),Pending("Commented out until query is added to the API")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1122"), Owner(Owner.DenisRyzhkov), Pending("Commented out until query is added to the API")]
         public void GetApplicationAprWihtCorrectPromoCode()
         {
         //    decimal apr = 28.7m;
@@ -51,7 +51,7 @@ namespace Wonga.QA.Tests.Payments
 
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1122"), Pending("Commented out until query is added to the API")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1122"), Owner(Owner.DenisRyzhkov), Pending("Commented out until query is added to the API")]
         public void GetApplicationAprIncorrectPromoCode()
         {
         //    Guid aplId = Guid.Parse("148F9ED2-C75F-470B-A8E1-CAAC83A4F1EB");

@@ -14,7 +14,7 @@ namespace Wonga.QA.Tests.Payments
    
     public class GetAvailabelCreditTest
     {
-        [Test, AUT(AUT.Uk), JIRA("UK-92"), Pending("Commented out until query is added to the API")]
+        [Test, AUT(AUT.Uk), JIRA("UK-92"), Owner(Owner.DenisRyzhkov), Pending("Commented out until query is added to the API")]
         public void AvailabelCreditHandler()
         {
             //const decimal available = 1000.0m;

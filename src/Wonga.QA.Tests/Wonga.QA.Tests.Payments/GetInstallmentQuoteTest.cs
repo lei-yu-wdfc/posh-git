@@ -10,7 +10,7 @@ namespace Wonga.QA.Tests.Payments
 {
     class GetInstallmentQuoteTest
     {
-        [Test, AUT(AUT.Uk), JIRA("UK-1111"), Pending("Commented out until query is added to the API")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1111"), Owner(Owner.DenisRyzhkov), Pending("Commented out until query is added to the API")]
         public void GetInstallmentQuoteMethod()
         {
             //const decimal totalValue = 300.0m;
@@ -23,7 +23,7 @@ namespace Wonga.QA.Tests.Payments
             //Assert.AreEqual(100.0m, Decimal.Parse(parm.Values["MonthlyPaymentAmount"].Single()));
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-111"), Pending("Commented out until query is added to the API")]
+        [Test, AUT(AUT.Uk), JIRA("UK-111"), Owner(Owner.DenisRyzhkov), Pending("Commented out until query is added to the API")]
         public void GetInstallmentQuoteHandlerWithTotalValueLessOrEqualsZeroReturnsError()
         {
             //const string guidId = "5C09C656-721A-4CDD-8EF8-410CC5343DE3";
