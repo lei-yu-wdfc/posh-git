@@ -259,7 +259,7 @@ namespace Wonga.QA.Tests.Comms
             newEntity.Surname = Get.RandomString(8);
             newEntity.MiddleName = Get.RandomString(8);
             newEntity.HomePhone = "0217050520";
-            newEntity.WorkPhone = "0217450510";
+			newEntity.WorkPhone = "0217450510";
             newEntity.HasAccount = 0;
 
             commsDb.Insert(newEntity);

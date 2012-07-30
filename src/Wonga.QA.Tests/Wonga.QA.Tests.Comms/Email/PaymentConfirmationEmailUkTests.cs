@@ -14,6 +14,8 @@ namespace Wonga.QA.Tests.Comms.Email
         private decimal _loanAmount;
         private int _loanTerm;
         private string _emailAddress;
+
+
         [SetUp]
         public virtual void SetUp()
         {
