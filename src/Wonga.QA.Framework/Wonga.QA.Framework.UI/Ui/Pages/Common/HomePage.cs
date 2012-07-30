@@ -39,6 +39,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
         private IWebElement _paydayLoansLink;
         private IWebElement _quickLoanLink;
         private IWebElement _cashLoanLink;
+        private IWebElement _contentSlot1;
+        private IWebElement _wongaCustomersBox;
+        private IWebElement _responsibleLendingBox;
         //private IWebElement _fastCashLink;
         //private IWebElement _cashAdvanceLink;
         //private IWebElement _quickQuidLink;
@@ -296,6 +299,30 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
             _quickLoanLink = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.QuickLoanLink));
             var quickLoanLink = _quickLoanLink.GetAttribute("href");
             return quickLoanLink;
+        }
+
+        public String GetContentSlot1Title()
+        {
+            Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.ContentSlot1Title)));
+            _contentSlot1 = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.ContentSlot1Title));
+            var contenSlot1 = _contentSlot1.GetAttribute("title");
+            return contenSlot1;
+        }
+
+        public String GetWongaCustomersBoxText()
+        {
+            Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.WongaCustomersBoxText)));
+            _wongaCustomersBox = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.WongaCustomersBoxText));
+            var wongaCustomersBox = _wongaCustomersBox.Text;
+            return wongaCustomersBox;
+        }
+
+        public String GetResponsibleLendingBoxText()
+        {
+            Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.ResponsibleLendingBoxText)));
+            _responsibleLendingBox = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.ResponsibleLendingBoxText));
+            var responsibleLendingBox = _responsibleLendingBox.Text;
+            return responsibleLendingBox;
         }
 
         public bool IsMocked()

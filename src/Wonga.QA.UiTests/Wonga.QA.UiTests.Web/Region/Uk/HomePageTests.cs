@@ -96,16 +96,37 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Console.WriteLine(homePage.GetHomePageTechTrack100Link());
 
             //Ensure Payday Loans Alternative link has correct URL
-            Assert.AreEqual("http://rc.uk.wonga.com/content/payday-loans-alternative", homePage.GetHomePagePaydayLoansLink());
+            Assert.AreEqual(url + "content/payday-loans-alternative", homePage.GetHomePagePaydayLoansLink());
             Console.WriteLine(homePage.GetHomePagePaydayLoansLink());
 
             //Ensure Quick Loan link has correct URL
-            Assert.AreEqual("http://rc.uk.wonga.com/content/quick-loan", homePage.GetHomePageQuickLoanLink());
+            Assert.AreEqual(url + "content/quick-loan", homePage.GetHomePageQuickLoanLink());
             Console.WriteLine(homePage.GetHomePageQuickLoanLink());
 
             //Ensure Cash Loan link has correct URL
-            Assert.AreEqual("http://rc.uk.wonga.com/content/cash-loan", homePage.GetHomePageCashLoanLink());
+            Assert.AreEqual(url + "content/cash-loan", homePage.GetHomePageCashLoanLink());
             Console.WriteLine(homePage.GetHomePageCashLoanLink());
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-229"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
+        public void HomePageContentSlotsTest()
+        {
+            var homePage = Client.Home();
+            url = Client.Home().Url;
+
+            //Ensure correct title is present in first content slot in home page
+            Assert.AreEqual("Betty, Earl and Joyce show how wonga.com's short term cash loans put you in control", homePage.GetContentSlot1Title());
+            Console.WriteLine("Content Slot1 title is: " + homePage.GetContentSlot1Title());
+
+            //Ensure correct text is displayed in 'Wonga customers' box in home page
+            Assert.AreEqual("populus survey of 2012 with over 25,000 respondents", homePage.GetWongaCustomersBoxText());
+            Console.WriteLine("Text in Wonga customers box: " + homePage.GetWongaCustomersBoxText());
+
+            //Ensure correct text is displayed in 'Responsible lending' box in home page
+            Assert.AreEqual("Responsible lending", homePage.GetResponsibleLendingBoxText());
+            Console.WriteLine("Responsible lending box heading: " + homePage.GetResponsibleLendingBoxText());
+
+            //TODO - Check the content slots post login
         }
 
         [Test, AUT(AUT.Uk), JIRA("UKWEB-344", "UKWEB-345"), MultipleAsserts, Owner(Owner.OrizuNwokeji), Pending("Test in development. Code in development.")]
