@@ -74,5 +74,7 @@ namespace Wonga.QA.Tests.Core
         DenisRyzhkov,
         [Description("shane.mchugh@wonga.com")]
         ShaneMcHugh
+        [Description("ziming.wang@wonga.com")]
+        ZimingWang
     }
 }

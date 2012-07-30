@@ -39,7 +39,7 @@ namespace Wonga.QA.Tests.BankGateway
             _code = database.SortCodes.OrderByDescending(c => c.CreationDate).ThenByDescending(c => c.SortCodeId).First();
         }
 
-        [Test, JIRA("UK-494")]
+        [Test, JIRA("UK-494"), Owner(Owner.MichaelDoyle)]
         [Ignore]//todo: Test needs updating
         public void SortCodesTableIsUpdatedOnRestart()
         {
@@ -53,7 +53,7 @@ namespace Wonga.QA.Tests.BankGateway
             Assert.Contains(codes.Select(c => c.SortCode), _code.SortCode);
         }
 
-        [Test, JIRA("UK-494"), TestsOn(typeof(UpdateSortCodeTableMessage))]
+        [Test, JIRA("UK-494"), Owner(Owner.MichaelDoyle), TestsOn(typeof(UpdateSortCodeTableMessage))]
         [Ignore] //todo: Test needs updating
         public void SortCodesTableIsUpdatedOnMessage()
         {

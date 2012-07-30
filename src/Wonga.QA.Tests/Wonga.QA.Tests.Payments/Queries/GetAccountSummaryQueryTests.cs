@@ -15,7 +15,7 @@ namespace Wonga.QA.Tests.Payments
 	[TestFixture, Parallelizable(TestScope.All)]
 	public class GetAccountSummaryQueryTests
 	{
-		[Test, AUT(AUT.Uk), JIRA("UK-795")]
+		[Test, AUT(AUT.Uk), JIRA("UK-795"), Owner(Owner.ZimingWang)]
 		[Ignore]
 		public void GetAccountSummaryTest()
 		{

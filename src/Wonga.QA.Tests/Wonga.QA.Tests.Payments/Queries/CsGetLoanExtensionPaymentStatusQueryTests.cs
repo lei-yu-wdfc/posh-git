@@ -87,7 +87,7 @@ namespace Wonga.QA.Tests.Payments.Queries
                                                                          _loanExtensionStatusRepo.ExtendDate == DateTime.Today + TimeSpan.FromDays(21)));
                 }
 
-                [Test, AUT(AUT.Uk)]
+                [Test, AUT(AUT.Uk), Owner(Owner.SeamusHoban)]
                 public void TheStatusOfThePartPaymentCanBeObtainedAndIfPendingWillChangeToSuccess()
                 {
                     GetAndPollExtensionPaymentStatus("PaymentTaken");
@@ -104,7 +104,7 @@ namespace Wonga.QA.Tests.Payments.Queries
                 }
 
                 [Ignore] //Until JH has the failure path complete.
-                [Test, AUT(AUT.Uk)]
+                [Test, AUT(AUT.Uk), Owner(Owner.SeamusHoban)]
                 public void TheStatusOfThePartPaymentCanBeOntainedAndIfPendingWillChangeToFailed()
                 {
                     GetAndPollExtensionPaymentStatus("PaymentFailed");
