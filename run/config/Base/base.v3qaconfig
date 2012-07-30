@@ -48,6 +48,10 @@
 		<Url>localhost/CSAPI</Url>
 	</CSApi>
 	
+	<UCG>
+		<Url>localhost/UCG</Url>
+	</UCG>
+	
 	<Salesforce>
 		<HomePage>http://test.salesforce.com</HomePage>
 		<Username>qa.wonga.com@gmail.com.wip</Username>

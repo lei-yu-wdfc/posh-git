@@ -24,6 +24,7 @@ namespace Wonga.QA.Framework.Core
 
         public static ApiConfig Api { get; set; }
         public static CsConfig Cs { get; set; }
+		public static UcgConfig Ucg { get; set; }
         public static SvcConfig Svc { get; set; }
         public static MsmqConfig Msmq { get; set; }
         public static DbConfig Db { get; set; }       
@@ -107,6 +108,7 @@ namespace Wonga.QA.Framework.Core
             Api = new ApiConfig(GetSettingFromXml("//Api/Url"));
             CommonApi = new CommonApiConfig(GetSettingFromXml("//CommonApi/Url"));
             Cs = new CsConfig(GetSettingFromXml("//CSApi/Url"));
+			Ucg = new UcgConfig(GetSettingFromXml("//UCG/Url"));
             Admin = new AdminConfig { Home = new Uri(GetSettingFromXml("//Admin/HomePage")) };
             PrepaidAdminUI = new PrepaidAdminConfig
             {
@@ -271,6 +273,19 @@ namespace Wonga.QA.Framework.Core
                 Queries = new Uri(uri, "queries");
             }
         }
+
+		public class UcgConfig
+		{
+			public Uri Commands { get; set; }
+			public Uri Queries { get; set; }
+
+			public UcgConfig(String host)
+			{
+				Uri uri = new UriBuilder { Host = host }.Uri;
+				Commands = new Uri(uri, "commands");
+				Queries = new Uri(uri, "queries");
+			}
+		}
 
         public class CsConfig : ApiConfig
         {
