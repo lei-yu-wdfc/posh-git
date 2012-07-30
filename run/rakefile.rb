@@ -67,8 +67,8 @@ task :merge do #ready
   command = File.join(PROGRAMM_FILES, 'Microsoft', 'ILMerge','ILMerge.exe')
     
   params = '/targetplatform:v4,'+read_msbuild_property("MSBuildToolsPath")
-  params += ' /out:' + BIN + '\\' + TESTS + '.dll'
-  params += ' ' + BIN + '\\' + TESTS + '.Core.dll'
+  params += ' /out:' + File.join(BIN, "#{TESTS}.dll")
+  params += ' '+ File.join(BIN, "#{TESTS}.Core.dll")
   include_dlls.each { |dll| params+= ' ' + dll }
         
   exec do |cmd|
@@ -83,13 +83,13 @@ gallio :test, :files, :filter do |g, fls, fltr|
     files = fls.split(';')
     Dir.chdir(BIN)
     files.uniq!
-    files.each { |file| g.addTestAssembly(BIN + '\\' + TESTS + '.' + file + '.dll') }
-  else g.addTestAssembly(BIN + '\\' + TESTS + '.dll')
+    files.each { |file| g.addTestAssembly(File.join(BIN, "#{TESTS}.#{file}.dll")) }
+  else g.addTestAssembly(File.join(BIN, "#{TESTS}.dll"))
   end
 
   g.filter = fltr if fltr and not fltr.empty? 
-  g.reportDirectory = BIN + '\\' + TESTS + '.Report'
-  g.reportNameFormat = TESTS + '.Report'
+  g.reportDirectory = File.join(BIN, "#{TESTS}.Report")
+  g.reportNameFormat = "#{TESTS}.Report"
   g.addReportType("xml")
 end
 
@@ -107,13 +107,13 @@ task :sanity_test => [:config, :build, :merge, :pre_generate_serializers] do
 end
   
 task :convert_reports do
-	command = BIN + '\\Wonga.QA.Tools.ReportConverter\\Wonga.QA.Tools.ReportConverter.exe'
-	params1 = '"' + BIN + '\\' + TESTS + '.Report\\' + TESTS + '.Report.xml" '
-	params1 += '"' + BIN + '\\' + TESTS + '.Report\\' + TESTS + '.Report.html" '
+	command = File.join(BIN,'Wonga.QA.Tools.ReportConverter','Wonga.QA.Tools.ReportConverter.exe')
+	params1 = '"' + File.join(BIN, "#{TESTS}.Report", "#{TESTS}.Report.xml\" ") 
+	params1 += '"' + File.join(BIN, "#{TESTS}.Report", "#{TESTS}.Report.html\" ")
 	params1 += 'html'
 	
-	params2 = '"' + BIN + '\\' + TESTS + '.Report\\' + TESTS + '.Report.xml" '
-	params2 += '"' + BIN + '\\' + TESTS + '.Report\\' + TESTS + '.Report.csv" '
+	params2 = '"' + File.join(BIN, "#{TESTS}.Report", "#{TESTS}.Report.xml\" ")
+	params2 += '"' + File.join(BIN, "#{TESTS}.Report", "#{TESTS}.Report.csv\" ")
 	params2 += 'csv'
 	
 	sh command + ' ' + params1
@@ -126,23 +126,23 @@ msbuild :framework do |msb|
 end
   
 msbuild :tests do |msb|
-  msb.solution = SRC + '\\' + TESTS + '\\' + TESTS + '.sln'
+  msb.solution = File.join(SRC, TESTS, "#{TESTS}.sln")
 end
   
 msbuild :service_tests do |msb|
-  msb.solution = SRC + '\\' + SERVICETESTS + '\\' + SERVICETESTS + '.sln'
+  msb.solution = File.join(SRC, SERVICETESTS, "#{SERVICETESTS}.sln")
 end
   
 msbuild :data_tests do |msb|
-  msb.solution = SRC + '\\' + DATATESTS + '\\' + DATATESTS + '.sln'
+  msb.solution = File.join(SRC, DATATESTS, "#{DATATESTS}.sln")
 end
 
 msbuild :ui_tests do |msb|
-    msb.solution = SRC + '\\' + UITESTS + '\\' + UITESTS + '.sln'
+    msb.solution = File.join(SRC, UITESTS, "#{UITESTS}.sln")
 end
   
 msbuild :tools do |msb|
-  msb.solution = SRC + '\\' + TOOLS + '\\' + TOOLS + '.sln'
+  msb.solution = File.join(SRC, TOOLS, "#{TOOLS}.sln")
 end
 #--
   
