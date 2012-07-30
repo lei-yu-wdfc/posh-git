@@ -317,7 +317,7 @@ namespace Wonga.QA.Framework
                 CaseId = caseId
             });
             Do.With.Timeout(1).Until(
-             () => PaymentsSuppressionsTable.FindBy(ApplicationId: appInternalId, BankruptSuppression: true));
+             () => PaymentsSuppressionsTable.FindBy(ApplicationId: appInternalId, BankruptcySuppression: true));
         }
 
         public static void ManagementReview(Application application, Guid caseId)
