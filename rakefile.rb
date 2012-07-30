@@ -102,26 +102,17 @@ task :sanity_test => [:config, :build, :merge, :pre_generate_serializers] do
 end
   
 task :convert_reports do
-  command = BIN + '\\Wonga.QA.Tools.ReportConverter\\Wonga.QA.Tools.ReportConverter.exe'
-  params1 = '"' + BIN + '\\' + TESTS + '.Report\\' + TESTS + '.Report.xml" '
-  params1 += '"' + BIN + '\\' + TESTS + '.Report\\' + TESTS + '.Report.html" '
-  params1 += 'html'
-  
-  params2 = '"' + BIN + '\\' + TESTS + '.Report\\' + TESTS + '.Report.xml" '
-  params2 += '"' + BIN + '\\' + TESTS + '.Report\\' + TESTS + '.Report.csv" '
-  params2 += 'csv'
-  
-  puts "#{command} #{params1}"
-  exec do |cmd1|
-    cmd1.command = command
-    cmd1.parameters = params1
-  end
-  
-  puts "#{command} #{params2}"  
-  exec do |cmd2|
-    cmd2.command = command
-    cmd2.parameters = params2
-  end
+	command = BIN + '\\Wonga.QA.Tools.ReportConverter\\Wonga.QA.Tools.ReportConverter.exe'
+	params1 = '"' + BIN + '\\' + TESTS + '.Report\\' + TESTS + '.Report.xml" '
+	params1 += '"' + BIN + '\\' + TESTS + '.Report\\' + TESTS + '.Report.html" '
+	params1 += 'html'
+	
+	params2 = '"' + BIN + '\\' + TESTS + '.Report\\' + TESTS + '.Report.xml" '
+	params2 += '"' + BIN + '\\' + TESTS + '.Report\\' + TESTS + '.Report.csv" '
+	params2 += 'csv'
+	
+	sh command + ' ' + params1
+	sh command + ' ' + params2
 end
   
 #-- build tasks for each solution  
