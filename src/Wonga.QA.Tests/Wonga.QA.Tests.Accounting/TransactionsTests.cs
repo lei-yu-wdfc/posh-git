@@ -53,7 +53,7 @@ namespace Wonga.QA.Tests.Ui.Admin
         /// Verifies repayed application balance
         /// </summary>
         [Ignore]
-        [Test, AUT(AUT.Uk)]
+        [Test, AUT(AUT.Uk), Owner(Owner.RomanTertychnyi)]
         public void ClosedApplicationBalance()
         {
             Customer cust = CustomerBuilder.New().Build();
