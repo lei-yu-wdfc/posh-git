@@ -18,7 +18,6 @@ namespace Wonga.QA.Framework
     {
         private static readonly dynamic ApplicationRepo = Drive.Data.Payments.Db.Applications;
         private static readonly dynamic CommsSuppressionsRepo = Drive.Data.Comms.Db.Suppressions;
-        private static readonly dynamic PaymentsSuppressionsRepo = Drive.Data.Payments.Db.PaymentCollectionSuppressions;
         private static readonly dynamic PaymentsSuppressionsTable = Drive.Data.Payments.Db.PaymentCollectionSuppressions;
       
         public static Application DaysFromStart(this Application app, int daysAgo)
@@ -233,8 +232,8 @@ namespace Wonga.QA.Framework
             int appInternalId = GetAppInternalId(application);
             Do.Until(() => CommsSuppressionsRepo.FindAll(
                            CommsSuppressionsRepo.AccountId == application.AccountId && CommsSuppressionsRepo.Complaint == 1).Single());
-            Do.Until(() => PaymentsSuppressionsRepo.FindAll(
-                PaymentsSuppressionsRepo.ApplicationId == appInternalId && PaymentsSuppressionsRepo.ComplaintSuppression == 1).Single());
+            Do.Until(() => PaymentsSuppressionsTable.FindAll(
+                PaymentsSuppressionsTable.ApplicationId == appInternalId && PaymentsSuppressionsTable.ComplaintSuppression == 1).Single());
           }
 
         public static void RemoveComplaint(Application application, Guid caseId)
@@ -246,6 +245,11 @@ namespace Wonga.QA.Framework
                 CaseId = caseId,
             };
             Drive.Cs.Commands.Post(removeComplaint);
+            int appInternalId = GetAppInternalId(application);
+            Do.Until(() => CommsSuppressionsRepo.FindAll(
+                           CommsSuppressionsRepo.AccountId == application.AccountId && CommsSuppressionsRepo.Complaint == 0).Single());
+            Do.Until(() => PaymentsSuppressionsTable.FindAll(
+                PaymentsSuppressionsTable.ApplicationId == appInternalId && PaymentsSuppressionsTable.ComplaintSuppression == 0).Single());
         }
 
         public static void SuspectFraud(Application application, Customer cust, Guid caseId)
