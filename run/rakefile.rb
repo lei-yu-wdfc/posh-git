@@ -39,7 +39,7 @@ end
 
 def get_dlls_list(names)
   if names and not names.empty?
-    list = names.split(';')
+    list = names.split(':')
     list.uniq!
     list.collect! { |name| name = get_full_dll_path name   }
   else
@@ -61,9 +61,9 @@ task :post_test_cleanup do #should be extended
   FileUtils.rm config_files_to_delete
 end
   
-task :config do |t, arg| #ready
-  test_target = ENV['test_target']
-  FileUtils.cp File.join(CONFIG, test_target,'.v3qaconfig'), BIN unless test_target.empty?
+task :config, :test_target do |t, target| #ready
+  target.with_defaults(:test_target => ENV['test_target'])
+  FileUtils.cp File.join(CONFIG, test_target,'.v3qaconfig'), BIN
   puts "test target: #{test_target}"
 end
   
@@ -106,9 +106,12 @@ task :merge do #ready
 end
   
 desc 'run Gallio'
-gallio :gallio, :test_dlls, :test_filter do |g, dlls, fltr| 
+gallio :gallio, :test_dlls, :test_filter do |g, args| 
+ # args.with_defaults(:test_dlls => ENV['test_dlls'], :test_filter=> ENV['test_filter'])
+  dlls = args[:test_dlls]
+  fltr = args[:test_filter]
   if dlls and not dlls.empty?
-    dlls.each { |dll| g.addTestAssembly(dlls) }
+    dlls.each { |dll| g.addTestAssembly(dll) }
   else g.addTestAssembly(File.join(BIN, "#{TESTS}.dll"))
   end
   g.filter = fltr if fltr and not fltr.empty? 
@@ -117,13 +120,16 @@ gallio :gallio, :test_dlls, :test_filter do |g, dlls, fltr|
   g.addReportType("xml")
 end
 
-task :test, :include, :exclude, :test_filter do |t, incl, excl, fltr|
+task :test, :include, :exclude, :test_filter do |t, args|
   args.with_defaults(:include => ENV['include'], :exclude => ENV['exclude'], :test_filter => ENV['test_filter'])
-  include = get_dlls_list incl
-  exclude = get_dlls_list excl
-  test_dlls = include - exclude
-  Rake::Task[:gallio].invoke(test_dlls, fltr)
-  Rake::Task[:convert_reports]
+  incl = get_dlls_list args[:include]
+  excl = get_dlls_list args[:exclude]
+  fltr = args[:test_filter] if args[:test_filter] 
+  test_dlls = incl - excl
+  puts test_dlls
+  puts "filter: #{fltr}"
+  # Rake.application.invoke_task("gallio[#{test_dlls}, #{fltr}]")
+   Rake::Task[:gallio].invoke(:test_dlls => test_dlls, :test_filter => fltr)
 
 end
   
