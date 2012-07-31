@@ -15,5 +15,8 @@ namespace Wonga.QA.Framework.Api.Enums
         LastDayOfMonth,
         [Description("LastFridayOfMonth")]
         LastFridayOfMonth,
+        [Description("TwiceMonthly15thAnd30th")]
+        TwiceMonthly15thAnd30th,
+        
     }
 }
