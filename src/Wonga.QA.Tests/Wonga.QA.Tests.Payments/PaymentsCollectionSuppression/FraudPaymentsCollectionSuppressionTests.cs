@@ -13,7 +13,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.Payments.PaymentsCollectionSuppression
 {
     [TestFixture]
-    [Parallelizable(TestScope.All)]
+    [Parallelizable(TestScope.All), Pending("Depends on salesforce tc so will not run reliably on RC")]
     [AUT(AUT.Uk)]
     public class FraudPaymentsCollectionSuppressionTests
     {
