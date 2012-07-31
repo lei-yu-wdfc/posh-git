@@ -290,6 +290,8 @@
     <ContentSlot1Title>#ctl00_ContentPlaceHolder1_A1</ContentSlot1Title>
     <WongaCustomersBoxText>.populus-survey</WongaCustomersBoxText>
     <ResponsibleLendingBoxText>.responsible-lending-box h1</ResponsibleLendingBoxText>
+    <RepresentativeExampleTrigger>.largetooltiptrigger</RepresentativeExampleTrigger>
+    <RepresentativeExampleText>div .largetooltipbox</RepresentativeExampleText>
   </HomePage>
   
 </UiMap>
