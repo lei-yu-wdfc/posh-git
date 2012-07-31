@@ -9,7 +9,7 @@ using Wonga.QA.UiTests.Web;
 
 namespace Wonga.QA.Tests.Ui.FinancialAssessment
 {
-    [TestFixture]
+    [TestFixture, Parallelizable(TestScope.All)]
     public class FinancialAssessmentIncomeTest : UiTest
     {
         [Test, AUT(AUT.Uk), Category(TestCategories.SmokeTest), Pending("Financial Assessment")]

@@ -15,7 +15,7 @@ using Wonga.QA.UiTests.Web;
 
 namespace Wonga.QA.Tests.Ui.FinancialAssessment
 {
-    [TestFixture]
+    [TestFixture, Parallelizable(TestScope.All)]
     public class FinancialAssessmentAboutYouTest : UiTest
     {
         [Test, AUT(AUT.Uk), Category(TestCategories.SmokeTest), MultipleAsserts, Pending("Financial Assessment")]
