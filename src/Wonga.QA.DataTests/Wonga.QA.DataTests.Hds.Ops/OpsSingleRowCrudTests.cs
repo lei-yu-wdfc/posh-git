@@ -5,6 +5,7 @@ using System.Dynamic;
 using System.Text;
 using System.Threading;
 using MbUnit.Framework;
+using Microsoft.SqlServer.Management.Smo.Agent;
 using Wonga.QA.DataTests.Hds.Common;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Data;
@@ -32,39 +33,37 @@ namespace Wonga.QA.DataTests.Hds.Ops
         dynamic _hdsConnection = Drive.Data.Hds.Db.ops[_tablename];
         dynamic _hdsCurrViewConnection = Drive.Data.Hds.Db.ops[CurrentViewName];
 
-        private bool _cdcStagingAgentJobWasDisabled;
-        private bool _hdsAgentJobWasDisabled;
-
-        private HdsUtilities _hdsUtilities = null;
+        private HdsUtilitiesAgentJob _hdsUtilitiesAgentJob = null;
+        private HdsUtilitiesData _hdsUtilitiesData = null;
+        private bool _cdcStagingAgentJobWasStopped;
+        private bool _hdsAgentJobWasStopped;
 
         [FixtureSetUp]
         [Description("This is the text fixture setup for all tests")]
-
         public void FixtureSetup()
         {
-            _hdsUtilities = new HdsUtilities(HdsUtilities.WongaService.Ops);
+            _hdsUtilitiesAgentJob = new HdsUtilitiesAgentJob(HdsUtilitiesBase.WongaService.Ops);
 
-            _cdcStagingAgentJobWasDisabled = _hdsUtilities.EnableJob(_hdsUtilities.CdcStagingAgentJob);
-            _hdsAgentJobWasDisabled = _hdsUtilities.EnableJob(_hdsUtilities.HdsLoadAgentJob);
+            _cdcStagingAgentJobWasStopped = _hdsUtilitiesAgentJob.StartJob(_hdsUtilitiesAgentJob.CdcStagingAgentJob);
+            _hdsAgentJobWasStopped = _hdsUtilitiesAgentJob.StartJob(_hdsUtilitiesAgentJob.HdsLoadAgentJob);
+
+            _hdsUtilitiesData = new HdsUtilitiesData(HdsUtilitiesBase.WongaService.Ops);
         }
-
 
         [FixtureTearDown]
         [Description("This is the text fixture teardown for all tests")]
-
         public void FixtureTearDown()
         {
-            if (_cdcStagingAgentJobWasDisabled)
+            if (_cdcStagingAgentJobWasStopped)
             {
-                _hdsUtilities.DisableJob(_hdsUtilities.CdcStagingAgentJob);
+                _hdsUtilitiesAgentJob.StopJob(_hdsUtilitiesAgentJob.CdcStagingAgentJob);
             }
 
-            if (_hdsAgentJobWasDisabled)
+            if (_hdsAgentJobWasStopped)
             {
-                _hdsUtilities.DisableJob(_hdsUtilities.HdsLoadAgentJob);
+                _hdsUtilitiesAgentJob.StopJob(_hdsUtilitiesAgentJob.HdsLoadAgentJob);
             }
         }
-
 
         /// <summary>
         /// insert new record 
@@ -73,26 +72,14 @@ namespace Wonga.QA.DataTests.Hds.Ops
         /// 
        
         private dynamic InsertNewRecord(dynamic connection)
-        {
-           
-            /*
-            dynamic account = new ExpandoObject();
-
-            account.ExternalId = Guid.NewGuid();
-            account.Login = Get.RandomEmail();
-            account.CreatedOn = DateTime.Now;
-            account.Password = _hdsUtilities.StringToByteArray(Get.GetPassword());
-            account.Salt = _hdsUtilities.StringToByteArray(Get.GetPassword());
-             * */
-            
+        {                  
            // var sourceRecord = connection.Insert(account);
            var sourceRecord = connection.Insert(ExternalId: Guid.NewGuid(),
                                                   Login: Get.RandomEmail()  ,
                                                   CreatedOn: DateTime.Now,
-                                                  Password: _hdsUtilities.StringToByteArray(Get.GetPassword()),
-                                                  Salt: _hdsUtilities.StringToByteArray(Get.GetPassword()));
-            
-                                               
+                                                  Password: _hdsUtilitiesData.StringToByteArray(Get.GetPassword()),
+                                                  Salt: _hdsUtilitiesData.StringToByteArray(Get.GetPassword()));
+                                                           
             return sourceRecord;
         }
 
@@ -126,29 +113,29 @@ namespace Wonga.QA.DataTests.Hds.Ops
 
 
             // Allow for CDC to pick up the data
-            Thread.Sleep(HdsUtilities.CdcWaitTimeMilliseconds);
+            Thread.Sleep(HdsUtilitiesAgentJob.CdcWaitTimeMilliseconds);
 
             // Wait for hds and cdc load job to run
-            SQLServerAgentJobs.WaitUntilJobComplete(_hdsUtilities.CdcStagingAgentJob);
-            SQLServerAgentJobs.WaitUntilJobComplete(_hdsUtilities.HdsLoadAgentJob);
+            _hdsUtilitiesAgentJob.WaitForLoadExecutionCycle(HdsUtilitiesBase.SystemComponent.CDCStaging);
+            _hdsUtilitiesAgentJob.WaitForLoadExecutionCycle(HdsUtilitiesBase.SystemComponent.HDS);
 
             //Check total record count in Cdc 
-            _hdsUtilities.RecordCount(key, 1, _cdcConnection, _columnname, "CDCStaging");
+            _hdsUtilitiesData.RecordCount(key, 1, _cdcConnection, _columnname, "CDCStaging");
 
             //Select the inserted record from cdcstaging and check it matches with source data
-            DateTime cdcCommittime = _hdsUtilities.CompareCdcRecord(sourceRecord, _cdcConnection, key, _columnname, 2);
+            DateTime cdcCommittime = _hdsUtilitiesData.CompareCdcRecord(sourceRecord, _cdcConnection, key, _columnname, 2);
 
             //Check the Total Record count in HDS
-            _hdsUtilities.RecordCount(key, 1, _hdsConnection, _columnname, "Hds");
+            _hdsUtilitiesData.RecordCount(key, 1, _hdsConnection, _columnname, "Hds");
 
             // checking  record exist in hds with correct hdslsn,hdsfrm and hdsTo 
-            _hdsUtilities.CompareHdscRecord(sourceRecord, _hdsConnection, key, cdcCommittime, _dthdsDefaultTo, _columnname, 0);
+            _hdsUtilitiesData.CompareHdscRecord(sourceRecord, _hdsConnection, key, cdcCommittime, _dthdsDefaultTo, _columnname, 0);
 
             //Checking record count in payment.vw_CalendarDates_Current view
-            _hdsUtilities.RecordCount(key, 1, _hdsCurrViewConnection, _columnname, "HdsCurrentView");
+            _hdsUtilitiesData.RecordCount(key, 1, _hdsCurrViewConnection, _columnname, "HdsCurrentView");
 
             //Checking data in payment.vw_CalendarDates_Current view
-            _hdsUtilities.CompareViewRecord(sourceRecord, _hdsCurrViewConnection, key, _columnname);
+            _hdsUtilitiesData.CompareViewRecord(sourceRecord, _hdsCurrViewConnection, key, _columnname);
 
         }
 
@@ -168,34 +155,34 @@ namespace Wonga.QA.DataTests.Hds.Ops
                 UpdateRecord(transaction[_schemaName][_tablename], key);
                 transaction.Commit();
 
-                var updatedSrcRecord = _hdsUtilities.UpdatedSourceRecord(_serviceConnection, key, _columnname);
+                var updatedSrcRecord = _hdsUtilitiesData.UpdatedSourceRecord(_serviceConnection, key, _columnname);
                 // Allow for CDC to pick up the data
-                Thread.Sleep(HdsUtilities.CdcWaitTimeMilliseconds);
+                Thread.Sleep(HdsUtilitiesAgentJob.CdcWaitTimeMilliseconds);
 
                 // Wait for hds and cdc load job to run
-                SQLServerAgentJobs.WaitUntilJobComplete(_hdsUtilities.CdcStagingAgentJob);
-                SQLServerAgentJobs.WaitUntilJobComplete(_hdsUtilities.HdsLoadAgentJob);
+                _hdsUtilitiesAgentJob.WaitForLoadExecutionCycle(HdsUtilitiesBase.SystemComponent.CDCStaging);
+                _hdsUtilitiesAgentJob.WaitForLoadExecutionCycle(HdsUtilitiesBase.SystemComponent.HDS);
 
                 //Check total record count in Cdc 
-                _hdsUtilities.RecordCount(key, 3, _cdcConnection, _columnname, "CDCStaging");
+                _hdsUtilitiesData.RecordCount(key, 3, _cdcConnection, _columnname, "CDCStaging");
 
                 //Select the inserted record from cdcstaging and check it matches with inserted source data
-                _hdsUtilities.CompareCdcRecord(sourceRecord, _cdcConnection, key, _columnname, 2);
+                _hdsUtilitiesData.CompareCdcRecord(sourceRecord, _cdcConnection, key, _columnname, 2);
 
                 //Select the updated record from cdcstaging and check it matches with updated source data 
-                DateTime updatedCommittime = _hdsUtilities.CompareCdcRecord(updatedSrcRecord, _cdcConnection, key, _columnname, 4);
+                DateTime updatedCommittime = _hdsUtilitiesData.CompareCdcRecord(updatedSrcRecord, _cdcConnection, key, _columnname, 4);
 
                 //Check the Total Record count in HDS
-                _hdsUtilities.RecordCount(key, 1, _hdsConnection, _columnname, "Hds");
+                _hdsUtilitiesData.RecordCount(key, 1, _hdsConnection, _columnname, "Hds");
 
                 //Checking  only updated record exist in hds with correct hdslsn,hdsfrm and hdsTo 
-                _hdsUtilities.CompareHdscRecord(updatedSrcRecord, _hdsConnection, key, updatedCommittime, _dthdsDefaultTo, _columnname, 0);
+                _hdsUtilitiesData.CompareHdscRecord(updatedSrcRecord, _hdsConnection, key, updatedCommittime, _dthdsDefaultTo, _columnname, 0);
 
                 //Checking record count in payment.vw_CalendarDates_Current view
-                _hdsUtilities.RecordCount(key, 1, _hdsCurrViewConnection, _columnname, "HdsCurrentView");
+                _hdsUtilitiesData.RecordCount(key, 1, _hdsCurrViewConnection, _columnname, "HdsCurrentView");
 
                 //Checking data in payment.vw_CalendarDates_Current view
-                _hdsUtilities.CompareViewRecord(updatedSrcRecord, _hdsCurrViewConnection, key, _columnname);
+                _hdsUtilitiesData.CompareViewRecord(updatedSrcRecord, _hdsCurrViewConnection, key, _columnname);
 
             }
         }
@@ -215,38 +202,38 @@ namespace Wonga.QA.DataTests.Hds.Ops
             UpdateRecord(_serviceConnection, key);
 
             //selected the source record after update
-            var updatedSrcRecord = _hdsUtilities.UpdatedSourceRecord(_serviceConnection, key, _columnname);
+            var updatedSrcRecord = _hdsUtilitiesData.UpdatedSourceRecord(_serviceConnection, key, _columnname);
 
             // Allow for CDC to pick up the data
-            Thread.Sleep(HdsUtilities.CdcWaitTimeMilliseconds);
+            Thread.Sleep(HdsUtilitiesAgentJob.CdcWaitTimeMilliseconds);
 
             // Wait for hds and cdc load job to run
-            SQLServerAgentJobs.WaitUntilJobComplete(_hdsUtilities.CdcStagingAgentJob);
-            SQLServerAgentJobs.WaitUntilJobComplete(_hdsUtilities.HdsLoadAgentJob);
+            _hdsUtilitiesAgentJob.WaitForLoadExecutionCycle(HdsUtilitiesBase.SystemComponent.CDCStaging);
+            _hdsUtilitiesAgentJob.WaitForLoadExecutionCycle(HdsUtilitiesBase.SystemComponent.HDS);
 
             //Check total record count in Cdc 
-            _hdsUtilities.RecordCount(key, 3, _cdcConnection, _columnname, "CDCStaging");
+            _hdsUtilitiesData.RecordCount(key, 3, _cdcConnection, _columnname, "CDCStaging");
 
             //Select the inserted record from cdcstaging and check it matches inserted source data
-            DateTime insertedCommittime = _hdsUtilities.CompareCdcRecord(sourceRecord, _cdcConnection, key, _columnname, 2);
+            DateTime insertedCommittime = _hdsUtilitiesData.CompareCdcRecord(sourceRecord, _cdcConnection, key, _columnname, 2);
 
             //Select the updated record from cdcstaging and check it matches with source data after update
-            DateTime updatedCommittime = _hdsUtilities.CompareCdcRecord(updatedSrcRecord, _cdcConnection, key, _columnname, 4);
+            DateTime updatedCommittime = _hdsUtilitiesData.CompareCdcRecord(updatedSrcRecord, _cdcConnection, key, _columnname, 4);
 
             //Check the Total Record count in HDS
-            _hdsUtilities.RecordCount(key, 2, _hdsConnection, _columnname, "Hds");
+            _hdsUtilitiesData.RecordCount(key, 2, _hdsConnection, _columnname, "Hds");
 
             //Checking  inserted record exist in hds with correct hdslsn,hdsfrm and hdsTo 
-            _hdsUtilities.CompareHdscRecord(sourceRecord, _hdsConnection, key, insertedCommittime, updatedCommittime, _columnname, 0);
+            _hdsUtilitiesData.CompareHdscRecord(sourceRecord, _hdsConnection, key, insertedCommittime, updatedCommittime, _columnname, 0);
 
             //Checking  updated record exist in hds with correct hdslsn,hdsfrm and hdsTo 
-            _hdsUtilities.CompareHdscRecord(updatedSrcRecord, _hdsConnection, key, updatedCommittime, _dthdsDefaultTo, _columnname, 0);
+            _hdsUtilitiesData.CompareHdscRecord(updatedSrcRecord, _hdsConnection, key, updatedCommittime, _dthdsDefaultTo, _columnname, 0);
 
             //Checking record count in payment.vw_CalendarDates_Current view
-            _hdsUtilities.RecordCount(key, 1, _hdsCurrViewConnection, _columnname, "HdsCurrentView");
+            _hdsUtilitiesData.RecordCount(key, 1, _hdsCurrViewConnection, _columnname, "HdsCurrentView");
 
             //Checking data in payment.vw_CalendarDates_Current view
-            _hdsUtilities.CompareViewRecord(updatedSrcRecord, _hdsCurrViewConnection, key, _columnname);
+            _hdsUtilitiesData.CompareViewRecord(updatedSrcRecord, _hdsCurrViewConnection, key, _columnname);
 
         }
 
@@ -265,11 +252,11 @@ namespace Wonga.QA.DataTests.Hds.Ops
             int key = (int)((IDictionary<string, object>)sourceRecord)[_columnname];
 
             // Allow for CDC to pick up the data
-            Thread.Sleep(HdsUtilities.CdcWaitTimeMilliseconds);
+            Thread.Sleep(HdsUtilitiesAgentJob.CdcWaitTimeMilliseconds);
 
             // Wait for hds and cdc load job to run
-            SQLServerAgentJobs.WaitUntilJobComplete(_hdsUtilities.CdcStagingAgentJob);
-            SQLServerAgentJobs.WaitUntilJobComplete(_hdsUtilities.HdsLoadAgentJob);
+            _hdsUtilitiesAgentJob.WaitForLoadExecutionCycle(HdsUtilitiesBase.SystemComponent.CDCStaging);
+            _hdsUtilitiesAgentJob.WaitForLoadExecutionCycle(HdsUtilitiesBase.SystemComponent.HDS);
 
             //----------------------------------- 2nd Load----------------------------------------------
 
@@ -277,41 +264,41 @@ namespace Wonga.QA.DataTests.Hds.Ops
             UpdateRecord(_serviceConnection, key);
 
             //selected the source record after update
-            var updatedSrcRecord = _hdsUtilities.UpdatedSourceRecord(_serviceConnection, key, _columnname);
+            var updatedSrcRecord = _hdsUtilitiesData.UpdatedSourceRecord(_serviceConnection, key, _columnname);
 
             // Allow for CDC to pick up the data
-            Thread.Sleep(HdsUtilities.CdcWaitTimeMilliseconds);
+            Thread.Sleep(HdsUtilitiesAgentJob.CdcWaitTimeMilliseconds);
 
             // Wait for hds and cdc load job to run
-            SQLServerAgentJobs.WaitUntilJobComplete(_hdsUtilities.CdcStagingAgentJob);
-            SQLServerAgentJobs.WaitUntilJobComplete(_hdsUtilities.HdsLoadAgentJob);
+            _hdsUtilitiesAgentJob.WaitForLoadExecutionCycle(HdsUtilitiesBase.SystemComponent.CDCStaging);
+            _hdsUtilitiesAgentJob.WaitForLoadExecutionCycle(HdsUtilitiesBase.SystemComponent.HDS);
 
             //----------------------------------- Check cdc and hds data----------------------------------------------
             //Check total record count in Cdc 
-            _hdsUtilities.RecordCount(key, 3, _cdcConnection, _columnname, "CDCStaging");
+            _hdsUtilitiesData.RecordCount(key, 3, _cdcConnection, _columnname, "CDCStaging");
 
 
             //Select the inserted record from cdcstaging and check it matches inserted source data
-            DateTime insertedCommittime = _hdsUtilities.CompareCdcRecord(sourceRecord, _cdcConnection, key, _columnname, 2);
+            DateTime insertedCommittime = _hdsUtilitiesData.CompareCdcRecord(sourceRecord, _cdcConnection, key, _columnname, 2);
 
             //Select the updated record from cdcstaging and check it matches with source data after update
-            DateTime updatedCommittime = _hdsUtilities.CompareCdcRecord(updatedSrcRecord, _cdcConnection, key, _columnname, 4);
+            DateTime updatedCommittime = _hdsUtilitiesData.CompareCdcRecord(updatedSrcRecord, _cdcConnection, key, _columnname, 4);
 
             //Check the Total Record count in HDS
-            _hdsUtilities.RecordCount(key, 2, _hdsConnection, _columnname, "Hds");
+            _hdsUtilitiesData.RecordCount(key, 2, _hdsConnection, _columnname, "Hds");
 
             //Checking  inserted record exist in hds with correct hdslsn,hdsfrm and hdsTo 
-            _hdsUtilities.CompareHdscRecord(sourceRecord, _hdsConnection, key, insertedCommittime, updatedCommittime, _columnname, 0);
+            _hdsUtilitiesData.CompareHdscRecord(sourceRecord, _hdsConnection, key, insertedCommittime, updatedCommittime, _columnname, 0);
 
             //Checking  updated record exist in hds with correct hdslsn,hdsfrm and hdsTo 
-            _hdsUtilities.CompareHdscRecord(updatedSrcRecord, _hdsConnection, key, updatedCommittime, _dthdsDefaultTo, _columnname, 0);
+            _hdsUtilitiesData.CompareHdscRecord(updatedSrcRecord, _hdsConnection, key, updatedCommittime, _dthdsDefaultTo, _columnname, 0);
 
 
             //Checking record count in payment.vw_CalendarDates_Current view
-            _hdsUtilities.RecordCount(key, 1, _hdsCurrViewConnection, _columnname, "HdsCurrentView");
+            _hdsUtilitiesData.RecordCount(key, 1, _hdsCurrViewConnection, _columnname, "HdsCurrentView");
 
             //Checking data in payment.vw_CalendarDates_Current view
-            _hdsUtilities.CompareViewRecord(updatedSrcRecord, _hdsCurrViewConnection, key, _columnname);
+            _hdsUtilitiesData.CompareViewRecord(updatedSrcRecord, _hdsCurrViewConnection, key, _columnname);
 
         }
 
@@ -330,34 +317,34 @@ namespace Wonga.QA.DataTests.Hds.Ops
             DeleteRecord(_serviceConnection, key);
 
             // Allow for CDC to pick up the data
-            Thread.Sleep(HdsUtilities.CdcWaitTimeMilliseconds);
+            Thread.Sleep(HdsUtilitiesAgentJob.CdcWaitTimeMilliseconds);
 
             // Wait for hds and cdc load job to run
-            SQLServerAgentJobs.WaitUntilJobComplete(_hdsUtilities.CdcStagingAgentJob);
-            SQLServerAgentJobs.WaitUntilJobComplete(_hdsUtilities.HdsLoadAgentJob);
+            _hdsUtilitiesAgentJob.WaitForLoadExecutionCycle(HdsUtilitiesBase.SystemComponent.CDCStaging);
+            _hdsUtilitiesAgentJob.WaitForLoadExecutionCycle(HdsUtilitiesBase.SystemComponent.HDS);
 
             //Check total record count in Cdc 
-            _hdsUtilities.RecordCount(key, 2, _cdcConnection, _columnname, "CDCStaging");
+            _hdsUtilitiesData.RecordCount(key, 2, _cdcConnection, _columnname, "CDCStaging");
 
 
             //Select the inserted record from cdcstaging and check it matches source data
-            DateTime insertedCommittime = _hdsUtilities.CompareCdcRecord(sourceRecord, _cdcConnection, key, _columnname, 2);
+            DateTime insertedCommittime = _hdsUtilitiesData.CompareCdcRecord(sourceRecord, _cdcConnection, key, _columnname, 2);
 
 
             //Select the delete record from cdcstaging and check it matches with source data 
-            DateTime deletedCommittime = _hdsUtilities.CompareCdcRecord(sourceRecord, _cdcConnection, key, _columnname, 1);
+            DateTime deletedCommittime = _hdsUtilitiesData.CompareCdcRecord(sourceRecord, _cdcConnection, key, _columnname, 1);
 
             //Check the Total Record count in HDS
-            _hdsUtilities.RecordCount(key, 2, _hdsConnection, _columnname, "Hds");
+            _hdsUtilitiesData.RecordCount(key, 2, _hdsConnection, _columnname, "Hds");
 
             //Checking  inserted record exist in hds with correct hdslsn,hdsfrm and hdsTo 
-            _hdsUtilities.CompareHdscRecord(sourceRecord, _hdsConnection, key, insertedCommittime, deletedCommittime, _columnname, 0);
+            _hdsUtilitiesData.CompareHdscRecord(sourceRecord, _hdsConnection, key, insertedCommittime, deletedCommittime, _columnname, 0);
 
             //Checking deleted record exist in hds with correct hdslsn,hdsfrm and hdsTo 
-            _hdsUtilities.CompareHdscRecord(sourceRecord, _hdsConnection, key, deletedCommittime, _dthdsDefaultTo, _columnname, 1);
+            _hdsUtilitiesData.CompareHdscRecord(sourceRecord, _hdsConnection, key, deletedCommittime, _dthdsDefaultTo, _columnname, 1);
 
             //Checking record count in payment.vw_CalendarDates_Current view
-            _hdsUtilities.RecordCount(key, 0, _hdsCurrViewConnection, _columnname, "HdsCurrentView");
+            _hdsUtilitiesData.RecordCount(key, 0, _hdsCurrViewConnection, _columnname, "HdsCurrentView");
 
         }
 
@@ -373,11 +360,11 @@ namespace Wonga.QA.DataTests.Hds.Ops
             int key = (int)((IDictionary<string, object>)sourceRecord)[_columnname];
 
             // Allow for CDC to pick up the data
-            Thread.Sleep(HdsUtilities.CdcWaitTimeMilliseconds);
+            Thread.Sleep(HdsUtilitiesAgentJob.CdcWaitTimeMilliseconds);
 
             // Wait for hds and cdc load job to run
-            SQLServerAgentJobs.WaitUntilJobComplete(_hdsUtilities.CdcStagingAgentJob);
-            SQLServerAgentJobs.WaitUntilJobComplete(_hdsUtilities.HdsLoadAgentJob);
+            _hdsUtilitiesAgentJob.WaitForLoadExecutionCycle(HdsUtilitiesBase.SystemComponent.CDCStaging);
+            _hdsUtilitiesAgentJob.WaitForLoadExecutionCycle(HdsUtilitiesBase.SystemComponent.HDS);
 
 
             //-------------------2nd load.........................................................
@@ -385,33 +372,33 @@ namespace Wonga.QA.DataTests.Hds.Ops
             DeleteRecord(_serviceConnection, key);
 
             // Allow for CDC to pick up the data
-            Thread.Sleep(HdsUtilities.CdcWaitTimeMilliseconds);
+            Thread.Sleep(HdsUtilitiesAgentJob.CdcWaitTimeMilliseconds);
 
             // Wait for hds and cdc load job to run
-            SQLServerAgentJobs.WaitUntilJobComplete(_hdsUtilities.CdcStagingAgentJob);
-            SQLServerAgentJobs.WaitUntilJobComplete(_hdsUtilities.HdsLoadAgentJob);
+            _hdsUtilitiesAgentJob.WaitForLoadExecutionCycle(HdsUtilitiesBase.SystemComponent.CDCStaging);
+            _hdsUtilitiesAgentJob.WaitForLoadExecutionCycle(HdsUtilitiesBase.SystemComponent.HDS);
 
             //-------------------check hds and cdc record after insert and delete.........................................................
             //Check total record count in Cdc 
-            _hdsUtilities.RecordCount(key, 2, _cdcConnection, _columnname, "CDCStaging");
+            _hdsUtilitiesData.RecordCount(key, 2, _cdcConnection, _columnname, "CDCStaging");
 
             //Select the inserted record from cdcstaging and check it matches source data
-            DateTime insertedCommittime = _hdsUtilities.CompareCdcRecord(sourceRecord, _cdcConnection, key, _columnname, 2);
+            DateTime insertedCommittime = _hdsUtilitiesData.CompareCdcRecord(sourceRecord, _cdcConnection, key, _columnname, 2);
 
             //Select the delete record from cdcstaging and check it matches with source data 
-            DateTime deletedCommittime = _hdsUtilities.CompareCdcRecord(sourceRecord, _cdcConnection, key, _columnname, 1);
+            DateTime deletedCommittime = _hdsUtilitiesData.CompareCdcRecord(sourceRecord, _cdcConnection, key, _columnname, 1);
 
             //Check the Total Record count in HDS
-            _hdsUtilities.RecordCount(key, 2, _hdsConnection, _columnname, "Hds");
+            _hdsUtilitiesData.RecordCount(key, 2, _hdsConnection, _columnname, "Hds");
 
             //Checking  inserted record exist in hds with correct hdslsn,hdsfrm and hdsTo 
-            _hdsUtilities.CompareHdscRecord(sourceRecord, _hdsConnection, key, insertedCommittime, deletedCommittime, _columnname, 0);
+            _hdsUtilitiesData.CompareHdscRecord(sourceRecord, _hdsConnection, key, insertedCommittime, deletedCommittime, _columnname, 0);
 
             //Checking deleted record exist in hds with correct hdslsn,hdsfrm and hdsTo 
-            _hdsUtilities.CompareHdscRecord(sourceRecord, _hdsConnection, key, deletedCommittime, _dthdsDefaultTo, _columnname, 1);
+            _hdsUtilitiesData.CompareHdscRecord(sourceRecord, _hdsConnection, key, deletedCommittime, _dthdsDefaultTo, _columnname, 1);
 
             //Checking record count in payment.vw_CalendarDates_Current view
-            _hdsUtilities.RecordCount(key, 0, _hdsCurrViewConnection, _columnname, "HdsCurrentView");
+            _hdsUtilitiesData.RecordCount(key, 0, _hdsCurrViewConnection, _columnname, "HdsCurrentView");
 
         }
      }

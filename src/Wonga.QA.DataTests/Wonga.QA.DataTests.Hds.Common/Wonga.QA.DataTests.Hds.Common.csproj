@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="MbUnit, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.SqlServer.SqlEnum, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="Simple.Data, Version=0.16.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\lib\nuget\packages\Simple.Data.Core.0.16.0.0\lib\net40\Simple.Data.dll</HintPath>
@@ -49,7 +50,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HDSUtilities.cs" />
+    <Compile Include="HDSUtilitiesAgentJob.cs" />
+    <Compile Include="HDSUtilitiesBase.cs" />
+    <Compile Include="HDSUtilitiesData.cs" />
     <Compile Include="InitialLoad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reconciliation.cs" />

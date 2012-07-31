@@ -15,6 +15,32 @@ namespace Wonga.QA.Framework.Data
     {
 
         /// <summary>
+        /// Starts a job
+        /// </summary>
+        /// <param name="jobName">The name of the SQL Server agent job to start</param>
+        public static void Start(string jobName)
+        {
+            Server srv = new Server(new DataDriver().Hds.Server);
+
+            Job specificJob = new Job(srv.JobServer, jobName);
+            specificJob.Refresh();
+            specificJob.Start();
+        }
+
+        /// <summary>
+        /// Stops a job
+        /// </summary>
+        /// <param name="jobName">The name of the SQL Server agent job to stop</param>
+        public static void Stop(string jobName)
+        {
+            Server srv = new Server(new DataDriver().Hds.Server);
+
+            Job specificJob = new Job(srv.JobServer, jobName);
+            specificJob.Refresh();
+            specificJob.Stop();
+        }
+
+        /// <summary>
         /// Executes a job and returns if the job was successful or not.
         /// </summary>
         /// <param name="jobName">The name of the SQL Server agent job to execute</param>

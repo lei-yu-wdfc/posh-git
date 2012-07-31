@@ -10,12 +10,12 @@ namespace Wonga.QA.DataTests.Hds.Payments
     public class PaymentsInitialLoadTests
     {
         [Test]
-        [Description("Run payments initial load and confirm that it succeeds")]
+        [Description("Run Payments initial load and confirm that it succeeds")]
         public void RunInitialLoadAndConfirmThatItSucceeds()
         {
             InitialLoad initialLoad = new InitialLoad();
 
-            initialLoad.RunInitialLoadAndConfirmThatItSucceeds(HdsUtilities.WongaService.Payments);
+            initialLoad.RunInitialLoadAndConfirmThatItSucceeds(HdsUtilitiesBase.WongaService.Payments);
         }
     }
 }

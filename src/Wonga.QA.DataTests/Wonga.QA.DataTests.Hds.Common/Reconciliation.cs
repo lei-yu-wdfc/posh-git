@@ -11,11 +11,11 @@ namespace Wonga.QA.DataTests.Hds.Common
         /// Run the reconcilliation and confirm that it succeeds
         /// </summary>
         /// <param name="wongaService">Service to run for</param>
-        public void RunReconciliationAndConfirmThatItSucceeds(HdsUtilities.WongaService wongaService)
+        public void RunReconciliationAndConfirmThatItSucceeds(HdsUtilitiesBase.WongaService wongaService)
         {
-            HdsUtilities hdsUtilities = new HdsUtilities(wongaService);
+            HdsUtilitiesAgentJob hdsUtilitiesAgentJob = new HdsUtilitiesAgentJob(wongaService);
 
-            bool jobSuccess = SQLServerAgentJobs.Execute(hdsUtilities.HdsReconcileAgentJob);
+            bool jobSuccess = SQLServerAgentJobs.Execute(hdsUtilitiesAgentJob.HdsReconcileAgentJob);
 
             // check job succeeds
             Assert.IsTrue(jobSuccess);

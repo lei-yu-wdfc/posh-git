@@ -6,7 +6,7 @@ namespace Wonga.QA.DataTests.Hds.Payments
     [TestFixture(Order = 4)]
     [Category("Reconciliation")]
     [Category("Payments")]
-    [Parallelizable(TestScope.All)]
+    [Parallelizable]
     public class PaymentsReconciliationTests
     {
         [Test]
@@ -15,7 +15,7 @@ namespace Wonga.QA.DataTests.Hds.Payments
         {
             Reconciliation reconciliation = new Reconciliation();
 
-            reconciliation.RunReconciliationAndConfirmThatItSucceeds(HdsUtilities.WongaService.Payments);
+            reconciliation.RunReconciliationAndConfirmThatItSucceeds(HdsUtilitiesBase.WongaService.Payments);
         }
     }
 }

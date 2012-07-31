@@ -15,7 +15,7 @@ namespace Wonga.QA.DataTests.Hds.Comms
         {
             InitialLoad initialLoad = new InitialLoad();
 
-            initialLoad.RunInitialLoadAndConfirmThatItSucceeds(HdsUtilities.WongaService.Comms);
+            initialLoad.RunInitialLoadAndConfirmThatItSucceeds(HdsUtilitiesBase.WongaService.Comms);
         }
     }
 }

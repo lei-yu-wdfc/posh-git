@@ -15,7 +15,7 @@ namespace Wonga.QA.DataTests.Hds.Ops
         {
             Reconciliation reconciliation = new Reconciliation();
 
-            reconciliation.RunReconciliationAndConfirmThatItSucceeds(HdsUtilities.WongaService.Ops);
+            reconciliation.RunReconciliationAndConfirmThatItSucceeds(HdsUtilitiesBase.WongaService.Ops);
         }
     }
 }
