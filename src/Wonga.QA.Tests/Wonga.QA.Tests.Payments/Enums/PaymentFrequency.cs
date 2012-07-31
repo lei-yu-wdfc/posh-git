@@ -12,6 +12,7 @@ namespace Wonga.QA.Tests.Payments.Enums
         Weekly = 3,
         LastDayOfMonth = 4,
         LastFridayOfMonth = 5,
-        BiWeekly = 6
+        BiWeekly = 6,
+        TwiceMonthly15thAnd30th=9
     }
 }
