@@ -41,7 +41,7 @@ namespace Wonga.QA.Tests.Api
 
 
         [Test, AUT(AUT.Uk), JIRA("QA-320"), Ignore, Owner(Owner.PetrTarasenko)]
-        [Row(225, 1)]
+        [Row(255, 1)]
         [Row(225, 2)]
         [Row(225, 3)]
         [Row(200, 5)]
@@ -49,13 +49,14 @@ namespace Wonga.QA.Tests.Api
         [Row(150, 30)]
         [Row(120, 60)]
         [Row(75, 90)]
-        public void CreateArrearsCustomersWithProperInfo(int customerNum, uint day)
+        public void CreateArrearsCustomersWithProperInfo(int customerNum, int day)
         {
             for (int i = 0; i < customerNum; i++)
             {
                 Customer properCustomer = properCustomerCreator();
                 Application aplication = ApplicationBuilder.New(properCustomer).Build();
-                aplication.PutIntoArrears(day);
+                //aplication.PutIntoArrears(day);
+                aplication.UpdateNextDueDate(-day);
 
             }
 
@@ -84,6 +85,7 @@ namespace Wonga.QA.Tests.Api
                 Customer properCustomer = properCustomerCreator();
                 Application application = ApplicationBuilder.New(properCustomer).Build();
                 application.MakeDueToday();
+
 
             }
 
