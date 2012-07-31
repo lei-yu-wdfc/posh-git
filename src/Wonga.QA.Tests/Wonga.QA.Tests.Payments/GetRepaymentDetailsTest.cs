@@ -11,14 +11,14 @@ namespace Wonga.QA.Tests.Payments
 {
     class GetRepaymentDetailsTest
     {
-        [Test, AUT(AUT.Uk), JIRA("UK-1112"), Pending("Commented out until query is added to the API")]
+        [Test, AUT(AUT.Uk), JIRA("UK-1112"), Pending("Commented out until query is added to the API"), Owner(Owner.DenisRyzhkov)]
         public void GetRepaymentDetailsHandler()
         {
             //Guid aplId = Guid.Parse("AC36B516-6096-41D9-BD13-BC2661EC5A5B");
 
             //var parm =  Drive.Api.Queries.Post(new GetRepaymentDetailsQuery { ApplicationId = aplId });
 
-            //var repDate = parm.Values["RepaymentDate"];
+            //var repDate = parm.Values["RepaymentDate"];ClosedApplicationBalance
             //var repAmount = (parm.Values["RepaymentAmount"]);
 
             //List<string > repDateArray = new List<string>();

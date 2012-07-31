@@ -15,7 +15,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	{
 		private const RiskMask TestMask = RiskMask.TESTTooManyLoansAtAddress;
 
-        [Test, AUT(AUT.Uk), JIRA("UK-848")]
+        [Test, AUT(AUT.Uk), JIRA("UK-848"), Owner(Owner.StanDesyatnikov)]
         public void AcceptForOneApplication()
         {
             const string foreName = "Janet";
@@ -32,7 +32,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.TooManyLoansAtAddress));
         }
 
-		[Test, AUT(AUT.Uk), JIRA("UK-848"), Category(TestCategories.CoreTest)]
+		[Test, AUT(AUT.Uk), JIRA("UK-848"), Category(TestCategories.CoreTest), Owner(Owner.StanDesyatnikov)]
         public void DeclinedIfTooManyOpenLoans()
         {
             /* The test scenario is that there cant be more then 3 loans at the same address

@@ -22,7 +22,7 @@ namespace Wonga.QA.Tests.Comms
     [Parallelizable(TestScope.All)]
     public class CustomerTests
     {
-        [Test, AUT(AUT.Wb,AUT.Uk)]
+        [Test, AUT(AUT.Wb,AUT.Uk), Owner(Owner.StanDesyatnikov)]
         [JIRA("SME-561"), Description("This test verifies the save customer address command by verifying its response and verifying that the record has been created in the repository")]
         public void TestAddressOverridesCorrectlySaved()
         {
@@ -47,7 +47,7 @@ namespace Wonga.QA.Tests.Comms
             Assert.AreEqual(addressEntity.Town, "MyTown", "These values should be equal");
         }
 
-        [Test, AUT(AUT.Wb,AUT.Uk)]
+        [Test, AUT(AUT.Wb,AUT.Uk), Owner(Owner.StanDesyatnikov)]
         [JIRA("SME-561"), Description("This test verifies update customer address command by issuing a command and verifying its successful response and that the record in the repository has been changed")]
         public void TestUpdateCustomerAddressCommand()
         {
@@ -447,7 +447,7 @@ namespace Wonga.QA.Tests.Comms
                                                                   }));
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-850")]
+        [Test, AUT(AUT.Uk), JIRA("UK-850"), Owner(Owner.StanDesyatnikov)]
         public void CreateCustomerTwice()
         {
             String forename = Get.RandomString(4, 8);
@@ -470,7 +470,7 @@ namespace Wonga.QA.Tests.Comms
             Assert.Contains(error.Message, "Comms_Customer_Recognised");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-850")]
+        [Test, AUT(AUT.Uk), JIRA("UK-850"), Owner(Owner.StanDesyatnikov)]
         public void CreateSameCustomerTwiceInverseCaseOnSurnameAndForename()
         {
             String forename = Get.RandomString(4, 8);
@@ -493,7 +493,7 @@ namespace Wonga.QA.Tests.Comms
             Assert.Contains(error.Message, "Comms_Customer_Recognised");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-850")]
+        [Test, AUT(AUT.Uk), JIRA("UK-850"), Owner(Owner.StanDesyatnikov)]
         public void CreateSimilarCustomerDiffForename()
         {
             String forename = Get.RandomString(4, 8);
@@ -513,7 +513,7 @@ namespace Wonga.QA.Tests.Comms
                 .Build();
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-850")]
+        [Test, AUT(AUT.Uk), JIRA("UK-850"), Owner(Owner.StanDesyatnikov)]
         public void CreateSimilarCustomerSoundexOnSurname()
         {
             String forename = Get.RandomString(4, 8);
@@ -538,7 +538,7 @@ namespace Wonga.QA.Tests.Comms
             Assert.Contains(error.Message, "Comms_Customer_Recognised");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-850")]
+        [Test, AUT(AUT.Uk), JIRA("UK-850"), Owner(Owner.StanDesyatnikov)]
         public void CreateTwoCustomersSameEmail()
         {
             String email = Get.RandomEmail();
@@ -555,7 +555,7 @@ namespace Wonga.QA.Tests.Comms
             Assert.Contains(error.Message, "Ops_Login_AlreadyExists");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-850")]
+        [Test, AUT(AUT.Uk), JIRA("UK-850"), Owner(Owner.StanDesyatnikov)]
         public void CreateTwoCustomersSameEmailInvertedCase()
         {
             String email = Get.RandomEmail();
