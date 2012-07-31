@@ -90,15 +90,15 @@ IF ERRORLEVEL 1 GOTO 71
 GOTO EOF
 
 :71 
-	SET /P TestingTarget=Enter your server name (e.g. risk):
-	SETX QAFTestTarget %TestingTarget%	
-	powershell -command "& {. %Powershell%\EditEndPointConfig.ps1; configservice %TestingTarget% }"
+	SET /P ServiceTest=Enter your server name (e.g. risk):
+	REM SETX QAFTestTarget %TestingTarget%	
+	powershell -command "& {. %Powershell%\EditEndPointConfig.ps1; configservice %ServiceTest% }"
  GOTO MENU
  
 :72
-	SET /P TestingTarget=Enter your server name to restore(e.g.risk):
-	SETX QAFTestTarget %TestingTarget%
-	powershell -command "& {. %Powershell%\EditEndPointConfig.ps1; configservice_undo %TestingTarget% }"
+	SET /P ServiceTest=Enter your server name to restore(e.g.risk):
+	REM SETX QAFTestTarget %TestingTarget%
+	powershell -command "& {. %Powershell%\EditEndPointConfig.ps1; configservice_undo %ServiceTest% }"
  GOTO MENU
  
 
