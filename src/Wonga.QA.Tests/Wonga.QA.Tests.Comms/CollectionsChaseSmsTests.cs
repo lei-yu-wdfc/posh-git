@@ -11,7 +11,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Comms
 {
-	[TestFixture, Parallelizable(TestScope.Descendants), Category(TestCategories.CoreTest)] //Can be only on level 3 because it changes configuration
+	[TestFixture, Parallelizable(TestScope.Descendants), Category(TestCategories.CoreTest), AUT(AUT.Za)] //Can be only on level 3 because it changes configuration
 	public class CollectionsChaseSmsTests
 	{
 		#region constants
@@ -56,9 +56,10 @@ namespace Wonga.QA.Tests.Comms
 			_bankGatewayTestModeOriginal = ConfigurationFunctions.GetBankGatewayTestMode();
 			ConfigurationFunctions.SetBankGatewayTestMode(false);
 
-            var mobilePhonePart = String.Format("700900{0}", GetPhoneNumber());
-            _formattedPhoneNumber = BuildPhoneNumber(mobilePhonePart);
-            var customer = CustomerBuilder.New().WithMobileNumber(string.Format("{0}", _formattedPhoneNumber)).Build();
+			var phoneNumberChunk = GetPhoneNumberChunk();
+			_formattedPhoneNumber = GetFormattedPhoneNumber(phoneNumberChunk);
+
+			var customer = CustomerBuilder.New().WithMobileNumber(string.Format("0{0}", phoneNumberChunk)).Build();
 			_application = ApplicationBuilder.New(customer).Build();
 		}
 
@@ -136,9 +137,9 @@ namespace Wonga.QA.Tests.Comms
 			Action<Application> suppressAction, Action<Application> resumeAction)
 		{
 			DateTime atTheBeginningOfThisTest = DateTime.Now;
-            var mobilePhonePart = String.Format("700900{0}", GetPhoneNumber());
-            var formattedPhoneNumber = BuildPhoneNumber(mobilePhonePart);
-            Application application = ArrangeApplicationInArrears(mobilePhonePart);
+			string phoneNumberChunk = GetPhoneNumberChunk();
+			string formattedPhoneNumber = GetFormattedPhoneNumber(phoneNumberChunk);
+			Application application = ArrangeApplicationInArrears(phoneNumberChunk);
 
 			// wait unit A2 is sent
 			AssertSmsIsSent(formattedPhoneNumber, A2Text, atTheBeginningOfThisTest);
@@ -165,25 +166,20 @@ namespace Wonga.QA.Tests.Comms
 			AssertSmsIsNotSent(formattedPhoneNumber, A3Text, atTheBeginningOfThisTest);
 		}
 
-        protected static string GetPhoneNumber()
-        {
-            return Get.RandomInt(100, 999).ToString(CultureInfo.InvariantCulture);
-        }
+		private static string GetPhoneNumberChunk()
+		{
+			return Get.RandomLong(100000000, 1000000000).ToString(CultureInfo.InvariantCulture);
+		}
 
-        protected static string BuildPhoneNumber(string n)
-        {
-            return String.Format("07{0}", n);
-        }
-
-        protected string FormatPhoneNumber(string unformatted)
-        {
-            return "447" + unformatted;
-        }
+		private static string GetFormattedPhoneNumber(string phoneNumberChunk)
+		{
+			return string.Format("27{0}", phoneNumberChunk);
+		}
 
 		private static Application ArrangeApplicationInArrears(string phoneNumberChunk)
 		{
 			Customer customer = CustomerBuilder.New()
-				.WithMobileNumber(string.Format("07{0}", phoneNumberChunk))
+				.WithMobileNumber(string.Format("0{0}", phoneNumberChunk))
 				.Build();
 			Do.Until(customer.GetBankAccount);
 			return ApplicationBuilder.New(customer).Build().PutIntoArrears(20);
