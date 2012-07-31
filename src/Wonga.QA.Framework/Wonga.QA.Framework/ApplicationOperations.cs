@@ -362,7 +362,7 @@ namespace Wonga.QA.Framework
                 () => PaymentsSuppressionsTable.FindBy(ApplicationId: appInternalId, FraudSuppression: true));
         }
 
-        public static decimal GetUkRepayAmountWithInterest(decimal loanAmount,int term)
+        public static decimal GetRepayAmountWithInterest(decimal loanAmount,int term)
         {
             const int months = 12;
             const int daysInYear = 365;
