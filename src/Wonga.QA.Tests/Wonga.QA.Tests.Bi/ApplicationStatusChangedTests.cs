@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 
 
+
 namespace Wonga.QA.Tests.Bi
 {
     [TestFixture]
@@ -28,6 +29,8 @@ namespace Wonga.QA.Tests.Bi
         private dynamic applicationRepo = Drive.Data.Payments.Db.Applications;
         private dynamic commsSuppressionsRepo = Drive.Data.Comms.Db.Suppressions;
         private dynamic paymentsSuppressionsRepo = Drive.Data.Payments.Db.PaymentCollectionSuppressions;
+        private readonly dynamic _loanDueDateNotifiSagaEntityTab = Drive.Data.OpsSagas.Db.LoanDueDateNotificationSagaEntity;
+        private readonly dynamic _fixedTermLoanAppTab = Drive.Data.Payments.Db.FixedTermLoanApplications;
 
         [SetUp]
         public void SetUp()
@@ -236,7 +239,7 @@ namespace Wonga.QA.Tests.Bi
 
 
 		[Test]
-		[AUT(AUT.Uk), JIRA("UK-925"), Owner(Owner.JonHurd)]
+		[AUT(AUT.Uk), JIRA("UKOPS-149"), Owner(Owner.JonHurd)]
 		[Description("Verifies that when a live application is moved to complaint status salesforce is informed and a suppression record is created")]
 		[Parallelizable]
 		public void ApplicationInBankruptcy_SubmitsBankruptStatus_ToSalesforce()
@@ -269,6 +272,295 @@ namespace Wonga.QA.Tests.Bi
 							commsSuppressionsRepo.AccountId == application.AccountId && commsSuppressionsRepo.Bankruptcy == 1).Single());
 
 		}
+
+        [Test]
+        [AUT(AUT.Uk), JIRA("UKOPS-149"), Owner(Owner.ShaneMcHugh)]
+        [Description("Verifies that when an application is due today and it is moved to bankrupt status salesforce is informed and a suppression record is created")]
+        [Parallelizable]
+        public void ApplicationDueToday_SubmitsBankruptStatus_ToSalesforce()
+        {
+            //Create live application
+            int appInternalId;
+            var caseId = Guid.NewGuid();
+            var application = CreateLiveApplication(out appInternalId);
+
+            //make application due today
+            MakeDueToday(application);
+
+            // wait until sales force moves to due today
+            Do.Until(() =>
+            {
+                var app = sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.DueToday;
+            });
+
+            //Report application as bankrupt.
+            ApplicationOperations.ReportBankrupt(application, caseId);
+
+            // wait until sales force moves to bankrupt
+            Do.Until(() =>
+            {
+                var app = sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Bankrupt;
+            });
+        }
+
+        [Test]
+        [AUT(AUT.Uk), JIRA("UKOPS-149"), Owner(Owner.ShaneMcHugh), Pending]
+        [Description("Verifies that when an application is in arrears and it is moved to bankrupt status salesforce is informed and a suppression record is created")]
+        [Parallelizable]
+        public void ApplicationInArrears_SubmitsBankruptStatus_ToSalesforce()
+        {
+            //Create live application
+            int appInternalId;
+            var caseId = Guid.NewGuid();
+            var application = CreateLiveApplication(out appInternalId);
+
+            //put application in arrears
+            application.PutIntoArrears();
+
+            // wait until sales force moves to in arrears
+            Do.Until(() =>
+            {
+                var app = sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.InArrears;
+            });
+
+            //Report application as bankrupt.
+            ApplicationOperations.ReportBankrupt(application, caseId);
+
+            // wait until sales force moves to bankrupt
+            Do.Until(() =>
+            {
+                var app = sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Bankrupt;
+            });
+        }
+
+        [Test]
+        [AUT(AUT.Uk), JIRA("UKOPS-149"), Owner(Owner.ShaneMcHugh), Pending]
+        [Description("Verifies that when an application is in fraud and it is moved to bankrupt status salesforce is informed and a suppression record is created")]
+        [Parallelizable]
+        public void ApplicationFraud_SubmitsBankruptStatus_ToSalesforce()
+        {
+            //Create live application
+            int appInternalId;
+            var caseId = Guid.NewGuid();
+            var application = CreateLiveApplication(out appInternalId);
+            Customer customer = CustomerBuilder.New().Build();
+
+            //Make application fraud
+            ApplicationOperations.ConfirmFraud(application, customer, caseId);
+
+            // wait until sales force moves to fraud
+            Do.Until(() =>
+            {
+                var app = sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Fraud;
+            });
+
+            //Report application as bankrupt.
+            ApplicationOperations.ReportBankrupt(application, caseId);
+
+            // wait until sales force moves to bankrupt
+            Do.Until(() =>
+            {
+                var app = sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Bankrupt;
+            });
+        }
+
+        [Test]
+        [AUT(AUT.Uk), JIRA("UKOPS-149"), Owner(Owner.ShaneMcHugh), Pending]
+        [Description("Verifies that when an application is in DCA status and it is moved to bankrupt status salesforce is informed and a suppression record is created")]
+        [Parallelizable]
+        public void ApplicationDCA_SubmitsBankruptStatus_ToSalesforce()
+        {
+            //Create live application
+            int appInternalId;
+            var caseId = Guid.NewGuid();
+            var application = CreateLiveApplication(out appInternalId);
+
+            //Make application DCA
+            ApplicationOperations.Dca(application);
+
+            // wait until sales force moves to DCA
+            Do.Until(() =>
+            {
+                var app = sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.DCA;
+            });
+
+            //Report application as bankrupt.
+            ApplicationOperations.ReportBankrupt(application, caseId);
+
+            // wait until sales force moves to bankrupt
+            Do.Until(() =>
+            {
+                var app = sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Bankrupt;
+            });
+        }
+
+        [Test]
+        [AUT(AUT.Uk), JIRA("UKOPS-149"), Owner(Owner.ShaneMcHugh), Pending]
+        [Description("Verifies that when an application is in hardship and it is moved to bankrupt status salesforce is informed and a suppression record is created")]
+        [Parallelizable]
+        public void ApplicationInHardhsip_SubmitsBankruptStatus_ToSalesforce()
+        {
+            //Create live application
+            int appInternalId;
+            var caseId = Guid.NewGuid();
+            var application = CreateLiveApplication(out appInternalId);
+
+            //Make application in hardship
+            ApplicationOperations.ReportHardship(application, caseId);
+
+            // wait until sales force moves to hardship
+            Do.Until(() =>
+            {
+                var app = sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Hardship;
+            });
+
+            //Report application as bankrupt.
+            ApplicationOperations.ReportBankrupt(application, caseId);
+
+            // wait until sales force moves to bankrupt
+            Do.Until(() =>
+            {
+                var app = sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Bankrupt;
+            });
+        }
+
+        [Test]
+        [AUT(AUT.Uk), JIRA("UKOPS-149"), Owner(Owner.ShaneMcHugh), Pending]
+        [Description("Verifies that when an application is in a repayment arrangement and it is moved to bankrupt status salesforce is informed and a suppression record is created")]
+        [Parallelizable]
+        public void ApplicationInRepaymentArrangement_SubmitsBankruptStatus_ToSalesforce()
+        {
+            //Create live application
+            int appInternalId;
+            var caseId = Guid.NewGuid();
+            var application = CreateLiveApplication(out appInternalId);
+
+            //Make application in hardship
+            application.CreateRepaymentArrangement();
+
+            // wait until sales force moves to hardship
+            Do.Until(() =>
+            {
+                var app = sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.RepaymentArrangement;
+            });
+
+            //Report application as bankrupt.
+            ApplicationOperations.ReportBankrupt(application, caseId);
+
+            // wait until sales force moves to bankrupt
+            Do.Until(() =>
+            {
+                var app = sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Bankrupt;
+            });
+        }
+
+        [Test]
+        [AUT(AUT.Uk), JIRA("UKOPS-149"), Owner(Owner.ShaneMcHugh)]
+        [Description("Verifies that when an application is in complaint status and it is moved to bankrupt status salesforce is informed and a suppression record is created")]
+        [Parallelizable]
+        public void ApplicationInComplaint_SubmitsBankruptStatus_ToSalesforce()
+        {
+            //Create live application
+            int appInternalId;
+            var caseId = Guid.NewGuid();
+            var application = CreateLiveApplication(out appInternalId);
+
+            //Make application in complaint
+            ApplicationOperations.ReportComplaint(application, caseId);
+
+            // wait until sales force moves to complaint
+            Do.Until(() =>
+            {
+                var app = sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Complaint;
+            });
+
+            //Report application as bankrupt.
+            ApplicationOperations.ReportBankrupt(application, caseId);
+
+            // wait until sales force moves to bankrupt
+            Do.Until(() =>
+            {
+                var app = sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Bankrupt;
+            });
+        }
+
+        [Test]
+        [AUT(AUT.Uk), JIRA("UKOPS-149"), Owner(Owner.ShaneMcHugh)]
+        [Description("Verifies that when an application is in management review status and it is moved to bankrupt status salesforce is informed and a suppression record is created")]
+        [Parallelizable]
+        public void ApplicationInManagementReview_SubmitsBankruptStatus_ToSalesforce()
+        {
+            //Create live application
+            int appInternalId;
+            var caseId = Guid.NewGuid();
+            var application = CreateLiveApplication(out appInternalId);
+
+            //Make application in management review
+            ApplicationOperations.ManagementReview(application, caseId);
+
+            // wait until sales force moves to in management review
+            Do.Until(() =>
+            {
+                var app = sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.ManagementReview;
+            });
+
+            //Report application as bankrupt.
+            ApplicationOperations.ReportBankrupt(application, caseId);
+
+            // wait until sales force moves to bankrupt
+            Do.Until(() =>
+            {
+                var app = sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Bankrupt;
+            });
+        }
+
+        [Test]
+        [AUT(AUT.Uk), JIRA("UKOPS-149"), Owner(Owner.ShaneMcHugh)]
+        [Description("Verifies that when an application is in refund status and it is moved to bankrupt status salesforce is informed and a suppression record is created")]
+        [Parallelizable]
+        public void ApplicationInRefund_SubmitsBankruptStatus_ToSalesforce()
+        {
+            //Create live application
+            int appInternalId;
+            var caseId = Guid.NewGuid();
+            var application = CreateLiveApplication(out appInternalId);
+
+            //Make application in refund
+            ApplicationOperations.Refundrequest(application, caseId);
+
+            // wait until sales force moves to in refund
+            Do.Until(() =>
+            {
+                var app = sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Refund;
+            });
+
+            //Report application as bankrupt.
+            ApplicationOperations.ReportBankrupt(application, caseId);
+
+            // wait until sales force moves to bankrupt
+            Do.Until(() =>
+            {
+                var app = sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Bankrupt;
+            });
+        }
 
         [Test]
         [AUT(AUT.Uk), JIRA("UK-925"), Owner(Owner.JonHurd)]
@@ -422,6 +714,15 @@ namespace Wonga.QA.Tests.Bi
             Assert.IsTrue(present);
         }
 
+        private void CheckSupressionTable(Application application, int appInternalId)
+        {
+            // wait until suppression record is created in comms and payments
+            Do.Until(() => paymentsSuppressionsRepo.FindAll(
+                paymentsSuppressionsRepo.ApplicationId == appInternalId && paymentsSuppressionsRepo.HardshipSuppression == 1).Single());
+            Do.Until(() => commsSuppressionsRepo.FindAll(
+                            commsSuppressionsRepo.AccountId == application.AccountId && commsSuppressionsRepo.Hardship == 1).Single());
+        }
+
         private bool ConfirmStatusValues(Guid appId, IEnumerable<string> statuses)
         {
             var appHistory = sales.GetApplicationHistoryById(appId, "Status__c");
@@ -431,6 +732,31 @@ namespace Wonga.QA.Tests.Bi
                           select s;
 
             return matched.Count() == statuses.Count();
+        }
+
+        private void rewindApplicationDates(dynamic application)
+        {
+            int id = ApplicationOperations.GetAppInternalId(application);
+            TimeSpan span = _fixedTermLoanAppTab.FindByApplicationId(id).NextDueDate - DateTime.Today;
+            application.RewindApplicationDates(span);
+        }
+
+        private void MakeDueToday(dynamic application)
+        {
+            rewindApplicationDates(application);
+            var ldd = _loanDueDateNotifiSagaEntityTab.FindAll(_loanDueDateNotifiSagaEntityTab.ApplicationId == application.Id).Single();
+            if (Drive.Data.Ops.GetServiceConfiguration<bool>("Payments.FeatureSwitches.UseLoanDurationSaga") == false)
+            {
+                Drive.Msmq.Payments.Send(new Framework.Msmq.TimeoutMessage { SagaId = ldd.Id });
+                _loanDueDateNotifiSagaEntityTab.Update(ldd);
+            }
+            else
+            {
+                //We should timeout the LoanDurationSaga...
+                dynamic loanDurationSagaEntities = Drive.Data.OpsSagas.Db.LoanDurationSagaEntity;
+                var loanDurationSaga = loanDurationSagaEntities.FindAllByAccountGuid(AccountGuid: application.AccountId).FirstOrDefault();
+                Drive.Msmq.Payments.Send(new Framework.Msmq.TimeoutMessage() { SagaId = loanDurationSaga.Id });
+            }
         }
 
         /// <summary>
