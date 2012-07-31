@@ -20,6 +20,7 @@ SERVICETESTS = 'Wonga.QA.ServiceTests'
 DATATESTS = 'Wonga.QA.DataTests'
 UITESTS = 'Wonga.QA.UiTests'
 TOOLS = 'Wonga.QA.Tools'
+PREFIX = 'Wonga.QA'
  
 def get_MSBuildToolsPath
   Win32::Registry::open(Win32::Registry::HKEY_LOCAL_MACHINE, 'SOFTWARE\\Microsoft\\MSBuild\\ToolsVersions\\4.0') do |reg|
@@ -28,21 +29,21 @@ def get_MSBuildToolsPath
   end
 end
 
-def get_full_dll_path(name)
-  unless name == 'Ui'
-    file = File.join(BIN, "#{TESTS}.#{name}.dll")
-  else
-    file = File.join(BIN, "#{UITESTS}.#{name}.dll")
-  end
-  file
+def find_dlls(mask)
+  Dir.chdir(BIN)
+  dlls = Dir.glob("#{PREFIX}.#{mask}.dll")
 end
 
 def get_dlls_list(names)
   if names and not names.empty?
-    list = names.split(':')
-    list.uniq!
-    list.collect! { |name| name = get_full_dll_path name   }
-  else
+    list = Array.new
+    names_list = names.split(':')
+    names_list.uniq!
+    names_list.each do |name| 
+      dlls = find_dlls(name)
+      list += dlls
+    end
+  else  
     list = Array.new
   end
   list
@@ -68,11 +69,11 @@ task :config, :test_target do |t, target| #ready
 end
   
 task :pre_generate_serializers do #ready
-	puts 'Generating serializers'
-	cmd = Exec.new
+  puts 'Generating serializers'
+  cmd = Exec.new
   cmd.command = File.join(LIB,'sgen','sgen.exe')
   cmd.parameters = File.join(BIN,'Wonga.QA.Framework.Cs.dll') + ' /force'
-	cmd.execute  
+  cmd.execute  
 end
 #--
   
@@ -99,15 +100,16 @@ task :merge do #ready
   params += ' '+ File.join(BIN, "#{TESTS}.Core.dll")
   include_dlls.each { |dll| params+= ' ' + dll }
         
-	cmd = Exec.new
+  cmd = Exec.new
   cmd.command = command
   cmd.parameters = params
-	cmd.execute
+  cmd.execute
 end
   
 desc 'run Gallio'
-gallio :gallio, :test_dlls, :test_filter do |g, args| 
- # args.with_defaults(:test_dlls => ENV['test_dlls'], :test_filter=> ENV['test_filter'])
+task :gallio, :test_dlls, :test_filter do |t, args| 
+  args.with_defaults(:test_dlls => ENV['test_dlls'], :test_filter=> ENV['test_filter'])
+  g = Gallio.new
   dlls = args[:test_dlls]
   fltr = args[:test_filter]
   if dlls and not dlls.empty?
@@ -118,33 +120,39 @@ gallio :gallio, :test_dlls, :test_filter do |g, args|
   g.reportDirectory = File.join(BIN, "#{TESTS}.Report")
   g.reportNameFormat = "#{TESTS}.Report"
   g.addReportType("xml")
+  begin
+    g.run
+  ensure
+    Rake::Task[:convert_reports].invoke
+  end
 end
 
 task :test, :include, :exclude, :test_filter do |t, args|
   args.with_defaults(:include => ENV['include'], :exclude => ENV['exclude'], :test_filter => ENV['test_filter'])
   incl = get_dlls_list args[:include]
+  puts incl
   excl = get_dlls_list args[:exclude]
   fltr = args[:test_filter] if args[:test_filter] 
   test_dlls = incl - excl
-  puts test_dlls
   puts "filter: #{fltr}"
   # Rake.application.invoke_task("gallio[#{test_dlls}, #{fltr}]")
-   Rake::Task[:gallio].invoke(:test_dlls => test_dlls, :test_filter => fltr)
+  Rake::Task[:gallio].invoke(test_dlls, fltr)
 
 end
   
 task :convert_reports do
-	command = File.join(BIN,'Wonga.QA.Tools.ReportConverter','Wonga.QA.Tools.ReportConverter.exe')
-	params1 = '"' + File.join(BIN, "#{TESTS}.Report", "#{TESTS}.Report.xml\" ") 
-	params1 += '"' + File.join(BIN, "#{TESTS}.Report", "#{TESTS}.Report.html\" ")
-	params1 += 'html'
+  puts 'Converting reports'
+  command = File.join(BIN,'Wonga.QA.Tools.ReportConverter','Wonga.QA.Tools.ReportConverter.exe')
+  params1 = '"' + File.join(BIN, "#{TESTS}.Report", "#{TESTS}.Report.xml\" ") 
+  params1 += '"' + File.join(BIN, "#{TESTS}.Report", "#{TESTS}.Report.html\" ")
+  params1 += 'html'
 	
-	params2 = '"' + File.join(BIN, "#{TESTS}.Report", "#{TESTS}.Report.xml\" ")
-	params2 += '"' + File.join(BIN, "#{TESTS}.Report", "#{TESTS}.Report.csv\" ")
-	params2 += 'csv'
+  params2 = '"' + File.join(BIN, "#{TESTS}.Report", "#{TESTS}.Report.xml\" ")
+  params2 += '"' + File.join(BIN, "#{TESTS}.Report", "#{TESTS}.Report.csv\" ")
+  params2 += 'csv'
 	
-	sh command + ' ' + params1
-	sh command + ' ' + params2
+  sh command + ' ' + params1
+  sh command + ' ' + params2
 end
   
 #-- build tasks for each solution  
