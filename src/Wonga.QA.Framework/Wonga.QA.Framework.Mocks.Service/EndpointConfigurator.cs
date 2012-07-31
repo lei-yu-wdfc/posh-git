@@ -7,7 +7,7 @@ using NServiceBus.Serialization;
 using NServiceBus.Serializers.XML;
 using NServiceBus.Unicast.Transport;
 
-namespace Wonga.QA.Framework.Svc.Mocks
+namespace Wonga.QA.Framework.Mocks.Service
 {
 	internal class EndpointConfigurator
 	{

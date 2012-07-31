@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5A8C165D-CE35-4BAB-980F-EE4F222F6E21}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Wonga.QA.Framework.Mocks.Service</RootNamespace>
+    <AssemblyName>Wonga.QA.Framework.Mocks.Service</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\Wonga.QA.Framework\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>$(SolutionDir)\..\..\bin</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>$(SolutionDir)\..\..\bin</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=2.3.2.632, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\nuget\packages\Autofac.2.3.2.632\lib\NET40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\nuget\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NServiceBus, Version=2.6.0.1511, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\nuget\packages\NServiceBus.2.6.0.1511\lib\net40\NServiceBus.dll</HintPath>
+    </Reference>
+    <Reference Include="NServiceBus.Core, Version=2.6.0.1511, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\nuget\packages\NServiceBus.2.6.0.1511\lib\net40\NServiceBus.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="NServiceBus.ObjectBuilder.Autofac2, Version=2.6.0.1511, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\nuget\packages\NServiceBus.Autofac2.2.6.0.1511\lib\net40\NServiceBus.ObjectBuilder.Autofac2.dll</HintPath>
+    </Reference>
+    <Reference Include="Simple.Data, Version=0.16.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BusConfiguration.cs" />
+    <Compile Include="EndpointConfigurator.cs" />
+    <Compile Include="EndpointMock.cs" />
+    <Compile Include="FluentHandlerCreator.cs" />
+    <Compile Include="GenericHandler.cs" />
+    <Compile Include="OnTheFlyHandlers.cs" />
+    <Compile Include="QafMessageMapper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Wonga.QA.Framework.Core\Wonga.QA.Framework.Core.csproj">
+      <Project>{BACA1D90-F604-476F-ACDE-A9839E85147F}</Project>
+      <Name>Wonga.QA.Framework.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wonga.QA.Framework.Data\Wonga.QA.Framework.Data.csproj">
+      <Project>{6DB7E1BD-C5B2-4BEE-A0A3-E2C635768203}</Project>
+      <Name>Wonga.QA.Framework.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wonga.QA.Framework.Db\Wonga.QA.Framework.Db.csproj">
+      <Project>{06D44CDD-9AB7-47EC-8D7A-0E548465EF9D}</Project>
+      <Name>Wonga.QA.Framework.Db</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wonga.QA.Framework.Msmq\Wonga.QA.Framework.Msmq.csproj">
+      <Project>{87AAAAD5-5EAE-473C-9A05-7696E6853478}</Project>
+      <Name>Wonga.QA.Framework.Msmq</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\..\..\lib\nuget\.nuget\nuget.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

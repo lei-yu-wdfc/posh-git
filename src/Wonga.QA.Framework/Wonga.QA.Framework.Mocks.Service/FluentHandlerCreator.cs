@@ -1,7 +1,7 @@
 ﻿using System;
 using NServiceBus;
 
-namespace Wonga.QA.Framework.Svc.Mocks
+namespace Wonga.QA.Framework.Mocks.Service
 {
 	public class FluentHandlerCreator<T> where T:IMessage
 	{

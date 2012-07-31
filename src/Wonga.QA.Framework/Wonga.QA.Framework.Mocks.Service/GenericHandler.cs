@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NServiceBus;
 
-namespace Wonga.QA.Framework.Svc.Mocks
+namespace Wonga.QA.Framework.Mocks.Service
 {
 	public class GenericHandler : IHandleMessages<IMessage>
 	{

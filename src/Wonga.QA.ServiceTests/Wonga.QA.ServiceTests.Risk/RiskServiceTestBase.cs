@@ -4,7 +4,7 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Requests.Risk.Queries;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.Svc.Mocks;
+using Wonga.QA.Framework.Mocks.Service;
 using RiskSaveCustomerAddressCommand = Wonga.QA.Framework.Msmq.Messages.Risk.RiskSaveCustomerAddress;
 using RiskSaveCustomerDetailsCommand = Wonga.QA.Framework.Msmq.Messages.Risk.RiskSaveCustomerDetails;
 

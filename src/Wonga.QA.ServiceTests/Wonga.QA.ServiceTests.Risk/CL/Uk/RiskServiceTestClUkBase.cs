@@ -6,7 +6,7 @@ using Wonga.QA.Framework.Msmq.Messages.Ops.PublicMessages;
 using Wonga.QA.Framework.Msmq.Messages.Payments.PublicMessages;
 using Wonga.QA.Framework.Msmq.Messages.Risk;
 using Wonga.QA.Framework.Msmq.Messages.Risk.BlackList;
-using Wonga.QA.Framework.Svc.Mocks;
+using Wonga.QA.Framework.Mocks.Service;
 
 namespace Wonga.QA.ServiceTests.Risk.CL.uk
 {

@@ -2,8 +2,8 @@
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Mocks.Service;
 using Wonga.QA.Framework.Msmq.Messages.Risk.Business;
-using Wonga.QA.Framework.Svc.Mocks;
 
 namespace Wonga.QA.ServiceTests.Risk
 {

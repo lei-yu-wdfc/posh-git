@@ -2,7 +2,7 @@
 using NServiceBus.Config;
 using NServiceBus.Config.ConfigurationSource;
 
-namespace Wonga.QA.Framework.Svc.Mocks
+namespace Wonga.QA.Framework.Mocks.Service
 {
 	public class BusConfiguration :IConfigurationSource
 	{
