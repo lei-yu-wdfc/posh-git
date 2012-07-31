@@ -140,9 +140,32 @@ namespace Wonga.QA.Framework
             _getDaysUntilStartOfLoan = GetDaysUntilStartOfLoan;
         }
 
+        // Migration tests override
+        protected ApplicationBuilder(Date promiseDate, decimal loanAmount)
+        {
+            Id = Guid.NewGuid();
+            LoanAmount = loanAmount;
+            IovationBlackBox = IovationMockResponse.Unknown.ToString();
+
+            _setPromiseDateAndLoanTerm = () =>
+            {
+                PromiseDate = promiseDate;
+                LoanTerm = GetLoanTermFromPromiseDate();
+            };
+
+            _getDaysUntilStartOfLoan = GetDaysUntilStartOfLoan;
+        }
+
         public static ApplicationBuilder New(Customer mainApplicant)
         {
             return new ApplicationBuilder { Customer = mainApplicant };
+        }
+
+        //method needed for migration testing
+
+        public static ApplicationBuilder New(Customer mainApplicant, Date promiseDate, decimal loanAmount)
+        {
+            return new ApplicationBuilder(promiseDate,loanAmount) { Customer = mainApplicant};
         }
 
         public static ApplicationBuilder New(Customer mainApplicant, Organisation company)

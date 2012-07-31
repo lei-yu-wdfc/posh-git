@@ -64,6 +64,18 @@ namespace Wonga.QA.Framework
 
         public Guid GetBankAccount()
         {
+            // this section is need for migrated customer
+
+            if (BankAccountId.Equals(Guid.Empty))
+            {
+                var bankAccountId = Drive.Db.Payments.PersonalBankAccounts.Where(p => p.AccountId == Id).Select(p => p.BankAccountId).Single
+                    ();
+                var bankAccountGuid =
+                    Drive.Db.Payments.BankAccountsBases.Where(b => b.BankAccountId == bankAccountId).Select(b => b.ExternalId).Single();
+             
+                return bankAccountGuid;
+            }
+
             return BankAccountId;
         }
 
@@ -80,20 +92,20 @@ namespace Wonga.QA.Framework
                 r.Number = cardNumber;
                 r.IsPrimary = isPrimary;
                 r.SecurityCode = securityCode;
-				r.ExpiryDate = expiryDate.ToPaymentCardDate();
+                r.ExpiryDate = expiryDate.ToPaymentCardDate();
                 r.CardType = cardType;
             });
             Drive.Api.Commands.Post(cmd);
 
-        	RiskAddPaymentCardCommand riskCommand = RiskAddPaymentCardCommand.New(r =>
-        	                                                                      	{
-        	                                                                      		r.AccountId = Id;
-        	                                                                      		r.Number = cardNumber;
-        	                                                                      		r.SecurityCode = securityCode;
-																						r.ExpiryDate = expiryDate.ToPaymentCardDate();
-        	                                                                      		r.CardType = cardType;
-        	                                                                      	});
-			Drive.Api.Commands.Post(riskCommand);
+            RiskAddPaymentCardCommand riskCommand = RiskAddPaymentCardCommand.New(r =>
+                                                                                    {
+                                                                                        r.AccountId = Id;
+                                                                                        r.Number = cardNumber;
+                                                                                        r.SecurityCode = securityCode;
+                                                                                        r.ExpiryDate = expiryDate.ToPaymentCardDate();
+                                                                                        r.CardType = cardType;
+                                                                                    });
+            Drive.Api.Commands.Post(riskCommand);
 
             Do.Until(() => Drive.Db.Payments.PersonalPaymentCards
                          .Single(c => c.AccountId == Id
@@ -135,7 +147,7 @@ namespace Wonga.QA.Framework
             var row = Drive.Db.Risk.EmploymentDetails.Single(cd => cd.AccountId == Id);
             row.EmployerName = employer;
             row.Submit();
-        	Do.Until(row.Refresh);
+            Do.Until(row.Refresh);
         }
 
         public string GetCcin()
@@ -162,7 +174,7 @@ namespace Wonga.QA.Framework
         public string GetCustomerForename()
         {
             var customerDetailsRow = Drive.Db.Comms.CustomerDetails.Single(cd => cd.AccountId == Id);
-        	return customerDetailsRow.Forename;
+            return customerDetailsRow.Forename;
         }
 
         public void ScrubCcin()
@@ -180,6 +192,6 @@ namespace Wonga.QA.Framework
         }
 
         #endregion
-        
+
     }
 }

@@ -23,7 +23,7 @@ namespace Wonga.QA.Framework.Data
                                 where MigrationStatus = 'completed'
                                 order by MigrationRunId desc";
 
-            SqlCommand cmd = new SqlCommand(query, new SqlConnection("Data Source='mig-int-v2.test.wonga.com';Initial Catalog=MigrationStaging;Integrated Security=True"));
+            SqlCommand cmd = new SqlCommand(query, new SqlConnection("Data Source='(local)';Initial Catalog=MigrationStaging;Integrated Security=True"));
             SqlDataAdapter adapter = new SqlDataAdapter(cmd);
             adapter.Fill(runId);
 
@@ -43,12 +43,12 @@ namespace Wonga.QA.Framework.Data
 
         public MigratedUser GetMigratedAccountLogin()
         {
-            MigratedUser migratedUser = new MigratedUser();
-            DataSet controlTableLogin = new DataSet();
+            var migratedUser = new MigratedUser();
+            var controlTableLogin = new DataSet();
             //get top 1 users this will be replaced by a lite version of db and can't seem to do this with drive.data
-            String query = @"SELECT TOP 1 [AccountId],[Login],[MigrationRunId]FROM [MigrationStaging].[test].[AcceptanceTestControlTable]";
-            SqlCommand cmd = new SqlCommand(query, new SqlConnection("Data Source='(local)';Initial Catalog=MigrationStaging;Integrated Security=True"));
-            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+            const string query = @"SELECT TOP 1 [AccountId],[Login],[MigrationRunId]FROM [MigrationStaging].[test].[AcceptanceTestControl]";
+            var cmd = new SqlCommand(query, new SqlConnection("Data Source='(local)';Initial Catalog=MigrationStaging;Integrated Security=True"));
+            var adapter = new SqlDataAdapter(cmd);
             adapter.Fill(controlTableLogin);
 
             migratedUser.AccountId = (Guid)controlTableLogin.Tables[0].Rows[0].ItemArray[0];
@@ -60,11 +60,15 @@ namespace Wonga.QA.Framework.Data
         }
 
 
-        public string GetMigratedAccountLogin(dynamic callUser = null, string forYear = null)
+        public MigratedUser GetMigratedAccountLogin(dynamic callUser = null, string forYear = null)
         {
+            var migratedUser = new MigratedUser();
             var opsAccounts = _drive.Ops.Db.Accounts;
-            var totalUsers = GetTotalUserInOpsAccounts(forYear);
-
+            var totalUsers = 1000;
+            if (!string.IsNullOrEmpty(forYear))
+            {
+                totalUsers = GetTotalUserInOpsAccounts(forYear);    
+            }
 
             if (callUser == null || Convert.ToInt64(callUser) > Convert.ToInt64(totalUsers) || Convert.ToInt64(callUser) == 0)
             {
@@ -74,7 +78,12 @@ namespace Wonga.QA.Framework.Data
 
             var userName = opsAccounts.FindByAccountId(callUser);
 
-            return userName.Login;
+            migratedUser.AccountId = userName.ExternalId;
+            migratedUser.Login = userName.Login;
+            migratedUser.MigratedRunId = "-1";
+            migratedUser.Password = "Passw0rd";
+
+            return migratedUser;
         }
 
         public void FillAcceptanceTestControlTable()
@@ -83,16 +92,16 @@ namespace Wonga.QA.Framework.Data
             DataSet opsUsersToControlTable = new DataSet();
             //get top 1000 users this will be replaced by a lite version of db and can't seem to do this with drive.data
             String query = "SELECT TOP 1000 [ExternalId],[Login] FROM [Ops].[ops].[Accounts]";
-            SqlCommand cmd = new SqlCommand(query, new SqlConnection("Data Source='mig-int-v2.test.wonga.com';Initial Catalog=GreyfaceShell;Integrated Security=True"));
+            SqlCommand cmd = new SqlCommand(query, new SqlConnection("Data Source='(local)';Initial Catalog=GreyfaceShell;Integrated Security=True"));
             SqlDataAdapter adapter = new SqlDataAdapter(cmd);
             adapter.Fill(opsUsersToControlTable);
 
-            var acceptanceTestControlTable = _drive.MigrationStaging.Db.test.AcceptanceTestControlTable;
+            var acceptanceTestControl = _drive.MigrationStaging.Db.test.AcceptanceTestControl;
 
             for (int counter = 0; counter < opsUsersToControlTable.Tables[0].Rows.Count; counter++)
             {
                 var user = opsUsersToControlTable.Tables[0].Rows[counter];
-                acceptanceTestControlTable.Insert(AccountId: user.ItemArray[0], Login: user.ItemArray[1], MigrationRunId: _migrationRunId);
+                acceptanceTestControl.Insert(AccountId: user.ItemArray[0], Login: user.ItemArray[1], MigrationRunId: _migrationRunId);
             }
         }
 
