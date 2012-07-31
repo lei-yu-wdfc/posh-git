@@ -18,7 +18,7 @@ namespace Wonga.QA.Tests.Payments
 
             //var parm =  Drive.Api.Queries.Post(new GetRepaymentDetailsQuery { ApplicationId = aplId });
 
-            //var repDate = parm.Values["RepaymentDate"];ClosedApplicationBalance
+            //var repDate = parm.Values["RepaymentDate"];
             //var repAmount = (parm.Values["RepaymentAmount"]);
 
             //List<string > repDateArray = new List<string>();
