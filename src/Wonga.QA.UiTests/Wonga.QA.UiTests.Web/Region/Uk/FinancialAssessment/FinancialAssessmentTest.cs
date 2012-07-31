@@ -21,7 +21,7 @@ namespace Wonga.QA.Tests.Ui
     [TestFixture, Parallelizable(TestScope.All)]
     public class FinancialAssessmentTest : UiTest
     {
-        [Test, AUT(AUT.Uk), Category(TestCategories.SmokeTest), MultipleAsserts, Pending("Financial Assessment")]
+        [Test, AUT(AUT.Uk), JIRA("UKOPS-704"), Category(TestCategories.SmokeTest), MultipleAsserts, Pending("Financial Assessment")]
         public void LoginAsCustomerWithDifferentLoanTime()
         {
             var loginPage = Client.Login();
@@ -49,7 +49,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.IsTrue(financialassessmentpage.IsNotAvailablePage(), "Login with 4 days loan in arrears");
         }
 
-        [Test, AUT(AUT.Uk), Category(TestCategories.SmokeTest), MultipleAsserts, Pending("Financial Assessment")]
+        [Test, AUT(AUT.Uk), JIRA("UKOPS-704"), Category(TestCategories.SmokeTest), MultipleAsserts, Pending("Financial Assessment")]
         public void PrepopulatedNameAndAssesmentEmailCheck()
         {
             var loginPage = Client.Login();
@@ -64,7 +64,7 @@ namespace Wonga.QA.Tests.Ui
             Assert.AreEqual(ContentMap.Get.FinancialAssessmentPage.AssesmentEmail, financialassessmentpage.GetAssesmentsEmail(), "Prepopulated email check");
         }
 
-        [Test, AUT(AUT.Uk), Category(TestCategories.SmokeTest), Pending("Financial Assessment")]
+        [Test, AUT(AUT.Uk), JIRA("UKOPS-704"), Category(TestCategories.SmokeTest), Pending("Financial Assessment")]
         public void NavigateByClickGetStarted()
         {
             var loginPage = Client.Login();

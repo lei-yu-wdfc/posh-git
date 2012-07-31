@@ -18,7 +18,7 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
     [TestFixture, Parallelizable(TestScope.All)]
     public class FinancialAssessmentAboutYouTest : UiTest
     {
-        [Test, AUT(AUT.Uk), Category(TestCategories.SmokeTest), MultipleAsserts, Pending("Financial Assessment")]
+        [Test, AUT(AUT.Uk), JIRA("UKOPS-720"), Category(TestCategories.SmokeTest), MultipleAsserts, Pending("Financial Assessment")]
         public void PrepopulatedAgreementReferenceAndEmailCheck()
         {
             var loginPage = Client.Login();
@@ -34,7 +34,7 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
             Assert.AreEqual(/*customer.GetCcin()/*var t = */customer.GetApplication().Id.ToString(), faaboutyoupage.GetPrepopulatedAgreementReference(), "Prepopulated AgreementReference check");
         }
 
-        [Test, AUT(AUT.Uk), Category(TestCategories.SmokeTest), MultipleAsserts, Pending("Financial Assessment")]
+        [Test, AUT(AUT.Uk), JIRA("UKOPS-720"), Category(TestCategories.SmokeTest), MultipleAsserts, Pending("Financial Assessment")]
         public void NextClickWithValidDataAndCheckDataAfterGoBack()
         {
             var loginPage = Client.Login();
@@ -72,7 +72,7 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
             Assert.AreEqual(faaboutyoupage.NumberOfVehiles, numberOfVehiles, "Vehiles number check after go back");
         }
 
-        [Test, AUT(AUT.Uk), Category(TestCategories.SmokeTest), Pending("Financial Assessment")]
+        [Test, AUT(AUT.Uk), JIRA("UKOPS-720"), Category(TestCategories.SmokeTest), Pending("Financial Assessment")]
         public void InvalidPotcodeWarningMessageCheck()
         {
             var loginPage = Client.Login();
@@ -91,7 +91,7 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
             Assert.IsTrue(faaboutyoupage.PostCodeErrorPresent());
         }
 
-        [Test, AUT(AUT.Uk), Category(TestCategories.SmokeTest), Pending("Financial Assessment")]
+        [Test, AUT(AUT.Uk), JIRA("UKOPS-720"), Category(TestCategories.SmokeTest), Pending("Financial Assessment")]
         public void NextClickWithInvalidData()
         {
             var loginPage = Client.Login();
