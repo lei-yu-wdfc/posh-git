@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Reflection;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Api.Requests.Ops.Queries;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
@@ -40,7 +42,7 @@ namespace Wonga.QA.MigrationTests
         {
             _testStartTime = DateTime.Now;
         }
-        
+
         public void StoreTestResults()
         {
             _migHelper.StoreTestResults(_batchId.ToString(CultureInfo.InvariantCulture), _testName,
@@ -138,6 +140,24 @@ namespace Wonga.QA.MigrationTests
                 }
 
             }
+        }
+
+        [Test]
+        public void MigratedApiLnJournery()
+        {
+            _migHelper.FillAcceptanceTestControlTable();
+
+            _migratedUser = new MigratedUser();
+            _migratedUser = _migHelper.GetMigratedAccountLogin(null, null);
+            var customer = new Customer(Guid.Parse
+                                            (Drive.Api.Queries.Post
+                                                 (new GetAccountQuery { Login = "qa.wonga.com+BUILD-WIN21-7af66e12-7664-4bec-8a51-f5ffb17f41b2@gmail.com", Password = "Passw0rd" }).
+                                                 Values["AccountId"].Single()));
+            
+            var promiseDate = new Date(DateTime.Now.AddDays(10));
+            var loanAmmount = new decimal(1000);
+
+            ApplicationBuilder.New(customer,promiseDate,loanAmmount).Build();
         }
 
         [Test]
