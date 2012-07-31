@@ -297,5 +297,45 @@
   <SocialElement>
     <SocialTrigger>#social-trigger</SocialTrigger>
   </SocialElement>
+
+<FinancialAssessmentPage>
+    <PrepopulatedName>#wonga-repayment-start-form.form-element-type-form div.form-inner div.form-markup-wrapper div.form-markup-wrapper div.wonga-user-name</PrepopulatedName>
+    <AssesmentsTeamEmail>#wonga-repayment-start-form.form-element-type-form div.form-inner div.form-markup-wrapper div.form-markup-wrapper div.wonga-invitein-text a</AssesmentsTeamEmail>
+    <GetStartedButton>#wonga-repayment-start-form.form-element-type-form div.form-inner div.form-markup-wrapper div.form-markup-wrapper div.wonga-started-button</GetStartedButton>
+  </FinancialAssessmentPage>
+
+  <FALoginPage>
+    <Username>#edit-xsd-fapi--Call-GetAccount--FieldName-Login</Username>
+    <Password>#edit-xsd-fapi--Call-GetAccount--FieldName-Password</Password>
+    <LoginButton>#edit-login</LoginButton>
+    <ForgotPassword>#wonga-login-new-form.form-element-type-form div.form-inner div.form-markup-wrapper</ForgotPassword>
+  </FALoginPage>
+
+  <FAAboutYouPage>
+    <AgreementReference>#edit-agreement</AgreementReference>
+    <EmailAddress>#edit-email.form-text</EmailAddress>
+    <Name>#edit-first-name.form-text</Name>
+    <Surname>#edit-last-name.form-text</Surname>
+    <DateOfBirth>#edit-birthdate.form-text</DateOfBirth>
+    <HouseNumber>#edit-house-number.form-text</HouseNumber>
+    <PostCode>#edit-postcode.form-text</PostCode>
+    <Employer>#edit-employer-name.form-text</Employer>
+    <YourHousehold>#edit-number-household.form-text</YourHousehold>
+    <ChildrenInHousehold>#edit-children.form-text</ChildrenInHousehold>
+    <NumberOfVehiles>#edit-number-vehicles.form-text</NumberOfVehiles>
+    <ButtonPrevious>#edit-previous.form-submit</ButtonPrevious>
+    <ButtonNext>#edit-next.form-submit</ButtonNext>
+    <PostCodeError>#edit-postcode-wrapper.form-item div.form-error div.invalid</PostCodeError>
+  </FAAboutYouPage>
+
+  <FAIncomePage>
+    <ButtonPrevious>#edit-previous.form-submit</ButtonPrevious>
+    <ButtonNext>#edit-next.form-submit</ButtonNext>
+  </FAIncomePage>
+
+  <FAExpenditurePage>
+    <ButtonPrevious>#edit-previous.form-submit</ButtonPrevious>
+    <ButtonNext>#edit-next.form-submit</ButtonNext>
+  </FAExpenditurePage>
   
 </UiMap>

@@ -65,6 +65,8 @@
     <Compile Include="Journey\BaseL0Journey.cs" />
     <Compile Include="Journey\BaseLnJourney.cs" />
     <Compile Include="Journey\CaL0Journey.cs" />
+    <Compile Include="Journey\FinancialAssessment\BaseFALnJourney.cs" />
+    <Compile Include="Journey\FinancialAssessment\UkFALnJourney.cs" />
     <Compile Include="Journey\WbLnJourney.cs" />
     <Compile Include="Journey\PlL0Journey.cs" />
     <Compile Include="Journey\JourneyFactory.cs" />
@@ -140,6 +142,12 @@
     <Compile Include="Mappings\Ui\Pages\Common\ApplyTermsPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\BlogPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\EasypaymentNumberPrintPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\FinancialAssessment\FAAboutYouPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\FinancialAssessment\FADebtsPage.cs.cs" />
+    <Compile Include="Mappings\Ui\Pages\FinancialAssessment\FAExpenditurePage.cs" />
+    <Compile Include="Mappings\Ui\Pages\FinancialAssessment\FAIncomePage.cs" />
+    <Compile Include="Mappings\Ui\Pages\FinancialAssessment\FALoginPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\FinancialAssessment\FinancialAssessmentPage.cs" />
     <Compile Include="Testing\Attributes\IgnorePageErrorsAttribute.cs" />
     <Compile Include="Ui\Elements\SocialElement.cs" />
     <Compile Include="Ui\Elements\SecciToggleElement.cs" />
@@ -301,6 +309,12 @@
     <Compile Include="Ui\Pages\Common\TopupProcessingPage.cs" />
     <Compile Include="Ui\Pages\Common\TopupRequestPage.cs" />
     <Compile Include="Ui\Pages\Common\WhyUseUsPage.cs" />
+    <Compile Include="Ui\Pages\FinancialAssessment\FAAboutYouPage.cs" />
+    <Compile Include="Ui\Pages\FinancialAssessment\FADebtsPage.cs.cs" />
+    <Compile Include="Ui\Pages\FinancialAssessment\FAExpenditurePage.cs" />
+    <Compile Include="Ui\Pages\FinancialAssessment\FAIncomePage.cs" />
+    <Compile Include="Ui\Pages\FinancialAssessment\FALoginPage.cs" />
+    <Compile Include="Ui\Pages\FinancialAssessment\FinancialAssessmentPage.cs" />
     <Compile Include="Ui\Pages\Interfaces\IRepayPaymentPage.cs" />
     <Compile Include="Ui\Pages\Interfaces\IExtensionPaymentPage.cs" />
     <Compile Include="Ui\Pages\Interfaces\ITopupDecisionPage.cs" />

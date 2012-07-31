@@ -6,6 +6,7 @@ using Wonga.QA.Framework.UI.Mappings.Sections;
 using Wonga.QA.Framework.UI.Mappings.Pages.SalesForce;
 using Wonga.QA.Framework.UI.Mappings.Ui.Elements;
 using Wonga.QA.Framework.UI.Mappings.Ui.Pages.Prepaid;
+using Wonga.QA.Framework.UI.Mappings.Pages.FinancialAssessment;
 using AboutUsPage = Wonga.QA.Framework.UI.Mappings.Pages.AboutUsPage;
 using AccountDetailsSection = Wonga.QA.Framework.UI.Mappings.Sections.AccountDetailsSection;
 using AddressDetailsPage = Wonga.QA.Framework.UI.Mappings.Pages.AddressDetailsPage;
@@ -228,6 +229,17 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual AddCardPage AddCardPage { get; set; }
         public virtual AccountingPage AccountingPage { get; set; }
         public virtual CashOutPage CashOutPage { get; set; }
+
+        #endregion
+
+        #region FinancialAssessment
+
+        public virtual FALoginPage FinancialAssessmentLoginPage { get; set; }
+        public virtual FinancialAssessmentPage FinancialAssessmentPage { get; set; }
+        public virtual FAAboutYouPage FinancialAssessmentAboutYouPage { get; set; }
+        public virtual FAIncomePage FinancialAssessmentIncomePage { get; set; }
+        public virtual FAExpenditurePage FinancialAssessmentExpenditurePage { get; set; }
+        public virtual FADebtsPage FinancialAssessmentDebtsPage { get; set; }
 
         #endregion
     }
