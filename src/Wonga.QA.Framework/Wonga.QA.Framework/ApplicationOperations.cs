@@ -19,7 +19,7 @@ namespace Wonga.QA.Framework
         private static readonly dynamic ApplicationRepo = Drive.Data.Payments.Db.Applications;
         private static readonly dynamic CommsSuppressionsRepo = Drive.Data.Comms.Db.Suppressions;
         private static readonly dynamic PaymentsSuppressionsTable = Drive.Data.Payments.Db.PaymentCollectionSuppressions;
-      
+        
         public static Application DaysFromStart(this Application app, int daysAgo)
         {
             ApplicationEntity application = Drive.Db.Payments.Applications.Single(a => a.ExternalId == app.Id);
@@ -362,6 +362,25 @@ namespace Wonga.QA.Framework
                 () => PaymentsSuppressionsTable.FindBy(ApplicationId: appInternalId, FraudSuppression: true));
         }
 
+        public static decimal GetRepayAmountWithInterest(decimal loanAmount,int term)
+        {
+            const int months = 12;
+            const int daysInYear = 365;
+            var amount = 0m;
+            var product = Drive.Data.Payments.Db.Products.FindByName("WongaFixedLoan");
+            var mir = product.MonthlyInterestRate;
+            var fees = product.TransmissionFee; 
+            switch(Config.AUT )
+            {
+                case AUT.Uk :   
+                    var interestPerDay = (mir/100)*months/daysInYear;
+                    var interest = (1 + term*interestPerDay);
+                    amount = (loanAmount + fees)*interest;
+                    break;
+            }
+            return Math.Round(amount, 2, MidpointRounding.AwayFromZero);
+        }
+        
         public static int GetAppInternalId(Application application)
         {
             return (ApplicationRepo.FindAll(ApplicationRepo.ExternalID == application.Id).Single().ApplicationId);
