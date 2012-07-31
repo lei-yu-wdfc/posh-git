@@ -80,6 +80,8 @@ namespace Wonga.QA.Framework.Api
         TESTApplicantHasPoorRelationshipWithWonga,
         TESTApplicantIsNotMinorUru,
         TESTCardLivePaymentCardVerification,
-        TESTCustomerIsNotOnBenefits
+        TESTCustomerIsNotOnBenefits,
+        TESTExperianAuthenticatePlus
+
 	}
 }
