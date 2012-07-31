@@ -1,6 +1,8 @@
 using System;
+using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
+using Wonga.QA.Framework.Api.Requests.Payments.Queries;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Msmq.Enums.Integration.Payments.Enums;
 using Wonga.QA.Tests.Core;
@@ -11,6 +13,10 @@ namespace Wonga.QA.Tests.Payments
     public class AccruedInterestSuspensionTests
     {
         private const string InArrearsMaxInterestDaysKey = "Payments.InArrearsMaxInterestDays";
+        private const decimal LoanAmount = 100m;
+        private const int LoanTerm = 10;
+        private const decimal DefaultFees = 20m;
+        
         /// <summary>
         /// Transactions db table
         /// </summary>
@@ -26,35 +32,44 @@ namespace Wonga.QA.Tests.Payments
         public void Setup()
         {
             _customer = CustomerBuilder.New().Build();
-            _application = ApplicationBuilder.New(_customer).WithLoanTerm(12).Build();
+            _application = ApplicationBuilder.New(_customer).WithLoanTerm(LoanTerm ).WithLoanAmount(LoanAmount).Build();
             _transactionsTable = Drive.Data.Payments.Db.Transactions;
             _serviceConfigTable = Drive.Data.Ops.Db.ServiceConfigurations;
             _fixedTermApplicationsTable = Drive.Data.Payments.Db.FixedTermLoanApplications;
             _applicationsTable = Drive.Data.Payments.Db.Applications;
         }
 
-        [Test,JIRA("UKOPS-414" ), Owner(Owner.PiotrWalat)]
+        [Test,JIRA("UKOPS-414" ), Owner(Owner.PiotrWalat),Pending("Loan calculator bug") ]
         public void GoingIntoArrears_Creates_SuspendInterestTransaction_InTheFuture()
         {
             //Make sure the payment attempt fails by changing the expiry date of the card.
             Drive.Data.Payments.Db.PaymentCardsBase.UpdateByExternalId(ExternalId: _customer.GetPaymentCard(),
                                                     ExpiryDate: new DateTime(DateTime.Now.Year - 1, 1, 31));
-            _application.ExpireCard().PutIntoArrears(60);
+            string maximumarreardays = _serviceConfigTable.FindBy(Key: InArrearsMaxInterestDaysKey).Value.ToString();
+            int intmaximumarreardays = Int32.Parse(maximumarreardays);
+            int arrearDays = intmaximumarreardays + 10;
+            _application.ExpireCard().PutIntoArrears((uint)arrearDays);
             dynamic suspendTransaction = null;
             dynamic application = null;
             dynamic fixedTermApplication = null;
-            string offset = _serviceConfigTable.FindBy(Key: InArrearsMaxInterestDaysKey).Value.ToString();
-            int intOffset = Int32.Parse(offset);
+            
 
             Do.Until(() => application = _applicationsTable.FindBy(ExternalId: _application.Id));
             Do.Until(() => fixedTermApplication = _fixedTermApplicationsTable.FindBy(ApplicationId: application.ApplicationId));
-            DateTime expectedDate = ((DateTime)fixedTermApplication.NextDueDate).AddDays(intOffset);
+            DateTime expectedDate = ((DateTime)fixedTermApplication.NextDueDate).AddDays(intmaximumarreardays);
 
             Do.Until(() => suspendTransaction = _transactionsTable
                                                     .FindBy(Type: PaymentTransactionEnum.SuspendInterestAccrual,
                                                             ApplicationId: application.ApplicationId, 
                                                             PostedOn: expectedDate));
             Assert.IsNotNull(suspendTransaction);
+            var fees = Drive.Data.Payments.Db.Products.FindByName("WongaFixedLoan").TransmissionFee;
+            var accountSummary=Drive.Api.Queries .Post(new GetAccountSummaryQuery() {AccountId = _application.AccountId});
+            var currentLoanAmountDue=accountSummary.Values["CurrentLoanAmountDueToday"].Single();
+            var amountDueOnDueDateWithoutInterest = ApplicationOperations.GetRepayAmountWithInterest(LoanAmount,LoanTerm)-fees;
+            var t1 = ApplicationOperations.GetRepayAmountWithInterest(amountDueOnDueDateWithoutInterest, intmaximumarreardays) + DefaultFees;
+            Assert.AreEqual(currentLoanAmountDue, t1.ToString());
+
         }
     }
 }
