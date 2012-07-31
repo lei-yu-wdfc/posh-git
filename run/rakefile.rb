@@ -3,7 +3,6 @@ require 'albacore'
 require 'securerandom'
 require 'fileutils'
 require './ruby/gallio.rb'
-require './ruby/msbuild_helper.rb'
 require 'win32/registry'
   
 Dir.chdir('..')
@@ -22,6 +21,33 @@ DATATESTS = 'Wonga.QA.DataTests'
 UITESTS = 'Wonga.QA.UiTests'
 TOOLS = 'Wonga.QA.Tools'
  
+def get_MSBuildToolsPath
+  Win32::Registry::open(Win32::Registry::HKEY_LOCAL_MACHINE, 'SOFTWARE\\Microsoft\\MSBuild\\ToolsVersions\\4.0') do |reg|
+    type, value = reg.read('MSBuildToolsPath')
+    value
+  end
+end
+
+def get_full_dll_path(name)
+  unless name == 'Ui'
+    file = File.join(BIN, "#{TESTS}.#{name}.dll")
+  else
+    file = File.join(BIN, "#{UITESTS}.#{name}.dll")
+  end
+  file
+end
+
+def get_dlls_list(names)
+  if names and not names.empty?
+    list = names.split(';')
+    list.uniq!
+    list.collect! { |name| name = get_full_dll_path name   }
+  else
+    list = Array.new
+  end
+  list
+end
+
 task :pre_test_cleanup do 
   bin_dir = Dir.new(BIN)
   config_files_to_delete = Dir.glob("*.v3qaconfig")
@@ -36,16 +62,16 @@ task :post_test_cleanup do #should be extended
 end
   
 task :config do |t, arg| #ready
-    test_target = ENV['test_target']
-    FileUtils.cp File.join(CONFIG, test_target,'.v3qaconfig'), BIN unless test_target.empty?
-    puts "test target: #{test_target}"
+  test_target = ENV['test_target']
+  FileUtils.cp File.join(CONFIG, test_target,'.v3qaconfig'), BIN unless test_target.empty?
+  puts "test target: #{test_target}"
 end
   
 task :pre_generate_serializers do #ready
 	puts 'Generating serializers'
 	cmd = Exec.new
-    cmd.command = File.join(LIB,'sgen','sgen.exe')
-    cmd.parameters = File.join(BIN,'Wonga.QA.Framework.Cs.dll') + ' /force'
+  cmd.command = File.join(LIB,'sgen','sgen.exe')
+  cmd.parameters = File.join(BIN,'Wonga.QA.Framework.Cs.dll') + ' /force'
 	cmd.execute  
 end
 #--
@@ -66,44 +92,39 @@ task :merge do #ready
     
   command = File.join(PROGRAMM_FILES, 'Microsoft', 'ILMerge','ILMerge.exe')
     
-  params = '/targetplatform:v4,'+read_msbuild_property("MSBuildToolsPath")
+  params = '/targetplatform:v4,'+get_MSBuildToolsPath#read_msbuild_property("MSBuildToolsPath")
   params += ' /out:' + File.join(BIN, "#{TESTS}.dll")
+  #params += ' /allowDup' 
+  #uncomment the row above to be able to merge
   params += ' '+ File.join(BIN, "#{TESTS}.Core.dll")
   include_dlls.each { |dll| params+= ' ' + dll }
         
 	cmd = Exec.new
-    cmd.command = command
-    cmd.parameters = params
+  cmd.command = command
+  cmd.parameters = params
 	cmd.execute
 end
   
 desc 'run Gallio'
-gallio :test, :files, :filter do |g, fls, fltr| 
-  if fls and not fls.empty?
-    files = fls.split(';')
-    Dir.chdir(BIN)
-    files.uniq!
-    files.each { |file| g.addTestAssembly(File.join(BIN, "#{TESTS}.#{file}.dll")) }
+gallio :gallio, :test_dlls, :test_filter do |g, dlls, fltr| 
+  if dlls and not dlls.empty?
+    dlls.each { |dll| g.addTestAssembly(dlls) }
   else g.addTestAssembly(File.join(BIN, "#{TESTS}.dll"))
   end
-
   g.filter = fltr if fltr and not fltr.empty? 
   g.reportDirectory = File.join(BIN, "#{TESTS}.Report")
   g.reportNameFormat = "#{TESTS}.Report"
   g.addReportType("xml")
 end
 
-task :run_tests, :files, :filter do |t, fls, fltr|  #change this shit
-  Rake::Task[:pre_test_cleanup].invoke
-  Rake::Task[:test].invoke(fls, fltr)
-  Rake::Task[:post_test_cleanup].invoke  
-end
-  
-task :sanity_test => [:config, :build, :merge, :pre_generate_serializers] do 
-        Rake::Task[:test].invoke('Meta', '')
-        Rake::Task[:convert_reports].invoke
-        Rake::Task[:test].invoke('','Category:CoreTest')
-        Rake::Task[:convert_reports].invoke
+task :test, :include, :exclude, :test_filter do |t, incl, excl, fltr|
+  args.with_defaults(:include => ENV['include'], :exclude => ENV['exclude'], :test_filter => ENV['test_filter'])
+  include = get_dlls_list incl
+  exclude = get_dlls_list excl
+  test_dlls = include - exclude
+  Rake::Task[:gallio].invoke(test_dlls, fltr)
+  Rake::Task[:convert_reports]
+
 end
   
 task :convert_reports do
@@ -138,7 +159,7 @@ msbuild :data_tests do |msb|
 end
 
 msbuild :ui_tests do |msb|
-    msb.solution = File.join(SRC, UITESTS, "#{UITESTS}.sln")
+  msb.solution = File.join(SRC, UITESTS, "#{UITESTS}.sln")
 end
   
 msbuild :tools do |msb|
