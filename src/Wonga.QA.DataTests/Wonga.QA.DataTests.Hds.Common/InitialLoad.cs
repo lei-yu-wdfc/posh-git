@@ -10,18 +10,19 @@ namespace Wonga.QA.DataTests.Hds.Common
         /// Run initial load and confirm that it succeeds
         /// </summary>
         /// <param name="wongaService">Service to run for</param>
-        public void RunInitialLoadAndConfirmThatItSucceeds(HdsUtilities.WongaService wongaService)
+        public void RunInitialLoadAndConfirmThatItSucceeds(HdsUtilitiesBase.WongaService wongaService)
         {
-            HdsUtilities hdsUtilities = new HdsUtilities(wongaService);
+            HdsUtilitiesAgentJob hdsUtilitiesAgentJob = new HdsUtilitiesAgentJob(wongaService);
 
             // disable HDS load
-            bool hdsAgentJobWasEnabled = hdsUtilities.DisableJob(hdsUtilities.HdsLoadAgentJob);
+            bool hdsAgentJobWasEnabled = hdsUtilitiesAgentJob.DisableJob(hdsUtilitiesAgentJob.HdsLoadAgentJob);
+            bool hdsAgentJobWasExecuting = hdsUtilitiesAgentJob.StopJob(hdsUtilitiesAgentJob.HdsLoadAgentJob);
 
             // clear down HDS - not currently needed as initial load now includes cleardown
             //Drive.Data.Hds.Db.hds.usp_ClearHdsTables(hdsUtilities.WongaServiceSchema);
 
             // run initial load
-            bool jobSuccess = SQLServerAgentJobs.Execute(hdsUtilities.HdsInitialLoadAgentJob);
+            bool jobSuccess = SQLServerAgentJobs.Execute(hdsUtilitiesAgentJob.HdsInitialLoadAgentJob);
 
             // check job succeeds
             Assert.IsTrue(jobSuccess);
@@ -29,7 +30,12 @@ namespace Wonga.QA.DataTests.Hds.Common
             // Reset HDS load
             if (hdsAgentJobWasEnabled)
             {
-                hdsUtilities.EnableJob(hdsUtilities.HdsLoadAgentJob);
+                hdsUtilitiesAgentJob.EnableJob(hdsUtilitiesAgentJob.HdsLoadAgentJob);
+            }
+
+            if (hdsAgentJobWasExecuting)
+            {
+                hdsUtilitiesAgentJob.StartJob(hdsUtilitiesAgentJob.HdsLoadAgentJob);
             }
         }
     }

@@ -15,7 +15,7 @@ namespace Wonga.QA.DataTests.Hds.Risk
         {
             InitialLoad initialLoad = new InitialLoad();
 
-            initialLoad.RunInitialLoadAndConfirmThatItSucceeds(HdsUtilities.WongaService.Risk);
+            initialLoad.RunInitialLoadAndConfirmThatItSucceeds(HdsUtilitiesBase.WongaService.Risk);
         }
     }
 }

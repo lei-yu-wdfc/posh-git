@@ -6,7 +6,7 @@ namespace Wonga.QA.DataTests.Hds.Risk
     [TestFixture(Order = 4)]
     [Category("Reconciliation")]
     [Category("Risk")]
-    [Parallelizable(TestScope.All)]
+    [Parallelizable]
     public class RiskReconciliationTests
     {
         [Test]
@@ -15,7 +15,7 @@ namespace Wonga.QA.DataTests.Hds.Risk
         {
             Reconciliation reconciliation = new Reconciliation();
 
-            reconciliation.RunReconciliationAndConfirmThatItSucceeds(HdsUtilities.WongaService.Risk);
+            reconciliation.RunReconciliationAndConfirmThatItSucceeds(HdsUtilitiesBase.WongaService.Risk);
         }
     }
 }

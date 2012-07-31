@@ -6,7 +6,7 @@ namespace Wonga.QA.DataTests.Hds.Comms
     [TestFixture(Order = 4)]
     [Category("Reconciliation")]
     [Category("Comms")]
-    [Parallelizable(TestScope.All)]
+    [Parallelizable]
     public class CommsReconciliationTests
     {
         [Test]
@@ -15,7 +15,7 @@ namespace Wonga.QA.DataTests.Hds.Comms
         {
             Reconciliation reconciliation = new Reconciliation();
 
-            reconciliation.RunReconciliationAndConfirmThatItSucceeds(HdsUtilities.WongaService.Comms);
+            reconciliation.RunReconciliationAndConfirmThatItSucceeds(HdsUtilitiesBase.WongaService.Comms);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿﻿using MbUnit.Framework;
+﻿﻿using System;
+﻿using System.Threading;
+﻿using MbUnit.Framework;
 using Microsoft.SqlServer.Management.Smo;
 using Microsoft.SqlServer.Management.Smo.Agent;
 ﻿using Wonga.QA.DataTests.Hds.Common;
@@ -12,33 +14,33 @@ namespace Wonga.QA.DataTests.Hds.Payments
     [Category("Payments")]
     public class PaymentsServiceDBChangesTest
     {
-        private bool _cdcStagingAgentJobWasEnabled;
-        private bool _hdsAgentJobWasEnabled;
+        private bool _cdcStagingAgentJobWasStarted;
+        private bool _hdsAgentJobWasStarted;
 
-        private HdsUtilities _hdsUtilities = null;
+        private HdsUtilitiesAgentJob _hdsUtilitiesAgentJob = null;
 
         [FixtureSetUp]
         [Description("This is the text fixture setup for all tests")]
         public void FixtureSetup()
         {
-            _hdsUtilities = new HdsUtilities(HdsUtilities.WongaService.Payments);
+            _hdsUtilitiesAgentJob = new HdsUtilitiesAgentJob(HdsUtilitiesBase.WongaService.Payments);
 
-            _cdcStagingAgentJobWasEnabled = _hdsUtilities.DisableJob(_hdsUtilities.CdcStagingAgentJob);
-            _hdsAgentJobWasEnabled = _hdsUtilities.DisableJob(_hdsUtilities.HdsLoadAgentJob);
+            _cdcStagingAgentJobWasStarted = _hdsUtilitiesAgentJob.StopJob(_hdsUtilitiesAgentJob.CdcStagingAgentJob);
+            _hdsAgentJobWasStarted = _hdsUtilitiesAgentJob.StopJob(_hdsUtilitiesAgentJob.HdsLoadAgentJob);
         }
 
         [FixtureTearDown]
         [Description("This is the text fixture teardown for all tests")]
         public void FixtureTearDown()
         {
-            if (_cdcStagingAgentJobWasEnabled)
+            if (_cdcStagingAgentJobWasStarted)
             {
-                _hdsUtilities.EnableJob(_hdsUtilities.CdcStagingAgentJob);
+                _hdsUtilitiesAgentJob.StartJob(_hdsUtilitiesAgentJob.CdcStagingAgentJob);
             }
 
-            if (_hdsAgentJobWasEnabled)
+            if (_hdsAgentJobWasStarted)
             {
-                _hdsUtilities.EnableJob(_hdsUtilities.HdsLoadAgentJob);
+                _hdsUtilitiesAgentJob.StartJob(_hdsUtilitiesAgentJob.HdsLoadAgentJob);
             }
         }
 
@@ -46,39 +48,42 @@ namespace Wonga.QA.DataTests.Hds.Payments
         [Description("Test for new column in ServiceDB -- CDC SSIS Job Fails")]
         public void AddNewColumnInServiceDB_CDCSSISJobFails()
         {
-
             SMODatabaseAlterations.RemoveAColumn(Drive.Data.Payments.Server, "Payments", "Payment", "Applications", "col5");
 
-            SQLServerAgentJobs.Execute(_hdsUtilities.CdcStagingAgentJob);
+            _hdsUtilitiesAgentJob.StartJob(_hdsUtilitiesAgentJob.CdcStagingAgentJob);
 
-            Assert.AreEqual(CompletionResult.Succeeded, SQLServerAgentJobs.LastRunOutcome(_hdsUtilities.CdcStagingAgentJob));
+            _hdsUtilitiesAgentJob.WaitForLoadExecutionCycle(HdsUtilitiesBase.SystemComponent.CDCStaging);
+
+            _hdsUtilitiesAgentJob.StopJob(_hdsUtilitiesAgentJob.CdcStagingAgentJob);
 
             SMODatabaseAlterations.AddAColumn(Drive.Data.Payments.Server, "Payments", "Payment", "Applications", "col5", DataType.BigInt);
 
-            SQLServerAgentJobs.Execute(_hdsUtilities.CdcStagingAgentJob);
-
-            Assert.AreEqual(CompletionResult.Failed, SQLServerAgentJobs.LastRunOutcome(_hdsUtilities.CdcStagingAgentJob));
+            _hdsUtilitiesAgentJob.StartJob(_hdsUtilitiesAgentJob.CdcStagingAgentJob, false);
 
             SMODatabaseAlterations.RemoveAColumn(Drive.Data.Payments.Server, "Payments", "Payment", "Applications", "col5");
+
+            Assert.AreEqual(CompletionResult.Failed, SQLServerAgentJobs.LastRunOutcome(_hdsUtilitiesAgentJob.CdcStagingAgentJob));
         }
 
         [Test]
         [Description("Test for new column in ServiceDB -- HDS SSIS Job Fails")]
         public void AddNewColumnInCDCStagingDB_HDSSSISJobFails()
         {
-            SMODatabaseAlterations.RemoveAColumn(Drive.Data.Hds.Server, _hdsUtilities.CDCDatabaseName, "Payment", "Applications", "col5");
+            SMODatabaseAlterations.RemoveAColumn(Drive.Data.Hds.Server, _hdsUtilitiesAgentJob.CDCDatabaseName, "Payment", "Applications", "col5");
 
-            SQLServerAgentJobs.Execute(_hdsUtilities.HdsLoadAgentJob);
+            _hdsUtilitiesAgentJob.StartJob(_hdsUtilitiesAgentJob.HdsLoadAgentJob);
 
-            Assert.AreEqual(CompletionResult.Succeeded, SQLServerAgentJobs.LastRunOutcome(_hdsUtilities.HdsLoadAgentJob));
+            _hdsUtilitiesAgentJob.WaitForLoadExecutionCycle(HdsUtilitiesBase.SystemComponent.HDS);
 
-            SMODatabaseAlterations.AddAColumn(Drive.Data.Hds.Server, _hdsUtilities.CDCDatabaseName, "Payment", "Applications", "col5", DataType.BigInt);
+            _hdsUtilitiesAgentJob.StopJob(_hdsUtilitiesAgentJob.HdsLoadAgentJob);
 
-            SQLServerAgentJobs.Execute(_hdsUtilities.HdsLoadAgentJob);
+            SMODatabaseAlterations.AddAColumn(Drive.Data.Hds.Server, _hdsUtilitiesAgentJob.CDCDatabaseName, "Payment", "Applications", "col5", DataType.BigInt);
 
-            Assert.AreEqual(CompletionResult.Failed, SQLServerAgentJobs.LastRunOutcome(_hdsUtilities.HdsLoadAgentJob));
+            _hdsUtilitiesAgentJob.StartJob(_hdsUtilitiesAgentJob.HdsLoadAgentJob);
 
-            SMODatabaseAlterations.RemoveAColumn(Drive.Data.Hds.Server, _hdsUtilities.CDCDatabaseName, "Payment", "Applications", "col5");
+            SMODatabaseAlterations.RemoveAColumn(Drive.Data.Hds.Server, _hdsUtilitiesAgentJob.CDCDatabaseName, "Payment", "Applications", "col5");
+
+            Assert.AreEqual(CompletionResult.Failed, SQLServerAgentJobs.LastRunOutcome(_hdsUtilitiesAgentJob.HdsLoadAgentJob));
         }
     }
 }
