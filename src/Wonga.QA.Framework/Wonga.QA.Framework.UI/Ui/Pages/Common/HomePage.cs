@@ -49,6 +49,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
         //private IWebElement _quickQuidLink;
         //private IWebElement _borrowMoneyLink;
         //private IWebElement _loansOnlineLink;
+        private SocialElement Social;
 
 
         public string ending;
@@ -83,7 +84,12 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
                     Login = new LoginElement(this);
                     Contact = new ContactElement(this);
                     break;
-
+                case (AUT.Uk):
+                    InternationalElements = new InternationalElement(this);
+                    Help = new HelpElement(this);
+                    Social = new SocialElement(this);
+                    Login = new LoginElement(this);
+                    break;
             }
             //Tabs = new TabsElement(this);
 

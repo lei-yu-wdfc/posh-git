@@ -45,6 +45,10 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Assert.IsNotNull(homePage);
 
             Assert.AreEqual("400", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
+
+            // TODO: UKWEB-371: Check Navigation Header (international-trigger, help-trigger, social-trigger, login-trigger)
+            // UKWEB-371: Navigation Header is partially checked when object homePage is created.
+            // TODO: UKWEB-371: Apart from checking that the navigation header on the Home page is displayed, also check the elements’ (International, Social, Help, Login) behaviour and content.
         }
 
         [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), MultipleAsserts, Pending("Test in development"), Owner(Owner.PavithranVangiti)]
@@ -148,7 +152,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Assert.AreEqual("Responsible lending", homePage.GetResponsibleLendingBoxText());
             Console.WriteLine("Responsible lending box heading: " + homePage.GetResponsibleLendingBoxText());
 
-            //TODO - Check the content slots post login
+            // TODO: UKWEB-229: Check the content slots post login
         }
 
         [Test, AUT(AUT.Uk), JIRA("UKWEB-344", "UKWEB-345"), MultipleAsserts, Owner(Owner.OrizuNwokeji), Pending("Test in development. Code in development.")]
@@ -191,6 +195,10 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
                 + homePage.GetWelcomeMessageDay(), homePage.GetWelcomeHeaderMessageText());
 
             Assert.AreEqual("400", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
+
+            // TODO: UKWEB-371: Check Navigation Header (international-trigger, help-trigger, social-trigger, login-trigger)
+            // Check "Welcome <15-symbolsTrancatedFirstName> Logout"
+            // TODO: UKWEB-371: Apart from checking that the navigation header on the Home page is displayed, also check the elements’ (International, Social, Help, Login) behaviour and content.
         }
 
         [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), Pending("Test in development. Code in development."), DependsOn("HomePagePersonalisedLoggedInUserTest"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
@@ -200,6 +208,10 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Assert.AreEqual("Welcome back " + _truncatedFirstName + "...! (not " + _truncatedFirstName + "...? click here)", homePage.GetWelcomeHeaderMessageText()); // user has being cookied
 
             Assert.AreEqual("400", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
+
+            // TODO: UKWEB-371: Check Navigation Header (international-trigger, help-trigger, social-trigger, login-trigger)
+            // Check "If you're not <15-symbolsTrancatedFirstName>, click here."
+            // TODO: UKWEB-371: Apart from checking that the navigation header on the Home page is displayed, also check the elements’ (International, Social, Help, Login) behaviour and content.
         }
 
         [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), Pending("Test in development, and waiting for functionality"), DependsOn("HomePagePersonalisedNewUserTest"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
@@ -216,6 +228,10 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Assert.AreEqual("Welcome back " + _truncatedFirstName + "...! (not " + _truncatedFirstName + "...? click here) We can deposit up to " + " in your bank account by " + DateTime.Now.AddMinutes(23).ToShortTimeString() + homePage.GetWelcomeMessageDay(), homePage.GetWelcomeHeaderMessageText()); // user has logged in
 
             Assert.AreEqual("400", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
+
+            // TODO: UKWEB-371: Check Navigation Header (international-trigger, help-trigger, social-trigger, login-trigger)
+            // Check "Welcome <15-symbolsTrancatedFirstName> Logout"
+            // TODO: UKWEB-371: Apart from checking that the navigation header on the Home page is displayed, also check the elements’ (International, Social, Help, Login) behaviour and content.
         }
 
         [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), Pending("Test in development, and waiting for functionality"), DependsOn("HomePagePersonalisedLoggedInUserTest"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
@@ -225,6 +241,10 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             //Assert.AreEqual("Welcome back " + _truncatedFirstName + "...! (not " + _truncatedFirstName + "...? click here)", homePage.Headers[1]); // user has being cookied
 
             Assert.AreEqual("400", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
+
+            // TODO: UKWEB-371: Check Navigation Header (international-trigger, help-trigger, social-trigger, login-trigger)
+            // Check "If you're not <15-symbolsTrancatedFirstName>, click here."
+            // TODO: UKWEB-371: Apart from checking that the navigation header on the Home page is displayed, also check the elements’ (International, Social, Help, Login) behaviour and content.
         }
 
         /*

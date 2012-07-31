@@ -35,7 +35,8 @@ namespace Wonga.QA.Framework.UI.Elements
                     break;
             }
             _helpTrigger = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.HelpElement.HelpTrigger));
-            _listQuestions = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.HelpElement.HelplistQuestions));
+            if (Config.AUT != AUT.Uk) // This element does not exist for UK
+                _listQuestions = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.HelpElement.HelplistQuestions));
 
         }
 
