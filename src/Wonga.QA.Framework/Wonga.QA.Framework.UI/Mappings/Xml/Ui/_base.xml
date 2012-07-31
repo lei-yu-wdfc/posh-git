@@ -153,6 +153,7 @@
     <InternationalPanelZa>.en-ZA.first a</InternationalPanelZa>
     <InternationalPanelCa>.en-CA.first a</InternationalPanelCa>
     <InternationalPanelUk>.en-UK.last a</InternationalPanelUk>
+    <InternationalPanelZaForUk>.en-ZA.last a</InternationalPanelZaForUk>
   </InternationalElement>
 
   <PersonalDetailsPage>

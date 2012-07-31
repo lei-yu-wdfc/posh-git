@@ -293,5 +293,9 @@
     <RepresentativeExampleTrigger>.largetooltiptrigger</RepresentativeExampleTrigger>
     <RepresentativeExampleText>div .largetooltipbox</RepresentativeExampleText>
   </HomePage>
+
+  <SocialElement>
+    <SocialTrigger>#social-trigger</SocialTrigger>
+  </SocialElement>
   
 </UiMap>

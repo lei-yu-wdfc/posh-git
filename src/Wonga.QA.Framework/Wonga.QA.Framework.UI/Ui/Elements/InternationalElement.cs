@@ -37,6 +37,10 @@ namespace Wonga.QA.Framework.UI.Elements
                     _internationalPanelCa = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.InternationalElement.InternationalPanelCa));
                     _internationalPanelUk = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.InternationalElement.InternationalPanelUk));
                     break;
+                case (AUT.Uk):
+                    _internationalPanelCa = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.InternationalElement.InternationalPanelCa));
+                    _internationalPanelZa = Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.InternationalElement.InternationalPanelZaForUk));
+                    break;
             }
         }
 

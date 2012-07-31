@@ -91,6 +91,7 @@
     <Compile Include="Mappings\Content\Pages\ExtensionProcessingPage.cs" />
     <Compile Include="Mappings\Content\Pages\TopupDealDonePage.cs" />
     <Compile Include="Mappings\Content\Sections\ApplicationSection.cs" />
+    <Compile Include="Mappings\Ui\Elements\SocialElement.cs" />
     <Compile Include="Mappings\Ui\Elements\SecciToggleElement.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\BusinessSummaryPage.cs" />
     <Compile Include="Mappings\Content\Pages\TopupProcessingPage.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="Mappings\Ui\Pages\Common\BlogPage.cs" />
     <Compile Include="Mappings\Ui\Pages\Common\EasypaymentNumberPrintPage.cs" />
     <Compile Include="Testing\Attributes\IgnorePageErrorsAttribute.cs" />
+    <Compile Include="Ui\Elements\SocialElement.cs" />
     <Compile Include="Ui\Elements\SecciToggleElement.cs" />
     <Compile Include="Ui\Pages\Common\BusinessSummaryPage.cs" />
     <Compile Include="Ui\Pages\Common\DebitOrderPage.cs" />

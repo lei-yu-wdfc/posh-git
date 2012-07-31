@@ -114,6 +114,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual TabsElementMobile TabsElementMobile { get; set; }
         public virtual HomePageWelcomePopup HomePageWelcomePopup { get; set; }
         public virtual SecciToggleElement SecciToggleElement { get; set; }
+        public virtual SocialElement SocialElement { get; set; }
 
         #endregion
 
