@@ -37,6 +37,8 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="MissingSourceAssemblyAttributeException.cs" />
+    <Compile Include="SourceAssemblyAttribute.cs" />
     <Compile Include="Defaults\RiskAddBankAccountCommand.cs" />
     <Compile Include="Defaults\RiskCreateBusinessFixedInstallmentLoanApplicationWbCommand.cs" />
     <Compile Include="Defaults\RiskCreateFixedTermLoanApplicationCommand.cs" />

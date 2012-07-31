@@ -1,12 +1,11 @@
 ﻿using System;
 using NServiceBus.MessageInterfaces;
-using Wonga.QA.Framework.Msmq.Messages.Risk;
+using Wonga.QA.Framework.Msmq;
 
-namespace Wonga.QA.ServiceTests.Risk.Mocks
+namespace Wonga.QA.Framework.Svc.Mocks
 {
 	public class QafMessageMapper : IMessageMapper
 	{
-
 		public IMessageMapper Decorated { get; set; }
 
 		public Type GetMappedTypeFor(string typeName)
@@ -39,29 +38,46 @@ namespace Wonga.QA.ServiceTests.Risk.Mocks
 			throw new NotImplementedException();
 		}
 
+		public string GetSourceTypeName(string type)
+		{
+			return type.Replace("Wonga.QA.Framework.Msmq.Messages", "Wonga");
+		}
+
+		public string GetSourceAssemblyName(Type generated)
+		{
+			var assemblyAttribute = generated.GetCustomAttributes(typeof (SourceAssemblyAttribute),true);
+			
+			if (assemblyAttribute.Length == 0)
+				throw new MissingSourceAssemblyAttributeException(generated);
+
+			return ((SourceAssemblyAttribute) assemblyAttribute[0]).Name;
+		}
+
 		private bool IsWongaMessage(string typeName)
 		{
 			return typeName.ToLower().Contains("wonga");
 		}
 
-		private string GetMappedName(string typeName)
+		private string GetGeneratedTypeName(string typeName)
 		{
 			return typeName.Replace("Wonga", "Wonga.QA.Framework.Msmq.Messages");
 		}
 
 		private Type MapToGeneratedType(string typeName)
 		{
-			var mapped = LoadType(GetMappedName(typeName));
+			var mapped = LoadType(GetGeneratedTypeName(typeName));
+
 			if (mapped == null)
 				throw new TypeLoadException("Could not map message type " + typeName);
+
 			return Decorated.GetMappedTypeFor(mapped);
 		}
 
 		private Type LoadType(string type)
 		{
-			return typeof (IApplicationAccepted).Assembly.GetType(type);
+			return typeof(Msmq.Messages.Risk.IApplicationAccepted)
+				.Assembly.GetType(type);
 		}
-
 	}
 	
 }

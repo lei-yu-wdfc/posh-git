@@ -57,38 +57,38 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Messaging" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Xml" />
     <Reference Include="Wonga.QA.Framework">
-      <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.dll</HintPath>
+      <HintPath>..\..\..\bin\Wonga.QA.Framework.dll</HintPath>
     </Reference>
     <Reference Include="Wonga.QA.Framework.Api">
-      <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Api.dll</HintPath>
+      <HintPath>..\..\..\bin\Wonga.QA.Framework.Api.dll</HintPath>
     </Reference>
     <Reference Include="Wonga.QA.Framework.Core">
-      <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Core.dll</HintPath>
+      <HintPath>..\..\..\bin\Wonga.QA.Framework.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Wonga.QA.Framework.Cs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Cs.dll</HintPath>
+    <Reference Include="Wonga.QA.Framework.Cs">
+      <HintPath>..\..\..\bin\Wonga.QA.Framework.Cs.dll</HintPath>
     </Reference>
-    <Reference Include="Wonga.QA.Framework.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Data.dll</HintPath>
+    <Reference Include="Wonga.QA.Framework.Data">
+      <HintPath>..\..\..\bin\Wonga.QA.Framework.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Wonga.QA.Framework.Db, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="Wonga.QA.Framework.Mocks, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Wonga.QA.Framework.Db">
+      <HintPath>..\..\..\bin\Wonga.QA.Framework.Db.dll</HintPath>
+    </Reference>
+    <Reference Include="Wonga.QA.Framework.Mocks">
       <HintPath>..\..\..\bin\Wonga.QA.Framework.Mocks.dll</HintPath>
     </Reference>
     <Reference Include="Wonga.QA.Framework.Msmq">
-      <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Msmq.dll</HintPath>
+      <HintPath>..\..\..\bin\Wonga.QA.Framework.Msmq.dll</HintPath>
     </Reference>
     <Reference Include="Wonga.QA.Framework.Svc">
-      <HintPath>..\..\..\bin\Wonga.QA.Framework\Wonga.QA.Framework.Svc.dll</HintPath>
+      <HintPath>..\..\..\bin\Wonga.QA.Framework.Svc.dll</HintPath>
     </Reference>
-    <Reference Include="Wonga.QA.Tests.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Wonga.QA.Tests.Core">
       <HintPath>..\..\..\bin\Wonga.QA.Tests.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
@@ -99,6 +99,7 @@
     <Compile Include="CheckpointTestSettings.cs" />
     <Compile Include="CL\Uk\Checkpoints\Blacklist\ApplicationElementNotInBlacklist.cs" />
     <Compile Include="CL\Uk\Checkpoints\BureauData\CallValidateTests.cs" />
+    <Compile Include="CL\Uk\RiskDecisionsPublishingTests.cs" />
     <Compile Include="CL\Uk\PreparationTests.cs" />
     <Compile Include="CL\Uk\RiskServiceTestClUkBase.cs" />
     <Compile Include="Messages\IMessageFactory.cs" />
@@ -107,24 +108,7 @@
     <Compile Include="MocksSelfTests.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Mocks\BusConfiguration.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Mocks\EndpointConfigurator.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Mocks\EndpointMock.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Mocks\GenericHandler.cs" />
-    <Compile Include="Mocks\OnTheFlyHandlers.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Mocks\QafMessageMapper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Preparation\ApplicationReadinessUkTests.cs" />
-    <Compile Include="Preparation\ApplicationReadinessWbTests.cs" />
+    <Compile Include="Wb\Uk\ApplicationReadinessWbTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RiskServiceTestBase.cs" />
     <Compile Include="RiskServiceTestWbBase.cs" />

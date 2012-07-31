@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using MbUnit.Framework;
+using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Msmq.Messages.Risk.Business;
-using Wonga.QA.ServiceTests.Risk.Mocks;
+using Wonga.QA.Framework.Svc.Mocks;
 
 namespace Wonga.QA.ServiceTests.Risk
 {
@@ -15,7 +13,7 @@ namespace Wonga.QA.ServiceTests.Risk
 		[SetUp]
 		public void Setup()
 		{
-			_salesforce = new EndpointMock("servicetest");
+			_salesforce = new EndpointMock("servicetest",Drive.Msmq.Risk);
 			_salesforce.Start();
 		}
 
@@ -23,14 +21,14 @@ namespace Wonga.QA.ServiceTests.Risk
 		[Test]
 		public void ThisMessageIsSentToSalesforceTest()
 		{
-			var appId = new Guid("00000000-0000-0000-0000-000000000000");
+			var appId = new Guid();
 
 			var thisMessageWasSentToSalesforce = false;
 
 			_salesforce.AddHandler<IBusinessApplicationAccepted>(
 
 			filter: x => x.ApplicationId == appId,
-			action: (x, bus) => thisMessageWasSentToSalesforce = true);
+			action: (x) => thisMessageWasSentToSalesforce = true);
 
 			Do.Until(() => thisMessageWasSentToSalesforce);
 		}

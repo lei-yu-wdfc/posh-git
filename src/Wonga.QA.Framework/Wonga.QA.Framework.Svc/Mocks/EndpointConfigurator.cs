@@ -1,4 +1,5 @@
-﻿using System.Transactions;
+﻿using System;
+using System.Transactions;
 using Autofac;
 using NServiceBus;
 using NServiceBus.Config.ConfigurationSource;
@@ -6,13 +7,13 @@ using NServiceBus.Serialization;
 using NServiceBus.Serializers.XML;
 using NServiceBus.Unicast.Transport;
 
-namespace Wonga.QA.ServiceTests.Risk.Mocks
+namespace Wonga.QA.Framework.Svc.Mocks
 {
 	internal class EndpointConfigurator
 	{
 		private string EndpointName { get; set; }
 
-		public IBus InitialiseEndpoint()
+		public IDisposable InitialiseEndpoint()
 		{
 			var builder = new ContainerBuilder();
 
@@ -28,6 +29,7 @@ namespace Wonga.QA.ServiceTests.Risk.Mocks
 				typeof (OnTheFlyHandler).Assembly,
 				typeof (Framework.Msmq.Messages.Risk.IRiskEvent).Assembly
 				);
+
 			configure.CustomConfigurationSource(busConfigSource);
 			configure.Autofac2Builder(container).XmlSerializer();
 			var bus = configure.MsmqTransport()
@@ -37,7 +39,8 @@ namespace Wonga.QA.ServiceTests.Risk.Mocks
 				.UnicastBus()
 				.ImpersonateSender(true)
 				.LoadMessageHandlers()
-				.DoNotAutoSubscribe().CreateBus().Start();
+				.DoNotAutoSubscribe().CreateBus();
+			bus.Start();
 
 			var messageSerializer = container.Resolve<IMessageSerializer>();
 			var origMapper = ((MessageSerializer) messageSerializer).MessageMapper;
@@ -45,8 +48,6 @@ namespace Wonga.QA.ServiceTests.Risk.Mocks
 
 			return bus;
 		}
-
-
 
 		public EndpointConfigurator(string endpointName)
 		{

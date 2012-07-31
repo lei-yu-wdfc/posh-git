@@ -49,7 +49,7 @@ namespace Wonga.QA.Generators.Msmq
                 GeneratedEntityDefinition generatedEntityDefinition = _entityGenerator.GenerateEntityDefinition(message);
                 FileInfo code = Repo.File(String.Format("{0}.cs", messageClassName),
                                             generatedEntityDefinition.Directory);
-                var builder = InitializeMessageClassDefinition(messageClassName, message, generatedEntityDefinition.Namespace);
+                var builder = InitializeMessageClassDefinition(messageClassName, assembly.FullName, message, generatedEntityDefinition.Namespace);
                 _enumGenerator.StartEnumGenerationForClass(generatedEntityDefinition.Namespace);
                 foreach (KeyValuePair<String, Type> member in message.GetMessageMembers())
                 {
@@ -83,7 +83,7 @@ namespace Wonga.QA.Generators.Msmq
             }
         }
 
-    	private StringBuilder InitializeMessageClassDefinition(string messageClassName, Type message,
+    	private StringBuilder InitializeMessageClassDefinition(string messageClassName, string messageAssemblyName, Type message,
     	                                                              string messageClassNamespace)
     	{
     		StringBuilder builder = new StringBuilder().AppendFormatLine(new[]
@@ -91,8 +91,8 @@ namespace Wonga.QA.Generators.Msmq
     		                                                             		"namespace {0}",
     		                                                             		"{{",
     		                                                             		"    /// <summary> {1} </summary>",
-    		                                                             		"    [XmlRoot({2}, Namespace = {3}, DataType = {4})]"
-    		                                                             		,
+    		                                                             		"    [XmlRoot({2}, Namespace = {3}, DataType = {4} )",
+    		                                                             		"    , SourceAssembly({6})]",
     		                                                             		"    public partial class {5} : MsmqMessage<{5}>",
     		                                                             		"    {{"
     		                                                             	},
@@ -101,7 +101,9 @@ namespace Wonga.QA.Generators.Msmq
     		                                                             message.Name.Quote(),
     		                                                             message.Namespace.Quote(),
     		                                                             String.Join(",", message.GetTypes().Select(t => t.FullName)).Quote(),
-    		                                                             messageClassName);
+    		                                                             messageClassName,
+																		 messageAssemblyName.Quote()
+																		 );
     		return builder;
     	}
 

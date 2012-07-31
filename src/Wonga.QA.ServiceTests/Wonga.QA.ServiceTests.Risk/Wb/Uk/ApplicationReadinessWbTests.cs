@@ -2,7 +2,7 @@
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
 
-namespace Wonga.QA.ServiceTests.Risk.Preparation
+namespace Wonga.QA.ServiceTests.Risk.Wb.Uk
 {
 	[Parallelizable(TestScope.All), AUT(AUT.Wb)]
 	public class ApplicationReadinessWbTests : RiskServiceTestWbBase

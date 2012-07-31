@@ -32,7 +32,7 @@ namespace Wonga.QA.ServiceTests.Risk.CL.Uk.Checkpoints.BureauData
 		{
 			EndpointMock.AddHandler<CallValidateRequestMessage>(
 				filter: x => x.ApplicationId == this.ApplicationId,
-				action: (receivedMsg,bus) =>
+				action: (receivedMsg) =>
 				        	{
 				        		var response = GetCallValidateHappyCaseResponse();
 				        		response.SagaId = receivedMsg.SagaId;
@@ -42,9 +42,6 @@ namespace Wonga.QA.ServiceTests.Risk.CL.Uk.Checkpoints.BureauData
 
 		private CallValidateResponseMessage GetCallValidateHappyCaseResponse()
 		{
-			//var tableRef = Drive.Data.QaData.Db.CallValidateOutputs;
-			//var xmlResponse = tableRef.FindAllBy(ResponseType: "Success").Single().Response;
-
 			var xmlResponse = new DbDriver().QaData.CallValidateOutputs.First(x => x.ResponseType == "Success");
 			return new CallValidateResponseMessage {Response = xmlResponse.Response};
 		}

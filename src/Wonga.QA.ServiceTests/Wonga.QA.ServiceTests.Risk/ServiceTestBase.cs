@@ -9,13 +9,16 @@ using Wonga.QA.Framework.Msmq;
 
 namespace Wonga.QA.ServiceTests.Risk
 {
+	//TODO: Move to the Fx
 	[TestFixture]
 	public abstract class ServiceTestBase
 	{
 		protected string CardExpiryDateFormat = "yyyy-MM-dd";
+		protected DateTime TestAsOf { get; set; }
 
 		#region IDs
 		protected Guid ApplicationId { get; private set; }
+
 		protected virtual void GenerateIds()
 		{
 			ApplicationId = Guid.NewGuid();
@@ -36,9 +39,10 @@ namespace Wonga.QA.ServiceTests.Risk
 		{
 			msgs.ToList().ForEach(x => Drive.Msmq.Risk.Send(x));
 		}
+
 		protected void Send(MsmqMessage msg)
 		{
-			Send(new MsmqMessage[]{msg});
+			Send(new[]{msg});
 		}
 
 		protected void Post(IEnumerable<ApiRequest> requests)
@@ -55,29 +59,32 @@ namespace Wonga.QA.ServiceTests.Risk
 		}
 		#endregion
 
-		#region Test Settings
-
-		protected DateTime TestAsOf { get; set; }
-
-		#endregion
-
+		
 		[SetUp]
 		public void SetUp()
 		{
 			GenerateIds();
 			DeclareCommands();
+
 			Messages.Instantiate();
 			Messages.ApplyDefaults();
-			
+
 			BeforeEachTest();
 			Messages.Initialise();
-			
 		}
+		
+		[TearDown]
+		public void TearDown()
+		{
+			AfterEachTest();
+		}
+
 
 		protected virtual void BeforeEachTest()
 		{
 			TestAsOf = DateTime.Now;
-
 		}
+
+		protected virtual void AfterEachTest(){}
 	}
 }

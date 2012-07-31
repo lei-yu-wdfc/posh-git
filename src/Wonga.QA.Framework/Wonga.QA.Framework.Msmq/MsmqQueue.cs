@@ -44,23 +44,38 @@ namespace Wonga.QA.Framework.Msmq
             }
         }
 
-        public void Send(MsmqMessage message)
+        public void Send(MsmqMessage message,string label = "")
         {
-            String body = message.ToString();
-            Trace.WriteLine(Get.Indent(body), GetType().FullName);
-
-            Byte[] bytes = Encoding.Default.GetBytes(body);
-            Message send = new Message
-            {
-                ResponseQueue = _response,
-                AdministrationQueue = _administration,
-                AcknowledgeType = AcknowledgeTypes.FullReceive
-            };
-            send.BodyStream.Write(bytes, 0, bytes.Length);
-            _queue.Send(send, MessageQueueTransactionType.Single);
+            Send(message.ToString(),label);
         }
 
-        private MsmqQueue Wait(MsmqMessage message)
+		public void Send(string body,string label)
+		{
+			SendMessageToQueue(body, label,_queue);
+		}
+
+		public void SendSubscription(string body, string label)
+		{
+			SendMessageToQueue(body, label, _subscriptions);
+		}
+
+    	private void SendMessageToQueue(string body, string label,MessageQueue destinationQueue)
+    	{
+    		Trace.WriteLine(Get.Indent(body), GetType().FullName);
+
+    		Byte[] bytes = Encoding.Default.GetBytes(body);
+    		Message send = new Message
+    		               	{
+    		               		ResponseQueue = _response,
+    		               		AdministrationQueue = _administration,
+    		               		AcknowledgeType = AcknowledgeTypes.FullReceive,
+    		               		Label = label
+    		               	};
+    		send.BodyStream.Write(bytes, 0, bytes.Length);
+    		destinationQueue.Send(send, MessageQueueTransactionType.Single);
+    	}
+
+    	private MsmqQueue Wait(MsmqMessage message)
         {
             throw new NotImplementedException();
         }

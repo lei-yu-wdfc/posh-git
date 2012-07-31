@@ -5,6 +5,8 @@ using Wonga.QA.Framework.Msmq.Messages.Comms.PublicMessages;
 using Wonga.QA.Framework.Msmq.Messages.Ops.PublicMessages;
 using Wonga.QA.Framework.Msmq.Messages.Payments.PublicMessages;
 using Wonga.QA.Framework.Msmq.Messages.Risk;
+using Wonga.QA.Framework.Msmq.Messages.Risk.BlackList;
+using Wonga.QA.Framework.Svc.Mocks;
 
 namespace Wonga.QA.ServiceTests.Risk.CL.uk
 {
@@ -19,8 +21,11 @@ namespace Wonga.QA.ServiceTests.Risk.CL.uk
 			                                               		x.AccountId = MainApplicantAccountId;
 			                                               		x.MiddleName = CheckpointTestSettings.MaskName;
 			                                               	});
+
 			Messages.Add<RiskSaveCustomerAddressUkCommand>(x => x.AccountId = MainApplicantAccountId);
+
 			Messages.Add<SubmitApplicationBehaviourCommand>(x => x.ApplicationId = ApplicationId);
+
 			Messages.Add<RiskCreateFixedTermLoanApplicationCommand>(
 				x =>
 					{
@@ -29,6 +34,7 @@ namespace Wonga.QA.ServiceTests.Risk.CL.uk
 						x.BankAccountId = BankAccountId;
 						x.PaymentCardId = PaymentCardId;
 					});
+
 			Messages.Add<IApplicationAdded>(
 				x =>
 					{
@@ -36,7 +42,9 @@ namespace Wonga.QA.ServiceTests.Risk.CL.uk
 						x.ApplicationId = ApplicationId;
 						x.CreatedOn = TestAsOf;
 					});
+
 			Messages.Add<IAccountCreated>(x => x.AccountId = MainApplicantAccountId);
+
 			Messages.Add<RiskAddBankAccountUkCommand>(
 				x =>
 					{
@@ -113,6 +121,26 @@ namespace Wonga.QA.ServiceTests.Risk.CL.uk
 		protected void WhenTheL0UserAppliesForALoan()
 		{
 			RunL0Journey();
+		}
+
+		protected void GivenThatApplicantIsOnBlackList()
+		{ 
+			EndpointMock
+				.OnArrivalOf<ConsumerBlackListRequestMessage>()
+				.Matching(x => x.ApplicationId == ApplicationId)
+				.ThenDoThis(receivedMsg =>
+				{
+					var response = CreateBlacklistedMessage();
+					response.SagaId = receivedMsg.SagaId;
+					Send(response);
+				})
+
+				.SeemsLegit().Dude();
+		}
+
+		private ConsumerBlackListResponseMessage CreateBlacklistedMessage()
+		{
+			return new ConsumerBlackListResponseMessage {PresentInBlackList = true};
 		}
 	}
 }
