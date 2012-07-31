@@ -4,7 +4,7 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Requests.Risk.Queries;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.ServiceTests.Risk.Mocks;
+using Wonga.QA.Framework.Svc.Mocks;
 using RiskSaveCustomerAddressCommand = Wonga.QA.Framework.Msmq.Messages.Risk.RiskSaveCustomerAddress;
 using RiskSaveCustomerDetailsCommand = Wonga.QA.Framework.Msmq.Messages.Risk.RiskSaveCustomerDetails;
 
@@ -16,8 +16,15 @@ namespace Wonga.QA.ServiceTests.Risk
 		{
 			base.BeforeEachTest();
 			CheckpointTestSettings = new CheckpointTestSettings();
-			EndpointMock = new EndpointMock("servicetest");
+			EndpointMock = new EndpointMock("servicetest",Drive.Msmq.Risk);
 			EndpointMock.Start();
+		}
+
+		protected override void AfterEachTest()
+		{
+			base.AfterEachTest();
+			if(EndpointMock!=null)
+				EndpointMock.Dispose();
 		}
 
 		#region Assertions
@@ -91,12 +98,12 @@ namespace Wonga.QA.ServiceTests.Risk
 		{
 			////todo: use variables instead
 			SetupKathleenAs(
-				Messages.Get<Wonga.QA.Framework.Api.Requests.Risk.Commands.Uk.RiskSaveCustomerDetailsUkCommand>(),
-				Messages.Get<Wonga.QA.Framework.Api.Requests.Risk.Commands.Uk.RiskSaveCustomerAddressUkCommand>(), dateOfBirth);
+				Messages.Get<Framework.Api.Requests.Risk.Commands.Uk.RiskSaveCustomerDetailsUkCommand>(),
+				Messages.Get<Framework.Api.Requests.Risk.Commands.Uk.RiskSaveCustomerAddressUkCommand>(), dateOfBirth);
 		}
 
-		protected void SetupKathleenAs(Wonga.QA.Framework.Api.Requests.Risk.Commands.Uk.RiskSaveCustomerDetailsUkCommand detailsCommand,
-									   Wonga.QA.Framework.Api.Requests.Risk.Commands.Uk.RiskSaveCustomerAddressUkCommand addressCommand,
+		protected void SetupKathleenAs(Framework.Api.Requests.Risk.Commands.Uk.RiskSaveCustomerDetailsUkCommand detailsCommand,
+									   Framework.Api.Requests.Risk.Commands.Uk.RiskSaveCustomerAddressUkCommand addressCommand,
 									   DateTime? dateOfBirth = null)
 		{
 			detailsCommand.DateOfBirth = (dateOfBirth ?? DateTime.Parse("24-Jan-1992")).ToDate(DateFormat.Date);
