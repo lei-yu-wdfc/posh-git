@@ -9,6 +9,7 @@ using OpenQA.Selenium.Firefox;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI;
+using Wonga.QA.Framework.UI.Mappings;
 using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Framework.UI.UiElements.Pages.FinancialAssessment;
@@ -60,7 +61,7 @@ namespace Wonga.QA.Tests.Ui
             var financialassessmentpage = Client.FinancialAssessment();
 
             Assert.Contains(financialassessmentpage.GetPrepopulatedName(), customer.GetCustomerForename(), "Prepopulated name check");
-            Assert.AreEqual("assesment@wonga.com", financialassessmentpage.GetAssesmentsEmail(), "Prepopulated email check");
+            Assert.AreEqual(ContentMap.Get.FinancialAssessmentPage.AssesmentEmail, financialassessmentpage.GetAssesmentsEmail(), "Prepopulated email check");
         }
 
         [Test, AUT(AUT.Uk), Category(TestCategories.SmokeTest), Pending("Financial Assessment")]
