@@ -35,6 +35,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Ui.Pages.Common
         public String ContentSlot1Title { get; set; }
         public String WongaCustomersBoxText { get; set; }
         public String ResponsibleLendingBoxText { get; set; }
-
+        public String RepresentativeExampleTrigger { get; set; }
+        public String RepresentativeExampleText { get; set; }
     }
 }

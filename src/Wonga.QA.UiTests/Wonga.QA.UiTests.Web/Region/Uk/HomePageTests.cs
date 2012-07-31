@@ -12,18 +12,20 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
     public class HomePageTests: UiTest
     {
         private string _email;
-        private string _firsName;
-        private string url;
+        private string _fullfirstName;
+        private string _url;
+        private string _truncatedFirstName;
         //private string _time;
 
         [FixtureSetUp]
         public void FixtureSetup()
         {
             _email = Get.RandomEmail();
-            _firsName = Get.GetName();
-            Console.WriteLine("email={0}, first name={1}", _email, _firsName);
+            _fullfirstName = Get.RandomString(20);
+            _truncatedFirstName = _fullfirstName.Remove(15);
+            Console.WriteLine("email={0}, first name={1}", _email, _fullfirstName, _truncatedFirstName);
 
-            Customer customer = CustomerBuilder.New().WithEmailAddress(_email).WithForename(_firsName).Build();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(_email).WithForename(_fullfirstName).Build();
             ApplicationBuilder.New(customer).Build();
         }
 
@@ -49,26 +51,26 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         public void HomePageLinksTest()
         {
             var homePage = Client.Home();
-            url = Client.Home().Url;
+            _url = Client.Home().Url;
 
             //Ensure 'Code of practice' link has correct URL
-            Assert.AreEqual(url + "node/495", homePage.GetHomePageCodeOfPracticeLink());
+            Assert.AreEqual(_url + "node/495", homePage.GetHomePageCodeOfPracticeLink());
             Console.WriteLine(homePage.GetHomePageCodeOfPracticeLink());
 
             //Ensure 'Trust rating' link has correct URL
-            Assert.AreEqual(url + "trust-rating", homePage.GetHomePageTrustRatingLink());
+            Assert.AreEqual(_url + "trust-rating", homePage.GetHomePageTrustRatingLink());
             Console.WriteLine(homePage.GetHomePageTrustRatingLink());
 
             //Ensure 'APR' link has correct URL
-            Assert.AreEqual(url + "apr", homePage.GetHomePageAPRLink());
+            Assert.AreEqual(_url + "apr", homePage.GetHomePageAPRLink());
             Console.WriteLine(homePage.GetHomePageAPRLink());
 
             //Ensure 'Contact us' link has correct URL
-            Assert.AreEqual(url + "contact", homePage.GetHomePageContactUsLink());
+            Assert.AreEqual(_url + "contact", homePage.GetHomePageContactUsLink());
             Console.WriteLine(homePage.GetHomePageContactUsLink());
 
             //Ensure 'Privacy policy' link has correct URL
-            Assert.AreEqual(url + "privacy-policy", homePage.GetHomePagePrivacyPolicyLink());
+            Assert.AreEqual(_url + "privacy-policy", homePage.GetHomePagePrivacyPolicyLink());
             Console.WriteLine(homePage.GetHomePagePrivacyPolicyLink());
 
             //Ensure VeriSign image link has correct URL
@@ -100,23 +102,39 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Console.WriteLine(homePage.GetHomePageTechTrack100Link());
 
             //Ensure Payday Loans Alternative link has correct URL
-            Assert.AreEqual(url + "content/payday-loans-alternative", homePage.GetHomePagePaydayLoansLink());
+            Assert.AreEqual(_url + "content/payday-loans-alternative", homePage.GetHomePagePaydayLoansLink());
             Console.WriteLine(homePage.GetHomePagePaydayLoansLink());
 
             //Ensure Quick Loan link has correct URL
-            Assert.AreEqual(url + "content/quick-loan", homePage.GetHomePageQuickLoanLink());
+            Assert.AreEqual(_url + "content/quick-loan", homePage.GetHomePageQuickLoanLink());
             Console.WriteLine(homePage.GetHomePageQuickLoanLink());
 
             //Ensure Cash Loan link has correct URL
-            Assert.AreEqual(url + "content/cash-loan", homePage.GetHomePageCashLoanLink());
+            Assert.AreEqual(_url + "content/cash-loan", homePage.GetHomePageCashLoanLink());
             Console.WriteLine(homePage.GetHomePageCashLoanLink());
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-373"), MultipleAsserts, Pending("Test in development"), Owner(Owner.PavithranVangiti)]
+        public void HomePageRepresentativeExampleTest()
+        {
+            var homePage = Client.Home();
+
+            //Ensure 'Representative example' tool tip has the correct text
+            Assert.AreEqual("Representative example:" +
+                            "Amount of credit £207 for 20 days" +
+                            "Total amount payable £254.42" +
+                            "Interest £41.92" +
+                            "Interest rate 360% pa (fixed)" +
+                            "Transmission fee £5.50" +
+                            "Representative APR 4212%", homePage.GetRepresentativeExampleText());
+            Console.WriteLine("Representative Example text is: " + homePage.GetRepresentativeExampleText());
         }
 
         [Test, AUT(AUT.Uk), JIRA("UKWEB-229"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
         public void HomePageContentSlotsTest()
         {
             var homePage = Client.Home();
-            url = Client.Home().Url;
+            _url = Client.Home().Url;
 
             //Ensure correct title is present in first content slot in home page
             Assert.AreEqual("Betty, Earl and Joyce show how wonga.com's short term cash loans put you in control", homePage.GetContentSlot1Title());
@@ -155,8 +173,21 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             loginPage.LoginAs(_email);
             var homePage = Client.Home();
             // user has logged in
-            Assert.AreEqual("Welcome back " + _firsName + "! (not " + _firsName + 
-                "? click here) We can deposit up to £400 in your bank account by " + DateTime.Now.AddMinutes(23).ToShortTimeString()
+            Assert.AreEqual("Welcome back " + _truncatedFirstName + "...! (not " + _truncatedFirstName + 
+                "...? click here) We can deposit up to £400 in your bank account by " + DateTime.Now.AddMinutes(23).ToShortTimeString()
+                + homePage.GetWelcomeMessageDay(), homePage.GetWelcomeHeaderMessageText()); 
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), Pending("Test in development. Code in development."), DependsOn("HomePagePersonalisedNewUserTest"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
+        public void L0HomePageFirstNameTruncationTest()
+        {
+            var loginPage = Client.Login();
+            loginPage.LoginAs(_email);
+            var homePage = Client.Home();
+            Console.WriteLine(_fullfirstName + _truncatedFirstName);
+            // user has logged in
+            Assert.AreEqual("Welcome back " + _truncatedFirstName + "...! (not " + _fullfirstName +
+                "...? click here) We can deposit up to £400 in your bank account by " + DateTime.Now.AddMinutes(23).ToShortTimeString()
                 + homePage.GetWelcomeMessageDay(), homePage.GetWelcomeHeaderMessageText());
 
             Assert.AreEqual("400", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
@@ -166,7 +197,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         public void L0HomePagePersonalisedCookiedUserTest()
         {
             var homePage = Client.Home();
-            Assert.AreEqual("Welcome back " + _firsName + "! (not " + _firsName + "? click here)", homePage.GetWelcomeHeaderMessageText()); // user has being cookied
+            Assert.AreEqual("Welcome back " + _truncatedFirstName + "...! (not " + _truncatedFirstName + "...? click here)", homePage.GetWelcomeHeaderMessageText()); // user has being cookied
 
             Assert.AreEqual("400", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
         }
@@ -182,7 +213,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             loginPage.LoginAs(_email);
             var homePage = Client.Home();
             Console.WriteLine(_email);
-            Assert.AreEqual("Welcome back " + _firsName + "! (not " + _firsName + "? click here) We can deposit up to " +  " in your bank account by " + DateTime.Now.AddMinutes(23).ToShortTimeString() + homePage.GetWelcomeMessageDay(), homePage.GetWelcomeHeaderMessageText()); // user has logged in
+            Assert.AreEqual("Welcome back " + _truncatedFirstName + "...! (not " + _truncatedFirstName + "...? click here) We can deposit up to " + " in your bank account by " + DateTime.Now.AddMinutes(23).ToShortTimeString() + homePage.GetWelcomeMessageDay(), homePage.GetWelcomeHeaderMessageText()); // user has logged in
 
             Assert.AreEqual("400", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
         }
@@ -191,7 +222,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         public void LnHomePagePersonalisedCookiedUserTest()
         {
             var homePage = Client.Home();
-            //Assert.AreEqual("Welcome back " + _firsName + "! (not " + _firsName + "? click here)", homePage.Headers[1]); // user has being cookied
+            //Assert.AreEqual("Welcome back " + _truncatedFirstName + "...! (not " + _truncatedFirstName + "...? click here)", homePage.Headers[1]); // user has being cookied
 
             Assert.AreEqual("400", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
         }

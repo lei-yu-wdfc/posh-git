@@ -2,6 +2,7 @@
 using MbUnit.Framework;
 using NHamcrest.Core;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.Elements;
 using Wonga.QA.Framework.UI.Mappings;
@@ -42,6 +43,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
         private IWebElement _contentSlot1;
         private IWebElement _wongaCustomersBox;
         private IWebElement _responsibleLendingBox;
+        private IWebElement _representativeExample;
         //private IWebElement _fastCashLink;
         //private IWebElement _cashAdvanceLink;
         //private IWebElement _quickQuidLink;
@@ -323,6 +325,21 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
             _responsibleLendingBox = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.ResponsibleLendingBoxText));
             var responsibleLendingBox = _responsibleLendingBox.Text;
             return responsibleLendingBox;
+        }
+
+        public String GetRepresentativeExampleText()
+        {
+            Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.RepresentativeExampleTrigger)));
+
+            IWebElement AprExampleLink = Content.FindElement(By.CssSelector(UiMap.Get.HomePage.RepresentativeExampleTrigger));
+
+            Actions builder = new Actions(Client.Driver);
+            builder.MoveToElement(AprExampleLink);
+
+            Do.With.Timeout(new TimeSpan(0, 0, 10)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.RepresentativeExampleText)));
+            _representativeExample = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.RepresentativeExampleText));
+            var representativeExampleText = _representativeExample.Text;
+            return representativeExampleText;
         }
 
         public bool IsMocked()
