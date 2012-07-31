@@ -20,5 +20,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Elements
         public String AmountPlusButton { get; set; }
         public String DurationMinusButton { get; set; }
         public String DurationPlusButton { get; set; }
+        public String MaxAvailableCredit { get; set; }
     }
 }

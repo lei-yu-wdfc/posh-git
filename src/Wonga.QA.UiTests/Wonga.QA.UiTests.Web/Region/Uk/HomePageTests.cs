@@ -34,11 +34,15 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
             // User hasn't logged in before. Verify the Welcome message
             Assert.AreEqual("Welcome to Wonga. We can deposit up to £400 in your bank account by " + DateTime.Now.AddMinutes(24).ToShortTimeString() + homePage.GetWelcomeMessageDay(), 
-                            homePage.GetWelcomeHeaderMessageText(), "The Header should be 'Welcome to Wonga'");
+                            homePage.GetWelcomeHeaderMessageText(), "The Wellcome text is wrong");
 
             // Verify Sub message
             Assert.AreEqual("Existing customers may be able to borrow up to £1,000, depending on your current trust rating.", homePage.GetWelcomeSubMessageText(), 
                             "The Header should be 'Welcome to Wonga'");
+
+            Assert.IsNotNull(homePage);
+
+            Assert.AreEqual("400", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
         }
 
         [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), MultipleAsserts, Pending("Test in development"), Owner(Owner.PavithranVangiti)]
@@ -153,7 +157,9 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             // user has logged in
             Assert.AreEqual("Welcome back " + _firsName + "! (not " + _firsName + 
                 "? click here) We can deposit up to £400 in your bank account by " + DateTime.Now.AddMinutes(23).ToShortTimeString()
-                + homePage.GetWelcomeMessageDay(), homePage.GetWelcomeHeaderMessageText()); 
+                + homePage.GetWelcomeMessageDay(), homePage.GetWelcomeHeaderMessageText());
+
+            Assert.AreEqual("400", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
         }
 
         [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), Pending("Test in development. Code in development."), DependsOn("HomePagePersonalisedLoggedInUserTest"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
@@ -161,6 +167,8 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         {
             var homePage = Client.Home();
             Assert.AreEqual("Welcome back " + _firsName + "! (not " + _firsName + "? click here)", homePage.GetWelcomeHeaderMessageText()); // user has being cookied
+
+            Assert.AreEqual("400", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
         }
 
         [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), Pending("Test in development, and waiting for functionality"), DependsOn("HomePagePersonalisedNewUserTest"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
@@ -175,6 +183,8 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             var homePage = Client.Home();
             Console.WriteLine(_email);
             Assert.AreEqual("Welcome back " + _firsName + "! (not " + _firsName + "? click here) We can deposit up to " +  " in your bank account by " + DateTime.Now.AddMinutes(23).ToShortTimeString() + homePage.GetWelcomeMessageDay(), homePage.GetWelcomeHeaderMessageText()); // user has logged in
+
+            Assert.AreEqual("400", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
         }
 
         [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), Pending("Test in development, and waiting for functionality"), DependsOn("HomePagePersonalisedLoggedInUserTest"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
@@ -182,6 +192,8 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         {
             var homePage = Client.Home();
             //Assert.AreEqual("Welcome back " + _firsName + "! (not " + _firsName + "? click here)", homePage.Headers[1]); // user has being cookied
+
+            Assert.AreEqual("400", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
         }
 
         /*

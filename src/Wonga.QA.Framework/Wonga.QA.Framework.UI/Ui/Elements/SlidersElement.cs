@@ -29,6 +29,7 @@ namespace Wonga.QA.Framework.UI.Elements
         private readonly IWebElement _amountPlusButton;
         private readonly IWebElement _durationMinusButton;
         private readonly IWebElement _durationPlusButton;
+        private readonly IWebElement _maxAvailableCredit;
 
         public SlidersElement(BasePage page)
             : base(page)
@@ -50,6 +51,10 @@ namespace Wonga.QA.Framework.UI.Elements
                     _totalFees = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.TotalFees));
                     _totalToRepay = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.TotalToRepay));
                     _repaymentDate = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.RepaymentDate));
+                    break;
+                case (AUT.Uk):
+                    _totalAmount = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.TotalAmount));
+                    _maxAvailableCredit = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.MaxAvailableCredit));
                     break;
             }
         }
@@ -166,6 +171,11 @@ namespace Wonga.QA.Framework.UI.Elements
             {
                 return false;
             }
+        }
+
+        public String MaxAvailableCredit()
+        {
+            return _maxAvailableCredit.Text.Replace("max £", "");
         }
 
     }
