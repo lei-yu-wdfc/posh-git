@@ -16,7 +16,7 @@ namespace Wonga.QA.Tests.Payments.Command
     [Parallelizable(TestScope.Self)]
     public class DeletePersonalPaymentCardCsApiCommandTests
     {
-		[Test, AUT(AUT.Uk)]
+		[Test, AUT(AUT.Uk), Owner(Owner.PiotrWalat)]
         [Description("Populates customer account with payment cards, deletes one of them using DeletePersonalPaymentCard Cs API" +
                      " command and then verifies that this card has been marked as deleted")]
         public void Command_DeletesPaymentCard_FromCustomersPaymentCards()

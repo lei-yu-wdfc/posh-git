@@ -50,7 +50,7 @@ namespace Wonga.QA.Tests.Payments.Command
 
        [Test]
        [Description("Extends an existing fixed term loan")]
-       [AUT(AUT.Uk), JIRA("UK-1351")]
+       [AUT(AUT.Uk), JIRA("UK-1351"), Owner(Owner.JonHurd)]
        public void CsExtendFixedTermLoanTest_ExtendsExistingLoan_ReturnsWorksOKIfDueDateLessThanAWeekAway()
        {
            Customer _customer = CustomerBuilder.New().Build();

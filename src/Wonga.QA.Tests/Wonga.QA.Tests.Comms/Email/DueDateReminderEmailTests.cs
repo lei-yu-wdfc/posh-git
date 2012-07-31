@@ -90,7 +90,7 @@ namespace Wonga.QA.Tests.Comms.Email
             Assert.IsNotNull(email);
         }
 
-        [AUT(AUT.Uk)]
+        [AUT(AUT.Uk), Owner(Owner.PiotrWalat)]
         [Test]
         public void LiveFixedTermLoan_WithThreeDayTerm_DoesNotSendA1TemplateEmailToCustomer()
         {
@@ -98,7 +98,7 @@ namespace Wonga.QA.Tests.Comms.Email
             Assert.IsNull(_emailTable.FindBy(EmailAddress: _customer.Email, TemplateName: "34250"));
         }
 
-        [AUT(AUT.Uk)]
+        [AUT(AUT.Uk), Owner(Owner.PiotrWalat)]
         [Test]
         public void LiveFixedTermLoan_WithTwoDayTerm_DoesNotSendA1TemplateEmailToCustomer()
         {
@@ -106,7 +106,7 @@ namespace Wonga.QA.Tests.Comms.Email
             Assert.IsNull(_emailTable.FindBy(EmailAddress: _customer.Email, TemplateName: "34250"));
         }
 
-        [AUT(AUT.Uk)]
+        [AUT(AUT.Uk), Owner(Owner.PiotrWalat)]
         [Test]
         public void LiveFixedTermLoan_WithOneDayTerm_DoesNotSendA1TemplateEmailToCustomer()
         {
