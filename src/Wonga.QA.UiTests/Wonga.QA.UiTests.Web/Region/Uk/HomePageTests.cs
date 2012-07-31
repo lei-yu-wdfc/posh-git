@@ -29,17 +29,19 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             ApplicationBuilder.New(customer).Build();
         }
 
+        #region L0_HomePage_Personalised
+
         [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
         public void HomePagePersonalisedNewUserTest()
         {
             var homePage = Client.Home();
 
             // User hasn't logged in before. Verify the Welcome message
-            Assert.AreEqual("Welcome to Wonga. We can deposit up to £400 in your bank account by " + DateTime.Now.AddMinutes(24).ToShortTimeString() + homePage.GetWelcomeMessageDay(), 
+            Assert.AreEqual("Welcome to Wonga. We can deposit up to £400 in your bank account by " + DateTime.Now.AddMinutes(24).ToShortTimeString() + homePage.GetWelcomeMessageDay(),
                             homePage.GetWelcomeHeaderMessageText(), "The Wellcome text is wrong");
 
             // Verify Sub message
-            Assert.AreEqual("Existing customers may be able to borrow up to £1,000, depending on your current trust rating.", homePage.GetWelcomeSubMessageText(), 
+            Assert.AreEqual("Existing customers may be able to borrow up to £1,000, depending on your current trust rating.", homePage.GetWelcomeSubMessageText(),
                             "The Header should be 'Welcome to Wonga'");
 
             Assert.IsNotNull(homePage);
@@ -50,6 +52,75 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             // UKWEB-371: Navigation Header is partially checked when object homePage is created.
             // TODO: UKWEB-371: Apart from checking that the navigation header on the Home page is displayed, also check the elements’ (International, Social, Help, Login) behaviour and content.
         }
+
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), Pending("Test in development. Code in development."), DependsOn("HomePagePersonalisedNewUserTest"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
+        public void L0HomePagePersonalisedLoggedInUserTest()
+        {
+            var loginPage = Client.Login();
+            loginPage.LoginAs(_email);
+            var homePage = Client.Home();
+            // user has logged in
+            Assert.AreEqual("Welcome back " + _truncatedFirstName + "...! (not " + _truncatedFirstName +
+                "...? click here) We can deposit up to £400 in your bank account by " + DateTime.Now.AddMinutes(23).ToShortTimeString()
+                + homePage.GetWelcomeMessageDay(), homePage.GetWelcomeHeaderMessageText());
+
+            // TODO: Change AddMinutes(23) to AddMinutes(24) when the code is fixed
+            // TODO: UKWEB-1072: When users clicks "click here" in the Welcome message on the Homepage, as a recognised or logged in user, the Homepage should open.
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), Pending("Test in development. Code in development."), DependsOn("HomePagePersonalisedLoggedInUserTest"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
+        public void L0HomePagePersonalisedCookiedUserTest()
+        {
+            var homePage = Client.Home();
+            Assert.AreEqual("Welcome back " + _truncatedFirstName + "...! (not " + _truncatedFirstName + "...? click here)", homePage.GetWelcomeHeaderMessageText()); // user has being cookied
+
+            Assert.AreEqual("400", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
+
+            // TODO: UKWEB-371: Check Navigation Header (international-trigger, help-trigger, social-trigger, login-trigger)
+            // Check "If you're not <15-symbolsTrancatedFirstName>, click here."
+            // TODO: UKWEB-371: Apart from checking that the navigation header on the Home page is displayed, also check the elements’ (International, Social, Help, Login) behaviour and content.
+            // TODO: UKWEB-1072: When users clicks "click here" in the Welcome message on the Homepage, as a recognised or logged in user, the Homepage should open.
+        }
+
+        #endregion
+
+        #region Ln_HomePage_Personalised
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), Pending("Test in development. Code in development."), DependsOn("HomePagePersonalisedNewUserTest"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
+        public void LnHomePagePersonalisedLoggedInUserTest()
+        {
+            var journeyL0 = JourneyFactory.GetL0Journey(Client.Home())
+               .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask))
+               .WithEmail(_email);
+
+            var loginPage = Client.Login();
+            loginPage.LoginAs(_email);
+            var homePage = Client.Home();
+            Console.WriteLine(_email);
+            Assert.AreEqual("Welcome back " + _truncatedFirstName + "...! (not " + _truncatedFirstName + "...? click here) We can deposit up to " + " in your bank account by " + DateTime.Now.AddMinutes(23).ToShortTimeString() + homePage.GetWelcomeMessageDay(), homePage.GetWelcomeHeaderMessageText()); // user has logged in
+
+            Assert.AreEqual("400", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
+
+            // TODO: Change AddMinutes(23) to AddMinutes(24) when the code is fixed
+            // TODO: UKWEB-371: Check Navigation Header (international-trigger, help-trigger, social-trigger, login-trigger)
+            // Check "Welcome <15-symbolsTrancatedFirstName> Logout"
+            // TODO: UKWEB-371: Apart from checking that the navigation header on the Home page is displayed, also check the elements’ (International, Social, Help, Login) behaviour and content.
+            // TODO: UKWEB-1072: When users clicks "click here" in the Welcome message on the Homepage, as a recognised or logged in user, the Homepage should open.
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), Pending("Test in development. Code in development."), DependsOn("HomePagePersonalisedLoggedInUserTest"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
+        public void LnHomePagePersonalisedCookiedUserTest()
+        {
+            var homePage = Client.Home();
+            //Assert.AreEqual("Welcome back " + _truncatedFirstName + "...! (not " + _truncatedFirstName + "...? click here)", homePage.Headers[1]); // user has being cookied
+
+            Assert.AreEqual("400", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
+
+            // TODO: UKWEB-371: Check Navigation Header (international-trigger, help-trigger, social-trigger, login-trigger)
+            // Check "If you're not <15-symbolsTrancatedFirstName>, click here."
+            // TODO: UKWEB-371: Apart from checking that the navigation header on the Home page is displayed, also check the elements’ (International, Social, Help, Login) behaviour and content.
+            // TODO: UKWEB-1072: When users clicks "click here" in the Welcome message on the Homepage, as a recognised or logged in user, the Homepage should open.
+        }
+        #endregion
 
         [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), MultipleAsserts, Pending("Test in development"), Owner(Owner.PavithranVangiti)]
         public void HomePageLinksTest()
@@ -118,7 +189,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Console.WriteLine(homePage.GetHomePageCashLoanLink());
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-373"), MultipleAsserts, Pending("Test in development"), Owner(Owner.PavithranVangiti)]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-373"), MultipleAsserts, Pending("Test in development.  Code in development."), Owner(Owner.PavithranVangiti)]
         public void HomePageRepresentativeExampleTest()
         {
             var homePage = Client.Home();
@@ -171,18 +242,6 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         }
         
         [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), Pending("Test in development. Code in development."), DependsOn("HomePagePersonalisedNewUserTest"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
-        public void L0HomePagePersonalisedLoggedInUserTest()
-        {
-            var loginPage = Client.Login();
-            loginPage.LoginAs(_email);
-            var homePage = Client.Home();
-            // user has logged in
-            Assert.AreEqual("Welcome back " + _truncatedFirstName + "...! (not " + _truncatedFirstName + 
-                "...? click here) We can deposit up to £400 in your bank account by " + DateTime.Now.AddMinutes(23).ToShortTimeString()
-                + homePage.GetWelcomeMessageDay(), homePage.GetWelcomeHeaderMessageText()); 
-        }
-
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), Pending("Test in development. Code in development."), DependsOn("HomePagePersonalisedNewUserTest"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
         public void L0HomePageFirstNameTruncationTest()
         {
             var loginPage = Client.Login();
@@ -196,54 +255,9 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
             Assert.AreEqual("400", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
 
+            // TODO: Change AddMinutes(23) to AddMinutes(24) when the code is fixed
             // TODO: UKWEB-371: Check Navigation Header (international-trigger, help-trigger, social-trigger, login-trigger)
             // Check "Welcome <15-symbolsTrancatedFirstName> Logout"
-            // TODO: UKWEB-371: Apart from checking that the navigation header on the Home page is displayed, also check the elements’ (International, Social, Help, Login) behaviour and content.
-        }
-
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), Pending("Test in development. Code in development."), DependsOn("HomePagePersonalisedLoggedInUserTest"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
-        public void L0HomePagePersonalisedCookiedUserTest()
-        {
-            var homePage = Client.Home();
-            Assert.AreEqual("Welcome back " + _truncatedFirstName + "...! (not " + _truncatedFirstName + "...? click here)", homePage.GetWelcomeHeaderMessageText()); // user has being cookied
-
-            Assert.AreEqual("400", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
-
-            // TODO: UKWEB-371: Check Navigation Header (international-trigger, help-trigger, social-trigger, login-trigger)
-            // Check "If you're not <15-symbolsTrancatedFirstName>, click here."
-            // TODO: UKWEB-371: Apart from checking that the navigation header on the Home page is displayed, also check the elements’ (International, Social, Help, Login) behaviour and content.
-        }
-
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), Pending("Test in development, and waiting for functionality"), DependsOn("HomePagePersonalisedNewUserTest"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
-        public void LnHomePagePersonalisedLoggedInUserTest()
-        {
-            var journeyL0 = JourneyFactory.GetL0Journey(Client.Home())
-               .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask))
-               .WithEmail(_email);
-
-            var loginPage = Client.Login();
-            loginPage.LoginAs(_email);
-            var homePage = Client.Home();
-            Console.WriteLine(_email);
-            Assert.AreEqual("Welcome back " + _truncatedFirstName + "...! (not " + _truncatedFirstName + "...? click here) We can deposit up to " + " in your bank account by " + DateTime.Now.AddMinutes(23).ToShortTimeString() + homePage.GetWelcomeMessageDay(), homePage.GetWelcomeHeaderMessageText()); // user has logged in
-
-            Assert.AreEqual("400", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
-
-            // TODO: UKWEB-371: Check Navigation Header (international-trigger, help-trigger, social-trigger, login-trigger)
-            // Check "Welcome <15-symbolsTrancatedFirstName> Logout"
-            // TODO: UKWEB-371: Apart from checking that the navigation header on the Home page is displayed, also check the elements’ (International, Social, Help, Login) behaviour and content.
-        }
-
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), Pending("Test in development, and waiting for functionality"), DependsOn("HomePagePersonalisedLoggedInUserTest"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
-        public void LnHomePagePersonalisedCookiedUserTest()
-        {
-            var homePage = Client.Home();
-            //Assert.AreEqual("Welcome back " + _truncatedFirstName + "...! (not " + _truncatedFirstName + "...? click here)", homePage.Headers[1]); // user has being cookied
-
-            Assert.AreEqual("400", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
-
-            // TODO: UKWEB-371: Check Navigation Header (international-trigger, help-trigger, social-trigger, login-trigger)
-            // Check "If you're not <15-symbolsTrancatedFirstName>, click here."
             // TODO: UKWEB-371: Apart from checking that the navigation header on the Home page is displayed, also check the elements’ (International, Social, Help, Login) behaviour and content.
         }
 
