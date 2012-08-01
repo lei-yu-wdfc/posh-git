@@ -79,9 +79,6 @@ namespace Wonga.QA.Framework.Api
 		TESTFraudBlacklist,
         TESTApplicantHasPoorRelationshipWithWonga,
         TESTApplicantIsNotMinorUru,
-        TESTCardLivePaymentCardVerification,
-        TESTCustomerIsNotOnBenefits,
-        TESTExperianAuthenticatePlus
-
+        TESTCardLivePaymentCardVerification
 	}
 }

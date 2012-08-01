@@ -10,7 +10,6 @@ using Wonga.QA.Tests.Payments.Helpers.Ca;
 
 namespace Wonga.QA.Tests.Risk
 {
-    [Parallelizable(TestScope.All)]
     class AdditionalPayFrequencyCalculateTest
     {
         [Test, AUT(AUT.Ca), JIRA("CA-2444")]
