@@ -115,13 +115,14 @@ namespace Wonga.QA.Tests.Api
         }
 
         [Test, AUT(AUT.Uk), JIRA("QA-320"), Ignore, Owner(Owner.PetrTarasenko)]
-        [Row(1, 20)]
+        [Row(1, -20)]
         public void CreateAcceptedCustomersWithProperInfo(int customersNum, int day)
         {
             for (int i = 0; i < customersNum; i++)
             {
                 Customer properCustomer = properCustomerCreator();
-                Application application = ApplicationBuilder.New(properCustomer).WithLoanTerm(day).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+                Application application = ApplicationBuilder.New(properCustomer)
+                    .WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build().RewindApplicationDatesForDays(day);
             }
 
         }
@@ -133,7 +134,8 @@ namespace Wonga.QA.Tests.Api
             for (int i = 0; i < customersNum; i++)
             {
                 Customer properCustomer = properCustomerCreator();
-                Application application = ApplicationBuilder.New(properCustomer).WithLoanTerm(day).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+                Application application =
+                    ApplicationBuilder.New(properCustomer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build().RewindApplicationDatesForDays(day);
             }
 
         }
@@ -145,10 +147,75 @@ namespace Wonga.QA.Tests.Api
             for (int i = 0; i < customersNum; i++)
             {
                 Customer properCustomer = properCustomerCreator();
-                Application application = ApplicationBuilder.New(properCustomer).WithLoanTerm(day).WithExpectedDecision(ApplicationDecisionStatus.Pending).Build();
+                Application application =
+                    ApplicationBuilder.New(properCustomer).WithExpectedDecision(ApplicationDecisionStatus.Pending).Build().RewindApplicationDatesForDays(day);
+                
             }
 
         }
+
+        [Test, AUT(AUT.Uk), JIRA("QA-320"), Ignore, Owner(Owner.PetrTarasenko)]
+        [Row(13, -1)]
+        [Row(3, 0)]
+        [Row(3, 1)]
+        public void CreateFraudCustomersWithProperInfo(int customersNum, int day)
+        {
+            for (int i = 0; i < customersNum; i++)
+            {
+                Customer properCustomer = properCustomerCreator();
+                Application application = ApplicationBuilder.New(properCustomer).Build().RewindApplicationDatesForDays(day);
+                ApplicationOperations.ConfirmFraud(application,properCustomer,Guid.NewGuid());
+            }
+
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("QA-320"), Ignore, Owner(Owner.PetrTarasenko)]
+        [Row(5, 5)]
+        [Row(5, 10)]
+        [Row(5, 30)]
+        [Row(5, 60)]
+        public void CreateHardshipCustomersWithProperInfo(int customersNum, int day)
+        {
+            for (int i = 0; i < customersNum; i++)
+            {
+                Customer properCustomer = properCustomerCreator();
+                Application application = ApplicationBuilder.New(properCustomer).Build().RewindApplicationDatesForDays(day);
+                ApplicationOperations.ReportHardship(application, Guid.NewGuid());
+            }
+
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("QA-320"), Ignore, Owner(Owner.PetrTarasenko)]
+        [Row(5, 1)]
+        [Row(13, 2)]
+        [Row(13, 5)]
+        [Row(13, 30)]
+        public void CreateManagementReviewCustomersWithProperInfo(int customersNum, int day)
+        {
+            for (int i = 0; i < customersNum; i++)
+            {
+                Customer properCustomer = properCustomerCreator();
+                Application application = ApplicationBuilder.New(properCustomer).Build().RewindApplicationDatesForDays(day);
+                ApplicationOperations.ManagementReview(application, Guid.NewGuid());
+            }
+
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("QA-320"), Ignore, Owner(Owner.PetrTarasenko)]
+        [Row(13, 3)]
+        [Row(13, 10)]
+        [Row(13, 60)]
+        public void CreateRefundCustomersWithProperInfo(int customersNum, int day)
+        {
+            for (int i = 0; i < customersNum; i++)
+            {
+                Customer properCustomer = properCustomerCreator();
+                Application application = ApplicationBuilder.New(properCustomer).Build().RewindApplicationDatesForDays(day);
+                ApplicationOperations.Refundrequest(application, Guid.NewGuid());
+            }
+
+        }
+
         public Customer properCustomerCreator()
         {
 
