@@ -1,8 +1,8 @@
-task :meta do
+task :meta do [:config]
   test 'Tests.Meta', '',''
 end
 
-task :core do
+task :core do [:config]
   test 'Tests.*', 'Tests.Meta','Category:CoreTest'
 end
 
