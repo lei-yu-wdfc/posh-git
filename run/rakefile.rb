@@ -50,7 +50,7 @@ def get_dlls_list(names)
 end
 
 task :pre_test_cleanup do 
-  bin_dir = Dir.new(BIN)
+  bin_dir = Dir.chdir(BIN)
   config_files_to_delete = Dir.glob("*.v3qaconfig")
   FileUtils.rm config_files_to_delete
   puts 'cleanup'
@@ -64,8 +64,9 @@ end
   
 task :config, :test_target do |t, target| #ready
   target.with_defaults(:test_target => ENV['test_target'])
-  FileUtils.cp File.join(CONFIG, test_target,'.v3qaconfig'), BIN
-  puts "test target: #{test_target}"
+  Rake::Task[:pre_test_cleanup].invoke
+  FileUtils.cp File.join(CONFIG, "#{target[:test_target]}.v3qaconfig"), BIN
+  puts "test target: #{target[:test_target]}"
 end
   
 task :pre_generate_serializers do #ready
@@ -84,26 +85,26 @@ task :merge do #ready
   exclude += ' ' + File.join(BIN, "#{TESTS}.Ui.Mobile.dll")
   exclude += ' ' + File.join(BIN, "#{TESTS}.Migration.dll")
   exclude_dlls = exclude.split(' ')
-  
+
   Dir.chdir(BIN)
 
   include = Dir.glob(TESTS + '.*.dll')
-  include.each { |item| item.insert(0, BIN + '\\')}
+  include.collect! { |item| item = File.join(BIN, item)}
+
   include_dlls = include - exclude_dlls
-    
+
   command = File.join(PROGRAMM_FILES, 'Microsoft', 'ILMerge','ILMerge.exe')
     
-  params = '/targetplatform:v4,'+get_MSBuildToolsPath#read_msbuild_property("MSBuildToolsPath")
+  params = '/targetplatform:v4,'+get_MSBuildToolsPath
   params += ' /out:' + File.join(BIN, "#{TESTS}.dll")
-  #params += ' /allowDup' 
-  #uncomment the row above to be able to merge
   params += ' '+ File.join(BIN, "#{TESTS}.Core.dll")
   include_dlls.each { |dll| params+= ' ' + dll }
-        
+  
   cmd = Exec.new
   cmd.command = command
   cmd.parameters = params
   cmd.execute
+  puts "Merged"
 end
   
 desc 'run Gallio'
