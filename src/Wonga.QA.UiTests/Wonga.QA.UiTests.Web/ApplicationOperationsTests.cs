@@ -10,7 +10,7 @@ namespace Wonga.QA.UiTests.Web
     class ApplicationOperationsTests
     {
         [Test]
-        public void Froud()
+        public void Fraud()
         {
             var customer = CustomerBuilder.New().Build();
             var application = ApplicationBuilder.New(customer).Build();
