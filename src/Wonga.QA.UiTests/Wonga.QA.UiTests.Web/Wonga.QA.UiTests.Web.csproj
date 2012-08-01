@@ -38,6 +38,7 @@
     <Compile Include="AboutUsTest.cs" />
     <Compile Include="BehaviourAndAdvertTracking.cs" />
     <Compile Include="DoubleClickTest.cs" />
+    <Compile Include="ApplicationOperationsTests.cs" />
     <Compile Include="Region\Ca\Journey\L0LoanCa.cs" />
     <Compile Include="EnabledModulesTests.cs" />
     <Compile Include="ClickTest.cs" />
