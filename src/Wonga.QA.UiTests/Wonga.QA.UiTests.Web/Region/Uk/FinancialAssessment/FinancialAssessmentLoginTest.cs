@@ -14,7 +14,7 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
     [TestFixture, Parallelizable(TestScope.All)]
     public class FinancialAssessmentLoginTest : UiTest
     {
-        [Test, AUT(AUT.Uk), Category(TestCategories.SmokeTest), Pending("Financial Assessment")]
+        [Test, AUT(AUT.Uk), Owner(Owner.SaveliyProkopenko), Category(TestCategories.SmokeTest), Pending("Financial Assessment")]
         public void LoginTest()
         {
             var faloginpage = Client.FinancialAssessmentLogin();
