@@ -183,7 +183,7 @@ end
 #--
   
 #--Task dependencies
-task :default => [:config, :build, :merge, :pre_generate_serializers]
+task :default => [:build, :merge, :pre_generate_serializers]
   
 task :build => [:framework, :tests, :ui_tests, :service_tests, :data_tests, :tools]
 #--
