@@ -80,7 +80,7 @@ namespace Wonga.QA.Tests.Api
         [Test, AUT(AUT.Uk), JIRA("QA-320"), Ignore, Owner(Owner.PetrTarasenko)]
         public void CreateDueTodayCustomersWithProperInfo()
         {
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 1; i++)
             {
                 Customer properCustomer = properCustomerCreator();
                 Application application = ApplicationBuilder.New(properCustomer).Build();
@@ -126,6 +126,29 @@ namespace Wonga.QA.Tests.Api
 
         }
 
+        [Test, AUT(AUT.Uk), JIRA("QA-320"), Ignore, Owner(Owner.PetrTarasenko)]
+        [Row(1, 20)]
+        public void CreateDeclinedCustomersWithProperInfo(int customersNum, int day)
+        {
+            for (int i = 0; i < customersNum; i++)
+            {
+                Customer properCustomer = properCustomerCreator();
+                Application application = ApplicationBuilder.New(properCustomer).WithLoanTerm(day).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+            }
+
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("QA-320"), Ignore, Owner(Owner.PetrTarasenko)]
+        [Row(1, 20)]
+        public void CreatePendingCustomersWithProperInfo(int customersNum, int day)
+        {
+            for (int i = 0; i < customersNum; i++)
+            {
+                Customer properCustomer = properCustomerCreator();
+                Application application = ApplicationBuilder.New(properCustomer).WithLoanTerm(day).WithExpectedDecision(ApplicationDecisionStatus.Pending).Build();
+            }
+
+        }
         public Customer properCustomerCreator()
         {
 
