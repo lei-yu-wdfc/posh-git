@@ -27,142 +27,142 @@ namespace Wonga.QA.Tests.Salesforce
 
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-129"), Owner(Owner.AnilKrishnamaneni)]
-        public void AcceptedApplicationCompliantCycle()
+        public void AcceptedApplicationcomplaintCycle()
         {  
             var caseId = Guid.NewGuid();
             var cust = CreateCustomer();
             var application = ApplicationBuilder.New(cust).WithOutSigning().Build();
-            CompliantCycle(caseId, application);
+            complaintCycle(caseId, application);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.Accepted );
         }
 
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-129"), Owner(Owner.AnilKrishnamaneni)]
-        public void LiveApplicationCompliantCycle()
+        public void LiveApplicationcomplaintCycle()
         {
             var caseId = Guid.NewGuid();
             var application = CreateLiveApplication();
-            CompliantCycle( caseId, application);
+            complaintCycle( caseId, application);
             SalesforceOperations.CheckSalesApplicationStatus(application,(double)salesforceStatusAlias.Live);
         }
 
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-129"), Owner(Owner.AnilKrishnamaneni) ]
-        public void DueTodayApplicationCompliantCycle()
+        public void DueTodayApplicationcomplaintCycle()
         {
             var caseId = Guid.NewGuid();
             var application = CreateLiveApplication();
             RewindDatesToMakeDueToday(application);
             MakeDueToday(application);
-            CompliantCycle( caseId, application);
+            complaintCycle( caseId, application);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.DueToday);
         }
         
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-129"), Owner(Owner.AnilKrishnamaneni)]
-        public void ArrearApplicationCompliantCycle()
+        public void ArrearApplicationcomplaintCycle()
         {
             var caseId = Guid.NewGuid();
             var application = CreateLiveApplication();
             application.ExpireCard();  
             application.PutIntoArrears(3);
-            CompliantCycle( caseId, application);
+            complaintCycle( caseId, application);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.InArrears);
         }
 
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-129"), Owner(Owner.AnilKrishnamaneni)]
-        public void SuspectFraudApplicationCompliantCycle()
+        public void SuspectFraudApplicationcomplaintCycle()
         {
             var caseId = Guid.NewGuid();
             var customer = CreateCustomer(); 
             var application =SalesforceOperations.CreateApplication(customer);
             ApplicationOperations.SuspectFraud(application, customer, caseId);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.Fraud);
-            CompliantCycle(caseId, application);
+            complaintCycle(caseId, application);
             ApplicationOperations.ConfirmNotFraud(application, customer, caseId);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.Live);
         }
 
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-129"), Owner(Owner.AnilKrishnamaneni),Pending("DCA not implemented")]
-        public void DCAApplicationCompliantCycle()
+        public void DCAApplicationcomplaintCycle()
         {
             var caseId = Guid.NewGuid();
             var application = CreateLiveApplication();
             ApplicationOperations.Dca(application);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.DCA);
-            CompliantCycle(caseId, application);
+            complaintCycle(caseId, application);
             ApplicationOperations.RevokeDca(application);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.Live);
         }
 
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-129"), Owner(Owner.AnilKrishnamaneni),Pending("DMP Not implemneted") ]
-        public void DmpRepaymentArrangementApplicationCompliantCycle()
+        public void DmpRepaymentArrangementApplicationcomplaintCycle()
         {
             var caseId = Guid.NewGuid();
             var application = CreateLiveApplication();
             application.PutIntoArrears();
             application.CreateRepaymentArrangement();
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.RepaymentArrangement );
-            CompliantCycle(caseId, application);
+            complaintCycle(caseId, application);
             application.CancelRepaymentArrangement(); 
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.Live);
         }
 
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-129"), Owner(Owner.AnilKrishnamaneni)]
-        public void HardshipApplicationCompliantCycle()
+        public void HardshipApplicationcomplaintCycle()
         {
             var caseId = Guid.NewGuid();
             var application = CreateLiveApplication();
             ApplicationOperations.ReportHardship(application, caseId);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.Hardship );
-            CompliantCycle(caseId, application);
+            complaintCycle(caseId, application);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.Hardship);
         }
 
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-129"), Owner(Owner.AnilKrishnamaneni)]
-        public void BankruptApplicationCompliantCycle()
+        public void BankruptApplicationcomplaintCycle()
         {
             var caseId = Guid.NewGuid();
             var application = CreateLiveApplication();
             ApplicationOperations.ReportBankrupt(application, caseId);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.Bankrupt);
-            CompliantCycle(caseId, application);
+            complaintCycle(caseId, application);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.Bankrupt);
         }
 
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-129"), Owner(Owner.AnilKrishnamaneni)]
-        public void ManagementReviewApplicationCompliantCycle()
+        public void ManagementReviewApplicationcomplaintCycle()
         {
             var caseId = Guid.NewGuid();
             var application = CreateLiveApplication();
             ApplicationOperations.ManagementReview(application, caseId);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.ManagementReview );
-            CompliantCycle(caseId, application);
+            complaintCycle(caseId, application);
             ApplicationOperations.RemoveManagementReview(application, caseId);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.Live);
         }
 
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-129"), Owner(Owner.AnilKrishnamaneni)]
-        public void RefundApplicationCompliantCycle()
+        public void RefundApplicationcomplaintCycle()
         {
             var caseId = Guid.NewGuid();
             var application = CreateLiveApplication();
             ApplicationOperations.Refundrequest(application, caseId);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.Refund);
-            CompliantCycle(caseId, application);
+            complaintCycle(caseId, application);
             
         }
 
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-129"), Owner(Owner.AnilKrishnamaneni)]
-        public void ManagementReviewCompliantCycleWhileApplicationGoesDueToday()
+        public void ManagementReviewcomplaintCycleWhileApplicationGoesDueToday()
         {
             var caseId = Guid.NewGuid();
             var application = CreateLiveApplication();
@@ -190,7 +190,7 @@ namespace Wonga.QA.Tests.Salesforce
             return CustomerBuilder.New().Build();
         }
 
-        private void CompliantCycle(Guid caseId, Application application)
+        private void complaintCycle(Guid caseId, Application application)
         {
             ReportComplaint(caseId, application);
             ApplicationOperations.RemoveComplaint(application, caseId);
