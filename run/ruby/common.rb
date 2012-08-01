@@ -49,27 +49,37 @@ def get_dlls_list(names)
   list
 end
 
-desc 'This task should run before a test run and it will clean up any artifacts'
-task :pre_test_cleanup do 
+def config(config_name)
+   unless config_name.nil?
+    
+    if File.exists? File.join(CONFIG, "#{config_name}.v3qaconfig")
+      FileUtils.cp File.join(CONFIG, "#{config_name}.v3qaconfig"), BIN
+      cleanup
+      puts "test target: #{config_name}"
+     
+    else
+      puts "#{config_name} config file not found"
+    end
+  end
+end
+
+def cleanup
   config_files_to_delete = Dir.glob(File.join(BIN, "*.v3qaconfig"))
   FileUtils.rm config_files_to_delete
   puts 'cleanup'
 end
- 
-desc 'This task should run after a test run and it will clean up any tmp artifacts'
-task :post_test_cleanup do #should be extended
-  bin_dir = Dir.new(BIN)
-  config_files_to_delete = Dir.glob(File.join(BIN, "*.v3qaconfig"))
-  FileUtils.rm config_files_to_delete
+
+task :pre_test_cleanup do 
+  cleanup
 end
   
- 
-desc 'Accepts a test_target parameter and copies the corresponding v3qaconfig to bin'
-task :config, :test_target do |t, target| #ready
-  target.with_defaults(:test_target => ENV['test_target'])
-  Rake::Task[:pre_test_cleanup].invoke
-  FileUtils.cp File.join(CONFIG, "#{target[:test_target]}.v3qaconfig"), BIN
-  puts "test target: #{target[:test_target]}"
+task :post_test_cleanup do #should be extended
+  cleanup
+end
+  
+task :config, :test_target do |t, args| #ready
+  args.with_defaults(:test_target => ENV['test_target'])
+  config args[:test_target]
 end
   
 desc 'Pregenerates the serializers of any dlls that require it'
