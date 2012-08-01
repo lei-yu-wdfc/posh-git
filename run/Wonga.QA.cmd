@@ -6,6 +6,7 @@ SET Run=%Root%\run
 SET Src=%Root%\src
 SET Bin=%Root%\bin
 SET Powershell=%Run%\powershell
+pushd %Run%
 
 :MENU
 ECHO.
