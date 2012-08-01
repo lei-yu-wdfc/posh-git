@@ -63,7 +63,7 @@ namespace Wonga.QA.Tests.Api
         }
 
         [Test, AUT(AUT.Uk), JIRA("QA-320"), Ignore, Owner(Owner.PetrTarasenko)]
-        [Row(82, 20)]
+        [Row(8, 20)]
         [Row(125, 10)]
         [Row(225, 1)]
         public void CreateLiveLoanCustomersWithProperInfo(int customersNum, int day)
@@ -110,6 +110,18 @@ namespace Wonga.QA.Tests.Api
                 Application application = ApplicationBuilder.New(properCustomer).Build();
                 application.RepayEarly(application.GetBalanceToday(), day);
 
+            }
+
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("QA-320"), Ignore, Owner(Owner.PetrTarasenko)]
+        [Row(1, 20)]
+        public void CreateAcceptedCustomersWithProperInfo(int customersNum, int day)
+        {
+            for (int i = 0; i < customersNum; i++)
+            {
+                Customer properCustomer = properCustomerCreator();
+                Application application = ApplicationBuilder.New(properCustomer).WithLoanTerm(day).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
             }
 
         }
