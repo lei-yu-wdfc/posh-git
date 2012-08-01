@@ -94,7 +94,6 @@ def merge(test_dlls)
   core_tests = File.join(BIN, "#{TESTS}.Core.dll")
   exclude = core_tests
   exclude_dlls = exclude.split(' ')
-  test_dlls = test_dlls
   include_dlls = test_dlls - exclude_dlls
 
   command = '"' + File.join(PROGRAMM_FILES, 'Microsoft', 'ILMerge','ILMerge.exe') + '"'
