@@ -78,20 +78,16 @@ task :pre_generate_serializers do #ready
 end
 #--
   
-task :merge do #ready
+task :merge, :test_dlls do |t, args|#ready
+  args.with_defaults(:test_dlls => ENV['test_dlls'])
   exclude = File.join(BIN, "#{TESTS}.Core.dll")
-  exclude += ' ' + File.join(BIN, "#{TESTS}.Meta.dll")
-  exclude += ' ' + File.join(BIN, "#{TESTS}.Ui.dll")
-  exclude += ' ' + File.join(BIN, "#{TESTS}.Ui.Mobile.dll")
-  exclude += ' ' + File.join(BIN, "#{TESTS}.Migration.dll")
+  #exclude += ' ' + File.join(BIN, "#{TESTS}.Meta.dll")
+  #exclude += ' ' + File.join(BIN, "#{TESTS}.Ui.dll")
+  #exclude += ' ' + File.join(BIN, "#{TESTS}.Ui.Mobile.dll")
+  #exclude += ' ' + File.join(BIN, "#{TESTS}.Migration.dll")
   exclude_dlls = exclude.split(' ')
-
-  Dir.chdir(BIN)
-
-  include = Dir.glob(TESTS + '.*.dll')
-  include.collect! { |item| item = File.join(BIN, item)}
-
-  include_dlls = include - exclude_dlls
+  test_dlls = args[:test_dlls]
+  include_dlls = test_dlls - exclude_dlls
 
   command = File.join(PROGRAMM_FILES, 'Microsoft', 'ILMerge','ILMerge.exe')
     
@@ -112,6 +108,7 @@ task :gallio, :test_dlls, :test_filter do |t, args|
   args.with_defaults(:test_dlls => ENV['test_dlls'], :test_filter=> ENV['test_filter'])
   g = Gallio.new
   dlls = args[:test_dlls]
+  puts "Gallio dlls: #{dlls}"
   fltr = args[:test_filter]
   if dlls and not dlls.empty?
     dlls.each { |dll| g.addTestAssembly(dll) }
@@ -131,13 +128,15 @@ end
 task :test, :include, :exclude, :test_filter do |t, args|
   args.with_defaults(:include => ENV['include'], :exclude => ENV['exclude'], :test_filter => ENV['test_filter'])
   incl = get_dlls_list args[:include]
-  puts incl
   excl = get_dlls_list args[:exclude]
   fltr = args[:test_filter] if args[:test_filter] 
   test_dlls = incl - excl
+  Rake::Task[:merge].invoke(test_dlls)
   puts "filter: #{fltr}"
+  Dir.chdir(BIN)
+  wonga_qa_tests_dll = Dir.glob("#{TESTS}.dll")
   # Rake.application.invoke_task("gallio[#{test_dlls}, #{fltr}]")
-  Rake::Task[:gallio].invoke(test_dlls, fltr)
+  Rake::Task[:gallio].invoke(wonga_qa_tests_dll, fltr)
 
 end
   
