@@ -81,7 +81,8 @@ end
   
 desc 'Accepts a list of dlls land uses ILMerge to merge them making sure that Tests.Core is always added first'
 def merge(test_dlls)
-  exclude = "#{TESTS}.Core.dll"
+  core_tests = File.join(BIN, "#{TESTS}.Core.dll")
+  exclude = core_tests
   exclude_dlls = exclude.split(' ')
   test_dlls = test_dlls
   include_dlls = test_dlls - exclude_dlls
@@ -90,7 +91,7 @@ def merge(test_dlls)
   output_file = File.join(BIN, "#{TESTS}.dll")
   params = '/targetplatform:v4,'+get_MSBuildToolsPath
   params += " /out:#{output_file}"
-  params += ' '+ File.join(BIN, "#{TESTS}.Core.dll")
+  params += ' '+ core_tests
   include_dlls.each { |dll| params+= ' ' + dll }
   
   sh command + ' ' + params
