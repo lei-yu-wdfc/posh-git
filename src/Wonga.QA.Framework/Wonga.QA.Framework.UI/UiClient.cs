@@ -21,6 +21,7 @@ using Wonga.QA.Framework.UI.Mappings.Pages.PayLater;
 using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages.Admin;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
+using Wonga.QA.Framework.UI.UiElements.Pages.FinancialAssessment;
 using Wonga.QA.Framework.UI.UiElements.Pages.SalesForce;
 using SubmitionPage = Wonga.QA.Framework.UI.UiElements.Pages.SubmitionPage;
 
@@ -119,6 +120,18 @@ namespace Wonga.QA.Framework.UI
             Driver.Navigate().GoToUrl(Config.Ui.Home);
             return new HomePage(this);
         }
+
+        public FinancialAssessmentPage FinancialAssessment()
+        {
+            Driver.Navigate().GoToUrl(Config.Ui.Home + "financial-assessment");
+            return new FinancialAssessmentPage(this);
+        }
+
+        public FALoginPage FinancialAssessmentLogin()
+        {
+            Driver.Navigate().GoToUrl(Config.Ui.Home + "financial-assessment/login");
+            return new FALoginPage(this);
+        } 
 
         public HomePage DoubleclickCookiesHome()
         {

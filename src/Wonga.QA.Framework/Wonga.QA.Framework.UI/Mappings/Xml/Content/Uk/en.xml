@@ -172,4 +172,8 @@
     <ImportantInformationText>Important information about your loan</ImportantInformationText>
   </AccountSetupPage>
 
+  <FinancialAssessmentPage>
+    <AssesmentEmail>assesment@wonga.com</AssesmentEmail>
+  </FinancialAssessmentPage>
+
 </ContentMap>

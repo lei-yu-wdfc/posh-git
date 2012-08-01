@@ -5,6 +5,7 @@ using System.Text;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.Journey;
 using Wonga.QA.Framework.UI.UiElements.Pages;
+using Wonga.QA.Framework.UI.UiElements.Pages.FinancialAssessment;
 
 namespace Wonga.QA.Framework.UI
 {
@@ -40,6 +41,16 @@ namespace Wonga.QA.Framework.UI
                     return new UkLnJourney(homePage);
                 case AUT.Wb:
                     return new WbLnJourney(homePage);
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+        public static BaseFALnJourney GetFaLnJourney(FinancialAssessmentPage financialAssessmentPage)
+        {
+            switch (Config.AUT)
+            {
+                case AUT.Uk:
+                    return new UkFALnJourney(financialAssessmentPage);
                 default:
                     throw new NotImplementedException();
             }
