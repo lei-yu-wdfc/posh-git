@@ -18,6 +18,21 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         private string _truncatedFirstName;
         private Cookie _userCookie;
 
+        private void CheckContentSlots()
+        {
+            //Ensure correct title is present in first content slot in home page
+            Assert.AreEqual("Betty, Earl and Joyce show how wonga.com's short term cash loans put you in control", Client.Home().GetContentSlot1Title());
+            Console.WriteLine("Content Slot1 title is: " + Client.Home().GetContentSlot1Title());
+
+            //Ensure correct text is displayed in 'Wonga customers' box in home page
+            Assert.AreEqual("Populus survey of 2012 with over 25,000 respondents", Client.Home().GetWongaCustomersBoxText());
+            Console.WriteLine("Text in Wonga customers box: " + Client.Home().GetWongaCustomersBoxText());
+
+            //Ensure correct text is displayed in 'Responsible lending' box in home page
+            Assert.AreEqual("Responsible lending", Client.Home().GetResponsibleLendingBoxText());
+            Console.WriteLine("Responsible lending box heading: " + Client.Home().GetResponsibleLendingBoxText());
+        }
+
         [FixtureSetUp]
         public void FixtureSetup()
         {
@@ -234,21 +249,15 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         public void HomePageContentSlotsTest()
         {
             var homePage = Client.Home();
-            _url = Client.Home().Url;
 
-            //Ensure correct title is present in first content slot in home page
-            Assert.AreEqual("Betty, Earl and Joyce show how wonga.com's short term cash loans put you in control", homePage.GetContentSlot1Title());
-            Console.WriteLine("Content Slot1 title is: " + homePage.GetContentSlot1Title());
+            //Check Content slots pre-login
+            CheckContentSlots();
 
-            //Ensure correct text is displayed in 'Wonga customers' box in home page
-            Assert.AreEqual("Populus survey of 2012 with over 25,000 respondents", homePage.GetWongaCustomersBoxText());
-            Console.WriteLine("Text in Wonga customers box: " + homePage.GetWongaCustomersBoxText());
-
-            //Ensure correct text is displayed in 'Responsible lending' box in home page
-            Assert.AreEqual("Responsible lending", homePage.GetResponsibleLendingBoxText());
-            Console.WriteLine("Responsible lending box heading: " + homePage.GetResponsibleLendingBoxText());
-
-            // TODO: UKWEB-229: Check the content slots post login
+            //Check Content slots post-login
+            var loginPage = Client.Login();
+            loginPage.LoginAs(_email);
+            homePage.Client.Home();
+            CheckContentSlots();
         }
 
         [Test, AUT(AUT.Uk), JIRA("UKWEB-344", "UKWEB-345"), MultipleAsserts, Owner(Owner.OrizuNwokeji), Pending("Test in development. Code in development.")]
