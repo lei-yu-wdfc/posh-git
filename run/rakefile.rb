@@ -71,35 +71,29 @@ end
   
 task :pre_generate_serializers do #ready
   puts 'Generating serializers'
-  cmd = Exec.new
-  cmd.command = File.join(LIB,'sgen','sgen.exe')
-  cmd.parameters = File.join(BIN,'Wonga.QA.Framework.Cs.dll') + ' /force'
-  cmd.execute  
+  sh File.join(LIB,'sgen','sgen.exe') + ' ' + File.join(BIN,'Wonga.QA.Framework.Cs.dll') + ' /force'
 end
 #--
   
 task :merge, :test_dlls do |t, args|#ready
   args.with_defaults(:test_dlls => ENV['test_dlls'])
   exclude = File.join(BIN, "#{TESTS}.Core.dll")
-  #exclude += ' ' + File.join(BIN, "#{TESTS}.Meta.dll")
-  #exclude += ' ' + File.join(BIN, "#{TESTS}.Ui.dll")
-  #exclude += ' ' + File.join(BIN, "#{TESTS}.Ui.Mobile.dll")
-  #exclude += ' ' + File.join(BIN, "#{TESTS}.Migration.dll")
   exclude_dlls = exclude.split(' ')
   test_dlls = args[:test_dlls]
   include_dlls = test_dlls - exclude_dlls
 
-  command = File.join(PROGRAMM_FILES, 'Microsoft', 'ILMerge','ILMerge.exe')
+  command = '"' + File.join(PROGRAMM_FILES, 'Microsoft', 'ILMerge','ILMerge.exe') + '"'
     
   params = '/targetplatform:v4,'+get_MSBuildToolsPath
   params += ' /out:' + File.join(BIN, "#{TESTS}.dll")
   params += ' '+ File.join(BIN, "#{TESTS}.Core.dll")
   include_dlls.each { |dll| params+= ' ' + dll }
   
-  cmd = Exec.new
-  cmd.command = command
-  cmd.parameters = params
-  cmd.execute
+  sh command + ' ' + params
+#  cmd = Exec.new
+#  cmd.command = command
+#  cmd.parameters = params
+#  cmd.execute
   puts "Merged"
 end
   
