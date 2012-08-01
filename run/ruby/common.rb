@@ -18,6 +18,7 @@ SERVICETESTS = 'Wonga.QA.ServiceTests'
 DATATESTS = 'Wonga.QA.DataTests'
 UITESTS = 'Wonga.QA.UiTests'
 TOOLS = 'Wonga.QA.Tools'
+GENERATORS = 'Wonga.QA.Generators'
 PREFIX = 'Wonga.QA'
  
  desc 'Reads the registry for the msbuildToolspath key'
@@ -108,24 +109,21 @@ def merge(test_dlls)
 end
   
 desc 'Accepts a dll list and a test filter and runs the tests with theh Gallio runner'
-task :gallio, :test_dlls, :test_filter do |t, args| 
-  args.with_defaults(:test_dlls => ENV['test_dlls'], :test_filter=> ENV['test_filter'])
+def gallio(test_dlls, test_filter)
   g = Gallio.new
-  dlls = args[:test_dlls]
-  puts "Gallio dlls: #{dlls}"
-  fltr = args[:test_filter]
-  if dlls and not dlls.empty?
-    dlls.each { |dll| g.addTestAssembly(dll) }
+  puts "Gallio dlls: #{test_dlls}"
+  if test_dlls and not test_dlls.empty?
+    test_dlls.each { |dll| g.addTestAssembly(dll) }
   else g.addTestAssembly(File.join(BIN, "#{TESTS}.dll"))
   end
-  g.filter = fltr if fltr and not fltr.empty? 
+  g.filter = test_filter if test_filter and not test_filter.empty? 
   g.reportDirectory = File.join(BIN, "#{TESTS}.Report")
   g.reportNameFormat = "#{TESTS}.Report"
   g.addReportType("xml")
   begin
     g.run
   ensure
-    Rake::Task[:convert_reports].invoke
+    convert_reports
   end
 end
 
@@ -141,10 +139,10 @@ def test(include = '', exclude = '', test_filter = '')
   merge test_dlls
   wonga_qa_tests_dll = Dir.glob(File.join(BIN, "#{TESTS}.dll"))
   # Rake.application.invoke_task("gallio[#{test_dlls}, #{fltr}]")
-  #Rake::Task[:gallio].invoke(wonga_qa_tests_dll, test_filter)
+  gallio wonga_qa_tests_dll, test_filter
 end
 
-task :convert_reports do
+def convert_reports
   puts 'Converting reports'
   command = File.join(BIN,'Wonga.QA.Tools.ReportConverter','Wonga.QA.Tools.ReportConverter.exe')
   params1 = '"' + File.join(BIN, "#{TESTS}.Report", "#{TESTS}.Report.xml\" ") 

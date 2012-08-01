@@ -25,8 +25,12 @@ end
 msbuild :tools do |msb|
   msb.solution = File.join(SRC, TOOLS, "#{TOOLS}.sln")
 end
+
+msbuild :generators do |msb|
+  msb.solution = File.join(SRC, GENERATORS, "#{GENERATORS}.sln")
+end
 #--
 
-task :build => [:framework, :tests, :ui_tests, :service_tests, :data_tests, :tools, :pre_generate_serializers]
+task :build => [:framework, :tests, :ui_tests, :service_tests, :data_tests, :tools, :generators, :pre_generate_serializers]
 #--
 

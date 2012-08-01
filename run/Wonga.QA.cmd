@@ -6,7 +6,6 @@ SET Run=%Root%\run
 SET Src=%Root%\src
 SET Bin=%Root%\bin
 SET Powershell=%Run%\powershell
-SET MSBuild=%SystemRoot%\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe /nologo
 
 :MENU
 ECHO.
@@ -33,19 +32,12 @@ IF ERRORLEVEL 1 GOTO 1
 GOTO EOF
 
 :1
-	:CD %Root% && FOR /R %%0 IN (*.sln) DO %MSBuild% %%0 /v:m || PAUSE
-	%MsBuild% %Run%\Wonga.QA.Tests.build /t:Build /v:m || PAUSE
+	rake build
 GOTO MENU
 
 :2
 	SET /P TestingTarget=Enter your testing target(v3 [deployto] flag):
 	SETX QAFTestTarget %TestingTarget%
-	REM echo Removing existing settings
-	REM rd %APPDATA%\v3qa /s /q
-	REM echo Creating settings directory @ %APPDATA%\v3qa
-	REM mkdir %APPDATA%\v3qa
-	REM echo Copying %Run%\config\%TestingTarget%.v3qaconfig to %APPDATA%\v3qa\%TestingTarget%.v3qaconfig
-	REM copy %Run%\config\%TestingTarget%.v3qaconfig %APPDATA%\v3qa\%TestingTarget%.v3qaconfig
 GOTO MENU
 
 :3
@@ -55,15 +47,17 @@ GOTO MENU
 GOTO MENU
 
 :4
-	SET Files=
-	SET /P Files=Semicolon-separated projects, blank for default (e.g. Meta;Api;Ops;Ui): 
-	%MsBuild% %Run%\Wonga.QA.Tests.build /p:Files="%Files%" || PAUSE
+	SET include=
+	SET exclude=
+	SET filter=
+	SET /P include=Projects to include(colon-separated)(e.g. Tests.Meta:Tests.Api:DataTests.*): 
+	SET /P exclude=Projects to exclude(colon-separated, empty for no exclusions)(e.g. Tests.Core): 
+	SET /P filter=Filter to use(colon-separated, empty for no filter)(e.g. Tests.Core): 
+	rake test include=%include% exclude=%exclude% filter=%filter%|| PAUSE
 GOTO MENU
 
 :5
-	REM SET /P AUT=Enter AUT (E.g. Uk, Za, Ca, Wb, Pl): 
-	REM SET /P SUT=Enter SUT (E.g. Dev, WIP, UAT, RC, WIPRelease, RCRelease, Live): 
-	%MsBuild% %Run%\Wonga.QA.Tests.build /t:SanityTest /v:m || PAUSE
+	rake sanity_test || PAUSE
 GOTO MENU
 
 :6
@@ -100,18 +94,9 @@ GOTO EOF
 	REM SETX QAFTestTarget %TestingTarget%
 	powershell -command "& {. %Powershell%\EditEndPointConfig.ps1; configservice_undo %ServiceTest% }"
  GOTO MENU
- 
-
-:META
-	%MsBuild% %Run%\Wonga.QA.Tests.build /t:Test /p:Files=Meta || PAUSE
-GOTO EOF
-
-:CORE
-	%MsBuild% %Run%\Wonga.QA.Tests.build /t:Merge;Test /p:TestFilter="Category:CoreTest" || PAUSE 
-GOTO EOF
 
 :GENERATE
-	%MsBuild% %Src%\Wonga.QA.Generators\Wonga.QA.Generators.sln /v:m || PAUSE
+	rake generators || PAUSE
 	%Bin%\Wonga.QA.Generators.%1.exe %Origin%
 GOTO EOF
 
