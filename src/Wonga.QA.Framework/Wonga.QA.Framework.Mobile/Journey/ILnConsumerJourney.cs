@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Wonga.QA.Framework.Mobile.Ui.Pages;
 
-namespace Wonga.QA.Framework.Mobile
+namespace Wonga.QA.Framework.Mobile.Journey
 {
     public interface ILnConsumerJourney
     {

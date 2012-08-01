@@ -5,9 +5,9 @@ using System.Text;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Mobile.Journey;
 using Wonga.QA.Framework.Mobile.Ui.Pages;
-using Wonga.QA.Framework.UI;
 
-namespace Wonga.QA.Framework.Mobile
+
+namespace Wonga.QA.Framework.Mobile.Journey
 {
     public static class JourneyFactory
     {

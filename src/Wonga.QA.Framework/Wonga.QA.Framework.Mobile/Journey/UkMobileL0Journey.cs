@@ -10,7 +10,7 @@ using Wonga.QA.Framework.Mobile.Journey;
 using Wonga.QA.Framework.Mobile.Ui.Pages;
 
 
-namespace Wonga.QA.Framework.UI
+namespace Wonga.QA.Framework.Mobile.Journey
 {
     public class UkMobileL0Journey : BaseL0Journey
     {

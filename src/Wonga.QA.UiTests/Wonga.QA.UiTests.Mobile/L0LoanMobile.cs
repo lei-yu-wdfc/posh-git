@@ -2,6 +2,7 @@
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Mobile;
+using Wonga.QA.Framework.Mobile.Journey;
 using Wonga.QA.Framework.Mobile.Ui.Pages;
 using Wonga.QA.Tests.Core;
 
