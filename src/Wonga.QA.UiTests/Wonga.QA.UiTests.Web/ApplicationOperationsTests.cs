@@ -8,6 +8,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.UiTests.Web
 {
+    [TestFixture, Parallelizable(TestScope.All)]
     class ApplicationOperationsTests
     {
         [Test, Owner(Owner.MihailPodobivsky, Owner.KirillPolishyk), JIRA("QA-328")]
@@ -15,7 +16,7 @@ namespace Wonga.QA.UiTests.Web
         {
             var customer = CustomerBuilder.New().Build();
             var application = ApplicationBuilder.New(customer).Build();
-            ApplicationOperations.ConfirmFraud(application,customer,Guid.NewGuid());
+            ApplicationOperations.ConfirmFraud(application, customer, Guid.NewGuid());
         }
 
         [Test, Owner(Owner.MihailPodobivsky, Owner.KirillPolishyk), JIRA("QA-328")]
