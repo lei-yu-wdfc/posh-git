@@ -256,6 +256,8 @@ namespace Wonga.QA.Framework
         {
             int appInternalId = GetAppInternalId(application);
             Drive.Cs.Commands.Post(new SuspectFraudCommand() { AccountId = cust.Id, CaseId = caseId });
+            Do.Until(() => CommsSuppressionsRepo.FindAll(
+                           CommsSuppressionsRepo.AccountId == application.AccountId && CommsSuppressionsRepo.Fraud == 1).Single());
             Do.With.Timeout(1).Until(
                 () => PaymentsSuppressionsTable.FindBy(ApplicationId: appInternalId, FraudSuppression: true));
         }
@@ -264,6 +266,8 @@ namespace Wonga.QA.Framework
         {
             int appInternalId = GetAppInternalId(application);
             Drive.Cs.Commands.Post(new ConfirmNotFraudCommand() { AccountId = cust.Id, CaseId = caseId });
+            Do.Until(() => CommsSuppressionsRepo.FindAll(
+                           CommsSuppressionsRepo.AccountId == application.AccountId && CommsSuppressionsRepo.Fraud == 0).Single());
             Do.With.Timeout(1).Until(
                 () => PaymentsSuppressionsTable.FindBy(ApplicationId: appInternalId, FraudSuppression: false));
         }
@@ -276,6 +280,8 @@ namespace Wonga.QA.Framework
                 ApplicationId = application.Id
             };
             Drive.Cs.Commands.Post(flagToDcaCommand);
+            Do.Until(() => CommsSuppressionsRepo.FindAll(
+                           CommsSuppressionsRepo.AccountId == application.AccountId && CommsSuppressionsRepo.DCA == 1).Single());
             Do.With.Timeout(1).Until(
                () => PaymentsSuppressionsTable.FindBy(ApplicationId: appInternalId, DCASuppression: true));
 
@@ -289,6 +295,8 @@ namespace Wonga.QA.Framework
                 ApplicationId = application.Id
             };
             Drive.Cs.Commands.Post(flagToDcaCommand);
+            Do.Until(() => CommsSuppressionsRepo.FindAll(
+                           CommsSuppressionsRepo.AccountId == application.AccountId && CommsSuppressionsRepo.DCA == 0).Single());
             Do.With.Timeout(1).Until(
                () => PaymentsSuppressionsTable.FindBy(ApplicationId: appInternalId, DCASuppression: false));
 
@@ -303,6 +311,8 @@ namespace Wonga.QA.Framework
                 ApplicationId = application.Id,
                 CaseId = caseId
             });
+            Do.Until(() => CommsSuppressionsRepo.FindAll(
+                           CommsSuppressionsRepo.AccountId == application.AccountId && CommsSuppressionsRepo.Hardship == 1).Single());
             Do.With.Timeout(1).Until(
              () => PaymentsSuppressionsTable.FindBy(ApplicationId: appInternalId, HardshipSuppression: true));
         }
@@ -316,6 +326,8 @@ namespace Wonga.QA.Framework
                 ApplicationId = application.Id,
                 CaseId = caseId
             });
+            Do.Until(() => CommsSuppressionsRepo.FindAll(
+                           CommsSuppressionsRepo.AccountId == application.AccountId && CommsSuppressionsRepo.Bankruptcy == 1).Single());
             Do.With.Timeout(1).Until(
              () => PaymentsSuppressionsTable.FindBy(ApplicationId: appInternalId, BankruptcySuppression: true));
         }
