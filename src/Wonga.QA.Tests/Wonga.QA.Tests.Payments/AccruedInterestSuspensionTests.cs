@@ -45,9 +45,9 @@ namespace Wonga.QA.Tests.Payments
             //Make sure the payment attempt fails by changing the expiry date of the card.
             Drive.Data.Payments.Db.PaymentCardsBase.UpdateByExternalId(ExternalId: _customer.GetPaymentCard(),
                                                     ExpiryDate: new DateTime(DateTime.Now.Year - 1, 1, 31));
-            string maximumarreardays = _serviceConfigTable.FindBy(Key: InArrearsMaxInterestDaysKey).Value.ToString();
-            int intmaximumarreardays = Int32.Parse(maximumarreardays);
-            int arrearDays = intmaximumarreardays + 10;
+            string maximumArrearDays = _serviceConfigTable.FindBy(Key: InArrearsMaxInterestDaysKey).Value.ToString();
+            int intMaximumArrearDays = Int32.Parse(maximumArrearDays);
+            int arrearDays = intMaximumArrearDays + 10;
             _application.ExpireCard().PutIntoArrears((uint)arrearDays);
             dynamic suspendTransaction = null;
             dynamic application = null;
@@ -56,7 +56,7 @@ namespace Wonga.QA.Tests.Payments
 
             Do.Until(() => application = _applicationsTable.FindBy(ExternalId: _application.Id));
             Do.Until(() => fixedTermApplication = _fixedTermApplicationsTable.FindBy(ApplicationId: application.ApplicationId));
-            DateTime expectedDate = ((DateTime)fixedTermApplication.NextDueDate).AddDays(intmaximumarreardays);
+            DateTime expectedDate = ((DateTime)fixedTermApplication.NextDueDate).AddDays(intMaximumArrearDays);
 
             Do.Until(() => suspendTransaction = _transactionsTable
                                                     .FindBy(Type: PaymentTransactionEnum.SuspendInterestAccrual,
@@ -67,8 +67,8 @@ namespace Wonga.QA.Tests.Payments
             var accountSummary=Drive.Api.Queries .Post(new GetAccountSummaryQuery() {AccountId = _application.AccountId});
             var currentLoanAmountDue=accountSummary.Values["CurrentLoanAmountDueToday"].Single();
             var amountDueOnDueDateWithoutInterest = ApplicationOperations.GetRepayAmountWithInterest(LoanAmount,LoanTerm)-fees;
-            var t1 = ApplicationOperations.GetRepayAmountWithInterest(amountDueOnDueDateWithoutInterest, intmaximumarreardays) + DefaultFees;
-            Assert.AreEqual(currentLoanAmountDue, t1.ToString());
+            var repayAmount = ApplicationOperations.GetRepayAmountWithInterest(amountDueOnDueDateWithoutInterest, intMaximumArrearDays) + DefaultFees;
+            Assert.AreEqual(currentLoanAmountDue, repayAmount.ToString());
 
         }
     }
