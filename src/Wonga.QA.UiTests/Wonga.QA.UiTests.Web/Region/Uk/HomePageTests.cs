@@ -1,5 +1,6 @@
 ﻿using System;
 using MbUnit.Framework;
+using OpenQA.Selenium;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
@@ -15,6 +16,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         private string _fullFirstName;
         private string _url;
         private string _truncatedFirstName;
+        private Cookie _userCookie;
 
         [FixtureSetUp]
         public void FixtureSetup()
@@ -30,7 +32,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
         #region L0_HomePage_Personalised
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), MultipleAsserts, Owner(Owner.PavithranVangiti), Pending("Test in development. Code in development.")]
         public void HomePagePersonalisedNewUserTest()
         {
             var homePage = Client.Home();
@@ -42,6 +44,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             // Verify Sub message
             Assert.AreEqual("Existing customers may be able to borrow up to £1,000, depending on your current trust rating.", homePage.GetWelcomeSubMessageText(),
                             "The Header should be 'Welcome to Wonga'");
+            // TODO Check links in the message above
 
             Assert.IsNotNull(homePage);
 
@@ -52,11 +55,15 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             // TODO: UKWEB-371: Apart from checking that the navigation header on the Home page is displayed, also check the elements’ (International, Social, Help, Login) behaviour and content.
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), Pending("Test in development. Code in development."), DependsOn("HomePagePersonalisedNewUserTest"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), MultipleAsserts, Owner(Owner.PavithranVangiti), Pending("Test in development. Code in development.")]
         public void L0HomePagePersonalisedLoggedInUserTest()
         {
             var loginPage = Client.Login();
             loginPage.LoginAs(_email);
+
+            // Save user's cookie
+            _userCookie = Client.Driver.Manage().Cookies.GetCookieNamed("wonga_visitor");
+
             var homePage = Client.Home();
 
             // user has logged in
@@ -66,16 +73,22 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
             Assert.AreEqual("400", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
 
-            // TODO: 1. Log out and check the home page opens 2. Log in again to create cookies for L0HomePagePersonalisedCookiedUserTest
             // TODO: Change AddMinutes(23) to AddMinutes(24) when the code is fixed
             // TODO: UKWEB-1072: When users clicks "click here" in the Welcome message on the Homepage, as a recognised or logged in user, the Homepage should open.
             // TODO: UKWEB-371: Check "Welcome <15-symbolsTrancatedFirstName> Logout" in the Navigation Header
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), Pending("Test in development. Code in development."), DependsOn("HomePagePersonalisedLoggedInUserTest"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), DependsOn("L0HomePagePersonalisedLoggedInUserTest"), MultipleAsserts, Owner(Owner.PavithranVangiti), Pending("Test in development. Code in development.")]
         public void L0HomePagePersonalisedCookiedUserTest()
         {
             var homePage = Client.Home();
+
+            // Add user's cookie to see the personalised Navigation Header
+            var userCookie = new Cookie(_userCookie.Name, _userCookie.Value, _userCookie.Domain, _userCookie.Path, _userCookie.Expiry);
+            Client.Driver.Manage().Cookies.AddCookie(userCookie);
+
+            this.Client.Driver.Navigate().Refresh();
+
             Assert.AreEqual("Welcome back " + _truncatedFirstName + "...! (not " + _truncatedFirstName + "...? click here)", homePage.GetWelcomeHeaderMessageText()); // user has being cookied
 
             Assert.AreEqual("400", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
@@ -91,7 +104,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
         #region Ln_HomePage_Personalised
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), Pending("Test in development. Code in development."), DependsOn("HomePagePersonalisedNewUserTest"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), Pending("Test in development. Code in development."), MultipleAsserts, Owner(Owner.PavithranVangiti)]
         public void LnHomePagePersonalisedLoggedInUserTest()
         {
             var journeyL0 = JourneyFactory.GetL0Journey(Client.Home())
@@ -113,7 +126,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             // TODO: UKWEB-1072: When users clicks "click here" in the Welcome message on the Homepage, as a recognised or logged in user, the Homepage should open.
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), Pending("Test in development. Code in development."), DependsOn("HomePagePersonalisedLoggedInUserTest"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), Pending("Test in development. Code in development."), DependsOn("LnHomePagePersonalisedLoggedInUserTest"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
         public void LnHomePagePersonalisedCookiedUserTest()
         {
             var homePage = Client.Home();
@@ -212,6 +225,9 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
                             "Transmission fee £5.50" +
                             "Representative APR 4212%", homePage.GetRepresentativeExampleText());
             Console.WriteLine("Representative Example text is: " + homePage.GetRepresentativeExampleText());
+
+            // TODO: 1. Click on the APR Example link. 2. Check the current page is Homepage.
+            // TODO: Check the page APR Example does not exist
         }
 
         [Test, AUT(AUT.Uk), JIRA("UKWEB-229"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
