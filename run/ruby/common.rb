@@ -51,22 +51,22 @@ end
 
 def config(config_name)
    unless config_name.nil?
-    
+    cleanup
     if File.exists? File.join(CONFIG, "#{config_name}.v3qaconfig")
       FileUtils.cp File.join(CONFIG, "#{config_name}.v3qaconfig"), BIN
-      cleanup
-      puts "test target: #{config_name}"
+      puts "Configuring Test Target to be #{config_name}"
      
     else
-      puts "#{config_name} config file not found"
+      raise "#{config_name} config file not found"
     end
   end
 end
 
 def cleanup
+  puts 'Cleaning up..'
+  puts 'Deleting any v3qaconfig files within /bin..'
   config_files_to_delete = Dir.glob(File.join(BIN, "*.v3qaconfig"))
   FileUtils.rm config_files_to_delete
-  puts 'cleanup'
 end
 
 task :pre_test_cleanup do 
