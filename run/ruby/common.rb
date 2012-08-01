@@ -20,6 +20,7 @@ UITESTS = 'Wonga.QA.UiTests'
 TOOLS = 'Wonga.QA.Tools'
 PREFIX = 'Wonga.QA'
  
+ desc 'Reads the registry for the msbuildToolspath key'
 def get_MSBuildToolsPath
   Win32::Registry::open(Win32::Registry::HKEY_LOCAL_MACHINE, 'SOFTWARE\\Microsoft\\MSBuild\\ToolsVersions\\4.0') do |reg|
     type, value = reg.read('MSBuildToolsPath')
@@ -27,10 +28,12 @@ def get_MSBuildToolsPath
   end
 end
 
+desc 'Returns all the files that match the given filename pattern in the BIN folder'
 def find_dlls(mask)
   dlls = Dir.glob(File.join(BIN, "#{PREFIX}.#{mask}.dll"))
 end
 
+desc 'Retreives a list of dll paths for the given list of dll names/patterns. It searches in BIN'
 def get_dlls_list(names)
   if names and not names.empty?
     list = Array.new
@@ -46,18 +49,22 @@ def get_dlls_list(names)
   list
 end
 
+desc 'This task should run before a test run and it will clean up any artifacts'
 task :pre_test_cleanup do 
   config_files_to_delete = Dir.glob(File.join(BIN, "*.v3qaconfig"))
   FileUtils.rm config_files_to_delete
   puts 'cleanup'
 end
-  
+ 
+desc 'This task should run after a test run and it will clean up any tmp artifacts'
 task :post_test_cleanup do #should be extended
   bin_dir = Dir.new(BIN)
   config_files_to_delete = Dir.glob(File.join(BIN, "*.v3qaconfig"))
   FileUtils.rm config_files_to_delete
 end
   
+ 
+desc 'Accepts a test_target parameter and copies the corresponding v3qaconfig to bin'
 task :config, :test_target do |t, target| #ready
   target.with_defaults(:test_target => ENV['test_target'])
   Rake::Task[:pre_test_cleanup].invoke
@@ -65,17 +72,18 @@ task :config, :test_target do |t, target| #ready
   puts "test target: #{target[:test_target]}"
 end
   
+desc 'Pregenerates the serializers of any dlls that require it'
 task :pre_generate_serializers do #ready
   puts 'Generating serializers'
   sh File.join(LIB,'sgen','sgen.exe') + ' ' + File.join(BIN,'Wonga.QA.Framework.Cs.dll') + ' /force'
 end
 #--
   
-task :merge, :test_dlls do |t, args|#ready
-  args.with_defaults(:test_dlls => ENV['test_dlls'])
+desc 'Accepts a list of dlls land uses ILMerge to merge them making sure that Tests.Core is always added first'
+def merge(test_dlls)
   exclude = "#{TESTS}.Core.dll"
   exclude_dlls = exclude.split(' ')
-  test_dlls = args[:test_dlls]
+  test_dlls = test_dlls
   include_dlls = test_dlls - exclude_dlls
 
   command = '"' + File.join(PROGRAMM_FILES, 'Microsoft', 'ILMerge','ILMerge.exe') + '"'
@@ -89,7 +97,7 @@ task :merge, :test_dlls do |t, args|#ready
   puts "Merged as #{output_file}"
 end
   
-desc 'run Gallio'
+desc 'Accepts a dll list and a test filter and runs the tests with theh Gallio runner'
 task :gallio, :test_dlls, :test_filter do |t, args| 
   args.with_defaults(:test_dlls => ENV['test_dlls'], :test_filter=> ENV['test_filter'])
   g = Gallio.new
@@ -113,17 +121,19 @@ end
 
 task :test, :include, :exclude, :test_filter do |t, args|
   args.with_defaults(:include => ENV['include'], :exclude => ENV['exclude'], :test_filter => ENV['test_filter'])
-  incl = get_dlls_list args[:include]
-  excl = get_dlls_list args[:exclude]
-  fltr = args[:test_filter] if args[:test_filter] 
+  test(args[:include], args[:exclude], args[:test_filter])
+end
+
+def test(include = '', exclude = '', test_filter = '')
+  incl = get_dlls_list include
+  excl = get_dlls_list exclude
   test_dlls = incl - excl
-  puts test_dlls
-  Rake::Task[:merge].invoke(test_dlls)
+  merge test_dlls
   wonga_qa_tests_dll = Dir.glob(File.join(BIN, "#{TESTS}.dll"))
   # Rake.application.invoke_task("gallio[#{test_dlls}, #{fltr}]")
-  Rake::Task[:gallio].invoke(wonga_qa_tests_dll, fltr)
+  #Rake::Task[:gallio].invoke(wonga_qa_tests_dll, test_filter)
 end
-  
+
 task :convert_reports do
   puts 'Converting reports'
   command = File.join(BIN,'Wonga.QA.Tools.ReportConverter','Wonga.QA.Tools.ReportConverter.exe')

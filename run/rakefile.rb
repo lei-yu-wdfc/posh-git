@@ -4,5 +4,5 @@ require './ruby/test'
 require './ruby/msbuild'
   
 #--Task dependencies
-task :default => [:build, :pre_generate_serializers]
+task :default => [:build]
 

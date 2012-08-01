@@ -27,6 +27,6 @@ msbuild :tools do |msb|
 end
 #--
 
-task :build => [:framework, :tests, :ui_tests, :service_tests, :data_tests, :tools]
+task :build => [:framework, :tests, :ui_tests, :service_tests, :data_tests, :tools, :pre_generate_serializers]
 #--
 
