@@ -165,37 +165,9 @@ namespace Wonga.QA.Tests.Payments.Helpers.Ca
 
                 case PaymentFrequency.BiWeekly:
                     return GetNextBiWeeklyDate(knownPayDate, today);
-                case PaymentFrequency.TwiceMonthly15thAnd30th:
-                    return GetNextDayOfMonth15thOr30th(today);
             }
 
             throw new Exception("Invalid incomeFrequency");
-        }
-
-        private static DateTime GetNextDayOfMonth15thOr30th(DateTime today)
-        {
-            int payMonth = today.Month;
-            int payYear = today.Year;
-            int payDay = 15;
-
-            if (today.Day > 15 && today.Day <= 30)
-            {
-                payDay = 30;
-                DateTime endOfTheMonth = GetFirstDayOfNextMonth(today).AddDays(-1);
-                if (endOfTheMonth.Day < 30)
-                {
-                    payDay = endOfTheMonth.Day;
-                }
-            }
-
-            if (today.Day == 31)
-            {
-                DateTime firstDayOfNextMonth = GetFirstDayOfNextMonth(today);
-                payMonth = firstDayOfNextMonth.Month;
-                payYear = firstDayOfNextMonth.Year;
-            }
-
-            return new DateTime(payYear, payMonth, payDay);
         }
     }
 }
