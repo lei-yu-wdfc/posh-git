@@ -26,6 +26,7 @@ namespace Wonga.QA.Tests.Comms.Email
         [SetUp]
         private void Setup()
         {
+
             _accountId = Guid.NewGuid();
             _appId = Guid.NewGuid();
             _paymentCardId = Guid.NewGuid();
@@ -41,12 +42,12 @@ namespace Wonga.QA.Tests.Comms.Email
             Drive.Msmq.Comms.Send(new SaveCustomerDetails()
                                       {
                                            AccountId = _accountId,
-                                           Email = "Junk@Hallville.net",
-                                           Forename = "Test",
-                                           Surname =  "CancelledExtEmail",
+                                           Email = Get.RandomAlphaNumeric(9,9)+Get.GetEmail(),
+                                           Forename = Get.GetName(),
+                                           Surname =  Get.GetName() ,
                                            Gender = GenderEnum.Male,
-                                           HomePhone = "012345667789",
-                                           DateOfBirth = DateTime.Now.AddYears(-20),
+                                           HomePhone = Get.GetPhone(),
+                                           DateOfBirth = Get.GetDoB(),
 
                                       });
 
@@ -65,7 +66,7 @@ namespace Wonga.QA.Tests.Comms.Email
         {
 
             //Time out extension reminder saga in comms
-            var saga = Do.With.Interval(1).Until(() => Drive.Data.OpsSagas.Db.IWantToSendExtensionCancelledEmailSagaEntity.FindByAccountId(_accountId));
+            var saga = Do.With.Interval(1).Until(() => Drive.Data.OpsSagas.Db.ExtensionCancelledEmailData.FindByAccountId(_accountId));
             Drive.Msmq.Comms.Send(new TimeoutMessage { ClearTimeout = true, Expires = DateTime.UtcNow, SagaId = saga.Id, State = null });
         }
     }
