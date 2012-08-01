@@ -14,7 +14,6 @@ namespace Wonga.QA.Tests.Salesforce
         private Framework.ThirdParties.Salesforce _sales; 
         private readonly dynamic _loanDueDateNotifiSagaEntityTab = Drive.Data.OpsSagas.Db.LoanDueDateNotificationSagaEntity;
         private readonly dynamic _fixedTermLoanAppTab = Drive.Data.Payments.Db.FixedTermLoanApplications;
-        private readonly dynamic _applicationRepo = Drive.Data.Payments.Db.Applications;
         private readonly dynamic _commsSuppressionsRepo = Drive.Data.Comms.Db.Suppressions;
         private readonly dynamic _paymentsSuppressionsRepo = Drive.Data.Payments.Db.PaymentCollectionSuppressions;
 
@@ -53,14 +52,12 @@ namespace Wonga.QA.Tests.Salesforce
         {
             var caseId = Guid.NewGuid();
             var application = CreateLiveApplication();
-            int id =ApplicationOperations.GetAppInternalId(application);
-            TimeSpan span = _fixedTermLoanAppTab.FindByApplicationId(id).NextDueDate - DateTime.Today;
-            application.RewindApplicationDates(span);
+            RewindDatesToMakeDueToday(application);
             MakeDueToday(application);
             CompliantCycle( caseId, application);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.DueToday);
         }
-
+        
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-129"), Owner(Owner.AnilKrishnamaneni)]
         public void ArrearApplicationCompliantCycle()
@@ -163,6 +160,22 @@ namespace Wonga.QA.Tests.Salesforce
             
         }
 
+        [Test]
+        [AUT(AUT.Uk), JIRA("UKOPS-129"), Owner(Owner.AnilKrishnamaneni)]
+        public void ManagementReviewCompliantCycleWhileApplicationGoesDueToday()
+        {
+            var caseId = Guid.NewGuid();
+            var application = CreateLiveApplication();
+            ApplicationOperations.ManagementReview(application, caseId);
+            SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.ManagementReview);
+            ReportComplaint(caseId, application);
+            RewindDatesToMakeDueToday(application);
+            MakeDueToday(application);
+            ApplicationOperations.RemoveComplaint(application, caseId);
+            ApplicationOperations.RemoveManagementReview(application, caseId);
+            SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.DueToday);
+        }
+
         #region Helpers#
 
         private Application CreateLiveApplication()
@@ -179,13 +192,18 @@ namespace Wonga.QA.Tests.Salesforce
 
         private void CompliantCycle(Guid caseId, Application application)
         {
-            ApplicationOperations.ReportComplaint(application, caseId);
-            SalesforceOperations.CheckSalesApplicationStatus(application,
-                                        (double) salesforceStatusAlias.Complaint);
-            CheckSupressionTable(application);
+            ReportComplaint(caseId, application);
             ApplicationOperations.RemoveComplaint(application, caseId);
         }
-       
+
+        private void ReportComplaint(Guid caseId, Application application)
+        {
+            ApplicationOperations.ReportComplaint(application, caseId);
+            SalesforceOperations.CheckSalesApplicationStatus(application,
+                                                            (double) salesforceStatusAlias.Complaint);
+            CheckSupressionTable(application);
+        }
+
         private void CheckSupressionTable(Application application)
         {
             int appInternalId =ApplicationOperations.GetAppInternalId(application);
@@ -210,6 +228,13 @@ namespace Wonga.QA.Tests.Salesforce
                 var loanDurationSaga = loanDurationSagaEntities.FindAllByAccountGuid(AccountGuid: application.AccountId).FirstOrDefault();
                 Drive.Msmq.Payments.Send(new Framework.Msmq.TimeoutMessage() { SagaId = loanDurationSaga.Id });
             }
+        }
+
+        private void RewindDatesToMakeDueToday(Application application)
+        {
+            int id = ApplicationOperations.GetAppInternalId(application);
+            TimeSpan span = _fixedTermLoanAppTab.FindByApplicationId(id).NextDueDate - DateTime.Today;
+            application.RewindApplicationDates(span);
         }
 
         #endregion helpers#
