@@ -7,11 +7,6 @@ using System.Text.RegularExpressions;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.Db.BankGateway;
-using Wonga.QA.Framework.Db.Ops;
-using Wonga.QA.Framework.Db.Payments;
-using Wonga.QA.Framework.Db.QaData;
-using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.BankGateway
@@ -27,24 +22,13 @@ namespace Wonga.QA.Tests.BankGateway
 
 		private dynamic _filesTable = Drive.Data.BankGateway.Db.Files;
 		private dynamic _acknowledgesTable = Drive.Data.BankGateway.Db.Acknowledges;
-		private dynamic _bankIntegrationsTable = Drive.Data.BankGateway.Db.BankIntegrations;
 		private dynamic _incomingBankGatewayFileTable = Drive.Data.QaData.Db.IncomingBankGatewayFile;
-
-		private int _pollingInterval;
-		private const string BANK_INT_DESC = "Easypay";
 
 		[FixtureSetUp]
 		public void FixtureSetUp()
 		{
 			DeleteEasypayTestFie(TEST_FILE1);
 			DeleteEasypayTestFie(TEST_FILE2);
-
-			//Make test run faster with min polling interval
-			var bankIntegration = _bankIntegrationsTable.FindByDescription(BANK_INT_DESC);
-			_pollingInterval = bankIntegration.PollingInterval;
-			bankIntegration.PollingInterval = 10;
-
-			_bankIntegrationsTable.Update(bankIntegration);
 
 			var customer = CustomerBuilder.New().Build();
 			_application = ApplicationBuilder.New(customer).Build();
@@ -53,12 +37,6 @@ namespace Wonga.QA.Tests.BankGateway
 		[FixtureTearDown]
 		public void FixtureTearDown()
 		{
-			//Reset polling interval
-			var bankIntegration = _bankIntegrationsTable.FindByDescription(BANK_INT_DESC);
-			bankIntegration.PollingInterval = _pollingInterval;
-
-			_bankIntegrationsTable.Update(bankIntegration);
-
 			DeleteEasypayTestFie(TEST_FILE1);
 			DeleteEasypayTestFie(TEST_FILE2);
 		}
