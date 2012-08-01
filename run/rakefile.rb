@@ -77,7 +77,7 @@ end
   
 task :merge, :test_dlls do |t, args|#ready
   args.with_defaults(:test_dlls => ENV['test_dlls'])
-  exclude = File.join(BIN, "#{TESTS}.Core.dll")
+  exclude = "#{TESTS}.Core.dll"
   exclude_dlls = exclude.split(' ')
   test_dlls = args[:test_dlls]
   include_dlls = test_dlls - exclude_dlls
@@ -125,8 +125,8 @@ task :test, :include, :exclude, :test_filter do |t, args|
   excl = get_dlls_list args[:exclude]
   fltr = args[:test_filter] if args[:test_filter] 
   test_dlls = incl - excl
+  puts test_dlls
   Rake::Task[:merge].invoke(test_dlls)
-  puts "filter: #{fltr}"
   Dir.chdir(BIN)
   wonga_qa_tests_dll = Dir.glob("#{TESTS}.dll")
   # Rake.application.invoke_task("gallio[#{test_dlls}, #{fltr}]")
