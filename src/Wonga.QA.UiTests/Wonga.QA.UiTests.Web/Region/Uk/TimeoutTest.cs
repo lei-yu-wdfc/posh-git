@@ -4,7 +4,7 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 
-namespace Wonga.QA.UiTests.Web
+namespace Wonga.QA.UiTests.Web.Region.Uk
 {
     [Parallelizable(TestScope.All)]
     class TimeoutTest : UiTest

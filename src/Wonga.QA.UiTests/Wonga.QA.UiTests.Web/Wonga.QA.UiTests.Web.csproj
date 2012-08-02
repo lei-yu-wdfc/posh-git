@@ -51,11 +51,11 @@
     <Compile Include="Region\Uk\FinancialAssessment\FinancialAssessmentLoginTest.cs" />
     <Compile Include="Region\Uk\FinancialAssessment\FinancialAssessmentTest.cs" />
     <Compile Include="Region\Uk\HomePageTests.cs" />
-    <Compile Include="Region\Uk\Journey\LnJourneyTests.cs" />
+    <Compile Include="Region\Uk\L0Ln\LnJourneyTests.cs" />
     <Compile Include="Region\Uk\LegalDocumentsGracefulDegradeTests.cs" />
     <Compile Include="Region\Uk\MySummaryScenariosTests.cs" />
-    <Compile Include="Region\Uk\Journey\L0LnJourneyCoreTests.cs" />
-    <Compile Include="TimeoutTest.cs" />
+    <Compile Include="Region\Uk\L0Ln\L0LnJourneyCoreTests.cs" />
+    <Compile Include="Region\Uk\TimeoutTest.cs" />
     <Compile Include="Region\Uk\ExtensionAgreementTests.cs" />
     <Compile Include="RepaymentTest.cs" />
     <Compile Include="RepayLoanTests.cs" />
@@ -69,7 +69,7 @@
     <Compile Include="L0AcceptedLoan.cs" />
     <Compile Include="L0JourneyTests.cs" />
     <Compile Include="LnJourneyTests.cs" />
-    <Compile Include="LoginTest.cs" />
+    <Compile Include="Region\Uk\LoginTest.cs" />
     <Compile Include="LogoutTest.cs" />
     <Compile Include="MyAccountTests.cs" />
     <Compile Include="MySummary.cs" />
@@ -85,7 +85,7 @@
     <Compile Include="Region\Uk\TopUpTests.cs" />
     <Compile Include="L0DeclinedLoan.cs" />
     <Compile Include="UiTest.cs" />
-    <Compile Include="Region\Uk\Journey\L0JourneyTests.cs" />
+    <Compile Include="Region\Uk\L0Ln\L0JourneyTests.cs" />
     <Compile Include="WbLnJourneyTests.cs" />
     <Compile Include="Region\Wb\Journey\L0LoanWb.cs" />
     <Compile Include="Region\Za\Journey\L0LoanZa.cs" />

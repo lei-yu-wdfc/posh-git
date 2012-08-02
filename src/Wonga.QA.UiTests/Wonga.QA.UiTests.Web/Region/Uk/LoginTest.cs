@@ -3,7 +3,7 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
 
-namespace Wonga.QA.UiTests.Web
+namespace Wonga.QA.UiTests.Web.Region.Uk
 {
     [Parallelizable(TestScope.All)]
     class LoginTest : UiTest
@@ -18,7 +18,6 @@ namespace Wonga.QA.UiTests.Web
                 .Build();
             application.RepayOnDueDate();
             var page = homePage.Login.LoginAs(email, "Passw0rd");
-
         }
     }
 }

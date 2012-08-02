@@ -4,13 +4,12 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api.Requests.Ops.Queries;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.Msmq.Enums.Integration.Risk;
 using Wonga.QA.Framework.UI;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Framework.Api;
 
-namespace Wonga.QA.UiTests.Web.Region.Uk.Journey
+namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
 {
     [Parallelizable(TestScope.All)]
     public class LnJourneyTests : UiTest
