@@ -85,7 +85,6 @@ namespace Wonga.QA.UiTests.Web
                 Assert.IsTrue(exception.Message.Contains("The SMS PIN you entered was incorrect"));
             }
         }
-
     
         [Test, AUT(AUT.Za)]
         public void ZaFullLnJourneyTest()
@@ -105,90 +104,6 @@ namespace Wonga.QA.UiTests.Web
             var journey = JourneyFactory.GetLnJourney(Client.Home());
             var page = journey.Teleport<MySummaryPage>() as MySummaryPage;
         }
-
-        [Test, AUT(AUT.Uk), JIRA("UK-1533", "UK-1902", "UKWEB-914")]
-        public void LnJourneyWithNewMobilePhoneTest()
-        {
-            var loginPage = Client.Login();
-            string email = Get.RandomEmail();
-            Customer customer = CustomerBuilder
-                .New()
-                .WithEmailAddress(email)
-                .Build();
-            Application application = ApplicationBuilder
-                .New(customer)
-                .Build();
-            application.RepayOnDueDate();
-            loginPage.LoginAs(email);
-
-            var journeyLn = JourneyFactory.GetLnJourney(Client.Home()).WithNewMobilePhone();
-            var page = journeyLn.Teleport<MySummaryPage>() as MySummaryPage;
-        }
-
-        [Test, AUT(AUT.Uk), JIRA("UK-886"), MultipleAsserts]
-        public void ExistingMobilePhoneNumberNotAccepted()
-        {
-            var loginPage = Client.Login();
-            string email = Get.RandomEmail();
-
-            Console.WriteLine("email={0}", email);
-
-            // L0 journey
-            var journeyL0 = JourneyFactory.GetL0Journey(Client.Home())
-                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)).WithEmail(email);
-            var mySummary = journeyL0.Teleport<MySummaryPage>() as MySummaryPage;
-
-            var customer =
-                new Customer(
-                    Guid.Parse(
-                        Drive.Api.Queries.Post(new GetAccountQuery { Login = email, Password = Get.GetPassword() }).Values
-                            ["AccountId"].Single()));
-            var application = customer.GetApplication();
-
-            var mobileNumber = customer.GetCustomerMobileNumber();
-
-
-            // Repay
-            application.RepayOnDueDate();
-
-            // Ln journey
-            var journey = JourneyFactory.GetLnJourney(Client.Home());
-            var applyPage = journey.Teleport<ApplyPage>() as ApplyPage;
-            applyPage.SetIncorrectMobilePhone = mobileNumber;
-
-            Assert.IsTrue(applyPage.IsMobilePhonePopupCancelButtonEnabled(), "Cancel button is not enabled");
-            Assert.IsTrue(applyPage.IsMobilePhonePopupSaveButtonEnabled(), "Save button is not disabled");
-            Assert.IsTrue(applyPage.IsPhoneNumberNotChangedMessageVisible(),
-                          "Message that mobile phone number has not changed is not dispalyed");
-        }
-
-        [Test, AUT(AUT.Uk), JIRA("UK-1533")]
-        public void L0LnJourneyTest()
-        {
-            var loginPage = Client.Login();
-            string email = Get.RandomEmail();
-            Console.WriteLine("email={0}", email);
-
-            // L0 journey
-            var journeyL0 = JourneyFactory.GetL0Journey(Client.Home())
-                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)).WithEmail(email);
-            var mySummary = journeyL0.Teleport<MySummaryPage>() as MySummaryPage;
-
-            var customer =
-                new Customer(
-                    Guid.Parse(
-                        Drive.Api.Queries.Post(new GetAccountQuery { Login = email, Password = Get.GetPassword() }).Values
-                            ["AccountId"].Single()));
-            var application = customer.GetApplication();
-
-            // Repay
-            application.RepayOnDueDate();
-
-            // Ln journey
-            var journey = JourneyFactory.GetLnJourney(Client.Home());
-            var page = journey.Teleport<MySummaryPage>() as MySummaryPage;
-        }
-
 
         [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-199")]
         public void LoggedCustomerWithoutLoanAppliesNewLoanChangesMobilePhoneAndClicksResendPinItShouldBeResent()
@@ -319,43 +234,5 @@ namespace Wonga.QA.UiTests.Web
             // Check the URL here is /deal-done-member
             Assert.EndsWith(Client.Driver.Url, "/deal-done-member", "The deal done page URL is not /deal-done-member.");
         }
-
-        [Test, AUT(AUT.Uk), MultipleAsserts, Owner(Owner.PavithranVangiti)]
-        public void UkLnVerifyUrlsAreCorrect()
-        {
-            var loginPage = Client.Login();
-            string email = Get.RandomEmail();
-
-            Customer customer = CustomerBuilder
-                .New()
-                .WithEmailAddress(email)
-                .Build();
-
-            Application application = ApplicationBuilder
-                .New(customer)
-                .Build();
-            application.RepayOnDueDate();
-
-            var mySummaryPageAfterLogin = loginPage.LoginAs(email);
-            var homePage = Client.Home();
-            var journey = JourneyFactory.GetLnJourney(homePage);
-            var applyPage = journey.Teleport<ApplyPage>() as ApplyPage;
-
-            // Check the URL contains /applyln
-            Assert.Contains(Client.Driver.Url, "/applyln", "The apply page URL does not contain '/applyln'");
-            var processingPage = journey.Teleport<ProcessingPage>() as ProcessingPage;
-
-            // Check the URL ends with /processing-page
-            Assert.EndsWith(Client.Driver.Url, "/processing-page", "The processing page URL is not /processing-page.");
-            var acceptedPage = journey.Teleport<AcceptedPage>() as AcceptedPage;
-
-            // Check the URL ends with /accept
-            Assert.EndsWith(Client.Driver.Url, "/accept", "The accept page URL is not /accept.");
-            var dealDonePage = journey.Teleport<DealDonePage>() as DealDonePage;
-
-            // Check the URL ends with /dealdoneLN
-            Assert.EndsWith(Client.Driver.Url, "/dealdoneLN", "The deal done page URL is not /dealdoneLN.");
-        }
-
      }
 }

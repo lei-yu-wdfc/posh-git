@@ -51,6 +51,7 @@
     <Compile Include="Region\Uk\FinancialAssessment\FinancialAssessmentLoginTest.cs" />
     <Compile Include="Region\Uk\FinancialAssessment\FinancialAssessmentTest.cs" />
     <Compile Include="Region\Uk\HomePageTests.cs" />
+    <Compile Include="Region\Uk\Journey\LnJourneyTests.cs" />
     <Compile Include="Region\Uk\LegalDocumentsGracefulDegradeTests.cs" />
     <Compile Include="Region\Uk\MySummaryScenariosTests.cs" />
     <Compile Include="Region\Uk\L0LnJourneyCoreTests.cs" />
@@ -84,7 +85,7 @@
     <Compile Include="Region\Uk\TopUpTests.cs" />
     <Compile Include="L0DeclinedLoan.cs" />
     <Compile Include="UiTest.cs" />
-    <Compile Include="Region\Uk\Journey\L0LoanUk.cs" />
+    <Compile Include="Region\Uk\Journey\L0JourneyTests.cs" />
     <Compile Include="WbLnJourneyTests.cs" />
     <Compile Include="Region\Wb\Journey\L0LoanWb.cs" />
     <Compile Include="Region\Za\Journey\L0LoanZa.cs" />
