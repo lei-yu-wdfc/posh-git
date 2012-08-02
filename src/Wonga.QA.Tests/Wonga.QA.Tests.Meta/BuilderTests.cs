@@ -17,12 +17,17 @@ namespace Wonga.QA.Tests.Meta
             Assert.DoesNotThrow(() => _customer = CustomerBuilder.New().Build());
         }
 
-        [Test, DependsOn("CustomerBuilderTest"), Owner(Owner.StanDesyatnikov)]
+        [Test, AUT(AUT.Ca, AUT.Pl, AUT.Uk, AUT.Za), DependsOn("CustomerBuilderTest"), Owner(Owner.StanDesyatnikov)]
         public void ApplicationBuilderTest()
         {
-            ApplicationBuilder builder = Config.AUT == AUT.Wb ?
-                ApplicationBuilder.New(_customer, _organisation) :
-                ApplicationBuilder.New(_customer);
+            ApplicationBuilder builder = ApplicationBuilder.New(_customer);
+
+            builder.Build();
+        }
+        [Test, AUT(AUT.Wb), DependsOn("OrganisationBuilderTest")]
+        public void WbApplicationBuilderTest()
+        {
+            ApplicationBuilder builder = ApplicationBuilder.New(_customer, _organisation);
 
             builder.Build();
         }
