@@ -53,7 +53,6 @@ namespace Wonga.QA.Tests.Salesforce
         {
             var caseId = Guid.NewGuid();
             var application = CreateLiveApplication();
-            application.ExpireCard();
             application.PutIntoArrears(3);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.InArrears);
             Refund(caseId, application);
