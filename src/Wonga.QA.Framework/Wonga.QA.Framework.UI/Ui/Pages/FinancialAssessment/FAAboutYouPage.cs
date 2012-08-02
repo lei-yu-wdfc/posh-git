@@ -16,7 +16,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.FinancialAssessment
         private readonly IWebElement _emailAddress;
         private IWebElement _editname;
         private IWebElement _editsurname;
-        private IWebElement _editdateOfBirth;
+        private IWebElement _editDOBday;
+        private IWebElement _editDOBmonth;
+        private IWebElement _editDOByear;
         private IWebElement _edithouseNumber;
         private IWebElement _editpostCode;
         private IWebElement _editemployer;
@@ -28,14 +30,16 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.FinancialAssessment
         private IWebElement _postCodeError;
 
         public FAAboutYouPage(UiClient client, Validator validator = null)
-            : base(client)
+            : base(client, validator)
         {
             _agreementReference =
                 Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentAboutYouPage.AgreementReference));
             _emailAddress = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentAboutYouPage.EmailAddress));
             _editname = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentAboutYouPage.Name));
             _editsurname = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentAboutYouPage.Surname));
-            _editdateOfBirth = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentAboutYouPage.DateOfBirth));
+            _editDOBday = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentAboutYouPage.DateOfBirthDay));
+            _editDOBmonth = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentAboutYouPage.DateOfBirthMonth));
+            _editDOByear = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentAboutYouPage.DateOfBirthYear));
             _edithouseNumber = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentAboutYouPage.HouseNumber));
             _editpostCode = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentAboutYouPage.PostCode));
             _editemployer = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentAboutYouPage.Employer));
@@ -72,11 +76,45 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.FinancialAssessment
 
         public string DateOfBirth
         {
-            get { return _editdateOfBirth.GetValue(); }
+            get
+            {
+                String outDate = _editDOByear.GetValue() + "-";
+                switch (_editDOBmonth.GetValue())
+                {
+                    case "Jan": { outDate += "01-"; break; }
+                    case "Feb": { outDate += "02-"; break; }
+                    case "Mar": { outDate += "03-"; break; }
+                    case "Apr": { outDate += "04-"; break; }
+                    case "May": { outDate += "05-"; break; }
+                    case "Jun": { outDate += "06-"; break; }
+                    case "Jul": { outDate += "07-"; break; }
+                    case "Aug": { outDate += "08-"; break; }
+                    case "Sep": { outDate += "09-"; break; }
+                    case "Oct": { outDate += "10-"; break; }
+                    case "Now": { outDate += "11-"; break; }
+                    case "Dec": { outDate += "12-"; break; }
+                }
+                return outDate + int.Parse(_editDOBday.GetValue()).ToString("00");
+            }
             set
             {
-                _editdateOfBirth.Clear();
-                _editdateOfBirth.SendKeys(value);
+                _editDOBday.SendKeys(int.Parse(value.Split('-')[2]).ToString());
+                switch (int.Parse(value.Split('-')[1]))
+                {
+                    case 1: { _editDOBmonth.SendKeys("Jan"); break; }
+                    case 2: { _editDOBmonth.SendKeys("Feb"); break; }
+                    case 3: { _editDOBmonth.SendKeys("Mar"); break; }
+                    case 4: { _editDOBmonth.SendKeys("Apr"); break; }
+                    case 5: { _editDOBmonth.SendKeys("May"); break; }
+                    case 6: { _editDOBmonth.SendKeys("Jun"); break; }
+                    case 7: { _editDOBmonth.SendKeys("Jul"); break; }
+                    case 8: { _editDOBmonth.SendKeys("Aug"); break; }
+                    case 9: { _editDOBmonth.SendKeys("Sep"); break; }
+                    case 10: { _editDOBmonth.SendKeys("Oct"); break; }
+                    case 11: { _editDOBmonth.SendKeys("Now"); break; }
+                    case 12: { _editDOBmonth.SendKeys("Dec"); break; }
+                }
+                _editDOByear.SendKeys(value.Split('-').First());
             }
         }
 
@@ -171,7 +209,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.FinancialAssessment
         {
             try
             {
-                _postCodeError = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentAboutYouPage.PostCodeError));
+                _postCodeError =
+                    Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentAboutYouPage.PostCodeError)));
                 if (_postCodeError.Text == "")
                 {
                     return false;

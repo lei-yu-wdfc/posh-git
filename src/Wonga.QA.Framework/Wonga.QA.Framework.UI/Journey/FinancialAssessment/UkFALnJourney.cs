@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using Wonga.QA.Framework.Core;
@@ -14,14 +15,31 @@ namespace Wonga.QA.Framework.UI.Journey
         {
             CurrentPage = financialAssessmentPage as FinancialAssessmentPage;
 
+            _submit = true;
+
             _firstName = Get.GetName();
             _lastName = Get.RandomString(10);
             _houseNumber = Get.RandomString(10);
-            _dateOfBirth = "";
+            _dateOfBirth = Get.GetDoB().ToString();
             _postCode = Get.GetPostcode();
             _yourHousehold = Get.RandomInt(1, 5).ToString();
             _childrenInHousehold = Get.RandomInt(1, 5).ToString();
             _numberOfVehiles = Get.RandomInt(1, 5).ToString();
+
+            _salaryAfterTax = Get.RandomInt(0,10000).ToString() + Get.Random().ToString(".00");
+            _partnerSalaryAfterTax = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
+            _jobseekerAllowance = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
+            _incomeSupport = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
+            _workingTaxCredit = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
+            _childTaxCredit = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
+            _statePension = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
+            _privateOrWorkPension = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
+            _pensionCredit = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
+            _other = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
+            _maintenenceOrChildSupport = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
+            _incomeFromBoardersOrLodgers = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
+            _studentLoansOrGrants = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
+            _otherIncome = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
 
             journey.Add(typeof(FinancialAssessmentPage), GetStarted);
             journey.Add(typeof(FAAboutYouPage), PassAboutYou);
@@ -40,7 +58,7 @@ namespace Wonga.QA.Framework.UI.Journey
             var faAboutYouPage = CurrentPage as FAAboutYouPage;
             faAboutYouPage.FirstName = _firstName;
             faAboutYouPage.LastName = _lastName;
-            faAboutYouPage.DateOfBirth = "1977-10-10";
+            faAboutYouPage.DateOfBirth = _dateOfBirth;
             faAboutYouPage.HouseNumber = _houseNumber;
             faAboutYouPage.PostCode = _postCode;
             faAboutYouPage.Employer = _employer;
@@ -57,6 +75,26 @@ namespace Wonga.QA.Framework.UI.Journey
 
         protected override BaseFALnJourney PassIncomePage(bool submit = true)
         {
+            var faIncomePage = CurrentPage as FAIncomePage;
+            faIncomePage.SalaryAfterTax = _salaryAfterTax;
+            faIncomePage.PartnerSalaryAfterTax = _partnerSalaryAfterTax;
+            faIncomePage.JobseekerAllowance = _jobseekerAllowance;
+            faIncomePage.IncomeSupport = _incomeSupport;
+            faIncomePage.WorkingTaxCredit = _workingTaxCredit;
+            faIncomePage.ChildTaxCredit = _childTaxCredit;
+            faIncomePage.StatePension = _statePension;
+            faIncomePage.PrivateOrWorkPension = _privateOrWorkPension;
+            faIncomePage.PensionCredit = _pensionCredit;
+            faIncomePage.Other = _other;
+            faIncomePage.MaintenenceOrChildSupport = _maintenenceOrChildSupport;
+            faIncomePage.IncomeFromBoardersOrLodgers = _incomeFromBoardersOrLodgers;
+            faIncomePage.StudentLoansOrGrants = _studentLoansOrGrants;
+            faIncomePage.OtherIncome = _otherIncome;
+
+            if (submit)
+            {
+                CurrentPage = faIncomePage.NextClick() as FAExpenditurePage;
+            }
             return this;
         }
     }

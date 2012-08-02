@@ -5,6 +5,7 @@ using System.Text;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.Mappings;
+using Wonga.QA.Framework.UI.Ui.Validators;
 using Wonga.QA.Framework.UI.UiElements.Pages;
 
 namespace Wonga.QA.Framework.UI.UiElements.Pages.FinancialAssessment
@@ -25,153 +26,191 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.FinancialAssessment
         private IWebElement _incomeFromBoardersOrLodgers;
         private IWebElement _studentLoansOrGrants;
         private IWebElement _otherIncome;
-        //private readonly IWebElement _totalIncome;
+        private readonly IWebElement _totalIncome;
         private readonly IWebElement _buttonPrevious;
         private readonly IWebElement _buttonNext;
 
-        public FAIncomePage(UiClient client)
-            : base(client)
+        public FAIncomePage(UiClient client, Validator validator = null)
+            : base(client, validator)
         {
-            // _totalIncome = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.TotalIncome));
+            _salaryAfterTax = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.SalaryAfterTax));
+            _partnerSalaryAfterTax = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.PartnerSalaryAfterTax));
+            _jobseekerAllowance = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.JobseekerAllowance));
+            _incomeSupport = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.IncomeSupport));
+            _workingTaxCredit = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.WorkingTaxCredit));
+            _childTaxCredit = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.ChildTaxCredit));
+            _statePension = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.StatePension));
+            _privateOrWorkPension = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.PrivateOrWorkPension));
+            _pensionCredit = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.PensionCredit));
+            _other = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.Other));
+            _maintenenceOrChildSupport = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.MaintenenceOrChildSupport));
+            _incomeFromBoardersOrLodgers = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.IncomeFromBoardersOrLodgers));
+            _studentLoansOrGrants = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.StudentLoansOrGrants));
+            _otherIncome = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.OtherIncome));
+            _totalIncome = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.TotalIncome));
             _buttonPrevious = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.ButtonPrevious));
             _buttonNext = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.ButtonNext));
         }
 
-        public bool SetSalaryAfterTax(string salaryAfterTax)
+        public string SalaryAfterTax
         {
-            _salaryAfterTax = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.SalaryAfterTax)));
-
-            _salaryAfterTax.Clear();
-            _salaryAfterTax.SendKeys(salaryAfterTax);
-            return true;
+            get { return _salaryAfterTax.GetValue(); }
+            set
+            {
+                _salaryAfterTax.Clear();
+                _salaryAfterTax.SendKeys(value);
+            }
         }
 
-        public bool SetPartnerSalaryAfterTax(string partnerSalaryAfterTax)
+        public string PartnerSalaryAfterTax
         {
-            _partnerSalaryAfterTax = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.PartnerSalaryAfterTax)));
-
-            _partnerSalaryAfterTax.Clear();
-            _partnerSalaryAfterTax.SendKeys(partnerSalaryAfterTax);
-            return true;
+            get { return _partnerSalaryAfterTax.GetValue(); }
+            set
+            {
+                _partnerSalaryAfterTax.Clear();
+                _partnerSalaryAfterTax.SendKeys(value);
+            }
         }
 
-        public bool SetJobseekerAllowance(string jobseekerAllowance)
+        public string JobseekerAllowance
         {
-            _jobseekerAllowance = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.JobseekerAllowance)));
-
-            _jobseekerAllowance.Clear();
-            _jobseekerAllowance.SendKeys(jobseekerAllowance);
-            return true;
+            get { return _jobseekerAllowance.GetValue(); }
+            set
+            {
+                _jobseekerAllowance.Clear();
+                _jobseekerAllowance.SendKeys(value);
+            }
         }
 
-        public bool SetIncomeSupport(string incomeSupport)
+        public string IncomeSupport
         {
-            _incomeSupport = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.IncomeSupport)));
-
-            _incomeSupport.Clear();
-            _incomeSupport.SendKeys(incomeSupport);
-            return true;
+            get { return _incomeSupport.GetValue(); }
+            set
+            {
+                _incomeSupport.Clear();
+                _incomeSupport.SendKeys(value);
+            }
         }
 
-        public bool SetWorkingTaxCredit(string workingTaxCredit)
+        public string WorkingTaxCredit
         {
-            _workingTaxCredit = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.WorkingTaxCredit)));
-
-            _workingTaxCredit.Clear();
-            _workingTaxCredit.SendKeys(workingTaxCredit);
-            return true;
+            get { return _workingTaxCredit.GetValue(); }
+            set
+            {
+                _workingTaxCredit.Clear();
+                _workingTaxCredit.SendKeys(value);
+            }
         }
 
-        public bool SetChildTaxCredit(string childTaxCredit)
+        public string ChildTaxCredit
         {
-            _childTaxCredit = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.ChildTaxCredit)));
-
-            _childTaxCredit.Clear();
-            _childTaxCredit.SendKeys(childTaxCredit);
-            return true;
+            get { return _childTaxCredit.GetValue(); }
+            set
+            {
+                _childTaxCredit.Clear();
+                _childTaxCredit.SendKeys(value);
+            }
         }
 
-        public bool SetStatePension(string statePension)
+        public string StatePension
         {
-            _statePension = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.StatePension)));
-
-            _statePension.Clear();
-            _statePension.SendKeys(statePension);
-            return true;
+            get { return _statePension.GetValue(); }
+            set
+            {
+                _statePension.Clear();
+                _statePension.SendKeys(value);
+            }
         }
 
-        public bool SetPrivateOrWorkPension(string privateOrWorkPension)
+        public string PrivateOrWorkPension
         {
-            _privateOrWorkPension = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.PrivateOrWorkPension)));
-
-            _privateOrWorkPension.Clear();
-            _privateOrWorkPension.SendKeys(privateOrWorkPension);
-            return true;
+            get { return _privateOrWorkPension.GetValue(); }
+            set
+            {
+                _privateOrWorkPension.Clear();
+                _privateOrWorkPension.SendKeys(value);
+            }
         }
 
-        public bool SetPensionCredit(string pensionCredit)
+        public string PensionCredit
         {
-            _pensionCredit = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.PensionCredit)));
-
-            _pensionCredit.Clear();
-            _pensionCredit.SendKeys(pensionCredit);
-            return true;
+            get { return _pensionCredit.GetValue(); }
+            set
+            {
+                _pensionCredit.Clear();
+                _pensionCredit.SendKeys(value);
+            }
         }
 
-        public bool SetOther(string other)
+        public string Other
         {
-            _other = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.Other)));
-
-            _other.Clear();
-            _other.SendKeys(other);
-            return true;
+            get { return _other.GetValue(); }
+            set
+            {
+                _other.Clear();
+                _other.SendKeys(value);
+            }
         }
 
-        public bool SetMaintenenceOrChildSupport(string maintenenceOrChildSupport)
+        public string MaintenenceOrChildSupport
         {
-            _maintenenceOrChildSupport = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.MaintenenceOrChildSupport)));
-
-            _maintenenceOrChildSupport.Clear();
-            _maintenenceOrChildSupport.SendKeys(maintenenceOrChildSupport);
-            return true;
+            get { return _maintenenceOrChildSupport.GetValue(); }
+            set
+            {
+                _maintenenceOrChildSupport.Clear();
+                _maintenenceOrChildSupport.SendKeys(value);
+            }
         }
 
-        public bool SetIncomeFromBoardersOrLodgers(string incomeFromBoardersOrLodgers)
+        public string IncomeFromBoardersOrLodgers
         {
-            _incomeFromBoardersOrLodgers = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.IncomeFromBoardersOrLodgers)));
-
-            _incomeFromBoardersOrLodgers.Clear();
-            _incomeFromBoardersOrLodgers.SendKeys(incomeFromBoardersOrLodgers);
-            return true;
+            get { return _incomeFromBoardersOrLodgers.GetValue(); }
+            set
+            {
+                _incomeFromBoardersOrLodgers.Clear();
+                _incomeFromBoardersOrLodgers.SendKeys(value);
+            }
         }
 
-        public bool SetStudentLoansOrGrants(string studentLoansOrGrants)
+        public string StudentLoansOrGrants
         {
-            _studentLoansOrGrants = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.StudentLoansOrGrants)));
-
-            _studentLoansOrGrants.Clear();
-            _studentLoansOrGrants.SendKeys(studentLoansOrGrants);
-            return true;
+            get { return _studentLoansOrGrants.GetValue(); }
+            set
+            {
+                _studentLoansOrGrants.Clear();
+                _studentLoansOrGrants.SendKeys(value);
+            }
         }
 
-        public bool SetOtherIncome(string otherIncome)
+        public string OtherIncome
         {
-            _otherIncome = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.OtherIncome)));
-
-            _otherIncome.Clear();
-            _otherIncome.SendKeys(otherIncome);
-            return true;
+            get { return _otherIncome.GetValue(); }
+            set
+            {
+                _otherIncome.Clear();
+                _otherIncome.SendKeys(value);
+            }
         }
 
-        public FAAboutYouPage PreviousClick()
+        public string TotalIncome
+        {
+            get { return _totalIncome.GetValue(); }
+        }
+
+        public BasePage PreviousClick()
         {
             _buttonPrevious.Click();
             return new FAAboutYouPage(Client);
         }
 
-        public FAExpenditurePage NextClick()
+        public BasePage NextClick(bool error = false)
         {
             _buttonNext.Click();
+            if (error)
+            {
+                var validator = new ValidatorBuilder().WithoutErrorsCheck().Build();
+                return new FAIncomePage(Client, validator);
+            }
             return new FAExpenditurePage(Client);
         }
     }
