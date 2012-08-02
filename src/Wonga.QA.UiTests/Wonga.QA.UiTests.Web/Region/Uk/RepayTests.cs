@@ -12,12 +12,8 @@ using Wonga.QA.Tests.Core;
 using System.Linq;
 using System;
 
-namespace Wonga.QA.UiTests.Web
+namespace Wonga.QA.UiTests.Web.Region.Uk
 {
-    /// <summary>
-    /// TopupSlider tests for UK
-    /// </summary>
-    /// 
     [Parallelizable(TestScope.All)]
     class RepayTests : UiTest
     {

@@ -8,7 +8,7 @@ using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Framework.Api;
 
-namespace Wonga.QA.UiTests.Web.Region.Uk.Journey
+namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
 {
     [Parallelizable(TestScope.All)]
     public class L0JourneyTests : UiTest
