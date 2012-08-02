@@ -43,7 +43,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             application.RepayOnDueDate();
         }
 
-        [Test, AUT(AUT.Uk), DependsOn("RepaymentOnDueDateTest"), Owner(Owner.StanDesyatnikov)]
+        [Test, AUT(AUT.Uk), JIRA("UK-1533"), DependsOn("RepaymentOnDueDateTest"), Owner(Owner.StanDesyatnikov)]
         public void LnJourneyTest()
         {
             var loginPage = Client.Login();
