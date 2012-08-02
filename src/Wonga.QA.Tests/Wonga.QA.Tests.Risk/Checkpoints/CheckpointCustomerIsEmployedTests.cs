@@ -31,9 +31,6 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
         [JIRA("UKRISK-72"), Description("Scenario 2: Customer is eploymend, application accepted"),Category(TestCategories.CoreTest)]
         public void L0CustomerEmployedThenApplicationAccepted()
         {
-        	Drive.Api.Commands.Post(new CreateAccountCommand());
-
-
             var customer = CustomerBuilder.New().WithEmployer(TestMask).WithEmployerStatus(EmploymentStatusEnum.EmployedFullTime.ToString()).Build();
             _loanApplication = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
         }
