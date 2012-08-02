@@ -46,6 +46,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
         private IWebElement _representativeExample;
         private IWebElement _existingCustomersLink;
         private IWebElement _trustratingLinkAboveSliders;
+        private IWebElement _headerBarText;
         //private IWebElement _fastCashLink;
         //private IWebElement _cashAdvanceLink;
         //private IWebElement _quickQuidLink;
@@ -167,12 +168,42 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
             return seoLinksText;
         }
 
+        public String GetHeaderBarText()
+        {
+            _headerBarText = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.HeaderBarText));
+            var headerBarText = _headerBarText.Text;
+            return headerBarText;
+        }
+
+        public bool IsHeaderBarVisible()
+        {
+            try
+            {
+                var headerBarText = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.HeaderBarText));
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public void ClickLogoutLink()
+        {
+            Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.WelcomeMessageClickHereLink)).Click();
+        }
+
         public String GetWelcomeHeaderMessageText()
         {
             Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.WelcomeHeaderMessage)));
             _headerMessage = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.WelcomeHeaderMessage));
             var headerMessageText = _headerMessage.Text.Replace("\r\n", " ");
             return headerMessageText;
+        }
+
+        public void ClickWelcomeMessageClickHereLink()
+        {
+            Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.WelcomeMessageClickHereLink)).Click();    
         }
 
         public String GetWelcomeSubMessageText()
