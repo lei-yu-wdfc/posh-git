@@ -297,7 +297,7 @@ namespace Wonga.QA.Framework
 			return this;
 		}
 
-        public virtual Application ExpireCard()
+        private Application ExpireCard()
         {
             Customer customer = this.GetCustomer();
             Drive.Data.Payments.Db.PaymentCardsBase.UpdateByExternalId(ExternalId: customer.GetPaymentCard(),
@@ -319,6 +319,11 @@ namespace Wonga.QA.Framework
 
 			ApplicationOperations.RewindApplicationDates(application, riskApplication, span);
 
+            //simulate failing payments
+            if (Config.AUT == AUT.Uk)
+            {
+                this.ExpireCard();
+            }
             if (Config.AUT == AUT.Ca || Config.AUT == AUT.Za)
             {
                 var entity = _scheduledPostAccruedInterestSagaEntityTab.FindAll(_scheduledPostAccruedInterestSagaEntityTab.ApplicationGuid == Id).Single();

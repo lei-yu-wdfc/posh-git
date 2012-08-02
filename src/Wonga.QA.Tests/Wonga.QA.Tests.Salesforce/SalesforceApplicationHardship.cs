@@ -55,7 +55,7 @@ namespace Wonga.QA.Tests.Salesforce
         {
             var caseId = Guid.NewGuid();
             var application = CreateLiveApplication();
-            application.ExpireCard().PutIntoArrears(3);
+            application.PutIntoArrears(3);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.InArrears);
             HardshipCycle(caseId, application);
         }

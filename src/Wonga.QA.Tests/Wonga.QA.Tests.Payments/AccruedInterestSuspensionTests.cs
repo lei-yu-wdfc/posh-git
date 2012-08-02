@@ -48,7 +48,7 @@ namespace Wonga.QA.Tests.Payments
             string maximumArrearDays = _serviceConfigTable.FindBy(Key: InArrearsMaxInterestDaysKey).Value.ToString();
             int intMaximumArrearDays = Int32.Parse(maximumArrearDays);
             int arrearDays = intMaximumArrearDays + 10;
-            _application.ExpireCard().PutIntoArrears((uint)arrearDays);
+            _application.PutIntoArrears((uint)arrearDays);
             dynamic suspendTransaction = null;
             dynamic application = null;
             dynamic fixedTermApplication = null;
