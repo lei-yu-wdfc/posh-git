@@ -44,6 +44,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
         private IWebElement _wongaCustomersBox;
         private IWebElement _responsibleLendingBox;
         private IWebElement _representativeExample;
+        private IWebElement _existingCustomersLink;
+        private IWebElement _trustratingLinkAboveSliders;
         //private IWebElement _fastCashLink;
         //private IWebElement _cashAdvanceLink;
         //private IWebElement _quickQuidLink;
@@ -187,6 +189,22 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
             if ((DateTime.Now.AddMinutes(24).Hour.ToString("#") == "00") && (DateTime.Now.Hour.ToString("#") != "00"))
             ending = " tomorrow.";
             return ending;
+        }
+
+        public String GetExistingCustomersLink()
+        {
+            Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.ExistingCustomersLink)));
+            _existingCustomersLink = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.ExistingCustomersLink));
+            var existingCustomersLink = _existingCustomersLink.GetAttribute("href");
+            return existingCustomersLink;
+        }
+
+        public String GetAboveSlidersTrustRatingLink()
+        {
+            Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.TrustratingLinkAboveSliders)));
+            _trustratingLinkAboveSliders = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.TrustratingLinkAboveSliders));
+            var trustratingLinkAboveSliders = _trustratingLinkAboveSliders.GetAttribute("href");
+            return trustratingLinkAboveSliders;
         }
 
         public String GetHomePageCodeOfPracticeLink()
@@ -333,19 +351,27 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
             return responsibleLendingBox;
         }
 
+        //public static void MouseOver(IWebElement element)
+        //{
+        //    String code = "var fireOnThis = arguments[0];"
+        //                + "var evObj = document.createEvent('MouseEvents');"
+        //                + "evObj.initEvent( 'mouseover', true, true );"
+        //                + "fireOnThis.dispatchEvent(evObj);";
+        //    ((IJavaScriptExecutor)element.Driver()).ExecuteScript(code, element);
+        //}
+
         public String GetRepresentativeExampleText()
         {
             Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.RepresentativeExampleTrigger)));
 
-            IWebElement AprExampleLink = Content.FindElement(By.CssSelector(UiMap.Get.HomePage.RepresentativeExampleTrigger));
+            IWebElement aprExampleLink = Content.FindElement(By.CssSelector(UiMap.Get.HomePage.RepresentativeExampleTrigger));
 
-            Actions builder = new Actions(Client.Driver);
-            builder.MoveToElement(AprExampleLink);
+            aprExampleLink.MouseOver();
 
             Do.With.Timeout(new TimeSpan(0, 0, 10)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.RepresentativeExampleText)));
             _representativeExample = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.RepresentativeExampleText));
             var representativeExampleText = _representativeExample.Text;
-            return representativeExampleText;
+            return representativeExampleText.Replace("\r\n","");
         }
 
         public bool IsMocked()

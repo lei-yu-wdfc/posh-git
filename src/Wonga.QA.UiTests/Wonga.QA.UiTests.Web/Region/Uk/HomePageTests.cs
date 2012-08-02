@@ -52,18 +52,24 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         {
             var homePage = Client.Home();
 
+            //Ensure 'Max available credit' value is correct
+            Assert.AreEqual("400", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
+
+            _url = Client.Home().Url;
+
             // User hasn't logged in before. Verify the Welcome message
-            Assert.AreEqual("Welcome to Wonga. We can deposit up to £400 in your bank account by " + DateTime.Now.AddMinutes(24).ToShortTimeString() + homePage.GetWelcomeMessageDay(),
-                            homePage.GetWelcomeHeaderMessageText(), "The Wellcome text is wrong");
+            Assert.AreEqual("Welcome to Wonga. We can deposit up to £400 in your bank account by " + DateTime.Now.AddMinutes(23).ToShortTimeString() + homePage.GetWelcomeMessageDay(),
+                            homePage.GetWelcomeHeaderMessageText(), "The Welcome text is wrong");
 
             // Verify Sub message
             Assert.AreEqual("Existing customers may be able to borrow up to £1,000, depending on your current trust rating.", homePage.GetWelcomeSubMessageText(),
                             "The Header should be 'Welcome to Wonga'");
-            // TODO Check links in the message above
 
-            Assert.IsNotNull(homePage);
+            //Ensure 'Existing Customers' link has correct URL
+            Assert.AreEqual(_url + "login", homePage.GetExistingCustomersLink());
 
-            Assert.AreEqual("400", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
+            //Ensure 'Trust rating' link above sliders has correct URL
+            Assert.AreEqual(_url + "money/about-trust", homePage.GetAboveSlidersTrustRatingLink());
 
             // TODO: UKWEB-371: Check Navigation Header (international-trigger, help-trigger, social-trigger, login-trigger)
             // UKWEB-371: Navigation Header is partially checked when object homePage is created.
@@ -83,7 +89,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
             // user has logged in
             Assert.AreEqual("Welcome back " + _truncatedFirstName + "...! (not " + _truncatedFirstName +
-                            "...? click here) We can deposit up to £400 in your bank account by " + DateTime.Now.AddMinutes(23).ToShortTimeString()
+                            "...? click here) We can deposit up to £" + homePage.Sliders.MaxAvailableCredit() + " in your bank account by " + DateTime.Now.AddMinutes(24).ToShortTimeString()
                             + homePage.GetWelcomeMessageDay(), homePage.GetWelcomeHeaderMessageText());
 
             Assert.AreEqual("400", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");

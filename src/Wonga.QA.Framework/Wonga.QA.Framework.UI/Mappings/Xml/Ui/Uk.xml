@@ -292,6 +292,8 @@
     <ResponsibleLendingBoxText>.responsible-lending-box h1</ResponsibleLendingBoxText>
     <RepresentativeExampleTrigger>.largetooltiptrigger</RepresentativeExampleTrigger>
     <RepresentativeExampleText>div .largetooltipbox</RepresentativeExampleText>
+    <TrustratingLinkAboveSliders>a[href='/money/about-trust']</TrustratingLinkAboveSliders>
+    <ExistingCustomersLink>a[href='/login']</ExistingCustomersLink>
   </HomePage>
 
   <SocialElement>
