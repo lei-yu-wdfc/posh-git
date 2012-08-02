@@ -40,6 +40,8 @@ namespace Wonga.QA.UiTests.Web
         private const int DefaultLoanTerm = 11;
         private const int MinimumMaxLoanTerm = 30;
 
+        private const int _maxSliderValue = 419;
+        private const int _minSliderValue = -419;
 
         public void GetInitialValues()
         {
@@ -739,6 +741,32 @@ namespace Wonga.QA.UiTests.Web
         }
 
         #endregion
-    }
 
+        [Test, AUT(AUT.Wb), JIRA("SME-1581")]
+        public void CheckThatMaxLoanAmountIsCorrect()
+        {
+            var homePage = Client.Home();
+            homePage.Sliders.MoveAmountSlider = _maxSliderValue;
+
+            Assert.AreEqual("15,000", homePage.Sliders.LoanAmount.GetValue());
+
+        }
+
+        [Test, AUT(AUT.Wb), JIRA("SME-1563")]
+        public void WhenCustomerUsesSlidersThenIncludeCostsAndRepaymentAmount()
+        {
+
+            var riskPricingEnabled = Do.Until(() => Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.Wb.RiskBasedPricingEnabled"));
+            Config.WbRiskBasedPricingEnabled.RiskBasedPricingEnabled = bool.Parse(riskPricingEnabled.Value);
+           
+            var homePage = Client.Home();
+            var sliders = homePage.Sliders;
+            sliders.MoveAmountSlider = Get.RandomInt(_minSliderValue, _maxSliderValue);
+            sliders.MoveDurationSlider = Get.RandomInt(_minSliderValue, _maxSliderValue);
+
+            Assert.AreEqual("£" + sliders.LoanAmount.GetValue(), sliders.GetTotalAmount);
+            Assert.IsNotNull(sliders.GetTotalFees);
+        }
+    }
 }
+        
