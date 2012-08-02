@@ -107,7 +107,7 @@ namespace Wonga.QA.UiTests.Web
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-1533", "UK-1902", "UKWEB-914")]
-        public void FullLnJourneyTest()
+        public void LnJourneyWithNewMobilePhoneTest()
         {
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
