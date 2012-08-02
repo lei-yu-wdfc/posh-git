@@ -112,7 +112,7 @@ namespace Wonga.QA.Framework.Core
 
         public static String GetName()
         {
-            return RandomString(2, 30);
+            return RandomString(4, 30);
         }
 
         public static String GetPhone()
