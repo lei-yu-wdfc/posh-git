@@ -305,6 +305,14 @@ namespace Wonga.QA.Framework
             return this;
         }
 
+        private Application UnexpireCard()
+        {
+            Customer customer = this.GetCustomer();
+            Drive.Data.Payments.Db.PaymentCardsBase.UpdateByExternalId(ExternalId: customer.GetPaymentCard(),
+                        ExpiryDate: new DateTime(DateTime.Now.Year + 2, 1, 31));
+            return this;
+        }
+
 		public virtual Application PutIntoArrears()
 		{
             var application = _applicationsTab.FindAll(_applicationsTab.ExternalId == Id).Single();
@@ -319,7 +327,7 @@ namespace Wonga.QA.Framework
 
 			ApplicationOperations.RewindApplicationDates(application, riskApplication, span);
 
-            //simulate failing payments
+            //fail payments
             if (Config.AUT == AUT.Uk)
             {
                 this.ExpireCard();
@@ -353,6 +361,11 @@ namespace Wonga.QA.Framework
             }
 
             Do.Until(() => _arrearsTab.FindAll(_arrearsTab.ApplicationId == application.ApplicationId).Single());
+
+            if (Config.AUT == AUT.Uk)
+            {
+                this.UnexpireCard();
+            }
 
 			var arrearsDate = (DateTime)(Drive.Data.Payments.Db.Arrears.FindByApplicationId(application.ApplicationId)).CreatedOn;
 			Drive.Data.Payments.Db.Arrears.UpdateByApplicationId(ApplicationId: application.ApplicationId, CreatedOn: new DateTime(arrearsDate.Year, arrearsDate.Month, arrearsDate.Day));
