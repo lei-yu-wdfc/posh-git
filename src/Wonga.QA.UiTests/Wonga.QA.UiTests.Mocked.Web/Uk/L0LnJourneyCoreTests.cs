@@ -12,7 +12,7 @@ using Wonga.QA.UiTests.Web;
 
 namespace Wonga.QA.UiTests.Mocked.Web.Uk
 {
-    [TestFixture, SUT(SUT.WIP), Parallelizable(TestScope.Self), Description("Main UI tests for UK"), Category("CoreTest")]
+    [TestFixture, SUT(SUT.WIP), Parallelizable(TestScope.Self), Description("Main UI tests for UK")]
     public class L0LnJourneyCoreTests:UiTest
     {
         private string _email;
@@ -25,7 +25,6 @@ namespace Wonga.QA.UiTests.Mocked.Web.Uk
         }
 
         [Test, AUT(AUT.Uk), Description("Check WIP IS mocked. The test runs only in WIP."), Owner(Owner.StanDesyatnikov)]
-        [SUT(SUT.WIP)]
         public void WipIsMocked()
         {
             var homePage = Client.Home();

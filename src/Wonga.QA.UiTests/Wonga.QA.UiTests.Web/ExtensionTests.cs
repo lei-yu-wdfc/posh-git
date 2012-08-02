@@ -28,7 +28,7 @@ namespace Wonga.QA.UiTests.Web
         //private string _repaymentDate;
         //private DateTime _actualDate;
 
-        [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1627", "UK-1746", "UKWEB-911"), Category("CoreTest")]
+        [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1627", "UK-1746", "UKWEB-911")]
         public void ExtensionJourneyPass()
         {
             string email = Get.RandomEmail();
