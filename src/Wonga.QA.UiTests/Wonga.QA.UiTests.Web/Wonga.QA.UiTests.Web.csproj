@@ -54,7 +54,7 @@
     <Compile Include="Region\Uk\Journey\LnJourneyTests.cs" />
     <Compile Include="Region\Uk\LegalDocumentsGracefulDegradeTests.cs" />
     <Compile Include="Region\Uk\MySummaryScenariosTests.cs" />
-    <Compile Include="Region\Uk\L0LnJourneyCoreTests.cs" />
+    <Compile Include="Region\Uk\Journey\L0LnJourneyCoreTests.cs" />
     <Compile Include="TimeoutTest.cs" />
     <Compile Include="Region\Uk\ExtensionAgreementTests.cs" />
     <Compile Include="RepaymentTest.cs" />
@@ -145,8 +145,6 @@
     <Folder Include="Region\Ca\MyAccounts\" />
     <Folder Include="Region\Ca\Payment\" />
     <Folder Include="Region\Facebook\" />
-    <Folder Include="Region\Uk\MyAccounts\" />
-    <Folder Include="Region\Uk\Payment\" />
     <Folder Include="Region\Wb\MyAccounts\" />
     <Folder Include="Region\Wb\Payment\" />
     <Folder Include="Region\Za\MyAccounts\" />
