@@ -13,7 +13,7 @@ namespace Wonga.QA.UiTests.Mocked.Web.Uk
     [Parallelizable(TestScope.All), SUT(SUT.WIP)]
     internal class ExtensionTests : UiTest
     {
-        [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1627", "UK-1746", "UKWEB-911")]
+        [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1627", "UK-1746", "UKWEB-911"), Owner(Owner.StanDesyatnikov)]
         [Pending("Waiting for refactored 'Mock Settings' popup window in WIP")]
         public void ExtensionJourneyPass()
         {
