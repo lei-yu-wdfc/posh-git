@@ -121,61 +121,37 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.FinancialAssessment
         public string HouseNumber
         {
             get { return _edithouseNumber.GetValue(); }
-            set
-            {
-                _edithouseNumber.Clear();
-                _edithouseNumber.SendKeys(value);
-            }
+            set { _edithouseNumber.SendValue(value); }
         }
 
         public string PostCode
         {
             get { return _editpostCode.GetValue(); }
-            set
-            {
-                _editpostCode.Clear();
-                _editpostCode.SendKeys(value);
-            }
+            set{ _editpostCode.SendValue(value); }
         }
 
         public string Employer
         {
             get { return _editemployer.GetValue(); }
-            set
-            {
-                _editemployer.Clear();
-                _editemployer.SendKeys(value);
-            }
+            set { _editemployer.SendValue(value); }
         }
 
         public string AdultsInHousehold
         {
             get { return _edityourHousehold.GetValue(); }
-            set
-            {
-                _edityourHousehold.Clear();
-                _edityourHousehold.SendKeys(value);
-            }
+            set { _edityourHousehold.SendValue(value); }
         }
 
         public string ChidrenInHousehold
         {
             get { return _editchildrenInHousehold.GetValue(); }
-            set
-            {
-                _editchildrenInHousehold.Clear();
-                _editchildrenInHousehold.SendKeys(value);
-            }
+            set { _editchildrenInHousehold.SendValue(value); }
         }
 
         public string NumberOfVehiles
         {
             get { return _editnumberOfVehiles.GetValue(); }
-            set
-            {
-                _editnumberOfVehiles.Clear();
-                _editnumberOfVehiles.SendKeys(value);
-            }
+            set { _editnumberOfVehiles.SendValue(value); }
         }
 
         public string GetPrepopulatedAgreementReference()

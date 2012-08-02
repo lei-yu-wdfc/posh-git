@@ -55,141 +55,85 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.FinancialAssessment
         public string SalaryAfterTax
         {
             get { return _salaryAfterTax.GetValue(); }
-            set
-            {
-                _salaryAfterTax.Clear();
-                _salaryAfterTax.SendKeys(value);
-            }
+            set { _salaryAfterTax.SendValue(value); }
         }
 
         public string PartnerSalaryAfterTax
         {
             get { return _partnerSalaryAfterTax.GetValue(); }
-            set
-            {
-                _partnerSalaryAfterTax.Clear();
-                _partnerSalaryAfterTax.SendKeys(value);
-            }
+            set { _partnerSalaryAfterTax.SendValue(value); }
         }
 
         public string JobseekerAllowance
         {
             get { return _jobseekerAllowance.GetValue(); }
-            set
-            {
-                _jobseekerAllowance.Clear();
-                _jobseekerAllowance.SendKeys(value);
-            }
+            set { _jobseekerAllowance.SendValue(value); }
         }
 
         public string IncomeSupport
         {
             get { return _incomeSupport.GetValue(); }
-            set
-            {
-                _incomeSupport.Clear();
-                _incomeSupport.SendKeys(value);
-            }
+            set { _incomeSupport.SendValue(value); }
         }
 
         public string WorkingTaxCredit
         {
             get { return _workingTaxCredit.GetValue(); }
-            set
-            {
-                _workingTaxCredit.Clear();
-                _workingTaxCredit.SendKeys(value);
-            }
+            set { _workingTaxCredit.SendValue(value); }
         }
 
         public string ChildTaxCredit
         {
             get { return _childTaxCredit.GetValue(); }
-            set
-            {
-                _childTaxCredit.Clear();
-                _childTaxCredit.SendKeys(value);
-            }
+            set { _childTaxCredit.SendValue(value); }
         }
 
         public string StatePension
         {
             get { return _statePension.GetValue(); }
-            set
-            {
-                _statePension.Clear();
-                _statePension.SendKeys(value);
-            }
+            set { _statePension.SendValue(value); }
         }
 
         public string PrivateOrWorkPension
         {
             get { return _privateOrWorkPension.GetValue(); }
-            set
-            {
-                _privateOrWorkPension.Clear();
-                _privateOrWorkPension.SendKeys(value);
-            }
+            set { _privateOrWorkPension.SendValue(value); }
         }
 
         public string PensionCredit
         {
             get { return _pensionCredit.GetValue(); }
-            set
-            {
-                _pensionCredit.Clear();
-                _pensionCredit.SendKeys(value);
-            }
+            set { _pensionCredit.SendValue(value); }
         }
 
         public string Other
         {
             get { return _other.GetValue(); }
-            set
-            {
-                _other.Clear();
-                _other.SendKeys(value);
-            }
+            set { _other.SendValue(value); }
         }
 
         public string MaintenenceOrChildSupport
         {
             get { return _maintenenceOrChildSupport.GetValue(); }
-            set
-            {
-                _maintenenceOrChildSupport.Clear();
-                _maintenenceOrChildSupport.SendKeys(value);
-            }
+            set { _maintenenceOrChildSupport.SendValue(value); }
         }
 
         public string IncomeFromBoardersOrLodgers
         {
             get { return _incomeFromBoardersOrLodgers.GetValue(); }
-            set
-            {
-                _incomeFromBoardersOrLodgers.Clear();
-                _incomeFromBoardersOrLodgers.SendKeys(value);
-            }
+            set { _incomeFromBoardersOrLodgers.SendValue(value); }
         }
 
         public string StudentLoansOrGrants
         {
             get { return _studentLoansOrGrants.GetValue(); }
-            set
-            {
-                _studentLoansOrGrants.Clear();
-                _studentLoansOrGrants.SendKeys(value);
-            }
+            set { _studentLoansOrGrants.SendValue(value); }
         }
 
         public string OtherIncome
         {
             get { return _otherIncome.GetValue(); }
-            set
-            {
-                _otherIncome.Clear();
-                _otherIncome.SendKeys(value);
-            }
+            set { _otherIncome.SendValue(value); }
         }
 
         public string TotalIncome
