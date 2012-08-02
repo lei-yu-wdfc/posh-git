@@ -16,7 +16,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
      * and a prescribed error message is displayed and that progression in the application is stopped
      * Returning to the start of a journey will clear errors and allow progression*/
     [JIRA("UKWEB-365"), Parallelizable(TestScope.All)]
-    public class LegalDocumentsGracefulDegradeTests : UiTest
+    public class LegalDocumentsTests : UiTest
     {
         #region L0 Account Details page
 
