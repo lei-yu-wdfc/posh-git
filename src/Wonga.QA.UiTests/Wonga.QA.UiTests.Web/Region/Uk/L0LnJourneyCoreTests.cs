@@ -12,7 +12,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.UiTests.Web.Region.Uk
 {
     [TestFixture, Parallelizable(TestScope.Self), Description("Main UI tests for UK"), Category("CoreTest")]
-    public class UkUiMetaTests:UiTest
+    public class L0LnJourneyCoreTests:UiTest
     {
         private string _email;
 
