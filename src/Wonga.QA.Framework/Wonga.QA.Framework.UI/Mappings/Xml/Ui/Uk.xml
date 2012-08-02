@@ -294,6 +294,9 @@
     <RepresentativeExampleText>div .largetooltipbox</RepresentativeExampleText>
     <TrustratingLinkAboveSliders>a[href='/money/about-trust']</TrustratingLinkAboveSliders>
     <ExistingCustomersLink>a[href='/login']</ExistingCustomersLink>
+    <WelcomeMessageClickHereLink>a[href='/visitor/refresh']</WelcomeMessageClickHereLink>
+    <HeaderBarText>.inline-panel</HeaderBarText>
+    <LogoutLink>.inline-link</LogoutLink>
   </HomePage>
 
   <SocialElement>

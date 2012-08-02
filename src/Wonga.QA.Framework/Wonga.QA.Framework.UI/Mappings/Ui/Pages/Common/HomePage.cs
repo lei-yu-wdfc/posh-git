@@ -39,5 +39,8 @@ namespace Wonga.QA.Framework.UI.Mappings.Ui.Pages.Common
         public String RepresentativeExampleText { get; set; }
         public String TrustratingLinkAboveSliders { get; set; }
         public String ExistingCustomersLink { get; set; }
+        public String WelcomeMessageClickHereLink { get; set; }
+        public String HeaderBarText { get; set; }
+        public String LogoutLink { get; set; }
     }
 }
