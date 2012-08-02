@@ -143,7 +143,7 @@ namespace Wonga.QA.Tests.Salesforce
 
         private void Refund(Guid caseId, Application application)
         {
-            ApplicationOperations.ReportBankrupt(application, caseId);
+            ApplicationOperations.Refundrequest(application, caseId);
             SalesforceOperations.CheckSalesApplicationStatus(application,(double)salesforceStatusAlias.Refund);
         }
 
