@@ -33,7 +33,7 @@ IF ERRORLEVEL 1 GOTO 1
 GOTO EOF
 
 :1
-	rake build
+	CALL rake build
 GOTO MENU
 
 :2
@@ -54,11 +54,11 @@ GOTO MENU
 	SET /P include=Projects to include(colon-separated)(e.g. Tests.Meta:Tests.Api:DataTests.*): 
 	SET /P exclude=Projects to exclude(colon-separated, empty for no exclusions)(e.g. Tests.Core): 
 	SET /P filter=Filter to use(colon-separated, empty for no filter)(e.g. Tests.Core): 
-	rake test include=%include% exclude=%exclude% filter=%filter%|| PAUSE
+	CALL rake test include=%include% exclude=%exclude% filter=%filter%|| PAUSE
 GOTO MENU
 
 :5
-	rake sanity_test || PAUSE
+	CALL rake sanity_test || PAUSE
 GOTO MENU
 
 :6
