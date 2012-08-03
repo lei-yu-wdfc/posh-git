@@ -11,7 +11,7 @@ namespace Wonga.QA.Tests.Address
     [Parallelizable(TestScope.All), Category("CoreTest"), AUT(AUT.Uk)]
     public class AddressTests
     {
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-1094")]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-1094"), Owner(Owner.CharlieBarker)]
         public void AddressLookupIsWorking()
         {
             var response = Drive.Api.Queries.Post(new GetAddressDescriptorsByPostCodeUkQuery()
