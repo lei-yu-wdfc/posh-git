@@ -160,19 +160,46 @@ namespace Wonga.QA.Tests.Salesforce
         }
 
         [Test]
-        [AUT(AUT.Uk), JIRA("UKOPS-129"), Owner(Owner.AnilKrishnamaneni)]
+        [AUT(AUT.Uk), JIRA("UKOPS-129"), Owner(Owner.AnilKrishnamaneni), Pending("Waiting for Fix to RC")]
         public void ManagementReviewComplaintCycleWhileApplicationGoesDueToday()
         {
             var caseId = Guid.NewGuid();
             var application = CreateLiveApplication();
+            SalesforceOperations.CheckPreviousStatus(application.Id, salesforceStatusAlias.TermsAgreed .ToString(), salesforceStatusAlias.Live .ToString()); 
             ApplicationOperations.ManagementReview(application, caseId);
+            SalesforceOperations.CheckPreviousStatus(application.Id, salesforceStatusAlias.Live.ToString(), salesforceStatusAlias.ManagementReview.ToString()); 
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.ManagementReview);
             ReportComplaint(caseId, application);
+            SalesforceOperations.CheckPreviousStatus(application.Id, salesforceStatusAlias.ManagementReview.ToString(), salesforceStatusAlias.Complaint.ToString()); 
             RewindDatesToMakeDueToday(application);
             MakeDueToday(application);
             ApplicationOperations.RemoveComplaint(application, caseId);
+            SalesforceOperations.CheckPreviousStatus(application.Id, salesforceStatusAlias.Complaint .ToString(), salesforceStatusAlias.ManagementReview.ToString()); 
             ApplicationOperations.RemoveManagementReview(application, caseId);
+            SalesforceOperations.CheckPreviousStatus(application.Id, salesforceStatusAlias.ManagementReview.ToString(), salesforceStatusAlias.DueToday.ToString()); 
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.DueToday);
+        }
+
+        [Test]
+        [AUT(AUT.Uk), JIRA("UKOPS-129"), Owner(Owner.AnilKrishnamaneni),Pending("Waiting for Fix to RC") ]
+        public void ManagementReviewComplaintCycleWhileApplicationGoesDueTodayAndInToArrears()
+        {
+            var caseId = Guid.NewGuid();
+            var application = CreateLiveApplication();
+            SalesforceOperations.CheckPreviousStatus(application.Id, salesforceStatusAlias.TermsAgreed.ToString(), salesforceStatusAlias.Live.ToString());
+            ApplicationOperations.ManagementReview(application, caseId);
+            SalesforceOperations.CheckPreviousStatus(application.Id, salesforceStatusAlias.Live.ToString(), salesforceStatusAlias.ManagementReview.ToString());
+            SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.ManagementReview);
+            ReportComplaint(caseId, application);
+            SalesforceOperations.CheckPreviousStatus(application.Id, salesforceStatusAlias.ManagementReview.ToString(), salesforceStatusAlias.Complaint.ToString());
+            RewindDatesToMakeDueToday(application);
+            MakeDueToday(application);
+            application.PutIntoArrears(3);
+            ApplicationOperations.RemoveComplaint(application, caseId);
+            SalesforceOperations.CheckPreviousStatus(application.Id, salesforceStatusAlias.Complaint.ToString(), salesforceStatusAlias.ManagementReview.ToString());
+            ApplicationOperations.RemoveManagementReview(application, caseId);
+            SalesforceOperations.CheckPreviousStatus(application.Id, salesforceStatusAlias.ManagementReview.ToString(), salesforceStatusAlias.InArrears.ToString());
+            SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.InArrears );
         }
 
         #region Helpers#
