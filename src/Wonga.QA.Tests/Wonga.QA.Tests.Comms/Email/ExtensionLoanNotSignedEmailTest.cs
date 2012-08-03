@@ -61,7 +61,7 @@ namespace Wonga.QA.Tests.Comms.Email
                                       });
         }
 
-        [Test, AUT(AUT.Uk)]
+        [Test, AUT(AUT.Uk), Owner(Owner.CharlieBarker)]
         public void TriggerExtensionNotSignedEmailTest()
         {
 
