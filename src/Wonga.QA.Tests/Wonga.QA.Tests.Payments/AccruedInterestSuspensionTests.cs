@@ -38,9 +38,6 @@ namespace Wonga.QA.Tests.Payments
         public void GoingIntoArrears_Creates_SuspendInterestTransaction_InTheFuture()
         {
             var  _application = CreateLiveApplication();
-            //Make sure the payment attempt fails by changing the expiry date of the card.
-            Drive.Data.Payments.Db.PaymentCardsBase.UpdateByExternalId(ExternalId: _customer.GetPaymentCard(),
-                                                    ExpiryDate: new DateTime(DateTime.Now.Year - 1, 1, 31));
             var intMaximumArrearDays = MaximumArrearDays();
             int arrearDays = intMaximumArrearDays + 10;
             _application.PutIntoArrears((uint)arrearDays);
@@ -66,8 +63,8 @@ namespace Wonga.QA.Tests.Payments
             var application = CreateLiveApplication();
             var secondApplication = CreateLiveApplication();
             var intMaximumArrearDays = MaximumArrearDays();
-            application.ExpireCard().PutIntoArrears((uint)intMaximumArrearDays);
-            secondApplication.ExpireCard().PutIntoArrears((uint)intMaximumArrearDays + 10);
+            application.PutIntoArrears((uint)intMaximumArrearDays);
+            secondApplication.PutIntoArrears((uint)intMaximumArrearDays + 10);
             var applicationCurrentLoanAmountDue = ApplicationCurrentLoanAmountDue(application);
             var secondApplicationCurrentLoanAmountDue = ApplicationCurrentLoanAmountDue(secondApplication);
             Assert.AreEqual(applicationCurrentLoanAmountDue, secondApplicationCurrentLoanAmountDue);
