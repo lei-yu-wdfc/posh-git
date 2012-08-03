@@ -63,7 +63,7 @@ namespace Wonga.QA.Tests.Salesforce
             int appInternalId;
             var caseId = Guid.NewGuid();
             var application = CreateLiveApplication(out appInternalId);
-            application.ExpireCard().PutIntoArrears(5);
+            application.PutIntoArrears(5);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.InArrears);
             ReportBankruptcy(application, caseId, appInternalId);
         }
