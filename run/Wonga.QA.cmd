@@ -111,9 +111,15 @@ GOTO EOF
 :SET_TEST_TARGET
 ECHO Choose your target from listed below
 ECHO.
-	for /r %Run%\config %%i in (*) do echo %%~ni
+	setlocal enabledelayedexpansion enableextensions
+	set LIST=
+	for /r %Run%\config %%x in (*) do set LIST=!LIST! %%~nx
+	set LIST=%LIST:~1%
+ECHO %LIST%
 ECHO.	
 	SET /P TestingTarget=Enter your testing target(v3 [deployto] flag):
+	echo %LIST%|findstr /i %TestingTarget%>nul
+	IF ERRORLEVEL 1 GOTO SET_TARGET_ERROR
 	SETX QAFTestTarget %TestingTarget%
 GOTO MENU
 
@@ -134,6 +140,10 @@ GOTO MENU
 	@powershell -command "iex ((new-object net.webclient).DownloadString('http://bit.ly/psChocInstall'))"
 	@powershell -command "cinst ruby"
 	@powershell -command "cgem albacore"
+GOTO MENU
+
+:SET_TARGET_ERROR
+ECHO No such target
 GOTO MENU
 
 :EOF
