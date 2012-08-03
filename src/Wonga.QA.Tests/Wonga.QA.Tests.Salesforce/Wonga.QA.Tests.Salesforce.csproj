@@ -36,6 +36,8 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="BankruptcyStatusChangedTests.cs" />
+    <Compile Include="ManagementReviewStatusChangedTests.cs" />
     <Compile Include="SalesforceActivityTests.cs" />
     <Compile Include="SalesforceApplicationComplaint.cs" />
     <Compile Include="SalesforceApplicationHardship.cs" />
