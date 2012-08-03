@@ -17,7 +17,7 @@ namespace Wonga.QA.Tests.Meta
             Assert.DoesNotThrow(() => _customer = CustomerBuilder.New().Build());
         }
 
-        [Test, AUT(AUT.Ca, AUT.Pl, AUT.Uk, AUT.Za), DependsOn("CustomerBuilderTest"), Owner(Owner.StanDesyatnikov)]
+        [Test, DependsOn("CustomerBuilderTest"), DependsOn("OrganisationBuilderTest"), Owner(Owner.StanDesyatnikov)]
         public void ApplicationBuilderTest()
         {
             ApplicationBuilder builder = ApplicationBuilder.New(_customer);

@@ -294,6 +294,9 @@
     <RepresentativeExampleText>div .largetooltipbox</RepresentativeExampleText>
     <TrustratingLinkAboveSliders>a[href='/money/about-trust']</TrustratingLinkAboveSliders>
     <ExistingCustomersLink>a[href='/login']</ExistingCustomersLink>
+    <WelcomeMessageClickHereLink>a[href='/visitor/refresh']</WelcomeMessageClickHereLink>
+    <HeaderBarText>.inline-panel</HeaderBarText>
+    <LogoutLink>.inline-link</LogoutLink>
   </HomePage>
 
   <SocialElement>
@@ -318,7 +321,9 @@
     <EmailAddress>#edit-email.form-text</EmailAddress>
     <Name>#edit-first-name.form-text</Name>
     <Surname>#edit-last-name.form-text</Surname>
-    <DateOfBirth>#edit-birthdate.form-text</DateOfBirth>
+    <DateOfBirthDay>#edit-birthdate-day.form-select</DateOfBirthDay>
+    <DateOfBirthMonth>#edit-birthdate-month.form-select</DateOfBirthMonth>
+    <DateOfBirthYear>#edit-birthdate-year.form-select</DateOfBirthYear>
     <HouseNumber>#edit-house-number.form-text</HouseNumber>
     <PostCode>#edit-postcode.form-text</PostCode>
     <Employer>#edit-employer-name.form-text</Employer>
@@ -331,6 +336,21 @@
   </FAAboutYouPage>
 
   <FAIncomePage>
+    <SalaryAfterTax>#edit-salary.form-text</SalaryAfterTax>
+    <PartnerSalaryAfterTax>#edit-partners-salary.form-text</PartnerSalaryAfterTax>
+    <JobseekerAllowance>#edit-jobseekers-allowance.form-text</JobseekerAllowance>
+    <IncomeSupport>#edit-income-support.form-text</IncomeSupport>
+    <WorkingTaxCredit>#edit-working-tax-credit.form-text</WorkingTaxCredit>
+    <ChildTaxCredit>#edit-child-tax-credit.form-text</ChildTaxCredit>
+    <StatePension>#edit-state-pensions.form-text</StatePension>
+    <PrivateOrWorkPension>#edit-private-work-pensions.form-text</PrivateOrWorkPension>
+    <PensionCredit>#edit-pension-credit.form-text</PensionCredit>
+    <Other>#edit-other-pension-income.form-text</Other>
+    <MaintenenceOrChildSupport>#edit-maintenence.form-text</MaintenenceOrChildSupport>
+    <IncomeFromBoardersOrLodgers>#edit-boarders.form-text</IncomeFromBoardersOrLodgers>
+    <StudentLoansOrGrants>#edit-loans-or-grants.form-text</StudentLoansOrGrants>
+    <OtherIncome>#edit-other-income.form-text</OtherIncome>
+    <TotalIncome>#edit-all-income.form-text</TotalIncome>
     <ButtonPrevious>#edit-previous.form-submit</ButtonPrevious>
     <ButtonNext>#edit-next.form-submit</ButtonNext>
   </FAIncomePage>

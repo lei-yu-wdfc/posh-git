@@ -28,21 +28,5 @@ namespace Wonga.QA.UiTests.Web
         {
             
         }
-
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-953")]
-        // Check the my Summary page after we click My Summary buton
-        // UKWEB-953: Web elements on My Summary and Repay pages are shifted
-        public void ClickMySummaryButton()
-        {
-            var loginPage = Client.Login();
-            string email = Get.RandomEmail();
-            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-            ApplicationBuilder.New(customer).Build();
-
-            var myAccountPage = loginPage.LoginAs(email);
-            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
-
-            mySummaryPage.ChangePromiseDateButtonClick();
-        }
     }
 }

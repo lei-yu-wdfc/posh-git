@@ -74,9 +74,9 @@ namespace Wonga.QA.UiTests.Web
             //Test my account summary page
             Assert.IsTrue(this.Client.Driver.Url.Contains("my-account"));
         }
-
     
         [Test, AUT(AUT.Uk), JIRA("UK-789"), MultipleAsserts]
+        [Owner(Owner.StanDesyatnikov)]
         // Check on the Top Up Request page that
         // the Available Credit is correct for various scenarios
         public void TopUpCheckAvailableCreditForScenarios()

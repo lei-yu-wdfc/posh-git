@@ -16,7 +16,6 @@ namespace Wonga.QA.Tests.Risk.Workflows
     [AUT(AUT.Ca, AUT.Za)]
 	public class WorkflowVerificationsTests
 	{
-
 		private readonly List<string> ExpectedVerificationNamesL0 = GetExpectedVerificationNamesL0();
 		private readonly List<string> ExpectedVerificationNamesLn = GetExpectedVerificationNamesLn();
 
@@ -82,8 +81,8 @@ namespace Wonga.QA.Tests.Risk.Workflows
 		                                                             		"ReputationPredictionVerification",
 		                                                             		"CreditBureauDataIsAvailableVerification",
 		                                                             		"CustomerNameIsCorrectVerification",
-		                                                             		"ApplicantIsSolventNoticeVerification",
-		                                                             		"ApplicantIsSolventVerification",
+		                                                             		"CustomerIsSolventNoticeVerification",
+		                                                             		"CustomerIsSolventVerification",
 		                                                             		"CustomerIsAliveVerification",
 		                                                             		"RepaymentPredictionVerification",
 		                                                             		"BankAccountIsValidVerification"
@@ -91,7 +90,6 @@ namespace Wonga.QA.Tests.Risk.Workflows
 
 		private static readonly List<string> ExpectedVerificationNamesLnZa = new List<string>()
 		                                                             	{
-																			"AccountNumberApplicationsAcceptableVerification",
 		                                                             		"CustomerIsEmployedVerification",
 		                                                             		"MonthlyIncomeVerification",
 		                                                             		"ApplicationTermNotLessThan4DaysVerification",
@@ -101,8 +99,8 @@ namespace Wonga.QA.Tests.Risk.Workflows
 		                                                             		"DoNotRelendVerification",
 		                                                             		"FraudBlacklistVerification",
 		                                                             		"CreditBureauDataIsAvailableVerification",
-		                                                             		"ApplicantIsSolventNoticeVerification",
-		                                                             		"ApplicantIsSolventVerification",
+		                                                             		"CustomerIsSolventNoticeVerification",
+		                                                             		"CustomerIsSolventVerification",
 		                                                             		"CustomerIsAliveVerification",
 		                                                             		"RepaymentPredictionVerification",
 		                                                             		"BankAccountIsValidVerification"
@@ -111,7 +109,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 		#endregion
 
 
-		[Test, AUT(AUT.Ca, AUT.Za), Pending("Pedro is working on a refactor")]
+		[Test, AUT(AUT.Ca, AUT.Za)]
 		public void WorkflowCorrectVerificationsUsedL0()
 		{
 			var customer = CustomerBuilder.New().WithEmployer("Wonga").Build();
@@ -124,7 +122,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 			Assert.AreElementsEqualIgnoringOrder(ExpectedVerificationNamesL0, actualVerificationNames);
 		}
 
-		[Test, AUT(AUT.Ca, AUT.Za), Pending("Pedro is working on a refactor")]
+		[Test, AUT(AUT.Ca, AUT.Za)]
 		public void WorkflowCorrectVerificationsUsedLn()
 		{
 			var customer = CustomerBuilder.New().Build();

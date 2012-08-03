@@ -9,7 +9,7 @@ using Wonga.QA.Framework.UI;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Tests.Core;
 
-namespace Wonga.QA.UiTests.Web.Region.Uk
+namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
 {
     [TestFixture, Parallelizable(TestScope.Self), Description("Main UI tests for UK")]
     public class L0LnJourneyCoreTests:UiTest
@@ -43,7 +43,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             application.RepayOnDueDate();
         }
 
-        [Test, AUT(AUT.Uk), DependsOn("RepaymentOnDueDateTest"), Owner(Owner.StanDesyatnikov)]
+        [Test, AUT(AUT.Uk), JIRA("UK-1533"), DependsOn("RepaymentOnDueDateTest"), Owner(Owner.StanDesyatnikov)]
         public void LnJourneyTest()
         {
             var loginPage = Client.Login();

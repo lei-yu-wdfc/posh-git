@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Wonga.QA.Framework.UI;
+﻿using Wonga.QA.Framework.UI;
 
-namespace Wonga.QA.MigrationTests.V2Selenium.Pages
+namespace Wonga.QA.MigrationTests.Selenium.V2.Pages
 {
     public abstract class V2BasePage
     {

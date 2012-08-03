@@ -7,14 +7,13 @@ using salesforceStatusAlias = Wonga.QA.Framework.ThirdParties.Salesforce.Applica
 
 namespace Wonga.QA.Tests.Salesforce
 {
-    [TestFixture, Pending("BI customer Management Bug preventing test from pass")]
-    [Parallelizable(TestScope.All)]
+    [TestFixture(Order = -1)]
+    [Parallelizable(TestScope.Self)]
     class SalesforceApplicationHardship
     {
         private Framework.ThirdParties.Salesforce _sales;
         private readonly dynamic _loanDueDateNotifiSagaEntityTab = Drive.Data.OpsSagas.Db.LoanDueDateNotificationSagaEntity;
         private readonly dynamic _fixedTermLoanAppTab = Drive.Data.Payments.Db.FixedTermLoanApplications;
-        private readonly dynamic _applicationRepo = Drive.Data.Payments.Db.Applications;
         private readonly dynamic _commsSuppressionsRepo = Drive.Data.Comms.Db.Suppressions;
         private readonly dynamic _paymentsSuppressionsRepo = Drive.Data.Payments.Db.PaymentCollectionSuppressions;
 

@@ -51,15 +51,16 @@
     <Compile Include="Region\Uk\FinancialAssessment\FinancialAssessmentLoginTest.cs" />
     <Compile Include="Region\Uk\FinancialAssessment\FinancialAssessmentTest.cs" />
     <Compile Include="Region\Uk\HomePageTests.cs" />
-    <Compile Include="Region\Uk\LegalDocumentsGracefulDegradeTests.cs" />
+    <Compile Include="Region\Uk\L0Ln\LnJourneyTests.cs" />
+    <Compile Include="Region\Uk\LegalDocumentsTests.cs" />
     <Compile Include="Region\Uk\MySummaryScenariosTests.cs" />
-    <Compile Include="Region\Uk\L0LnJourneyCoreTests.cs" />
-    <Compile Include="TimeoutTest.cs" />
-    <Compile Include="ExtensionAgreementTest.cs" />
+    <Compile Include="Region\Uk\L0Ln\L0LnJourneyCoreTests.cs" />
+    <Compile Include="Region\Uk\TimeoutTest.cs" />
+    <Compile Include="Region\Uk\ExtensionAgreementTests.cs" />
     <Compile Include="RepaymentTest.cs" />
     <Compile Include="RepayLoanTests.cs" />
-    <Compile Include="RepayTests.cs" />
-    <Compile Include="ExtensionTests.cs" />
+    <Compile Include="Region\Uk\RepayTests.cs" />
+    <Compile Include="Region\Uk\ExtensionTests.cs" />
     <Compile Include="DealDonePageTest.cs" />
     <Compile Include="EndToEndApplicationTests.cs" />
     <Compile Include="ForgotPassword.cs" />
@@ -68,7 +69,7 @@
     <Compile Include="L0AcceptedLoan.cs" />
     <Compile Include="L0JourneyTests.cs" />
     <Compile Include="LnJourneyTests.cs" />
-    <Compile Include="LoginTest.cs" />
+    <Compile Include="Region\Uk\LoginTest.cs" />
     <Compile Include="LogoutTest.cs" />
     <Compile Include="MyAccountTests.cs" />
     <Compile Include="MySummary.cs" />
@@ -81,10 +82,10 @@
     <Compile Include="SecondLoanTest.cs" />
     <Compile Include="SliderTests.cs" />
     <Compile Include="SurveyTest.cs" />
-    <Compile Include="TopUpTests.cs" />
+    <Compile Include="Region\Uk\TopUpTests.cs" />
     <Compile Include="L0DeclinedLoan.cs" />
     <Compile Include="UiTest.cs" />
-    <Compile Include="Region\Uk\Journey\L0LoanUk.cs" />
+    <Compile Include="Region\Uk\L0Ln\L0JourneyTests.cs" />
     <Compile Include="WbLnJourneyTests.cs" />
     <Compile Include="Region\Wb\Journey\L0LoanWb.cs" />
     <Compile Include="Region\Za\Journey\L0LoanZa.cs" />
@@ -143,9 +144,6 @@
   <ItemGroup>
     <Folder Include="Region\Ca\MyAccounts\" />
     <Folder Include="Region\Ca\Payment\" />
-    <Folder Include="Region\Facebook\" />
-    <Folder Include="Region\Uk\MyAccounts\" />
-    <Folder Include="Region\Uk\Payment\" />
     <Folder Include="Region\Wb\MyAccounts\" />
     <Folder Include="Region\Wb\Payment\" />
     <Folder Include="Region\Za\MyAccounts\" />

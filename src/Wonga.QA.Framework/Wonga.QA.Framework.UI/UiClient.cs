@@ -147,19 +147,19 @@ namespace Wonga.QA.Framework.UI
 
         public LoginPage Login()
         {
-            Driver.Navigate().GoToUrl(Config.Ui.Home + "/login");
+            Driver.Navigate().GoToUrl(Config.Ui.Home + "login");
             return new LoginPage(this);
         }
 
         public LoginPage LoginPrepaidAdmin()
         {
-            Driver.Navigate().GoToUrl(Config.Ui.Home + "/login");
+            Driver.Navigate().GoToUrl(Config.Ui.Home + "login");
             return new LoginPage(this);
         }
 
         public MyPaymentsPage Payments()
         {
-            Driver.Navigate().GoToUrl(Config.Ui.Home + "/my-account/details");
+            Driver.Navigate().GoToUrl(Config.Ui.Home + "my-account/details");
             return new MyPaymentsPage(this);
         }
         
@@ -169,7 +169,7 @@ namespace Wonga.QA.Framework.UI
             {
                 case AUT.Za:
                 case AUT.Ca:
-                    Driver.Navigate().GoToUrl(Config.Ui.Home + "/about");
+                    Driver.Navigate().GoToUrl(Config.Ui.Home + "about");
                     break;
                 case AUT.Wb:
                     Driver.Navigate().GoToUrl(Config.Ui.Home + "/about-us");
@@ -181,25 +181,25 @@ namespace Wonga.QA.Framework.UI
 
         public HowItWorksPage HowItWorks()
         {
-            Driver.Navigate().GoToUrl(Config.Ui.Home + "/how-it-works");
+            Driver.Navigate().GoToUrl(Config.Ui.Home + "how-it-works");
             return new HowItWorksPage(this);
         }
 
         public PaymentCardsPage PaymentCards()
         {
-            Driver.Navigate().GoToUrl(Config.Admin.Home + "/PaymentCards/GetList/00000000-0000-0000-0000-000000000000");
+            Driver.Navigate().GoToUrl(Config.Admin.Home + "PaymentCards/GetList/00000000-0000-0000-0000-000000000000");
             return new PaymentCardsPage(this);
         }
 
         public AccountingPage Accounting()
         {
-            Driver.Navigate().GoToUrl(Config.Admin.Home + "/Accounting");
+            Driver.Navigate().GoToUrl(Config.Admin.Home + "Accounting");
             return new AccountingPage(this);
         }
 
         public FAQPage Faq()
         {
-            Driver.Navigate().GoToUrl(Config.Ui.Home + "/frequently-asked-questions");
+            Driver.Navigate().GoToUrl(Config.Ui.Home + "frequently-asked-questions");
             return new FAQPage(this);
         }
 

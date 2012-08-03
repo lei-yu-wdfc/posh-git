@@ -5,6 +5,7 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI;
+using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.UiTests.Web.Region.Uk
@@ -42,7 +43,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Console.WriteLine("Email={0}, First Name={1}, Trancated First Name={2}", _email, _fullFirstName, _truncatedFirstName);
 
             Customer customer = CustomerBuilder.New().WithEmailAddress(_email).WithForename(_fullFirstName).Build();
-            ApplicationBuilder.New(customer).Build();
+            ApplicationBuilder.New(customer).WithLoanAmount(100).Build();
         }
 
         #region L0_HomePage_Personalised
@@ -71,12 +72,13 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             //Ensure 'Trust rating' link above sliders has correct URL
             Assert.AreEqual(_url + "money/about-trust", homePage.GetAboveSlidersTrustRatingLink());
 
+            // TODO: Change AddMinutes(23) to AddMinutes(24) when the code is fixed
             // TODO: UKWEB-371: Check Navigation Header (international-trigger, help-trigger, social-trigger, login-trigger)
             // UKWEB-371: Navigation Header is partially checked when object homePage is created.
             // TODO: UKWEB-371: Apart from checking that the navigation header on the Home page is displayed, also check the elements’ (International, Social, Help, Login) behaviour and content.
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), MultipleAsserts, Owner(Owner.PavithranVangiti), Pending("Test in development. Code in development.")]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-370", "UKWEB-371"), MultipleAsserts, Owner(Owner.PavithranVangiti), Pending("Test in development. Code in development.")]
         public void L0HomePagePersonalisedLoggedInUserTest()
         {
             var loginPage = Client.Login();
@@ -89,14 +91,19 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
             // user has logged in
             Assert.AreEqual("Welcome back " + _truncatedFirstName + "...! (not " + _truncatedFirstName +
-                            "...? click here) We can deposit up to £" + homePage.Sliders.MaxAvailableCredit() + " in your bank account by " + DateTime.Now.AddMinutes(24).ToShortTimeString()
+                            "...? click here) We can deposit up to £300 in your bank account by " + DateTime.Now.AddMinutes(24).ToShortTimeString()
                             + homePage.GetWelcomeMessageDay(), homePage.GetWelcomeHeaderMessageText());
 
-            Assert.AreEqual("400", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
+            //Ensure maximum available credit is displayed correctly
+            Assert.AreEqual("300", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
 
-            // TODO: Change AddMinutes(23) to AddMinutes(24) when the code is fixed
-            // TODO: UKWEB-1072: When users clicks "click here" in the Welcome message on the Homepage, as a recognised or logged in user, the Homepage should open.
-            // TODO: UKWEB-371: Check "Welcome <15-symbolsTrancatedFirstName> Logout" in the Navigation Header
+            //Check "Welcome <15-symbolsTruncatedFirstName> Logout" in the Navigation Header
+            Assert.AreEqual("Welcome " + _truncatedFirstName + "... Logout", homePage.GetHeaderBarText(), "Header bar text is wrong.");
+
+            //Esnure 'click here' link in welcome message takes User back to home page.
+            homePage.ClickWelcomeMessageClickHereLink();
+            homePage = new HomePage(this.Client);
+            Assert.IsFalse(homePage.IsHeaderBarVisible());
         }
 
         [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), DependsOn("L0HomePagePersonalisedLoggedInUserTest"), MultipleAsserts, Owner(Owner.PavithranVangiti), Pending("Test in development. Code in development.")]

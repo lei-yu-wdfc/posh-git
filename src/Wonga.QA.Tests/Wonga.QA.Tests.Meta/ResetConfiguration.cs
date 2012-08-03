@@ -12,8 +12,8 @@ namespace Wonga.QA.Tests.Meta
 	[TestFixture]
 	public class ResetConfiguration
 	{
-		[Test, AUT(AUT.Ca), Category(TestCategories.CoreTest), Owner(Owner.AlexanderLuetjen)]
-		public void ResetConfigurationCa()
+		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Za), Category(TestCategories.CoreTest), Owner(Owner.AlexanderLuetjen)]
+		public void Reset()
 		{
 			Drive.Data.Ops.SetServiceConfiguration("BankGateway.Scotiabank.FileTransferTimes", string.Empty);
 			Drive.Data.Ops.SetServiceConfiguration("BankGateway.Bmo.FileTransferTimes", string.Empty);

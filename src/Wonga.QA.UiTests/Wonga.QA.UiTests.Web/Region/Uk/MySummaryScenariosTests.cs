@@ -121,8 +121,26 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
         #endregion
 
+        // Check the my Summary page after we click My Summary buton
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-953"), Owner(Owner.StanDesyatnikov)]
+        [Pending("UKWEB-953: Web elements on My Summary and Repay pages are shifted")] 
+        public void ClickMySummaryButton()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            ApplicationBuilder.New(customer).Build();
+
+            var myAccountPage = loginPage.LoginAs(email);
+            var mySummaryPage = myAccountPage.Navigation.MySummaryButtonClick();
+
+            mySummaryPage.ChangePromiseDateButtonClick();
+        }
+
         // No live drawdowns: L0 journey
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-419"), Pending("UKWEB-419: Scenario 17 instead of scenario 1, when user drops off in L0 Bank Account page"), MultipleAsserts]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-419"), MultipleAsserts]
+        [Owner(Owner.StanDesyatnikov)]
+        [Pending("UKWEB-419: Scenario 17 instead of scenario 1, when user drops off in L0 Bank Account page")]
         public void MySummaryScenario1L0()
         {
             int scenarioId = 1;
@@ -158,6 +176,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
         // No live drawdowns: Ln journey
         [Test, AUT(AUT.Uk), MultipleAsserts]
+        [Owner(Owner.StanDesyatnikov)]
         public void MySummaryScenario1Ln()
         {
             int scenarioId = 1;
@@ -198,6 +217,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
         // One live drawdown -can request credit, too early to extend
         [Test, AUT(AUT.Uk), JIRA("UK-1737"), MultipleAsserts]
+        [Owner(Owner.StanDesyatnikov)]
         [Row(2, 0)]
         [Row(2, 1)]
         [Row(2, 2)]
@@ -205,6 +225,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
         // One live drawdown -can request credit, can extend
         [Test, AUT(AUT.Uk), MultipleAsserts]
+        [Owner(Owner.StanDesyatnikov)]
         [Row(3, 3, 10)]
         [Row(3, 7, 10)]
         [Row(3, 8, 10)]
@@ -212,6 +233,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
         // One live drawdown -can request credit, can't  extend (max. exceeded)
         [Test, AUT(AUT.Uk), MultipleAsserts]
+        [Owner(Owner.StanDesyatnikov)]
         public void MySummaryScenario04()
         {
             string email = Get.RandomEmail();
@@ -266,31 +288,36 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             }
         }
 
-
         // One live drawdown -can't request credit, too early to extend
         [Test, AUT(AUT.Uk), JIRA("UK-788", "UK-1909"), MultipleAsserts]
+        [Owner(Owner.StanDesyatnikov)]
         [Row(5, 0)] //0 days passed in 10-day loan
         [Row(5, 2)] //0 days passed in 10-day loan
         public void MySummaryScenario05(int scenarioId, int dasyShift) { MySummaryScenarios(scenarioId, dasyShift); }
 
         // One live drawdown -can't request credit (Too near to due date), can extend
         [Test, AUT(AUT.Uk), MultipleAsserts]
+        [Owner(Owner.StanDesyatnikov)]
         [Row(6, 3, 10)] //3 days passed in 10-day loan
         [Row(6, 6, 7)]  //6 days passed in 7-day loan
         public void MySummaryScenario06(int scenarioId, int dasyShift, int loanTerm) { MySummaryScenarios(scenarioId, dasyShift, loanTerm); }
 
         // One live drawdown-can't request credit, can't extend (too late or max. exceeded
         [Test, AUT(AUT.Uk), MultipleAsserts]
+        [Owner(Owner.StanDesyatnikov)]
         [Row(7, 10)]
         public void MySummaryScenario07(int scenarioId, int dasyShift) { MySummaryScenarios(scenarioId, dasyShift); }
 
         // On promise date after live loan closed following successful repayment event
         [Test, AUT(AUT.Uk), MultipleAsserts]
-        [Row(8, 10), JIRA("UKWEB-483"), Pending("UKWEB-483: Waiting for implementation of GetRepayLoanStatus")]
+        [Owner(Owner.StanDesyatnikov)]
+        [Row(8, 10), JIRA("UKWEB-483")] 
+        [Pending("UKWEB-483: Waiting for implementation of GetRepayLoanStatus")]
         public void MySummaryScenario08(int scenarioId, int dasyShift) { MySummaryScenarios(scenarioId, dasyShift); }
 
         // Live loan on promise date (after failed ping until missed payment fee is applied
         [Test, AUT(AUT.Uk), MultipleAsserts]
+        [Owner(Owner.StanDesyatnikov)]
         public void MySummaryScenario09()
         {
             const int scenarioId = 9;
@@ -342,6 +369,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
         // Live loan  promise date (after missed payment  fee applied < 3 days in arrears.)
         [Test, AUT(AUT.Uk), MultipleAsserts]
+        [Owner(Owner.StanDesyatnikov)]
         public void MySummaryScenario10()
         {
             const int scenarioId = 10;
@@ -400,6 +428,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
         // 3+ days in arrears
         [Test, AUT(AUT.Uk), MultipleAsserts]
+        [Owner(Owner.StanDesyatnikov)]
         [Row(11, 13)]
         [Row(11, 14)]
         [Row(11, 40)]
@@ -407,6 +436,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
         // 31+days in arrears
         [Test, AUT(AUT.Uk), JIRA("UK-1954"), MultipleAsserts]
+        [Owner(Owner.StanDesyatnikov)]
         [Row(12, 41)]
         [Row(12, 42)]
         [Row(12, 70)]
@@ -414,6 +444,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
         // 61+ days in arrears
         [Test, AUT(AUT.Uk), JIRA("UK-1966"), MultipleAsserts]
+        [Owner(Owner.StanDesyatnikov)]
         [Row(13, 71)]
         [Row(13, 72)]
         [Row(13, 100)]
@@ -422,6 +453,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
         // In arrears -In repayment plan
         [Test, AUT(AUT.Uk), Pending("Repayment Arrangment Functionality is ready. Test to be updated."), MultipleAsserts]
+        [Owner(Owner.StanDesyatnikov)]
         public void MySummaryScenario14()
         {
             var scenarioId = 14;
@@ -470,7 +502,9 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         }
 
         // In arrears -In repayment plan - missed payment (within grace period)
-        [Test, AUT(AUT.Uk), Pending("Repayment Arrangment Functionality is ready. Test to be updated."), MultipleAsserts]
+        [Test, AUT(AUT.Uk), MultipleAsserts]
+        [Owner(Owner.StanDesyatnikov)]
+        [Pending("Repayment Arrangment Functionality is ready. Test to be updated.")]
         public void MySummaryScenario15()
         {
             const int scenarioId = 15;
@@ -516,7 +550,8 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         }
 
         // In arrears - In repayment plan – broken repayment arrangemnt
-        [Test, AUT(AUT.Uk), Pending("Repayment Arrangment Functionality is ready. Test to be updated."), MultipleAsserts]
+        [Test, AUT(AUT.Uk), MultipleAsserts]
+        [Pending("Repayment Arrangment Functionality is ready. Test to be updated.")]
         public void MySummaryScenario16()
         {
             const int scenarioId = 16;
@@ -562,7 +597,9 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         }
 
         // No live drawdowns
-        [Test, AUT(AUT.Uk), JIRA("UK-1624"), Pending("UK-1624 Waiting for implementation of Referrals and API implementation of the hours to decision"), MultipleAsserts]
+        [Test, AUT(AUT.Uk), JIRA("UK-1624"), MultipleAsserts]
+        [Owner(Owner.StanDesyatnikov)]
+        [Pending("UK-1624: Waiting for implementation of Referrals and API implementation of the hours to decision")]        
         public void MySummaryScenario17A()
         {
             var scenarioId = 17;
@@ -600,7 +637,9 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         }
 
         // No live drawdowns
-        [Test, AUT(AUT.Uk), JIRA("UK-1624"), Pending("UK-1624 Waiting for implementation of Referrals and API implementation of the hours to decision"), MultipleAsserts]
+        [Test, AUT(AUT.Uk), JIRA("UK-1624"), MultipleAsserts] 
+        [Owner(Owner.StanDesyatnikov)]
+        [Pending("UK-1624: Waiting for implementation of Referrals and API implementation of the hours to decision")]
         public void MySummaryScenario17B()
         {
             var scenarioId = 17;
@@ -637,15 +676,20 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         }
 
         // Agreement being cancelled
-        [Test, AUT(AUT.Uk), Pending("Waiting for implementation of agreement cancellation process."), MultipleAsserts]
+        [Test, AUT(AUT.Uk), MultipleAsserts] 
+        [Owner(Owner.StanDesyatnikov)]
+        [Pending("Waiting for implementation of agreement cancellation process.")]
         public void MySummaryScenario19() { MySummaryScenarios(19, 0); }
 
         // Customer has never had a loan but has applied and been declined therefore has an account
         [Test, AUT(AUT.Uk), MultipleAsserts]
+        [Owner(Owner.StanDesyatnikov)]
         public void MySummaryScenario20() { MySummaryScenarios(20, 1); }
 
         // Needs to accept agreement to complete application
-        [Test, AUT(AUT.Uk), MultipleAsserts, JIRA("UK-1735"), Pending("Waiting for implementation of calculation, bug UK-1735.")]
+        [Test, AUT(AUT.Uk), MultipleAsserts, JIRA("UK-1735")]
+        [Pending("UK-1735: Waiting for implementation of calculation")]
+        [Owner(Owner.StanDesyatnikov)]
         public void MySummaryScenario21()
         {
             var scenarioId = 21;

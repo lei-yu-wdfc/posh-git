@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using OpenQA.Selenium;
-using Wonga.QA.MigrationTests.V2Selenium.Pages;
+﻿using OpenQA.Selenium;
+using Wonga.QA.MigrationTests.Selenium.V2.Pages;
 
-namespace Wonga.QA.MigrationTests.V2Selenium.Elements
+namespace Wonga.QA.MigrationTests.Selenium.V2.Elements
 {
     public class V2SlidersElement : V2BaseElement
     {

@@ -10,8 +10,8 @@ using salesforceStatusAlias = Wonga.QA.Framework.ThirdParties.Salesforce.Applica
 
 namespace Wonga.QA.Tests.Salesforce
 {
-    [TestFixture(Order = 0), Pending("BI customer Management Bug preventing test from pass")]
-    [Parallelizable(TestScope.All)]
+    [TestFixture(Order = -1)]
+    [Parallelizable(TestScope.Self)]
     class SalesforceApplicationRefund
     {
         private Framework.ThirdParties.Salesforce _sales;

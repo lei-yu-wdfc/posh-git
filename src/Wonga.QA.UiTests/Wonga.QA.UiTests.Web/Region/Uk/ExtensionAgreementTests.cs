@@ -10,12 +10,12 @@ using Wonga.QA.Framework.UI;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Tests.Core;
 
-namespace Wonga.QA.UiTests.Web
+namespace Wonga.QA.UiTests.Web.Region.Uk
 {
     [Parallelizable(TestScope.All)]
     class ExtensionAgreementTest : UiTest
     {
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-243", "UKWEB-294"), MultipleAsserts]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-243", "UKWEB-294"), MultipleAsserts, Owner(Owner.StanDesyatnikov, Owner.OrizuNwokeji)]
         public void ExtensionAgreementPageTest()
         {
             string email = Get.RandomEmail();
@@ -70,13 +70,14 @@ namespace Wonga.QA.UiTests.Web
             Assert.Contains(secciText, expectedRepresentativeApr);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-243", "UKWEB-294"), MultipleAsserts]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-243", "UKWEB-294"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
         [Row (2, 100, 1, 7)]
         public void ExtensionAgreementPageNDaysAfterLoanTest(int loanTerm, int loanAmount, int daysAfterLoan, int daysToExtend)
         {
             ExtensionAgreementPageNDaysAfterLoan(loanTerm, loanAmount, daysAfterLoan, daysToExtend);
         }
 
+        #region Private Methods
         private void ExtensionAgreementPageNDaysAfterLoan(int loanTerm, int loanAmount, int daysAfterLoan, int daysToExtend)
         {
             string email = Get.RandomEmail();
@@ -103,7 +104,7 @@ namespace Wonga.QA.UiTests.Web
             var expectedLoanAmount = application.LoanAmount;
             var termDivisor = Convert.ToDouble(String.Format("{0:0.00000000}", 365d / Convert.ToDouble(expectedExtendedLoanTerm)));
             var loanDevisor = Convert.ToDouble(expectedTotalToRepay.Trim('£')) / Convert.ToDouble(expectedLoanAmount);
-            var expectedRepresentativeApr = Math.Ceiling((Math.Pow(loanDevisor, termDivisor) - 1) * 100).ToString("#") + "%"; 
+            var expectedRepresentativeApr = Math.Ceiling((Math.Pow(loanDevisor, termDivisor) - 1) * 100).ToString("#") + "%";
 
             requestPage.setSecurityCode("123");
             requestPage.SubmitButtonClick();
@@ -121,5 +122,6 @@ namespace Wonga.QA.UiTests.Web
             Assert.Contains(secciText, expectedTotalToRepay);
             Assert.Contains(secciText, expectedRepresentativeApr);
         }
+        #endregion
     }
 }
