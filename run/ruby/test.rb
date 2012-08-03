@@ -10,7 +10,8 @@ task :backend_test => [:config, :meta_test] do
   test 'Tests.*', 'Tests.Meta'
 end
 
-task :core_uitest => [:config] do
+desc 'Runs the frontend Core tests'
+task :core_ui_test => [:config] do
   test 'UiTests.Web', '','Category:CoreTest'
 end
 
