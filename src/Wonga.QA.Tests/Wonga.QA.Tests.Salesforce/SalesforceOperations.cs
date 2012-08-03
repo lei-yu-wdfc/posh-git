@@ -32,20 +32,12 @@ namespace Wonga.QA.Tests.Salesforce
             var application = ApplicationBuilder.New(customer)
              .Build();
 
-            //force the application to move to live by sending the IFundsTransferredEvent.
-            Drive.Msmq.Payments.Send(new IFundsTransferred
-            {
-                AccountId = application.AccountId,
-                ApplicationId = application.Id,
-                TransactionId = Guid.NewGuid()
-            });
-
             //wait for the payment to customer to be sent out
             Do.Until(() => _applicationRepo.FindAll(_applicationRepo.ExternalId == application.Id &&
                                                    _applicationRepo.Transaction.ApplicationId == _applicationRepo.Id &&
                                                    _applicationRepo.Type == "CashAdvance"));
 
-            Do.With.Timeout(2).Until(() =>
+            Do.With.Timeout(3).Until(() =>
             {
                 var app = _sales.GetApplicationById(application.Id);
                 return app.Status_ID__c != null &&
@@ -57,7 +49,7 @@ namespace Wonga.QA.Tests.Salesforce
 
         public static void CheckSalesApplicationStatus(Application application, double status)
         {
-            Do.With.Timeout(2).Until(() =>
+            Do.With.Timeout(3).Until(() =>
             {
                 var app = _sales.GetApplicationById(application.Id);
                 return app.Status_ID__c != null && app.Status_ID__c == status;
