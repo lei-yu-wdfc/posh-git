@@ -109,6 +109,10 @@ GOTO EOF
 GOTO EOF
 
 :SET_TEST_TARGET
+ECHO Choose your target from listed below
+ECHO.
+	for /r %Run%\config %%i in (*) do echo %%~ni
+ECHO.	
 	SET /P TestingTarget=Enter your testing target(v3 [deployto] flag):
 	SETX QAFTestTarget %TestingTarget%
 GOTO MENU
