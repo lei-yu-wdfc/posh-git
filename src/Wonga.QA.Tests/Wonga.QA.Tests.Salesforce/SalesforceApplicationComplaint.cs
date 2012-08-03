@@ -7,7 +7,7 @@ using salesforceStatusAlias = Wonga.QA.Framework.ThirdParties.Salesforce.Applica
 
 namespace Wonga.QA.Tests.Salesforce
 {
-    [TestFixture(Order = -1), Pending("BI customer Management Bug preventing test from pass")]
+    [TestFixture(Order = -1)]
     [Parallelizable(TestScope.Self)]
    class SalesforceApplicationComplaint
     {
