@@ -403,6 +403,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         }
 
         [Test, AUT(AUT.Uk), JIRA("UKWEB-247", "UKWEB-248"), MultipleAsserts]
+        [Category(TestCategories.CoreTest)]
         public void RepayEarlyFull()
         {
             //build L0 loan

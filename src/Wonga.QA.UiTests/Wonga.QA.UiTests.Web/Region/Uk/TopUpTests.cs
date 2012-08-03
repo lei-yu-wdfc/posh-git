@@ -13,9 +13,10 @@ namespace Wonga.QA.UiTests.Web
 {
     class TopUpTests : UiTest
     {
-        [Test, AUT(AUT.Uk), JIRA("UK-826", "UK-789", "UK-2016", "UKWEB-928"), MultipleAsserts, Pending("UKWEB-928: Top Up throws an exception on the Accept page")]
+        [Test, AUT(AUT.Uk), JIRA("UK-826", "UK-789", "UK-2016", "UKWEB-928"), MultipleAsserts]
         [Owner(Owner.OrizuNwokeji, Owner.StanDesyatnikov)]
-        //[Category("CoreTest")] // Uncommnet when the test works
+        [Category(TestCategories.CoreTest)]
+        [Pending("UKWEB-928: Top Up throws an exception on the Accept page")]
         public void TopUpHappyPath()
         {
             string email = Get.RandomEmail();

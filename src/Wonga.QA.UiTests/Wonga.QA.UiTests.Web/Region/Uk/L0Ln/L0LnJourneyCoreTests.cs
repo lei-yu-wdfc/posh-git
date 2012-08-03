@@ -11,7 +11,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
 {
-    [TestFixture, Parallelizable(TestScope.Self), Description("Main UI tests for UK")]
+    [Parallelizable(TestScope.Self), Category(TestCategories.CoreTest)]
     public class L0LnJourneyCoreTests:UiTest
     {
         private string _email;
@@ -54,6 +54,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
 
         [Test, AUT(AUT.Uk), Description("Check RC is NOT mocked. The test runs only in RC."), Owner(Owner.StanDesyatnikov)]
         [SUT(SUT.RC)]
+        [Pending("Not clear yet, if RC should contain the Mock Settings menu.")]
         public void RcIsNotMocked()
         {
             var homePage = Client.Home();

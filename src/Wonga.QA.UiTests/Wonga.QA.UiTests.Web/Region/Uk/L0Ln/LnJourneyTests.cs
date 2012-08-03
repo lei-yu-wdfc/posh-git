@@ -15,6 +15,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
     public class LnJourneyTests : UiTest
     {
         [Test, AUT(AUT.Uk), JIRA("UK-1533", "UK-1902", "UKWEB-914"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
+        [Description("UI Ln Journey after L0 is created via API. Mobile phone number is updated during Ln")]
         public void LnNewMobilePhonePassed()
         {
             var loginPage = Client.Login();
@@ -30,6 +31,26 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
             loginPage.LoginAs(email);
 
             var journeyLn = JourneyFactory.GetLnJourney(Client.Home()).WithNewMobilePhone();
+            var page = journeyLn.Teleport<MySummaryPage>() as MySummaryPage;
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("UK-1533"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
+        [Description("UI Ln Journey after L0 is created via API")]
+        public void LnWithoutChangingMobilePassed()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder
+                .New()
+                .WithEmailAddress(email)
+                .Build();
+            Application application = ApplicationBuilder
+                .New(customer)
+                .Build();
+            application.RepayOnDueDate();
+            loginPage.LoginAs(email);
+
+            var journeyLn = JourneyFactory.GetLnJourney(Client.Home());
             var page = journeyLn.Teleport<MySummaryPage>() as MySummaryPage;
         }
 
