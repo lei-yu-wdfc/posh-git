@@ -111,10 +111,10 @@ GOTO EOF
 :SET_TEST_TARGET
 ECHO Choose your target from listed below
 ECHO.
-	for /r %Run%\config %%x in (*) do echo %%~nx
+	for %%x in (%Run%\config\*) do echo %%~nx
 ECHO.	
 	SET /P TestingTarget=Enter your testing target(v3 [deployto] flag):
-	for /r %Run%\config %%x in (*) do IF %%~nx==%TestingTarget% GOTO SET_TARGET_VALID
+	for %%x in (%Run%\config\*) do IF %%~nx==%TestingTarget% GOTO SET_TARGET_VALID
 GOTO SET_TARGET_ERROR
 
 :SET_TARGET_VALID	
