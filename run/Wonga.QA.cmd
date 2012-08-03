@@ -11,7 +11,7 @@ pushd %Run%
 :MENU
 ECHO.
 ECHO   1. Build all solutions
-ECHO   2. Configure your environment
+ECHO   2. Setup your environment
 ECHO   3. Rebase from Upstream
 ECHO   4. Run Wonga.QA.Tests
 ECHO   5. Run Meta and Core tests
@@ -20,7 +20,7 @@ ECHO   7. Service test configuration
 ECHO   0. Exit
 ECHO.
 
-CHOICE /C 12345670 /M "But if you already know, how can I make a choice?" /N
+CHOICE /C 12345670 /M "Select an option: " /N
 
 IF ERRORLEVEL 8 GOTO EOF
 IF ERRORLEVEL 7 GOTO 7
@@ -37,9 +37,16 @@ GOTO EOF
 GOTO MENU
 
 :2
-	SET /P TestingTarget=Enter your testing target(v3 [deployto] flag):
-	SETX QAFTestTarget %TestingTarget%
-GOTO MENU
+	ECHO.
+	ECHO   1. Configure your environment
+	ECHO   2. Install prerequisites
+	ECHO   0. Back
+	ECHO.
+	CHOICE /C 120 /M "Select an option: " /N
+	IF ERRORLEVEL 3 GOTO MENU
+	IF ERRORLEVEL 2 GOTO INSTALL_PREREQS
+	IF ERRORLEVEL 1 GOTO SET_TEST_TARGET
+GOTO 2
 
 :3
 	CALL git remote add upstream git@github.com:QuickbridgeLtd/v3QA.git 2> NUL
@@ -101,4 +108,31 @@ GOTO EOF
 	%Bin%\Wonga.QA.Generators.%1.exe %Origin%
 GOTO EOF
 
+:SET_TEST_TARGET
+	SET /P TestingTarget=Enter your testing target(v3 [deployto] flag):
+	SETX QAFTestTarget %TestingTarget%
+GOTO MENU
+
+:INSTALL_PREREQS
+	ECHO.
+	ECHO   This option will install the prerequisites for you
+	ECHO   It's a requirement that you run this as an Admin
+	ECHO   1. Install Prereqs
+	ECHO   2. Go to menu
+	ECHO.
+	CHOICE /C 120 /M "Select an option: " /N
+	IF ERRORLEVEL 2 GOTO Menu
+	ECHO.
+	ECHO   Installing Prereqs!
+	ECHO   Buckle up, Daisy, 'cause Kansas is going bye-bye!
+	ECHO.
+	@powershell -command "Set-ExecutionPolicy Unrestricted"
+	@powershell -command "iex ((new-object net.webclient).DownloadString('http://bit.ly/psChocInstall'))"
+	@powershell -command "cinst ruby"
+	@powershell -command "cgem albacore"
+GOTO MENU
+
 :EOF
+	ECHO.
+	ECHO   So long and thanks for all the fish!
+	ECHO.
