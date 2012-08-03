@@ -109,11 +109,11 @@ GOTO EOF
 GOTO EOF
 
 :SET_TEST_TARGET
-ECHO Choose your target from listed below
+ECHO   Available test targets..
 ECHO.
-	for %%x in (%Run%\config\*) do echo %%~nx
+	for %%x in (%Run%\config\*) do echo   %%~nx
 ECHO.	
-	SET /P TestingTarget=Enter your testing target(v3 [deployto] flag):
+	SET /P TestingTarget=   Choose your test target:
 	for %%x in (%Run%\config\*) do IF %%~nx==%TestingTarget% GOTO SET_TARGET_VALID
 GOTO SET_TARGET_ERROR
 
@@ -122,8 +122,8 @@ GOTO SET_TARGET_ERROR
 	GOTO MENU
 
 :SET_TARGET_ERROR
-	ECHO No such target
-	GOTO MENU
+	ECHO   ERROR -- No such target -- ERROR
+GOTO MENU
 
 :INSTALL_PREREQS
 	ECHO.
