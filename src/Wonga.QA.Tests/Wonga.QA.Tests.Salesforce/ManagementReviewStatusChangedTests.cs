@@ -47,7 +47,7 @@ namespace Wonga.QA.Tests.Salesforce
         {
             var caseId = Guid.NewGuid();
             var application = CreateLiveApplication();
-            application.ExpireCard().PutIntoArrears(5);
+            application.PutIntoArrears(5);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.InArrears);
             ManagementReview(application, caseId);
             ApplicationOperations.RemoveManagementReview(application, caseId);
