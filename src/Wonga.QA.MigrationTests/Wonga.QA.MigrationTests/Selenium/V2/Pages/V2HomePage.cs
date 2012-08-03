@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using Wonga.QA.Framework.UI;
-using Wonga.QA.MigrationTests.V2Selenium.Elements;
+using Wonga.QA.MigrationTests.Selenium.V2.Elements;
 
-namespace Wonga.QA.MigrationTests.V2Selenium.Pages
+namespace Wonga.QA.MigrationTests.Selenium.V2.Pages
 {
     public class V2HomePage : V2BasePage
     {

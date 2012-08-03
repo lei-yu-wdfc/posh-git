@@ -36,6 +36,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Xml" />
     <Reference Include="WebDriver">
       <HintPath>..\..\..\bin\WebDriver.dll</HintPath>
     </Reference>
@@ -76,21 +77,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\cde_request.cs" />
     <Compile Include="MigrationGenderTests.cs" />
     <Compile Include="MigrationUiTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScorecardTesting.cs" />
-    <Compile Include="V2Selenium\Elements\V2BaseElement.cs" />
-    <Compile Include="V2Selenium\Elements\V2SlidersElement.cs" />
-    <Compile Include="V2Selenium\Pages\V2BasePage.cs" />
-    <Compile Include="V2Selenium\Pages\V2HomePage.cs" />
+    <Compile Include="Utils\ScorecardHelper.cs" />
+    <Compile Include="Utils\V2RequestFile.cs" />
+    <Compile Include="Selenium\V2\Elements\V2BaseElement.cs" />
+    <Compile Include="Selenium\V2\Elements\V2SlidersElement.cs" />
+    <Compile Include="Selenium\V2\Pages\V2BasePage.cs" />
+    <Compile Include="Selenium\V2\Pages\V2HomePage.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Input\" />
     <Folder Include="Output\" />
+    <Folder Include="Selenium\V3\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
