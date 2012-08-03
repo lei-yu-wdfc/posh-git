@@ -12,14 +12,23 @@ namespace Wonga.QA.Tests.Meta
 	[TestFixture]
 	public class ResetConfiguration
 	{
-		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Za), Category(TestCategories.CoreTest), Owner(Owner.AlexanderLuetjen)]
+		[Test, Category(TestCategories.CoreTest), Owner(Owner.AlexanderLuetjen)]
 		public void Reset()
 		{
-			Drive.Data.Ops.SetServiceConfiguration("BankGateway.Scotiabank.FileTransferTimes", string.Empty);
-			Drive.Data.Ops.SetServiceConfiguration("BankGateway.Bmo.FileTransferTimes", string.Empty);
-			Drive.Data.Ops.SetServiceConfiguration("BankGateway.Rbc.FileTransferTimes", string.Empty);
-            Drive.Data.Ops.SetServiceConfiguration("BankGateway.IsTestMode", false);
-			Drive.Data.Ops.SetServiceConfiguration("Payments.DelayBeforeApplicationClosedInMinutes", "0");
+            switch(Config.AUT)
+		    {
+                case(AUT.Ca):
+                case(AUT.Za):
+		            Drive.Data.Ops.SetServiceConfiguration("BankGateway.Scotiabank.FileTransferTimes", string.Empty);
+		            Drive.Data.Ops.SetServiceConfiguration("BankGateway.Bmo.FileTransferTimes", string.Empty);
+		            Drive.Data.Ops.SetServiceConfiguration("BankGateway.Rbc.FileTransferTimes", string.Empty);
+		            Drive.Data.Ops.SetServiceConfiguration("BankGateway.IsTestMode", false);
+		            Drive.Data.Ops.SetServiceConfiguration("Payments.DelayBeforeApplicationClosedInMinutes", "0");
+		            break;
+                case(AUT.Uk):
+                    Drive.Data.Ops.SetServiceConfiguration("BankGateway.IsTestMode", true);
+		            break;
+		    }
 		}
 	}
 }
