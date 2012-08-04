@@ -6,6 +6,7 @@ using System.Text;
 using System.Xml.Serialization;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Enums;
+using Wonga.QA.Framework.Api.Requests.Ops.Queries;
 using Wonga.QA.Framework.Api.Requests.Payments.Commands;
 using Wonga.QA.Framework.Api.Requests.Payments.Commands.Uk;
 using Wonga.QA.Framework.Api.Requests.Risk.Commands;
@@ -43,33 +44,29 @@ namespace Wonga.QA.MigrationTests.Utils
 
             return returnedXmlClass;
         }
-        internal static Guid RunV3LnJourney(cde_request v2CdeRequest)
+        internal static Guid RunV3LnJourneyFromV2LnCdeRequest(cde_request v2CdeRequest)
         {
-            //Note:Find out the relating accountId of the existing customer? Maybe a new private method?
-            Guid accountId = Guid.NewGuid();
+            Guid accountId = GetMigratedCustomerAccountId(v2CdeRequest.applicant_details[0].email_address,
+                                                          v2CdeRequest.authentication[0].password);
 
-            //Note:Get the existing migrated customer payment card id
-            Guid paymentCardId = Guid.NewGuid();
-
-            //Note:Get the existing migrated customer bank accountId
-            Guid bankAccountId = Guid.NewGuid();
-
-            //Note:Replace the nulls with values from V2 request
+            Guid paymentCardId = GetMigratedUserPaymentCardId(accountId);
+            Guid bankAccountId = GetMigratedUserBankAccountId(accountId);
             Guid applicationId = Guid.NewGuid();
+
             var listOfCommands = new List<ApiRequest>
                                      {
                                          SubmitApplicationBehaviourCommand.New(command =>
                                                                                    {
                                                                                        command.ApplicationId = applicationId;
-                                                                                       command.TermSliderPosition = null;
-                                                                                       command.AmountSliderPosition = null;
+                                                                                       command.TermSliderPosition = v2CdeRequest.additional_information[0].SliderDefaultPeriod;
+                                                                                       command.AmountSliderPosition = v2CdeRequest.additional_information[0].SliderDefaultAmount;
                                                                                    }),
                                          SubmitClientWatermarkCommand.New(command =>
                                                                               {
-                                                                                  command.AccountId = null;
+                                                                                  command.AccountId = accountId;
                                                                                   command.ApplicationId = applicationId;
-                                                                                  command.ClientIPAddress = null;
-                                                                                  command.BlackboxData = null;
+                                                                                  command.ClientIPAddress = v2CdeRequest.applicant_details[0].ip_address;
+                                                                                  command.BlackboxData = v2CdeRequest.additional_information[0].Iovation[0].Result;
                                                                               }),
                                          CreateFixedTermLoanApplicationUkCommand.New(command =>
                                                                                          {
@@ -106,7 +103,7 @@ namespace Wonga.QA.MigrationTests.Utils
 
             //Note: Get application decision other then Pending - We do not expect only Accepted
             Do.With.Timeout(3).Until(() => (ApplicationDecisionStatus)
-                                            Enum.Parse(typeof(ApplicationDecisionStatus), ( Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = applicationId })).Values["ApplicationDecisionStatus"].Single()) != ApplicationDecisionStatus.Pending);
+                                            Enum.Parse(typeof(ApplicationDecisionStatus), (Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = applicationId })).Values["ApplicationDecisionStatus"].Single()) != ApplicationDecisionStatus.Pending);
 
 
             //Note: Sign the application? SignApplicationCommand
@@ -116,12 +113,36 @@ namespace Wonga.QA.MigrationTests.Utils
                                             ApplicationId = applicationId,
 
                                         });
-            
+
 
             return applicationId;
         }
 
+        private static Guid GetMigratedUserBankAccountId(Guid accountId)
+        {
+            var bankAccountId = Drive.Data.Payments.Db.PersonalBankAccounts.FindAllByAccountId(accountId).SingleOrDefault().BankAccountId;
+            return Drive.Data.Payments.Db.BankAccountsBase.FindAllByBankAccountId(bankAccountId).Single().Single().ExternalId;
+        }
+        private static Guid GetMigratedUserPaymentCardId(Guid accountId)
+        {
+            Int32 primaryPaymentCardId =
+                Drive.Data.Payments.Db.AccountPreferences.FindAllByAccountId(accountId).SingleOrDefault().
+                    PrimaryPaymentCardId;
 
+            return
+                Drive.Data.Payments.Db.PaymentCardsBase.FindAllByPaymentCardId(primaryPaymentCardId).Single().ExternalId;
+        }
+        private static Guid GetMigratedCustomerAccountId(String email, String password)
+        {
+            return Guid.Parse
+                (Drive.Api.Queries.Post
+                     (new GetAccountQuery
+                          {
+                              Login = "qa.wonga.com+BUILD-WIN21-7af66e12-7664-4bec-8a51-f5ffb17f41b2@gmail.com",
+                              Password = "Passw0rd"
+                          }).
+                     Values["AccountId"].Single());
+        }
         private static String ReadContentsOfFile(FileSystemInfo file)
         {
             return File.ReadAllText(file.FullName);
