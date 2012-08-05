@@ -193,7 +193,7 @@ namespace Wonga.QA.Tests.Payments
                 .WithLoanAmount(loanAmount)
                 .WithLoanTerm(7)
                 .Build();
-            application.ExpireCard().PutIntoArrears();
+            application.PutIntoArrears();
 
             return application;
         }

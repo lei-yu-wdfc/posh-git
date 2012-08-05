@@ -11,7 +11,7 @@ using salesforceStatusAlias = Wonga.QA.Framework.ThirdParties.Salesforce.Applica
 namespace Wonga.QA.Tests.Salesforce
 {
     [TestFixture(Order = -1)]
-    [Parallelizable(TestScope.All)]
+    [Parallelizable(TestScope.Self)]
     class SalesforceApplicationRefund
     {
         private Framework.ThirdParties.Salesforce _sales;
