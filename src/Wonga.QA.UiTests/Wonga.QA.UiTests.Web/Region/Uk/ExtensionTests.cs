@@ -210,6 +210,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         #endregion
         
         [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1627", "UK-1746", "UKWEB-911"), MultipleAsserts, Owner(Owner.StanDesyatnikov, Owner.OrizuNwokeji)]
+        [Category(TestCategories.CoreTest)]
         public void ExtensionJourneyPass()
         {
             string email = Get.RandomEmail();

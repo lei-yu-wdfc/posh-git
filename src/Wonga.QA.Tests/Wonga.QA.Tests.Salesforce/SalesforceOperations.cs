@@ -12,7 +12,7 @@ namespace Wonga.QA.Tests.Salesforce
         private static ServiceConfigurationEntity _sfPassword;
         private static ServiceConfigurationEntity _sfUrl;
         private static Framework.ThirdParties.Salesforce _sales;
-        private static readonly dynamic _applicationRepo = Drive.Data.Payments.Db.Applications;
+        private static readonly dynamic ApplicationRepo = Drive.Data.Payments.Db.Applications;
 
         public static Framework.ThirdParties.Salesforce SalesforceSetup()
         {
@@ -33,9 +33,9 @@ namespace Wonga.QA.Tests.Salesforce
              .Build();
 
             //wait for the payment to customer to be sent out
-            Do.Until(() => _applicationRepo.FindAll(_applicationRepo.ExternalId == application.Id &&
-                                                   _applicationRepo.Transaction.ApplicationId == _applicationRepo.Id &&
-                                                   _applicationRepo.Type == "CashAdvance"));
+            Do.Until(() => ApplicationRepo.FindAll(ApplicationRepo.ExternalId == application.Id &&
+                                                   ApplicationRepo.Transaction.ApplicationId == ApplicationRepo.Id &&
+                                                   ApplicationRepo.Type == "CashAdvance"));
 
             Do.With.Timeout(3).Until(() =>
             {
@@ -54,6 +54,14 @@ namespace Wonga.QA.Tests.Salesforce
                 var app = _sales.GetApplicationById(application.Id);
                 return app.Status_ID__c != null && app.Status_ID__c == status;
             });
+        }
+
+        public static void CheckPreviousStatus(Guid id,string previousStatus,string currentStatus)
+        {
+
+            Do.With.Timeout(1).Until(()=>  Drive.Data.BiCustomerManagement.Db.ApplicationStatusHistory.FindBy(ApplicationId: id,
+                                                                                   PreviousStatus: previousStatus,
+                                                                                   CurrentStatus: currentStatus) );
         }
 
     }

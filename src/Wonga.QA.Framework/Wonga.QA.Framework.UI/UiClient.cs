@@ -187,13 +187,13 @@ namespace Wonga.QA.Framework.UI
 
         public PaymentCardsPage PaymentCards()
         {
-            Driver.Navigate().GoToUrl(Config.Admin.Home + "PaymentCards/GetList/00000000-0000-0000-0000-000000000000");
+            Driver.Navigate().GoToUrl(Config.Admin.Home + "/PaymentCards/GetList/00000000-0000-0000-0000-000000000000");
             return new PaymentCardsPage(this);
         }
 
         public AccountingPage Accounting()
         {
-            Driver.Navigate().GoToUrl(Config.Admin.Home + "Accounting");
+            Driver.Navigate().GoToUrl(Config.Admin.Home + "/Accounting");
             return new AccountingPage(this);
         }
 

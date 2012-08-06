@@ -244,7 +244,8 @@ namespace Wonga.QA.Framework.Core
                     }
                 case AUT.Wb:
                     {
-                        return RandomLong(10000000, 99999999).ToString();
+                        //return RandomLong(10000000, 99999999).ToString();
+                        return RandomUkBankAccountFromSortCode(bankSortCode);
                     }
                 default:
                     {
