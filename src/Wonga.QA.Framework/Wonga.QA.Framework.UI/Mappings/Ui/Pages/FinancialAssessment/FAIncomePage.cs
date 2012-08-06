@@ -24,5 +24,19 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages.FinancialAssessment
         public String TotalIncome { get; set; }
         public String ButtonPrevious { get; set; }
         public String ButtonNext { get; set; }
+        public String SalaryAfterTaxError { get; set; }
+        public String PartnerSalaryAfterTaxError { get; set; }
+        public String JobseekerAllowanceError { get; set; }
+        public String IncomeSupportError { get; set; }
+        public String WorkingTaxCreditError { get; set; }
+        public String ChildTaxCreditError { get; set; }
+        public String StatePensionError { get; set; }
+        public String PrivateOrWorkPensionError { get; set; }
+        public String PensionCreditError { get; set; }
+        public String OtherError { get; set; }
+        public String MaintenenceOrChildSupportError { get; set; }
+        public String IncomeFromBoardersOrLodgersError { get; set; }
+        public String StudentLoansOrGrantsError { get; set; }
+        public String OtherIncomeError { get; set; }
     }
 }
