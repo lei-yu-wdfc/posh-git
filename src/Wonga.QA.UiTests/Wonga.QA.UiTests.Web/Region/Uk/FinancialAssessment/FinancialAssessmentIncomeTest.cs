@@ -234,8 +234,8 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
             faincomepage.TotalIncome = GetRandomMoney();
             faincomepage.ClickOnOtherIncome();
             faincomepage.ClickOnTotalIncome();
-            Assert.AreEqual(0, int.Parse(faincomepage.TotalIncome.Split('.')[0]) * 100 + 
-                int.Parse(faincomepage.TotalIncome.Split('.')[1]), "Try change TotalIncome from zero");
+            faincomepage.ClickOnOtherIncome();
+            Assert.AreEqual(0, MoneyToInt(faincomepage.TotalIncome), "Try change TotalIncome from zero");
 
             faincomepage.SalaryAfterTax = GetRandomMoney();
             faincomepage.TotalIncome = GetRandomMoney();
