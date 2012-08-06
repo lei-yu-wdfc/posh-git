@@ -26,20 +26,20 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
 
         public int GetIncomeSum(FAIncomePage faincomepage)
         {
-            int sum = int.Parse(faincomepage.SalaryAfterTax.Split('.')[0]) * 100 + int.Parse(faincomepage.SalaryAfterTax.Split('.')[1]);
-            sum += int.Parse(faincomepage.PartnerSalaryAfterTax.Split('.')[0]) * 100 + int.Parse(faincomepage.PartnerSalaryAfterTax.Split('.')[1]);
-            sum += int.Parse(faincomepage.JobseekerAllowance.Split('.')[0]) * 100 + int.Parse(faincomepage.JobseekerAllowance.Split('.')[1]);
-            sum += int.Parse(faincomepage.IncomeSupport.Split('.')[0]) * 100 + int.Parse(faincomepage.IncomeSupport.Split('.')[1]);
-            sum += int.Parse(faincomepage.WorkingTaxCredit.Split('.')[0]) * 100 + int.Parse(faincomepage.WorkingTaxCredit.Split('.')[1]);
-            sum += int.Parse(faincomepage.ChildTaxCredit.Split('.')[0]) * 100 + int.Parse(faincomepage.ChildTaxCredit.Split('.')[1]);
-            sum += int.Parse(faincomepage.StatePension.Split('.')[0]) * 100 + int.Parse(faincomepage.StatePension.Split('.')[1]);
-            sum += int.Parse(faincomepage.PrivateOrWorkPension.Split('.')[0]) * 100 + int.Parse(faincomepage.PrivateOrWorkPension.Split('.')[1]);
-            sum += int.Parse(faincomepage.PensionCredit.Split('.')[0]) * 100 + int.Parse(faincomepage.PensionCredit.Split('.')[1]);
-            sum += int.Parse(faincomepage.Other.Split('.')[0]) * 100 + int.Parse(faincomepage.Other.Split('.')[1]);
-            sum += int.Parse(faincomepage.MaintenenceOrChildSupport.Split('.')[0]) * 100 + int.Parse(faincomepage.MaintenenceOrChildSupport.Split('.')[1]);
-            sum += int.Parse(faincomepage.IncomeFromBoardersOrLodgers.Split('.')[0]) * 100 + int.Parse(faincomepage.IncomeFromBoardersOrLodgers.Split('.')[1]);
-            sum += int.Parse(faincomepage.StudentLoansOrGrants.Split('.')[0]) * 100 + int.Parse(faincomepage.StudentLoansOrGrants.Split('.')[1]);
-            sum += int.Parse(faincomepage.OtherIncome.Split('.')[0]) * 100 + int.Parse(faincomepage.OtherIncome.Split('.')[1]);
+            int sum = MoneyToInt(faincomepage.SalaryAfterTax);
+            sum += MoneyToInt(faincomepage.PartnerSalaryAfterTax);
+            sum += MoneyToInt(faincomepage.JobseekerAllowance);
+            sum += MoneyToInt(faincomepage.IncomeSupport);
+            sum += MoneyToInt(faincomepage.WorkingTaxCredit);
+            sum += MoneyToInt(faincomepage.ChildTaxCredit);
+            sum += MoneyToInt(faincomepage.StatePension);
+            sum += MoneyToInt(faincomepage.PrivateOrWorkPension);
+            sum += MoneyToInt(faincomepage.PensionCredit);
+            sum += MoneyToInt(faincomepage.Other);
+            sum += MoneyToInt(faincomepage.MaintenenceOrChildSupport);
+            sum += MoneyToInt(faincomepage.IncomeFromBoardersOrLodgers);
+            sum += MoneyToInt(faincomepage.StudentLoansOrGrants);
+            sum += MoneyToInt(faincomepage.OtherIncome);
             return sum;
         }
 
@@ -136,6 +136,12 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
             faincomepage.OtherIncome = GetRandomMoney();
         }
 
+        public int MoneyToInt(String money)
+        {
+            return int.Parse(money.Split('.')[0])*100 +
+                   int.Parse(money.Split('.')[1]);
+        }
+
         [Test, AUT(AUT.Uk), JIRA("UKOPS-706"), MultipleAsserts, Owner(Owner.SaveliyProkopenko), Pending("Financial Assessment")]
         public void CheckTotalIncomefterEnterSomeValueIntoFieldsAndChangeValue()
         {
@@ -147,78 +153,63 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
             var faincomepage = journeyLn.FillAndStop().Teleport<FAIncomePage>() as FAIncomePage;
 
             faincomepage.ClickOnTotalIncome();
-            Assert.AreEqual(GetIncomeSum(faincomepage), int.Parse(faincomepage.TotalIncome.Split('.')[0]) * 100 + 
-                int.Parse(faincomepage.TotalIncome.Split('.')[1]), "First enter all value in fields");
+            Assert.AreEqual(GetIncomeSum(faincomepage), MoneyToInt(faincomepage.TotalIncome), "First enter all value in fields");
 
             faincomepage.SalaryAfterTax = GetRandomMoney();
             faincomepage.ClickOnTotalIncome();
-            Assert.AreEqual(GetIncomeSum(faincomepage), int.Parse(faincomepage.TotalIncome.Split('.')[0]) * 100 + 
-                int.Parse(faincomepage.TotalIncome.Split('.')[1]), "Change SalaryAfterTax and check TotalIncome");
+            Assert.AreEqual(GetIncomeSum(faincomepage), MoneyToInt(faincomepage.TotalIncome), "Change SalaryAfterTax and check TotalIncome");
 
             faincomepage.PartnerSalaryAfterTax = GetRandomMoney();
             faincomepage.ClickOnTotalIncome();
-            Assert.AreEqual(GetIncomeSum(faincomepage), int.Parse(faincomepage.TotalIncome.Split('.')[0]) * 100 + 
-                int.Parse(faincomepage.TotalIncome.Split('.')[1]), "Change PartnerSalaryAfterTax and check TotalIncome");
+            Assert.AreEqual(GetIncomeSum(faincomepage), MoneyToInt(faincomepage.TotalIncome), "Change PartnerSalaryAfterTax and check TotalIncome");
 
             faincomepage.JobseekerAllowance = GetRandomMoney();
             faincomepage.ClickOnTotalIncome();
-            Assert.AreEqual(GetIncomeSum(faincomepage), int.Parse(faincomepage.TotalIncome.Split('.')[0]) * 100 + 
-                int.Parse(faincomepage.TotalIncome.Split('.')[1]), "Change JobseekerAllowance and check TotalIncome");
+            Assert.AreEqual(GetIncomeSum(faincomepage), MoneyToInt(faincomepage.TotalIncome), "Change JobseekerAllowance and check TotalIncome");
 
             faincomepage.IncomeSupport = GetRandomMoney();
             faincomepage.ClickOnTotalIncome();
-            Assert.AreEqual(GetIncomeSum(faincomepage), int.Parse(faincomepage.TotalIncome.Split('.')[0]) * 100 + 
-                int.Parse(faincomepage.TotalIncome.Split('.')[1]), "Change IncomeSupport and check TotalIncome");
+            Assert.AreEqual(GetIncomeSum(faincomepage), MoneyToInt(faincomepage.TotalIncome), "Change IncomeSupport and check TotalIncome");
 
             faincomepage.WorkingTaxCredit = GetRandomMoney();
             faincomepage.ClickOnTotalIncome();
-            Assert.AreEqual(GetIncomeSum(faincomepage), int.Parse(faincomepage.TotalIncome.Split('.')[0]) * 100 + 
-                int.Parse(faincomepage.TotalIncome.Split('.')[1]), "Change WorkingTaxCredit and check TotalIncome");
+            Assert.AreEqual(GetIncomeSum(faincomepage), MoneyToInt(faincomepage.TotalIncome), "Change WorkingTaxCredit and check TotalIncome");
 
             faincomepage.ChildTaxCredit = GetRandomMoney();
             faincomepage.ClickOnTotalIncome();
-            Assert.AreEqual(GetIncomeSum(faincomepage), int.Parse(faincomepage.TotalIncome.Split('.')[0]) * 100 + 
-                int.Parse(faincomepage.TotalIncome.Split('.')[1]), "Change ChildTaxCredit and check TotalIncome");
+            Assert.AreEqual(GetIncomeSum(faincomepage), MoneyToInt(faincomepage.TotalIncome), "Change ChildTaxCredit and check TotalIncome");
 
             faincomepage.StatePension = GetRandomMoney();
             faincomepage.ClickOnTotalIncome();
-            Assert.AreEqual(GetIncomeSum(faincomepage), int.Parse(faincomepage.TotalIncome.Split('.')[0]) * 100 + 
-                int.Parse(faincomepage.TotalIncome.Split('.')[1]), "Change StatePension and check TotalIncome");
+            Assert.AreEqual(GetIncomeSum(faincomepage), MoneyToInt(faincomepage.TotalIncome), "Change StatePension and check TotalIncome");
 
             faincomepage.PrivateOrWorkPension = GetRandomMoney();
             faincomepage.ClickOnTotalIncome();
-            Assert.AreEqual(GetIncomeSum(faincomepage), int.Parse(faincomepage.TotalIncome.Split('.')[0]) * 100 + 
-                int.Parse(faincomepage.TotalIncome.Split('.')[1]), "Change PrivateOrWorkPension and check TotalIncome");
+            Assert.AreEqual(GetIncomeSum(faincomepage), MoneyToInt(faincomepage.TotalIncome), "Change PrivateOrWorkPension and check TotalIncome");
 
             faincomepage.PensionCredit = GetRandomMoney();
             faincomepage.ClickOnTotalIncome();
-            Assert.AreEqual(GetIncomeSum(faincomepage), int.Parse(faincomepage.TotalIncome.Split('.')[0]) * 100 + 
-                int.Parse(faincomepage.TotalIncome.Split('.')[1]), "Change PensionCredit and check TotalIncome");
+            Assert.AreEqual(GetIncomeSum(faincomepage), MoneyToInt(faincomepage.TotalIncome), "Change PensionCredit and check TotalIncome");
 
             faincomepage.Other = GetRandomMoney();
             faincomepage.ClickOnTotalIncome();
-            Assert.AreEqual(GetIncomeSum(faincomepage), int.Parse(faincomepage.TotalIncome.Split('.')[0]) * 100 + 
-                int.Parse(faincomepage.TotalIncome.Split('.')[1]), "Change Other and check TotalIncome");
+            Assert.AreEqual(GetIncomeSum(faincomepage), MoneyToInt(faincomepage.TotalIncome), "Change Other and check TotalIncome");
 
             faincomepage.MaintenenceOrChildSupport = GetRandomMoney();
             faincomepage.ClickOnTotalIncome();
-            Assert.AreEqual(GetIncomeSum(faincomepage), int.Parse(faincomepage.TotalIncome.Split('.')[0]) * 100 + 
-                int.Parse(faincomepage.TotalIncome.Split('.')[1]), "Change MaintenenceOrChildSupport and check TotalIncome");
+            Assert.AreEqual(GetIncomeSum(faincomepage), MoneyToInt(faincomepage.TotalIncome), "Change MaintenenceOrChildSupport and check TotalIncome");
 
             faincomepage.IncomeFromBoardersOrLodgers = GetRandomMoney();
             faincomepage.ClickOnTotalIncome();
-            Assert.AreEqual(GetIncomeSum(faincomepage), int.Parse(faincomepage.TotalIncome.Split('.')[0]) * 100 + 
-                int.Parse(faincomepage.TotalIncome.Split('.')[1]), "Change IncomeFromBoardersOrLodgers and check TotalIncome");
+            Assert.AreEqual(GetIncomeSum(faincomepage), MoneyToInt(faincomepage.TotalIncome), "Change IncomeFromBoardersOrLodgers and check TotalIncome");
 
             faincomepage.StudentLoansOrGrants = GetRandomMoney();
             faincomepage.ClickOnTotalIncome();
-            Assert.AreEqual(GetIncomeSum(faincomepage), int.Parse(faincomepage.TotalIncome.Split('.')[0]) * 100 + 
-                int.Parse(faincomepage.TotalIncome.Split('.')[1]), "Change StudentLoansOrGrants and check TotalIncome");
+            Assert.AreEqual(GetIncomeSum(faincomepage), MoneyToInt(faincomepage.TotalIncome), "Change StudentLoansOrGrants and check TotalIncome");
 
             faincomepage.OtherIncome = GetRandomMoney();
             faincomepage.ClickOnTotalIncome();
-            Assert.AreEqual(GetIncomeSum(faincomepage), int.Parse(faincomepage.TotalIncome.Split('.')[0]) * 100 + 
-                int.Parse(faincomepage.TotalIncome.Split('.')[1]), "Change OtherIncome and check TotalIncome");
+            Assert.AreEqual(GetIncomeSum(faincomepage), MoneyToInt(faincomepage.TotalIncome), "Change OtherIncome and check TotalIncome");
         }
 
         [Test, AUT(AUT.Uk), JIRA("UKOPS-706"), MultipleAsserts, Owner(Owner.SaveliyProkopenko), Pending("Financial Assessment")]
@@ -249,9 +240,8 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
             faincomepage.SalaryAfterTax = GetRandomMoney();
             faincomepage.TotalIncome = GetRandomMoney();
             faincomepage.ClickOnOtherIncome();
-            Assert.AreEqual(int.Parse(faincomepage.SalaryAfterTax.Split('.')[0]) * 100 + int.Parse(faincomepage.SalaryAfterTax.Split('.')[1]),
-                int.Parse(faincomepage.TotalIncome.Split('.')[0]) * 100 + 
-                int.Parse(faincomepage.TotalIncome.Split('.')[1]), "Try change TotalIncome from not zero");
+            Assert.AreEqual(MoneyToInt(faincomepage.SalaryAfterTax),
+                MoneyToInt(faincomepage.TotalIncome), "Try change TotalIncome from not zero");
         }
 
         [Test, AUT(AUT.Uk), JIRA("UKOPS-706"), MultipleAsserts, Owner(Owner.SaveliyProkopenko), Pending("Financial Assessment")]
@@ -299,8 +289,7 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
             Assert.AreEqual(faincomepage.StudentLoansOrGrants, studentLoansOrGrants, "StudentLoansOrGrants check after go back");
             Assert.AreEqual(faincomepage.OtherIncome, otherIncome, "OtherIncome check after go back");
 
-            Assert.AreEqual(GetIncomeSum(faincomepage), int.Parse(faincomepage.TotalIncome.Split('.')[0]) * 100 +
-                int.Parse(faincomepage.TotalIncome.Split('.')[1]), "Total Income check after go back");
+            Assert.AreEqual(GetIncomeSum(faincomepage), MoneyToInt(faincomepage.TotalIncome), "Total Income check after go back");
         }
 
         [Test, AUT(AUT.Uk), JIRA("UKOPS-706"), MultipleAsserts, Owner(Owner.SaveliyProkopenko), Pending("Financial Assessment")]
