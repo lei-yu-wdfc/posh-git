@@ -40,6 +40,10 @@ namespace Wonga.QA.MigrationTests
         [FixtureSetUp]
         public void FixtureSetup()
         {
+            //if (_migHelper.IsControlTableEmpty())
+            //{
+            //    _migHelper.FillAcceptanceTestControlTable();
+            //}
             _testStartTime = DateTime.Now;
         }
 
@@ -145,19 +149,19 @@ namespace Wonga.QA.MigrationTests
         [Test]
         public void MigratedApiLnJournery()
         {
-            _migHelper.FillAcceptanceTestControlTable();
-
             _migratedUser = new MigratedUser();
-            _migratedUser = _migHelper.GetMigratedAccountLogin(null, null);
+            _migratedUser = _migHelper.GetMigratedAccountLogin();
             var customer = new Customer(Guid.Parse
                                             (Drive.Api.Queries.Post
-                                                 (new GetAccountQuery { Login = "qa.wonga.com+BUILD-WIN21-7af66e12-7664-4bec-8a51-f5ffb17f41b2@gmail.com", Password = "Passw0rd" }).
+                                                 (new GetAccountQuery { Login = _migratedUser.Login, Password = _migratedUser.Password }).
+                                                 //{ Login = "qa.wonga.com+BUILD-WIN21-7af66e12-7664-4bec-8a51-f5ffb17f41b2@gmail.com", Password = "Passw0rd"}).//
                                                  Values["AccountId"].Single()));
             
-            var promiseDate = new Date(DateTime.Now.AddDays(10));
-            var loanAmmount = new decimal(1000);
+            //var promiseDate = new Date(DateTime.Now.AddDays(10));
+            //var loanAmmount = new decimal(1000);
 
-            ApplicationBuilder.New(customer,promiseDate,loanAmmount).Build();
+            //ApplicationBuilder.New(customer,promiseDate,loanAmmount).Build();
+            ApplicationBuilder.New(customer).Build();
         }
 
         [Test]
