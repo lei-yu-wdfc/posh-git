@@ -34,7 +34,7 @@ namespace Wonga.QA.UiTests.Web
                 .Build();
             application.PutIntoArrears(10);
             var mySummaryPage = loginPage.LoginAs(email);
-            Assert.IsFalse(mySummaryPage.LookForSliders());
+            Assert.IsFalse(mySummaryPage.LookForTopupSliders());
         }
 
         [Test, AUT(AUT.Za), JIRA("QA-196"), Pending("ZA-2510"), Category(TestCategories.SmokeTest)]
