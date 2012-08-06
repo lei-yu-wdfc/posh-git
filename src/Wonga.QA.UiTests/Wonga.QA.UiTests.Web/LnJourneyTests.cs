@@ -16,6 +16,27 @@ namespace Wonga.QA.UiTests.Web
     [TestFixture, Parallelizable(TestScope.All)]
     internal class LnJourneyTests : UiTest
     {
+        [Test, AUT(AUT.Uk), JIRA("QA-342"), Owner(Owner.MihailPodobivsky)]
+        public void CustomerInArrearsShoudntBeAbleToTakeExtraCredit()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            string name = Get.GetName();
+            string surname = Get.RandomString(10);
+            Customer customer = CustomerBuilder
+                .New()
+                .WithEmailAddress(email)
+                .WithForename(name)
+                .WithSurname(surname)
+                .Build();
+            Application application = ApplicationBuilder
+                .New(customer)
+                .Build();
+            application.PutIntoArrears(10);
+            var mySummaryPage = loginPage.LoginAs(email);
+            Assert.IsFalse(mySummaryPage.LookForTopupSliders());
+        }
+
         [Test, AUT(AUT.Za), JIRA("QA-196"), Pending("ZA-2510"), Category(TestCategories.SmokeTest)]
         public void LnCustomerTakesNewLoanAndChangesTheMobilePhoneThenChangesShouldBeReflected()
         {
