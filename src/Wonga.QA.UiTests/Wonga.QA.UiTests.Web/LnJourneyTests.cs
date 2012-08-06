@@ -85,7 +85,7 @@ namespace Wonga.QA.UiTests.Web
                 Assert.IsTrue(exception.Message.Contains("The SMS PIN you entered was incorrect"));
             }
         }
-    
+
         [Test, AUT(AUT.Za)]
         public void ZaFullLnJourneyTest()
         {
@@ -134,10 +134,10 @@ namespace Wonga.QA.UiTests.Web
                     pageZA.SetNewMobilePhone = phone;
                     pageZA.ResendPinClick();
 
-            		var phoneInDbFormat = phone.Replace("077", "2777");
+                    var phoneInDbFormat = phone.Replace("077", "2777");
 
                     var smsZa = Do.With.Message("There is no sought-for sms in DB").Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(phoneInDbFormat));
-					Do.With.Message("There is one sms in DB instead of two").Until(() => smsZa.Count() == 2);
+                    Do.With.Message("There is one sms in DB instead of two").Until(() => smsZa.Count() == 2);
                     Assert.AreEqual(2, smsZa.Count());
                     Console.WriteLine(smsZa.Count());
                     foreach (var sms in smsZa)
@@ -154,7 +154,7 @@ namespace Wonga.QA.UiTests.Web
                     var pageCa = journeyCa.Teleport<ApplyPage>() as ApplyPage;
                     pageCa.SetNewMobilePhone = phone;
                     pageCa.ResendPinClick();
-					var smsCa = Do.With.Message("There is no sought-for sms in DB").Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(phone.Replace("077", "177")));
+                    var smsCa = Do.With.Message("There is no sought-for sms in DB").Until(() => Drive.Data.Sms.Db.SmsMessages.FindAllByMobilePhoneNumber(phone.Replace("077", "177")));
                     foreach (var sms in smsCa)
                     {
                         Console.WriteLine(sms.MessageText + " / " + sms.CreatedOn);
@@ -165,29 +165,57 @@ namespace Wonga.QA.UiTests.Web
             }
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-302"), Pending("Uses sleep()!")]
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Uk), JIRA("QA-302, QA-335"), Pending("Uses sleep()!")]
         public void LoggedCustomerWithoutLoanAppliesNewLoanChangesMobilePhoneAndClicksResendPinAndGoFarther()
         {
             string email = Get.RandomEmail();
             string name = Get.RandomString(3, 10);
             string surname = Get.RandomString(3, 10);
-            string oldphone = "077009" + Get.RandomLong(1000, 9999).ToString();
-            Customer customer = CustomerBuilder
-                .New()
-                .WithForename(name)
-                .WithSurname(surname)
-                .WithEmailAddress(email)
-                .WithMobileNumber(oldphone)
-                .Build();
-            Application application = ApplicationBuilder
-                .New(customer)
-                .Build();
-            application.RepayOnDueDate();
-            string phone = "077009" + Get.RandomLong(1000, 9999).ToString();
-            var loginPage = Client.Login();
-            loginPage.LoginAs(email);
+            string oldphone = Get.GetMobilePhone() /*"077009" + Get.RandomLong(1000, 9999).ToString()*/;
+            Customer customer;
+            Application application;
+            LoginPage loginPage;
+            BaseLnJourney journey;
+            
+            switch (Config.AUT)
+            {
+                case AUT.Ca:
+                case AUT.Za:
+                default:
+                    customer = CustomerBuilder
+                        .New()
+                        .WithForename(name)
+                        .WithSurname(surname)
+                        .WithEmailAddress(email)
+                        .WithMobileNumber(oldphone)
+                        .Build();
+                    application = ApplicationBuilder
+                       .New(customer)
+                       .Build();
+                    application.RepayOnDueDate();
+                    loginPage = Client.Login();
+                    loginPage.LoginAs(email);
+                    journey = JourneyFactory.GetLnJourney(Client.Home());
 
-            var journey = JourneyFactory.GetLnJourney(Client.Home());
+                    break;
+                case AUT.Uk:
+                    customer = CustomerBuilder
+                        .New()
+                        .WithForename(name)
+                        .WithSurname(surname)
+                        .WithEmailAddress(email)
+                        .Build();
+                    application = ApplicationBuilder
+                       .New(customer)
+                       .Build();
+                    application.RepayOnDueDate();
+                    loginPage = Client.Login();
+                    loginPage.LoginAs(email);
+                    journey = JourneyFactory.GetLnJourney(Client.Home()).WithNewMobilePhone(oldphone);
+                    break;
+            }
+
+            string phone = Get.GetMobilePhone();
             var applyPage = journey.Teleport<ApplyPage>() as ApplyPage;
             applyPage.SetNewMobilePhone = phone;
             applyPage.ResendPinClick();
@@ -200,7 +228,7 @@ namespace Wonga.QA.UiTests.Web
 
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), Category(TestCategories.SmokeTest), Pending("Fail")]
+        [Test, AUT(AUT.Za, AUT.Ca, AUT.Uk), Category(TestCategories.SmokeTest), Pending("Fail")]
         public void LnVerifyUrlsAreCorrect()
         {
             var loginPage = Client.Login();
@@ -219,20 +247,52 @@ namespace Wonga.QA.UiTests.Web
             application.RepayOnDueDate();
             var mySummaryPageAfterLogin = loginPage.LoginAs(email);
             var homePage = Client.Home();
-            //var journey = JourneyFactory.GetLnJourney(homePage).WithFirstName(name).WithLastName(surname);
             var journey = JourneyFactory.GetLnJourney(homePage);
             var applyPage = journey.Teleport<ApplyPage>() as ApplyPage;
-            // Check the URL here is /apply-member
-            Assert.Contains(Client.Driver.Url, "/apply-member?", "The apply page URL does not contain '/apply-member?'");
-            journey.CurrentPage = applyPage.Submit() as ProcessingPage;
-            // Check the URL here is /processing-member
-            Assert.EndsWith(Client.Driver.Url, "/processing-member", "The processing page URL is not /processing-member.");
-            var acceptedPage = journey.Teleport<AcceptedPage>() as AcceptedPage;
-            // Check the URL here is /apply-accept-member
-            Assert.EndsWith(Client.Driver.Url, "/apply-accept-member", "The accept page URL is not /apply-accept-member.");
-            var dealDonePage = journey.Teleport<DealDonePage>() as DealDonePage;
-            // Check the URL here is /deal-done-member
-            Assert.EndsWith(Client.Driver.Url, "/deal-done-member", "The deal done page URL is not /deal-done-member.");
+            switch (Config.AUT)
+            {
+                case AUT.Ca:
+                case AUT.Za:
+                    //var journey = JourneyFactory.GetLnJourney(homePage).WithFirstName(name).WithLastName(surname);
+
+                    // Check the URL here is /apply-member
+                    Assert.Contains(Client.Driver.Url, "/apply-member?",
+                                    "The apply page URL does not contain '/apply-member?'");
+                    journey.CurrentPage = applyPage.Submit() as ProcessingPage;
+                    // Check the URL here is /processing-member
+                    Assert.EndsWith(Client.Driver.Url, "/processing-member",
+                                    "The processing page URL is not /processing-member.");
+                    var acceptedPageZaCa = journey.Teleport<AcceptedPage>() as AcceptedPage;
+                    // Check the URL here is /apply-accept-member
+                    Assert.EndsWith(Client.Driver.Url, "/apply-accept-member",
+                                    "The accept page URL is not /apply-accept-member.");
+                    var dealDonePageZaCa = journey.Teleport<DealDonePage>() as DealDonePage;
+                    // Check the URL here is /deal-done-member
+                    Assert.EndsWith(Client.Driver.Url, "/deal-done-member",
+                                    "The deal done page URL is not /deal-done-member.");
+                    break;
+                case AUT.Uk:
+                    // Check the URL here is /apply-member
+                    Assert.Contains(Client.Driver.Url, "/applyln?",
+                                    "The apply page URL does not contain '/apply-member?'");
+                    journey.CurrentPage = journey.Teleport<ProcessingPage>() as ProcessingPage;
+                    // Check the URL here is /processing-page
+                    Assert.EndsWith(Client.Driver.Url, "/processing-page",
+                                    "The processing page URL is not /processing-page.");
+                    var acceptedPageUk = journey.Teleport<AcceptedPage>() as AcceptedPage;
+                    // Check the URL here is /apply-accept-member
+                    Assert.EndsWith(Client.Driver.Url, "/accept",
+                                    "The accept page URL is not /apply-accept-member.");
+
+                    // commented till front end won't work normally 
+                    //var dealDonePageUk = journey.Teleport<DealDonePage>() as DealDonePage;
+                    // Check the URL here is /deal-done-member
+                    //Assert.EndsWith(Client.Driver.Url, "/deal-done-member",
+                                    //"The deal done page URL is not /deal-done-member.");
+                    break;
+
+
+            }
         }
-     }
+    }
 }
