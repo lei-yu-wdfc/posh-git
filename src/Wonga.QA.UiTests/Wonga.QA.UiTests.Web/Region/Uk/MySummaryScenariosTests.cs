@@ -210,10 +210,6 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Assert.IsFalse(mySummaryPage.IsLoanStatusMessageAvailable());
 
             CheckSliders(mySummaryPage, "full");
-
-            var journey = JourneyFactory.GetLnJourney(Client.Home())
-                .WithAmount(50).WithDuration(3);
-            var aPage = journey.Teleport<MySummaryPage>() as MySummaryPage;
         }
 
         // One live drawdown -can request credit, too early to extend
@@ -743,12 +739,12 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             RewindApplicationDates(daysShift, application);
             
             expectedDueDateBalance = application.GetDueDateBalance();
-            var expectedDueDate = Convert.ToDateTime(customer.GetNextPayDate());
-            var expectedDaysTillDueDate = expectedDueDate - DateTime.Today.Date;
+            var expectedDueDate = Convert.ToDateTime(customer.GetNextPayDate()).Subtract(new TimeSpan(daysShift, 0, 0, 0));
+            var expectedDaysTillDueDate = expectedDueDate - DateTime.Today.Date; 
 
             if (scenarioId == 8)
             {
-                expectedAmountMax = "400";
+                expectedAmountMax = "400.00";
             }
 
             if (scenarioId == 20)
@@ -778,7 +774,11 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             }
             else
             {
-                string expectedPromiseSummaryText = PromiseSummaryTexts[scenarioId].Replace("{£245}", "£" + expectedDueDateBalance.ToString("#.##")).Replace("in {10}", "in " + expectedDaysTillDueDate.Days.ToString("#")).Replace("{10th May 2012}", Date.GetOrdinalDate(expectedDueDate, "ddd d MMM yyyy")).Replace("{£456.34}", "£" + expectedDueDateBalance.ToString("#.##"));
+                string expectedPromiseSummaryText = PromiseSummaryTexts[scenarioId]
+                                                    .Replace("{£245}", "£" + expectedDueDateBalance.ToString("#.##"))
+                                                    .Replace("in {10}", "in " + expectedDaysTillDueDate.Days.ToString("#"))
+                                                    .Replace("{10th May 2012}", Date.GetOrdinalDate(expectedDueDate, "ddd d MMM yyyy"))
+                                                    .Replace("{£456.34}", "£" + expectedDueDateBalance.ToString("#.##"));
                 Assert.AreEqual(expectedPromiseSummaryText, mySummaryPage.GetPromiseSummaryText);
             }
 
