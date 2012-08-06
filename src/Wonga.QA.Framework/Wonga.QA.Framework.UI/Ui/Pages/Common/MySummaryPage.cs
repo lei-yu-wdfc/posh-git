@@ -73,7 +73,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         {
             try
             {
-                TopupSliders = new TopupSlidersElement(this);
+                TopupSliders = Do.Until(() => new TopupSlidersElement(this));
                 return true;
             }
             catch (NoSuchElementException)

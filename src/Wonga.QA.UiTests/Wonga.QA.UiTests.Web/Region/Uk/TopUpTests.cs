@@ -168,5 +168,31 @@ namespace Wonga.QA.UiTests.Web
             Assert.Contains(actualIntroText, expectedAvailableCredit, "IntroText shows wrong AvailableCredit for scenario 3");
             Assert.Contains(actualMaxAvailableCredit, expectedAvailableCredit, "Max Available Credit is wrong for scenario 3");
         }
+
+        [Test, AUT(AUT.Uk), JIRA("QA-340")]
+        [Owner(Owner.PetrTarasenko)]
+        public  void TopUpExtraCashequalToChoosen()
+        {
+            string email = Get.RandomEmail();
+
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(30).Build();
+            application.RewindApplicationDatesForDays(20);
+            
+            var responseLimit = Drive.Api.Queries.Post(new GetFixedTermLoanTopupOfferQuery { AccountId = customer.Id });
+            int _amountMax = (int)Decimal.Parse(responseLimit.Values["AmountMax"].Single(), CultureInfo.InvariantCulture);
+            int _amountMin = 1;
+            
+            int randomAmount = _amountMin + (new Random()).Next(_amountMax - _amountMin);
+            
+            var topupAmount = randomAmount.ToString();
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(email);
+            mySummaryPage.TopupSliders.HowMuch = topupAmount;
+            var requestPage =mySummaryPage.TopupSliders.Apply();
+            String[] s = requestPage.Sliders.GetTopUpAmount.Remove(0, 1).Split('.');
+            Assert.AreEqual(topupAmount, requestPage.Sliders.HowMuch);
+            Assert.AreEqual(topupAmount, s[0]);
+          }
     }
 }

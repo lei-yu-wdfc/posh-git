@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using MbUnit.Framework;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI;
@@ -18,6 +19,7 @@ namespace Wonga.QA.Framework.UI.Elements
         private readonly IWebElement _grandTotalAmount;
         private readonly IWebElement _totalFees;
         private readonly IWebElement _subTotalAmount;
+        private readonly IWebElement _topUpAmount;
         //private readonly IWebElement _amountMinusButton;
         //private readonly IWebElement _amountPlusButton;
 
@@ -29,6 +31,7 @@ namespace Wonga.QA.Framework.UI.Elements
             _grandTotalAmount = _form.FindElement(By.CssSelector(UiMap.Get.SmallTopupSlidersElement.TotalToRepay));
             _totalFees = _form.FindElement(By.CssSelector(UiMap.Get.SmallTopupSlidersElement.TopupFees));
             _subTotalAmount = _form.FindElement(By.CssSelector(UiMap.Get.SmallTopupSlidersElement.TopupToRepay));
+            _topUpAmount = _form.FindElement(By.CssSelector(UiMap.Get.SmallTopupSlidersElement.TopupAmount));
             //_loanAmount = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.LoanAmount));
             //_totalAmount = _form.FindElement(By.CssSelector(UiMap.Get.TopupRequestPage.TopupRequestPageNewCreditRequest));
             //_totalFees = _form.FindElement(By.CssSelector(UiMap.Get.TopupRequestPage.TopupRequestPageNewInterestAndFees));
@@ -54,5 +57,11 @@ namespace Wonga.QA.Framework.UI.Elements
         {
             get { return _subTotalAmount.Text; }
         }
+
+        public String GetTopUpAmount
+        {
+            get { return _topUpAmount.Text; }
+        }
+
     }
 }
