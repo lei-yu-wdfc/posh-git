@@ -43,9 +43,9 @@ namespace Wonga.QA.UiTests.Web
             var totalRepayable = _response.Values["TotalRepayable"].Single();
             var interestAndFees = _response.Values["InterestAndFeesAmount"].Single();
 
-            Assert.AreEqual(mySummaryPage.TopupSliders.GetTotalToRepay.Remove(0, 1), totalRepayable);
-            Assert.AreEqual(mySummaryPage.TopupSliders.GetTotalAmount.Remove(0, 1), topupAmount);
-            Assert.AreEqual(mySummaryPage.TopupSliders.GetTotalFees.Remove(0, 1), interestAndFees);
+            Assert.AreEqual(mySummaryPage.TopupSliders.GetTotalToRepay.Remove(0, 1), totalRepayable, "Total to Repay on Sliders on My Summary page is wrong");
+            Assert.AreEqual(mySummaryPage.TopupSliders.GetTotalAmount.Remove(0, 1), topupAmount, "Total Amount on Sliders on My Summary page is wrong");
+            Assert.AreEqual(mySummaryPage.TopupSliders.GetTotalFees.Remove(0, 1), interestAndFees, "Interest Fees on Sliders on My Summary page is wrong");
 
             var requestPage =
                 mySummaryPage.TopupSliders.Apply();
@@ -58,22 +58,22 @@ namespace Wonga.QA.UiTests.Web
             var processPage = new TopupProcessingPage(this.Client);
             var agreementPage = processPage.WaitForAgreementPage(Client);
 
-            Assert.IsFalse(agreementPage.IsTopupAgreementPageDateNotPresent());
-            Assert.IsTrue(agreementPage.IsTopupAgreementPageLegalInfoDisplayed());
-            Assert.IsFalse(agreementPage.IsTopupAgreementPageTopupAmountNotPresent());
-            Assert.IsFalse(agreementPage.IsTopupTotalAmountTokenBeingReplaced());
+            Assert.IsFalse(agreementPage.IsTopupAgreementPageDateNotPresent(), "Date on Agreement page is not displayed");
+            Assert.IsTrue(agreementPage.IsTopupAgreementPageLegalInfoDisplayed(), "Legal Info on Agreement page is not displayed");
+            Assert.IsFalse(agreementPage.IsTopupAgreementPageTopupAmountNotPresent(), "Topup Amount on Agreement page is not displayed");
+            Assert.IsFalse(agreementPage.IsTopupTotalAmountTokenBeingReplaced(), "Amount Token Agreement page is not replaced with value");
 
             var dealDonePage = agreementPage.Accept();
-            Assert.IsFalse(dealDonePage.IsDealDonePageDateNotPresent());
-            Assert.IsFalse(dealDonePage.IsDealDonePageJiffyNotPresent());
-            Assert.IsFalse(dealDonePage.IsDealDonePageTopupAmountNotPresent());
-            Assert.Contains(dealDonePage.SucessMessage, totalRepayable);
-            Assert.Contains(dealDonePage.SucessMessage, topupAmount);
+            Assert.IsFalse(dealDonePage.IsDealDonePageDateNotPresent(), "Date on Deal Done page is not displayed");
+            Assert.IsFalse(dealDonePage.IsDealDonePageJiffyNotPresent(), "Jiffy on Deal Done page is not displayed");
+            Assert.IsFalse(dealDonePage.IsDealDonePageTopupAmountNotPresent(), "Topup Amount on Deal Done page is not displayed");
+            Assert.Contains(dealDonePage.SucessMessage, totalRepayable, "Success Message on Deal Done page does not contain Total Repayable");
+            Assert.Contains(dealDonePage.SucessMessage, topupAmount, "Success Message on Deal Done page does not contain Total Amount");
 
             dealDonePage.ContinueToMyAccount();
             
             //Test my account summary page
-            Assert.IsTrue(this.Client.Driver.Url.Contains("my-account"));
+            Assert.IsTrue(this.Client.Driver.Url.Contains("my-account"), "My Account page was not open");
         }
     
         [Test, AUT(AUT.Uk), JIRA("UK-789"), MultipleAsserts]
