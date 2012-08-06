@@ -13,6 +13,50 @@ namespace Wonga.QA.UiTests.Web
 {
     class TopUpTests : UiTest
     {
+
+        [Test, AUT(AUT.Uk), JIRA("QA-341"), Owner(Owner.MihailPodobivsky)]
+        public void CustomerOnTheDayBeforeDueDateShouldntBeAbleToTakeExtraCash()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            string name = Get.GetName();
+            string surname = Get.RandomString(10);
+            Customer customer = CustomerBuilder
+                .New()
+                .WithEmailAddress(email)
+                .WithForename(name)
+                .WithSurname(surname)
+                .Build();
+            Application application = ApplicationBuilder
+                .New(customer)
+                .WithLoanTerm(30)
+                .Build();
+            application.RewindApplicationDatesForDays(29);
+            var mySummaryPage = loginPage.LoginAs(email);
+            Assert.IsFalse(mySummaryPage.LookForTopupSliders());
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("QA-342"), Owner(Owner.MihailPodobivsky)]
+        public void CustomerInArrearsShoudntBeAbleToTakeExtraCredit()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            string name = Get.GetName();
+            string surname = Get.RandomString(10);
+            Customer customer = CustomerBuilder
+                .New()
+                .WithEmailAddress(email)
+                .WithForename(name)
+                .WithSurname(surname)
+                .Build();
+            Application application = ApplicationBuilder
+                .New(customer)
+                .Build();
+            application.PutIntoArrears(10);
+            var mySummaryPage = loginPage.LoginAs(email);
+            Assert.IsFalse(mySummaryPage.LookForTopupSliders());
+        }
+
         [Test, AUT(AUT.Uk), JIRA("UK-826", "UK-789", "UK-2016", "UKWEB-928"), MultipleAsserts]
         [Owner(Owner.OrizuNwokeji, Owner.StanDesyatnikov)]
         [Category(TestCategories.CoreTest)]
