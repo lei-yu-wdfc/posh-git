@@ -452,7 +452,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         public void MySummaryScenario13(int scenarioId, int dasyShift) { MySummaryScenarios(scenarioId, dasyShift); }
 
         // In arrears -In repayment plan
-        [Test, AUT(AUT.Uk), Pending("Repayment Arrangment Functionality is ready. Test to be updated."), MultipleAsserts]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-1083"), MultipleAsserts]
         [Owner(Owner.StanDesyatnikov)]
         public void MySummaryScenario14()
         {
@@ -502,9 +502,8 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         }
 
         // In arrears -In repayment plan - missed payment (within grace period)
-        [Test, AUT(AUT.Uk), MultipleAsserts]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-1083"), MultipleAsserts]
         [Owner(Owner.StanDesyatnikov)]
-        [Pending("Repayment Arrangment Functionality is ready. Test to be updated.")]
         public void MySummaryScenario15()
         {
             const int scenarioId = 15;
@@ -550,8 +549,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         }
 
         // In arrears - In repayment plan – broken repayment arrangemnt
-        [Test, AUT(AUT.Uk), MultipleAsserts]
-        [Pending("Repayment Arrangment Functionality is ready. Test to be updated.")]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-1083"), MultipleAsserts]
         public void MySummaryScenario16()
         {
             const int scenarioId = 16;
