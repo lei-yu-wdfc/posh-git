@@ -44,6 +44,8 @@ namespace Wonga.QA.Framework.UI.Journey
             journey.Add(typeof(FinancialAssessmentPage), GetStarted);
             journey.Add(typeof(FAAboutYouPage), PassAboutYou);
             journey.Add(typeof(FAIncomePage), PassIncomePage);
+            journey.Add(typeof(FAExpenditurePage), PassExpenditurePage);
+            journey.Add(typeof(FADebtsPage), PassDebtsPage);
         }
 
         protected override BaseFALnJourney GetStarted(bool submit = true)
@@ -94,6 +96,28 @@ namespace Wonga.QA.Framework.UI.Journey
             if (submit)
             {
                 CurrentPage = faIncomePage.NextClick() as FAExpenditurePage;
+            }
+            return this;
+        }
+
+        protected override BaseFALnJourney PassExpenditurePage(bool submit = true)
+        {
+            var faExpenditurePage = CurrentPage as FAExpenditurePage;
+           
+            if (submit)
+            {
+                CurrentPage = faExpenditurePage.NextClick() as FADebtsPage;
+            }
+            return this;
+        }
+
+        protected override BaseFALnJourney PassDebtsPage(bool submit = true)
+        {
+            var faDebtsPage = CurrentPage as FADebtsPage;
+
+            if (submit)
+            {
+               // CurrentPage = faDebtsPage.NextClick() as FADebtsPage;
             }
             return this;
         }
