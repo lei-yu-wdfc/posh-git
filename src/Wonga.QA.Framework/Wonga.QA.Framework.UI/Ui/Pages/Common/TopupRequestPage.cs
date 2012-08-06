@@ -17,9 +17,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private IWebElement _interestAndFees;
         private IWebElement _grandTotal;
         private IWebElement _topupAmount;
-        private SmallTopupSlidersElement Sliders { get; set; }
+        public SmallTopupSlidersElement Sliders { get; set; }
         public TopupRequestPage(UiClient client) : base(client)
         {
+            Sliders = new SmallTopupSlidersElement(this);
             _submitButton = Content.FindElement(By.CssSelector(UiMap.Get.TopupRequestPage.TopupRequestPageSubmitButton));
             _informativeBox = Content.FindElement(By.CssSelector(UiMap.Get.TopupRequestPage.TopupRequestPageInformativeBox));
             _interestAndFees = Content.FindElement(By.CssSelector(UiMap.Get.TopupRequestPage.TopupRequestPageNewInterestAndFees));
@@ -57,5 +58,6 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             Assert.AreEqual(Decimal.Parse(Sliders.GetSubTotal.Remove(0, 1)),Decimal.Parse(totalRepayable));
             Assert.AreEqual(Decimal.Parse(Sliders.GetTotalFees.Remove(0, 1)),Decimal.Parse(interestAndFees));
         }
+
     }
 }
