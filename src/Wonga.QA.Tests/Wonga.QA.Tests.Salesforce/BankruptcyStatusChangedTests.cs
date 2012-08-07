@@ -10,11 +10,9 @@ namespace Wonga.QA.Tests.Salesforce
     [TestFixture]
     [AUT(AUT.Uk)]
     [Parallelizable(TestScope.Self)]
-    [Pending("BI customer Management Bug preventing test from pass")]
     public class BankruptcyStatusChangedTests
     {
         private Framework.ThirdParties.Salesforce _sales;
-        private readonly dynamic _applicationRepo = Drive.Data.Payments.Db.Applications;
         private readonly dynamic _loanDueDateNotifiSagaEntityTab = Drive.Data.OpsSagas.Db.LoanDueDateNotificationSagaEntity;
         private readonly dynamic _fixedTermLoanAppTab = Drive.Data.Payments.Db.FixedTermLoanApplications;
 
@@ -104,6 +102,7 @@ namespace Wonga.QA.Tests.Salesforce
         {
             var caseId = Guid.NewGuid();
             Application application = CreateLiveApplication();
+            application.PutIntoArrears(10);
             application.CreateRepaymentArrangement();
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.RepaymentArrangement);
             ReportBankruptcy(application, caseId);

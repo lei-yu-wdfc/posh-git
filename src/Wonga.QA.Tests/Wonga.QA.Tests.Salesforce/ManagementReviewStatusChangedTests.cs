@@ -9,7 +9,6 @@ namespace Wonga.QA.Tests.Salesforce
     [TestFixture]
     [AUT(AUT.Uk)]
     [Parallelizable(TestScope.Self)]
-    [Pending("BI customer Management Bug preventing test from pass")]
     public class ManagementReviewStatusChangedTests
     {
         private Framework.ThirdParties.Salesforce _sales;
