@@ -6,7 +6,7 @@ using Wonga.QA.UiTests.Web;
 
 namespace Wonga.QA.UiTests.Mocked.Web.Uk
 {
-    [TestFixture]
+    [Parallelizable(TestScope.All), AUT(AUT.Uk)]
     internal class TopUpTests: UiTest
     {
         [Test, JIRA("UK-826"), MultipleAsserts]

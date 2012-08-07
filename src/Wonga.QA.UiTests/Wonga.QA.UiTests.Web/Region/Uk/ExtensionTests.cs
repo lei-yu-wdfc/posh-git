@@ -16,7 +16,7 @@ using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 
 namespace Wonga.QA.UiTests.Web.Region.Uk
 {
-    [Parallelizable(TestScope.All)]
+    [Parallelizable(TestScope.All), AUT(AUT.Uk)]
     class ExtensionTests : UiTest
     {
         private int _amountMax;
@@ -209,7 +209,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
         #endregion
         
-        [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1627", "UK-1746", "UKWEB-911"), MultipleAsserts, Owner(Owner.StanDesyatnikov, Owner.OrizuNwokeji)]
+        [Test, JIRA("UK-427", "UK-1627", "UK-1746", "UKWEB-911"), MultipleAsserts, Owner(Owner.StanDesyatnikov, Owner.OrizuNwokeji)]
         [Category(TestCategories.CoreTest)]
         public void ExtensionJourneyPass()
         {
@@ -241,7 +241,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Assert.IsFalse(dealDonePage.IsDealDonePageDateTokenPresent());
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1321", "UK-1522", "UK-1746"), MultipleAsserts, Owner(Owner.StanDesyatnikov, Owner.OrizuNwokeji)]
+        [Test, JIRA("UK-1321", "UK-1522", "UK-1746"), MultipleAsserts, Owner(Owner.StanDesyatnikov, Owner.OrizuNwokeji)]
         public void ExtensionJourneyDecline()
         {
             string email = Get.RandomEmail();
@@ -270,7 +270,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Assert.IsFalse(declinedPage.IsPaymentFailedDateNotPresent());
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1323", "UK-1523", "UK-1746"), MultipleAsserts, Owner(Owner.StanDesyatnikov, Owner.OrizuNwokeji)]
+        [Test, JIRA("UK-1323", "UK-1523", "UK-1746"), MultipleAsserts, Owner(Owner.StanDesyatnikov, Owner.OrizuNwokeji)]
         public void ExtensionJourneyError()
         {
             string email = Get.RandomEmail();
@@ -296,7 +296,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             var errorPage = extensionProcessingPage.WaitFor<ExtensionErrorPage>() as ExtensionErrorPage;
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1739", "UK-2121"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
+        [Test, JIRA("UK-427", "UK-1739", "UK-2121"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
         [Row(100, 5, 1)]
         [Row(400, 2, 1)]
         [Row(400, 7, 1)]
@@ -307,7 +307,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             ExtensionRequestPage(loanAmount, loanTerm, extensionDays);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-427"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
+        [Test, JIRA("UK-427"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
         public void ExtensionRequestPageChangeExtensionDaysFieldTest()
         {
             int loanAmount = 1;
@@ -315,7 +315,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             ExtensionRequestPageChangeDays(loanAmount, loanTerm);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-427", "Uk-1862", "UK-2121", "UKWEB-304"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
+        [Test, JIRA("UK-427", "Uk-1862", "UK-2121", "UKWEB-304"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
         [Pending("UKWEB-304: Incorrect Future Interest and Fees in Extension afer N days after application")]
         [Row(1, 2, 1)]
         [Row(1, 7, 1)] // UKWEB-304
@@ -325,7 +325,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             ExtensionRequestPageNDaysAfterLoanTaken(loanAmount, loanTerm, daysAfterLoan);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-427"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
+        [Test, JIRA("UK-427"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
         [Pending("Test in development")]
         public void ExtensionRequestPage1TopupAnd1ExtendTest()
         {
@@ -340,7 +340,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Extend(email, mySummaryPage, loanTerm, application, extensionDays);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1862", "UK-1859"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
+        [Test, JIRA("UK-427", "UK-1862", "UK-1859"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
         public void TotalPayableFutureInterestAndFeesTest()
         {
             const int extensionDays = 1;

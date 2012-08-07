@@ -6,10 +6,10 @@ using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 
 namespace Wonga.QA.UiTests.Web.Region.Uk
 {
-    [Parallelizable(TestScope.All)]
+    [Parallelizable(TestScope.All), AUT(AUT.Uk)]
     class TimeoutTest : UiTest
     {
-        [Test, AUT(AUT.Uk), JIRA("UK-794", "UKWEB-238")]
+        [Test, JIRA("UK-794", "UKWEB-238")]
         public void AutologoutRedirectTest()
         {
             string email = Get.RandomEmail();
@@ -31,7 +31,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             var timeoutPageReopened = new TimeoutTestPage(this.Client); // redirected to test page. 
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-794"), Pending("UKWEB-948: After timeout and login, the My Summary page does not open")]
+        [Test, JIRA("UK-794"), Pending("UKWEB-948: After timeout and login, the My Summary page does not open")]
         public void AutologoutDoesNotRedirectTest()
         {
             string email = Get.RandomEmail();

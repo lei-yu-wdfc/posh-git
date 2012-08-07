@@ -5,10 +5,10 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.UiTests.Web.Region.Uk
 {
-    [Parallelizable(TestScope.All)]
+    [Parallelizable(TestScope.All), AUT(AUT.Uk)]
     class LoginTest : UiTest
     {
-        [Test, AUT(AUT.Uk), JIRA("QA-160"), Category(TestCategories.SmokeTest)]//don`t work yet
+        [Test, JIRA("QA-160"), Category(TestCategories.SmokeTest)]//don`t work yet
         public void LogInShouldBeRedirectedToMySummaryPage()
         {
             var homePage = Client.Home();

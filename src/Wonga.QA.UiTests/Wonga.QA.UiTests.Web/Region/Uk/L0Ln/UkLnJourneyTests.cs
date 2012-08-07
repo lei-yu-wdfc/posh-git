@@ -12,10 +12,10 @@ using Wonga.QA.Framework.Api;
 
 namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
 {
-    [Parallelizable(TestScope.All)]
-    public class UkLnJourneyTests : UiTest
+    [Parallelizable(TestScope.All), AUT(AUT.Uk)]
+    public class LnJourneyTests : UiTest
     {
-        [Test, AUT(AUT.Uk), JIRA("UK-1533", "UK-1902", "UKWEB-914"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
+        [Test, JIRA("UK-1533", "UK-1902", "UKWEB-914"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
         [Description("UI Ln Journey after L0 is created via API. Mobile phone number is updated during Ln")]
         public void LnNewMobilePhonePassed()
         {
@@ -35,7 +35,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
             var page = journeyLn.Teleport<MySummaryPage>() as MySummaryPage;
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1533"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
+        [Test, JIRA("UK-1533"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
         [Description("UI Ln Journey after L0 is created via API")]
         public void LnWithoutChangingMobilePassed()
         {
@@ -55,7 +55,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
             var page = journeyLn.Teleport<MySummaryPage>() as MySummaryPage;
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-886"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
+        [Test, JIRA("UK-886"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
         public void LnExistingMobilePhoneNotAccepted()
         {
             var loginPage = Client.Login();
@@ -92,7 +92,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
                           "Message that mobile phone number has not changed is not dispalyed");
         }
 
-        [Test, AUT(AUT.Uk), MultipleAsserts, Owner(Owner.PavithranVangiti)]
+        [Test, MultipleAsserts, Owner(Owner.PavithranVangiti)]
         public void LnUrlsAreCorrect()
         {
             var loginPage = Client.Login();

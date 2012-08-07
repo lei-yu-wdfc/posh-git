@@ -15,7 +15,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
     /* Check L0 account setup link toggle is clicked and SECCI, T&C or explanation links are broken 
      * and a prescribed error message is displayed and that progression in the application is stopped
      * Returning to the start of a journey will clear errors and allow progression*/
-    [JIRA("UKWEB-365"), Parallelizable(TestScope.All)]
+    [JIRA("UKWEB-365"), Parallelizable(TestScope.All), AUT(AUT.Uk)]
     public class LegalDocumentsTests : UiTest
     {
         #region L0 Account Details page
@@ -31,7 +31,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
         // 1. Start L0, simulate documents fetching issue, open a legal document, get error.
         // 2. Ensure user cannot proceed to Bank Details page
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-365", "UKWEB-1005"), IgnorePageErrors, Owner(Owner.OrizuNwokeji, Owner.PavithranVangiti), Pending("UKWEB-1005: With document links turned off, clicking Next button in Account Details page should show the error message")]
+        [Test, JIRA("UKWEB-365", "UKWEB-1005"), IgnorePageErrors, Owner(Owner.OrizuNwokeji, Owner.PavithranVangiti), Pending("UKWEB-1005: With document links turned off, clicking Next button in Account Details page should show the error message")]
         public void L0AccountDetails_DocumentsLinkIsTurnedOff_DisplayErrorMessage()
         {
             var loginPage = Client.Login();
@@ -93,7 +93,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
         // 1. Start L0, simulate documents fetching issue, open a legal document, get error. 
         // 2. Restart L0 and successfully proceed to Bank Details page without opening a legal document.
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-365", "UKWEB-1005"), IgnorePageErrors, Pending("UKWEB-1005: With document links turned off, clicking Next button in Account Details page should show the error message"), Owner(Owner.PavithranVangiti)]
+        [Test, JIRA("UKWEB-365", "UKWEB-1005"), IgnorePageErrors, Pending("UKWEB-1005: With document links turned off, clicking Next button in Account Details page should show the error message"), Owner(Owner.PavithranVangiti)]
         public void L0AccountDetailsRestartL0AndContinueWithoutOpeningLegalDocumentsL0ShouldSucceed()
         {
             var loginPage = Client.Login();
@@ -152,7 +152,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
         /* Start L0, simulate documents fetching issue, and successfully proceed to the Bank Details page 
         without opening a legal document */
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-365"), IgnorePageErrors, Owner(Owner.StanDesyatnikov)]
+        [Test, JIRA("UKWEB-365"), IgnorePageErrors, Owner(Owner.StanDesyatnikov)]
         public void L0AccountDetailsContinueWithoutOpeningLegalDocumentsL0ShouldSucceed()
         {
             var loginPage = Client.Login();
@@ -195,7 +195,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
         // 1. Start L0, simulate documents fetching issue in Accept page, open a legal document, get error.
         // 2. Ensure user cannot proceed to Deal Done page
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-365"), IgnorePageErrors, Owner(Owner.StanDesyatnikov)]
+        [Test, JIRA("UKWEB-365"), IgnorePageErrors, Owner(Owner.StanDesyatnikov)]
         public void L0AcceptPageLegalDocumentsErrorTest()
         {
             const String errorMessage = "Oops. We are having technical issues and are unable to complete your application. Please try again shortly or call us on 08448 429 109.";
@@ -240,7 +240,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
         /* Start L0, simulate documents fetching issue in Accept page, and successfully proceed to the
         Deal Done without opening a legal document*/
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-365"), IgnorePageErrors, Owner(Owner.PavithranVangiti)]
+        [Test, JIRA("UKWEB-365"), IgnorePageErrors, Owner(Owner.PavithranVangiti)]
         public void L0AcceptPageContinueWithoutOpeningLegalDocumentsL0ShouldSucceed()
         {
             var loginPage = Client.Login();
@@ -278,7 +278,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
         // 1. Start Extension, simulate documents fetching issue in Extension Agreement page, open a legal document, get error.
         // 2. Ensure user cannot proceed to Deal Done page
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-365"), IgnorePageErrors, Owner(Owner.PavithranVangiti)]
+        [Test, JIRA("UKWEB-365"), IgnorePageErrors, Owner(Owner.PavithranVangiti)]
         public void ExtensionAgreementPageLegalDocumentsErrorTest()
         {
             string email = Get.RandomEmail();
@@ -340,7 +340,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
         // 1. Start Extension, simulate documents fetching issue in Extension Agreement page, open a legal document, get error. 
         // 2. Restart Extension and successfully proceed to Deal Done page without opening a legal document.
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-365"), MultipleAsserts, IgnorePageErrors, Owner(Owner.PavithranVangiti)]
+        [Test, JIRA("UKWEB-365"), MultipleAsserts, IgnorePageErrors, Owner(Owner.PavithranVangiti)]
         public void ExtensionRestartExtensionAndContinueWithoutOpeningLegalDocumentsShouldSucceed()
         {
             string email = Get.RandomEmail();
@@ -430,7 +430,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
         /* Start Extension, simulate documents fetching issue in Extension Agreement page, and successfully proceed to the
         Deal Done without opening a legal document*/
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-365"), MultipleAsserts, IgnorePageErrors, Owner(Owner.PavithranVangiti)]
+        [Test, JIRA("UKWEB-365"), MultipleAsserts, IgnorePageErrors, Owner(Owner.PavithranVangiti)]
         public void ExtensionContinueWithoutOpeningLegalDocumentsShouldSucceed()
         {
             string email = Get.RandomEmail();

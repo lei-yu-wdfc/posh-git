@@ -12,10 +12,10 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.UiTests.Web.Region.Uk
 {
-    [Parallelizable(TestScope.All)]
+    [Parallelizable(TestScope.All), AUT(AUT.Uk)]
     class ExtensionAgreementTest : UiTest
     {
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-243", "UKWEB-294"), MultipleAsserts, Owner(Owner.StanDesyatnikov, Owner.OrizuNwokeji)]
+        [Test, JIRA("UKWEB-243", "UKWEB-294"), MultipleAsserts, Owner(Owner.StanDesyatnikov, Owner.OrizuNwokeji)]
         public void ExtensionAgreementPageTest()
         {
             string email = Get.RandomEmail();
@@ -70,7 +70,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Assert.Contains(secciText, expectedRepresentativeApr);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-243", "UKWEB-294"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
+        [Test, JIRA("UKWEB-243", "UKWEB-294"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
         [Row (2, 100, 1, 7)]
         public void ExtensionAgreementPageNDaysAfterLoanTest(int loanTerm, int loanAmount, int daysAfterLoan, int daysToExtend)
         {
