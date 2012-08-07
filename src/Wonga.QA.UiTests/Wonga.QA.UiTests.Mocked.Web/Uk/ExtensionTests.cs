@@ -26,7 +26,7 @@ namespace Wonga.QA.UiTests.Mocked.Web.Uk
 
             mySummaryPage.ChangePromiseDateButtonClick();
             var requestPage = new ExtensionRequestPage(this.Client);
-
+            
             //Branch point - Add Cv2 for each path and proceed
             requestPage.setSecurityCode("123");
             requestPage.SubmitButtonClick();
