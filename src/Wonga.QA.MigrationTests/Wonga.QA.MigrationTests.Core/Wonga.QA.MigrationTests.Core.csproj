@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{A65E24D5-E8D8-4075-9D1F-04CFA7EE8A2A}</ProjectGuid>
+    <ProjectGuid>{5E1C81C1-EB11-4952-AA2D-AA67937380AE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Wonga.QA.MigrationTests</RootNamespace>
-    <AssemblyName>Wonga.QA.MigrationTests</AssemblyName>
+    <RootNamespace>Wonga.QA.MigrationTests.Core</RootNamespace>
+    <AssemblyName>Wonga.QA.MigrationTests.Core</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -36,6 +36,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="WebDriver">
       <HintPath>..\..\..\bin\WebDriver.dll</HintPath>
@@ -77,32 +78,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\cde_request.cs" />
-    <Compile Include="MigrationApiTests.cs" />
-    <Compile Include="MigrationGenderTests.cs" />
-    <Compile Include="MigrationUiTests.cs" />
+    <Compile Include="MigratedUser.cs" />
+    <Compile Include="MigrationHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScorecardTesting.cs" />
-    <Compile Include="Utils\ScorecardHelper.cs" />
-    <Compile Include="Utils\V2RequestFile.cs" />
-    <Compile Include="Selenium\V2\Elements\V2BaseElement.cs" />
-    <Compile Include="Selenium\V2\Elements\V2SlidersElement.cs" />
-    <Compile Include="Selenium\V2\Pages\V2BasePage.cs" />
-    <Compile Include="Selenium\V2\Pages\V2HomePage.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Output\" />
-    <Folder Include="Selenium\V3\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Wonga.QA.MigrationTests.Core\Wonga.QA.MigrationTests.Core.csproj">
-      <Project>{5E1C81C1-EB11-4952-AA2D-AA67937380AE}</Project>
-      <Name>Wonga.QA.MigrationTests.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

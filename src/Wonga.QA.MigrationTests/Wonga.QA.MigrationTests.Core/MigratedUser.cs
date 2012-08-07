@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Wonga.QA.MigrationCore
+namespace Wonga.QA.MigrationTests.Core
 {
     public class MigratedUser
     {

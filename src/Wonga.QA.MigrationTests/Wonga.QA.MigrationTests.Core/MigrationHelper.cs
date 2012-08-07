@@ -3,7 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using Wonga.QA.Framework;
 
-namespace Wonga.QA.MigrationCore
+namespace Wonga.QA.MigrationTests.Core
 {
     public class MigrationHelper
     {
