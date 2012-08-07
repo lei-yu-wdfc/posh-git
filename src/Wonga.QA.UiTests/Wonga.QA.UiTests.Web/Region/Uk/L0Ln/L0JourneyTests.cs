@@ -10,13 +10,13 @@ using Wonga.QA.Framework.Api;
 
 namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
 {
-    [Parallelizable(TestScope.All)]
+    [Parallelizable(TestScope.All), AUT(AUT.Uk)]
     public class L0JourneyTests : UiTest
     {
 
         // Check L0 loan is accepted and Loan Agreement is displayed
         // Check L0 loan is completed and text on Deal Done page is correct
-        [Test, AUT(AUT.Uk), JIRA("UK-730", "UK-731"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
+        [Test, JIRA("UK-730", "UK-731"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
         public void L0AcceptedCompleted()
         {
             string expectedDealDoneText = "Your application has been accepted\r\nThe cash will be winging its way into your bank account in the next 15 minutes! Please just be aware that different banks take different lengths of time to show new deposits.\r\nPlease don\'t forget that you have promised to repay on {repay date} when you\'ll need to have £{repay amount} ready in the bank account linked to your debit card. You can login to your Wonga account at any time to keep track of your loan, apply for more cash (depending on your trust rating) and even extend or repay early.\r\nWe hope you find the money useful and, if you love our service, please now check out the options below!";
@@ -38,7 +38,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
             Assert.AreEqual(expectedDealDoneText, actualDealDoneText);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-438", "UK-1823", "UKWEB-253"), Owner(Owner.StanDesyatnikov)]
+        [Test, JIRA("UK-438", "UK-1823", "UKWEB-253"), Owner(Owner.StanDesyatnikov)]
         [Pending("Stops on Accept page. Then also opens Success page, not Decline")]
         public void L0DeclinedForEmployedPartTimeTest()
         {
@@ -51,7 +51,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
             Assert.IsTrue(declinedPage.DeclineAdviceExists());
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-438", "UK-1823"), Owner(Owner.StanDesyatnikov)]
+        [Test, JIRA("UK-438", "UK-1823"), Owner(Owner.StanDesyatnikov)]
         [Pending("Enable if we need to simulate different Employment statuses for declined loan")]
         public void L0DeclinedForNotFullEmployedTest([EnumData(typeof(EmploymentStatusEnum), ExcludeArray = new object[] { EmploymentStatusEnum.EmployedFullTime })] EmploymentStatusEnum employmentStatus)
         {
@@ -65,7 +65,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
             Assert.IsTrue(declinedPage.DeclineAdviceExists());
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-969", "UKWEB-250"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
+        [Test, JIRA("UK-969", "UKWEB-250"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
         public void L0PreAgreementPartonAccountSetupPageTest()
         {
             var loginPage = Client.Login();

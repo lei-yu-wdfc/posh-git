@@ -9,12 +9,13 @@ using System.Linq;
 using System;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 
-namespace Wonga.QA.UiTests.Web
+namespace Wonga.QA.UiTests.Web.Region.Uk
 {
+    [Parallelizable(TestScope.All), AUT(AUT.Uk)]
     class TopUpTests : UiTest
     {
 
-        [Test, AUT(AUT.Uk), JIRA("QA-341"), Owner(Owner.MihailPodobivsky)]
+        [Test, JIRA("QA-341"), Owner(Owner.MihailPodobivsky)]
         public void CustomerOnTheDayBeforeDueDateShouldntBeAbleToTakeExtraCash()
         {
             var loginPage = Client.Login();
@@ -36,7 +37,7 @@ namespace Wonga.QA.UiTests.Web
             Assert.IsFalse(mySummaryPage.LookForTopupSliders());
         }
 
-        [Test, AUT(AUT.Uk), JIRA("QA-342"), Owner(Owner.MihailPodobivsky)]
+        [Test, JIRA("QA-342"), Owner(Owner.MihailPodobivsky)]
         public void CustomerInArrearsShoudntBeAbleToTakeExtraCredit()
         {
             var loginPage = Client.Login();
@@ -57,7 +58,7 @@ namespace Wonga.QA.UiTests.Web
             Assert.IsFalse(mySummaryPage.LookForTopupSliders());
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-826", "UK-789", "UK-2016", "UKWEB-928"), MultipleAsserts]
+        [Test, JIRA("UK-826", "UK-789", "UK-2016", "UKWEB-928"), MultipleAsserts]
         [Owner(Owner.OrizuNwokeji, Owner.StanDesyatnikov)]
         [Category(TestCategories.CoreTest)]
         [Pending("UKWEB-928: Top Up throws an exception on the Accept page")]
@@ -120,7 +121,7 @@ namespace Wonga.QA.UiTests.Web
             Assert.IsTrue(this.Client.Driver.Url.Contains("my-account"), "My Account page was not open");
         }
     
-        [Test, AUT(AUT.Uk), JIRA("UK-789"), MultipleAsserts]
+        [Test, JIRA("UK-789"), MultipleAsserts]
         [Owner(Owner.StanDesyatnikov)]
         // Check on the Top Up Request page that
         // the Available Credit is correct for various scenarios
@@ -169,7 +170,7 @@ namespace Wonga.QA.UiTests.Web
             Assert.Contains(actualMaxAvailableCredit, expectedAvailableCredit, "Max Available Credit is wrong for scenario 3");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("QA-340")]
+        [Test, JIRA("QA-340")]
         [Owner(Owner.PetrTarasenko)]
         public  void TopUpExtraCashequalToChoosen()
         {
