@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\cde_request.cs" />
+    <Compile Include="MigrationApiTests.cs" />
     <Compile Include="MigrationGenderTests.cs" />
     <Compile Include="MigrationUiTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -12,7 +12,7 @@ namespace Wonga.QA.Framework.Data
     {
         private readonly DataDriver _drive = new DataDriver();
 
-        private static int _migrationRunId ;
+        private static int _migrationRunId;
 
         private int GetLatestMigrationRunId()
         {
@@ -27,7 +27,7 @@ namespace Wonga.QA.Framework.Data
             SqlDataAdapter adapter = new SqlDataAdapter(cmd);
             adapter.Fill(runId);
 
-            return (int) runId.Tables[0].Rows[0].ItemArray[0];
+            return (int)runId.Tables[0].Rows[0].ItemArray[0];
         }
 
         private int GetTotalUserInOpsAccounts(string forYear = null)
@@ -67,7 +67,7 @@ namespace Wonga.QA.Framework.Data
             var totalUsers = 1000;
             if (!string.IsNullOrEmpty(forYear))
             {
-                totalUsers = GetTotalUserInOpsAccounts(forYear);    
+                totalUsers = GetTotalUserInOpsAccounts(forYear);
             }
 
             if (callUser == null || Convert.ToInt64(callUser) > Convert.ToInt64(totalUsers) || Convert.ToInt64(callUser) == 0)
@@ -113,7 +113,7 @@ namespace Wonga.QA.Framework.Data
 
             DataSet dsDecryptedPassword = new DataSet();
             String query = "select * from [GreyfaceShell].[dbo].[GetUserPassword](@password)"; //GetUserPassword is table-valued n it can't be done with simple.Data
-            SqlCommand cmd = new SqlCommand(query, new SqlConnection("Data Source='mig-int-v2.test.wonga.com';Initial Catalog=GreyfaceShell;Integrated Security=True"));
+            SqlCommand cmd = new SqlCommand(query, new SqlConnection("Data Source='(local)';Initial Catalog=GreyfaceShell;Integrated Security=True"));
             cmd.Parameters.Add("password", SqlDbType.VarBinary).Value = passwordHashKey;
             SqlDataAdapter adapter = new SqlDataAdapter(cmd);
             adapter.Fill(dsDecryptedPassword);
@@ -121,7 +121,7 @@ namespace Wonga.QA.Framework.Data
             return dsDecryptedPassword.Tables[0].Rows[0].ItemArray[0].ToString();
         }
 
-        public void StoreTestResults(string batchId,string testName, MigratedUser migratedUser, DateTime testStartTime, DateTime testEndTime, byte testResult)
+        public void StoreTestResults(string batchId, string testName, MigratedUser migratedUser, DateTime testStartTime, DateTime testEndTime, byte testResult)
         {
             var acceptanceTestResultsTable = _drive.MigrationStaging.Db.test.AcceptanceTestResults;
 
@@ -132,6 +132,16 @@ namespace Wonga.QA.Framework.Data
             var acceptanceTestControlTable = _drive.MigrationStaging.Db.test.AcceptanceTestControlTable;
 
             acceptanceTestControlTable.DeleteByAccountId(migratedUser.AccountId);
+        }
+
+        public bool IsControlTableEmpty()
+        {
+            var acceptanceTestControl = _drive.MigrationStaging.Db.test.AcceptanceTestControl;
+            if (acceptanceTestControl.All().Count() > 0)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
