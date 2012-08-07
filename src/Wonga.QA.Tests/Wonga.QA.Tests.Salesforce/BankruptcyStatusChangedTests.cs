@@ -29,7 +29,6 @@ namespace Wonga.QA.Tests.Salesforce
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-149"), Owner(Owner.ShaneMcHugh)]
         [Description("Verifies that when a live application is moved to complaint status salesforce is informed and a suppression record is created")]
-        [Parallelizable]
         public void ApplicationInBankruptcy_SubmitsBankruptStatus_ToSalesforce()
         {
             var caseId = Guid.NewGuid();
@@ -40,7 +39,6 @@ namespace Wonga.QA.Tests.Salesforce
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-149"), Owner(Owner.ShaneMcHugh)]
         [Description("Verifies that when an application is due today and it is moved to bankrupt status salesforce is informed and a suppression record is created")]
-        [Parallelizable]
         public void ApplicationDueToday_SubmitsBankruptStatus_ToSalesforce()
         {
             var caseId = Guid.NewGuid();
@@ -53,7 +51,6 @@ namespace Wonga.QA.Tests.Salesforce
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-149"), Owner(Owner.ShaneMcHugh)]
         [Description("Verifies that when an application is in arrears and it is moved to bankrupt status salesforce is informed and a suppression record is created")]
-        [Parallelizable]
         public void ApplicationInArrears_SubmitsBankruptStatus_ToSalesforce()
         {
             var caseId = Guid.NewGuid();
@@ -66,7 +63,6 @@ namespace Wonga.QA.Tests.Salesforce
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-149"), Owner(Owner.ShaneMcHugh)]
         [Description("Verifies that when an application is in fraud and it is moved to bankrupt status salesforce is informed and a suppression record is created")]
-        [Parallelizable]
         public void ApplicationFraud_SubmitsBankruptStatus_ToSalesforce()
         {
             var caseId = Guid.NewGuid();
@@ -80,7 +76,6 @@ namespace Wonga.QA.Tests.Salesforce
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-149"), Owner(Owner.ShaneMcHugh), Pending("DCA Not implemented")]
         [Description("Verifies that when an application is in DCA status and it is moved to bankrupt status salesforce is informed and a suppression record is created")]
-        [Parallelizable]
         public void ApplicationDCA_SubmitsBankruptStatus_ToSalesforce()
         {
             var caseId = Guid.NewGuid();
@@ -93,7 +88,6 @@ namespace Wonga.QA.Tests.Salesforce
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-149"), Owner(Owner.ShaneMcHugh)]
         [Description("Verifies that when an application is in hardship and it is moved to bankrupt status salesforce is informed and a suppression record is created")]
-        [Parallelizable]
         public void ApplicationInHardhsip_SubmitsBankruptStatus_ToSalesforce()
         {
             var caseId = Guid.NewGuid();
@@ -106,7 +100,6 @@ namespace Wonga.QA.Tests.Salesforce
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-149"), Owner(Owner.ShaneMcHugh)]
         [Description("Verifies that when an application is in a repayment arrangement and it is moved to bankrupt status salesforce is informed and a suppression record is created")]
-        [Parallelizable]
         public void ApplicationInRepaymentArrangement_SubmitsBankruptStatus_ToSalesforce()
         {
             var caseId = Guid.NewGuid();
@@ -119,7 +112,6 @@ namespace Wonga.QA.Tests.Salesforce
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-149"), Owner(Owner.ShaneMcHugh)]
         [Description("Verifies that when an application is in complaint status and it is moved to bankrupt status salesforce is informed and a suppression record is created")]
-        [Parallelizable]
         public void ApplicationInComplaint_SubmitsBankruptStatus_ToSalesforce()
         {
             var caseId = Guid.NewGuid();
@@ -132,7 +124,6 @@ namespace Wonga.QA.Tests.Salesforce
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-149"), Owner(Owner.ShaneMcHugh)]
         [Description("Verifies that when an application is in management review status and it is moved to bankrupt status salesforce is informed and a suppression record is created")]
-        [Parallelizable]
         public void ApplicationInManagementReview_SubmitsBankruptStatus_ToSalesforce()
         {
             var caseId = Guid.NewGuid();
@@ -145,7 +136,6 @@ namespace Wonga.QA.Tests.Salesforce
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-149"), Owner(Owner.ShaneMcHugh)]
         [Description("Verifies that when an application is in refund status and it is moved to bankrupt status salesforce is informed and a suppression record is created")]
-        [Parallelizable]
         public void ApplicationInRefund_SubmitsBankruptStatus_ToSalesforce()
         {
             var caseId = Guid.NewGuid();

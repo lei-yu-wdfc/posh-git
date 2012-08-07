@@ -27,7 +27,6 @@ namespace Wonga.QA.Tests.Salesforce
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-140"), Owner(Owner.ShaneMcHugh)]
         [Description("Verifies that when an application is in due today status and it is moved to management review status salesforce is informed. When the management review status is removed return to previous status")]
-        [Parallelizable]
         public void ApplicationDueToday_SubmitsManagementReview_ToSalesforce()
         {
             var caseId = Guid.NewGuid();
@@ -42,7 +41,6 @@ namespace Wonga.QA.Tests.Salesforce
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-140"), Owner(Owner.ShaneMcHugh)]
         [Description("Verifies that when an application is in arrears status and it is moved to management review status salesforce is informed. When the management review status is removed return to previous status")]
-        [Parallelizable]
         public void ApplicationInArrears_SubmitsManagementReview_ToSalesforce()
         {
             var caseId = Guid.NewGuid();
@@ -58,7 +56,6 @@ namespace Wonga.QA.Tests.Salesforce
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-140"), Owner(Owner.ShaneMcHugh)]
         [Description("Verifies that when an application is in fraud status and it is moved to management review status salesforce is informed. When the management review status is removed return to previous status")]
-        [Parallelizable]
         public void ApplicationFraud_SubmitsManagementReview_ToSalesforce()
         {
             var caseId = Guid.NewGuid();
@@ -74,7 +71,6 @@ namespace Wonga.QA.Tests.Salesforce
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-140"), Owner(Owner.ShaneMcHugh)]
         [Description("Verifies that when an application is in hardship status and it is moved to management review status salesforce is informed. When the management review status is removed return to previous status")]
-        [Parallelizable]
         public void ApplicationHardship_SubmitsManagementReview_ToSalesforce()
         {
             var caseId = Guid.NewGuid();
@@ -89,7 +85,6 @@ namespace Wonga.QA.Tests.Salesforce
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-140"), Owner(Owner.ShaneMcHugh)]
         [Description("Verifies that when an application is in bankrupt status and it is moved to management review status salesforce is informed. When the management review status is removed return to previous status")]
-        [Parallelizable]
         public void ApplicationBankrupt_SubmitsManagementReview_ToSalesforce()
         {
             var caseId = Guid.NewGuid();
@@ -104,7 +99,6 @@ namespace Wonga.QA.Tests.Salesforce
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-140"), Owner(Owner.ShaneMcHugh)]
         [Description("Verifies that when an application is in complaint status and it is moved to management review status salesforce is informed. When the management review status is removed return to previous status")]
-        [Parallelizable]
         public void ApplicationComplaint_SubmitsManagementReview_ToSalesforce()
         {
             var caseId = Guid.NewGuid();
@@ -119,7 +113,6 @@ namespace Wonga.QA.Tests.Salesforce
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-140"), Owner(Owner.ShaneMcHugh)]
         [Description("Verifies that when an application is in Repayment Arrangement status and it is moved to management review status salesforce is informed. When the management review status is removed return to previous status")]
-        [Parallelizable]
         public void ApplicationRepaymentArrangement_SubmitsManagementReview_ToSalesforce()
         {
             var caseId = Guid.NewGuid();
@@ -134,7 +127,6 @@ namespace Wonga.QA.Tests.Salesforce
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-140"), Owner(Owner.ShaneMcHugh)]
         [Description("Verifies that when an application is in Refund status and it is moved to management review status salesforce is informed. When the management review status is removed return to previous status")]
-        [Parallelizable]
         public void ApplicationInRefund_SubmitsManagementReview_ToSalesforce()
         {
             var caseId = Guid.NewGuid();
@@ -149,7 +141,6 @@ namespace Wonga.QA.Tests.Salesforce
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-140"), Owner(Owner.ShaneMcHugh), Pending("DCA Not implemented")]
         [Description("Verifies that when an application is in DCA status and it is moved to management review status salesforce is informed. When the management review status is removed return to previous status")]
-        [Parallelizable]
         public void ApplicationInDCA_SubmitsManagementReview_ToSalesforce()
         {
             var caseId = Guid.NewGuid();
@@ -164,7 +155,6 @@ namespace Wonga.QA.Tests.Salesforce
         [Test]
         [AUT(AUT.Uk), JIRA("UKOPS-140"), Owner(Owner.ShaneMcHugh)]
         [Description("Verifies that when an application is in live status and it is moved to management review status salesforce is informed")]
-        [Parallelizable]
         public void ApplicationLive_SubmitsManagementReview_ToSalesforce()
         {
             var caseId = Guid.NewGuid();
