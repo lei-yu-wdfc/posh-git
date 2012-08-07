@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\cde_request.cs" />
+    <Compile Include="MigrationApiTests.cs" />
     <Compile Include="MigrationGenderTests.cs" />
     <Compile Include="MigrationUiTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -95,6 +96,12 @@
   <ItemGroup>
     <Folder Include="Output\" />
     <Folder Include="Selenium\V3\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Wonga.QA.MigrationTests.Core\Wonga.QA.MigrationTests.Core.csproj">
+      <Project>{5E1C81C1-EB11-4952-AA2D-AA67937380AE}</Project>
+      <Name>Wonga.QA.MigrationTests.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

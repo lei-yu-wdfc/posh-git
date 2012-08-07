@@ -176,4 +176,7 @@
     <AssesmentEmail>assesment@wonga.com</AssesmentEmail>
   </FinancialAssessmentPage>
 
+  <ApplyPage>
+    <PinErrorMessage>The SMS PIN you entered was incorrect</PinErrorMessage>
+  </ApplyPage>
 </ContentMap>

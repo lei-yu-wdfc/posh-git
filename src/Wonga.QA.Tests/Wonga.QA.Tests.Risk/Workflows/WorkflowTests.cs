@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.Db;
-using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Workflows
 {
 	[TestFixture, Category(TestCategories.CoreTest)]
     [AUT(AUT.Ca, AUT.Za)]
-	public partial class WorkflowTests
+	public class WorkflowTests
 	{
 		[FixtureSetUp]
 		public void FixtureSetUp()
@@ -23,10 +20,11 @@ namespace Wonga.QA.Tests.Risk.Workflows
 			{
 				case (AUT.Za):
 					{
-						var hyphenAhvServiceEnabled = Drive.Data.Ops.GetServiceConfiguration<bool?>("Mocks.HyphenAHVWebServiceEnabled");
-						var iovationMockEnabled = Drive.Data.Ops.GetServiceConfiguration<bool?>("Mocks.IovationEnabled");
+						var hyphenAhvServiceEnabled =
+							Drive.Data.Ops.GetServiceConfiguration("Mocks.HyphenAHVWebServiceEnabled", true);
+						var iovationMockEnabled = Drive.Data.Ops.GetServiceConfiguration("Mocks.IovationEnabled", true);
 
-						if( hyphenAhvServiceEnabled == null || hyphenAhvServiceEnabled == false || iovationMockEnabled == null || iovationMockEnabled == false)
+						if( !hyphenAhvServiceEnabled || !iovationMockEnabled)
 						{
 							Assert.Inconclusive("Test could not be ran due to service configuration");
 						}
@@ -40,7 +38,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 			}
 		}
 
-		[Test, AUT(AUT.Za, AUT.Ca), Pending]
+		[Test, AUT(AUT.Za, AUT.Ca)]
 		public void WorkflowL0SingleWorkflowUsed()
 		{
 			var customer = CustomerBuilder.New().WithEmployer("Wonga").Build();
@@ -49,7 +47,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 				.WithExpectedDecision(ApplicationDecisionStatus.Declined)
 				.Build();
 
-			var workflows = Drive.Db.GetWorkflowsForApplication(application.Id);
+			var workflows = Drive.Data.Risk.GetWorkflowsForApplication(application.Id).ToList();
 
 			Assert.AreEqual(1, workflows.Count);
 		}

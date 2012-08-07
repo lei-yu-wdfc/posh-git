@@ -195,7 +195,7 @@
 		<TransUnion>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=TransUnion</TransUnion>
 		<Uru>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=Uru</Uru>
 		<WongaPay>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=WongaPay</WongaPay>
-		<WongaWholeStaging>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=WongaWholeStaging</WongaWholeStaging>
+		<WongaWholeStaging>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=WongaWholeStagingV2</WongaWholeStaging>
 		<GreyfaceShell>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=GreyfaceShell</GreyfaceShell>
 		<Pps>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=Pps</Pps>
 		<PrepaidCard>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=PrepaidCard</PrepaidCard>

@@ -58,8 +58,8 @@ namespace Wonga.QA.MigrationTests.Utils
                                          SubmitApplicationBehaviourCommand.New(command =>
                                                                                    {
                                                                                        command.ApplicationId = applicationId;
-                                                                                       command.TermSliderPosition = v2CdeRequest.additional_information[0].SliderDefaultPeriod;
-                                                                                       command.AmountSliderPosition = v2CdeRequest.additional_information[0].SliderDefaultAmount;
+                                                                                       command.TermSliderPosition = v2CdeRequest.proposal_details[0].cash_price;
+                                                                                       command.AmountSliderPosition = v2CdeRequest.proposal_details[0].term;
                                                                                    }),
                                          SubmitClientWatermarkCommand.New(command =>
                                                                               {
@@ -71,14 +71,14 @@ namespace Wonga.QA.MigrationTests.Utils
                                          CreateFixedTermLoanApplicationUkCommand.New(command =>
                                                                                          {
                                                                                              command.AccountId = accountId;
-                                                                                             command.AffiliateId = null;
+                                                                                             //command.AffiliateId = null;
                                                                                              command.ApplicationId = applicationId;
                                                                                              command.BankAccountId = bankAccountId;
                                                                                              command.Currency = CurrencyCodeEnum.GBP;
-                                                                                             command.LoanAmount = null;
+                                                                                             command.LoanAmount = v2CdeRequest.proposal_details[0].cash_price;
                                                                                              command.PaymentCardId = paymentCardId;
-                                                                                             command.PromiseDate = null;
-                                                                                             command.PromoCodeId = null;
+                                                                                             command.PromiseDate = v2CdeRequest.additional_information[0].pay_away_date;
+                                                                                             //command.PromoCodeId = null;
                                                                                          }),
                                          RiskCreateFixedTermLoanApplicationCommand.New(command =>
                                                                                            {
@@ -86,9 +86,9 @@ namespace Wonga.QA.MigrationTests.Utils
                                                                                                command.ApplicationId = applicationId;
                                                                                                command.BankAccountId = bankAccountId;
                                                                                                command.Currency = CurrencyCodeEnum.GBP;
-                                                                                               command.LoanAmount = null;
+                                                                                               command.LoanAmount = v2CdeRequest.proposal_details[0].cash_price;
                                                                                                command.PaymentCardId = paymentCardId;
-                                                                                               command.PromiseDate = null;
+                                                                                               command.PromiseDate = v2CdeRequest.additional_information[0].pay_away_date;
                                                                                            }),
                                          VerifyFixedTermLoanCommand.New(command =>
                                                                             {
@@ -97,8 +97,12 @@ namespace Wonga.QA.MigrationTests.Utils
                                                                             })
                                      };
             //Note: Post the commands to the API + log the responses
+            foreach (var command in listOfCommands)
+            {
+                var response = Drive.Api.Commands.Post(command);
+            }
 
-            //Note: Wait for the Risk Entity to be created
+            //Note: Wait for the Risk Entity to be created / When created write to log file
             Do.With.Timeout(2).Message("The RiskApplication entity was not created").Until(() => Drive.Data.Risk.Db.RiskApplications.FindAllBy(ApplicationId: applicationId).Count() > 0);
 
             //Note: Get application decision other then Pending - We do not expect only Accepted
@@ -111,7 +115,6 @@ namespace Wonga.QA.MigrationTests.Utils
                                         {
                                             AccountId = accountId,
                                             ApplicationId = applicationId,
-
                                         });
 
 
@@ -136,12 +139,7 @@ namespace Wonga.QA.MigrationTests.Utils
         {
             return Guid.Parse
                 (Drive.Api.Queries.Post
-                     (new GetAccountQuery
-                          {
-                              Login = "qa.wonga.com+BUILD-WIN21-7af66e12-7664-4bec-8a51-f5ffb17f41b2@gmail.com",
-                              Password = "Passw0rd"
-                          }).
-                     Values["AccountId"].Single());
+                     (new GetAccountQuery {Login = email, Password = password}).Values["AccountId"].Single());
         }
         private static String ReadContentsOfFile(FileSystemInfo file)
         {

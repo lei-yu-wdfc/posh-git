@@ -175,7 +175,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
             return headerBarText;
         }
 
-        public bool IsHeaderBarVisible()
+        public bool IsHeaderBarTextVisible()
         {
             try
             {
@@ -188,9 +188,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
             }
         }
 
-        public void ClickLogoutLink()
+        public void ClickHeaderBarClickHereLink()
         {
-            Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.WelcomeMessageClickHereLink)).Click();
+            Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.HeaderBarClickHereLink)).Click();
         }
 
         public String GetWelcomeHeaderMessageText()
@@ -381,15 +381,6 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
             var responsibleLendingBox = _responsibleLendingBox.Text;
             return responsibleLendingBox;
         }
-
-        //public static void MouseOver(IWebElement element)
-        //{
-        //    String code = "var fireOnThis = arguments[0];"
-        //                + "var evObj = document.createEvent('MouseEvents');"
-        //                + "evObj.initEvent( 'mouseover', true, true );"
-        //                + "fireOnThis.dispatchEvent(evObj);";
-        //    ((IJavaScriptExecutor)element.Driver()).ExecuteScript(code, element);
-        //}
 
         public String GetRepresentativeExampleText()
         {
