@@ -38,16 +38,16 @@ namespace Wonga.QA.Framework.Data
 			return oldValue;
 		}
 
-        public T GetServiceConfiguration<T>(string keyName)
-        {
-            var row = Db.ServiceConfigurations.FindByKey(keyName);
+		public T GetServiceConfiguration<T>(string keyName, T defaultValue = default(T))
+		{
+			var row = Db.ServiceConfigurations.FindByKey(keyName);
 
-            return row != null
-                            ? ConvertToType<T>(row.Value)
-                            : default(T);
-        }
+			return row != null
+			       	? ConvertToType<T>(row.Value)
+			       	: defaultValue;
+		}
 
-		private static T ConvertToType<T>(string value)
+    	private static T ConvertToType<T>(string value)
 		{
 			Type targetType = typeof(T);
 
