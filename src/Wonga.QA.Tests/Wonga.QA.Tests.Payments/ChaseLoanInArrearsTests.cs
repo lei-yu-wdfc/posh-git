@@ -52,7 +52,7 @@ namespace Wonga.QA.Tests.Payments
 
             // Act
             // Call timeout with a state of 0 representing the first ping at 5 am ping
-            Drive.Msmq.Payments.Send(message: new Framework.Msmq.TimeoutMessage { Expires = DateTime.UtcNow, SagaId = sagaEntity.Id, State = 0 });
+            Drive.Msmq.Payments.Send( new Framework.Msmq.TimeoutMessage { Expires = DateTime.UtcNow, SagaId = sagaEntity.Id, State = 0 });
 
             // Assert that saga is complete
             Do.With.Timeout(2).Until(() => ChaseLoanInArrearsSagaEntities.FindById(sagaEntity.Id) == null);
