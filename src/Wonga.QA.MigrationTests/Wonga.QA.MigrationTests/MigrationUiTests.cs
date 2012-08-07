@@ -112,7 +112,7 @@ namespace Wonga.QA.MigrationTests
 
             var loginPage = Client.Login();
             var email = CustomerBuilder.RandomLnCustomerEmail();
-            loginPage.LoginAs("qa.wonga.com+BUILD-WIN7-ccf7b794-1ab4-4536-991c-9bfc95ee0652@gmail.com", "Passw0rd");
+            loginPage.LoginAs(email, "Passw0rd");
             var journey = JourneyFactory.GetLnJourney(Client.Home()).WithAmount(10).WithDuration(1);
             var page = journey.Teleport<MySummaryPage>() as MySummaryPage;
 
