@@ -14,7 +14,7 @@ using System;
 
 namespace Wonga.QA.UiTests.Web.Region.Uk
 {
-    [Parallelizable(TestScope.All)]
+    [Parallelizable(TestScope.All), AUT(AUT.Uk)]
     class RepayTests : UiTest
     {
         //private int _amountMax;
@@ -23,7 +23,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         //private ApiResponse _response;
         //private DateTime _actualDate;
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247"), MultipleAsserts]
+        [Test, JIRA("UKWEB-247"), MultipleAsserts]
         public void DefaultRepayPageValuesAreCorrect()
         {
             // Build L0 loan
@@ -66,7 +66,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Assert.AreEqual(sExpectedWantToRepay, sActualRepayTotal, "Repay Total in the Read Me message is wrong.");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247"), MultipleAsserts]
+        [Test, JIRA("UKWEB-247"), MultipleAsserts]
         public void ChangeWantToRepayBox()
         {
 
@@ -147,7 +147,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             }
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247"), MultipleAsserts]
+        [Test, JIRA("UKWEB-247"), MultipleAsserts]
         public void ClickingCancelOnRepayPageOpensMySummaryPage()
         {
             var loginPage = Client.Login();
@@ -171,7 +171,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
         // TBD
         // Check for scenarion 3, 4, 6, 7
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247"), Pending("In development"), MultipleAsserts]
+        [Test, JIRA("UKWEB-247"), Pending("In development"), MultipleAsserts]
         [Row(3)]
         [Row(4)]
         [Row(6)]
@@ -181,7 +181,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             //RepaymentVsScenarios(scenarioId);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1833", "UKWEB-244", "UKWEB-912"), MultipleAsserts]
+        [Test, JIRA("UK-1833", "UKWEB-244", "UKWEB-912"), MultipleAsserts]
         public void RepayEarlyDecline()
         {
             string email = Get.RandomEmail();
@@ -238,7 +238,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         }
 
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1833", "UKWEB-244"), MultipleAsserts]
+        [Test, JIRA("UK-1833", "UKWEB-244"), MultipleAsserts]
         public void RepayDueDecline()
         {
             //build L0 loan
@@ -294,7 +294,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             var myDetailsPage = new MyPersonalDetailsPage(this.Client);
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UK-1833", "UKWEB-244"), MultipleAsserts]
+        [Test, JIRA("UK-1833", "UKWEB-244"), MultipleAsserts]
         public void RepayOverdueDecline()
         {
             //build L0 loan
@@ -354,7 +354,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         }
 
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247"), MultipleAsserts]
+        [Test, JIRA("UKWEB-247"), MultipleAsserts]
         public void RepayError()
         {
             //build L0 loan
@@ -382,7 +382,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         }
         
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247"), MultipleAsserts]
+        [Test, JIRA("UKWEB-247"), MultipleAsserts]
         public void MovingRepaySliderRemainingAmountShouldBeCorrect()
         {
             //build L0 loan
@@ -402,7 +402,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             requestPage.IsRepayRequestPageSliderReturningCorrectValuesOnChange(application.Id.ToString(), "50");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247", "UKWEB-248"), MultipleAsserts]
+        [Test, JIRA("UKWEB-247", "UKWEB-248"), MultipleAsserts]
         [Category(TestCategories.CoreTest)]
         public void RepayEarlyFull()
         {
@@ -438,7 +438,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Assert.IsTrue(paymentTakenPage.Content.Text.Contains(testMessage), "Success Message is missing on Payment Taken page");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247", "UKWEB-248", "UKWEB-913"), MultipleAsserts]
+        [Test, JIRA("UKWEB-247", "UKWEB-248", "UKWEB-913"), MultipleAsserts]
         public void RepayEarlyPart()
         {
             // Build L0 loan
@@ -487,7 +487,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Assert.IsTrue(paymentTakenText.Contains(String.Format("{0:0.00}", repayAmount)), "Repay Amount is wrong.");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247", "UKWEB-248"), MultipleAsserts]
+        [Test, JIRA("UKWEB-247", "UKWEB-248"), MultipleAsserts]
         public void RepayDueFull()
         {
             //build L0 loan
@@ -524,7 +524,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Assert.IsTrue(paymentTakenText.Contains(testMessage), "Content area text is incorrect.");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247", "UKWEB-248"), MultipleAsserts]
+        [Test, JIRA("UKWEB-247", "UKWEB-248"), MultipleAsserts]
         public void RepayDuePart()
         {
             //build L0 loan
@@ -572,7 +572,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         }
 
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247", "UKWEB-248"), MultipleAsserts]
+        [Test, JIRA("UKWEB-247", "UKWEB-248"), MultipleAsserts]
         public void RepayOverdueFull()
         {
             //build L0 loan
@@ -614,7 +614,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Assert.IsTrue(paymentTakenText.Contains(testMessage), "Content area text is incorrect.");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247", "UKWEB-248"), MultipleAsserts]
+        [Test, JIRA("UKWEB-247", "UKWEB-248"), MultipleAsserts]
         public void RepayOverduePart()
         {
             //build L0 loan
@@ -665,7 +665,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Assert.IsTrue(paymentTakenText.Contains(sNewDueDateAmount), "New Total Repayable is wrong.");   
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-247"), MultipleAsserts]
+        [Test, JIRA("UKWEB-247"), MultipleAsserts]
         public void RepayEarlyLessThanMinPayment()
         {
             //build L0 loan

@@ -81,6 +81,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Uk\ExtensionTests.cs" />
+    <Compile Include="Uk\HomePageTests.cs" />
     <Compile Include="Uk\L0LnJourneyCoreTests.cs" />
     <Compile Include="Uk\RepayTests.cs" />
     <Compile Include="Uk\TopUpTests.cs" />
