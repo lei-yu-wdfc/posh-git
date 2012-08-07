@@ -47,6 +47,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
     <Reference Include="WebDriver, Version=2.21.0.0, Culture=neutral, PublicKeyToken=1c2bd1631853048f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\bin\WebDriver.dll</HintPath>
@@ -81,6 +82,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Uk\ExtensionTests.cs" />
     <Compile Include="Uk\L0LnJourneyCoreTests.cs" />
+    <Compile Include="Uk\RepayTests.cs" />
+    <Compile Include="Uk\TopUpTests.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
