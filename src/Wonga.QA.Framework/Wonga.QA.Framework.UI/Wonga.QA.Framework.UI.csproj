@@ -81,6 +81,7 @@
     <Compile Include="Mappings\Content\Elements\HelpElement.cs" />
     <Compile Include="Mappings\Content\Elements\TabsElementMobile.cs" />
     <Compile Include="Mappings\Content\Elements\Prepaid\PrepaidBalanceBlock.cs" />
+    <Compile Include="Mappings\Content\ErrorsMessages\ApplyErrorPage.cs" />
     <Compile Include="Mappings\Content\ErrorsMessages\ExtensionErrorPage.cs" />
     <Compile Include="Mappings\Content\Pages\AddressDetailsPage.cs" />
     <Compile Include="Mappings\Content\ErrorsMessages\MobilePinVerificationSection.cs" />

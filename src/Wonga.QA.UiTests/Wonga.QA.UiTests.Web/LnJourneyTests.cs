@@ -111,7 +111,7 @@ namespace Wonga.QA.UiTests.Web
             string email = Get.RandomEmail();
             string name = Get.RandomString(3, 10);
             string surname = Get.RandomString(3, 10);
-            string oldphone = Get.GetMobilePhone() /*"077009" + Get.RandomLong(1000, 9999).ToString()*/; 
+            string oldphone = Get.GetMobilePhone() /*"077009" + Get.RandomLong(1000, 9999).ToString()*/;
             string phone = Get.GetMobilePhone() /*"077009" + Get.RandomLong(1000, 9999).ToString()*/;
             Customer customer;
             Application application;
@@ -174,7 +174,7 @@ namespace Wonga.QA.UiTests.Web
 
                     Console.WriteLine(smsZa.Count());
                     break;
-                #endregion 
+                #endregion
                 #region Ca
                 case AUT.Ca:
                     var journeyCa = JourneyFactory.GetLnJourney(Client.Home()).WithAmount(200).WithDuration(25);
@@ -228,7 +228,7 @@ namespace Wonga.QA.UiTests.Web
             Application application;
             LoginPage loginPage;
             BaseLnJourney journey;
-            
+
             switch (Config.AUT)
             {
                 case AUT.Ca:
@@ -301,45 +301,25 @@ namespace Wonga.QA.UiTests.Web
             var homePage = Client.Home();
             var journey = JourneyFactory.GetLnJourney(homePage);
             var applyPage = journey.Teleport<ApplyPage>() as ApplyPage;
-            switch (Config.AUT)
-            {
-                case AUT.Ca:
-                case AUT.Za:
-                    //var journey = JourneyFactory.GetLnJourney(homePage).WithFirstName(name).WithLastName(surname);
+            //var journey = JourneyFactory.GetLnJourney(homePage).WithFirstName(name).WithLastName(surname);
 
-                    // Check the URL here is /apply-member
-                    Assert.Contains(Client.Driver.Url, "/apply-member?",
-                                    "The apply page URL does not contain '/apply-member?'");
-                    journey.CurrentPage = applyPage.Submit() as ProcessingPage;
-                    // Check the URL here is /processing-member
-                    Assert.EndsWith(Client.Driver.Url, "/processing-member",
-                                    "The processing page URL is not /processing-member.");
-                    var acceptedPageZaCa = journey.Teleport<AcceptedPage>() as AcceptedPage;
-                    // Check the URL here is /apply-accept-member
-                    Assert.EndsWith(Client.Driver.Url, "/apply-accept-member",
-                                    "The accept page URL is not /apply-accept-member.");
-                    var dealDonePageZaCa = journey.Teleport<DealDonePage>() as DealDonePage;
-                    // Check the URL here is /deal-done-member
-                    Assert.EndsWith(Client.Driver.Url, "/deal-done-member",
-                                    "The deal done page URL is not /deal-done-member.");
-                    break;
-                case AUT.Uk:
-                    // Check the URL here is /apply-member
-                    Assert.Contains(Client.Driver.Url, "/applyln?",
-                                    "The apply page URL does not contain '/apply-member?'");
-                    journey.CurrentPage = journey.Teleport<ProcessingPage>() as ProcessingPage;
-                    // Check the URL here is /processing-page
-                    Assert.EndsWith(Client.Driver.Url, "/processing-page",
-                                    "The processing page URL is not /processing-page.");
-                    var acceptedPageUk = journey.Teleport<AcceptedPage>() as AcceptedPage;
-                    // Check the URL here is /apply-accept-member
-                    Assert.EndsWith(Client.Driver.Url, "/accept",
-                                    "The accept page URL is not /apply-accept-member.");
-
-                    break;
+            // Check the URL here is /apply-member
+            Assert.Contains(Client.Driver.Url, "/apply-member?",
+                            "The apply page URL does not contain '/apply-member?'");
+            journey.CurrentPage = applyPage.Submit() as ProcessingPage;
+            // Check the URL here is /processing-member
+            Assert.EndsWith(Client.Driver.Url, "/processing-member",
+                            "The processing page URL is not /processing-member.");
+            var acceptedPageZaCa = journey.Teleport<AcceptedPage>() as AcceptedPage;
+            // Check the URL here is /apply-accept-member
+            Assert.EndsWith(Client.Driver.Url, "/apply-accept-member",
+                            "The accept page URL is not /apply-accept-member.");
+            var dealDonePageZaCa = journey.Teleport<DealDonePage>() as DealDonePage;
+            // Check the URL here is /deal-done-member
+            Assert.EndsWith(Client.Driver.Url, "/deal-done-member",
+                            "The deal done page URL is not /deal-done-member.");
 
 
-            }
         }
     }
 }
