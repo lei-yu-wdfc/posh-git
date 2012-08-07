@@ -58,8 +58,8 @@ namespace Wonga.QA.MigrationTests.Utils
                                          SubmitApplicationBehaviourCommand.New(command =>
                                                                                    {
                                                                                        command.ApplicationId = applicationId;
-                                                                                       command.TermSliderPosition = v2CdeRequest.additional_information[0].SliderDefaultPeriod;
-                                                                                       command.AmountSliderPosition = v2CdeRequest.additional_information[0].SliderDefaultAmount;
+                                                                                       command.TermSliderPosition = v2CdeRequest.proposal_details[0].cash_price;
+                                                                                       command.AmountSliderPosition = v2CdeRequest.proposal_details[0].term;
                                                                                    }),
                                          SubmitClientWatermarkCommand.New(command =>
                                                                               {
