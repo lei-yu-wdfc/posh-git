@@ -809,13 +809,13 @@ namespace Wonga.QA.Framework
                               select accts;
             IList<dynamic> opslist = Enumerable.Cast<dynamic>(opsAccounts).ToList();
 
-            var test = (from app in applist
+            var latestLnCustomer = (from app in applist
                         join acct in opslist on app.AccountId equals acct.ExternalId
                         where app.ClosedOn != null
                         orderby acct.CreatedOn descending
                         select acct.Login).Take(1);
 
-            return test.Single();
+            return latestLnCustomer.Single();
         }
 
         /// <summary>
