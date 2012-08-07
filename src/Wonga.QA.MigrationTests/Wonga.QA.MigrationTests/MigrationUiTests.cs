@@ -10,9 +10,10 @@ using Wonga.QA.Framework.Api.Requests.Ops.Queries;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
-using Wonga.QA.Framework.Data;
+using Wonga.QA.MigrationCore;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.UiTests.Web;
+
 
 namespace Wonga.QA.MigrationTests
 {
@@ -112,7 +113,7 @@ namespace Wonga.QA.MigrationTests
 
             var loginPage = Client.Login();
             var email = CustomerBuilder.RandomLnCustomerEmail();
-            loginPage.LoginAs("qa.wonga.com+BUILD-WIN7-ccf7b794-1ab4-4536-991c-9bfc95ee0652@gmail.com", "Passw0rd");
+            loginPage.LoginAs(email, "Passw0rd");
             var journey = JourneyFactory.GetLnJourney(Client.Home()).WithAmount(10).WithDuration(1);
             var page = journey.Teleport<MySummaryPage>() as MySummaryPage;
 

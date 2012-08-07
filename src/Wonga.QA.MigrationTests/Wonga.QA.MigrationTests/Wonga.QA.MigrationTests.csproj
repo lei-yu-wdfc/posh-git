@@ -97,6 +97,12 @@
     <Folder Include="Output\" />
     <Folder Include="Selenium\V3\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Wonga.QA.MigrationCore\Wonga.QA.MigrationCore.csproj">
+      <Project>{C61407C2-C697-4288-B2AC-10F6C2D1804F}</Project>
+      <Name>Wonga.QA.MigrationCore</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
