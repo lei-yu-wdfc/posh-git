@@ -20,14 +20,9 @@ namespace Wonga.QA.Tests.Meta
         [Test, DependsOn("CustomerBuilderTest"), DependsOn("OrganisationBuilderTest"), Owner(Owner.StanDesyatnikov)]
         public void ApplicationBuilderTest()
         {
-            ApplicationBuilder builder = ApplicationBuilder.New(_customer);
-
-            builder.Build();
-        }
-        [Test, AUT(AUT.Wb), DependsOn("OrganisationBuilderTest")]
-        public void WbApplicationBuilderTest()
-        {
-            ApplicationBuilder builder = ApplicationBuilder.New(_customer, _organisation);
+            ApplicationBuilder builder = Config.AUT == AUT.Wb ?
+                ApplicationBuilder.New(_customer, _organisation) :
+                ApplicationBuilder.New(_customer);
 
             builder.Build();
         }
