@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Gallio.Framework.Assertions;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api.Requests.Ops.Queries;
@@ -12,7 +13,7 @@ using Wonga.QA.Framework.Api;
 namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
 {
     [Parallelizable(TestScope.All)]
-    public class LnJourneyTests : UiTest
+    public class UkLnJourneyTests : UiTest
     {
         [Test, AUT(AUT.Uk), JIRA("UK-1533", "UK-1902", "UKWEB-914"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
         [Description("UI Ln Journey after L0 is created via API. Mobile phone number is updated during Ln")]
@@ -126,6 +127,39 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
 
             // Check the URL ends with /dealdoneLN
             Assert.EndsWith(Client.Driver.Url, "/dealdoneLN", "The deal done page URL is not /dealdoneLN.");
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("QA-335")]
+        public void LnCustomerChangesMobilePhoneAndEntersInvalidPinShouldNotBeAbleToTakeLoan()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            string name = Get.GetName();
+            string surname = Get.RandomString(10);
+            Customer customer = CustomerBuilder
+                .New()
+                .WithEmailAddress(email)
+                .WithForename(name)
+                .WithSurname(surname)
+                .Build();
+            Application application = ApplicationBuilder
+                .New(customer)
+                .Build();
+            application.RepayOnDueDate();
+            var mySummaryPage = loginPage.LoginAs(email);
+            var journey = JourneyFactory.GetLnJourney(Client.Home());
+            var applyPage = journey.Teleport<ApplyPage>() as ApplyPage;
+
+            applyPage.SetNewMobilePhone = Get.GetMobilePhone();
+            applyPage.ApplicationSection.SetPin = "1111";
+            try
+            {
+                applyPage.Submit();
+            }
+            catch (AssertionFailureException exception)
+            {
+                Assert.IsTrue(exception.Message.Contains(ContentMap.Get.ApplyPage.PinErrorMessage));
+            }
         }
     }
 }
