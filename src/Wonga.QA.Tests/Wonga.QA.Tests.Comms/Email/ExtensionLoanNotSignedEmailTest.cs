@@ -1,8 +1,10 @@
 ﻿
 using System;
+using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Db;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Framework.Msmq.Enums.Common.Enums;
 using Wonga.QA.Framework.Msmq.Messages.Comms.Commands;
@@ -72,9 +74,11 @@ namespace Wonga.QA.Tests.Comms.Email
             var saga = Do.With.Interval(1).Until(() => Drive.Data.OpsSagas.Db.ExtensionCancelledEmailData.FindByAccountId(_accountId));
             Drive.Msmq.Comms.Send(new TimeoutMessage { ClearTimeout = true, Expires = DateTime.UtcNow, SagaId = saga.Id, State = null });
 
-            // Check the mock database to see if an email was sent
+            // Check the QA database to see if an email was sent
             var email = Do.With.Interval(1).Until(() => Drive.Data.QaData.Db.Email.FindByEmailAddressAndTemplateName(_emailAddress, loanExtensionCancelledEmailTemplate));
             Assert.IsNotNull(email);
+            var emailData = Drive.Data.QaData.Db.EmailTokens.FindByEmailIdAndKey(email.EmailId, "Html_body");
+            Assert.Contains(emailData.Value, "still need to repay <b>&pound;110.70");
         }
     }
 }
