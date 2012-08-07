@@ -528,5 +528,16 @@ namespace Wonga.QA.Framework.Core
                 Commands = new Uri(uri, "commands");
             }
         }
+
+
+        public static class WbRiskBasedPricingEnabled
+        {
+            public static bool RiskBasedPricingEnabled { get; set; }
+
+            static WbRiskBasedPricingEnabled()
+            {
+                RiskBasedPricingEnabled = true;
+            }
+        }
     }
 }
