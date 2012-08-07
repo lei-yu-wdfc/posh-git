@@ -14,33 +14,20 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 {
     [Parallelizable(TestScope.Descendants), JIRA("UKWEB-343", "UKWEB-373")]
     // TODO: UKWEB-371: Apart from checking that the navigation header on the Home page is displayed, also check the elements’ (International, Social, Help, Login) behaviour and content.
-    public class HomePageTests: UiTest
+
+    #region L0_HomePage_Personalised
+
+    public class HomePageL0Tests: UiTest
     {
-        private string _emailL0, _emailLn;
-        private string _fullFirstNameL0, _fullFirstNameLn;
+        private string _emailL0;
+        private string _fullFirstNameL0;
         private string _url;
-        private string _truncatedFirstNameL0, _truncatedFirstNameLn;
+        private string _truncatedFirstNameL0;
         private Cookie _userCookie;
-
-        private void CheckContentSlots()
-        {
-            //Ensure correct title is present in first content slot in home page
-            Assert.AreEqual("Betty, Earl and Joyce show how wonga.com's short term cash loans put you in control", Client.Home().GetContentSlot1Title());
-            Console.WriteLine("Content Slot1 title is: " + Client.Home().GetContentSlot1Title());
-
-            //Ensure correct text is displayed in 'Wonga customers' box in home page
-            Assert.AreEqual("Populus survey of 2012 with over 25,000 respondents", Client.Home().GetWongaCustomersBoxText());
-            Console.WriteLine("Text in Wonga customers box: " + Client.Home().GetWongaCustomersBoxText());
-
-            //Ensure correct text is displayed in 'Responsible lending' box in home page
-            Assert.AreEqual("Responsible lending", Client.Home().GetResponsibleLendingBoxText());
-            Console.WriteLine("Responsible lending box heading: " + Client.Home().GetResponsibleLendingBoxText());
-        }
 
         [FixtureSetUp]
         public void FixtureSetup()
         {
-            // Create L0 user
             _emailL0 = Get.RandomEmail();
             _fullFirstNameL0 = Get.RandomString(20);
             _truncatedFirstNameL0 = _fullFirstNameL0.Remove(15);
@@ -48,21 +35,10 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
             Customer customerL0 = CustomerBuilder.New().WithEmailAddress(_emailL0).WithForename(_fullFirstNameL0).Build();
             ApplicationBuilder.New(customerL0).WithLoanAmount(100).Build();
-
-            // Create Ln user
-            _emailLn = Get.RandomEmail();
-            _fullFirstNameLn = Get.RandomString(20);
-            _truncatedFirstNameLn = _fullFirstNameLn.Remove(15);
-            Console.WriteLine("Email={0}, First Name={1}, Trancated First Name={2}", _emailLn, _fullFirstNameLn, _truncatedFirstNameLn);
-
-            Customer customerLn = CustomerBuilder.New().WithEmailAddress(_emailLn).WithForename(_fullFirstNameLn).Build();
-            var appicationLn = ApplicationBuilder.New(customerLn).WithLoanAmount(150).Build();
-            appicationLn.RepayOnDueDate();
         }
 
-        #region L0_HomePage_Personalised
-
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), MultipleAsserts, Owner(Owner.PavithranVangiti), Pending("Test in development. Code in development.")]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
+        //[Pending("Test in development. Code in development.")]
         public void HomePage_NewUser()
         {
             var homePage = Client.Home();
@@ -91,7 +67,8 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             // UKWEB-371: Navigation Header is partially checked when object homePage is created.
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-370", "UKWEB-371"), MultipleAsserts, Owner(Owner.PavithranVangiti), Pending("Test in development. Code in development.")]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-370", "UKWEB-371"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
+        [IgnorePageErrors]//[Pending("Test in development. Code in development.")]
         public void L0_HomePage_LoggedInUser()
         {
             var loginPage = Client.Login();
@@ -103,7 +80,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             var homePage = Client.Home();
 
             var expectedWelcomeMessage = "Welcome back " + _truncatedFirstNameL0 + "...! (not " + _truncatedFirstNameL0 +
-                                        "...? click here) We can deposit up to £300 in your bank account by " + DateTime.Now.AddMinutes(24).ToShortTimeString()
+                                        "...?) click hereWe can deposit up to £300 in your bank account by " + DateTime.Now.AddMinutes(24).ToShortTimeString()
                                         + homePage.GetWelcomeMessageDay();
             // user has logged in
             Assert.AreEqual(expectedWelcomeMessage, homePage.GetWelcomeHeaderMessageText());
@@ -113,11 +90,12 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             //Esnure 'click here' link in welcome message takes User back to home page.
             homePage.ClickWelcomeMessageClickHereLink();
             homePage = new HomePage(this.Client);
-            Assert.IsFalse(homePage.IsHeaderBarVisible());
+            Assert.IsFalse(homePage.IsHeaderBarTextVisible());
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), DependsOn("L0_HomePage_LoggedInUser"), MultipleAsserts, Owner(Owner.PavithranVangiti), Pending("Test in development. Code in development.")]
-        public void L0HomePagePersonalisedCookiedUserTest()
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), DependsOn("L0_HomePage_LoggedInUser"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
+        [IgnorePageErrors]//[Pending("Test in development. Code in development.")]
+        public void L0_HomePage_CookiedUser()
         {
             var homePage = Client.Home();
 
@@ -125,20 +103,76 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             var userCookie = new Cookie(_userCookie.Name, _userCookie.Value, _userCookie.Domain, _userCookie.Path, _userCookie.Expiry);
             Client.Driver.Manage().Cookies.AddCookie(userCookie);
 
-            this.Client.Driver.Navigate().Refresh();
+            Client.Driver.Navigate().Refresh();
+            homePage = new HomePage(Client);
 
-            Assert.AreEqual("Welcome back " + _truncatedFirstNameL0 + "...! (not " + _truncatedFirstNameL0 + "...? click here)", homePage.GetWelcomeHeaderMessageText()); // user has being cookied
+            Assert.AreEqual("If you're not " + _truncatedFirstNameL0 + "..., click here", homePage.GetHeaderBarText()); //Verify header bar text
 
-            Assert.AreEqual("400", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
+            //Verify Welcome message text
+            Assert.AreEqual("Welcome back " + _truncatedFirstNameL0 + "...! (not " + _truncatedFirstNameL0 +
+                                        "...?) click hereWe can deposit up to £300 in your bank account by " + DateTime.Now.AddMinutes(24).ToShortTimeString()
+                                        + homePage.GetWelcomeMessageDay(), homePage.GetWelcomeHeaderMessageText());
 
-            // TODO: Check "If you're not <15-symbolsTrancatedFirstName>, click here."
-            // TODO: 1. Click on "click here" in the Navigation Header. 2. Check that the Login page opens and the user is logged out.
-            // TODO: UKWEB-1072: When users clicks "click here" in the Welcome message on the Homepage, as a recognised or logged in user, the Homepage should open.
+            Assert.AreEqual("300", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
+
+            //Esnure 'click here' link in welcome message takes User back to home page.
+            homePage.ClickWelcomeMessageClickHereLink();
+            homePage = new HomePage(Client);
+            Assert.IsFalse(homePage.IsHeaderBarTextVisible());
         }
 
-        #endregion
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), DependsOn("L0_HomePage_LoggedInUser"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
+        [IgnorePageErrors]//[Pending("Test in development. Code in development.")]
+        public void L0_HomePage_CookiedUser_ClickHereInNavigationHeader()
+        {
+            Assert.IsNotNull(_userCookie, "Cookie is not created. Ensure the test is run after test that creates the cookie.");
 
-        #region Ln_HomePage_Personalised
+            // Check cookied user
+            //-----------------------
+            var homePage = Client.Home();
+
+            // Add user's cookie to see the personalised Navigation Header
+            var userCookie = new Cookie(_userCookie.Name, _userCookie.Value, _userCookie.Domain, _userCookie.Path, _userCookie.Expiry);
+            Client.Driver.Manage().Cookies.AddCookie(userCookie);
+
+            Client.Driver.Navigate().Refresh();
+            homePage = new HomePage(Client);
+
+            //Ensure header bar text is displayed correctly
+            Assert.AreEqual("If you're not " + _truncatedFirstNameL0 + "..., click here", homePage.GetHeaderBarText());
+
+            //Esnure 'click here' link in welcome message takes User back to home page.
+            homePage.ClickHeaderBarClickHereLink();
+            homePage = new HomePage(Client);
+            Assert.IsFalse(homePage.IsHeaderBarTextVisible());
+        }
+    }
+
+    #endregion
+
+    #region Ln_HomePage_Personalised
+
+    public class HomePageLnTests : UiTest
+    {
+        private string _emailLn;
+        private string _fullFirstNameLn;
+        //private string _url;
+        private string _truncatedFirstNameLn;
+        private Cookie _userCookie;
+
+        [FixtureSetUp]
+        public void FixtureSetup()
+        {
+            // Create Ln user
+            _emailLn = Get.RandomEmail();
+            _fullFirstNameLn = Get.RandomString(20);
+            _truncatedFirstNameLn = _fullFirstNameLn.Remove(15);
+            Console.WriteLine("Email={0}, First Name={1}, Trancated First Name={2}", _emailLn, _fullFirstNameLn, _truncatedFirstNameLn);
+
+            Customer customerLn = CustomerBuilder.New().WithEmailAddress(_emailLn).WithForename(_fullFirstNameLn).Build();
+            var appicationLn = ApplicationBuilder.New(customerLn).WithLoanAmount(150).Build();
+            appicationLn.RepayOnDueDate();
+        }
 
         [Test, AUT(AUT.Uk), JIRA("UKWEB-370")] //Pending("Test in development. Code in development."), 
         [MultipleAsserts, Owner(Owner.PavithranVangiti)]
@@ -152,7 +186,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             _userCookie = Client.Driver.Manage().Cookies.GetCookieNamed("wonga_visitor");
 
             Console.WriteLine(_emailLn);
-            //Assert.AreEqual("Welcome back " + _truncatedFirstNameLn + "...! (not " + _truncatedFirstNameLn + "...?) click hereWe can deposit up to £400 in your bank account by " + DateTime.Now.AddMinutes(24).ToShortTimeString() + homePage.GetWelcomeMessageDay(), homePage.GetWelcomeHeaderMessageText()); // user has logged in
+            Assert.AreEqual("Welcome back " + _truncatedFirstNameLn + "...! (not " + _truncatedFirstNameLn + "...?) click hereWe can deposit up to £400 in your bank account by " + DateTime.Now.AddMinutes(24).ToShortTimeString() + homePage.GetWelcomeMessageDay(), homePage.GetWelcomeHeaderMessageText()); // user has logged in
             Assert.AreEqual("400", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
 
             // TODO: Change Expected text in welcome message when the code is fixed
@@ -162,12 +196,13 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             //Esnure 'click here' link in welcome message takes User back to home page.
             homePage.ClickWelcomeMessageClickHereLink();
             homePage = new HomePage(Client);
-            Assert.IsFalse(homePage.IsHeaderBarVisible());
+            Assert.IsFalse(homePage.IsHeaderBarTextVisible());
         }
 
         [Test, AUT(AUT.Uk), JIRA("UKWEB-370")]
         //, Pending("Test in development. Code in development."), 
         [DependsOn("Ln_HomePage_LoggedInUser"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
+        [IgnorePageErrors]
         public void Ln_HomePage_CookiedUser_ClickHereInWelcomeMessage()
         {
             Assert.IsNotNull(_userCookie, "Cookie is not created. Ensure the test is run after test that creates the cookie.");
@@ -180,39 +215,91 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             var userCookie = new Cookie(_userCookie.Name, _userCookie.Value, _userCookie.Domain, _userCookie.Path, _userCookie.Expiry);
             Client.Driver.Manage().Cookies.AddCookie(userCookie);
 
-            this.Client.Driver.Navigate().Refresh();
+            Client.Driver.Navigate().Refresh();
+            homePage = new HomePage(Client);
 
-            Assert.AreEqual("Welcome back " + _truncatedFirstNameLn + "...! (not " + _truncatedFirstNameLn + "...?) click hereWe can deposit up to £400 in your bank account by " + DateTime.Now.AddMinutes(24).ToShortTimeString() + homePage.GetWelcomeMessageDay(), homePage.GetWelcomeHeaderMessageText()); // user has logged in
+            //Ensure header bar text is displayed correctly
+            Assert.AreEqual("If you're not " + _truncatedFirstNameLn + "..., click here", homePage.GetHeaderBarText());
+
+            //Ensure welcome message text is displayed correctly
+            Assert.AreEqual("Welcome back " + _truncatedFirstNameLn + "...! (not "
+                           + _truncatedFirstNameLn + "...?) click hereWe can deposit up to £400 in your bank account by "
+                           + DateTime.Now.AddMinutes(24).ToShortTimeString() + homePage.GetWelcomeMessageDay(), homePage.GetWelcomeHeaderMessageText());
+
+            //Ensure maximum available credit value is displayed correctly
             Assert.AreEqual("400", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
 
             //Esnure 'click here' link in welcome message takes User back to home page.
             homePage.ClickWelcomeMessageClickHereLink();
             homePage = new HomePage(Client);
-            Assert.IsFalse(homePage.IsHeaderBarVisible());
+            Assert.IsFalse(homePage.IsHeaderBarTextVisible());
+            Console.WriteLine("Test is run");
         }
 
-        [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), IgnorePageErrors, Pending("Test in development. Code in development."), MultipleAsserts, Owner(Owner.PavithranVangiti)]
+        [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), IgnorePageErrors, Pending("Test in development. Code in development.")] 
+        [DependsOn ("Ln_HomePage_LoggedInUser"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
         public void Ln_HomePage_CookiedUser_ClickHereInNavigationHeader()
         {
             Assert.IsNotNull(_userCookie, "Cookie is not created. Ensure the test is run after test that creates the cookie.");
 
             // Check cookied user
-            //-----------------------
             var homePage = Client.Home();
 
             // Add user's cookie to see the personalised Navigation Header
-            var userCookie = new Cookie(_userCookie.Name, _userCookie.Value, _userCookie.Domain, _userCookie.Path,_userCookie.Expiry);
+            var userCookie = new Cookie(_userCookie.Name, _userCookie.Value, _userCookie.Domain, _userCookie.Path, _userCookie.Expiry);
             Client.Driver.Manage().Cookies.AddCookie(userCookie);
 
-            this.Client.Driver.Navigate().Refresh();
+            Client.Driver.Navigate().Refresh();
+            homePage = new HomePage(Client);
 
-            // TODO: Check the correct text in the Navigation Header: "If you're not <15-symbolsTrancatedFirstName>, click here."
-            // TODO: UKWEB-1072: When users clicks "click here" in the Navigation Header on the Homepage, as a recognised or logged in user, the Homepage should open.
+            //Ensure header bar text is displayed correctly
+            Assert.AreEqual("If you're not " + _truncatedFirstNameLn + "..., click here", homePage.GetHeaderBarText());
+
+            //Esnure 'click here' link in welcome message takes User back to home page.
+            homePage.ClickHeaderBarClickHereLink();
+            homePage = new HomePage(Client);
+            Assert.IsFalse(homePage.IsHeaderBarTextVisible());
+            Console.WriteLine("Test is run");
+        }
+    }
+
+    #endregion
+
+    #region Miscellaneous_Homepage_Tests
+
+    public class HomePageMiscellaneousTests : UiTest
+    {
+        //private string _emailL0;
+        //private string _fullFirstNameL0;
+        private string _url;
+        //private string _truncatedFirstNameL0;
+
+        private void CheckContentSlots()
+        {
+            //Ensure correct title is present in first content slot in home page
+            Assert.AreEqual("Betty, Earl and Joyce show how wonga.com's short term cash loans put you in control", Client.Home().GetContentSlot1Title());
+            Console.WriteLine("Content Slot1 title is: " + Client.Home().GetContentSlot1Title());
+
+            //Ensure correct text is displayed in 'Wonga customers' box in home page
+            Assert.AreEqual("Populus survey of 2012 with over 25,000 respondents", Client.Home().GetWongaCustomersBoxText());
+            Console.WriteLine("Text in Wonga customers box: " + Client.Home().GetWongaCustomersBoxText());
+
+            //Ensure correct text is displayed in 'Responsible lending' box in home page
+            Assert.AreEqual("Responsible lending", Client.Home().GetResponsibleLendingBoxText());
+            Console.WriteLine("Responsible lending box heading: " + Client.Home().GetResponsibleLendingBoxText());
         }
 
-#endregion
+        //[FixtureSetUp]
+        //public void FixtureSetup()
+        //{
+        //    _emailL0 = Get.RandomEmail();
+        //    _fullFirstNameL0 = Get.RandomString(20);
+        //    _truncatedFirstNameL0 = _fullFirstNameL0.Remove(15);
+        //    Console.WriteLine("Email={0}, First Name={1}, Trancated First Name={2}", _emailL0, _fullFirstNameL0, _truncatedFirstNameL0);
 
-        #region Miscellaneous_Homepage_Tests
+        //    Customer customerL0 = CustomerBuilder.New().WithEmailAddress(_emailL0).WithForename(_fullFirstNameL0).Build();
+        //    ApplicationBuilder.New(customerL0).WithLoanAmount(100).Build();
+        //}
 
         [Test, AUT(AUT.Uk), JIRA("UKWEB-370"), MultipleAsserts, Pending("Test in development"), Owner(Owner.PavithranVangiti)]
         public void HomePageLinksTest()
@@ -309,10 +396,10 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             CheckContentSlots();
 
             //Check Content slots post-login
-            var loginPage = Client.Login();
-            loginPage.LoginAs(_emailL0);
-            homePage.Client.Home();
-            CheckContentSlots();
+            //var loginPage = Client.Login();
+            //loginPage.LoginAs(_emailL0);
+            //homePage.Client.Home();
+            //CheckContentSlots();
         }
 
         [Test, AUT(AUT.Uk), JIRA("UKWEB-344", "UKWEB-345"), MultipleAsserts, Owner(Owner.OrizuNwokeji), Pending("Test in development. Code in development.")]
@@ -329,8 +416,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Assert.IsTrue(homePage.Source.Contains(awards), "Awards not found");
             Assert.IsTrue(homePage.Source.Contains(seoLinks), "SEO Links not found");
         }
-
-        #endregion
-
     }
+
+    #endregion
 }
