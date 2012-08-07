@@ -742,7 +742,7 @@ namespace Wonga.QA.UiTests.Web
 
         #endregion
 
-        [Test, AUT(AUT.Wb), JIRA("SME-1581")]
+        [Test, AUT(AUT.Wb), JIRA("SME-1581"), Owner(Owner.EugeneVlokh)]
         public void CheckThatMaxLoanAmountIsCorrect()
         {
             var homePage = Client.Home();
@@ -752,7 +752,7 @@ namespace Wonga.QA.UiTests.Web
 
         }
 
-        [Test, AUT(AUT.Wb), JIRA("SME-1563")]
+        [Test, AUT(AUT.Wb), JIRA("SME-1563"), Owner(Owner.EugeneVlokh)]
         public void WhenCustomerUsesSlidersThenIncludeCostsAndRepaymentAmount()
         {
 

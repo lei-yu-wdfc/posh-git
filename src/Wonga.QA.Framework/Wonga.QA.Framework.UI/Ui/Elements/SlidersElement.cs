@@ -10,6 +10,7 @@ using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Framework.UI.UiElements.Pages.Interfaces;
 using Wonga.QA.Framework.UI.Mappings;
 using Wonga.QA.Framework.UI.UiElements.Pages.Wb;
+using Wonga.QA.Framework;
 
 namespace Wonga.QA.Framework.UI.Elements
 {
@@ -30,7 +31,7 @@ namespace Wonga.QA.Framework.UI.Elements
         private readonly IWebElement _durationMinusButton;
         private readonly IWebElement _durationPlusButton;
         private readonly IWebElement _maxAvailableCredit;
-
+        private readonly IWebElement _termsOfLoan;
         public SlidersElement(BasePage page)
             : base(page)
         {
@@ -45,6 +46,15 @@ namespace Wonga.QA.Framework.UI.Elements
             _durationPlusButton = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.DurationPlusButton));
             switch (Config.AUT)
             {
+                case (AUT.Wb):
+                    if (!Config.WbRiskBasedPricingEnabled.RiskBasedPricingEnabled)
+                    {
+                        _totalAmount = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.TotalAmount));
+                        _totalFees = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.TotalFees));
+                        _totalToRepay = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.TotalToRepay));
+                        _termsOfLoan = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.TermsOfLoan));
+                    }
+                    break;
                 case (AUT.Ca):
                 case (AUT.Za):
                     _totalAmount = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.TotalAmount));
@@ -89,6 +99,12 @@ namespace Wonga.QA.Framework.UI.Elements
                 _loanDuration.LostFocus();
             }
         }
+
+        public String GetsTermOfLoan
+        {
+            get { return _termsOfLoan.Text; }
+        }
+
         public int MoveAmountSlider //Moving by pixels NOT by cash value
         {
             set { Do.Until(() => _amountSlider.DragAndDropToOffset(value, 0)); }
@@ -129,6 +145,7 @@ namespace Wonga.QA.Framework.UI.Elements
         {
             _durationPlusButton.Click();
         }
+
 
 
         public IApplyPage Apply()
