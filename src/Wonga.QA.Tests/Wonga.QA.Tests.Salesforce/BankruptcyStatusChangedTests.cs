@@ -15,8 +15,6 @@ namespace Wonga.QA.Tests.Salesforce
     {
         private Framework.ThirdParties.Salesforce _sales;
         private readonly dynamic _applicationRepo = Drive.Data.Payments.Db.Applications;
-        private readonly dynamic _commsSuppressionsRepo = Drive.Data.Comms.Db.Suppressions;
-        private readonly dynamic _paymentsSuppressionsRepo = Drive.Data.Payments.Db.PaymentCollectionSuppressions;
         private readonly dynamic _loanDueDateNotifiSagaEntityTab = Drive.Data.OpsSagas.Db.LoanDueDateNotificationSagaEntity;
         private readonly dynamic _fixedTermLoanAppTab = Drive.Data.Payments.Db.FixedTermLoanApplications;
 
@@ -29,15 +27,14 @@ namespace Wonga.QA.Tests.Salesforce
         #endregion setup#
 
         [Test]
-        [AUT(AUT.Uk), JIRA("UKOPS-149"), Owner(Owner.JonHurd)]
+        [AUT(AUT.Uk), JIRA("UKOPS-149"), Owner(Owner.ShaneMcHugh)]
         [Description("Verifies that when a live application is moved to complaint status salesforce is informed and a suppression record is created")]
         [Parallelizable]
         public void ApplicationInBankruptcy_SubmitsBankruptStatus_ToSalesforce()
         {
-            int appInternalId;
             var caseId = Guid.NewGuid();
-            var application = CreateLiveApplication(out appInternalId);
-            ReportBankruptcy(application, caseId, appInternalId);
+            Application application = CreateLiveApplication();
+            ReportBankruptcy(application, caseId);
         }
 
         [Test]
@@ -46,12 +43,11 @@ namespace Wonga.QA.Tests.Salesforce
         [Parallelizable]
         public void ApplicationDueToday_SubmitsBankruptStatus_ToSalesforce()
         {
-            int appInternalId;
             var caseId = Guid.NewGuid();
-            var application = CreateLiveApplication(out appInternalId);
+            Application application = CreateLiveApplication();
             MakeDueToday(application);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.DueToday);
-            ReportBankruptcy(application, caseId, appInternalId);
+            ReportBankruptcy(application, caseId);
         }
 
         [Test]
@@ -60,12 +56,11 @@ namespace Wonga.QA.Tests.Salesforce
         [Parallelizable]
         public void ApplicationInArrears_SubmitsBankruptStatus_ToSalesforce()
         {
-            int appInternalId;
             var caseId = Guid.NewGuid();
-            var application = CreateLiveApplication(out appInternalId);
+            Application application = CreateLiveApplication();
             application.PutIntoArrears(5);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.InArrears);
-            ReportBankruptcy(application, caseId, appInternalId);
+            ReportBankruptcy(application, caseId);
         }
 
         [Test]
@@ -74,27 +69,25 @@ namespace Wonga.QA.Tests.Salesforce
         [Parallelizable]
         public void ApplicationFraud_SubmitsBankruptStatus_ToSalesforce()
         {
-            int appInternalId;
             var caseId = Guid.NewGuid();
-            var application = CreateLiveApplication(out appInternalId);
-            Customer customer = CustomerBuilder.New().Build();
-            ApplicationOperations.ConfirmFraud(application, customer, caseId);
+            Application application = CreateLiveApplication();
+            Customer customer = application.GetCustomer();
+            ApplicationOperations.SuspectFraud(application, customer, caseId);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Fraud);
-            ReportBankruptcy(application, caseId, appInternalId);
+            ReportBankruptcy(application, caseId);
         }
 
         [Test]
-        [AUT(AUT.Uk), JIRA("UKOPS-149"), Owner(Owner.ShaneMcHugh)]
+        [AUT(AUT.Uk), JIRA("UKOPS-149"), Owner(Owner.ShaneMcHugh), Pending("DCA Not implemented")]
         [Description("Verifies that when an application is in DCA status and it is moved to bankrupt status salesforce is informed and a suppression record is created")]
         [Parallelizable]
         public void ApplicationDCA_SubmitsBankruptStatus_ToSalesforce()
         {
-            int appInternalId;
             var caseId = Guid.NewGuid();
-            var application = CreateLiveApplication(out appInternalId);
+            Application application = CreateLiveApplication();
             ApplicationOperations.Dca(application);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.DCA);
-            ReportBankruptcy(application, caseId, appInternalId);
+            ReportBankruptcy(application, caseId);
         }
 
         [Test]
@@ -103,12 +96,11 @@ namespace Wonga.QA.Tests.Salesforce
         [Parallelizable]
         public void ApplicationInHardhsip_SubmitsBankruptStatus_ToSalesforce()
         {
-            int appInternalId;
             var caseId = Guid.NewGuid();
-            var application = CreateLiveApplication(out appInternalId);
+            Application application = CreateLiveApplication();
             ApplicationOperations.ReportHardship(application, caseId);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Hardship);
-            ReportBankruptcy(application, caseId, appInternalId);
+            ReportBankruptcy(application, caseId);
         }
 
         [Test]
@@ -117,12 +109,11 @@ namespace Wonga.QA.Tests.Salesforce
         [Parallelizable]
         public void ApplicationInRepaymentArrangement_SubmitsBankruptStatus_ToSalesforce()
         {
-            int appInternalId;
             var caseId = Guid.NewGuid();
-            var application = CreateLiveApplication(out appInternalId);
+            Application application = CreateLiveApplication();
             application.CreateRepaymentArrangement();
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.RepaymentArrangement);
-            ReportBankruptcy(application, caseId, appInternalId);
+            ReportBankruptcy(application, caseId);
         }
 
         [Test]
@@ -131,12 +122,11 @@ namespace Wonga.QA.Tests.Salesforce
         [Parallelizable]
         public void ApplicationInComplaint_SubmitsBankruptStatus_ToSalesforce()
         {
-            int appInternalId;
             var caseId = Guid.NewGuid();
-            var application = CreateLiveApplication(out appInternalId);
+            Application application = CreateLiveApplication();
             ApplicationOperations.ReportComplaint(application, caseId);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Complaint);
-            ReportBankruptcy(application, caseId, appInternalId);
+            ReportBankruptcy(application, caseId);
         }
 
         [Test]
@@ -145,12 +135,11 @@ namespace Wonga.QA.Tests.Salesforce
         [Parallelizable]
         public void ApplicationInManagementReview_SubmitsBankruptStatus_ToSalesforce()
         {
-            int appInternalId;
             var caseId = Guid.NewGuid();
-            var application = CreateLiveApplication(out appInternalId);
+            Application application = CreateLiveApplication();
             ApplicationOperations.ManagementReview(application, caseId);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.ManagementReview);
-            ReportBankruptcy(application, caseId, appInternalId);
+            ReportBankruptcy(application, caseId);
         }
 
         [Test]
@@ -159,26 +148,19 @@ namespace Wonga.QA.Tests.Salesforce
         [Parallelizable]
         public void ApplicationInRefund_SubmitsBankruptStatus_ToSalesforce()
         {
-            int appInternalId;
             var caseId = Guid.NewGuid();
-            var application = CreateLiveApplication(out appInternalId);
+            Application application = CreateLiveApplication();
             ApplicationOperations.Refundrequest(application, caseId);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Refund);
-            ReportBankruptcy(application, caseId, appInternalId);
+            ReportBankruptcy(application, caseId);
         }
 
         #region Helpers#
 
-        private void ReportBankruptcy(dynamic application, Guid caseId, int appInternalId)
+        private void ReportBankruptcy(dynamic application, Guid caseId)
         {
             ApplicationOperations.ReportBankrupt(application, caseId);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Bankrupt);
-
-            // wait until suppression record is created
-            Do.Until(() => _commsSuppressionsRepo.FindAll(
-                            _commsSuppressionsRepo.AccountId == application.AccountId && _commsSuppressionsRepo.Bankruptcy == 1).Single());
-            Do.Until(() => _paymentsSuppressionsRepo.FindAll(
-                _paymentsSuppressionsRepo.ApplicationId == appInternalId && _paymentsSuppressionsRepo.BankruptcySuppression == 1).Single());
         }
 
         private void RewindApplicationDates(dynamic application)
@@ -206,41 +188,10 @@ namespace Wonga.QA.Tests.Salesforce
             }
         }
 
-        /// <summary>
-        /// create a live application and confirm that salesforce knows its live
-        /// </summary>
-        /// <returns></returns>
-        private Application CreateLiveApplication(out int appInternalId)
+        private Application CreateLiveApplication()
         {
-            Customer customer = CustomerBuilder.New().Build();
-            Do.Until(customer.GetBankAccount);
-            Do.Until(customer.GetPaymentCard);
-            const decimal loanAmount = 222.22m;
-            Application application = ApplicationBuilder.New(customer)
-                .WithLoanAmount(loanAmount)
-                .Build();
-
-            //force the application to move to live by sending the IFundsTransferredEvent.
-            Drive.Msmq.Payments.Send(new IFundsTransferred
-            {
-                AccountId = application.AccountId,
-                ApplicationId = application.Id,
-                TransactionId = Guid.NewGuid()
-            });
-
-            //wait for the payment to customer to be sent out
-            Do.Until(() => _applicationRepo.FindAll(_applicationRepo.ExternalId == application.Id &&
-                                                   _applicationRepo.Transaction.ApplicationId == _applicationRepo.Id &&
-                                                   _applicationRepo.Amount == loanAmount && _applicationRepo.Type == "CashAdvance"));
-
-            appInternalId = _applicationRepo.FindAll(_applicationRepo.ExternalID == application.Id).Single().ApplicationId;
-
-            Do.Until(() =>
-            {
-                var app = _sales.GetApplicationById(application.Id);
-                return app.Status_ID__c != null &&
-                       app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live;
-            });
+            var customer = CustomerBuilder.New().Build();
+            Application application = SalesforceOperations.CreateApplication(customer);
             return application;
         }
 
