@@ -755,10 +755,6 @@ namespace Wonga.QA.UiTests.Web
         [Test, AUT(AUT.Wb), JIRA("SME-1563"), Owner(Owner.EugeneVlokh)]
         public void WhenCustomerUsesSlidersThenIncludeCostsAndRepaymentAmount()
         {
-
-            var riskPricingEnabled = Do.Until(() => Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.Wb.RiskBasedPricingEnabled"));
-            Config.WbRiskBasedPricingEnabled.RiskBasedPricingEnabled = bool.Parse(riskPricingEnabled.Value);
-           
             var homePage = Client.Home();
             var sliders = homePage.Sliders;
             sliders.MoveAmountSlider = Get.RandomInt(_minSliderValue, _maxSliderValue);

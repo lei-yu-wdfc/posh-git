@@ -98,10 +98,6 @@
       <Project>{4F849124-C538-4580-BF64-296BAB6682BA}</Project>
       <Name>Wonga.QA.Framework.Ucg</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Wonga.QA.Framework.UI\Wonga.QA.Framework.Ui.csproj">
-      <Project>{0F724DF3-0849-4BE7-A5B8-FA23C55E3042}</Project>
-      <Name>Wonga.QA.Framework.Ui</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Wonga.QA.Framework.Svc\Wonga.QA.Framework.Svc.csproj">
       <Project>{67DCDC23-920C-4B70-8F6B-E2F9F2F66A6D}</Project>
       <Name>Wonga.QA.Framework.Svc</Name>
