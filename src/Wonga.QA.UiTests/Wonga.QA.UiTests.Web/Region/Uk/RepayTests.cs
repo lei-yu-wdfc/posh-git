@@ -434,8 +434,8 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             var testTitle = "Success! Your balance has been settled in full";
             var testMessage = "Thanks and nice work for repaying early";
 
-            Assert.IsTrue(paymentTakenPage.Headers.Contains(testTitle), "Header is incorrect.");
-            Assert.IsTrue(paymentTakenText.Contains(testMessage), "Content area text is incorrect.");
+            Assert.IsTrue(paymentTakenPage.Content.Text.Contains(testTitle), "Title is missing on Payment Taken page");
+            Assert.IsTrue(paymentTakenPage.Content.Text.Contains(testMessage), "Success Message is missing on Payment Taken page");
         }
 
         [Test, AUT(AUT.Uk), JIRA("UKWEB-247", "UKWEB-248", "UKWEB-913"), MultipleAsserts]

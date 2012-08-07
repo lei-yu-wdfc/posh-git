@@ -64,6 +64,8 @@ namespace Wonga.QA.Framework.UI
         protected abstract BaseFALnJourney GetStarted(bool submit = true);
         protected abstract BaseFALnJourney PassAboutYou(bool submit = true);
         protected abstract BaseFALnJourney PassIncomePage(bool submit = true);
+        protected abstract BaseFALnJourney PassExpenditurePage(bool submit = true);
+        protected abstract BaseFALnJourney PassDebtsPage(bool submit = true);
 
         public virtual BaseFALnJourney FillAndStop()
         {

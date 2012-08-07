@@ -29,6 +29,20 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.FinancialAssessment
         private readonly IWebElement _totalIncome;
         private readonly IWebElement _buttonPrevious;
         private readonly IWebElement _buttonNext;
+        private IWebElement _salaryAfterTaxError;
+        private IWebElement _partnerSalaryAfterTaxError;
+        private IWebElement _jobseekerAllowanceError;
+        private IWebElement _incomeSupportError;
+        private IWebElement _workingTaxCreditError;
+        private IWebElement _childTaxCreditError;
+        private IWebElement _statePensionError;
+        private IWebElement _privateOrWorkPensionError;
+        private IWebElement _pensionCreditError;
+        private IWebElement _otherError;
+        private IWebElement _maintenenceOrChildSupportError;
+        private IWebElement _incomeFromBoardersOrLodgersError;
+        private IWebElement _studentLoansOrGrantsError;
+        private IWebElement _otherIncomeError;
 
         public FAIncomePage(UiClient client, Validator validator = null)
             : base(client, validator)
@@ -136,9 +150,20 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.FinancialAssessment
             set { _otherIncome.SendValue(value); }
         }
 
+        public void ClickOnOtherIncome()
+        {
+            _otherIncome.Click();
+        }
+
         public string TotalIncome
         {
             get { return _totalIncome.GetValue(); }
+            set { _totalIncome.SendValue(value); }
+        }
+
+        public void ClickOnTotalIncome()
+        {
+            _totalIncome.Click();
         }
 
         public BasePage PreviousClick()
@@ -156,6 +181,146 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.FinancialAssessment
                 return new FAIncomePage(Client, validator);
             }
             return new FAExpenditurePage(Client);
+        }
+
+        public bool SalaryAfterTaxErrorPresent()
+        {
+            try
+            {
+                _salaryAfterTaxError = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.SalaryAfterTaxError)));
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public bool PartnerSalaryAfterTaxErrorPresent()
+        {
+            try
+            {
+                _partnerSalaryAfterTaxError = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.PartnerSalaryAfterTaxError)));
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public bool JobseekerAllowanceErrorPresent()
+        {
+            try
+            {
+                _jobseekerAllowanceError = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.JobseekerAllowanceError)));
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public bool IncomeSupportErrorPresent()
+        {
+            try
+            {
+                _incomeSupportError = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.IncomeSupportError)));
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public bool WorkingTaxCreditErrorPresent()
+        {
+            try
+            {
+                _workingTaxCreditError = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.WorkingTaxCreditError)));
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public bool ChildTaxCreditErrorPresent()
+        {
+            try
+            {
+                _childTaxCreditError = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.ChildTaxCreditError)));
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public bool StatePensionErrorPresent()
+        {
+            try
+            {
+                _statePensionError = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.StatePensionError)));
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public bool PrivateOrWorkPensionErrorPresent()
+        {
+            try
+            {
+                _privateOrWorkPensionError = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.PrivateOrWorkPensionError)));
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public bool PensionCreditErrorPresent()
+        {
+            try
+            {
+                _pensionCreditError = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.PensionCreditError)));
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public bool OtherErrorPresent()
+        {
+            try
+            {
+                _otherError = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.OtherError)));
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public bool MaintenenceOrChildSupportErrorPresent()
+        {
+            try
+            {
+                _maintenenceOrChildSupportError = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.MaintenenceOrChildSupportError)));
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public bool IncomeFromBoardersOrLodgersErrorPresent()
+        {
+            try
+            {
+                _incomeFromBoardersOrLodgersError = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.IncomeFromBoardersOrLodgersError)));
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public bool StudentLoansOrGrantsErrorPresent()
+        {
+            try
+            {
+                _studentLoansOrGrantsError = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.StudentLoansOrGrantsError)));
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public bool OtherIncomeErrorPresent()
+        {
+            try
+            {
+                _otherIncomeError = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentIncomePage.OtherIncomeError)));
+                return true;
+            }
+            catch { return false; }
         }
     }
 }

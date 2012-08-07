@@ -57,21 +57,13 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.FinancialAssessment
         public string FirstName
         {
             get { return _editname.GetValue(); }
-            set
-            {
-                _editname.Clear();
-                _editname.SendKeys(value);
-            }
+            set { _editname.SendValue(value); }
         }
 
         public string LastName
         {
             get { return _editsurname.GetValue(); }
-            set
-            {
-                _editsurname.Clear();
-                _editsurname.SendKeys(value);
-            }
+            set { _editsurname.SendValue(value); }
         }
 
         public string DateOfBirth

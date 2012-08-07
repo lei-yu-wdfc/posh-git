@@ -13,6 +13,50 @@ namespace Wonga.QA.UiTests.Web
 {
     class TopUpTests : UiTest
     {
+
+        [Test, AUT(AUT.Uk), JIRA("QA-341"), Owner(Owner.MihailPodobivsky)]
+        public void CustomerOnTheDayBeforeDueDateShouldntBeAbleToTakeExtraCash()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            string name = Get.GetName();
+            string surname = Get.RandomString(10);
+            Customer customer = CustomerBuilder
+                .New()
+                .WithEmailAddress(email)
+                .WithForename(name)
+                .WithSurname(surname)
+                .Build();
+            Application application = ApplicationBuilder
+                .New(customer)
+                .WithLoanTerm(30)
+                .Build();
+            application.RewindApplicationDatesForDays(29);
+            var mySummaryPage = loginPage.LoginAs(email);
+            Assert.IsFalse(mySummaryPage.LookForTopupSliders());
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("QA-342"), Owner(Owner.MihailPodobivsky)]
+        public void CustomerInArrearsShoudntBeAbleToTakeExtraCredit()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            string name = Get.GetName();
+            string surname = Get.RandomString(10);
+            Customer customer = CustomerBuilder
+                .New()
+                .WithEmailAddress(email)
+                .WithForename(name)
+                .WithSurname(surname)
+                .Build();
+            Application application = ApplicationBuilder
+                .New(customer)
+                .Build();
+            application.PutIntoArrears(10);
+            var mySummaryPage = loginPage.LoginAs(email);
+            Assert.IsFalse(mySummaryPage.LookForTopupSliders());
+        }
+
         [Test, AUT(AUT.Uk), JIRA("UK-826", "UK-789", "UK-2016", "UKWEB-928"), MultipleAsserts]
         [Owner(Owner.OrizuNwokeji, Owner.StanDesyatnikov)]
         [Category(TestCategories.CoreTest)]
@@ -43,9 +87,9 @@ namespace Wonga.QA.UiTests.Web
             var totalRepayable = _response.Values["TotalRepayable"].Single();
             var interestAndFees = _response.Values["InterestAndFeesAmount"].Single();
 
-            Assert.AreEqual(mySummaryPage.TopupSliders.GetTotalToRepay.Remove(0, 1), totalRepayable);
-            Assert.AreEqual(mySummaryPage.TopupSliders.GetTotalAmount.Remove(0, 1), topupAmount);
-            Assert.AreEqual(mySummaryPage.TopupSliders.GetTotalFees.Remove(0, 1), interestAndFees);
+            Assert.AreEqual(mySummaryPage.TopupSliders.GetTotalToRepay.Remove(0, 1), totalRepayable, "Total to Repay on Sliders on My Summary page is wrong");
+            Assert.AreEqual(mySummaryPage.TopupSliders.GetTotalAmount.Remove(0, 1), topupAmount, "Total Amount on Sliders on My Summary page is wrong");
+            Assert.AreEqual(mySummaryPage.TopupSliders.GetTotalFees.Remove(0, 1), interestAndFees, "Interest Fees on Sliders on My Summary page is wrong");
 
             var requestPage =
                 mySummaryPage.TopupSliders.Apply();
@@ -58,22 +102,22 @@ namespace Wonga.QA.UiTests.Web
             var processPage = new TopupProcessingPage(this.Client);
             var agreementPage = processPage.WaitForAgreementPage(Client);
 
-            Assert.IsFalse(agreementPage.IsTopupAgreementPageDateNotPresent());
-            Assert.IsTrue(agreementPage.IsTopupAgreementPageLegalInfoDisplayed());
-            Assert.IsFalse(agreementPage.IsTopupAgreementPageTopupAmountNotPresent());
-            Assert.IsFalse(agreementPage.IsTopupTotalAmountTokenBeingReplaced());
+            Assert.IsFalse(agreementPage.IsTopupAgreementPageDateNotPresent(), "Date on Agreement page is not displayed");
+            Assert.IsTrue(agreementPage.IsTopupAgreementPageLegalInfoDisplayed(), "Legal Info on Agreement page is not displayed");
+            Assert.IsFalse(agreementPage.IsTopupAgreementPageTopupAmountNotPresent(), "Topup Amount on Agreement page is not displayed");
+            Assert.IsFalse(agreementPage.IsTopupTotalAmountTokenBeingReplaced(), "Amount Token Agreement page is not replaced with value");
 
             var dealDonePage = agreementPage.Accept();
-            Assert.IsFalse(dealDonePage.IsDealDonePageDateNotPresent());
-            Assert.IsFalse(dealDonePage.IsDealDonePageJiffyNotPresent());
-            Assert.IsFalse(dealDonePage.IsDealDonePageTopupAmountNotPresent());
-            Assert.Contains(dealDonePage.SucessMessage, totalRepayable);
-            Assert.Contains(dealDonePage.SucessMessage, topupAmount);
+            Assert.IsFalse(dealDonePage.IsDealDonePageDateNotPresent(), "Date on Deal Done page is not displayed");
+            Assert.IsFalse(dealDonePage.IsDealDonePageJiffyNotPresent(), "Jiffy on Deal Done page is not displayed");
+            Assert.IsFalse(dealDonePage.IsDealDonePageTopupAmountNotPresent(), "Topup Amount on Deal Done page is not displayed");
+            Assert.Contains(dealDonePage.SucessMessage, totalRepayable, "Success Message on Deal Done page does not contain Total Repayable");
+            Assert.Contains(dealDonePage.SucessMessage, topupAmount, "Success Message on Deal Done page does not contain Total Amount");
 
             dealDonePage.ContinueToMyAccount();
             
             //Test my account summary page
-            Assert.IsTrue(this.Client.Driver.Url.Contains("my-account"));
+            Assert.IsTrue(this.Client.Driver.Url.Contains("my-account"), "My Account page was not open");
         }
     
         [Test, AUT(AUT.Uk), JIRA("UK-789"), MultipleAsserts]
@@ -124,5 +168,31 @@ namespace Wonga.QA.UiTests.Web
             Assert.Contains(actualIntroText, expectedAvailableCredit, "IntroText shows wrong AvailableCredit for scenario 3");
             Assert.Contains(actualMaxAvailableCredit, expectedAvailableCredit, "Max Available Credit is wrong for scenario 3");
         }
+
+        [Test, AUT(AUT.Uk), JIRA("QA-340")]
+        [Owner(Owner.PetrTarasenko)]
+        public  void TopUpExtraCashequalToChoosen()
+        {
+            string email = Get.RandomEmail();
+
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(30).Build();
+            application.RewindApplicationDatesForDays(20);
+            
+            var responseLimit = Drive.Api.Queries.Post(new GetFixedTermLoanTopupOfferQuery { AccountId = customer.Id });
+            int _amountMax = (int)Decimal.Parse(responseLimit.Values["AmountMax"].Single(), CultureInfo.InvariantCulture);
+            int _amountMin = 1;
+            
+            int randomAmount = _amountMin + (new Random()).Next(_amountMax - _amountMin);
+            
+            var topupAmount = randomAmount.ToString();
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(email);
+            mySummaryPage.TopupSliders.HowMuch = topupAmount;
+            var requestPage =mySummaryPage.TopupSliders.Apply();
+            String[] s = requestPage.Sliders.GetTopUpAmount.Remove(0, 1).Split('.');
+            Assert.AreEqual(topupAmount, requestPage.Sliders.HowMuch);
+            Assert.AreEqual(topupAmount, s[0]);
+          }
     }
 }
