@@ -9,6 +9,7 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Tests.Core.Helpers;
 
 namespace Wonga.QA.Tests.Payments.LoanCalculations
 {
@@ -29,6 +30,10 @@ namespace Wonga.QA.Tests.Payments.LoanCalculations
         [Row(9950, 5, 1.75, 870.62, 497.5, 2263.63, 11318.12, 0)]
         public void BusinessLoanCalculations_PriceTier5(decimal loanAmount, int term, decimal interestRate, decimal totalInterest, decimal arrangementFee, decimal weeklyRepaymentAmount, decimal totalRepay, decimal finalRepaymentAmount)
         {
+            const bool riskBasedPricingStatusIsEnabled = true;
+            var riskBasedPricingStatus = RiskBasedPricingHeplers.GetIsRisBasedPricingEnabled();
+            RiskBasedPricingHeplers.SwithcRiskBasedPricing(riskBasedPricingStatusIsEnabled);
+            
             const String tier = "5";
 
             /*************************************************************************************************************************************************
@@ -92,6 +97,8 @@ namespace Wonga.QA.Tests.Payments.LoanCalculations
             Assert.AreEqual(weeklyRepaymentAmount, decimal.Parse(response.Values["WeeklyRepaymentAmount"].SingleOrDefault()), "The weekly amount should be equal");
             Assert.AreEqual(term.ToString(), response.Values["RemainingNumberOfPayments"].SingleOrDefault(),"The number of repayments should be equal");
             Assert.AreEqual((loanAmount + totalInterest + arrangementFee),  decimal.Parse(response.Values["TotalOutstandingAmount"].SingleOrDefault()), "The total amount should be equal");
-        }
+
+            RiskBasedPricingHeplers.SwithcRiskBasedPricing(riskBasedPricingStatus);
+        }         
     }
 }

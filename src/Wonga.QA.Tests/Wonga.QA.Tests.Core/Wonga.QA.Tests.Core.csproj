@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AUTAttribute.cs" />
+    <Compile Include="Helpers\RiskBasedPricingHeplers.cs" />
     <Compile Include="MetadataKeys.cs" />
     <Compile Include="OwnerAttribute.cs" />
     <Compile Include="Categories\CoreTestAttribute.cs" />
