@@ -42,5 +42,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Ui.Pages.Common
         public String WelcomeMessageClickHereLink { get; set; }
         public String HeaderBarText { get; set; }
         public String LogoutLink { get; set; }
+        public String HeaderBarClickHereLink { get; set; }
     }
 }

@@ -297,6 +297,7 @@
     <WelcomeMessageClickHereLink>a[href='/visitor/refresh']</WelcomeMessageClickHereLink>
     <HeaderBarText>.inline-panel</HeaderBarText>
     <LogoutLink>.inline-link</LogoutLink>
+    <HeaderBarClickHereLink>.inline-link</HeaderBarClickHereLink>
   </HomePage>
 
   <SocialElement>
