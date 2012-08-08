@@ -14,7 +14,7 @@ using Microsoft.Win32;
 namespace Wonga.QA.Framework.Core
 {
     public enum AUT { Uk, Za, Ca, Wb, Pl }
-    public enum SUT { Dev, WIP, UAT, RC, WIPRelease, RCRelease, Live, WIPDI }
+    public enum SUT { Dev, WIP, UAT, RC, WIPRelease, RCRelease, Live, WIPDI, Perf }
 
     public static class Config
     {

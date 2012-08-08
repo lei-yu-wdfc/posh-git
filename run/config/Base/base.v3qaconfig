@@ -161,8 +161,10 @@
 	
 	<Db>
 		<Host>.</Host>
+		<ComponentsHost>%%//Db/Host%%</ComponentsHost>
 		<HdsHost>.</HdsHost>
 		
+		<!-- Services -->
 		<Ops>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=Ops</Ops>
 		<OpsLogs>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=OpsLogs</OpsLogs>
 		<OpsSagas>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=OpsSagas</OpsSagas>
@@ -174,32 +176,33 @@
 		<Bi>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=Bi</Bi>
 		<BiCustomerManagement>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=BiCustomerManagement</BiCustomerManagement>
 		
-		<BankGateway>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=BankGateway</BankGateway>
-		<BlackList>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=BlackList</BlackList>
-		<CallReport>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=CallReport</CallReport>
-		<CallValidate>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=CallValidate</CallValidate>
-		<CardPayment>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=CardPayment</CardPayment>
-		<ColdStorage>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=ColdStorage</ColdStorage>
-		<ContactManagement>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=ContactManagement</ContactManagement>
-		<Experian>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=Experian</Experian>
-		<ExperianBulk>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=ExperianBulk</ExperianBulk>
-		<FileStorage>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=FileStorage</FileStorage>		
-		<IpLookup>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=IpLookup</IpLookup>		
-		<Hpi>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=Hpi</Hpi>
-		<Salesforce>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=Salesforce</Salesforce>
-		<Sms>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=Sms</Sms>
-		<TimeoutManager>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=TimeoutManager</TimeoutManager>
-		<QaData>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=QaData</QaData>
-		<Scheduler>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=Scheduler</Scheduler>
-		<Timezone>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=Timezone</Timezone>
-		<TransUnion>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=TransUnion</TransUnion>
-		<Uru>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=Uru</Uru>
-		<WongaPay>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=WongaPay</WongaPay>
-		<WongaWholeStaging>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=WongaWholeStagingV2</WongaWholeStaging>
-		<GreyfaceShell>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=GreyfaceShell</GreyfaceShell>
-		<Pps>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=Pps</Pps>
-		<PrepaidCard>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=PrepaidCard</PrepaidCard>
-		<MigrationStaging>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=MigrationStaging</MigrationStaging>
+		<!-- Components -->
+		<BankGateway>Data Source=%%//Db/ComponentsHost%%;Integrated Security=true;Initial Catalog=BankGateway</BankGateway>
+		<BlackList>Data Source=%%//Db/ComponentsHost%%;Integrated Security=true;Initial Catalog=BlackList</BlackList>
+		<CallReport>Data Source=%%//Db/ComponentsHost%%;Integrated Security=true;Initial Catalog=CallReport</CallReport>
+		<CallValidate>Data Source=%%//Db/ComponentsHost%%;Integrated Security=true;Initial Catalog=CallValidate</CallValidate>
+		<CardPayment>Data Source=%%//Db/ComponentsHost%%;Integrated Security=true;Initial Catalog=CardPayment</CardPayment>
+		<ColdStorage>Data Source=%%//Db/ComponentsHost%%;Integrated Security=true;Initial Catalog=ColdStorage</ColdStorage>
+		<ContactManagement>Data Source=%%//Db/ComponentsHost%%;Integrated Security=true;Initial Catalog=ContactManagement</ContactManagement>
+		<Experian>Data Source=%%//Db/ComponentsHost%%;Integrated Security=true;Initial Catalog=Experian</Experian>
+		<ExperianBulk>Data Source=%%//Db/ComponentsHost%%;Integrated Security=true;Initial Catalog=ExperianBulk</ExperianBulk>
+		<FileStorage>Data Source=%%//Db/ComponentsHost%%;Integrated Security=true;Initial Catalog=FileStorage</FileStorage>		
+		<IpLookup>Data Source=%%//Db/ComponentsHost%%;Integrated Security=true;Initial Catalog=IpLookup</IpLookup>		
+		<Hpi>Data Source=%%//Db/ComponentsHost%%;Integrated Security=true;Initial Catalog=Hpi</Hpi>
+		<Salesforce>Data Source=%%//Db/ComponentsHost%%;Integrated Security=true;Initial Catalog=Salesforce</Salesforce>
+		<Sms>Data Source=%%//Db/ComponentsHost%%;Integrated Security=true;Initial Catalog=Sms</Sms>
+		<TimeoutManager>Data Source=%%//Db/ComponentsHost%%;Integrated Security=true;Initial Catalog=TimeoutManager</TimeoutManager>
+		<QaData>Data Source=%%//Db/ComponentsHost%%;Integrated Security=true;Initial Catalog=QaData</QaData>
+		<Scheduler>Data Source=%%//Db/ComponentsHost%%;Integrated Security=true;Initial Catalog=Scheduler</Scheduler>
+		<Timezone>Data Source=%%//Db/ComponentsHost%%;Integrated Security=true;Initial Catalog=Timezone</Timezone>
+		<TransUnion>Data Source=%%//Db/ComponentsHost%%;Integrated Security=true;Initial Catalog=TransUnion</TransUnion>
+		<Uru>Data Source=%%//Db/ComponentsHost%%;Integrated Security=true;Initial Catalog=Uru</Uru>
+		<WongaPay>Data Source=%%//Db/ComponentsHost%%;Integrated Security=true;Initial Catalog=WongaPay</WongaPay>
+		<WongaWholeStaging>Data Source=%%//Db/ComponentsHost%%;Integrated Security=true;Initial Catalog=WongaWholeStagingV2</WongaWholeStaging>
+		<GreyfaceShell>Data Source=%%//Db/ComponentsHost%%;Integrated Security=true;Initial Catalog=GreyfaceShell</GreyfaceShell>
+		<Pps>Data Source=%%//Db/ComponentsHost%%;Integrated Security=true;Initial Catalog=Pps</Pps>
+		<PrepaidCard>Data Source=%%//Db/ComponentsHost%%;Integrated Security=true;Initial Catalog=PrepaidCard</PrepaidCard>
+		<MigrationStaging>Data Source=%%//Db/ComponentsHost%%;Integrated Security=true;Initial Catalog=MigrationStaging</MigrationStaging>
 		
 		<Cdc>Data Source=%%//Db/HdsHost%%;Integrated Security=true;Initial Catalog=%%//Region%%_CDCStaging</Cdc>
 		<Hds>Data Source=%%//Db/HdsHost%%;Integrated Security=true;Initial Catalog=%%//Region%%_WongaHDS</Hds>
