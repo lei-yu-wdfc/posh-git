@@ -238,5 +238,14 @@ namespace Wonga.QA.Framework.UI
             IWebElement element = page.Client.Driver.FindElement(By.CssSelector(selector));
             return element.CanToggle();
         }
+
+        public static void MouseOver(this IWebElement element)
+        {
+            String code = "var fireOnThis = arguments[0];"
+                        + "var evObj = document.createEvent('MouseEvents');"
+                        + "evObj.initEvent( 'mouseover', true, true );"
+                        + "fireOnThis.dispatchEvent(evObj);";
+            ((IJavaScriptExecutor)element.Driver()).ExecuteScript(code, element);
+        }
     }
 }

@@ -27,6 +27,9 @@ namespace Wonga.QA.Framework.Data
         private Lazy<CdcDatabase> _cdc = new Lazy<CdcDatabase>(() => new CdcDatabase(Config.Db.Cdc));
         private Lazy<ColdStorageDatabase> _coldStorage = new Lazy<ColdStorageDatabase>(() => new ColdStorageDatabase(Config.Db.ColdStorage));
         private Lazy<ContactManagementDatabase> _contactManagement = new Lazy<ContactManagementDatabase>(() => new ContactManagementDatabase(Config.Db.ContactManagement));
+        private Lazy<DiControlDatabase> _diControl = new Lazy<DiControlDatabase>(() => new DiControlDatabase(Config.Db.DiControl));
+        private Lazy<DiStagingDatabase> _diStaging = new Lazy<DiStagingDatabase>(() => new DiStagingDatabase(Config.Db.DiStaging));
+        private Lazy<DiStagingWongaDatabase> _diStagingWonga = new Lazy<DiStagingWongaDatabase>(() => new DiStagingWongaDatabase(Config.Db.DiStagingWonga));
         private Lazy<ExperianDatabase> _experian = new Lazy<ExperianDatabase>(() => new ExperianDatabase(Config.Db.Experian));
         private Lazy<ExperianBulkDatabase> _experianBulk = new Lazy<ExperianBulkDatabase>(() => new ExperianBulkDatabase(Config.Db.ExperianBulk));
         private Lazy<FileStorageDatabase> _fileStorage = new Lazy<FileStorageDatabase>(() => new FileStorageDatabase(Config.Db.FileStorage));
@@ -40,6 +43,7 @@ namespace Wonga.QA.Framework.Data
         private Lazy<TimeZoneDatabase> _timeZone = new Lazy<TimeZoneDatabase>(() => new TimeZoneDatabase(Config.Db.TimeZone));
         private Lazy<TransUnionDatabase> _transUnion = new Lazy<TransUnionDatabase>(() => new TransUnionDatabase(Config.Db.TransUnion));
         private Lazy<UruDatabase> _uru = new Lazy<UruDatabase>(() => new UruDatabase(Config.Db.Uru));
+        private Lazy<WarehouseDatabase> _warehouse = new Lazy<WarehouseDatabase>(() => new WarehouseDatabase(Config.Db.Warehouse));
         private Lazy<WongaPayDatabase> _wongaPay = new Lazy<WongaPayDatabase>(() => new WongaPayDatabase(Config.Db.WongaPay));
         private Lazy<MarketingDatabase> _marketing = new Lazy<MarketingDatabase>(() => new MarketingDatabase(Config.Db.Marketing));
         private Lazy<PrepaidCardDatabase> _prepaidCard = new Lazy<PrepaidCardDatabase>(() => new PrepaidCardDatabase(Config.Db.PrepaidCard));
@@ -65,6 +69,9 @@ namespace Wonga.QA.Framework.Data
         public CdcDatabase Cdc { get { return _cdc.Value; } }
         public ColdStorageDatabase ColdStorage { get { return _coldStorage.Value; } }
         public ContactManagementDatabase ContactManagement { get { return _contactManagement.Value; } }
+        public DiControlDatabase DiControl { get { return _diControl.Value; } }
+        public DiStagingDatabase DiStaging { get { return _diStaging.Value; } }
+        public DiStagingWongaDatabase DiStagingWonga{ get { return _diStagingWonga.Value; } }
         public ExperianDatabase Experian { get { return _experian.Value; } }
         public ExperianBulkDatabase ExperianBulk { get { return _experianBulk.Value; } }
         public FileStorageDatabase FileStorage { get { return _fileStorage.Value; } }
@@ -82,6 +89,7 @@ namespace Wonga.QA.Framework.Data
         public MarketingDatabase Marketing { get { return _marketing.Value; } }
         public PrepaidCardDatabase PrepaidCard { get { return _prepaidCard.Value; } }
         public PpsDatabase Pps { get { return _pps.Value; } }
+        public WarehouseDatabase Warehouse { get { return _warehouse.Value;} } 
         public WongaWholeStaging WongaWholeStaging { get { return _wongaWholeStaging.Value; } }
         public GreyfaceShell GreyfaceShell { get { return _greyfaceShell.Value; } }
         public MigrationStaging MigrationStaging { get { return _migrationStaging.Value; } }

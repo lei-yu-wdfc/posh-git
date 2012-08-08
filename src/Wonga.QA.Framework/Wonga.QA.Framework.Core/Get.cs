@@ -112,7 +112,7 @@ namespace Wonga.QA.Framework.Core
 
         public static String GetName()
         {
-            return RandomString(2, 30);
+            return RandomString(4, 30);
         }
 
         public static String GetPhone()
@@ -244,7 +244,8 @@ namespace Wonga.QA.Framework.Core
                     }
                 case AUT.Wb:
                     {
-                        return RandomLong(10000000, 99999999).ToString();
+                        //return RandomLong(10000000, 99999999).ToString();
+                        return RandomUkBankAccountFromSortCode(bankSortCode);
                     }
                 default:
                     {

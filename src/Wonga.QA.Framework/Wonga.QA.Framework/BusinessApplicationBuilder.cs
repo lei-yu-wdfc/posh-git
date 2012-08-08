@@ -76,7 +76,7 @@ namespace Wonga.QA.Framework
 				            r.LoanAmount = LoanAmount;
 				            r.AccountId = Customer.Id;
 				            r.Currency = CurrencyCodeEnum.GBP;
-				            //r.ApplicationDate = Get.GetApplicationDate();  //This line is breaking the build
+				            r.ApplicationDate = Get.GetApplicationDate();  //This line is breaking the build
 				                                                                    })
             };
 

@@ -22,6 +22,21 @@ namespace Wonga.QA.Framework.UI
         protected String _childrenInHousehold;
         protected String _numberOfVehiles;
 
+        protected String _salaryAfterTax;
+        protected String _partnerSalaryAfterTax;
+        protected String _jobseekerAllowance;
+        protected String _incomeSupport;
+        protected String _workingTaxCredit;
+        protected String _childTaxCredit;
+        protected String _statePension;
+        protected String _privateOrWorkPension;
+        protected String _pensionCredit;
+        protected String _other;
+        protected String _maintenenceOrChildSupport;
+        protected String _incomeFromBoardersOrLodgers;
+        protected String _studentLoansOrGrants;
+        protected String _otherIncome;
+
         public BasePage CurrentPage { get; set; }
 
         public BasePage Teleport<T>()
@@ -49,6 +64,8 @@ namespace Wonga.QA.Framework.UI
         protected abstract BaseFALnJourney GetStarted(bool submit = true);
         protected abstract BaseFALnJourney PassAboutYou(bool submit = true);
         protected abstract BaseFALnJourney PassIncomePage(bool submit = true);
+        protected abstract BaseFALnJourney PassExpenditurePage(bool submit = true);
+        protected abstract BaseFALnJourney PassDebtsPage(bool submit = true);
 
         public virtual BaseFALnJourney FillAndStop()
         {

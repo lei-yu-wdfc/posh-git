@@ -14,9 +14,9 @@ namespace Wonga.QA.Framework.Data
             
         }
 
-        public List<Guid> GetWorkflowsForApplication(Guid applicationId,RiskWorkflowTypes riskWorkflowType)
+        public dynamic GetWorkflowsForApplication(Guid applicationId)
         {
-           return Db.SelectAllByApplicationId(applicationId).ToList();
+           return Db.RiskWorkflows.FindAllByApplicationId(applicationId);
         }
     }
 }

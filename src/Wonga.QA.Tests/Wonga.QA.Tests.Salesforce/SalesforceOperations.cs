@@ -12,7 +12,9 @@ namespace Wonga.QA.Tests.Salesforce
         private static ServiceConfigurationEntity _sfPassword;
         private static ServiceConfigurationEntity _sfUrl;
         private static Framework.ThirdParties.Salesforce _sales;
-        private static readonly dynamic _applicationRepo = Drive.Data.Payments.Db.Applications;
+        private static readonly dynamic ApplicationRepo = Drive.Data.Payments.Db.Applications;
+        private static readonly dynamic LoanDueDateNotifiSagaEntityTab = Drive.Data.OpsSagas.Db.LoanDueDateNotificationSagaEntity;
+        private static readonly dynamic FixedTermLoanAppTab = Drive.Data.Payments.Db.FixedTermLoanApplications;
 
         public static Framework.ThirdParties.Salesforce SalesforceSetup()
         {
@@ -32,20 +34,12 @@ namespace Wonga.QA.Tests.Salesforce
             var application = ApplicationBuilder.New(customer)
              .Build();
 
-            //force the application to move to live by sending the IFundsTransferredEvent.
-            Drive.Msmq.Payments.Send(new IFundsTransferred
-            {
-                AccountId = application.AccountId,
-                ApplicationId = application.Id,
-                TransactionId = Guid.NewGuid()
-            });
-
             //wait for the payment to customer to be sent out
-            Do.Until(() => _applicationRepo.FindAll(_applicationRepo.ExternalId == application.Id &&
-                                                   _applicationRepo.Transaction.ApplicationId == _applicationRepo.Id &&
-                                                   _applicationRepo.Type == "CashAdvance"));
+            Do.Until(() => ApplicationRepo.FindAll(ApplicationRepo.ExternalId == application.Id &&
+                                                   ApplicationRepo.Transaction.ApplicationId == ApplicationRepo.Id &&
+                                                   ApplicationRepo.Type == "CashAdvance"));
 
-            Do.With.Timeout(2).Until(() =>
+            Do.With.Timeout(3).Until(() =>
             {
                 var app = _sales.GetApplicationById(application.Id);
                 return app.Status_ID__c != null &&
@@ -57,12 +51,45 @@ namespace Wonga.QA.Tests.Salesforce
 
         public static void CheckSalesApplicationStatus(Application application, double status)
         {
-            Do.With.Timeout(2).Until(() =>
+            Do.With.Timeout(3).Until(() =>
             {
                 var app = _sales.GetApplicationById(application.Id);
                 return app.Status_ID__c != null && app.Status_ID__c == status;
             });
         }
+
+        public static void CheckPreviousStatus(Guid id,string previousStatus,string currentStatus)
+        {
+
+            Do.With.Timeout(1).Until(()=>  Drive.Data.BiCustomerManagement.Db.ApplicationStatusHistory.FindBy(ApplicationId: id,
+                                                                                   PreviousStatus: previousStatus,
+                                                                                   CurrentStatus: currentStatus) );
+        }
+
+        public static void MakeDueToday(dynamic application)
+        {
+            var ldd = LoanDueDateNotifiSagaEntityTab.FindAll(LoanDueDateNotifiSagaEntityTab.ApplicationId == application.Id).Single();
+            if (Drive.Data.Ops.GetServiceConfiguration<bool>("Payments.FeatureSwitches.UseLoanDurationSaga") == false)
+            {
+                Drive.Msmq.Payments.Send(new Framework.Msmq.TimeoutMessage { SagaId = ldd.Id });
+                LoanDueDateNotifiSagaEntityTab.Update(ldd);
+            }
+            else
+            {
+                //We should timeout the LoanDurationSaga...
+                dynamic loanDurationSagaEntities = Drive.Data.OpsSagas.Db.LoanDurationSagaEntity;
+                var loanDurationSaga = loanDurationSagaEntities.FindAllByAccountGuid(AccountGuid: application.AccountId).FirstOrDefault();
+                Drive.Msmq.Payments.Send(new Framework.Msmq.TimeoutMessage() { SagaId = loanDurationSaga.Id });
+            }
+        }
+
+        public static void RewindDatesToMakeDueToday(Application application)
+        {
+            int id = ApplicationOperations.GetAppInternalId(application);
+            TimeSpan span = FixedTermLoanAppTab.FindByApplicationId(id).NextDueDate - DateTime.Today;
+            application.RewindApplicationDates(span);
+        }
+
 
     }
 }

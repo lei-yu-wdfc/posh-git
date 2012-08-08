@@ -24,7 +24,7 @@ namespace Wonga.QA.Generators.Msmq
 
     	public void Generate()
     	{
-    	    var files = Origin.Build.GetFiles("Wonga.*.dll", SearchOption.AllDirectories).ToList().DistinctBy(x => x.Name);
+    	    var files = Origin.Build.GetFiles("Wonga.*.dll", SearchOption.AllDirectories).ToList().DistinctBy(x => x.Name.ToLower());
 
             foreach (var file in files)
                 GenerateTypesForAssembly(file);

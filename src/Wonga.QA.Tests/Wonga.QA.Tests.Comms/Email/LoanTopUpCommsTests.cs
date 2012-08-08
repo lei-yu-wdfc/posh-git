@@ -12,11 +12,9 @@ using CreateFixedTermLoanTopupCommand = Wonga.QA.Framework.Api.Requests.Payments
 
 namespace Wonga.QA.Tests.Comms.Email
 {
-
-	[TestFixture]
+	[TestFixture, AUT(AUT.Uk)]
 	public class LoanTopUpCommsTests
 	{
-
 		Guid fixedTermLoanTopupId = Guid.NewGuid();
 		const int topupAmount = 150;
 		Guid customerId;

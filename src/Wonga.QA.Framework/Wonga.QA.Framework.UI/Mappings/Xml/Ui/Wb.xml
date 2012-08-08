@@ -262,6 +262,7 @@
     <AmountPlusButton>.wonga-amount-slider-wrapper .sliderplus</AmountPlusButton>
     <DurationMinusButton>.wonga-duration-slider-wrapper .sliderminus</DurationMinusButton>
     <DurationPlusButton>.wonga-duration-slider-wrapper .sliderplus</DurationPlusButton>
+    <TermsOfLoan>span.green.weekly-term</TermsOfLoan>
   </SlidersElement>  
   
 </UiMap>

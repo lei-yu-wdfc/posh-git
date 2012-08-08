@@ -32,6 +32,7 @@ namespace Wonga.QA.UiTests.Mocked.Web.Uk
         }
 
         [Test, AUT(AUT.Uk), Owner(Owner.StanDesyatnikov)]
+        [Pending("Waiting for fixed mocked address")]
         public void L0Journey()
         {
             var loginPage = Client.Login();
@@ -41,6 +42,7 @@ namespace Wonga.QA.UiTests.Mocked.Web.Uk
         }
 
         [Test, AUT(AUT.Uk), Owner(Owner.StanDesyatnikov)]
+        [Pending("Waiting Ln mock in WIP")]
         public void LnJourney()
         {
             var loginPage = Client.Login();
@@ -48,6 +50,5 @@ namespace Wonga.QA.UiTests.Mocked.Web.Uk
             var journey = JourneyFactory.GetLnJourney(Client.Home());
             var page = journey.Teleport<MySummaryPage>() as MySummaryPage;
         }
-
     }
 }

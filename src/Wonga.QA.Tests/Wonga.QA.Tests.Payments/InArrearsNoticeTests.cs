@@ -62,7 +62,6 @@ namespace Wonga.QA.Tests.Payments
 			if (Config.AUT == AUT.Uk)
 			{
 				return ApplicationBuilder.New(customer).Build()
-					.ExpireCard()
 					.PutIntoArrears(20);
 			}
 			else

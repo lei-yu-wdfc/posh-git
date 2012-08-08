@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using MbUnit.Framework;
 using Wonga.QA.Framework.Api.Enums;
 using Wonga.QA.Framework.Api.Requests.Payments.Queries.Wb.Uk;
@@ -16,6 +14,9 @@ namespace Wonga.QA.Tests.Payments.LoanCalculations
     [Parallelizable(TestScope.All), Category(TestCategories.CoreTest)]
     public class BusinessLoanCalculationTests
     {
+        private const string RiskBasedPricingEnabled = "Payments.Wb.RiskBasedPricingEnabled";
+        private const bool IsRiskBasedPricingStatusIsEnabled = true;
+
         [Test, AUT(AUT.Wb)]
         [Row(9850/*loanAmount*/, 3/*Term*/, 1.75 /*interestRate*/, 517.12 /*totalInterest*/, 492.50 /*arrangementFee*/ , 3619.88/*weeklyRepaymentAmount*/, 10859.62 /*totalRepay*/, 3619.86/*finalRepaymentAmount*/)]
         [Row(5000, 10, 1.75, 875, 250, 612.5, 6125, 0)]
@@ -29,6 +30,9 @@ namespace Wonga.QA.Tests.Payments.LoanCalculations
         [Row(9950, 5, 1.75, 870.62, 497.5, 2263.63, 11318.12, 0)]
         public void BusinessLoanCalculations_PriceTier5(decimal loanAmount, int term, decimal interestRate, decimal totalInterest, decimal arrangementFee, decimal weeklyRepaymentAmount, decimal totalRepay, decimal finalRepaymentAmount)
         {
+            var riskBasedPricingStatus = Drive.Data.Ops.GetServiceConfiguration<bool>(RiskBasedPricingEnabled);
+            Drive.Data.Ops.SetServiceConfiguration<bool>(RiskBasedPricingEnabled, IsRiskBasedPricingStatusIsEnabled);
+
             const String tier = "5";
 
             /*************************************************************************************************************************************************
@@ -92,6 +96,8 @@ namespace Wonga.QA.Tests.Payments.LoanCalculations
             Assert.AreEqual(weeklyRepaymentAmount, decimal.Parse(response.Values["WeeklyRepaymentAmount"].SingleOrDefault()), "The weekly amount should be equal");
             Assert.AreEqual(term.ToString(), response.Values["RemainingNumberOfPayments"].SingleOrDefault(),"The number of repayments should be equal");
             Assert.AreEqual((loanAmount + totalInterest + arrangementFee),  decimal.Parse(response.Values["TotalOutstandingAmount"].SingleOrDefault()), "The total amount should be equal");
-        }
+
+            Drive.Data.Ops.SetServiceConfiguration<bool>(RiskBasedPricingEnabled, riskBasedPricingStatus);
+        }         
     }
 }

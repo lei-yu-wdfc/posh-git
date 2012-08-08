@@ -606,14 +606,6 @@ namespace Wonga.QA.UiTests.Web
 			Assert.IsTrue(personalBankAccountPage.Client.Source().Contains("<!-- Output from wonga_lzero_za/apply-bank -->"));
 		}
 
-		[Test, AUT(AUT.Uk)]
-		public void L0Journey()
-		{
-			var journey = JourneyFactory.GetL0Journey(Client.Home())
-				.WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
-			var dealDone = journey.Teleport<DealDonePage>() as DealDonePage;
-		}
-
 		[Test, AUT(AUT.Za), JIRA("QA-170")] //Removed from smoke because of the problem with sliders update
 		public void CustomerOnHowItWorksPageShouldBeAbleUseSlidersProperly()
 		{
@@ -1201,8 +1193,7 @@ namespace Wonga.QA.UiTests.Web
 				.WithDateOfBirth(customer.DateOfBirth);
 			var processingPage = journey.Teleport<ProcessingPage>() as ProcessingPage;
 		}
-
-		
+        
 		[Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-172"), Pending("CA code appearing in ZA - Michael Nowicki to fix")]
 		public void L0JourneyCustomerMakeALoanCheckOneLastStepPageValidDataDisplayed()
 		{
@@ -1329,7 +1320,8 @@ namespace Wonga.QA.UiTests.Web
 					break;
 			}
 		}
-		[Test, AUT(AUT.Wb), JIRA("QA-287"), Category(TestCategories.SmokeTest)]
+		
+        [Test, AUT(AUT.Wb), JIRA("QA-287"), Category(TestCategories.SmokeTest)]
 		public void WbL0JourneyShouldNotBeAbleToProceedWithoutAcceptingAllEligibilityQuestions()
 		{
 			int getRandomNumber = Get.RandomInt(0, 4);
@@ -1357,40 +1349,6 @@ namespace Wonga.QA.UiTests.Web
 				.WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
 			var mySummary = journey.Teleport<MySummaryPage>() as MySummaryPage;
 
-		}
-
-		[Test, AUT(AUT.Uk), JIRA("UK-969", "UKWEB-250"), MultipleAsserts]
-		public void L0PreAgreementPartonAccountSetupPageTest()
-		{
-			var loginPage = Client.Login();
-			string email = Get.RandomEmail();
-			int loanAmount = 200;
-			Console.WriteLine("email={0}", email);
-
-			// L0 journey
-			var journeyL0 = JourneyFactory.GetL0Journey(Client.Home())
-				.WithAmount(loanAmount)
-				.WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask))
-				.WithEmail(email);
-			var accountSetupPage = journeyL0.Teleport<AccountDetailsPage>() as AccountDetailsPage;
-
-			Assert.IsTrue(accountSetupPage.IsSecciLinkVisible());
-			Assert.IsTrue(accountSetupPage.IsTermsAndConditionsLinkVisible());
-			Assert.IsTrue(accountSetupPage.IsExplanationLinkVisible());
-
-			Assert.Contains(accountSetupPage.GetTermsAndConditionsTitle(), "Wonga.com Loan Conditions");
-			accountSetupPage.ClosePopupWindow();
-
-			Thread.Sleep(1000);
-
-			Assert.Contains(accountSetupPage.GetExplanationTitle(), "Important information about your loan");
-			accountSetupPage.ClosePopupWindow();
-
-			Thread.Sleep(1000);
-
-			accountSetupPage.ClickSecciLink();
-			Assert.Contains(accountSetupPage.SecciPopupWindowContent(), loanAmount.ToString("#"));
-			accountSetupPage.ClosePopupWindow();
 		}
 
 		[Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-204")]

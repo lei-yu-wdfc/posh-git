@@ -44,6 +44,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
         private IWebElement _wongaCustomersBox;
         private IWebElement _responsibleLendingBox;
         private IWebElement _representativeExample;
+        private IWebElement _existingCustomersLink;
+        private IWebElement _trustratingLinkAboveSliders;
+        private IWebElement _headerBarText;
         //private IWebElement _fastCashLink;
         //private IWebElement _cashAdvanceLink;
         //private IWebElement _quickQuidLink;
@@ -165,12 +168,42 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
             return seoLinksText;
         }
 
+        public String GetHeaderBarText()
+        {
+            _headerBarText = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.HeaderBarText));
+            var headerBarText = _headerBarText.Text;
+            return headerBarText;
+        }
+
+        public bool IsHeaderBarTextVisible()
+        {
+            try
+            {
+                var headerBarText = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.HeaderBarText));
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public void ClickHeaderBarClickHereLink()
+        {
+            Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.HeaderBarClickHereLink)).Click();
+        }
+
         public String GetWelcomeHeaderMessageText()
         {
             Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.WelcomeHeaderMessage)));
             _headerMessage = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.WelcomeHeaderMessage));
             var headerMessageText = _headerMessage.Text.Replace("\r\n", " ");
             return headerMessageText;
+        }
+
+        public void ClickWelcomeMessageClickHereLink()
+        {
+            Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.WelcomeMessageClickHereLink)).Click();    
         }
 
         public String GetWelcomeSubMessageText()
@@ -187,6 +220,22 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
             if ((DateTime.Now.AddMinutes(24).Hour.ToString("#") == "00") && (DateTime.Now.Hour.ToString("#") != "00"))
             ending = " tomorrow.";
             return ending;
+        }
+
+        public String GetExistingCustomersLink()
+        {
+            Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.ExistingCustomersLink)));
+            _existingCustomersLink = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.ExistingCustomersLink));
+            var existingCustomersLink = _existingCustomersLink.GetAttribute("href");
+            return existingCustomersLink;
+        }
+
+        public String GetAboveSlidersTrustRatingLink()
+        {
+            Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.TrustratingLinkAboveSliders)));
+            _trustratingLinkAboveSliders = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.TrustratingLinkAboveSliders));
+            var trustratingLinkAboveSliders = _trustratingLinkAboveSliders.GetAttribute("href");
+            return trustratingLinkAboveSliders;
         }
 
         public String GetHomePageCodeOfPracticeLink()
@@ -337,15 +386,14 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
         {
             Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.RepresentativeExampleTrigger)));
 
-            IWebElement AprExampleLink = Content.FindElement(By.CssSelector(UiMap.Get.HomePage.RepresentativeExampleTrigger));
+            IWebElement aprExampleLink = Content.FindElement(By.CssSelector(UiMap.Get.HomePage.RepresentativeExampleTrigger));
 
-            Actions builder = new Actions(Client.Driver);
-            builder.MoveToElement(AprExampleLink);
+            aprExampleLink.MouseOver();
 
             Do.With.Timeout(new TimeSpan(0, 0, 10)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.RepresentativeExampleText)));
             _representativeExample = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.RepresentativeExampleText));
             var representativeExampleText = _representativeExample.Text;
-            return representativeExampleText;
+            return representativeExampleText.Replace("\r\n","");
         }
 
         public bool IsMocked()

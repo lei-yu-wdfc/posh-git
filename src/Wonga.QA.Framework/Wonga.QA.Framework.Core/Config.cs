@@ -14,7 +14,7 @@ using Microsoft.Win32;
 namespace Wonga.QA.Framework.Core
 {
     public enum AUT { Uk, Za, Ca, Wb, Pl }
-    public enum SUT { Dev, WIP, UAT, RC, WIPRelease, RCRelease, Live, WIPDI }
+    public enum SUT { Dev, WIP, UAT, RC, WIPRelease, RCRelease, Live, WIPDI, Perf }
 
     public static class Config
     {
@@ -24,6 +24,7 @@ namespace Wonga.QA.Framework.Core
 
         public static ApiConfig Api { get; set; }
         public static CsConfig Cs { get; set; }
+		public static UcgConfig Ucg { get; set; }
         public static SvcConfig Svc { get; set; }
         public static MsmqConfig Msmq { get; set; }
         public static DbConfig Db { get; set; }       
@@ -107,6 +108,7 @@ namespace Wonga.QA.Framework.Core
             Api = new ApiConfig(GetSettingFromXml("//Api/Url"));
             CommonApi = new CommonApiConfig(GetSettingFromXml("//CommonApi/Url"));
             Cs = new CsConfig(GetSettingFromXml("//CSApi/Url"));
+			Ucg = new UcgConfig(GetSettingFromXml("//UCG/Url"));
             Admin = new AdminConfig { Home = new Uri(GetSettingFromXml("//Admin/HomePage")) };
             PrepaidAdminUI = new PrepaidAdminConfig
             {
@@ -205,6 +207,9 @@ namespace Wonga.QA.Framework.Core
             Db.ColdStorage = GetSettingFromXml("//Db/ColdStorage");
             Db.Comms = GetSettingFromXml("//Db/Comms");
             Db.ContactManagement = GetSettingFromXml("//Db/ContactManagement");
+            Db.DiControl = GetSettingFromXml("//Db/DiControl");
+            Db.DiStaging = GetSettingFromXml("//Db/DiStaging");
+            Db.DiStagingWonga = GetSettingFromXml("//Db/DiStagingWonga");
             Db.Experian = GetSettingFromXml("//Db/Experian");
             Db.ExperianBulk = GetSettingFromXml("//Db/ExperianBulk");
             Db.FileStorage = GetSettingFromXml("//Db/FileStorage");
@@ -227,6 +232,7 @@ namespace Wonga.QA.Framework.Core
             Db.TimeZone = GetSettingFromXml("//Db/Timezone");
             Db.TransUnion = GetSettingFromXml("//Db/TransUnion");
             Db.Uru = GetSettingFromXml("//Db/Uru");
+            Db.Warehouse = GetSettingFromXml("//Db/Warehouse");
             Db.WongaPay = GetSettingFromXml("//Db/WongaPay");
             Db.WongaWholeStaging = GetSettingFromXml("//Db/WongaWholeStaging");
             Db.MigrationStaging = GetSettingFromXml("//Db/MigrationStaging");
@@ -271,6 +277,19 @@ namespace Wonga.QA.Framework.Core
                 Queries = new Uri(uri, "queries");
             }
         }
+
+		public class UcgConfig
+		{
+			public Uri Commands { get; set; }
+			public Uri Queries { get; set; }
+
+			public UcgConfig(String host)
+			{
+				Uri uri = new UriBuilder { Host = host }.Uri;
+				Commands = new Uri(uri, "commands");
+				Queries = new Uri(uri, "queries");
+			}
+		}
 
         public class CsConfig : ApiConfig
         {
@@ -381,6 +400,9 @@ namespace Wonga.QA.Framework.Core
             public String Cdc { get; set; }
             public String ColdStorage { get; set; }
             public String ContactManagement { get; set; }
+            public String DiControl { get; set; }
+            public String DiStaging { get; set; }
+            public String DiStagingWonga { get; set; }
             public String Experian { get; set; }
             public String ExperianBulk { get; set; }
             public String FileStorage { get; set; }
@@ -392,6 +414,7 @@ namespace Wonga.QA.Framework.Core
             public String TimeZone { get; set; }
             public String TransUnion { get; set; }
             public String Uru { get; set; }
+            public String Warehouse { get; set; }
             public String WongaPay { get; set; }
             public String Marketing { get; set; }
             public String PrepaidCard { get; set; }

@@ -90,7 +90,9 @@ namespace Wonga.QA.Framework.UI
         public RepaymentOptionsPage RepaymentOptionsPage { get; set; }
         public AccountSetupPage AccountSetupPage { get; set; }
         public FinancialAssessmentPage FinancialAssessmentPage { get; set; }
-#endregion
+        public ApplyErrorPage ApplyPage { get; set; }
+
+        #endregion
     }
 }
 

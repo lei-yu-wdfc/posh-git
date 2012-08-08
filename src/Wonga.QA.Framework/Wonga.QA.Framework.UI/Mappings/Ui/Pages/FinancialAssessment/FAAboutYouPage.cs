@@ -11,7 +11,9 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages.FinancialAssessment
         public String EmailAddress { get; set; }
         public String Name { get; set; }
         public String Surname { get; set; }
-        public String DateOfBirth { get; set; }
+        public String DateOfBirthDay { get; set; }
+        public String DateOfBirthMonth { get; set; }
+        public String DateOfBirthYear { get; set; }
         public String HouseNumber { get; set; }
         public String PostCode { get; set; }
         public String Employer { get; set; }

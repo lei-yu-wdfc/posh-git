@@ -10,19 +10,15 @@ using salesforceStatusAlias = Wonga.QA.Framework.ThirdParties.Salesforce.Applica
 
 namespace Wonga.QA.Tests.Salesforce
 {
-    [TestFixture(Order = 0), Pending("BI customer Management Bug preventing test from pass")]
-    [Parallelizable(TestScope.All)]
+    [TestFixture(Order = -1)]
+    [Parallelizable(TestScope.Self)]
     class SalesforceApplicationRefund
     {
-        private Framework.ThirdParties.Salesforce _sales;
-        private readonly dynamic _loanDueDateNotifiSagaEntityTab = Drive.Data.OpsSagas.Db.LoanDueDateNotificationSagaEntity;
-        private readonly dynamic _fixedTermLoanAppTab = Drive.Data.Payments.Db.FixedTermLoanApplications;
-
         #region setup#
         [SetUp]
         public void SetUp()
         {
-            _sales = SalesforceOperations.SalesforceSetup();
+            SalesforceOperations.SalesforceSetup();
         }
         #endregion setup#
 
@@ -41,8 +37,8 @@ namespace Wonga.QA.Tests.Salesforce
         {
             var caseId = Guid.NewGuid();
             var application = CreateLiveApplication();
-            RewindDatesToMakeDueToday(application);
-            MakeDueToday(application);
+            SalesforceOperations.RewindDatesToMakeDueToday(application);
+            SalesforceOperations.MakeDueToday(application);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.DueToday);
             Refund(caseId, application);
         }
@@ -53,7 +49,6 @@ namespace Wonga.QA.Tests.Salesforce
         {
             var caseId = Guid.NewGuid();
             var application = CreateLiveApplication();
-            application.ExpireCard();
             application.PutIntoArrears(3);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.InArrears);
             Refund(caseId, application);
@@ -143,34 +138,10 @@ namespace Wonga.QA.Tests.Salesforce
 
         private void Refund(Guid caseId, Application application)
         {
-            ApplicationOperations.ReportBankrupt(application, caseId);
+            ApplicationOperations.Refundrequest(application, caseId);
             SalesforceOperations.CheckSalesApplicationStatus(application,(double)salesforceStatusAlias.Refund);
         }
 
-        public void MakeDueToday(dynamic application)
-        {
-            var ldd = _loanDueDateNotifiSagaEntityTab.FindAll(_loanDueDateNotifiSagaEntityTab.ApplicationId == application.Id).Single();
-            if (Drive.Data.Ops.GetServiceConfiguration<bool>("Payments.FeatureSwitches.UseLoanDurationSaga") == false)
-            {
-                Drive.Msmq.Payments.Send(new Framework.Msmq.TimeoutMessage { SagaId = ldd.Id });
-                _loanDueDateNotifiSagaEntityTab.Update(ldd);
-            }
-            else
-            {
-                //We should timeout the LoanDurationSaga...
-                dynamic loanDurationSagaEntities = Drive.Data.OpsSagas.Db.LoanDurationSagaEntity;
-                var loanDurationSaga = loanDurationSagaEntities.FindAllByAccountGuid(AccountGuid: application.AccountId).FirstOrDefault();
-                Drive.Msmq.Payments.Send(new Framework.Msmq.TimeoutMessage() { SagaId = loanDurationSaga.Id });
-            }
-        }
-
-        private void RewindDatesToMakeDueToday(Application application)
-        {
-            int id = ApplicationOperations.GetAppInternalId(application);
-            TimeSpan span = _fixedTermLoanAppTab.FindByApplicationId(id).NextDueDate - DateTime.Today;
-            application.RewindApplicationDates(span);
-        }
-
-        #endregion helpers#
+       #endregion helpers#
     }
 }

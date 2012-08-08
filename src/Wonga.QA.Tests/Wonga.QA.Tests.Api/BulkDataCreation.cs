@@ -128,7 +128,7 @@ namespace Wonga.QA.Tests.Api
         }
 
         [Test, AUT(AUT.Uk), JIRA("QA-320"), Ignore, Owner(Owner.PetrTarasenko)]
-        [Row(1, 20)]
+        [Row(1, -20)]
         public void CreateDeclinedCustomersWithProperInfo(int customersNum, int day)
         {
             for (int i = 0; i < customersNum; i++)
@@ -141,7 +141,7 @@ namespace Wonga.QA.Tests.Api
         }
 
         [Test, AUT(AUT.Uk), JIRA("QA-320"), Ignore, Owner(Owner.PetrTarasenko)]
-        [Row(1, 20)]
+        [Row(1, -20)]
         public void CreatePendingCustomersWithProperInfo(int customersNum, int day)
         {
             for (int i = 0; i < customersNum; i++)
@@ -216,6 +216,53 @@ namespace Wonga.QA.Tests.Api
 
         }
 
+        [Test, AUT(AUT.Uk), JIRA("QA-320"), Ignore, Owner(Owner.PetrTarasenko)]
+        [Row(18, 3)]
+        [Row(38, 10)]
+        [Row(50, 30)]
+        [Row(63, 60)]
+        [Row(13, 90)]
+        public void CreateRepaymentArrangementCustomersWithProperInfo(int customersNum, int day)
+        {
+            for (int i = 0; i < customersNum; i++)
+            {
+                Customer properCustomer = properCustomerCreator();
+                Application application = ApplicationBuilder.New(properCustomer).Build().RewindApplicationDatesForDays(day).CreateRepaymentArrangement();
+            }
+
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("QA-320"), Ignore, Owner(Owner.PetrTarasenko)]
+        [Row(3, 60)]
+        [Row(3, 90)]
+        public void CreateBankruptCustomersWithProperInfo(int customersNum, int day)
+        {
+            for (int i = 0; i < customersNum; i++)
+            {
+                Customer properCustomer = properCustomerCreator();
+                Application application = ApplicationBuilder.New(properCustomer).Build().RewindApplicationDatesForDays(day);
+                ApplicationOperations.ReportBankrupt(application, Guid.NewGuid());
+            }
+
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("QA-320"), Ignore, Owner(Owner.PetrTarasenko)]
+        [Row(1, 1)]
+        //[Row(3, 5)]
+        //[Row(8, 10)]
+        //[Row(8, 30)]
+        //[Row(3, 60)]
+        public void CreateComplaintCustomersWithProperInfo(int customersNum, int day)
+        {
+            for (int i = 0; i < customersNum; i++)
+            {
+                Customer properCustomer = properCustomerCreator();
+                Application application = ApplicationBuilder.New(properCustomer).Build().RewindApplicationDatesForDays(day);
+                ApplicationOperations.ReportComplaint(application, Guid.NewGuid());
+            }
+
+        }
+
         public Customer properCustomerCreator()
         {
 
@@ -248,5 +295,5 @@ namespace Wonga.QA.Tests.Api
 
         }
 
-    }
+       }
 }
