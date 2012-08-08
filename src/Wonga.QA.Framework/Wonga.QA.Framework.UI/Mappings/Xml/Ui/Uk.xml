@@ -460,4 +460,15 @@
     <ButtonPrevious>#edit-previous.form-submit</ButtonPrevious>
     <ButtonNext>#edit-next.form-submit</ButtonNext>
   </FARepaymentPlan>  
+  <MyPaymentsPage>
+    <AddCardButton>#cards div + div a</AddCardButton>
+    <EditCardType>#edit-card-type</EditCardType>
+    <EditCardNumber>#edit-card-number</EditCardNumber>
+    <EditCardName>#edit-card-name</EditCardName>
+    <EditCardExpiryDateMonth>#edit-card-expiry-date-month</EditCardExpiryDateMonth>
+    <EditCardExpiryDateYear>#edit-card-expiry-date-year</EditCardExpiryDateYear>
+    <EditCardSecurity>#edit-card-security'</EditCardSecurity>
+    <EditSubmit>#edit-submit</EditSubmit>
+  </MyPaymentsPage>
+  
 </UiMap>
