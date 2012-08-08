@@ -36,6 +36,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Ui.Pages.Common
         public String WongaCustomersBoxText { get; set; }
         public String ResponsibleLendingBoxText { get; set; }
         public String RepresentativeExampleTrigger { get; set; }
+        public String AprExplanationText { get; set; }
         public String RepresentativeExampleText { get; set; }
         public String TrustratingLinkAboveSliders { get; set; }
         public String ExistingCustomersLink { get; set; }
@@ -43,5 +44,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Ui.Pages.Common
         public String HeaderBarText { get; set; }
         public String LogoutLink { get; set; }
         public String HeaderBarClickHereLink { get; set; }
+        public String PromoCode { get; set; }
     }
 }

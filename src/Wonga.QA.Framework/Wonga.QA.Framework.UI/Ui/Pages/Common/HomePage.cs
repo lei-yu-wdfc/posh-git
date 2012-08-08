@@ -47,13 +47,14 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
         private IWebElement _existingCustomersLink;
         private IWebElement _trustratingLinkAboveSliders;
         private IWebElement _headerBarText;
+        private IWebElement _aprExplanationText;
+        //private IWebElement _promoCode;
         //private IWebElement _fastCashLink;
         //private IWebElement _cashAdvanceLink;
         //private IWebElement _quickQuidLink;
         //private IWebElement _borrowMoneyLink;
         //private IWebElement _loansOnlineLink;
         private SocialElement Social;
-
 
         public string ending;
 
@@ -394,6 +395,13 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
             _representativeExample = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.RepresentativeExampleText));
             var representativeExampleText = _representativeExample.Text;
             return representativeExampleText.Replace("\r\n","");
+        }
+
+        public String GetAprExplanationText()
+        {
+            _aprExplanationText = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.AprExplanationText));
+            var aprExplanation = _aprExplanationText.Text;
+            return aprExplanation;
         }
 
         public bool IsMocked()
