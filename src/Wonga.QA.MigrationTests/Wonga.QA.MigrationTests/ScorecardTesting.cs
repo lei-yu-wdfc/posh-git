@@ -15,9 +15,10 @@ namespace Wonga.QA.MigrationTests
         [SetUp]
         public void SetUp()
         {
-            var listOfFiles = ScorecardHelper.GetDirectoryFiles();
-            _deserializedRequests = listOfFiles.Select(requestFile => ScorecardHelper.DeserializeFromXml<cde_request>(requestFile.XmlTextContent)).ToList();
-            var xxx = ScorecardHelper.RunV3LnJourneyFromV2LnCdeRequest((_deserializedRequests.Single()));
+            ScorecardHelper.GetDirectoryFiles();
+            //var listOfFiles = ScorecardHelper.GetDirectoryFiles();
+            //_deserializedRequests = listOfFiles.Select(requestFile => ScorecardHelper.DeserializeFromXml<cde_request>(requestFile.XmlTextContent)).ToList();
+            //var xxx = ScorecardHelper.RunV3LnJourneyFromV2LnCdeRequest((_deserializedRequests.Single()));
         }
 
         [Test]

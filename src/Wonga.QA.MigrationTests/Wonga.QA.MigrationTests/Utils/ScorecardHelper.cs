@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -19,12 +20,15 @@ namespace Wonga.QA.MigrationTests.Utils
 {
     internal static class ScorecardHelper
     {
-        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         internal static IEnumerable<V2RequestFile> GetDirectoryFiles()
         {
-            var directory = new DirectoryInfo(@"C:\\test_files");
-            var fileList = directory.GetFiles("*.log");
+            var inputPath = ConfigurationManager.AppSettings["inputDir"];
+            var inputFileExtensionFilter = ConfigurationManager.AppSettings["inputFileExtension"];
+
+            var directory = new DirectoryInfo(inputPath);
+            var fileList = directory.GetFiles(inputFileExtensionFilter);
             return (from file in fileList
                     where file.Length > 0
                     select new V2RequestFile { FileName = file.Name, XmlTextContent = ReadContentsOfFile(file) }).ToList();
@@ -49,23 +53,20 @@ namespace Wonga.QA.MigrationTests.Utils
         }
         internal static Guid RunV3LnJourneyFromV2LnCdeRequest(cde_request v2CdeRequest)
         {
-            log4net.Config.XmlConfigurator.Configure();
-
-            Log.Debug("Debug logging");
-            Log.Info("Info logging");
-            Log.Warn("Warn logging");
-            Log.Error("Error logging");
-            Log.Fatal("Fatal logging");
-
-           
-
+            XmlConfigurator.Configure();
             Guid accountId = GetMigratedCustomerAccountId(v2CdeRequest.applicant_details[0].email_address,
                                                           v2CdeRequest.authentication[0].password);
+            Logger.Info("------------------------------------------------------------------------------");
+            Logger.InfoFormat("{0}: Running V3 for EmailAddress:{1} / Password:{2} / AccountId:{3}", DateTime.Now, v2CdeRequest.applicant_details[0].email_address, v2CdeRequest.authentication[0].password,accountId);
 
             Guid paymentCardId = GetMigratedUserPaymentCardId(accountId);
-            Guid bankAccountId = GetMigratedUserBankAccountId(accountId);
-            Guid applicationId = Guid.NewGuid();
+            Logger.InfoFormat("{0}: Found the following payment card Id: {1}", DateTime.Now,paymentCardId);
 
+            Guid bankAccountId = GetMigratedUserBankAccountId(accountId);
+            Logger.InfoFormat("{0}: Found the following bank account Id: {1}", DateTime.Now,bankAccountId);
+
+            Guid applicationId = Guid.NewGuid();
+            Logger.InfoFormat("{0}: Creating List of API commands for ApplicationId:{1}", DateTime.Now,applicationId);
 
             var listOfCommands = new List<ApiRequest>
                                      {
@@ -113,24 +114,28 @@ namespace Wonga.QA.MigrationTests.Utils
             //Note: Post the commands to the API + log the responses
             foreach (var command in listOfCommands)
             {
+                Logger.InfoFormat("{0}: Sending request for {1}", DateTime.Now, command);
                 var response = Drive.Api.Commands.Post(command);
+                Logger.InfoFormat("{0}: Receiving response for {1} - {2}", DateTime.Now, command,response);
             }
 
             //Note: Wait for the Risk Entity to be created / When created write to log file
             Do.With.Timeout(2).Message("The RiskApplication entity was not created").Until(() => Drive.Data.Risk.Db.RiskApplications.FindAllBy(ApplicationId: applicationId).Count() > 0);
+            Logger.InfoFormat("{0}: Risk application created ", DateTime.Now);
 
             //Note: Get application decision other then Pending - We do not expect only Accepted
             Do.With.Timeout(3).Until(() => (ApplicationDecisionStatus)
                                             Enum.Parse(typeof(ApplicationDecisionStatus), (Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = applicationId })).Values["ApplicationDecisionStatus"].Single()) != ApplicationDecisionStatus.Pending);
 
 
-            //Note: Sign the application? SignApplicationCommand
-            Drive.Api.Commands.Post(new SignApplicationCommand()
-                                        {
-                                            AccountId = accountId,
-                                            ApplicationId = applicationId,
-                                        });
-
+            //Note: Sign the application
+            var signApplicationCommand = new SignApplicationCommand()
+                                             {
+                                                 AccountId = accountId,
+                                                 ApplicationId = applicationId,
+                                             };
+            Drive.Api.Commands.Post(signApplicationCommand);
+            Logger.InfoFormat("{0}: Sending {1} ", DateTime.Now,signApplicationCommand);
 
             return applicationId;
         }
@@ -160,53 +165,45 @@ namespace Wonga.QA.MigrationTests.Utils
             return File.ReadAllText(file.FullName);
         }
 
-        internal static void GenerateCSV()
+        internal static void GenerateCsv(Guid applicationId)
         {
-            Guid accountId = Guid.NewGuid();
+            dynamic pmmlFactorsTable = Drive.Data.Risk.Db.PmmlFactors;
+            dynamic factorsTable = Drive.Data.Risk.Db.Factors;
+            dynamic riskWorkflowsTable = Drive.Data.Risk.Db.RiskWorkflows;
+            var riskWorkflowId = riskWorkflowsTable.FindAllByApplicationId(applicationId).Single();
 
-            dynamic _PmmlFactors = Drive.Data.Risk.Db.PmmlFactors;
-            dynamic _Factory = Drive.Data.Risk.Db.Factors;
-            dynamic _RiskWorkflows = Drive.Data.Risk.Db.RiskWorkflows;
-
-
-            dynamic accounts = _PmmlFactors.All()
-
-                .Join(_RiskWorkflows)
-                .On(RiskWorkflowId: _RiskWorkflows.RiskWorkflowId)
-                .WithOne(_RiskWorkflows)
-                .Join(_Factory)
-                .On(FactorId: _Factory.FactorId)
-                .WithOne(_Factory)
-                //.Where(_RiskWorkflows.RiskWorkflowId == 1)
+            dynamic accounts = pmmlFactorsTable.All()
+                .Join(riskWorkflowsTable)
+                .On(RiskWorkflowId: riskWorkflowsTable.RiskWorkflowId)
+                .WithOne(riskWorkflowsTable)
+                .Join(factorsTable)
+                .On(FactorId: factorsTable.FactorId)
+                .WithOne(factorsTable)
+                .Where(riskWorkflowsTable.RiskWorkflowId == riskWorkflowId)
                 .ToList();
 
-            var directory = new DirectoryInfo(@"C:\\test_files");
-
-            using (WriteCsv writer = new WriteCsv(directory + @"//WriteTest.csv"))
+            var outputPath = ConfigurationManager.AppSettings["outputDir"];
+            var outputCsvFileName = ConfigurationManager.AppSettings["outputCsvFileName"];
+            using (var writer = new WriteCsv(new DirectoryInfo(outputPath) + outputCsvFileName))
             {
-                generateColumName(writer);
-
+                GenerateColumName(writer);
                 foreach (var album in accounts)
                 {
-                    CsvRow row = new CsvRow();
-                    row.Add(album.Data);
-                    row.Add(Convert.ToString(album.FactorId));
-                    row.Add(Convert.ToString(album.PmmlFactorId));
-                    row.Add(Convert.ToString(album.RiskApplicationId));
-                    row.Add(Convert.ToString(album.RiskWorkflowId));
+                    var row = new CsvRow
+                                  {
+                                      album.Data,
+                                      Convert.ToString(album.FactorId),
+                                      Convert.ToString(album.PmmlFactorId),
+                                      Convert.ToString(album.RiskApplicationId),
+                                      Convert.ToString(album.RiskWorkflowId)
+                                  };
                     writer.WriteRow(row);
                 }
             }
         }
-
-        private static void generateColumName(WriteCsv writer)
+        private static void GenerateColumName(WriteCsv writer)
         {
-            CsvRow columName = new CsvRow();
-            columName.Add("Id");
-            columName.Add("FactorId");
-            columName.Add("PmmlFactorId");
-            columName.Add("RiskApplicationId");
-            columName.Add("RiskWorkflowId");
+            var columName = new CsvRow {"Id", "FactorId", "PmmlFactorId", "RiskApplicationId", "RiskWorkflowId"};
             writer.WriteRow(columName);
         }
     }
