@@ -45,5 +45,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Ui.Pages.Common
         public String LogoutLink { get; set; }
         public String HeaderBarClickHereLink { get; set; }
         public String PromoCode { get; set; }
+        public String ApplyNowToolTip { get; set; }
+        public String ApplyNowButton { get; set; }
     }
 }
