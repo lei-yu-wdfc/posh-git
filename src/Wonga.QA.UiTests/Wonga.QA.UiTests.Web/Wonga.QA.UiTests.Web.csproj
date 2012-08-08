@@ -58,6 +58,13 @@
     <Compile Include="Region\Uk\L0Ln\L0LnJourneyCoreTests.cs" />
     <Compile Include="Region\Uk\TimeoutTest.cs" />
     <Compile Include="Region\Uk\ExtensionAgreementTests.cs" />
+    <Compile Include="Region\Wb\AboutUs.cs" />
+    <Compile Include="Region\Wb\HowItWorksTest.cs" />
+    <Compile Include="Region\Wb\Journey\L0JourneyTests.cs" />
+    <Compile Include="Region\Wb\Journey\LnJourneyTests.cs" />
+    <Compile Include="Region\Wb\MyAccounts\HelpTest.cs" />
+    <Compile Include="Region\Wb\MyAccounts\MyAccountTests.cs" />
+    <Compile Include="Region\Wb\SliderTests.cs" />
     <Compile Include="RepaymentTest.cs" />
     <Compile Include="RepayLoanTests.cs" />
     <Compile Include="Region\Uk\RepayTests.cs" />
@@ -144,7 +151,6 @@
   <ItemGroup>
     <Folder Include="Region\Ca\MyAccounts\" />
     <Folder Include="Region\Ca\Payment\" />
-    <Folder Include="Region\Wb\MyAccounts\" />
     <Folder Include="Region\Wb\Payment\" />
     <Folder Include="Region\Za\MyAccounts\" />
     <Folder Include="Region\Za\Payment\" />
