@@ -7,7 +7,10 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Framework.Msmq.Enums.Common.Enums;
+using Wonga.QA.Framework.Msmq.Enums.Common.Iso;
+using Wonga.QA.Framework.Msmq.Enums.Integration.Payments.Enums;
 using Wonga.QA.Framework.Msmq.Messages.Comms.Commands;
+using Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Messages;
 using Wonga.QA.Framework.Msmq.Messages.Payments.PublicMessages;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Helpers;
@@ -70,6 +73,25 @@ namespace Wonga.QA.Tests.Comms.Email
         public void TriggerExtensionNotSignedEmailTest()
         {
             const int loanExtensionCancelledEmailTemplate = 34121;
+            var transactionId = Guid.NewGuid();
+
+            // Create Card Payment Transaction for Extension Part Payment
+            Drive.Msmq.Payments.Send(new CreateTransaction()
+                                         {
+                                             Amount = 10.70M,
+                                             ApplicationId = _appId,
+                                             Currency = CurrencyCodeIso4217Enum.GBP,
+                                             ExternalId = transactionId,
+                                             Mir = 0.00M,
+                                             PostedOn = DateTime.Now,
+                                             Reference = "Test Ext Part Payment",
+                                             Scope = PaymentTransactionScopeEnum.Credit,
+                                             Source = PaymentTransactionSourceEnum.System,
+                                             Type = PaymentTransactionEnum.LoanExtensionCardPayment
+                                         });
+            // Check Transaction has been created.
+            Do.With.Interval(1).Until(() => Drive.Data.Payments.Db.Transactions.FindByExternalId(transactionId));
+
             //Time out extension reminder saga in comms
             var saga = Do.With.Interval(1).Until(() => Drive.Data.OpsSagas.Db.ExtensionCancelledEmailData.FindByAccountId(_accountId));
             Drive.Msmq.Comms.Send(new TimeoutMessage { ClearTimeout = true, Expires = DateTime.UtcNow, SagaId = saga.Id, State = null });
@@ -78,7 +100,7 @@ namespace Wonga.QA.Tests.Comms.Email
             var email = Do.With.Interval(1).Until(() => Drive.Data.QaData.Db.Email.FindByEmailAddressAndTemplateName(_emailAddress, loanExtensionCancelledEmailTemplate));
             Assert.IsNotNull(email);
             var emailData = Drive.Data.QaData.Db.EmailTokens.FindByEmailIdAndKey(email.EmailId, "Html_body");
-            Assert.Contains(emailData.Value, "still need to repay <b>&pound;110.70");
+            Assert.Contains(emailData.Value, "still need to repay <b>&pound;115.91");
         }
     }
 }
