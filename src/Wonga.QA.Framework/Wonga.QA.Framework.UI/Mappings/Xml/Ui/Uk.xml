@@ -323,6 +323,8 @@
     <LogoutLink>.inline-link</LogoutLink>
     <HeaderBarClickHereLink>.inline-link</HeaderBarClickHereLink>
     <PromoCode>edit-promocode</PromoCode>
+    <ApplyNowToolTip>.tooltipbox</ApplyNowToolTip>
+    <ApplyNowButton>.apply-now-disabled</ApplyNowButton>
   </HomePage>
 
   <SocialElement>

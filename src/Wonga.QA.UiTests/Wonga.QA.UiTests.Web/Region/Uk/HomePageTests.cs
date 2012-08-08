@@ -67,7 +67,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         }
 
         [Test, MultipleAsserts, Owner(Owner.PavithranVangiti)]
-        [IgnorePageErrors]//[Pending("Test in development. Code in development.")]
+        [IgnorePageErrors]
         public void L0_HomePage_LoggedInUser()
         {
             Client.Driver.Manage().Window.Maximize();
@@ -87,6 +87,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Assert.AreEqual(expectedWelcomeMessage, homePage.GetWelcomeHeaderMessageText());
             Assert.AreEqual("300", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong."); //Ensure maximum available credit is displayed correctly
             Assert.AreEqual("Welcome " + _truncatedFirstNameL0 + "... Logout", homePage.GetHeaderBarText(), "Header bar text is wrong."); //Check "Welcome <15-symbolsTruncatedFirstName> Logout" in the Navigation Header
+            Assert.AreEqual("Sorry, you don't have any available credit and need to settle your balance before you can apply again", homePage.GetApplyNowToolTipText()); //Verify apply now button is disabled and tooltip is displayed
 
             //Esnure 'click here' link in welcome message takes User back to home page.
             homePage.ClickWelcomeMessageClickHereLink();
@@ -94,8 +95,8 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Assert.IsFalse(homePage.IsHeaderBarTextVisible());
         }
 
-        [Test, AUT(AUT.Uk), MultipleAsserts, Owner(Owner.PavithranVangiti)]
-        [IgnorePageErrors]//[Pending("Test in development. Code in development.")]
+        [Test, AUT(AUT.Uk), MultipleAsserts, Owner(Owner.PavithranVangiti), IgnorePageErrors]
+        [Pending("UKWEB-1122: Error message is displayed when logged in as a recognised user via cookie")]
         public void L0_HomePage_CookiedUser()
         {
             Client.Driver.Manage().Window.Maximize();
@@ -110,6 +111,8 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
             Assert.AreEqual("If you're not " + _truncatedFirstNameL0 + "..., click here", homePage.GetHeaderBarText()); //Verify header bar text
 
+            Assert.AreEqual("Sorry, you don't have any available credit and need to settle your balance before you can apply again", homePage.GetApplyNowToolTipText()); //Verify apply now button is disabled and tooltip is displayed
+
             //Verify Welcome message text
             Assert.AreEqual("Welcome back " + _truncatedFirstNameL0 + "...! (not " + _truncatedFirstNameL0 +
                                         "...? click here ) We can deposit up to £300 in your bank account by " + DateTime.Now.AddMinutes(24).ToShortTimeString()
@@ -117,21 +120,22 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
             Assert.AreEqual("300", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
 
+            Assert.AreEqual("Sorry, you don't have any available credit and need to settle your balance before you can apply again", homePage.GetApplyNowToolTipText()); //Verify apply now button is disabled and tooltip is displayed
+
             //Esnure 'click here' link in welcome message takes User back to home page.
             homePage.ClickWelcomeMessageClickHereLink();
             homePage = new HomePage(Client);
             Assert.IsFalse(homePage.IsHeaderBarTextVisible());
         }
 
-        [Test, DependsOn("L0_HomePage_LoggedInUser"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
-        [IgnorePageErrors]//[Pending("Test in development. Code in development.")]
+        [Test, DependsOn("L0_HomePage_LoggedInUser"), MultipleAsserts, Owner(Owner.PavithranVangiti), IgnorePageErrors]
+        [Pending("UKWEB-1122: Error message is displayed when logged in as a recognised user via cookie")]
         public void L0_HomePage_CookiedUser_ClickHereInNavigationHeader()
         {
             Client.Driver.Manage().Window.Maximize();
             Assert.IsNotNull(_userCookie, "Cookie is not created. Ensure the test is run after test that creates the cookie.");
 
             // Check cookied user
-            //-----------------------
             var homePage = Client.Home();
 
             // Add user's cookie to see the personalised Navigation Header
@@ -178,7 +182,6 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         }
 
         [Test, MultipleAsserts, Owner(Owner.PavithranVangiti)]
-        //Pending("Test in development. Code in development."), 
         public void Ln_HomePage_LoggedInUser()
         {
             Client.Driver.Manage().Window.Maximize();
@@ -192,10 +195,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Console.WriteLine(_emailLn);
             Assert.AreEqual("Welcome back " + _truncatedFirstNameLn + "...! (not " + _truncatedFirstNameLn + "...? click here ) We can deposit up to £400 in your bank account by " + DateTime.Now.AddMinutes(24).ToShortTimeString() + homePage.GetWelcomeMessageDay(), homePage.GetWelcomeHeaderMessageText()); // user has logged in
             Assert.AreEqual("400", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
-
-            // TODO: Change Expected text in welcome message when the code is fixed
-            // TODO: UKWEB-371: Check Navigation Header (international-trigger, help-trigger, social-trigger, login-trigger, #logout)
-            // Check "Welcome <15-symbolsTrancatedFirstName> Logout"
+            Assert.AreEqual("Welcome " + _truncatedFirstNameLn + "... Logout", homePage.GetHeaderBarText(), "Header bar text is wrong."); //Check "Welcome <15-symbolsTruncatedFirstName> Logout" in the Navigation Header
 
             //Esnure 'click here' link in welcome message takes User back to home page.
             homePage.ClickWelcomeMessageClickHereLink();
@@ -203,9 +203,8 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Assert.IsFalse(homePage.IsHeaderBarTextVisible());
         }
 
-        [Test, DependsOn("Ln_HomePage_LoggedInUser"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
-        //, Pending("Test in development. Code in development."),
-        [IgnorePageErrors]
+        [Test, DependsOn("Ln_HomePage_LoggedInUser"), MultipleAsserts, Owner(Owner.PavithranVangiti), IgnorePageErrors]
+        [Pending("UKWEB-1122: Error message is displayed when logged in as a recognised user via cookie")]
         public void Ln_HomePage_CookiedUser_ClickHereInWelcomeMessage()
         {
             Client.Driver.Manage().Window.Maximize();
@@ -240,8 +239,8 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Console.WriteLine("Test is run");
         }
 
-        [Test, IgnorePageErrors, Pending("Test in development. Code in development.")] 
-        [DependsOn ("Ln_HomePage_LoggedInUser"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
+        [Test, DependsOn ("Ln_HomePage_LoggedInUser"), MultipleAsserts, Owner(Owner.PavithranVangiti), IgnorePageErrors] 
+        [Pending("UKWEB-1122: Error message is displayed when logged in as a recognised user via cookie")]
         public void Ln_HomePage_CookiedUser_ClickHereInNavigationHeader()
         {
             Client.Driver.Manage().Window.Maximize();
