@@ -170,6 +170,7 @@
 		<OpsSagas>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=OpsSagas</OpsSagas>
 		<Comms>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=Comms</Comms>
 		<Payments>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=Payments</Payments>
+		<PayLater>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=PayLater</Payments>
 		<Risk>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=Risk</Risk>
 		<Marketing>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=Marketing</Marketing>
 		<Accounting>Data Source=%%//Db/Host%%;Integrated Security=true;Initial Catalog=Accounting</Accounting>

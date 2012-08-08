@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Simple.Data;
-using Simple.Data.Ado;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Data.Databases;
 
 namespace Wonga.QA.Framework.Data
 {
@@ -16,6 +12,7 @@ namespace Wonga.QA.Framework.Data
         private Lazy<OpsLogsDatabase> _opsLogs = new Lazy<OpsLogsDatabase>(() => new OpsLogsDatabase(Config.Db.OpsLogs));
         private Lazy<CommsDatabase> _comms = new Lazy<CommsDatabase>(() => new CommsDatabase(Config.Db.Comms));
         private Lazy<PaymentsDatabase> _payments = new Lazy<PaymentsDatabase>(() => new PaymentsDatabase(Config.Db.Payments));
+        private Lazy<PayLaterDatabase> _paylater = new Lazy<PayLaterDatabase>(() => new PayLaterDatabase(Config.Db.PayLater));
         private Lazy<RiskDatabase> _risk = new Lazy<RiskDatabase>(() => new RiskDatabase(Config.Db.Risk));
         private Lazy<BiDatabase> _bi = new Lazy<BiDatabase>(() => new BiDatabase(Config.Db.Bi));
         private Lazy<BiCustomerManagementDatabase>  _biCM = new Lazy<BiCustomerManagementDatabase>(() => new BiCustomerManagementDatabase(Config.Db.BiCustomerManagement));
@@ -58,6 +55,7 @@ namespace Wonga.QA.Framework.Data
         public OpsLogsDatabase OpsLogs { get { return _opsLogs.Value; } }
         public CommsDatabase Comms { get { return _comms.Value; } }
         public PaymentsDatabase Payments { get { return _payments.Value; } }
+        public PayLaterDatabase PayLater { get { return _paylater.Value; } }
         public RiskDatabase Risk { get { return _risk.Value; } }
         public BiDatabase Bi { get { return _bi.Value; } }
         public BiCustomerManagementDatabase BiCustomerManagement { get { return _biCM.Value; } }
