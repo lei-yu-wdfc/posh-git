@@ -286,7 +286,7 @@ namespace Wonga.QA.Framework
 
         public override Application RepayOnDueDate()
         {
-            throw new NotImplementedException("Don't use this method");
+            throw new NotImplementedException("Not for use in SME; this method is consumer-specific.");
         }
     }
 }
