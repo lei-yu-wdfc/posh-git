@@ -13,11 +13,14 @@ using Wonga.QA.Framework.Api.Requests.Risk.Commands;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api.Requests.Risk.Queries;
 using Wonga.QA.Framework.Core;
+using log4net.Config;
 
 namespace Wonga.QA.MigrationTests.Utils
 {
     internal static class ScorecardHelper
     {
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         internal static IEnumerable<V2RequestFile> GetDirectoryFiles()
         {
             var directory = new DirectoryInfo(@"C:\\test_files");
@@ -46,12 +49,23 @@ namespace Wonga.QA.MigrationTests.Utils
         }
         internal static Guid RunV3LnJourneyFromV2LnCdeRequest(cde_request v2CdeRequest)
         {
+            log4net.Config.XmlConfigurator.Configure();
+
+            Log.Debug("Debug logging");
+            Log.Info("Info logging");
+            Log.Warn("Warn logging");
+            Log.Error("Error logging");
+            Log.Fatal("Fatal logging");
+
+           
+
             Guid accountId = GetMigratedCustomerAccountId(v2CdeRequest.applicant_details[0].email_address,
                                                           v2CdeRequest.authentication[0].password);
 
             Guid paymentCardId = GetMigratedUserPaymentCardId(accountId);
             Guid bankAccountId = GetMigratedUserBankAccountId(accountId);
             Guid applicationId = Guid.NewGuid();
+
 
             var listOfCommands = new List<ApiRequest>
                                      {
@@ -144,6 +158,56 @@ namespace Wonga.QA.MigrationTests.Utils
         private static String ReadContentsOfFile(FileSystemInfo file)
         {
             return File.ReadAllText(file.FullName);
+        }
+
+        internal static void GenerateCSV()
+        {
+            Guid accountId = Guid.NewGuid();
+
+            dynamic _PmmlFactors = Drive.Data.Risk.Db.PmmlFactors;
+            dynamic _Factory = Drive.Data.Risk.Db.Factors;
+            dynamic _RiskWorkflows = Drive.Data.Risk.Db.RiskWorkflows;
+
+
+            dynamic accounts = _PmmlFactors.All()
+
+                .Join(_RiskWorkflows)
+                .On(RiskWorkflowId: _RiskWorkflows.RiskWorkflowId)
+                .WithOne(_RiskWorkflows)
+                .Join(_Factory)
+                .On(FactorId: _Factory.FactorId)
+                .WithOne(_Factory)
+                //.Where(_RiskWorkflows.RiskWorkflowId == 1)
+                .ToList();
+
+            var directory = new DirectoryInfo(@"C:\\test_files");
+
+            using (WriteCsv writer = new WriteCsv(directory + @"//WriteTest.csv"))
+            {
+                generateColumName(writer);
+
+                foreach (var album in accounts)
+                {
+                    CsvRow row = new CsvRow();
+                    row.Add(album.Data);
+                    row.Add(Convert.ToString(album.FactorId));
+                    row.Add(Convert.ToString(album.PmmlFactorId));
+                    row.Add(Convert.ToString(album.RiskApplicationId));
+                    row.Add(Convert.ToString(album.RiskWorkflowId));
+                    writer.WriteRow(row);
+                }
+            }
+        }
+
+        private static void generateColumName(WriteCsv writer)
+        {
+            CsvRow columName = new CsvRow();
+            columName.Add("Id");
+            columName.Add("FactorId");
+            columName.Add("PmmlFactorId");
+            columName.Add("RiskApplicationId");
+            columName.Add("RiskWorkflowId");
+            writer.WriteRow(columName);
         }
     }
 }

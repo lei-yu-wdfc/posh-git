@@ -15,10 +15,9 @@ namespace Wonga.QA.MigrationTests
         [SetUp]
         public void SetUp()
         {
-
             var listOfFiles = ScorecardHelper.GetDirectoryFiles();
             _deserializedRequests = listOfFiles.Select(requestFile => ScorecardHelper.DeserializeFromXml<cde_request>(requestFile.XmlTextContent)).ToList();
-            
+            var xxx = ScorecardHelper.RunV3LnJourneyFromV2LnCdeRequest((_deserializedRequests.Single()));
         }
 
         [Test]
@@ -27,6 +26,5 @@ namespace Wonga.QA.MigrationTests
         {
             
         }
-
     }
 }
