@@ -18,7 +18,7 @@ namespace Wonga.QA.Tests.Bi
 {
     [TestFixture]
     [AUT(AUT.Uk)]
-    [Parallelizable(TestScope.Self)]
+    [Parallelizable(TestScope.All)]
     [Pending("SF tests are failing because message congestion in SF TC queue, explicit until fixed")]
     public class ApplicationStatusChangedTests
     {

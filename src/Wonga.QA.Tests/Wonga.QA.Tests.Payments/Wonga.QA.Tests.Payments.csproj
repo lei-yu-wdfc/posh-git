@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -40,6 +40,7 @@
     <Compile Include="AddBusinessBankAccountTests.cs" />
     <Compile Include="BusinessRemoveFromArrearsTests.cs" />
     <Compile Include="CashOutInstructionTests.cs" />
+    <Compile Include="ChaseLoanInArrearsTests.cs" />
     <Compile Include="CollectionsCommunicationsChaseForDca.cs" />
     <Compile Include="CollectionsTests.cs" />
     <Compile Include="Command\AddPersonalPaymentCardCsApiCommandTests.cs" />
@@ -135,7 +136,7 @@
     <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
     <Reference Include="MbUnit, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.CSharp" />
-<Reference Include="NServiceBus">
+    <Reference Include="NServiceBus">
       <HintPath>..\..\..\lib\nuget\packages\NServiceBus.2.6.0.1511\lib\net40\NServiceBus.dll</HintPath>
     </Reference>
     <Reference Include="System" />
