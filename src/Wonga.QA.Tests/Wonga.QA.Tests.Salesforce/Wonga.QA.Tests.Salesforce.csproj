@@ -42,6 +42,7 @@
     <Compile Include="SalesforceApplicationComplaint.cs" />
     <Compile Include="SalesforceApplicationHardship.cs" />
     <Compile Include="SalesforceApplicationRefund.cs" />
+    <Compile Include="SalesforceApplicationRepaymentArrangement.cs" />
     <Compile Include="SalesforceApplicationStatusUpdateTests.cs" />
     <Compile Include="SalesforceOperations.cs" />
     <Compile Include="SalesforcePushBusinessBankAccountDetails.cs" />
