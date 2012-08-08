@@ -33,7 +33,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			application.RepayOnDueDate();
 		}
 
-        [Test, AUT(AUT.Wb), JIRA("SME-130"), Category(TestCategories.CoreTest)]
+        [Test, AUT(AUT.Wb), JIRA("SME-130"), Category(TestCategories.CoreTest), Owner(Owner.VitaliySinkevich)]
         public void WbL0IovationAllowIsAccepted()
         {
             var application = BuildApplication(ApplicationDecisionStatus.Accepted, IovationMockResponse.Allow);
