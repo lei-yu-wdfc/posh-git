@@ -150,6 +150,7 @@
     <Compile Include="Mappings\Ui\Pages\FinancialAssessment\FAExpenditurePage.cs" />
     <Compile Include="Mappings\Ui\Pages\FinancialAssessment\FAIncomePage.cs" />
     <Compile Include="Mappings\Ui\Pages\FinancialAssessment\FALoginPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\FinancialAssessment\FARepaymentPlan.cs" />
     <Compile Include="Mappings\Ui\Pages\FinancialAssessment\FinancialAssessmentPage.cs" />
     <Compile Include="Mappings\Ui\Pages\PayLater\PayLater.cs" />
     <Compile Include="Testing\Attributes\IgnorePageErrorsAttribute.cs" />
@@ -318,6 +319,7 @@
     <Compile Include="Ui\Pages\FinancialAssessment\FAExpenditurePage.cs" />
     <Compile Include="Ui\Pages\FinancialAssessment\FAIncomePage.cs" />
     <Compile Include="Ui\Pages\FinancialAssessment\FALoginPage.cs" />
+    <Compile Include="Ui\Pages\FinancialAssessment\FARepaymentPlan.cs" />
     <Compile Include="Ui\Pages\FinancialAssessment\FinancialAssessmentPage.cs" />
     <Compile Include="Ui\Pages\Interfaces\IRepayPaymentPage.cs" />
     <Compile Include="Ui\Pages\Interfaces\IExtensionPaymentPage.cs" />
