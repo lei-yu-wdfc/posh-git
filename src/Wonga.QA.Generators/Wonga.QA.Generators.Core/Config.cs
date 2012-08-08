@@ -53,7 +53,7 @@ namespace Wonga.QA.Generators.Core
 		static Config()
 		{
 			Origin = GetDefaultOrigin();
-			//SqlMetal = new FileInfo(Path.Combine(Repo.Lib.FullName, "SqlMetal\\SqlMetal.exe"));
+			SqlMetal = new FileInfo(Path.Combine(Repo.Lib.FullName, "SqlMetal\\SqlMetal.exe"));
 			Test = new Regex(@"\.Tests?(\.|$)", RegexOptions.IgnoreCase);
 			Artifact = new Regex(@"bin|obj");
 			Cs = new Regex(@"\.Csapi\.", RegexOptions.IgnoreCase);
