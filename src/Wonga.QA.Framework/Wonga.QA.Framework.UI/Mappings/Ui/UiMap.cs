@@ -49,7 +49,7 @@ using ExtensionErrorPage = Wonga.QA.Framework.UI.Mappings.Pages.ExtensionErrorPa
 using RepayErrorPage = Wonga.QA.Framework.UI.Mappings.Pages.RepayErrorPage;
 using DebitOrderPage = Wonga.QA.Framework.UI.Mappings.Pages.DebitOrderPage;
 using SecciToggleElement = Wonga.QA.Framework.UI.Mappings.Ui.Elements.SecciToggleElement;
-
+using PayLater = Wonga.QA.Framework.UI.Mappings.Ui.Pages.PayLater.PayLater;
 
 
 namespace Wonga.QA.Framework.UI.Mappings
@@ -202,6 +202,9 @@ namespace Wonga.QA.Framework.UI.Mappings
 
         #region PayLater
 
+        public virtual PayLater PayLater { get; set; }
+
+        //remove the ones below.
         public virtual PayLaterLoginPage PayLaterLoginPage { get; set; }
         public virtual SubmitionPage SubmitionPage { get; set; }
 

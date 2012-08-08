@@ -151,6 +151,7 @@
     <Compile Include="Mappings\Ui\Pages\FinancialAssessment\FAIncomePage.cs" />
     <Compile Include="Mappings\Ui\Pages\FinancialAssessment\FALoginPage.cs" />
     <Compile Include="Mappings\Ui\Pages\FinancialAssessment\FinancialAssessmentPage.cs" />
+    <Compile Include="Mappings\Ui\Pages\PayLater\PayLater.cs" />
     <Compile Include="Testing\Attributes\IgnorePageErrorsAttribute.cs" />
     <Compile Include="Ui\Elements\SocialElement.cs" />
     <Compile Include="Ui\Elements\SecciToggleElement.cs" />

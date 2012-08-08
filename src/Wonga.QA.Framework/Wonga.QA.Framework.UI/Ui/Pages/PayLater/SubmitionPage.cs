@@ -22,6 +22,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
             : base(client)
         {
             _footerInfo = Client.Driver.FindElement(By.CssSelector(UiMap.Get.SubmitionPage.FooterInfo));
+            //_footerInfo = Client.Driver.FindElement(By.CssSelector(UiMap.Get.PayLater.SubmitionPage.FooterInfo));
             _availabelCreditCookie = Client.Driver.FindElement(By.CssSelector(UiMap.Get.SubmitionPage.AvailabelCreditCookie));
             //_availabelCredit = Client.Driver.FindElement(By.CssSelector(UiMap.Get.SubmitionPage.AvailabelCredit));
             _infoCirculButton = Client.Driver.FindElement(By.CssSelector(UiMap.Get.SubmitionPage.InfoCirculButton));
