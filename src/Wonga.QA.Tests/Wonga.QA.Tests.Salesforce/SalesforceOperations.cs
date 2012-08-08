@@ -13,8 +13,6 @@ namespace Wonga.QA.Tests.Salesforce
         private static ServiceConfigurationEntity _sfUrl;
         private static Framework.ThirdParties.Salesforce _sales;
         private static readonly dynamic ApplicationRepo = Drive.Data.Payments.Db.Applications;
-        private static readonly dynamic LoanDueDateNotifiSagaEntityTab = Drive.Data.OpsSagas.Db.LoanDueDateNotificationSagaEntity;
-        private static readonly dynamic FixedTermLoanAppTab = Drive.Data.Payments.Db.FixedTermLoanApplications;
 
         public static Framework.ThirdParties.Salesforce SalesforceSetup()
         {
@@ -65,31 +63,6 @@ namespace Wonga.QA.Tests.Salesforce
                                                                                    PreviousStatus: previousStatus,
                                                                                    CurrentStatus: currentStatus) );
         }
-
-        public static void MakeDueToday(dynamic application)
-        {
-            var ldd = LoanDueDateNotifiSagaEntityTab.FindAll(LoanDueDateNotifiSagaEntityTab.ApplicationId == application.Id).Single();
-            if (Drive.Data.Ops.GetServiceConfiguration<bool>("Payments.FeatureSwitches.UseLoanDurationSaga") == false)
-            {
-                Drive.Msmq.Payments.Send(new Framework.Msmq.TimeoutMessage { SagaId = ldd.Id });
-                LoanDueDateNotifiSagaEntityTab.Update(ldd);
-            }
-            else
-            {
-                //We should timeout the LoanDurationSaga...
-                dynamic loanDurationSagaEntities = Drive.Data.OpsSagas.Db.LoanDurationSagaEntity;
-                var loanDurationSaga = loanDurationSagaEntities.FindAllByAccountGuid(AccountGuid: application.AccountId).FirstOrDefault();
-                Drive.Msmq.Payments.Send(new Framework.Msmq.TimeoutMessage() { SagaId = loanDurationSaga.Id });
-            }
-        }
-
-        public static void RewindDatesToMakeDueToday(Application application)
-        {
-            int id = ApplicationOperations.GetAppInternalId(application);
-            TimeSpan span = FixedTermLoanAppTab.FindByApplicationId(id).NextDueDate - DateTime.Today;
-            application.RewindApplicationDates(span);
-        }
-
 
     }
 }

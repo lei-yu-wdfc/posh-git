@@ -11,6 +11,8 @@ namespace Wonga.QA.Tests.Salesforce
     [Parallelizable(TestScope.Self)]
     class SalesforceApplicationHardship
     {
+        private Framework.ThirdParties.Salesforce _sales;
+        private readonly dynamic _loanDueDateNotifiSagaEntityTab = Drive.Data.OpsSagas.Db.LoanDueDateNotificationSagaEntity;
         private readonly dynamic _fixedTermLoanAppTab = Drive.Data.Payments.Db.FixedTermLoanApplications;
         private readonly dynamic _commsSuppressionsRepo = Drive.Data.Comms.Db.Suppressions;
         private readonly dynamic _paymentsSuppressionsRepo = Drive.Data.Payments.Db.PaymentCollectionSuppressions;
@@ -19,7 +21,7 @@ namespace Wonga.QA.Tests.Salesforce
         [SetUp]
         public void SetUp()
         {
-           SalesforceOperations.SalesforceSetup();
+           _sales= SalesforceOperations.SalesforceSetup();
         }
         #endregion setup#
 
@@ -41,7 +43,7 @@ namespace Wonga.QA.Tests.Salesforce
             int id = ApplicationOperations.GetAppInternalId(application);
             TimeSpan span = _fixedTermLoanAppTab.FindByApplicationId(id).NextDueDate - DateTime.Today;
             application.RewindApplicationDates(span);
-            SalesforceOperations.MakeDueToday(application);
+            MakeDueToday(application);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.DueToday);
             HardshipCycle(caseId, application);
          }
@@ -141,6 +143,23 @@ namespace Wonga.QA.Tests.Salesforce
                            _commsSuppressionsRepo.AccountId == application.AccountId && _commsSuppressionsRepo.Hardship == 1).Single());
             Do.Until(() => _paymentsSuppressionsRepo.FindAll(
                 _paymentsSuppressionsRepo.ApplicationId == appInternalId && _paymentsSuppressionsRepo.HardshipSuppression == 1).Single());
+        }
+
+        public void MakeDueToday(dynamic application)
+        {
+            var ldd = _loanDueDateNotifiSagaEntityTab.FindAll(_loanDueDateNotifiSagaEntityTab.ApplicationId == application.Id).Single();
+            if (Drive.Data.Ops.GetServiceConfiguration<bool>("Payments.FeatureSwitches.UseLoanDurationSaga") == false)
+            {
+                Drive.Msmq.Payments.Send(new Framework.Msmq.TimeoutMessage { SagaId = ldd.Id });
+                _loanDueDateNotifiSagaEntityTab.Update(ldd);
+            }
+            else
+            {
+                //We should timeout the LoanDurationSaga...
+                dynamic loanDurationSagaEntities = Drive.Data.OpsSagas.Db.LoanDurationSagaEntity;
+                var loanDurationSaga = loanDurationSagaEntities.FindAllByAccountGuid(AccountGuid: application.AccountId).FirstOrDefault();
+                Drive.Msmq.Payments.Send(new Framework.Msmq.TimeoutMessage() { SagaId = loanDurationSaga.Id });
+            }
         }
 
         #endregion helpers#
