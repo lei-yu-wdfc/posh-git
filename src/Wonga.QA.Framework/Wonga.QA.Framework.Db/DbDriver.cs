@@ -20,6 +20,7 @@ using Wonga.QA.Framework.Db.OpsSagas;
 using Wonga.QA.Framework.Db.OpsSagasCa;
 using Wonga.QA.Framework.Db.OpsSagasUk;
 using Wonga.QA.Framework.Db.OpsSagasWb;
+using Wonga.QA.Framework.Db.PayLater;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Db.QaData;
 using Wonga.QA.Framework.Db.Risk;
@@ -39,6 +40,7 @@ namespace Wonga.QA.Framework.Db
         private OpsLogsDatabase _opsLogs;
         private CommsDatabase _comms;
         private PaymentsDatabase _payments;
+        private PayLaterDatabase _paylater;
         private RiskDatabase _risk;
         private BiDatabase _bi;
         private BankGatewayDatabase _bankGateway;
@@ -93,6 +95,12 @@ namespace Wonga.QA.Framework.Db
         {
             get { return _payments ?? (_payments = new PaymentsDatabase(Config.Db.Payments)); }
             set { _payments = value; }
+        }
+
+        public PayLaterDatabase PayLater
+        {
+            get { return _paylater ?? (_paylater = new PayLaterDatabase(Config.Db.PayLater)); }
+            set { _paylater = value; }
         }
 
         public RiskDatabase Risk

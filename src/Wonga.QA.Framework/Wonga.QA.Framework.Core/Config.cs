@@ -222,6 +222,7 @@ namespace Wonga.QA.Framework.Core
             Db.OpsLogs = GetSettingFromXml("//Db/OpsLogs");
             Db.OpsSagas = GetSettingFromXml("//Db/OpsSagas");
             Db.Payments = GetSettingFromXml("//Db/Payments");
+            Db.PayLater = GetSettingFromXml("//Db/PayLater");
             Db.Pps = GetSettingFromXml("//Db/Pps");
             Db.PrepaidCard = GetSettingFromXml("//Db/PrepaidCard");
             Db.QaData = GetSettingFromXml("//Db/QaData");
@@ -387,6 +388,7 @@ namespace Wonga.QA.Framework.Core
             public String Ops { get; set; }
             public String Comms { get; set; }
             public String Payments { get; set; }
+            public String PayLater { get; set; }
             public String Risk { get; set; }
             public String Bi { get; set; }
             public String BiCustomerManagement { get; set; }
