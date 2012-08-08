@@ -23,7 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <NoWarn />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -33,7 +33,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <NoWarn />
   </PropertyGroup>
   <ItemGroup>
@@ -66,6 +66,7 @@
     <Compile Include="Databases\IpLookupDatabase.cs" />
     <Compile Include="Databases\OpsDatabase.cs" />
     <Compile Include="Databases\OpsLogsDatabase.cs" />
+    <Compile Include="Databases\PayLaterDatabase.cs" />
     <Compile Include="Databases\PaymentsDatabase.cs" />
     <Compile Include="Databases\QADataDatabase.cs" />
     <Compile Include="Databases\RiskDatabase.cs" />
