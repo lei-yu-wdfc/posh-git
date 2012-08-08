@@ -7,8 +7,8 @@ using System;
 
 namespace Wonga.QA.Tests.Salesforce
 {
-    [TestFixture]
     [AUT(AUT.Uk)]
+    [TestFixture(Order = -1)]
     [Parallelizable(TestScope.Self)]
     public class BankruptcyStatusChangedTests
     {
@@ -84,7 +84,7 @@ namespace Wonga.QA.Tests.Salesforce
         }
 
         [Test]
-        [AUT(AUT.Uk), JIRA("UKOPS-149"), Owner(Owner.ShaneMcHugh)]
+        [AUT(AUT.Uk), JIRA("UKOPS-149"), Owner(Owner.ShaneMcHugh), Pending("UKOPS-815")]
         [Description("Verifies that when an application is in hardship and it is moved to bankrupt status salesforce is informed and a suppression record is created")]
         public void ApplicationInHardhsip_SubmitsBankruptStatus_ToSalesforce()
         {
@@ -96,7 +96,7 @@ namespace Wonga.QA.Tests.Salesforce
         }
 
         [Test]
-        [AUT(AUT.Uk), JIRA("UKOPS-149"), Owner(Owner.ShaneMcHugh)]
+        [AUT(AUT.Uk), JIRA("UKOPS-149"), Owner(Owner.ShaneMcHugh), Pending("UKOPS-824")]
         [Description("Verifies that when an application is in a repayment arrangement and it is moved to bankrupt status salesforce is informed and a suppression record is created")]
         public void ApplicationInRepaymentArrangement_SubmitsBankruptStatus_ToSalesforce()
         {
