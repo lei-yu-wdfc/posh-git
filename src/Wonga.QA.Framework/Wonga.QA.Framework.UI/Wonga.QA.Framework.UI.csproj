@@ -53,6 +53,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
@@ -377,6 +378,14 @@
     <ProjectReference Include="..\Wonga.QA.Framework.Core\Wonga.QA.Framework.Core.csproj">
       <Project>{BACA1D90-F604-476F-ACDE-A9839E85147F}</Project>
       <Name>Wonga.QA.Framework.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wonga.QA.Framework.Db\Wonga.QA.Framework.Db.csproj">
+      <Project>{06D44CDD-9AB7-47EC-8D7A-0E548465EF9D}</Project>
+      <Name>Wonga.QA.Framework.Db</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wonga.QA.Framework\Wonga.QA.Framework.csproj">
+      <Project>{5D8AEAB2-EB00-45CA-86D1-A5B4A7C6ED2F}</Project>
+      <Name>Wonga.QA.Framework</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

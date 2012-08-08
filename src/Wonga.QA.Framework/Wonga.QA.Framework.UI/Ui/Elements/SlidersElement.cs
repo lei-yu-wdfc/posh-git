@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using MbUnit.Framework;
 using NHamcrest.Core;
@@ -47,14 +48,17 @@ namespace Wonga.QA.Framework.UI.Elements
             switch (Config.AUT)
             {
                 case (AUT.Wb):
-                    if (!Config.WbRiskBasedPricingEnabled.RiskBasedPricingEnabled)
+                    var riskBasedPricingEnabled = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.Wb.RiskBasedPricingEnabled").Value;
+                    bool isRiskBasedPricingEnabled = Boolean.Parse(riskBasedPricingEnabled);
+                    if (isRiskBasedPricingEnabled)
                     {
-                        _totalAmount = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.TotalAmount));
-                        _totalFees = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.TotalFees));
-                        _totalToRepay = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.TotalToRepay));
-                        _termsOfLoan = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.TermsOfLoan));
+                       break;
                     }
-                    break;
+                    _totalAmount = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.TotalAmount));
+                    _totalFees = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.TotalFees));
+                    _totalToRepay = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.TotalToRepay));
+                    _termsOfLoan = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.TermsOfLoan));
+                        break;
                 case (AUT.Ca):
                 case (AUT.Za):
                     _totalAmount = _form.FindElement(By.CssSelector(UiMap.Get.SlidersElement.TotalAmount));
