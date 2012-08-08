@@ -24,7 +24,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			VerifyRiskApplication(application, RiskCheckpointStatus.Failed);
 		}
 
-		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Wb, AUT.Za), JIRA("CA-1735", "SME-130", "UK-1567"),Category(TestCategories.CoreTest)]
+		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Za), JIRA("CA-1735", "UK-1567"),Category(TestCategories.CoreTest)]
 		public void L0IovationAllowIsAccepted()
 		{
 			_customer = BuildCustomer();
@@ -32,6 +32,13 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			VerifyRiskApplication(application, RiskCheckpointStatus.Verified);
 			application.RepayOnDueDate();
 		}
+
+        [Test, AUT(AUT.Wb), JIRA("SME-130"), Category(TestCategories.CoreTest)]
+        public void WbL0IovationAllowIsAccepted()
+        {
+            var application = BuildApplication(ApplicationDecisionStatus.Accepted, IovationMockResponse.Allow);
+            VerifyRiskApplication(application, RiskCheckpointStatus.Verified);
+        }
 
 		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Wb, AUT.Za), JIRA("CA-1735", "SME-130", "UK-1567")]
 		public void L0IovationUnknownIsAccepted()

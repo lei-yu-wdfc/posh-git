@@ -283,5 +283,10 @@ namespace Wonga.QA.Framework
             });
             return double.Parse(response.Values["TotalOutstandingAmount"].Single());
         }
+
+        public override Application RepayOnDueDate()
+        {
+            throw new NotImplementedException("Don't use this method");
+        }
     }
 }
