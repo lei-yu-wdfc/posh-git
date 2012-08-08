@@ -56,6 +56,7 @@
     <Compile Include="Region\Uk\LegalDocumentsTests.cs" />
     <Compile Include="Region\Uk\MySummaryScenariosTests.cs" />
     <Compile Include="Region\Uk\L0Ln\L0LnJourneyCoreTests.cs" />
+    <Compile Include="Region\Uk\PromoCodeTests.cs" />
     <Compile Include="Region\Uk\TimeoutTest.cs" />
     <Compile Include="Region\Uk\ExtensionAgreementTests.cs" />
     <Compile Include="Region\Wb\AboutUs.cs" />
