@@ -196,12 +196,37 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Assert.AreEqual(topupAmount, s[0]);
         }
 
-        [Test]
+       
+ [Test]
         public void PopUpBuilderTests()
         {
             var customer = CustomerBuilder.New().Build();
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(30).Build();
             var topup = TopUpBuilder.New().WithCustomer(customer).WithApplication(application).Build();
+        }
+ [Test, JIRA("QA-336")]
+        [Owner(Owner.PetrTarasenko)]
+        public void CustomerCantTopupIfMaxSumChooosen()
+        {
+            var request = new GetFixedTermLoanOfferUkQuery();
+            var response = Drive.Api.Queries.Post(request);
+            var amountMax = (int)Decimal.Parse(response.Values["AmountMax"].Single(), CultureInfo.InvariantCulture);
+            string email = Get.RandomEmail();
+
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            var application = ApplicationBuilder.New(customer)
+                .WithLoanAmount(amountMax)
+                .WithLoanTerm(30)
+                .Build();
+            application.RewindApplicationDatesForDays(20);
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(email);
+            Assert.IsFalse(mySummaryPage.LookForTopupSliders());
+            
+        }
+
+           
+            
         }
     }
 }

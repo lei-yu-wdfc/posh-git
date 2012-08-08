@@ -135,7 +135,8 @@
     <AmountPlusButton>.wonga-amount-slider-wrapper .sliderplus</AmountPlusButton>
     <DurationMinusButton>.wonga-duration-slider-wrapper .sliderminus</DurationMinusButton>
     <DurationPlusButton>.wonga-duration-slider-wrapper .sliderplus</DurationPlusButton>
-    <MaxAvailableCredit>.field-suffix</MaxAvailableCredit>
+    <!--<MaxAvailableCredit>.description</MaxAvailableCredit>-->
+    <MaxAvailableCredit>#edit-loan-amount-wrapper .field-suffix</MaxAvailableCredit>
   </SlidersElement>
 
   <ApplyPage>
