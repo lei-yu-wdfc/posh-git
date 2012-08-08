@@ -75,7 +75,91 @@ namespace Wonga.QA.UiTests.Web
             _termDefault = Int32.Parse(_response.Values["TermDefault"].Single(), CultureInfo.InvariantCulture);
         }
 
+        #region Helpers
 
+        private DateTime GetExpectedDefaultPromiseDateL0()
+        {
+            DateTime defaultPromiseDate;
+            var now = DateTime.Today;
+
+            switch (Config.AUT)
+            {
+                case AUT.Za:
+                    {
+                        var iMonth = DateTime.UtcNow.Month - 1;
+
+                        var payDayPerMonths = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.PayDayPerMonth").Value.Split(',');
+                        var sliderTermAddDays = Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.SliderTermAddDays").Value;
+
+                        var payDayPerMonth = Int32.Parse(payDayPerMonths[iMonth]);
+                        var minimumTerm = Int32.Parse(sliderTermAddDays);
+
+                        defaultPromiseDate = new DateTime(now.Year, now.Month, payDayPerMonth);
+                        var expectedTermDefault = defaultPromiseDate.Subtract(now).Days;
+
+                        //Check if we should snap to the next month's payday
+                        if (expectedTermDefault < minimumTerm)
+                        {
+                            iMonth = iMonth + 1 >= 12 ? 1 : iMonth + 1;
+                            payDayPerMonth = Int32.Parse(payDayPerMonths[iMonth]);
+                            defaultPromiseDate = defaultPromiseDate.AddMonths(1);
+                            defaultPromiseDate = new DateTime(defaultPromiseDate.Year, defaultPromiseDate.Month, payDayPerMonth);
+                        }
+
+                        defaultPromiseDate = Drive.Db.GetPreviousWorkingDay(new Date(defaultPromiseDate));
+                    }
+                    break;
+                case AUT.Ca:
+                    {
+                        //CA starts all loans from the next working day
+                        int daysTillStartOfLoan = DateHelper.GetNumberOfDaysUntilStartOfLoanForCa(now);
+                        defaultPromiseDate = now.AddDays(DefaultLoanTerm + daysTillStartOfLoan);
+                    }
+                    break;
+
+                default:
+                    {
+                        defaultPromiseDate = now.AddDays(DefaultLoanTerm);
+                    }
+                    break;
+            }
+            return defaultPromiseDate;
+        }
+
+        private int GetExpectedMinTerm()
+        {
+            return Drive.Db.Payments.Products.FirstOrDefault().TermMin;
+        }
+
+        private int GetExpectedMaxTermL0()
+        {
+            int maxTerm = 0;
+
+            switch (Config.AUT)
+            {
+                case AUT.Za:
+                    {
+                        var promiseDate = GetExpectedDefaultPromiseDateL0();
+                        var iMonth = promiseDate.Month - 1;
+
+                        var payDayPlusToMaxTerm = Int32.Parse(Drive.Db.Ops.ServiceConfigurations.Single(a => a.Key == "Payments.PayDayPlusToMaxTerm").Value.Split(',')[iMonth]);
+
+                        maxTerm = (promiseDate.AddDays(payDayPlusToMaxTerm) - DateTime.Today).Days;
+
+                        if (maxTerm < MinimumMaxLoanTerm) maxTerm = MinimumMaxLoanTerm;
+                    }
+                    break;
+
+                default:
+                    {
+                        return Drive.Db.Payments.Products.FirstOrDefault().TermMax;
+                    }
+            }
+
+            return maxTerm;
+        }
+
+        #endregion
 
         [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-282")]
         [Category(TestCategories.SmokeTest)]
