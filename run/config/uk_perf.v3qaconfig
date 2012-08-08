@@ -1,0 +1,25 @@
+<Configuration>
+	<Include>base_ci</Include>
+	<SUT>Perf</SUT>
+	<AUT>Uk</AUT>
+	<Region>Uk</Region>
+	
+	<Salesforce>
+		<ApiUsername>v3integration@wonga.com.rc</ApiUsername>
+	</Salesforce>
+	
+	<Svc>
+		<ServicesHost>uk-perf-app1</ServicesHost>
+		<ComponentsHost>uk-perf-app2</ComponentsHost>
+	</Svc>
+	
+	<Msmq>
+		<ServicesHost>%%//Svc/ServicesHost%%</ServicesHost>
+		<ComponentsHost>%%//Svc/ComponentsHost%%</ComponentsHost>
+	</Msmq>
+	
+	<Db>
+		<Host>uk-perf-db1</Host>
+		<ComponentsHost>uk-perf-db2</ComponentsHost>
+	</Db>
+</Configuration>
