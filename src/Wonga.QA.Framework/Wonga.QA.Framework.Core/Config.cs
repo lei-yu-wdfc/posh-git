@@ -207,6 +207,9 @@ namespace Wonga.QA.Framework.Core
             Db.ColdStorage = GetSettingFromXml("//Db/ColdStorage");
             Db.Comms = GetSettingFromXml("//Db/Comms");
             Db.ContactManagement = GetSettingFromXml("//Db/ContactManagement");
+            Db.DiControl = GetSettingFromXml("//Db/DiControl");
+            Db.DiStaging = GetSettingFromXml("//Db/DiStaging");
+            Db.DiStagingWonga = GetSettingFromXml("//Db/DiStagingWonga");
             Db.Experian = GetSettingFromXml("//Db/Experian");
             Db.ExperianBulk = GetSettingFromXml("//Db/ExperianBulk");
             Db.FileStorage = GetSettingFromXml("//Db/FileStorage");
@@ -229,6 +232,7 @@ namespace Wonga.QA.Framework.Core
             Db.TimeZone = GetSettingFromXml("//Db/Timezone");
             Db.TransUnion = GetSettingFromXml("//Db/TransUnion");
             Db.Uru = GetSettingFromXml("//Db/Uru");
+            Db.Warehouse = GetSettingFromXml("//Db/Warehouse");
             Db.WongaPay = GetSettingFromXml("//Db/WongaPay");
             Db.WongaWholeStaging = GetSettingFromXml("//Db/WongaWholeStaging");
             Db.MigrationStaging = GetSettingFromXml("//Db/MigrationStaging");
@@ -396,6 +400,9 @@ namespace Wonga.QA.Framework.Core
             public String Cdc { get; set; }
             public String ColdStorage { get; set; }
             public String ContactManagement { get; set; }
+            public String DiControl { get; set; }
+            public String DiStaging { get; set; }
+            public String DiStagingWonga { get; set; }
             public String Experian { get; set; }
             public String ExperianBulk { get; set; }
             public String FileStorage { get; set; }
@@ -407,6 +414,7 @@ namespace Wonga.QA.Framework.Core
             public String TimeZone { get; set; }
             public String TransUnion { get; set; }
             public String Uru { get; set; }
+            public String Warehouse { get; set; }
             public String WongaPay { get; set; }
             public String Marketing { get; set; }
             public String PrepaidCard { get; set; }

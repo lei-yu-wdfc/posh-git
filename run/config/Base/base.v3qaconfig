@@ -203,5 +203,9 @@
 		
 		<Cdc>Data Source=%%//Db/HdsHost%%;Integrated Security=true;Initial Catalog=%%//Region%%_CDCStaging</Cdc>
 		<Hds>Data Source=%%//Db/HdsHost%%;Integrated Security=true;Initial Catalog=%%//Region%%_WongaHDS</Hds>
+		<DiControl>Data Source=%%//Db/HdsHost%%;Integrated Security=true;Initial Catalog=%%//Region%%_DIControl</DiControl>
+		<DiStaging>Data Source=%%//Db/HdsHost%%;Integrated Security=true;Initial Catalog=%%//Region%%_DIStaging</DiStaging>
+		<DiStagingWonga>Data Source=%%//Db/HdsHost%%;Integrated Security=true;Initial Catalog=%%//Region%%_DIStaging_Wonga</DiStagingWonga>
+		<Warehouse>Data Source=%%//Db/HdsHost%%;Integrated Security=true;Initial Catalog=%%//Region%%_DIWarehouse</Warehouse>
 	</Db>
 </Configuration>

@@ -47,10 +47,14 @@
     <Compile Include="Databases\CardPaymentDatabase.cs" />
     <Compile Include="Databases\ColdStorageDatabase.cs" />
     <Compile Include="Databases\BiCustomerManagementDatabase.cs" />
+    <Compile Include="Databases\DiControlDatabase.cs" />
+    <Compile Include="Databases\DiStagingDatabase.cs" />
+    <Compile Include="Databases\DiStagingWongaDatabase.cs" />
     <Compile Include="Databases\GreyfaceShell.cs" />
     <Compile Include="Databases\HdsDatabase.cs" />
     <Compile Include="Databases\MigrationStaging.cs" />
     <Compile Include="Databases\SchedulerDatabase.cs" />
+    <Compile Include="Databases\WarehouseDatabase.cs" />
     <Compile Include="Databases\WongaPayDatabase.cs" />
     <Compile Include="Databases\UruDatabase.cs" />
     <Compile Include="Databases\TransUnionDatabase.cs" />
