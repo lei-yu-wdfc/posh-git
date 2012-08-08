@@ -45,6 +45,12 @@
     <Compile Include="ClickTest.cs" />
     <Compile Include="Facebook\FacebookTests.cs" />
     <Compile Include="Facebook\FacebookL0JourneyTests.cs" />
+    <Compile Include="Region\Ca\Journey\LnJourneyTests.cs" />
+    <Compile Include="Region\Ca\MyAccounts\MySummary.cs" />
+    <Compile Include="Region\Ca\SliderTests.cs" />
+    <Compile Include="Region\Ca\SurveyTest.cs" />
+    <Compile Include="Region\Pl\Journey\L0JourneyTests.cs" />
+    <Compile Include="Region\Pl\Journey\LnJourneyTests.cs" />
     <Compile Include="Region\Uk\FinancialAssessment\FinancialAssessmentAboutYouTest.cs" />
     <Compile Include="Region\Uk\FinancialAssessment\FinancialAssessmentDebtsTest.cs" />
     <Compile Include="Region\Uk\FinancialAssessment\FinancialAssessmentExpenditureTest.cs" />
@@ -56,7 +62,6 @@
     <Compile Include="Region\Uk\LegalDocumentsTests.cs" />
     <Compile Include="Region\Uk\MySummaryScenariosTests.cs" />
     <Compile Include="Region\Uk\L0Ln\L0LnJourneyCoreTests.cs" />
-    <Compile Include="Region\Uk\PromoCodeTests.cs" />
     <Compile Include="Region\Uk\TimeoutTest.cs" />
     <Compile Include="Region\Uk\ExtensionAgreementTests.cs" />
     <Compile Include="Region\Wb\AboutUs.cs" />
@@ -66,6 +71,16 @@
     <Compile Include="Region\Wb\MyAccounts\HelpTest.cs" />
     <Compile Include="Region\Wb\MyAccounts\MyAccountTests.cs" />
     <Compile Include="Region\Wb\SliderTests.cs" />
+    <Compile Include="Region\Za\BehaviourAndAdvertTracking.cs" />
+    <Compile Include="Region\Za\EnabledModulesTests.cs" />
+    <Compile Include="Region\Za\Journey\L0JourneyTests.cs" />
+    <Compile Include="Region\Za\Journey\LnJourneyTests.cs" />
+    <Compile Include="Region\Za\MyAccounts\HelpTest.cs" />
+    <Compile Include="Region\Za\MyAccounts\MyAccountTests.cs" />
+    <Compile Include="Region\Za\Payment\RepayLoanTests.cs" />
+    <Compile Include="Region\Za\Payment\RepaymentTest.cs" />
+    <Compile Include="Region\Za\Payment\SecondLoanTest.cs" />
+    <Compile Include="Region\Za\SalesForce\SalesForceTest.cs" />
     <Compile Include="RepaymentTest.cs" />
     <Compile Include="RepayLoanTests.cs" />
     <Compile Include="Region\Uk\RepayTests.cs" />

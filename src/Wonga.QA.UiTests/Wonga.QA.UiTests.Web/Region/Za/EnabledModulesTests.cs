@@ -27,7 +27,7 @@ namespace Wonga.QA.UiTests.Web.Region.Za
             Assert.IsTrue(Client.Driver.PageSource.Contains(".google-analytics.com/ga.js"), "Could not find '.google-analytics.com/ga.js' in the page source code. Please verify the Google Analytics tag is being inserted correctly.");
         }
 
-        [Test)]
+        [Test]
         public void VerifyWongaDoubleClickEnabled()
         {
             Client.Home();
