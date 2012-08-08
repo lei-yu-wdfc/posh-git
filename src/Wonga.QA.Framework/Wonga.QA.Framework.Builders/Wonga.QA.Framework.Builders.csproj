@@ -61,17 +61,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Wonga.QA.Framework.Account\Wonga.QA.Framework.Account.csproj">
-      <Project>{E0094714-FE50-46D2-BC9A-A82EFDD23F2B}</Project>
-      <Name>Wonga.QA.Framework.Account</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Wonga.QA.Framework.Api\Wonga.QA.Framework.Api.csproj">
       <Project>{87FC18E9-2B6B-4B8C-BDA0-544E51AC8D96}</Project>
       <Name>Wonga.QA.Framework.Api</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Wonga.QA.Framework.App\Wonga.QA.Framework.App.csproj">
-      <Project>{E02DE5C9-D5A4-45FE-8997-9C0CC9AAB3AA}</Project>
-      <Name>Wonga.QA.Framework.App</Name>
     </ProjectReference>
     <ProjectReference Include="..\Wonga.QA.Framework.Core\Wonga.QA.Framework.Core.csproj">
       <Project>{BACA1D90-F604-476F-ACDE-A9839E85147F}</Project>
