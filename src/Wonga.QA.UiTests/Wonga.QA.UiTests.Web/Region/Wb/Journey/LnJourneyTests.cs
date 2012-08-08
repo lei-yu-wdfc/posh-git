@@ -7,13 +7,14 @@ using Wonga.QA.Framework.UI;
 using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Tests.Core;
+using MbUnit.Framework.ContractVerifiers;
 
-namespace Wonga.QA.UiTests.Web
+namespace Wonga.QA.UiTests.Web.Region.Wb.Journey
 {
-    class WbLnJourneyTests: UiTest
+    [Parallelizable(TestScope.All), AUT(AUT.Wb)]
+    public class LnJourneyTests : UiTest
     {
-
-        [Test, AUT(AUT.Wb)]
+        [Test]
         public void WbAcceptedLnLoan()
         {
             var loginPage = Client.Login();
@@ -24,7 +25,7 @@ namespace Wonga.QA.UiTests.Web
             var homePage = journey.Teleport<HomePage>() as HomePage;
         }
 
-        [Test, AUT(AUT.Wb)]
+        [Test]
         public void WbDeclinedLnLoan()
         {
             var loginPage = Client.Login();
@@ -48,7 +49,7 @@ namespace Wonga.QA.UiTests.Web
             var organization = OrganisationBuilder.New(customer).Build();
             var applicationInfo =
                 ApplicationBuilder.New(customer, organization).WithExpectedDecision(ApplicationDecisionStatus.Accepted).
-                    Build() as BusinessApplication; 
+                    Build() as BusinessApplication;
             var paymentPlan = applicationInfo.GetPaymentPlan();
 
             var today = DateTime.UtcNow.Date;

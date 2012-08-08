@@ -10,23 +10,5 @@ namespace Wonga.QA.UiTests.Web
     class MySummary : UiTest
     {
 
-        [Test, AUT(AUT.Ca)]
-        public void IsRepaymentWarningAvailableForLn()
-        {
-            var loginPage = Client.Login();
-            string email = Get.RandomEmail();
-            CustomerBuilder.New().WithEmailAddress(email).Build();
-            var summary = loginPage.LoginAs(email);
-
-            summary.Client.Driver.Navigate().GoToUrl(Config.Ui.Home + "/repay-canada");
-            var xpath = summary.Client.Driver.FindElement(By.CssSelector("#content-area p:nth-child(1)"));
-            Assert.IsTrue(xpath.Text.Contains("via online banking"));
-        }
-
-        [Test, AUT(AUT.Ca)]
-        public void ThisIsTestSoBuggerOff()
-        {
-            
-        }
     }
 }

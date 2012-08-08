@@ -7,24 +7,24 @@ using Wonga.QA.Framework.Api;
 
 namespace Wonga.QA.UiTests.Web.Region.Ca.Journey
 {
-    [Parallelizable(TestScope.All)]
+    [Parallelizable(TestScope.All), AUT(AUT.Ca)]
     public class L0LoanCa : UiTest
     {
-        [Test, AUT(AUT.Ca), Category(TestCategories.SmokeTest)]
+        [Test, Category(TestCategories.SmokeTest)]
         public void CaAcceptedLoan()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home())
-                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)); 
+                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
             var mySummary = journey.Teleport<MySummaryPage>() as MySummaryPage;
         }
 
-       [Test, AUT(AUT.Ca)]
-       public void CaDeclinedLoan()
-       {
-           var journey = JourneyFactory.GetL0Journey(Client.Home())
-               .WithDeclineDecision();
-           var processingPage = journey.Teleport<DeclinedPage>() as DeclinedPage;
-       }
+        [Test]
+        public void CaDeclinedLoan()
+        {
+            var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithDeclineDecision();
+            var processingPage = journey.Teleport<DeclinedPage>() as DeclinedPage;
+        }
 
     }
 }
