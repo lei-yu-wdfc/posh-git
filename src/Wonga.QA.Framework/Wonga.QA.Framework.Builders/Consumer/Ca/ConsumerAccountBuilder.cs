@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Api.Requests.Comms.Commands.Ca;
+using Wonga.QA.Framework.Api.Requests.Ops.Commands.Ca;
+using Wonga.QA.Framework.Api.Requests.Payments.Commands.Ca;
+using Wonga.QA.Framework.Api.Requests.Risk.Commands.Ca;
 
 namespace Wonga.QA.Framework.Builders.Consumer.Ca
 {
@@ -16,7 +20,99 @@ namespace Wonga.QA.Framework.Builders.Consumer.Ca
 
 		protected override IEnumerable<ApiRequest> GetRegionSpecificApiCommands()
 		{
-			throw new NotImplementedException();
+			yield return SaveSocialDetailsCaCommand.New(r =>
+			                                            	{
+			                                            		r.AccountId = AccountId;
+			                                            		r.Dependants = AccountData.NumberOfDependants;
+			                                            	});
+
+			yield return SavePasswordRecoveryDetailsCaCommand.New(r => r.AccountId = AccountId);
+
+			yield return SaveCustomerDetailsCaCommand.New(r =>
+			                                              	{
+			                                              		r.AccountId = AccountId;
+			                                              		r.Forename = AccountData.Forename;
+			                                              		r.MiddleName = AccountData.MiddleName;
+			                                              		r.Surname = AccountData.Surname;
+			                                              		r.Email = AccountData.Email;
+			                                              		r.DateOfBirth = AccountData.DateOfBirth;
+			                                              		r.NationalNumber = AccountData.NationalNumber;
+			                                              		r.HomePhone = AccountData.HomePhoneNumber;
+			                                              		r.Gender = AccountData.Gender;
+			                                              	});
+
+			yield return RiskSaveCustomerDetailsCaCommand.New(r =>
+			                                                  	{
+			                                                  		r.AccountId = AccountId;
+			                                                  		r.Forename = AccountData.Forename;
+			                                                  		r.MiddleName = AccountData.MiddleName;
+			                                                  		r.Surname = AccountData.Surname;
+			                                                  		r.Email = AccountData.Email;
+			                                                  		r.DateOfBirth = AccountData.DateOfBirth;
+			                                                  		r.HomePhone = AccountData.HomePhoneNumber;
+			                                                  		r.Gender = AccountData.Gender;
+			                                                  		r.MobilePhone = AccountData.MobilePhoneNumber;
+			                                                  	});
+
+			yield return SaveCustomerAddressCaCommand.New(r =>
+			                                              	{
+			                                              		r.AccountId = AccountId;
+			                                              		r.HouseNumber = AccountData.HouseNumber;
+			                                              		r.HouseName = AccountData.HouseName;
+			                                              		r.Postcode = AccountData.Postcode;
+			                                              		r.Street = AccountData.Street;
+			                                              		r.Flat = AccountData.Flat;
+			                                              		r.District = AccountData.District;
+			                                              		r.Town = AccountData.Town;
+			                                              		r.County = AccountData.County;
+			                                              		r.Province = AccountData.Province;
+			                                              	});
+
+			yield return RiskSaveCustomerAddressCaCommand.New(r =>
+			                                                  	{
+			                                                  		r.AccountId = AccountId;
+			                                                  		r.HouseNumber = AccountData.HouseNumber;
+			                                                  		r.HouseName = AccountData.HouseName;
+			                                                  		r.Postcode = AccountData.Postcode;
+			                                                  		r.Street = AccountData.Street;
+			                                                  		r.Flat = AccountData.Flat;
+			                                                  		r.District = AccountData.District;
+			                                                  		r.Town = AccountData.Town;
+			                                                  		r.County = AccountData.County;
+			                                                  		r.SubRegion = AccountData.Province;
+			                                                  	});
+
+			yield return AddBankAccountCaCommand.New(r =>
+			                                         	{
+			                                         		r.AccountId = AccountId;
+			                                         		r.BankAccountId = BankAccountId;
+			                                         		if (!string.IsNullOrEmpty(AccountData.BankAccountNumber))
+			                                         			r.AccountNumber = AccountData.BankAccountNumber;
+			                                         		r.BranchNumber = AccountData.BankBranchNumber;
+			                                         		r.InstitutionNumber = AccountData.BankInstitutionNumber;
+			                                         	});
+
+			yield return RiskAddBankAccountCaCommand.New(r =>
+			                                             	{
+			                                             		r.AccountId = AccountId;
+			                                             		r.BankAccountId = BankAccountId;
+			                                             		if (!string.IsNullOrEmpty(AccountData.BankAccountNumber))
+			                                             		{
+			                                             			r.AccountNumber = AccountData.BankAccountNumber;
+			                                             		}
+			                                             	});
+
+			yield return SaveEmploymentDetailsCaCommand.New(r =>
+			                                                	{
+			                                                		r.AccountId = AccountId;
+			                                                		r.EmployerName = AccountData.EmployerName;
+			                                                		r.NetMonthlyIncome = AccountData.NetMonthlyIncome;
+			                                                		r.Status = AccountData.EmploymentStatus;
+			                                                		if (!string.IsNullOrEmpty(AccountData.NextPayDate.ToString()))
+			                                                			r.NextPayDate = AccountData.NextPayDate;
+			                                                		if (!string.IsNullOrEmpty(AccountData.IncomeFrequency.ToString()))
+			                                                			r.IncomeFrequency = AccountData.IncomeFrequency;
+			                                                	});
 		}
 
 		protected override void CompletePhoneVerification()
