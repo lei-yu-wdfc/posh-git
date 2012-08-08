@@ -44,7 +44,7 @@ namespace Wonga.QA.Framework.Builders
 				switch (Config.AUT)
 				{
 					case AUT.Uk:
-						return new Builders.PayLater.Uk.ConsumerApplicationBuilder(account, consumerApplicationData);
+						return new Builders.PayLater.Uk.PayLaterApplicationBuilder(account, consumerApplicationData);
 				}
 
 				throw new NotSupportedException(Config.AUT.ToString());

@@ -42,17 +42,23 @@
   <ItemGroup>
     <Compile Include="AccountBuilder.cs" />
     <Compile Include="ApplicationBuilder.cs" />
-    <Compile Include="Consumer\AccountBuilderConsumerBase.cs" />
-    <Compile Include="Consumer\AccountDataConsumerBase.cs" />
-    <Compile Include="Consumer\ApplicationBuilderConsumerBase.cs" />
-    <Compile Include="Consumer\ApplicationDataConsumerBase.cs" />
-    <Compile Include="Consumer\Ca\AccountBuilderConsumer.cs" />
-    <Compile Include="Consumer\Ca\ApplicationBuilderConsumer.cs" />
+    <Compile Include="Consumer\Ca\ConsumerAccountBuilder.cs" />
+    <Compile Include="Consumer\Ca\ConsumerApplicationBuilder.cs" />
+    <Compile Include="Consumer\ConsumerAccountBuilderBase.cs" />
+    <Compile Include="Consumer\ConsumerAccountDataBase.cs" />
+    <Compile Include="Consumer\ConsumerApplicationBuilderBase.cs" />
+    <Compile Include="Consumer\ConsumerApplicationDataBase.cs" />
+    <Compile Include="Consumer\Uk\ConsumerAccountBuilder.cs" />
+    <Compile Include="Consumer\Uk\ConsumerApplicationBuilder.cs" />
+    <Compile Include="Consumer\Za\ConsumerAccountBuilder.cs" />
+    <Compile Include="Consumer\Za\ConsumerApplicationBuilder.cs" />
+    <Compile Include="PayLater\PayLaterAccountBuilderBase.cs" />
+    <Compile Include="PayLater\PayLaterAccountDataBase.cs" />
+    <Compile Include="PayLater\PayLaterApplicationBuilderBase.cs" />
+    <Compile Include="PayLater\PayLaterApplicationDataBase.cs" />
+    <Compile Include="PayLater\Uk\PayLaterAccountBuilder.cs" />
+    <Compile Include="PayLater\Uk\PayLaterApplicationBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Consumer\Uk\AccountBuilderConsumer.cs" />
-    <Compile Include="Consumer\Uk\ApplicationBuilderConsumer.cs" />
-    <Compile Include="Consumer\Za\AccountBuilderConsumer.cs" />
-    <Compile Include="Consumer\Za\ApplicationBuilderConsumer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Wonga.QA.Framework.Account\Wonga.QA.Framework.Account.csproj">
@@ -82,7 +88,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Business\Uk\" />
-    <Folder Include="PayLater\Uk\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
