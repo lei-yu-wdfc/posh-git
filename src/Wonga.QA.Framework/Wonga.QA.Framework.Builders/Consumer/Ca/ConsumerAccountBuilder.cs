@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Api.Requests.Comms.Commands;
 using Wonga.QA.Framework.Api.Requests.Comms.Commands.Ca;
 using Wonga.QA.Framework.Api.Requests.Ops.Commands.Ca;
 using Wonga.QA.Framework.Api.Requests.Payments.Commands.Ca;
@@ -113,6 +114,53 @@ namespace Wonga.QA.Framework.Builders.Consumer.Ca
 			                                                		if (!string.IsNullOrEmpty(AccountData.IncomeFrequency.ToString()))
 			                                                			r.IncomeFrequency = AccountData.IncomeFrequency;
 			                                                	});
+
+			foreach (var api in GetPrimaryPhoneApiCommands())
+				yield return api;
+		}
+
+		private IEnumerable<ApiRequest> GetPrimaryPhoneApiCommands()
+		{
+			if (AccountData.MobilePhoneNumber == null)
+				return GetMobilePhoneApiCommands();
+
+			return GetHomePhoneApiCommands();
+		}
+
+		private IEnumerable<ApiRequest> GetMobilePhoneApiCommands()
+		{
+			yield return VerifyMobilePhoneCaCommand.New(r =>
+			{
+				r.AccountId = AccountId;
+				r.VerificationId = PrimaryPhoneVerificationId;
+				r.MobilePhone = AccountData.MobilePhoneNumber;
+			});
+
+			yield return CompleteMobilePhoneVerificationCommand.New(r => r.VerificationId = PrimaryPhoneVerificationId);
+
+			yield return RiskAddMobilePhoneCaCommand.New(r =>
+			{
+				r.AccountId = AccountId;
+				r.MobilePhone = AccountData.MobilePhoneNumber;
+			});
+		}
+
+		private IEnumerable<ApiRequest> GetHomePhoneApiCommands()
+		{
+			yield return VerifyHomePhoneCaCommand.New(r =>
+			{
+				r.AccountId = AccountId;
+				r.VerificationId = PrimaryPhoneVerificationId;
+				r.HomePhone = AccountData.HomePhoneNumber;
+			});
+
+			yield return CompleteHomePhoneVerificationCaCommand.New(r => r.VerificationId = PrimaryPhoneVerificationId);
+
+			yield return RiskAddHomePhoneCaCommand.New(r =>
+			{
+				r.AccountId = AccountId;
+				r.HomePhone = AccountData.HomePhoneNumber;
+			});
 		}
 
 		protected override void CompletePhoneVerification()

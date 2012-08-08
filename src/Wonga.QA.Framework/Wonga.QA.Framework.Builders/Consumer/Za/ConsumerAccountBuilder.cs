@@ -115,7 +115,7 @@ namespace Wonga.QA.Framework.Builders.Consumer.Za
 			yield return VerifyMobilePhoneZaCommand.New(r =>
 			                                            	{
 			                                            		r.AccountId = AccountId;
-			                                            		r.VerificationId = MobilePhoneVerificationId;
+			                                            		r.VerificationId = PrimaryPhoneVerificationId;
 			                                            		r.MobilePhone = AccountData.MobilePhoneNumber;
 			                                            	});
 		}

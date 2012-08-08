@@ -133,11 +133,11 @@ namespace Wonga.QA.Framework.Builders.Consumer.Uk
 			yield return VerifyMobilePhoneUkCommand.New(r =>
 			                                            	{
 			                                            		r.AccountId = AccountId;
-			                                            		r.VerificationId = MobilePhoneVerificationId;
+			                                            		r.VerificationId = PrimaryPhoneVerificationId;
 			                                            		r.MobilePhone = AccountData.MobilePhoneNumber;
 			                                            	});
 
-			yield return CompleteMobilePhoneVerificationCommand.New(r => r.VerificationId = MobilePhoneVerificationId);
+			yield return CompleteMobilePhoneVerificationCommand.New(r => r.VerificationId = PrimaryPhoneVerificationId);
 
 			yield return RiskAddMobilePhoneUkCommand.New(r =>
 			                                             	{

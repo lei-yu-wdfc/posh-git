@@ -12,7 +12,7 @@ namespace Wonga.QA.Framework.Builders.Consumer
 	{
 		protected Guid AccountId { get; private set; }
 		protected Guid BankAccountId { get; private set; }
-		protected Guid MobilePhoneVerificationId { get; private set; }
+		protected Guid PrimaryPhoneVerificationId { get; private set; }
 		protected ConsumerAccountDataBase AccountData { get; private set; }
 
 
@@ -22,7 +22,7 @@ namespace Wonga.QA.Framework.Builders.Consumer
 		{
 			AccountId = accountId;
 			BankAccountId = Guid.NewGuid();
-			MobilePhoneVerificationId = Guid.NewGuid();
+			PrimaryPhoneVerificationId = Guid.NewGuid();
 			AccountData = consumerAccountData;
 		}
 
