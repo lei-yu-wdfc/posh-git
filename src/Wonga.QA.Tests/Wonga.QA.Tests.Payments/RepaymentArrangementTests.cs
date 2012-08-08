@@ -19,10 +19,28 @@ namespace Wonga.QA.Tests.Payments
     [Parallelizable(TestScope.All)]
 	public class RepaymentArrangementTests
     {
+        private bool _repaymentArrangementEnabled;
         private ArrangementDetail[] _arrangementDetails;
         private Application _application;
 
-		[Test, AUT(AUT.Uk), Owner(Owner.AlexSloat)]
+        #region setup#
+
+        [FixtureSetUp]
+        public void FixtureSetup()
+        {
+            _repaymentArrangementEnabled = ConfigurationFunctions.GetRepaymentArrangementEnabled();
+            ConfigurationFunctions.SetRepaymentArrangementEnabled(true);
+        }
+
+        [FixtureTearDown]
+        public void FixtureTearDown()
+        {
+            ConfigurationFunctions.SetRepaymentArrangementEnabled(_repaymentArrangementEnabled);
+        }
+
+        #endregion setup#
+
+        [Test, AUT(AUT.Uk), Owner(Owner.AlexSloat)]
 		public void CustomerServiceSetRepaymentArrangementTest()
 		{
 			Customer customer = CustomerBuilder.New().Build();
