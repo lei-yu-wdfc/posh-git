@@ -29,7 +29,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
             _inputPassId = Content.FindElement(By.CssSelector(UiMap.Get.PayLaterLoginPage.InputPassId));
             _submitButton = Content.FindElement(By.CssSelector(UiMap.Get.PayLaterLoginPage.SubmitButton));
 
-            _apr = Content.FindElement(By.CssSelector(UiMap.Get.PayLaterLoginPage.Apr));
+            _apr = Client.Driver.FindElement(By.CssSelector(UiMap.Get.PayLaterLoginPage.Apr));
             _forgottenPassword = Content.FindElement(By.CssSelector(UiMap.Get.PayLaterLoginPage.ForgottenPassword));
             _singUp = Content.FindElement(By.CssSelector(UiMap.Get.PayLaterLoginPage.SingUp));
 
