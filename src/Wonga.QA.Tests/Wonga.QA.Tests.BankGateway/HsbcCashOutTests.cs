@@ -46,7 +46,7 @@ namespace Wonga.QA.Tests.BankGateway
             }
         }
 
-        [Test, JIRA("UK-495"), Owner(Owner.MichaelDoyle)]
+        [Test, JIRA("UK-495"), Owner(Owner.AlexSloat), Pending("Creation of injectable mock")]
         public void CashOutFileIsSent()
         {
             var accountId = CreateCustomerDetails().AccountId;
@@ -114,7 +114,7 @@ namespace Wonga.QA.Tests.BankGateway
         }
 
 
-        [Test, JIRA("UK-495"), Owner(Owner.MichaelDoyle)]
+        [Test, JIRA("UK-495"), Owner(Owner.AlexSloat), Pending("Creation of injectable mock")]
         public void CashOutFileIsSent2ndAckFailureTest()
         {
             var accountId = CreateCustomerDetails().AccountId;
@@ -256,7 +256,7 @@ namespace Wonga.QA.Tests.BankGateway
         }
 
 
-        [Test, JIRA("UK-495"), Owner(Owner.MichaelDoyle)]
+        [Test, JIRA("UK-495"), Owner(Owner.AlexSloat), Pending("Creation of injectable mock")]
         public void CashOutFileIsSentFaster3rdAckFailureTest()
         {
             var accountId = CreateCustomerDetails().AccountId;
