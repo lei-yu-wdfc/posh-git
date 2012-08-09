@@ -119,6 +119,7 @@
 
   <TimeoutTestPage>
     <HeaderText>Timeout Test</HeaderText>
+    <ContentText>This is just a test page</ContentText>
   </TimeoutTestPage>
 
 	<AccountDetailsSection>

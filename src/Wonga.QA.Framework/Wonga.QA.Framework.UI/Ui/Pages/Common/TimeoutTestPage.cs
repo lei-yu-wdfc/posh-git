@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using MbUnit.Framework;
 using NHamcrest.Core;
 using OpenQA.Selenium;
-using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.UI.UiElements.Pages.Interfaces;
 using Wonga.QA.Framework.UI.Mappings;
 
 namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
@@ -15,7 +10,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
     {
         public TimeoutTestPage(UiClient client) : base(client)
         {
-            Assert.That(Headers, Has.Item(ContentMap.Get.TimeoutTestPage.HeaderText));
+            if (Content.Text.Contains(ContentMap.Get.TimeoutTestPage.ContentText) == false)
+                throw new SystemException("TimeoutTest page not displayed.");
         }
     }
 }

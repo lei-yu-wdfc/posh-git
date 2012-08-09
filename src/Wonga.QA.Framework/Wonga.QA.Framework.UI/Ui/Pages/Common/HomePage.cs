@@ -406,7 +406,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
 
         public String GetApplyNowToolTipText()
         {
-            IWebElement applyNowButton = Content.FindElement(By.CssSelector(UiMap.Get.HomePage.ApplyNowButton));
+            IWebElement applyNowButton = Content.FindElement(By.CssSelector(UiMap.Get.HomePage.ApplyNowToolTipTrigger));
 
             applyNowButton.MouseOver();
 
@@ -414,6 +414,19 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
             IWebElement applyNowToolTip = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.ApplyNowToolTip));
             var applyNowToolTipText = applyNowToolTip.Text;
             return applyNowToolTipText.Replace("\r\n", "");
+        }
+
+        public bool IsApplyNowButtonEnabled()
+        {
+            try
+            {
+                IWebElement applyNowButton = Content.FindElement(By.CssSelector(UiMap.Get.HomePage.ApplyNowButton));
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public bool IsMocked()

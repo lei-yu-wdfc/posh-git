@@ -87,7 +87,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Assert.AreEqual(expectedWelcomeMessage, homePage.GetWelcomeHeaderMessageText());
             Assert.AreEqual("300", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong."); //Ensure maximum available credit is displayed correctly
             Assert.AreEqual("Welcome " + _truncatedFirstNameL0 + "... Logout", homePage.GetHeaderBarText(), "Header bar text is wrong."); //Check "Welcome <15-symbolsTruncatedFirstName> Logout" in the Navigation Header
-            Assert.AreEqual("Sorry, you don't have any available credit and need to settle your balance before you can apply again", homePage.GetApplyNowToolTipText()); //Verify apply now button is disabled and tooltip is displayed
+            Assert.AreEqual("You already have an open loan. Go to my account to view and manage this loan.", homePage.GetApplyNowToolTipText()); //Verify apply now button is disabled and tooltip is displayed
 
             //Esnure 'click here' link in welcome message takes User back to home page.
             homePage.ClickWelcomeMessageClickHereLink();
@@ -111,8 +111,6 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
             Assert.AreEqual("If you're not " + _truncatedFirstNameL0 + "..., click here", homePage.GetHeaderBarText()); //Verify header bar text
 
-            Assert.AreEqual("Sorry, you don't have any available credit and need to settle your balance before you can apply again", homePage.GetApplyNowToolTipText()); //Verify apply now button is disabled and tooltip is displayed
-
             //Verify Welcome message text
             Assert.AreEqual("Welcome back " + _truncatedFirstNameL0 + "...! (not " + _truncatedFirstNameL0 +
                                         "...? click here ) We can deposit up to £300 in your bank account by " + DateTime.Now.AddMinutes(24).ToShortTimeString()
@@ -120,7 +118,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
             Assert.AreEqual("300", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
 
-            Assert.AreEqual("Sorry, you don't have any available credit and need to settle your balance before you can apply again", homePage.GetApplyNowToolTipText()); //Verify apply now button is disabled and tooltip is displayed
+            Assert.AreEqual("You already have an open loan. Go to my account to view and manage this loan.", homePage.GetApplyNowToolTipText()); //Verify apply now button is disabled and tooltip is displayed
 
             //Esnure 'click here' link in welcome message takes User back to home page.
             homePage.ClickWelcomeMessageClickHereLink();
@@ -196,6 +194,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Assert.AreEqual("Welcome back " + _truncatedFirstNameLn + "...! (not " + _truncatedFirstNameLn + "...? click here ) We can deposit up to £400 in your bank account by " + DateTime.Now.AddMinutes(24).ToShortTimeString() + homePage.GetWelcomeMessageDay(), homePage.GetWelcomeHeaderMessageText()); // user has logged in
             Assert.AreEqual("400", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
             Assert.AreEqual("Welcome " + _truncatedFirstNameLn + "... Logout", homePage.GetHeaderBarText(), "Header bar text is wrong."); //Check "Welcome <15-symbolsTruncatedFirstName> Logout" in the Navigation Header
+            Assert.IsTrue(homePage.IsApplyNowButtonEnabled());
 
             //Esnure 'click here' link in welcome message takes User back to home page.
             homePage.ClickWelcomeMessageClickHereLink();
@@ -231,6 +230,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
             //Ensure maximum available credit value is displayed correctly
             Assert.AreEqual("400", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
+            Assert.IsTrue(homePage.IsApplyNowButtonEnabled());
 
             //Esnure 'click here' link in welcome message takes User back to home page.
             homePage.ClickWelcomeMessageClickHereLink();

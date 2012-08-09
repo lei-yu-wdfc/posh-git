@@ -8,5 +8,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Content
     public class TimeoutTestPage
     {
         public String HeaderText { get; set; }
+        public String ContentText { get; set; }
     }
 }
