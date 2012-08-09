@@ -39,8 +39,9 @@ namespace Wonga.QA.Framework.Builders.Consumer
 		public IncomeFrequencyEnum IncomeFrequency;
 
 		public String BankAccountNumber;
-		public String BranchNumber;
+		public String BankBranchNumber;
 		public String BankCode;
+		public String BankInstitutionNumber;
 		public Int64 PaymentCardNumber;
 		public String PaymentCardSecurityCode;
 		public String PaymentCardType;
@@ -78,7 +79,7 @@ namespace Wonga.QA.Framework.Builders.Consumer
 			IncomeFrequency = IncomeFrequencyEnum.LastFridayOfMonth;
 
 			BankAccountNumber = Get.GetBankAccountNumber();
-			BranchNumber = "00018";
+			BankBranchNumber = "00018";
 			PaymentCardNumber = 4444333322221111;
 			PaymentCardSecurityCode = "777"; ;
 			PaymentCardType = "Visa";

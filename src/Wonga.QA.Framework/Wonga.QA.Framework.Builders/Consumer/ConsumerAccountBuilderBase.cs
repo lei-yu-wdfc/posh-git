@@ -12,8 +12,8 @@ namespace Wonga.QA.Framework.Builders.Consumer
 	{
 		protected Guid AccountId { get; private set; }
 		protected Guid BankAccountId { get; private set; }
-		protected Guid MobilePhoneVerificationId { get; private set; }
-		protected ConsumerAccountDataBase ConsumerAccountData { get; private set; }
+		protected Guid PrimaryPhoneVerificationId { get; private set; }
+		protected ConsumerAccountDataBase AccountData { get; private set; }
 
 
 		protected ConsumerAccountBuilderBase(ConsumerAccountDataBase consumerAccountData) : this(Guid.NewGuid(), consumerAccountData){}
@@ -22,8 +22,8 @@ namespace Wonga.QA.Framework.Builders.Consumer
 		{
 			AccountId = accountId;
 			BankAccountId = Guid.NewGuid();
-			MobilePhoneVerificationId = Guid.NewGuid();
-			ConsumerAccountData = consumerAccountData;
+			PrimaryPhoneVerificationId = Guid.NewGuid();
+			AccountData = consumerAccountData;
 		}
 
 		public Customer Build()
@@ -50,8 +50,8 @@ namespace Wonga.QA.Framework.Builders.Consumer
 			yield return CreateAccountCommand.New(r =>
 			                                      	{
 			                                      		r.AccountId = AccountId;
-			                                      		r.Login = ConsumerAccountData.Email;
-			                                      		r.Password = ConsumerAccountData.Password;
+			                                      		r.Login = AccountData.Email;
+			                                      		r.Password = AccountData.Password;
 			                                      	});
 
 			yield return SaveContactPreferencesCommand.New(r => r.AccountId = AccountId);
@@ -73,55 +73,55 @@ namespace Wonga.QA.Framework.Builders.Consumer
 
 		public ConsumerAccountBuilderBase WithPassword(String password)
 		{
-			ConsumerAccountData.Password = password;
+			AccountData.Password = password;
 			return this;
 		}
 
 		public ConsumerAccountBuilderBase WithGender(GenderEnum gender)
 		{
-			ConsumerAccountData.Gender = gender;
+			AccountData.Gender = gender;
 			return this;
 		}
 
 		public ConsumerAccountBuilderBase WithNationalNumber(String nationalNumber)
 		{
-			ConsumerAccountData.NationalNumber = nationalNumber;
+			AccountData.NationalNumber = nationalNumber;
 			return this;
 		}
 
 		public ConsumerAccountBuilderBase WithDateOfBirth(Date date)
 		{
-			ConsumerAccountData.DateOfBirth = date;
+			AccountData.DateOfBirth = date;
 			return this;
 		}
 
 		public ConsumerAccountBuilderBase WithForename(String foreName)
 		{
-			ConsumerAccountData.Forename = foreName;
+			AccountData.Forename = foreName;
 			return this;
 		}
 
 		public ConsumerAccountBuilderBase WithMiddleName(String middleName)
 		{
-			ConsumerAccountData.MiddleName = middleName;
+			AccountData.MiddleName = middleName;
 			return this;
 		}
 
 		public ConsumerAccountBuilderBase WithSurname(String surname)
 		{
-			ConsumerAccountData.Surname = surname;
+			AccountData.Surname = surname;
 			return this;
 		}
 
 		public ConsumerAccountBuilderBase WithMaidenName(String maidenName)
 		{
-			ConsumerAccountData.MaidenName = maidenName;
+			AccountData.MaidenName = maidenName;
 			return this;
 		}
 
 		public ConsumerAccountBuilderBase WithNumberDependants(UInt16 numberOfDependants)
 		{
-			ConsumerAccountData.NumberOfDependants = numberOfDependants;
+			AccountData.NumberOfDependants = numberOfDependants;
 			return this;
 		}
 
@@ -131,19 +131,19 @@ namespace Wonga.QA.Framework.Builders.Consumer
 
 		public ConsumerAccountBuilderBase WithEmailAddress(String email)
 		{
-			ConsumerAccountData.Email = email;
+			AccountData.Email = email;
 			return this;
 		}
 
 		public ConsumerAccountBuilderBase WithPhoneNumber(String phoneNumber)
 		{
-			ConsumerAccountData.HomePhoneNumber = phoneNumber;
+			AccountData.HomePhoneNumber = phoneNumber;
 			return this;
 		}
 
 		public ConsumerAccountBuilderBase WithMobileNumber(String mobileNumber)
 		{
-			ConsumerAccountData.MobilePhoneNumber = mobileNumber;
+			AccountData.MobilePhoneNumber = mobileNumber;
 			return this;
 		}
 
@@ -153,55 +153,55 @@ namespace Wonga.QA.Framework.Builders.Consumer
 		
 		public ConsumerAccountBuilderBase WithFlat(String flat)
 		{
-			ConsumerAccountData.Flat = flat;
+			AccountData.Flat = flat;
 			return this;
 		}
 
 		public ConsumerAccountBuilderBase WithHouseNumber(String houseNumber)
 		{
-			ConsumerAccountData.HouseNumber = houseNumber;
+			AccountData.HouseNumber = houseNumber;
 			return this;
 		}
 
 		public ConsumerAccountBuilderBase WithHouseName(String houseName)
 		{
-			ConsumerAccountData.HouseName = houseName;
+			AccountData.HouseName = houseName;
 			return this;
 		}
 
 		public ConsumerAccountBuilderBase WithStreet(String street)
 		{
-			ConsumerAccountData.Street = street;
+			AccountData.Street = street;
 			return this;
 		}
 
 		public ConsumerAccountBuilderBase WithDistrict(String district)
 		{
-			ConsumerAccountData.District = district;
+			AccountData.District = district;
 			return this;
 		}
 
 		public ConsumerAccountBuilderBase WithTown(String town)
 		{
-			ConsumerAccountData.Town = town;
+			AccountData.Town = town;
 			return this;
 		}
 
 		public ConsumerAccountBuilderBase WithCounty(String county)
 		{
-			ConsumerAccountData.County = county;
+			AccountData.County = county;
 			return this;
 		}
 
 		public ConsumerAccountBuilderBase WithPostcode(String postcode)
 		{
-			ConsumerAccountData.Postcode = postcode;
+			AccountData.Postcode = postcode;
 			return this;
 		}
 
 		public ConsumerAccountBuilderBase WithCountryCode(String countryCode)
 		{
-			ConsumerAccountData.CountryCode = countryCode;
+			AccountData.CountryCode = countryCode;
 			return this;
 		}
 
@@ -211,31 +211,31 @@ namespace Wonga.QA.Framework.Builders.Consumer
 
 		public ConsumerAccountBuilderBase WithEmployer(String employerName)
 		{
-			ConsumerAccountData.EmployerName = employerName;
+			AccountData.EmployerName = employerName;
 			return this;
 		}
 
 		public ConsumerAccountBuilderBase WithEmployerStatus(String employerStatus)
 		{
-			ConsumerAccountData.EmploymentStatus = employerStatus;
+			AccountData.EmploymentStatus = employerStatus;
 			return this;
 		}
 
 		public ConsumerAccountBuilderBase WithNetMonthlyIncome(Decimal netMonthlyIncome)
 		{
-			ConsumerAccountData.NetMonthlyIncome = netMonthlyIncome;
+			AccountData.NetMonthlyIncome = netMonthlyIncome;
 			return this;
 		}
 
 		public ConsumerAccountBuilderBase WithNextPayDate(Date date)
 		{
-			ConsumerAccountData.NextPayDate = date;
+			AccountData.NextPayDate = date;
 			return this;
 		}
 
 		public ConsumerAccountBuilderBase WithIncomeFrequency(IncomeFrequencyEnum incomeFrequency)
 		{
-			ConsumerAccountData.IncomeFrequency = incomeFrequency;
+			AccountData.IncomeFrequency = incomeFrequency;
 			return this;
 		}
 
@@ -245,37 +245,37 @@ namespace Wonga.QA.Framework.Builders.Consumer
 
 		public ConsumerAccountBuilderBase WithBankAccountNumber( String bankAccountNumber)
 		{
-			ConsumerAccountData.BankAccountNumber = bankAccountNumber;
+			AccountData.BankAccountNumber = bankAccountNumber;
 			return this;
 		}
 
 		public ConsumerAccountBuilderBase WithBranchNumber(String branchNumber)
 		{
-			ConsumerAccountData.BranchNumber = branchNumber;
+			AccountData.BankBranchNumber = branchNumber;
 			return this;
 		}
 
 		public ConsumerAccountBuilderBase WithBankCode(String bankCode)
 		{
-			ConsumerAccountData.BankCode = bankCode;
+			AccountData.BankCode = bankCode;
 			return this;
 		}
 
 		public ConsumerAccountBuilderBase WithPaymentCardNumber(Int64 cardNumber)
 		{
-			ConsumerAccountData.PaymentCardNumber = cardNumber;
+			AccountData.PaymentCardNumber = cardNumber;
 			return this;
 		}
 
 		public ConsumerAccountBuilderBase WithPaymentCardSecurityCode(String securityCode)
 		{
-			ConsumerAccountData.PaymentCardSecurityCode = securityCode;
+			AccountData.PaymentCardSecurityCode = securityCode;
 			return this;
 		}
 
 		public ConsumerAccountBuilderBase WithPaymentCardType(String cardType)
 		{
-			ConsumerAccountData.PaymentCardType = cardType;
+			AccountData.PaymentCardType = cardType;
 			return this;
 		}
 		#endregion

@@ -22,92 +22,102 @@ namespace Wonga.QA.Framework.Builders.Consumer.Za
 
 		protected override IEnumerable<ApiRequest> GetRegionSpecificApiCommands()
 		{
-			return new ApiRequest[]
-			       	{
-			       		SaveSocialDetailsZaCommand.New(r =>
-			       		                               	{
-			       		                               		r.AccountId = AccountId;
-			       		                               		r.Dependants = ConsumerAccountData.NumberOfDependants;
-			       		                               	}),
-			       		SavePasswordRecoveryDetailsZaCommand.New(r => r.AccountId = AccountId),
-			       		SaveCustomerDetailsZaCommand.New(r =>
-			       		                                 	{
-			       		                                 		r.AccountId = AccountId;
-			       		                                 		r.Forename = ConsumerAccountData.Forename;
-			       		                                 		r.MiddleName = ConsumerAccountData.MiddleName;
-			       		                                 		r.Surname = ConsumerAccountData.Surname;
-			       		                                 		r.Email = ConsumerAccountData.Email;
-			       		                                 		r.NationalNumber = ConsumerAccountData.NationalNumber;
-			       		                                 		r.DateOfBirth = ConsumerAccountData.DateOfBirth;
-			       		                                 		r.Gender = ConsumerAccountData.Gender;
-			       		                                 		r.MaidenName = ConsumerAccountData.Gender == GenderEnum.Female ? ConsumerAccountData.MaidenName : null;
-			       		                                 		r.HomePhone = ConsumerAccountData.HomePhoneNumber;
-			       		                                 	}),
-			       		RiskSaveCustomerDetailsZaCommand.New(r =>
-			       		                                     	{
-			       		                                     		r.AccountId = AccountId;
-			       		                                     		r.Forename = ConsumerAccountData.Forename;
-			       		                                     		r.MiddleName = ConsumerAccountData.MiddleName;
-			       		                                     		r.Surname = ConsumerAccountData.Surname;
-			       		                                     		r.Email = ConsumerAccountData.Email;
-			       		                                     		r.DateOfBirth = ConsumerAccountData.DateOfBirth;
-			       		                                     		r.Gender = ConsumerAccountData.Gender;
-			       		                                     		r.MaidenName = ConsumerAccountData.Gender == GenderEnum.Female ? ConsumerAccountData.MaidenName : null;
-			       		                                     		r.HomePhone = ConsumerAccountData.HomePhoneNumber;
-			       		                                     		r.MobilePhone = ConsumerAccountData.MobilePhoneNumber;
-			       		                                     	}),
-			       		SaveCustomerAddressZaCommand.New(r =>
-			       		                                 	{
-			       		                                 		r.AccountId = AccountId;
-			       		                                 		r.HouseNumber = ConsumerAccountData.HouseNumber;
-			       		                                 		r.HouseName = ConsumerAccountData.HouseName;
-			       		                                 		r.Postcode = ConsumerAccountData.Postcode;
-			       		                                 		r.Street = ConsumerAccountData.Street;
-			       		                                 		r.Flat = ConsumerAccountData.Flat;
-			       		                                 		r.District = ConsumerAccountData.District;
-			       		                                 		r.Town = ConsumerAccountData.Town;
-			       		                                 		r.County = ConsumerAccountData.County;
-			       		                                 	}),
-			       		RiskSaveCustomerAddressZaCommand.New(r =>
-			       		                                     	{
-			       		                                     		r.AccountId = AccountId;
-			       		                                     		r.HouseNumber = ConsumerAccountData.HouseNumber;
-			       		                                     		r.HouseName = ConsumerAccountData.HouseName;
-			       		                                     		r.Postcode = ConsumerAccountData.Postcode;
-			       		                                     		r.Street = ConsumerAccountData.Street;
-			       		                                     		r.Flat = ConsumerAccountData.Flat;
-			       		                                     		r.District = ConsumerAccountData.District;
-			       		                                     		r.Town = ConsumerAccountData.Town;
-			       		                                     		r.County = ConsumerAccountData.County;
-			       		                                     	}),
-			       		AddBankAccountZaCommand.New(r =>
-			       		                            	{
-															r.AccountId = AccountId;
-			       		                            		r.BankAccountId = BankAccountId;
-			       		                            		if (!string.IsNullOrEmpty(ConsumerAccountData.BankAccountNumber))
-			       		                            			r.AccountNumber = ConsumerAccountData.BankAccountNumber;
-			       		                            	}),
-			       		RiskAddBankAccountZaCommand.New(r =>
-			       		                                	{
-																r.AccountId = AccountId;
-			       		                                		r.BankAccountId = BankAccountId;
-			       		                                		if (!string.IsNullOrEmpty(ConsumerAccountData.BankAccountNumber))
-			       		                                			r.AccountNumber = ConsumerAccountData.BankAccountNumber;
-			       		                                	}),
-			       		SaveEmploymentDetailsZaCommand.New(r =>
-			       		                                   	{
-																r.AccountId = AccountId;
-			       		                                   		r.EmployerName = ConsumerAccountData.EmployerName;
-			       		                                   		r.NextPayDate = ConsumerAccountData.NextPayDate;
-			       		                                   		r.Status = ConsumerAccountData.EmploymentStatus;
-			       		                                   	}),
-			       		VerifyMobilePhoneZaCommand.New(r =>
-			       		                               	{
-															r.AccountId = AccountId;
-			       		                               		r.VerificationId = MobilePhoneVerificationId;
-			       		                               		r.MobilePhone = ConsumerAccountData.MobilePhoneNumber;
-			       		                               	}),
-			       	};
+			yield return SaveSocialDetailsZaCommand.New(r =>
+			                                            	{
+			                                            		r.AccountId = AccountId;
+			                                            		r.Dependants = AccountData.NumberOfDependants;
+			                                            	});
+
+			yield return SavePasswordRecoveryDetailsZaCommand.New(r => r.AccountId = AccountId);
+
+			yield return SaveCustomerDetailsZaCommand.New(r =>
+			                                              	{
+			                                              		r.AccountId = AccountId;
+			                                              		r.Forename = AccountData.Forename;
+			                                              		r.MiddleName = AccountData.MiddleName;
+			                                              		r.Surname = AccountData.Surname;
+			                                              		r.Email = AccountData.Email;
+			                                              		r.NationalNumber = AccountData.NationalNumber;
+			                                              		r.DateOfBirth = AccountData.DateOfBirth;
+			                                              		r.Gender = AccountData.Gender;
+			                                              		r.MaidenName = AccountData.Gender == GenderEnum.Female
+			                                              		               	? AccountData.MaidenName
+			                                              		               	: null;
+			                                              		r.HomePhone = AccountData.HomePhoneNumber;
+			                                              	});
+
+			yield return RiskSaveCustomerDetailsZaCommand.New(r =>
+			                                                  	{
+			                                                  		r.AccountId = AccountId;
+			                                                  		r.Forename = AccountData.Forename;
+			                                                  		r.MiddleName = AccountData.MiddleName;
+			                                                  		r.Surname = AccountData.Surname;
+			                                                  		r.Email = AccountData.Email;
+			                                                  		r.DateOfBirth = AccountData.DateOfBirth;
+			                                                  		r.Gender = AccountData.Gender;
+			                                                  		r.MaidenName = AccountData.Gender == GenderEnum.Female
+			                                                  		               	? AccountData.MaidenName
+			                                                  		               	: null;
+			                                                  		r.HomePhone = AccountData.HomePhoneNumber;
+			                                                  		r.MobilePhone = AccountData.MobilePhoneNumber;
+			                                                  	});
+
+			yield return SaveCustomerAddressZaCommand.New(r =>
+			                                              	{
+			                                              		r.AccountId = AccountId;
+			                                              		r.HouseNumber = AccountData.HouseNumber;
+			                                              		r.HouseName = AccountData.HouseName;
+			                                              		r.Postcode = AccountData.Postcode;
+			                                              		r.Street = AccountData.Street;
+			                                              		r.Flat = AccountData.Flat;
+			                                              		r.District = AccountData.District;
+			                                              		r.Town = AccountData.Town;
+			                                              		r.County = AccountData.County;
+			                                              	});
+
+			yield return RiskSaveCustomerAddressZaCommand.New(r =>
+			                                                  	{
+			                                                  		r.AccountId = AccountId;
+			                                                  		r.HouseNumber = AccountData.HouseNumber;
+			                                                  		r.HouseName = AccountData.HouseName;
+			                                                  		r.Postcode = AccountData.Postcode;
+			                                                  		r.Street = AccountData.Street;
+			                                                  		r.Flat = AccountData.Flat;
+			                                                  		r.District = AccountData.District;
+			                                                  		r.Town = AccountData.Town;
+			                                                  		r.County = AccountData.County;
+			                                                  	});
+
+			yield return AddBankAccountZaCommand.New(r =>
+			                                         	{
+			                                         		r.AccountId = AccountId;
+			                                         		r.BankAccountId = BankAccountId;
+			                                         		if (!string.IsNullOrEmpty(AccountData.BankAccountNumber))
+			                                         			r.AccountNumber = AccountData.BankAccountNumber;
+			                                         	});
+
+			yield return RiskAddBankAccountZaCommand.New(r =>
+			                                             	{
+			                                             		r.AccountId = AccountId;
+			                                             		r.BankAccountId = BankAccountId;
+			                                             		if (!string.IsNullOrEmpty(AccountData.BankAccountNumber))
+			                                             			r.AccountNumber = AccountData.BankAccountNumber;
+			                                             	});
+
+			yield return SaveEmploymentDetailsZaCommand.New(r =>
+			                                                	{
+			                                                		r.AccountId = AccountId;
+			                                                		r.EmployerName = AccountData.EmployerName;
+			                                                		r.NextPayDate = AccountData.NextPayDate;
+			                                                		r.Status = AccountData.EmploymentStatus;
+			                                                	});
+
+			yield return VerifyMobilePhoneZaCommand.New(r =>
+			                                            	{
+			                                            		r.AccountId = AccountId;
+			                                            		r.VerificationId = PrimaryPhoneVerificationId;
+			                                            		r.MobilePhone = AccountData.MobilePhoneNumber;
+			                                            	});
 		}
 
 		protected override void CompletePhoneVerification(){}

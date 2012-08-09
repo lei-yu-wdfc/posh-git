@@ -27,7 +27,7 @@ namespace Wonga.QA.Framework.Builders.Consumer.Uk
 			yield return SaveSocialDetailsUkCommand.New(r =>
 			                                            	{
 			                                            		r.AccountId = AccountId;
-																r.Dependants = ConsumerAccountData.NumberOfDependants;
+																r.Dependants = AccountData.NumberOfDependants;
 			                                            	});
 
 			yield return SavePasswordRecoveryDetailsUkCommand.New(r => r.AccountId = AccountId);
@@ -35,114 +35,114 @@ namespace Wonga.QA.Framework.Builders.Consumer.Uk
 			yield return SaveCustomerDetailsUkCommand.New(r =>
 			                                              	{
 			                                              		r.AccountId = AccountId;
-																r.Forename = ConsumerAccountData.Forename;
-																r.MiddleName = ConsumerAccountData.MiddleName;
-																r.Surname = ConsumerAccountData.Surname;
-																r.Email = ConsumerAccountData.Email;
-																r.DateOfBirth = ConsumerAccountData.DateOfBirth;
-																r.HomePhone = ConsumerAccountData.HomePhoneNumber;
+																r.Forename = AccountData.Forename;
+																r.MiddleName = AccountData.MiddleName;
+																r.Surname = AccountData.Surname;
+																r.Email = AccountData.Email;
+																r.DateOfBirth = AccountData.DateOfBirth;
+																r.HomePhone = AccountData.HomePhoneNumber;
 			                                              	});
 
 			yield return RiskSaveCustomerDetailsUkCommand.New(r =>
 			                                                  	{
 			                                                  		r.AccountId = AccountId;
-			                                                  		r.Forename = ConsumerAccountData.Forename;
-			                                                  		r.MiddleName = ConsumerAccountData.MiddleName;
-			                                                  		r.Surname = ConsumerAccountData.Surname;
-																	r.Email = ConsumerAccountData.Email;
-			                                                  		r.DateOfBirth = ConsumerAccountData.DateOfBirth;
-			                                                  		r.MobilePhone = ConsumerAccountData.MobilePhoneNumber;
-			                                                  		r.HomePhone = ConsumerAccountData.HomePhoneNumber;
+			                                                  		r.Forename = AccountData.Forename;
+			                                                  		r.MiddleName = AccountData.MiddleName;
+			                                                  		r.Surname = AccountData.Surname;
+																	r.Email = AccountData.Email;
+			                                                  		r.DateOfBirth = AccountData.DateOfBirth;
+			                                                  		r.MobilePhone = AccountData.MobilePhoneNumber;
+			                                                  		r.HomePhone = AccountData.HomePhoneNumber;
 			                                                  	});
 
 			yield return SaveCustomerAddressUkCommand.New(r =>
 			                                              	{
 			                                              		r.AccountId = AccountId;
-																r.HouseNumber = ConsumerAccountData.HouseNumber;
-																r.HouseName = ConsumerAccountData.HouseName;
-																r.Postcode = ConsumerAccountData.Postcode;
-																r.Street = ConsumerAccountData.Street;
-																r.Flat = ConsumerAccountData.Flat;
-																r.District = ConsumerAccountData.District;
-																r.Town = ConsumerAccountData.Town;
-																r.County = ConsumerAccountData.County;
+																r.HouseNumber = AccountData.HouseNumber;
+																r.HouseName = AccountData.HouseName;
+																r.Postcode = AccountData.Postcode;
+																r.Street = AccountData.Street;
+																r.Flat = AccountData.Flat;
+																r.District = AccountData.District;
+																r.Town = AccountData.Town;
+																r.County = AccountData.County;
 			                                              	});
 
 			yield return RiskSaveCustomerAddressUkCommand.New(r =>
 			                                                  	{
 			                                                  		r.AccountId = AccountId;
-																	r.HouseNumber = ConsumerAccountData.HouseNumber;
-																	r.HouseName = ConsumerAccountData.HouseName;
-																	r.Postcode = ConsumerAccountData.Postcode;
-																	r.Street = ConsumerAccountData.Street;
-																	r.Flat = ConsumerAccountData.Flat;
-																	r.District = ConsumerAccountData.District;
-																	r.Town = ConsumerAccountData.Town;
-																	r.County = ConsumerAccountData.County;
+																	r.HouseNumber = AccountData.HouseNumber;
+																	r.HouseName = AccountData.HouseName;
+																	r.Postcode = AccountData.Postcode;
+																	r.Street = AccountData.Street;
+																	r.Flat = AccountData.Flat;
+																	r.District = AccountData.District;
+																	r.Town = AccountData.Town;
+																	r.County = AccountData.County;
 			                                                  	});
 
 			yield return AddBankAccountUkCommand.New(r =>
 			                                         	{
 			                                         		r.AccountId = AccountId;
 			                                         		r.BankAccountId = BankAccountId;
-															if (!string.IsNullOrEmpty(ConsumerAccountData.BankAccountNumber))
-																r.AccountNumber = ConsumerAccountData.BankAccountNumber;
-															if (!string.IsNullOrEmpty(ConsumerAccountData.BankCode))
-																r.BankCode = ConsumerAccountData.BankCode;
+															if (!string.IsNullOrEmpty(AccountData.BankAccountNumber))
+																r.AccountNumber = AccountData.BankAccountNumber;
+															if (!string.IsNullOrEmpty(AccountData.BankCode))
+																r.BankCode = AccountData.BankCode;
 			                                         	});
 
 			yield return RiskAddBankAccountUkCommand.New(r =>
 			                                             	{
 			                                             		r.AccountId = AccountId;
 			                                             		r.BankAccountId = BankAccountId;
-			                                             		if (!string.IsNullOrEmpty(ConsumerAccountData.BankAccountNumber))
+			                                             		if (!string.IsNullOrEmpty(AccountData.BankAccountNumber))
 			                                             		{
-			                                             			r.AccountNumber = ConsumerAccountData.BankAccountNumber;
+			                                             			r.AccountNumber = AccountData.BankAccountNumber;
 			                                             		}
 			                                             	});
 
 			yield return AddPaymentCardCommand.New(r =>
 			                                       	{
 			                                       		r.AccountId = AccountId;
-			                                       		r.Number = ConsumerAccountData.PaymentCardNumber;
-			                                       		r.HolderName = String.Format("{0} {1}", ConsumerAccountData.Forename, ConsumerAccountData.Surname);
+			                                       		r.Number = AccountData.PaymentCardNumber;
+			                                       		r.HolderName = String.Format("{0} {1}", AccountData.Forename, AccountData.Surname);
 			                                       		r.IsPrimary = true;
 			                                       		r.ExpiryDate = DateTime.Today.AddYears(2).ToPaymentCardDate();
-			                                       		r.SecurityCode = ConsumerAccountData.PaymentCardSecurityCode;
-			                                       		r.CardType = ConsumerAccountData.PaymentCardType;
+			                                       		r.SecurityCode = AccountData.PaymentCardSecurityCode;
+			                                       		r.CardType = AccountData.PaymentCardType;
 			                                       	});
 
 			yield return RiskAddPaymentCardCommand.New(r =>
 			                                           	{
 			                                           		r.AccountId = AccountId;
-			                                           		r.Number = ConsumerAccountData.PaymentCardNumber;
-			                                           		r.HolderName = String.Format("{0} {1}", ConsumerAccountData.Forename, ConsumerAccountData.Surname);
+			                                           		r.Number = AccountData.PaymentCardNumber;
+			                                           		r.HolderName = String.Format("{0} {1}", AccountData.Forename, AccountData.Surname);
 			                                           		r.ExpiryDate = DateTime.Today.AddYears(2).ToPaymentCardDate();
-			                                           		r.SecurityCode = ConsumerAccountData.PaymentCardSecurityCode;
-			                                           		r.CardType = ConsumerAccountData.PaymentCardType;
+			                                           		r.SecurityCode = AccountData.PaymentCardSecurityCode;
+			                                           		r.CardType = AccountData.PaymentCardType;
 			                                           	});
 
 			yield return SaveEmploymentDetailsUkCommand.New(r =>
 			                                                	{
 			                                                		r.AccountId = AccountId;
-																	r.EmployerName = ConsumerAccountData.EmployerName;
-																	r.Status = ConsumerAccountData.EmploymentStatus;
-																	r.NetMonthlyIncome = ConsumerAccountData.NetMonthlyIncome;
+																	r.EmployerName = AccountData.EmployerName;
+																	r.Status = AccountData.EmploymentStatus;
+																	r.NetMonthlyIncome = AccountData.NetMonthlyIncome;
 			                                                	});
 
 			yield return VerifyMobilePhoneUkCommand.New(r =>
 			                                            	{
 			                                            		r.AccountId = AccountId;
-			                                            		r.VerificationId = MobilePhoneVerificationId;
-			                                            		r.MobilePhone = ConsumerAccountData.MobilePhoneNumber;
+			                                            		r.VerificationId = PrimaryPhoneVerificationId;
+			                                            		r.MobilePhone = AccountData.MobilePhoneNumber;
 			                                            	});
 
-			yield return CompleteMobilePhoneVerificationCommand.New(r => r.VerificationId = MobilePhoneVerificationId);
+			yield return CompleteMobilePhoneVerificationCommand.New(r => r.VerificationId = PrimaryPhoneVerificationId);
 
 			yield return RiskAddMobilePhoneUkCommand.New(r =>
 			                                             	{
 			                                             		r.AccountId = AccountId;
-			                                             		r.MobilePhone = ConsumerAccountData.MobilePhoneNumber;
+			                                             		r.MobilePhone = AccountData.MobilePhoneNumber;
 			                                             	});
 		}
 		
