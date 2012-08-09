@@ -13,7 +13,7 @@ using Wonga.QA.Framework.Api;
 namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
 {
     [Parallelizable(TestScope.All), AUT(AUT.Uk)]
-    public class LnJourneyTests : UiTest
+    public class UkLnJourneyTests : UiTest
     {
         [Test, JIRA("UK-1533", "UK-1902", "UKWEB-914"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
         [Description("UI Ln Journey after L0 is created via API. Mobile phone number is updated during Ln")]
@@ -160,6 +160,31 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
             {
                 Assert.IsTrue(exception.Message.Contains(ContentMap.Get.ApplyPage.PinErrorMessage));
             }
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("QA-347"), Pending("Functional is not ready")]
+        public void LnCustomerWithoutLiveLoanPassLnWithNewCard()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            string name = Get.GetName();
+            string surname = Get.RandomString(10);
+            Customer customer = CustomerBuilder
+                .New()
+                .WithEmailAddress(email)
+                .WithForename(name)
+                .WithSurname(surname)
+                .Build();
+            Application application = ApplicationBuilder
+                .New(customer)
+                .Build();
+            application.RepayOnDueDate();
+            var mySummaryPage = loginPage.LoginAs(email);
+            var myPayments = mySummaryPage.Navigation.MyPaymentDetailsButtonClick();
+            myPayments.AddVisaElectronCard("4222 2222 2222 2222");
+            var journey = JourneyFactory.GetLnJourney(Client.Home());
+            var applyPage = journey.Teleport<MySummaryPage>() as MySummaryPage;
+
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.Elements;
@@ -15,6 +16,14 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public MyAccountNavigationElement Navigation { get; set; }
 
         private IWebElement _addBankAccountButton;
+        private IWebElement _addCardButton;
+        private IWebElement _editCardType;
+        private IWebElement _editCardNumber;
+        private IWebElement _editCardName;
+        private IWebElement _editCardExpiryDateMonth;
+        private IWebElement _editCardExpiryDateYear;
+        private IWebElement _editCardSecurity;
+        private IWebElement _editSubmit;
         private IWebElement _popupBankName;
         private IWebElement _popupBankAccountType;
         private IWebElement _popupAccountNumber;
@@ -27,12 +36,14 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public MyPaymentsPage(UiClient client)
             : base(client)
         {
-
+            _addCardButton = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.AddCardButton));
             switch (Config.AUT)
             {
+
                 case AUT.Za:
                 case AUT.Ca:  //TODO find out what xpath for button on Ca
                 case AUT.Wb:
+                case AUT.Uk:
                     Navigation = new MyAccountNavigationElement(this);
                     break;
             }
@@ -77,8 +88,30 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _popupLengthOfTime.SelectOption(lenghtOfTime);
             _popupAddBankAccountButton.Click();
             Console.WriteLine("popup 1 is closed");
-            
-            
+        }
+
+        public void AddVisaElectronCard(string cardNumber, string cardName = "NewCard", string mounth = "Jun", string year = "2014", string security = "000")
+        {
+            _addCardButton.Click();
+            Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.AddCardPopupHeader)));
+            _editCardType =Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.EditCardType));
+            _editCardNumber = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.EditCardNumber));
+            _editCardName = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.EditCardName));
+            _editCardExpiryDateMonth = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.EditCardExpiryDateMonth));
+            _editCardExpiryDateYear = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.EditCardExpiryDateYear));
+            _editCardSecurity = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.EditCardSecurity));
+            _editSubmit = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.EditSubmit));
+
+            _editCardType.SelectOption("Visa Electron");
+            _editCardNumber.SendKeys(cardNumber);
+            _editCardName.SendKeys(cardName);
+            _editCardExpiryDateMonth.SelectOption(mounth);
+            _editCardExpiryDateYear.SelectOption(year);
+            _editCardSecurity.SendKeys(security);
+            _editSubmit.Click();
+            Do.While(()=> Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.AddCardPopupHeader)));
+            _editSubmit = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.EditSubmit));
+            _editSubmit.Click();
         }
 
         public bool WaitBankAccountPopupClose()
