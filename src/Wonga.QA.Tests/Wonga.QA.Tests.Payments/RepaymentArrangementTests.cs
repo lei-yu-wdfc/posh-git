@@ -5,9 +5,11 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db;
+using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Msmq.Enums.Common.Iso;
 using Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Messages;
 using Wonga.QA.Tests.Core;
+using Wonga.QA.Tests.Payments.Helpers;
 using AddPaymentCardCommand = Wonga.QA.Framework.Api.Requests.Payments.Commands.AddPaymentCardCommand;
 using CreateRepaymentArrangementCommand = Wonga.QA.Framework.Api.Requests.Payments.Commands.CreateRepaymentArrangementCommand;
 using PaymentFrequencyEnum = Wonga.QA.Framework.Api.Enums.PaymentFrequencyEnum;
@@ -16,33 +18,77 @@ namespace Wonga.QA.Tests.Payments
 {
     [Parallelizable(TestScope.All)]
 	public class RepaymentArrangementTests
-	{
-		[Test, AUT(AUT.Uk), Owner(Owner.AlexSloat)]
+    {
+        private bool _repaymentArrangementEnabled;
+        private ArrangementDetail[] _arrangementDetails;
+        private Application _application;
+
+        #region setup#
+
+        [FixtureSetUp]
+        public void FixtureSetup()
+        {
+            _repaymentArrangementEnabled = ConfigurationFunctions.GetRepaymentArrangementEnabled();
+            ConfigurationFunctions.SetRepaymentArrangementEnabled(true);
+        }
+
+        [FixtureTearDown]
+        public void FixtureTearDown()
+        {
+            ConfigurationFunctions.SetRepaymentArrangementEnabled(_repaymentArrangementEnabled);
+        }
+
+        #endregion setup#
+
+        [Test, AUT(AUT.Uk), Owner(Owner.AlexSloat)]
 		public void CustomerServiceSetRepaymentArrangementTest()
 		{
 			Customer customer = CustomerBuilder.New().Build();
-			Application application = ApplicationBuilder.New(customer).Build();
-			
-			application.PutIntoArrears();
+            _application = ApplicationBuilder.New(customer).Build();
+
+            _arrangementDetails = new[]
+		                             {
+		                                 new ArrangementDetail
+		                                     {Amount = 49, Currency = CurrencyCodeIso4217Enum.GBP, DueDate = DateTime.Today},
+		                                 new ArrangementDetail
+		                                     {
+		                                         Amount = 51,
+		                                         Currency = CurrencyCodeIso4217Enum.GBP,
+		                                         DueDate = DateTime.Today.AddDays(7)
+		                                     }
+		                             };
+
+            _application.PutIntoArrears();
 
 			Drive.Msmq.Payments.Send(new CreateExtendedRepaymentArrangement
 			                          	{
 			                          		AccountId = customer.Id,
-											ApplicationId = application.Id,
+                                            ApplicationId = _application.Id,
 											EffectiveBalance = 100,
 											RepaymentAmount = 100,
-											RepaymentDetails = new[]
-											                   	{
-											                   		new ArrangementDetail{Amount = 49, Currency = CurrencyCodeIso4217Enum.GBP, DueDate = DateTime.Today},
-																	new ArrangementDetail{Amount = 51, Currency = CurrencyCodeIso4217Enum.GBP, DueDate = DateTime.Today.AddDays(7)}
-											                   	}
+                                            RepaymentDetails = _arrangementDetails
 			                          	});
 
-			var dbApplication = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
-			Thread.Sleep(10000);
-			var repaymentArrangement = Drive.Db.Payments.RepaymentArrangements.Single(x => x.ApplicationId == dbApplication.ApplicationId);
-			Assert.AreEqual(2, repaymentArrangement.RepaymentArrangementDetails.Count);
+            var repaymentArrangement = GetRepaymentArrangementEntity();
+		    Assert.AreEqual(2, repaymentArrangement.RepaymentArrangementDetails.Count);
 		}
+
+        [Test, AUT(AUT.Uk), JIRA("UKOPS-49"), Owner(Owner.ShaneMcHugh), DependsOn("CustomerServiceSetRepaymentArrangementTest")]
+		public void CancelRepaymentArrangemntAfterRepaymentToday()
+		{
+            var repaymentArrangement = GetRepaymentArrangementEntity();
+            var a = _arrangementDetails[0].Amount;
+            var d = _arrangementDetails[0].DueDate;
+            Assert.IsNotNull(repaymentArrangement.RepaymentArrangementDetails.First(ra => ra.Amount == a && ra.DueDate == d));
+
+            _application.CancelRepaymentArrangement();
+		}
+
+        [Test, AUT(AUT.Uk), JIRA("UKOPS-49"), Owner(Owner.ShaneMcHugh), Pending("UKOPS-822")]
+        public void CancelRepaymentArrangementWhenRepaymentArrangementIsBroken()
+        {
+
+        }
 
         [Test, AUT(AUT.Uk), JIRA("UK-725"), Owner(Owner.AlexSloat)]
 		public void CreateRepaymentArrangementTest()
@@ -132,12 +178,35 @@ namespace Wonga.QA.Tests.Payments
 			Assert.IsFalse(scheduledPayment.Success.Value);
 		}
 
-		//Needed for serialization in CreateExtendedRepaymentArrangementCommand
+        [Test, AUT(AUT.Uk), JIRA("UKOPS-49"), Owner(Owner.ShaneMcHugh)]
+        public void CancelRepaymentArrangementTest()
+        {
+            Customer customer = CustomerBuilder.New().Build();
+            Application application = ApplicationBuilder.New(customer).Build().PutIntoArrears(20);
+
+            application.CreateRepaymentArrangement();
+            application.CancelRepaymentArrangement();
+        }
+
+        #region Helpers#
+
+        //Needed for serialization in CreateExtendedRepaymentArrangementCommand
 		private class ArrangementDetail
 		{
 			public decimal Amount { get; set; }
 			public CurrencyCodeIso4217Enum Currency { get; set; }
 			public DateTime DueDate { get; set; }
 		}
-	}
+
+        private RepaymentArrangementEntity GetRepaymentArrangementEntity()
+        {
+            var dbApplication = Drive.Db.Payments.Applications.Single(a => a.ExternalId == _application.Id);
+            Thread.Sleep(10000);
+            var repaymentArrangement =
+                Drive.Db.Payments.RepaymentArrangements.Single(x => x.ApplicationId == dbApplication.ApplicationId);
+            return repaymentArrangement;
+        }
+
+        #endregion helpers#
+    }
 }

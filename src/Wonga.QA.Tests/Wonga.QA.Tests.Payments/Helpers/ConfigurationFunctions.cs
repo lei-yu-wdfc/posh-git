@@ -13,6 +13,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
         private const string DelayBeforeApplicationClosedInMinutes = "Payments.DelayBeforeApplicationClosedInMinutes";
         private const string VariableInterestRateEnabled = "Payments.VariableInterestRateEnabled";
         public const string BankGateWayIsTestMode = "BankGateway.IsTestMode";
+        public const string RepaymentArrangementEnabled = "Payments.RepaymentArrangementEnabled";
 
 		public static void SetupQaUtcNowOverride(DateTime now)
 		{
@@ -65,6 +66,27 @@ namespace Wonga.QA.Tests.Payments.Helpers
             var bgw = db.Ops.ServiceConfigurations.Single(bg => bg.Key == BankGateWayIsTestMode);
 
             return bool.Parse(bgw.Value);
+        }
+
+        public static Boolean GetRepaymentArrangementEnabled()
+        {
+            var db = new DbDriver();
+            var bgw = db.Ops.ServiceConfigurations.Single(bg => bg.Key == RepaymentArrangementEnabled);
+
+            return bool.Parse(bgw.Value);
+        }
+
+        public static void SetRepaymentArrangementEnabled(Boolean value)
+        {
+            var db = new DbDriver();
+            var rae = db.Ops.ServiceConfigurations.Single(ra => ra.Key == RepaymentArrangementEnabled);
+            var dbValue = rae.Value;
+            var wantedValue = value.ToString().ToLower();
+            if (dbValue != wantedValue)
+            {
+                rae.Value = wantedValue;
+                db.Ops.SubmitChanges();
+            }
         }
 
         // Move to configurations functions
