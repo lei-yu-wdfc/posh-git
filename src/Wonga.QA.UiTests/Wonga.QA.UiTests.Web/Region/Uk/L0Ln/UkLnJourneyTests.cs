@@ -13,7 +13,7 @@ using Wonga.QA.Framework.Api;
 namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
 {
     [Parallelizable(TestScope.All), AUT(AUT.Uk)]
-    public class LnJourneyTests : UiTest
+    public class UkLnJourneyTests : UiTest
     {
         [Test, JIRA("UK-1533", "UK-1902", "UKWEB-914"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
         [Description("UI Ln Journey after L0 is created via API. Mobile phone number is updated during Ln")]
