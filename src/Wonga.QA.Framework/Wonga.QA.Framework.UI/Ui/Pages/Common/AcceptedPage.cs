@@ -3,6 +3,7 @@ using System.Threading;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.Ui.Elements;
+using Wonga.QA.Framework.UI.Ui.Validators;
 using Wonga.QA.Framework.UI.UiElements.Pages.Interfaces;
 using Wonga.QA.Framework.UI.Mappings;
 using Wonga.QA.Framework.UI;
@@ -43,8 +44,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public String Initials3 { set { _initials3.SendValue(value); } }
         public String Signature { set{_signature.SendValue(value);} }
         public String DateOfAgreement { set{_signature.SendValue(value);} }
-       
-        public AcceptedPage(UiClient client) : base(client)
+
+        public AcceptedPage(UiClient client, Validator validator = null) : base(client, validator)
         {            
              switch(Config.AUT)
             {
@@ -285,8 +286,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public AcceptedPage ClickAcceptGetError()
         {
+            Validator validator = new ValidatorBuilder().Default(Client).WithoutErrorsCheck().Build();
             _acceptButton.Click();
-            return new AcceptedPage(Client);
+            //return new AcceptedPage();
+            return new AcceptedPage(Client, validator);
         }
 
         public string GetErrorText()
