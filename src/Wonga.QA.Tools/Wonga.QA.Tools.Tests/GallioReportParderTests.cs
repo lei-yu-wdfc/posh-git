@@ -45,14 +45,14 @@ namespace Wonga.QA.Tools.Tests
         public void GetTestsWithoutTestFixturesReturnsCorrectResults()
         {
             var testReport = new GallioReportParser(_fullReportDoc).GetTestReport();
-            var testsOnly = testReport.GetTestsWithoutTestFixtures();
+            var testsOnly = testReport.GetTests();
         }
 
         [Test]
         public void CanStoreMultipleMetadataOfTheSameKey()
         {
             var testReport = new GallioReportParser(_fullReportDoc).GetTestReport();
-            testReport.GetTestsWithoutTestFixtures().Any(x => x.Metadata.ContainsKey("Aut") && x.Metadata["Aut"].Count > 1);
+            testReport.GetTests().Any(x => x.Metadata.ContainsKey("Aut") && x.Metadata["Aut"].Count > 1);
         }
     }
 }

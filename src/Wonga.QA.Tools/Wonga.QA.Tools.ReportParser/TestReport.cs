@@ -15,15 +15,17 @@ namespace Wonga.QA.Tools.ReportParser
             Statistics = new TestStatistics();
         }
 
-        public List<TestResult> GetTestsWithoutTestFixtures(List<TestResult> coll = null)
+        public List<TestResult> GetTests(List<TestResult> coll = null, bool includeTestFixtures = false)
         {
             List<TestResult> result = new List<TestResult>();
             if(coll == null)
                 coll = Results;
-            result.AddRange(coll.Where(x => x.TestKind == TestKind.Test));
+            if(!includeTestFixtures)
+                result.AddRange(coll.Where(x => x.TestKind == TestKind.Test));
+            else result.AddRange(coll);
             var children = coll.SelectMany(x => x.Children).ToList();
             if(children.Count > 0)
-                result.AddRange(GetTestsWithoutTestFixtures(children));
+                result.AddRange(GetTests(children, includeTestFixtures));
             return result.Distinct().ToList();
         }
     }

@@ -11,6 +11,7 @@ namespace Wonga.QA.Tools.ReportParser
         Failed,
         Ignored,
         Pending,
+        Canceled,
         Inconclusive,
         UnknownOutcome
     }
@@ -33,6 +34,8 @@ namespace Wonga.QA.Tools.ReportParser
         public string WarningsTrace { get; set; }
         public int AssertCount { get; set; }
         public double Duration { get; set; }
+        public TestResult Parent { get; set; }
+
         public Dictionary<string, List<string>> Metadata { get; set; }
         public TestKind TestKind
         {
@@ -94,6 +97,12 @@ namespace Wonga.QA.Tools.ReportParser
             List<string> testKindText = new List<string>();
             Metadata.TryGetValue("TestKind", out testKindText);
             return testKindText;
+        }
+
+        public void AddChild(TestResult testResult)
+        {
+            testResult.Parent = this;
+            Children.Add(testResult);
         }
     }
 }

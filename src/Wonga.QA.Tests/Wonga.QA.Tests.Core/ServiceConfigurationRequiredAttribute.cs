@@ -29,24 +29,22 @@ namespace Wonga.QA.Tests.Core
             string serviceConfigurationKey = Get.EnumToString(_serviceConfigurationKey);
             scope.TestBuilder.AddMetadata(serviceConfigurationKey, _expectedValue);
 
-            scope.TestBuilder.TestActions.BeforeTestChain.After(state =>
+            scope.TestBuilder.TestActions.InitializeTestChain.After(state =>
             {
                 var setting = Drive.Data.Ops.GetServiceConfiguration<string>(serviceConfigurationKey);
-
                 if (setting == null)
                 {
                     if (_expectedValue != null)
-                    
                         throw new SilentTestException(TestOutcome.Canceled,
-                            string.Format("The service configuration required for key {0} is not found",
-                                                      serviceConfigurationKey));                 
+                                                      string.Format(
+                                                          "Required service configuration of '{0}' was not found",
+                                                          serviceConfigurationKey));
                 }
                 else
                 {
                     if (setting != _expectedValue)
                         throw new SilentTestException(TestOutcome.Canceled,
-                             string.Format("The service configuration found for key {0} is not equal with the expected value. " +
-                                                          "The value found is {1}.The expected value is {2}.",
+                             string.Format("Required service configuration of '{0}' was found with value '{1}' and did not match the required '{2}'",
                                                           serviceConfigurationKey,setting, _expectedValue));
                 }
             });

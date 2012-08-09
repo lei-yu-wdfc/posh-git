@@ -14,7 +14,7 @@ namespace Wonga.QA.Tools.ReportConverter
         public string FormatReport(TestReport testReport)
         {
             string output = "";
-            foreach (var test in testReport.GetTestsWithoutTestFixtures())
+            foreach (var test in testReport.GetTests())
                     output += string.Format("{0},{1},{2}\n\r", test.Name, test.Outcome.ToString(),
                                         test.FullName);
             return output;

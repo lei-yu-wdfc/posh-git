@@ -19,12 +19,13 @@ namespace Wonga.QA.Tools.ReportConverter
             string passedTestOutput = "";
             string ignoredTestOutput = "";
             string pendingTestOutput = "";
-
-            var tests = testReport.GetTestsWithoutTestFixtures();
+            string canceledTestOutput = "";
+            var tests = testReport.GetTests();
             var passedTests = tests.Where(x => x.Outcome == TestOutcome.Passed);
             var failedTests = tests.Where(x => x.Outcome == TestOutcome.Failed);
             var pendingTests = tests.Where(x => x.Outcome == TestOutcome.Pending);
             var ignoredTests = tests.Where(x => x.Outcome == TestOutcome.Ignored);
+            var canceledTests = testReport.GetTests(includeTestFixtures: true).Where(x => x.Outcome == TestOutcome.Canceled && !x.Children.Any(chi => chi.Outcome == TestOutcome.Canceled));
 
             foreach (var failedTest in failedTests)
                 failedTestOutput += ApplyTemplate(GetTemplate(failedTest.Outcome), failedTest);
@@ -38,19 +39,24 @@ namespace Wonga.QA.Tools.ReportConverter
             foreach (var pendingTest in pendingTests)
                 pendingTestOutput += ApplyTemplate(GetTemplate(pendingTest.Outcome), pendingTest);
 
+            foreach (var test in canceledTests)
+                canceledTestOutput += ApplyTemplate(GetTemplate(test.Outcome), test);
+
             ApplyFunFacts(tests, ref testHtml);
             return 
                 testHtml.Replace("%%FAILEDTESTS%%", failedTestOutput)
                 .Replace("%%PASSEDTESTS%%", passedTestOutput)
                 .Replace("%%PENDINGTESTS%%", pendingTestOutput)
                 .Replace("%%IGNOREDTESTS%%", ignoredTestOutput)
-                
+                .Replace("%%CANCELEDTESTS%%", canceledTestOutput)
+
                 .Replace("%%TOTALALL%%", testReport.Statistics.TestCount.ToString())
                 .Replace("%%TOTALRUN%%", testReport.Statistics.RunCount.ToString())
                 .Replace("%%TOTALPASSED%%", testReport.Statistics.PassedCount.ToString())
                 .Replace("%%TOTALFAILED%%", testReport.Statistics.FailedCount.ToString())
                 .Replace("%%TOTALIGNORED%%", testReport.Statistics.IgnoredCount.ToString())
                 .Replace("%%TOTALPENDING%%", testReport.Statistics.PendingCount.ToString())
+                .Replace("%%TOTALCANCELED%%", testReport.Statistics.CanceledCount.ToString())
                 .Replace("%%TOTALINCONCLUSIVE%%", testReport.Statistics.InconclusiveCount.ToString())
                 .Replace("%%TOTALDURATION%%", TimeSpan.FromSeconds(testReport.Statistics.Duration).ToString() );
         }
@@ -69,9 +75,12 @@ namespace Wonga.QA.Tools.ReportConverter
         {
             var stackTraceText = HttpUtility.HtmlEncode(testNode.StackTrace);
             var debugTraceText = HttpUtility.HtmlEncode(testNode.DebugTrace);
+            var warningsTraceText = HttpUtility.HtmlEncode(testNode.WarningsTrace);
             var result = testTemplate.Replace("%%TESTNAME%%", testNode.FullName)
                 .Replace("%%DEBUGTRACE%%", debugTraceText)
-                .Replace("%%STACKTRACE%%", stackTraceText);
+                .Replace("%%STACKTRACE%%", stackTraceText)
+                .Replace("%%WARNINGSTRACE%%", warningsTraceText);
+                
             result = ApplyInfo(result, testNode);
             return result;
         }

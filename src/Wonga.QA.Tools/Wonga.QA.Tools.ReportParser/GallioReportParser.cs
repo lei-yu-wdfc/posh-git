@@ -49,6 +49,7 @@ namespace Wonga.QA.Tools.ReportParser
             statistics.FailedCount = int.Parse(statNode.Attribute("failedCount").Value);
             statistics.IgnoredCount = GetCount("ignored", statNode);
             statistics.PendingCount = GetCount("pending", statNode);
+            statistics.CanceledCount = GetCount("canceled", statNode);
             statistics.InconclusiveCount = int.Parse(statNode.Attribute("inconclusiveCount").Value);
             statistics.RunCount = int.Parse(statNode.Attribute("runCount").Value);
             statistics.StepCount = int.Parse(statNode.Attribute("stepCount").Value);
@@ -64,7 +65,7 @@ namespace Wonga.QA.Tools.ReportParser
                                            outcomeSummary.Descendants(_ns + "outcome").Any(
                                                outcome =>
                                                outcome.Attribute("status") != null &&
-                                               outcome.Attribute("status").Value == "skipped" &&
+                                               (outcome.Attribute("status").Value == "skipped" || outcome.Attribute("status").Value == "inconclusive") &&
                                                outcome.Attribute("category") != null &&
                                                outcome.Attribute("category").Value == status)
                                        select outcomeSummary).FirstOrDefault();
@@ -97,7 +98,7 @@ namespace Wonga.QA.Tools.ReportParser
 
             var childrenTests = test.Elements(_ns + "children").Elements(_ns + "test");
             foreach(var childTest in childrenTests)
-                testResult.Children.Add(GetTest(childTest));
+                testResult.AddChild(GetTest(childTest));
             return testResult;
         }
 

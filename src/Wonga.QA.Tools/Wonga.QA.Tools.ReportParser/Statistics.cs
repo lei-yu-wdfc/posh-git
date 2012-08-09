@@ -22,6 +22,6 @@ namespace Wonga.QA.Tools.ReportParser
         public int IgnoredCount { get; set; }
         public int TestCount { get; set; }
         public int StepCount { get; set; }
-
+        public int CanceledCount { get; set; }
     }
 }
