@@ -85,7 +85,7 @@ namespace Wonga.QA.Framework
                 _accountPreferencesTab.FindAll(_accountPreferencesTab.AccountId == currentAccountId).Single().BankAccountsBase.ExternalId);
 		}
 
-		public Application RepayOnDueDate()
+		public virtual Application RepayOnDueDate()
 		{
             var application = _applicationsTab.FindAll(_applicationsTab.ExternalId == Id).Single();
 
