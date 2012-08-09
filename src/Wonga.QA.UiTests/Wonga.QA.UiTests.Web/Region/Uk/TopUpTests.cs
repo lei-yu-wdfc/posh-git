@@ -3,6 +3,7 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Requests.Payments.Queries;
+using Wonga.QA.Framework.Builders;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
 using System.Linq;
@@ -69,8 +70,8 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(30).Build();
 
-            var responseLimit = Drive.Api.Queries.Post(new GetFixedTermLoanTopupOfferQuery {AccountId = customer.Id});
-            int _amountMax = (int) Decimal.Parse(responseLimit.Values["AmountMax"].Single(), CultureInfo.InvariantCulture);
+            var responseLimit = Drive.Api.Queries.Post(new GetFixedTermLoanTopupOfferQuery { AccountId = customer.Id });
+            int _amountMax = (int)Decimal.Parse(responseLimit.Values["AmountMax"].Single(), CultureInfo.InvariantCulture);
             int _amountMin = 1;
 
             int randomAmount = _amountMin + (new Random()).Next(_amountMax - _amountMin);
@@ -78,13 +79,12 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
 
-            decimal topupAmountDec = (decimal) randomAmount;
+            decimal topupAmountDec = (decimal)randomAmount;
             var topupAmount = randomAmount.ToString();
 
             mySummaryPage.TopupSliders.HowMuch = topupAmount;
 
-            ApiResponse _response = Drive.Api.Queries.Post(new GetFixedTermLoanTopupCalculationQuery
-                                                               {ApplicationId = application.Id, TopupAmount = topupAmountDec});
+            ApiResponse _response = Drive.Api.Queries.Post(new GetFixedTermLoanTopupCalculationQuery { ApplicationId = application.Id, TopupAmount = topupAmountDec });
             var totalRepayable = _response.Values["TotalRepayable"].Single();
             var interestAndFees = _response.Values["InterestAndFeesAmount"].Single();
 
@@ -99,7 +99,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             requestPage.IsTopupRequestPageSliderReturningCorrrectValuesOnChange(application.Id.ToString());
 
             requestPage.SubmitButtonClick();
-            
+
             var processPage = new TopupProcessingPage(this.Client);
             var agreementPage = processPage.WaitForAgreementPage(Client);
 
@@ -116,11 +116,11 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Assert.Contains(dealDonePage.SucessMessage, topupAmount, "Success Message on Deal Done page does not contain Total Amount");
 
             dealDonePage.ContinueToMyAccount();
-            
+
             //Test my account summary page
             Assert.IsTrue(this.Client.Driver.Url.Contains("my-account"), "My Account page was not open");
         }
-    
+
         [Test, JIRA("UK-789"), MultipleAsserts]
         [Owner(Owner.StanDesyatnikov)]
         // Check on the Top Up Request page that
@@ -131,7 +131,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             string email = Get.RandomEmail();
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer).Build();
-            
+
             // *************************************************************************
             // Rewind application dates for 1 day (scenario 1)
             // *************************************************************************
@@ -140,11 +140,11 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
             // Log in and open MySummary page
             var mySummaryPage = Client.Login().LoginAs(email);
-            
+
             // Get expected Available Credit
             ApiResponse fixedTermLoanTopupOfferResponse = Drive.Api.Queries.Post(new GetFixedTermLoanTopupOfferQuery { AccountId = customer.Id });
-            string expectedAvailableCredit = (int.Parse(fixedTermLoanTopupOfferResponse.Values["AmountMax"].Single().Split('.')[0])).ToString("#"); 
-            
+            string expectedAvailableCredit = (int.Parse(fixedTermLoanTopupOfferResponse.Values["AmountMax"].Single().Split('.')[0])).ToString("#");
+
             // Compare expected Available Credit with actual values
             string actualIntroText = mySummaryPage.GetIntroText; // in Introduction Text
             string actualMaxAvailableCredit = mySummaryPage.GetMaxAvailableCredit; // near slide bars
@@ -172,28 +172,36 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
         [Test, JIRA("QA-340")]
         [Owner(Owner.PetrTarasenko)]
-        public  void TopUpExtraCashequalToChoosen()
+        public void TopUpExtraCashequalToChoosen()
         {
             string email = Get.RandomEmail();
 
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(30).Build();
             application.RewindApplicationDatesForDays(20);
-            
+
             var responseLimit = Drive.Api.Queries.Post(new GetFixedTermLoanTopupOfferQuery { AccountId = customer.Id });
             int _amountMax = (int)Decimal.Parse(responseLimit.Values["AmountMax"].Single(), CultureInfo.InvariantCulture);
             int _amountMin = 1;
-            
+
             int randomAmount = _amountMin + (new Random()).Next(_amountMax - _amountMin);
-            
+
             var topupAmount = randomAmount.ToString();
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
             mySummaryPage.TopupSliders.HowMuch = topupAmount;
-            var requestPage =mySummaryPage.TopupSliders.Apply();
+            var requestPage = mySummaryPage.TopupSliders.Apply();
             String[] s = requestPage.Sliders.GetTopUpAmount.Remove(0, 1).Split('.');
             Assert.AreEqual(topupAmount, requestPage.Sliders.HowMuch);
             Assert.AreEqual(topupAmount, s[0]);
-          }
+        }
+
+        [Test]
+        public void PopUpBuilderTests()
+        {
+            var customer = CustomerBuilder.New().Build();
+            var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(30).Build();
+            var topup = TopUpBuilder.New().WithCustomer(customer).WithApplication(application).Build();
+        }
     }
 }
