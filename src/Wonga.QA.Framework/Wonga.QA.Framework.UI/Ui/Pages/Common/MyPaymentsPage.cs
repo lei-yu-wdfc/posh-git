@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.Elements;
@@ -92,7 +93,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public void AddVisaElectronCard(string cardNumber, string cardName = "NewCard", string mounth = "Jun", string year = "2014", string security = "000")
         {
             _addCardButton.Click();
-            _editCardType = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.EditCardType)));
+            Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.AddCardPopupHeader)));
+            _editCardType =Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.EditCardType));
             _editCardNumber = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.EditCardNumber));
             _editCardName = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.EditCardName));
             _editCardExpiryDateMonth = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.EditCardExpiryDateMonth));
@@ -106,6 +108,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _editCardExpiryDateMonth.SelectOption(mounth);
             _editCardExpiryDateYear.SelectOption(year);
             _editCardSecurity.SendKeys(security);
+            _editSubmit.Click();
+            Do.While(()=> Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.AddCardPopupHeader)));
+            _editSubmit = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.EditSubmit));
             _editSubmit.Click();
         }
 

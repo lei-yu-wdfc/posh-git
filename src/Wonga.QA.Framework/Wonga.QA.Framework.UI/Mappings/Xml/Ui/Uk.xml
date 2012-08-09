@@ -89,7 +89,7 @@
 
   <MyAccountNavigationSection>
     <MySummary>.menu-mlid-2869</MySummary>
-    <MyPaymentsDetails>.menu-mlid-2870</MyPaymentsDetails>
+    <MyPaymentsDetails>.leaf.last.menu-mlid-2871 a</MyPaymentsDetails>
     <MyPersonalDetails>.menu-mlid-2871</MyPersonalDetails>
     <MyPrepaidCardPageDetails>.menu-mlid-9403</MyPrepaidCardPageDetails>
   </MyAccountNavigationSection>
@@ -461,14 +461,15 @@
     <ButtonNext>#edit-next.form-submit</ButtonNext>
   </FARepaymentPlan>  
   <MyPaymentsPage>
-    <AddCardButton>#cards div + div a</AddCardButton>
+    <AddCardButton>.add-card a</AddCardButton>
     <EditCardType>#edit-card-type</EditCardType>
     <EditCardNumber>#edit-card-number</EditCardNumber>
     <EditCardName>#edit-card-name</EditCardName>
     <EditCardExpiryDateMonth>#edit-card-expiry-date-month</EditCardExpiryDateMonth>
     <EditCardExpiryDateYear>#edit-card-expiry-date-year</EditCardExpiryDateYear>
-    <EditCardSecurity>#edit-card-security'</EditCardSecurity>
+    <EditCardSecurity>#edit-card-security</EditCardSecurity>
     <EditSubmit>#edit-submit</EditSubmit>
+    <AddCardPopupHeader>#wonga-my-account-add-card-form h1</AddCardPopupHeader>
   </MyPaymentsPage>
   
 </UiMap>

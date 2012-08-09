@@ -27,6 +27,7 @@ namespace Wonga.QA.Framework.UI.Elements
             {
                 case AUT.Za:
                 case AUT.Ca:
+                case  AUT.Uk:
                     _myPaymentDetailsButton =
                         Page.Client.Driver.FindElement(
                             By.CssSelector(UiMap.Get.MyAccountNavigationSection.MyPaymentsDetails));

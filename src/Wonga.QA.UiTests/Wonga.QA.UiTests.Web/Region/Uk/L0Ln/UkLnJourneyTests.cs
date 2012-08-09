@@ -162,7 +162,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
             }
         }
 
-        [Test, AUT(AUT.Uk), JIRA("QA-347")]
+        [Test, AUT(AUT.Uk), JIRA("QA-347"), Pending("Functional is not ready")]
         public void LnCustomerWithoutLiveLoanPassLnWithNewCard()
         {
             var loginPage = Client.Login();
@@ -183,7 +183,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
             var myPayments = mySummaryPage.Navigation.MyPaymentDetailsButtonClick();
             myPayments.AddVisaElectronCard("4222 2222 2222 2222");
             var journey = JourneyFactory.GetLnJourney(Client.Home());
-            var applyPage = journey.Teleport<MySummary>() as MySummary;
+            var applyPage = journey.Teleport<MySummaryPage>() as MySummaryPage;
 
         }
     }

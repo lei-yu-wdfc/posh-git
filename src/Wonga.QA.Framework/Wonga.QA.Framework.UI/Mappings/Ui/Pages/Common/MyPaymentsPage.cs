@@ -24,5 +24,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String EditCardExpiryDateYear { get; set; }
         public String EditCardSecurity { get; set; }
         public String EditSubmit { get; set; }
+        public String AddCardPopupHeader { get; set; }
     }
 }
