@@ -6,6 +6,7 @@ using Wonga.QA.Framework.Cs;
 using Wonga.QA.Framework.Cs.Requests.Comms.Csapi.Commands;
 using Wonga.QA.Framework.Cs.Requests.Payments.Csapi.Commands;
 using Wonga.QA.Framework.Db.Ops;
+using Wonga.QA.Framework.Msmq.Enums.Common.Iso;
 using Wonga.QA.Framework.Msmq.Messages.Payments.PublicMessages;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Framework.ThirdParties;
@@ -423,6 +424,67 @@ namespace Wonga.QA.Tests.Bi
 
             bool present = ConfirmStatusValues(application.Id, new string[] { "Accepted", "Terms Agreed", "Live (Not Due)" });
             Assert.IsTrue(present);
+        }
+
+        //Needed for serialization in CreateExtendedRepaymentArrangementCommand
+        public class RepaymentArrangementDetailCsapi
+        {
+            public decimal Amount { get; set; }
+            public CurrencyCodeIso4217Enum Currency { get; set; }
+            public DateTime DueDate { get; set; }
+        }
+
+        [Test]
+        [AUT(AUT.Uk), JIRA("UKOPS-62"), Owner(Owner.PiotrWalat)]
+        public void Create_RepaymentArrangement_ForLiveLoan_Changes_ApplicationStatus_To_RepaymentArrangement()
+        {
+            const decimal loanAmount = 222.22m;
+            Customer customer = CustomerBuilder.New().Build();
+            Application application = ApplicationBuilder.New(customer)
+                .WithLoanAmount(loanAmount).Build();
+            Do.Until(() =>
+            {
+                var app = sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Salesforce.ApplicationStatus.Live;
+            });
+
+            application.PutIntoArrears(2);
+
+            Do.Until(() =>
+            {
+                var app = sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Salesforce.ApplicationStatus.InArrears;
+            });
+
+            Drive.Cs.Commands.Post(new CreateRepaymentArrangementCommand()
+            {
+                AccountId = customer.Id,
+                ApplicationId = application.Id,
+                EffectiveBalance = 0,
+                RepaymentAmount = loanAmount,
+                ArrangementDetails = new[]
+                                                                    {
+                                                                        new RepaymentArrangementDetailCsapi
+                                                                            {
+                                                                                Amount = loanAmount - 100m,
+                                                                                Currency = CurrencyCodeIso4217Enum.GBP,
+                                                                                DueDate = DateTime.Today.AddDays(7)
+                                                                            },
+                                                                        new RepaymentArrangementDetailCsapi
+                                                                            {
+                                                                                Amount = 100m,
+                                                                                Currency = CurrencyCodeIso4217Enum.GBP,
+                                                                                DueDate = DateTime.Today.AddDays(15)
+                                                                            }
+                                                                    }
+            });
+
+            Do.Until(() =>
+            {
+                var app = sales.GetApplicationById(application.Id);
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Salesforce.ApplicationStatus.RepaymentArrangement;
+            });
+
         }
 
         private void CheckSupressionTable(Application application, int appInternalId)
