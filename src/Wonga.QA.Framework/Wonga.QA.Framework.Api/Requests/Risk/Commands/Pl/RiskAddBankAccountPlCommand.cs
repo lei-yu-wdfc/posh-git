@@ -11,5 +11,6 @@ namespace Wonga.QA.Framework.Api.Requests.Risk.Commands.Pl
         public Object BankAccountId { get; set; }
         public Object BankName { get; set; }
         public Object AccountNumber { get; set; }
+        public Object IBAN { get; set; }
     }
 }
