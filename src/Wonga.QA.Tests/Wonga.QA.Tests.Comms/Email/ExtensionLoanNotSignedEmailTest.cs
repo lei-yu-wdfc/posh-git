@@ -78,7 +78,7 @@ namespace Wonga.QA.Tests.Comms.Email
             // Create Card Payment Transaction for Extension Part Payment
             Drive.Msmq.Payments.Send(new CreateTransaction()
                                          {
-                                             Amount = 10.70M,
+                                             Amount = -10.70M,
                                              ApplicationId = _appId,
                                              Currency = CurrencyCodeIso4217Enum.GBP,
                                              ExternalId = transactionId,
@@ -100,7 +100,7 @@ namespace Wonga.QA.Tests.Comms.Email
             var email = Do.With.Interval(1).Until(() => Drive.Data.QaData.Db.Email.FindByEmailAddressAndTemplateName(_emailAddress, loanExtensionCancelledEmailTemplate));
             Assert.IsNotNull(email);
             var emailData = Drive.Data.QaData.Db.EmailTokens.FindByEmailIdAndKey(email.EmailId, "Html_body");
-            Assert.Contains(emailData.Value, "still need to repay <b>&pound;115.91");
+            Assert.Contains(emailData.Value, "still need to repay <b>&pound;104.93");
         }
     }
 }
