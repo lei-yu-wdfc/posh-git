@@ -403,8 +403,61 @@
   </FAExpenditurePage>
 
   <FADebtsPage>
+    <CurrentBalance>#edit-wonga.form-text</CurrentBalance>
+    <RentPayments>#edit-rent.form-text</RentPayments>
+    <Mortgage>#edit-mortgage.form-text</Mortgage>
+    <OtherSecuredLoans>#edit-other-secured-loans.form-text</OtherSecuredLoans>
+    <CouncilTax>#edit-council-tax.form-text</CouncilTax>
+    <MaintenceOrChildSupport>#edit-maintence.form-text</MaintenceOrChildSupport>
+    <Gas>#edit-gas.form-text</Gas>
+    <Electricity>#edit-electricity.form-text</Electricity>
+    <HirePurchaseOrConditionalSale>#edit-hire-purchase.form-text</HirePurchaseOrConditionalSale>
+    <Other>#edit-other-exp.form-text</Other>
+    <NonPriorityDebtsCreditor0>#edit-loan-name-0.form-text</NonPriorityDebtsCreditor0>
+    <NonPriorityDebtsAmount0>#edit-loan-value-0.form-text</NonPriorityDebtsAmount0>
+    <NonPriorityDebtsCreditor1>#edit-loan-name-1.form-text</NonPriorityDebtsCreditor1>
+    <NonPriorityDebtsAmount1>#edit-loan-value-1.form-text</NonPriorityDebtsAmount1>
+    <NonPriorityDebtsCreditor2>#edit-loan-name-2.form-text</NonPriorityDebtsCreditor2>
+    <NonPriorityDebtsAmount2>#edit-loan-value-2.form-text</NonPriorityDebtsAmount2>
+    <NonPriorityDebtsCreditor3>#edit-loan-name-3.form-text</NonPriorityDebtsCreditor3>
+    <NonPriorityDebtsAmount3>#edit-loan-value-3.form-text</NonPriorityDebtsAmount3>
+    <NonPriorityDebtsCreditor4>#edit-loan-name-4.form-text</NonPriorityDebtsCreditor4>
+    <NonPriorityDebtsAmount4>#edit-loan-value-4.form-text</NonPriorityDebtsAmount4>
+    <NonPriorityDebtsCreditor5>#edit-loan-name-5.form-text</NonPriorityDebtsCreditor5>
+    <NonPriorityDebtsAmount5>#edit-loan-value-5.form-text</NonPriorityDebtsAmount5>
+    <NonPriorityDebtsCreditor6>#edit-loan-name-6.form-text</NonPriorityDebtsCreditor6>
+    <NonPriorityDebtsAmount6>#edit-loan-value-6.form-text</NonPriorityDebtsAmount6>
+    <NonPriorityDebtsCreditor7>#edit-loan-name-7.form-text</NonPriorityDebtsCreditor7>
+    <NonPriorityDebtsAmount7>#edit-loan-value-7.form-text</NonPriorityDebtsAmount7>
+    <NonPriorityDebtsCreditor8>#edit-loan-name-8.form-text</NonPriorityDebtsCreditor8>
+    <NonPriorityDebtsAmount8>#edit-loan-value-8.form-text</NonPriorityDebtsAmount8>
+    <NonPriorityDebtsCreditor9>#edit-loan-name-9.form-text</NonPriorityDebtsCreditor9>
+    <NonPriorityDebtsAmount9>#edit-loan-value-9.form-text</NonPriorityDebtsAmount9>
+    <RentPaymentsError>#edit-rent-wrapper.form-item div.form-error div.invalid</RentPaymentsError>
+    <MortgageError>#edit-mortgage-wrapper.form-item div.form-error div.invalid</MortgageError>
+    <OtherSecuredLoansError>#edit-other-secured-loans-wrapper.form-item div.form-error div.invalid</OtherSecuredLoansError>
+    <CouncilTaxError>#edit-council-tax-wrapper.form-item div.form-error div.invalid</CouncilTaxError>
+    <MaintenceOrChildSupportError>#edit-maintence-wrapper.form-item div.form-error div.invalid</MaintenceOrChildSupportError>
+    <GasError>#edit-gas-wrapper.form-item div.form-error div.invalid</GasError>
+    <ElectricityError>#edit-electricity-wrapper.form-item div.form-error div.invalid</ElectricityError>
+    <HirePurchaseOrConditionalSaleError>#edit-hire-purchase-wrapper.form-item div.form-error div.invalid</HirePurchaseOrConditionalSaleError>
+    <OtherError>#edit-other-exp-wrapper.form-item div.form-error div.invalid</OtherError>
+    <NonPriorityDebtsAmount0Error>#edit-loan-value-0-wrapper.form-item div.form-error div.invalid</NonPriorityDebtsAmount0Error>
+    <NonPriorityDebtsAmount1Error>#edit-loan-value-1-wrapper.form-item div.form-error div.invalid</NonPriorityDebtsAmount1Error>
+    <NonPriorityDebtsAmount2Error>#edit-loan-value-2-wrapper.form-item div.form-error div.invalid</NonPriorityDebtsAmount2Error>
+    <NonPriorityDebtsAmount3Error>#edit-loan-value-3-wrapper.form-item div.form-error div.invalid</NonPriorityDebtsAmount3Error>
+    <NonPriorityDebtsAmount4Error>#edit-loan-value-4-wrapper.form-item div.form-error div.invalid</NonPriorityDebtsAmount4Error>
+    <NonPriorityDebtsAmount5Error>#edit-loan-value-5-wrapper.form-item div.form-error div.invalid</NonPriorityDebtsAmount5Error>
+    <NonPriorityDebtsAmount6Error>#edit-loan-value-6-wrapper.form-item div.form-error div.invalid</NonPriorityDebtsAmount6Error>
+    <NonPriorityDebtsAmount7Error>#edit-loan-value-7-wrapper.form-item div.form-error div.invalid</NonPriorityDebtsAmount7Error>
+    <NonPriorityDebtsAmount8Error>#edit-loan-value-8-wrapper.form-item div.form-error div.invalid</NonPriorityDebtsAmount8Error>
+    <NonPriorityDebtsAmount9Error>#edit-loan-value-9-wrapper.form-item div.form-error div.invalid</NonPriorityDebtsAmount9Error>
     <ButtonPrevious>#edit-previous.form-submit</ButtonPrevious>
     <ButtonNext>#edit-next.form-submit</ButtonNext>
   </FADebtsPage>
 
+  <FARepaymentPlan>
+    <ButtonPrevious>#edit-previous.form-submit</ButtonPrevious>
+    <ButtonNext>#edit-next.form-submit</ButtonNext>
+  </FARepaymentPlan>  
 </UiMap>

@@ -31,11 +31,41 @@ namespace Wonga.QA.Framework.UI
         protected String _statePension;
         protected String _privateOrWorkPension;
         protected String _pensionCredit;
-        protected String _other;
+        protected String _otherOnIncome;
         protected String _maintenenceOrChildSupport;
         protected String _incomeFromBoardersOrLodgers;
         protected String _studentLoansOrGrants;
         protected String _otherIncome;
+
+        protected String _rentPayments;
+        protected String _mortgage;
+        protected String _otherSecuredLoans;
+        protected String _councilTax;
+        protected String _maintenceOrChildSupport;
+        protected String _gas;
+        protected String _electricity;
+        protected String _hirePurchaseOrConditionalSale;
+        protected String _otherOnDebts;
+        protected String _nonPriorityDebtsCreditor0;
+        protected String _nonPriorityDebtsAmount0;
+        protected String _nonPriorityDebtsCreditor1;
+        protected String _nonPriorityDebtsAmount1;
+        protected String _nonPriorityDebtsCreditor2;
+        protected String _nonPriorityDebtsAmount2;
+        protected String _nonPriorityDebtsCreditor3;
+        protected String _nonPriorityDebtsAmount3;
+        protected String _nonPriorityDebtsCreditor4;
+        protected String _nonPriorityDebtsAmount4;
+        protected String _nonPriorityDebtsCreditor5;
+        protected String _nonPriorityDebtsAmount5;
+        protected String _nonPriorityDebtsCreditor6;
+        protected String _nonPriorityDebtsAmount6;
+        protected String _nonPriorityDebtsCreditor7;
+        protected String _nonPriorityDebtsAmount7;
+        protected String _nonPriorityDebtsCreditor8;
+        protected String _nonPriorityDebtsAmount8;
+        protected String _nonPriorityDebtsCreditor9;
+        protected String _nonPriorityDebtsAmount9;
 
         public BasePage CurrentPage { get; set; }
 
