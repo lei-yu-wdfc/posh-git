@@ -13,9 +13,14 @@ task :backend_test => [:config, :meta_test] do
   test 'Tests.*', 'Tests.Meta'
 end
 
-desc 'Runs the frontend core tests'
-task :core_ui_test => [:config] do
+desc 'Runs core system tests'
+task :full_system_core_test => [:config] do
   test 'UiTests.Web', '','Category:CoreTest'
+end
+
+desc 'Runs all full system tests'
+task :full_system_test => [:config] do
+  test 'UiTests.Web:UiTests.Mobile', '',''
 end
 
 desc 'Runs Meta + Core backend tests'
