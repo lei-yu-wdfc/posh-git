@@ -1,112 +1,112 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using MbUnit.Framework;
-using Wonga.QA.Framework;
-using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.Db;
-using Wonga.QA.Framework.Db.Payments;
-using Wonga.QA.Framework.Msmq.Enums.Common.Iso;
-using Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Messages;
-using Wonga.QA.Tests.Core;
-using Wonga.QA.Tests.Payments.Helpers;
-using AddPaymentCardCommand = Wonga.QA.Framework.Api.Requests.Payments.Commands.AddPaymentCardCommand;
-using CreateRepaymentArrangementCommand = Wonga.QA.Framework.Api.Requests.Payments.Commands.CreateRepaymentArrangementCommand;
-using PaymentFrequencyEnum = Wonga.QA.Framework.Api.Enums.PaymentFrequencyEnum;
+﻿	using System;
+	using System.Linq;
+	using System.Threading;
+	using MbUnit.Framework;
+	using Wonga.QA.Framework;
+	using Wonga.QA.Framework.Core;
+	using Wonga.QA.Framework.Db;
+	using Wonga.QA.Framework.Db.Payments;
+	using Wonga.QA.Framework.Msmq.Enums.Common.Iso;
+	using Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Messages;
+	using Wonga.QA.Tests.Core;
+	using Wonga.QA.Tests.Payments.Helpers;
+	using AddPaymentCardCommand = Wonga.QA.Framework.Api.Requests.Payments.Commands.AddPaymentCardCommand;
+	using CreateRepaymentArrangementCommand = Wonga.QA.Framework.Api.Requests.Payments.Commands.CreateRepaymentArrangementCommand;
+	using PaymentFrequencyEnum = Wonga.QA.Framework.Api.Enums.PaymentFrequencyEnum;
 
-namespace Wonga.QA.Tests.Payments
-{
-    [Parallelizable(TestScope.All)]
+	namespace Wonga.QA.Tests.Payments
+	{
+	[Parallelizable(TestScope.All)]
 	public class RepaymentArrangementTests
-    {
-        private bool _repaymentArrangementEnabled;
-        private ArrangementDetail[] _arrangementDetails;
-        private Application _application;
+	{
+		private bool _repaymentArrangementEnabled;
+		private ArrangementDetail[] _arrangementDetails;
+		private Application _application;
 
-        #region setup#
+		#region setup#
 
-        [FixtureSetUp]
-        public void FixtureSetup()
-        {
-            _repaymentArrangementEnabled = ConfigurationFunctions.GetRepaymentArrangementEnabled();
-            ConfigurationFunctions.SetRepaymentArrangementEnabled(true);
-        }
+		[FixtureSetUp]
+		public void FixtureSetup()
+		{
+			_repaymentArrangementEnabled = ConfigurationFunctions.GetRepaymentArrangementEnabled();
+			ConfigurationFunctions.SetRepaymentArrangementEnabled(true);
+		}
 
-        [FixtureTearDown]
-        public void FixtureTearDown()
-        {
-            ConfigurationFunctions.SetRepaymentArrangementEnabled(_repaymentArrangementEnabled);
-        }
+		[FixtureTearDown]
+		public void FixtureTearDown()
+		{
+			ConfigurationFunctions.SetRepaymentArrangementEnabled(_repaymentArrangementEnabled);
+		}
 
-        #endregion setup#
+		#endregion setup#
 
-        [Test, AUT(AUT.Uk), Owner(Owner.AlexSloat)]
+		[Test, AUT(AUT.Uk), Owner(Owner.AlexSloat)]
 		public void CustomerServiceSetRepaymentArrangementTest()
 		{
 			Customer customer = CustomerBuilder.New().Build();
-            _application = ApplicationBuilder.New(customer).Build();
+			_application = ApplicationBuilder.New(customer).Build();
 
-            _arrangementDetails = new[]
-		                             {
-		                                 new ArrangementDetail
-		                                     {Amount = 49, Currency = CurrencyCodeIso4217Enum.GBP, DueDate = DateTime.Today},
-		                                 new ArrangementDetail
-		                                     {
-		                                         Amount = 51,
-		                                         Currency = CurrencyCodeIso4217Enum.GBP,
-		                                         DueDate = DateTime.Today.AddDays(7)
-		                                     }
-		                             };
+			_arrangementDetails = new[]
+										{
+											new ArrangementDetail
+												{Amount = 49, Currency = CurrencyCodeIso4217Enum.GBP, DueDate = DateTime.Today},
+											new ArrangementDetail
+												{
+													Amount = 51,
+													Currency = CurrencyCodeIso4217Enum.GBP,
+													DueDate = DateTime.Today.AddDays(7)
+												}
+										};
 
-            _application.PutIntoArrears();
+			_application.PutIntoArrears();
 
 			Drive.Msmq.Payments.Send(new CreateExtendedRepaymentArrangement
-			                          	{
+										{
 			                          		AccountId = customer.Id,
-                                            ApplicationId = _application.Id,
+											ApplicationId = _application.Id,
 											EffectiveBalance = 100,
 											RepaymentAmount = 100,
-                                            RepaymentDetails = _arrangementDetails
-			                          	});
+											RepaymentDetails = _arrangementDetails
+										});
 
-            var repaymentArrangement = GetRepaymentArrangementEntity();
-		    Assert.AreEqual(2, repaymentArrangement.RepaymentArrangementDetails.Count);
+			var repaymentArrangement = GetRepaymentArrangementEntity();
+			Assert.AreEqual(2, repaymentArrangement.RepaymentArrangementDetails.Count);
 		}
 
-        [Test, AUT(AUT.Uk), JIRA("UKOPS-49"), Owner(Owner.ShaneMcHugh), DependsOn("CustomerServiceSetRepaymentArrangementTest")]
+		[Test, AUT(AUT.Uk), JIRA("UKOPS-49"), Owner(Owner.ShaneMcHugh), DependsOn("CustomerServiceSetRepaymentArrangementTest")]
 		public void CancelRepaymentArrangemntAfterRepaymentToday()
 		{
-            var repaymentArrangement = GetRepaymentArrangementEntity();
-            var a = _arrangementDetails[0].Amount;
-            var d = _arrangementDetails[0].DueDate;
-            Assert.IsNotNull(repaymentArrangement.RepaymentArrangementDetails.First(ra => ra.Amount == a && ra.DueDate == d));
+			var repaymentArrangement = GetRepaymentArrangementEntity();
+			var a = _arrangementDetails[0].Amount;
+			var d = _arrangementDetails[0].DueDate;
+			Assert.IsNotNull(repaymentArrangement.RepaymentArrangementDetails.First(ra => ra.Amount == a && ra.DueDate == d));
 
-            _application.CancelRepaymentArrangement();
+			_application.CancelRepaymentArrangement();
 		}
 
-        [Test, AUT(AUT.Uk), JIRA("UKOPS-49"), Owner(Owner.ShaneMcHugh), Pending("UKOPS-822")]
-        public void CancelRepaymentArrangementWhenRepaymentArrangementIsBroken()
-        {
+		[Test, AUT(AUT.Uk), JIRA("UKOPS-49"), Owner(Owner.ShaneMcHugh), Pending("UKOPS-822")]
+		public void CancelRepaymentArrangementWhenRepaymentArrangementIsBroken()
+		{
 
-        }
+		}
 
-        [Test, AUT(AUT.Uk), JIRA("UK-725"), Owner(Owner.AlexSloat)]
+		[Test, AUT(AUT.Uk), JIRA("UK-725"), Owner(Owner.AlexSloat)]
 		public void CreateRepaymentArrangementTest()
 		{
 			Customer customer = CustomerBuilder.New().Build();
 			Application application = ApplicationBuilder.New(customer).Build();
 
-            application.PutIntoArrears(4);
+			application.PutIntoArrears(4);
 
 			var cmd = new CreateRepaymentArrangementCommand()
-			           	{
+						{
 			           		ApplicationId = application.Id,
 			           		Frequency = PaymentFrequencyEnum.Every4Weeks,
 			           		RepaymentDates = new[] {DateTime.Today.AddDays(1), DateTime.Today.AddMonths(1)},
 			           		NumberOfMonths = 2
-			           	};
+						};
 			var errors= Drive.Api.Commands.Post(cmd).GetErrors().ToList();
-            Assert.IsTrue(errors.Count==0,"No validation errors expected");
+			Assert.IsTrue(errors.Count==0,"No validation errors expected");
 			
 			var dbApplication = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
 			Do.Until(() => Drive.Db.Payments.RepaymentArrangements.Single(x => x.ApplicationId == dbApplication.ApplicationId));
@@ -115,7 +115,7 @@ namespace Wonga.QA.Tests.Payments
 			Assert.IsNotNull(Drive.Db.Payments.Transactions.Where(x => x.ApplicationId == dbApplication.ApplicationId && x.Type == "SuspendInterestAccrual"));
 		}
 
-        [Test, AUT(AUT.Uk), JIRA("UK-726"), Owner(Owner.AlexSloat)]
+		[Test, AUT(AUT.Uk), JIRA("UK-726"), Owner(Owner.AlexSloat)]
 		public void CustomerMissesRepaymentArrangementInstallmentTest()
 		{
 			//Test written to support both mocked and non mocked environments
@@ -123,7 +123,7 @@ namespace Wonga.QA.Tests.Payments
 
 			Application application = ApplicationBuilder.New(customer).Build();
 
-            application.PutIntoArrears(4);
+			application.PutIntoArrears(4);
 
 			application.CreateRepaymentArrangement();
 
@@ -139,11 +139,11 @@ namespace Wonga.QA.Tests.Payments
 			Drive.Db.Payments.PaymentCardsBases.Single(x => x.ExternalId == app.PaymentCardGuid).Delete().Submit();
 			Drive.Db.ColdStorage.PaymentCards.Single(x => x.ExternalId == app.PaymentCardGuid).Delete().Submit();
 			Drive.Api.Commands.Post(new AddPaymentCardCommand
-			                         	{
+										{
 			                         		AccountId = app.AccountId,
 			                         		PaymentCardId = app.PaymentCardGuid,
 			                         		CardType = "Other",
-                                            Number = "1111111111111111",
+											Number = "1111111111111111",
 			                         		HolderName = "Test Holder",
 			                         		StartDate = DateTime.Today.AddYears(-1).ToDate(DateFormat.YearMonth),
 			                         		ExpiryDate = DateTime.Today.AddMonths(6).ToDate(DateFormat.YearMonth),
@@ -151,7 +151,7 @@ namespace Wonga.QA.Tests.Payments
 			                         		SecurityCode = "666",
 			                         		IsCreditCard = false,
 			                         		IsPrimary = true,
-			                         	});
+										});
 			Do.Until(() => Drive.Db.Payments.PaymentCardsBases.Single(x => x.ExternalId == app.PaymentCardGuid));
 			
 			var newPaymentCard = db.Payments.PaymentCardsBases.Single(x => x.ExternalId == app.PaymentCardGuid);
@@ -167,30 +167,30 @@ namespace Wonga.QA.Tests.Payments
 				db.Payments.RepaymentArrangementDetails.First(
 					x => x.RepaymentArrangementId == repaymentArrangement.RepaymentArrangementId);
 
-            Drive.Msmq.Payments.Send(new ProcessScheduledRepaymentMessage
-			                          	{
+			Drive.Msmq.Payments.Send(new ProcessScheduledRepaymentMessage
+										{
 			                          		RepaymentArrangementId = repaymentArrangement.RepaymentArrangementId,
 			                          		RepaymentDetailId = firstRepaymentArrangementDetail.RepaymentArrangementDetailId
-			                          	});
+										});
 			
 			var scheduledPayment = Do.Until(() => Drive.Db.Payments.ScheduledPayments.Single(x => x.ApplicationId == app.ApplicationId &&
-                                                                                                  x.Amount == firstRepaymentArrangementDetail.Amount));
+																									x.Amount == firstRepaymentArrangementDetail.Amount));
 			Assert.IsFalse(scheduledPayment.Success.Value);
 		}
 
-        [Test, AUT(AUT.Uk), JIRA("UKOPS-49"), Owner(Owner.ShaneMcHugh)]
-        public void CancelRepaymentArrangementTest()
-        {
-            Customer customer = CustomerBuilder.New().Build();
-            Application application = ApplicationBuilder.New(customer).Build().PutIntoArrears(20);
+		[Test, AUT(AUT.Uk), JIRA("UKOPS-49"), Owner(Owner.ShaneMcHugh)]
+		public void CancelRepaymentArrangementTest()
+		{
+			Customer customer = CustomerBuilder.New().Build();
+			Application application = ApplicationBuilder.New(customer).Build().PutIntoArrears(20);
 
-            application.CreateRepaymentArrangement();
-            application.CancelRepaymentArrangement();
-        }
+			application.CreateRepaymentArrangement();
+			application.CancelRepaymentArrangement();
+		}
 
-        #region Helpers#
+		#region Helpers#
 
-        //Needed for serialization in CreateExtendedRepaymentArrangementCommand
+		//Needed for serialization in CreateExtendedRepaymentArrangementCommand
 		private class ArrangementDetail
 		{
 			public decimal Amount { get; set; }
@@ -198,15 +198,14 @@ namespace Wonga.QA.Tests.Payments
 			public DateTime DueDate { get; set; }
 		}
 
-        private RepaymentArrangementEntity GetRepaymentArrangementEntity()
-        {
-            var dbApplication = Drive.Db.Payments.Applications.Single(a => a.ExternalId == _application.Id);
-            Thread.Sleep(10000);
-            var repaymentArrangement =
-                Drive.Db.Payments.RepaymentArrangements.Single(x => x.ApplicationId == dbApplication.ApplicationId);
-            return repaymentArrangement;
-        }
+		private RepaymentArrangementEntity GetRepaymentArrangementEntity()
+		{
+			var dbApplication = Drive.Db.Payments.Applications.Single(a => a.ExternalId == _application.Id);
+			var repaymentArrangement =
+					Do.Until(() => Drive.Db.Payments.RepaymentArrangements.Single(x => x.ApplicationId == dbApplication.ApplicationId));
+			return repaymentArrangement;
+		}
 
-        #endregion helpers#
-    }
-}
+		#endregion helpers#
+	}
+	}
