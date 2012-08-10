@@ -9,7 +9,7 @@ using Wonga.QA.Framework.Api.Requests.Payments.Queries.Uk;
 using Wonga.QA.Framework.Api.Requests.Risk.Queries;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Data.Enums.Risk;
-//using Wonga.QA.Framework.Db.Extensions;
+using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Helpers;
 
 namespace Wonga.QA.Framework.Builders
@@ -19,22 +19,33 @@ namespace Wonga.QA.Framework.Builders
         private Customer _customer;
         private Application _application;
         private int _amount;
-
+        private double _interestAndFeesAmount;
+        private double _totalToRepay;
+        
         public TopUp Build()
         {
-            var requests = new List<ApiRequest>
-                               {
-                                   GetFixedTermLoanTopupOfferQuery.New(r => r.AccountId = Guid.NewGuid())
-                               };
             switch (Config.AUT)
             {
                 case AUT.Uk:
+                    var responce = Drive.Api.Queries.Post(GetFixedTermLoanTopupCalculationQuery.New(r =>{
+                                                                                             r.ApplicationId = _application.Id;
+                                                                                             r.TopupAmount = _amount;
+                                                                                             }));
 
-                    var responce = Drive.Api.Commands.Post(requests);
+                    _interestAndFeesAmount = Convert.ToDouble(responce.Values["InterestAndFeesAmount"].Single());
+                    _totalToRepay = Convert.ToDouble(responce.Values["TotalRepayable"].Single());
                     break;
+
+                case AUT.Ca:
+                case AUT.Pl:
+                case AUT.Za:
+                case AUT.Wb:
+                    throw new System.ArgumentException("TopUp working only for Uk region, AUT is not correct", "Config AUT");
+                default:
+                    throw new NotImplementedException();
             }
 
-            return new TopUp();
+            return new TopUp(_interestAndFeesAmount, _totalToRepay);
         }
 
         public static TopUpBuilder New()

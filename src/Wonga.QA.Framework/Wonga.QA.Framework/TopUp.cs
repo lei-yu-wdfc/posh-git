@@ -16,9 +16,16 @@ namespace Wonga.QA.Framework
         public double transmissionFee { get; set; }
         public double interestRateMonthly { get; set; }
         public double interestRateAnnual { get; set; }
+        public double interestAndFeesAmount { get; set; }
         public int interestRateAPR { get; set; }
         public int daysTillRepaymentDate { get; set; }
         public string Currency { get; set; }
         public DateTime updateOn { get; set; }
+
+        public TopUp(double _interestAndFeesAmount, double _totalToRepay)
+        {
+            interestAndFeesAmount = _interestAndFeesAmount;
+            totalToRepay = _totalToRepay;
+        }
     }
 }
