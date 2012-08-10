@@ -188,7 +188,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
         }
 
         [Test, AUT(AUT.Uk), JIRA("QA-346"), Owner(Owner.MihailPodobivsky)]
-        public void  CustomerOnApplyLnPageEntersWrongSecretCodeShouldntBeAbleToProceed()
+        public void CustomerOnApplyLnPageEntersWrongSecretCodeShouldntBeAbleToProceed()
         {
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
@@ -209,7 +209,9 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
             var applyPage = journey.Teleport<ApplyPage>() as ApplyPage;
             applyPage.SetSecureCode = "111";
             applyPage.ApplicationSection.SetMinCash = "100";
-            Assert.IsTrue(applyPage.IsSecurecodeWarningOccurred());
+            Assert.IsFalse(applyPage.IsSecurecodeWarningOccurred());
+            Do.Until(() => Client.Driver is ApplyPage);
+            Assert.IsFalse(Client.Driver is ProcessingPage);
         }
 
         [Test, AUT(AUT.Uk), JIRA("QA-344"), Owner(Owner.PetrTarasenko)]
