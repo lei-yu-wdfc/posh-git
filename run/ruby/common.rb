@@ -86,8 +86,9 @@ end
   
 desc 'Pregenerates the serializers of any dlls that require it'
 task :pre_generate_serializers do #ready
-  puts 'Generating serializers'
-  sh File.join(LIB,'sgen','sgen.exe') + ' ' + File.join(BIN,'Wonga.QA.Framework.Cs.dll') + ' /force'
+  #skipping pre-generate for now.
+  #puts 'Generating serializers'
+  #sh File.join(LIB,'sgen','sgen.exe') + ' ' + File.join(BIN,'Wonga.QA.Framework.Cs.dll') + ' /force'
 end
 #--
   

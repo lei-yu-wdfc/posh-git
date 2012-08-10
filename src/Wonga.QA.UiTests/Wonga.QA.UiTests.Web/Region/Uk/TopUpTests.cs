@@ -3,6 +3,7 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Requests.Payments.Queries;
+using Wonga.QA.Framework.Api.Requests.Payments.Queries.Uk;
 using Wonga.QA.Framework.Builders;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
@@ -204,7 +205,8 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(30).Build();
             var topup = TopUpBuilder.New().WithCustomer(customer).WithApplication(application).Build();
         }
- [Test, JIRA("QA-336")]
+
+        [Test, JIRA("QA-336")]
         [Owner(Owner.PetrTarasenko)]
         public void CustomerCantTopupIfMaxSumChooosen()
         {
@@ -222,10 +224,6 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
             Assert.IsFalse(mySummaryPage.LookForTopupSliders());
-            
-        }
-
-           
             
         }
     }
