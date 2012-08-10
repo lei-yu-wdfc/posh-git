@@ -30,7 +30,7 @@ namespace Wonga.QA.Tests.Payments
         {
             var customer = GetCustomer();
             var application = GetApplicationInArrears(customer);
-            SetCardExpiryDate(customer.GetPaymentCard(), DateTime.Now.AddYears(EightAmState));
+            SetCardExpiryDate(customer.GetPaymentCard(), DateTime.Now.AddYears(1));
             var appInternalId = ApplicationOperations.GetAppInternalId(application);
             _sagaEntityFiveAm = GetSagaEntity(appInternalId);
             SaagaTimeOutMessageBy5Or8Am(_sagaEntityFiveAm.Id, FiveAmState);
