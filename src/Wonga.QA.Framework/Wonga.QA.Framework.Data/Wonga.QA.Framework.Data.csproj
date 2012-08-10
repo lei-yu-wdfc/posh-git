@@ -53,6 +53,7 @@
     <Compile Include="Databases\GreyfaceShell.cs" />
     <Compile Include="Databases\HdsDatabase.cs" />
     <Compile Include="Databases\MigrationStaging.cs" />
+    <Compile Include="Databases\PayLaterDatabase.cs" />
     <Compile Include="Databases\SchedulerDatabase.cs" />
     <Compile Include="Databases\WarehouseDatabase.cs" />
     <Compile Include="Databases\WongaPayDatabase.cs" />
