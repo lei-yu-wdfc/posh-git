@@ -123,7 +123,6 @@
     <Compile Include="RiskBasedPricingTests.cs" />
     <Compile Include="Sagas\LoanDueNotificationSagaTests.cs" />
     <Compile Include="PayUTests.cs" />
-    <Compile Include="Sagas\LoanDurationSagaTests.cs" />
     <Compile Include="Sagas\ScheduledServiceFeeTests.cs" />
     <Compile Include="ServiceFeesTests.cs" />
     <Compile Include="UpdateLoanTermTests.cs" />

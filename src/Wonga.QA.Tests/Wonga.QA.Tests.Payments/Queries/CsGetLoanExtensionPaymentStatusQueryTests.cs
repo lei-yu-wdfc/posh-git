@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
@@ -18,7 +16,6 @@ namespace Wonga.QA.Tests.Payments.Queries
     {
         protected Application _application;
         protected Customer _customer;
-        protected dynamic _loanExtensionStatusRepo = Drive.Data.Payments.Db.LoanExtensions;
 
         [SetUp]
         public virtual void Setup()
@@ -37,7 +34,7 @@ namespace Wonga.QA.Tests.Payments.Queries
         public abstract class GivenACustomerWithAnApprovedLoan : CsGetLoanExtensionPaymentStatusQueryTests
         {
             protected Guid _extensionId = Guid.NewGuid();
-            protected decimal _amount = 0m;
+            protected decimal _amount;
 
             [SetUp]
             public override void Setup()
@@ -82,6 +79,8 @@ namespace Wonga.QA.Tests.Payments.Queries
                 {
                     _amount = 50;
                     base.Setup();
+
+					dynamic _loanExtensionStatusRepo = Drive.Data.Payments.Db.LoanExtensions;
 
                     Do.With.Until(() => _loanExtensionStatusRepo.FindAll(_loanExtensionStatusRepo.PaymentCardId == _customer.GetPaymentCard() &&
                                                                          _loanExtensionStatusRepo.PartPaymentAmount == _amount &&
