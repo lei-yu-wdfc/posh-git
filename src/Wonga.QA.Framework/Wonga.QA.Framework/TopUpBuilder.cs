@@ -12,7 +12,7 @@ using Wonga.QA.Framework.Data.Enums.Risk;
 using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Helpers;
 
-namespace Wonga.QA.Framework.Builders
+namespace Wonga.QA.Framework
 {
     public class TopUpBuilder
     {

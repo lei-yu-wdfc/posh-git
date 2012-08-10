@@ -4,7 +4,6 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Requests.Payments.Queries;
 using Wonga.QA.Framework.Api.Requests.Payments.Queries.Uk;
-using Wonga.QA.Framework.Builders;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
 using System.Linq;
@@ -195,16 +194,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             String[] s = requestPage.Sliders.GetTopUpAmount.Remove(0, 1).Split('.');
             Assert.AreEqual(topupAmount, requestPage.Sliders.HowMuch);
             Assert.AreEqual(topupAmount, s[0]);
-        }
-
-       
- [Test]
-        public void PopUpBuilderTests()
-        {
-            var customer = CustomerBuilder.New().Build();
-            var application = ApplicationBuilder.New(customer).WithLoanAmount(150).WithLoanTerm(30).Build();
-            var topup = TopUpBuilder.New().WithCustomer(customer).WithApplication(application).Build();
-        }
+      }
 
         [Test, JIRA("QA-336")]
         [Owner(Owner.PetrTarasenko)]
