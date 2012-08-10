@@ -18,7 +18,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private IWebElement _card;
         private IWebElement _securityCode;
         private ApiResponse _response;
-        private IWebElement _extensionRequestDate;
+        //private IWebElement _extensionRequestDate;
         private IWebElement _interestAndFees;
         private IWebElement _grandTotal;
         //private IWebElement _extensionDuration;
@@ -68,14 +68,14 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _sliders = new SmallExtensionSlidersElement(this);
             _sliders.HowLong = extensionRequestDuration;
 
-            _extensionRequestDate = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionRequestPage.ExtensionRequestPageRepaymentDate));
-            var extensionRequestDate = _extensionRequestDate.Text.Replace("st", "").Replace("nd", "").Replace("rd", "").Replace("th", "");
+            //_extensionRequestDate = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionRequestPage.ExtensionRequestPageRepaymentDate));
+            //var extensionRequestDate = _extensionRequestDate.Text.Replace("st", "").Replace("nd", "").Replace("rd", "").Replace("th", "");
                         
             //Extract Requested Date from Page
-            DateTime convertedDate = DateTime.Parse(extensionRequestDate);
-            var newConvertedDate = convertedDate.ToDate(DateFormat.Date);
+            //DateTime convertedDate = DateTime.Parse(extensionRequestDate);
+            //var newConvertedDate = convertedDate.ToDate(DateFormat.Date);
             
-            Console.WriteLine("hello {0}", convertedDate.ToString());
+            //Console.WriteLine("hello {0}", convertedDate.ToString());
             //Expected values
             var api = new ApiDriver();
         

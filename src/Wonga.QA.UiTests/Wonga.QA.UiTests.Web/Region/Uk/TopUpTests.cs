@@ -63,7 +63,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         [Test, JIRA("UK-826", "UK-789", "UK-2016", "UKWEB-928"), MultipleAsserts]
         [Owner(Owner.OrizuNwokeji, Owner.StanDesyatnikov)]
         [Category(TestCategories.CoreTest)]
-        [Pending("UKWEB-928: Top Up throws an exception on the Accept page")]
+        [Pending("UKWEB-1131: Top Up fails on Accept and Deal Done pages")]
         public void TopUpHappyPath()
         {
             string email = Get.RandomEmail();
@@ -113,8 +113,8 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Assert.IsFalse(dealDonePage.IsDealDonePageDateNotPresent(), "Date on Deal Done page is not displayed");
             Assert.IsFalse(dealDonePage.IsDealDonePageJiffyNotPresent(), "Jiffy on Deal Done page is not displayed");
             Assert.IsFalse(dealDonePage.IsDealDonePageTopupAmountNotPresent(), "Topup Amount on Deal Done page is not displayed");
-            Assert.Contains(dealDonePage.SucessMessage, totalRepayable, "Success Message on Deal Done page does not contain Total Repayable");
-            Assert.Contains(dealDonePage.SucessMessage, topupAmount, "Success Message on Deal Done page does not contain Total Amount");
+            Assert.Contains(dealDonePage.SucessMessage, totalRepayable, "Success Message on Deal Done page does not contain correct Total Repayable");
+            Assert.Contains(dealDonePage.SucessMessage, topupAmount, "Success Message on Deal Done page does not contain correct Topup Amount");
 
             dealDonePage.ContinueToMyAccount();
 

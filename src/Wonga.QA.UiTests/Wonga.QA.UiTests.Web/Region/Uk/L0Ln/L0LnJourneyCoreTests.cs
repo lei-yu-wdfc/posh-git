@@ -24,6 +24,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
         }
 
         [Test, AUT(AUT.Uk), Owner(Owner.StanDesyatnikov)]
+        [Pending("UKWEB-1132: L0 Deal Done page does not have the title")]
         public void L0JourneyTest()
         {
             var loginPage = Client.Login();

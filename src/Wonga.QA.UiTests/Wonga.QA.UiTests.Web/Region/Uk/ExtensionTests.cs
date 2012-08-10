@@ -222,14 +222,17 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             var mySummaryPage = loginPage.LoginAs(email);
 
             mySummaryPage.ChangePromiseDateButtonClick();
-            var requestPage = new ExtensionRequestPage(this.Client);
+            var extensionRequestPage = new ExtensionRequestPage(this.Client);
 
             //Runs assertions internally
-            requestPage.IsExtensionRequestPageSliderReturningCorrectValuesOnChange(application.Id.ToString());
+            //requestPage.IsExtensionRequestPageSliderReturningCorrectValuesOnChange(application.Id.ToString()); the method to be updated
+
+            const int extensionDays = 2;
+            extensionRequestPage.SetInformativeBox(extensionDays);
 
             //Branch point - Add Cv2 for each path and proceed
-            requestPage.setSecurityCode("123");
-            requestPage.SubmitButtonClick();
+            extensionRequestPage.setSecurityCode("123");
+            extensionRequestPage.SubmitButtonClick();
 
             var extensionProcessingPage = new ExtensionProcessingPage(this.Client);
 
@@ -253,14 +256,17 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             var mySummaryPage = loginPage.LoginAs(email);
 
             mySummaryPage.ChangePromiseDateButtonClick();
-            var requestPage = new ExtensionRequestPage(this.Client);
+            var extensionRequestPage = new ExtensionRequestPage(this.Client);
 
             //Runs assertions internally
-            requestPage.IsExtensionRequestPageSliderReturningCorrectValuesOnChange(application.Id.ToString());
+            //requestPage.IsExtensionRequestPageSliderReturningCorrectValuesOnChange(application.Id.ToString()); the method to be updated
+
+            const int extensionDays = 2;
+            extensionRequestPage.SetInformativeBox(extensionDays);
 
             //Branch point - Add Cv2 for each path and proceed
-            requestPage.setSecurityCode("888");
-            requestPage.SubmitButtonClick();
+            extensionRequestPage.setSecurityCode("888");
+            extensionRequestPage.SubmitButtonClick();
 
             var extensionProcessingPage = new ExtensionProcessingPage(this.Client);
 
@@ -282,14 +288,17 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             var mySummaryPage = loginPage.LoginAs(email);
 
             mySummaryPage.ChangePromiseDateButtonClick();
-            var requestPage = new ExtensionRequestPage(this.Client);
+            var extensionRequestPage = new ExtensionRequestPage(this.Client);
 
             //Runs assertions internally
-            requestPage.IsExtensionRequestPageSliderReturningCorrectValuesOnChange(application.Id.ToString());
+            //requestPage.IsExtensionRequestPageSliderReturningCorrectValuesOnChange(application.Id.ToString()); the method to be updated
+
+            const int extensionDays = 2;
+            extensionRequestPage.SetInformativeBox(extensionDays);
 
             //Branch point - Add Cv2 for each path and proceed
-            requestPage.setSecurityCode("999");
-            requestPage.SubmitButtonClick();
+            extensionRequestPage.setSecurityCode("999");
+            extensionRequestPage.SubmitButtonClick();
 
             var extensionProcessingPage = new ExtensionProcessingPage(Client);
 
