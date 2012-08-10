@@ -30,12 +30,6 @@ namespace Wonga.QA.Framework.Builders
                 case AUT.Uk:
 
                     var responce = Drive.Api.Commands.Post(requests);
-                    Console.WriteLine("what {0}", responce.Values["ApplicationId"]);
-                    Console.WriteLine("what {0}", responce.Values["TransmissionFee"]);
-                    Console.WriteLine("what {0}", responce.Values["InterestRateMonthly"]);
-                    Console.WriteLine("what {0}", responce.Values["InterestRateAnnual"]);
-                    Console.WriteLine("what {0}", responce.Values["InterestRateAPR"]);
-                    Console.WriteLine("what {0}", responce.Values["DaysTillRepaymentDate"]);
                     break;
             }
 
