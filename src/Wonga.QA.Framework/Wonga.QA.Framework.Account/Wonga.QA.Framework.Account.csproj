@@ -42,14 +42,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountBase.cs" />
-    <Compile Include="AccountQueries.cs" />
+    <Compile Include="Business\BusinessAccount.cs" />
+    <Compile Include="Business\BusinessAccountOperations.cs" />
+    <Compile Include="Business\BusinessAccountQueries.cs" />
+    <Compile Include="Consumer\ConsumerAccountOperations.cs" />
+    <Compile Include="Consumer\ConsumerAccountQueries.cs" />
+    <Compile Include="Operations\AccountOperations.cs" />
+    <Compile Include="Operations\AccountOperationsBase.cs" />
+    <Compile Include="PayLater\PayLaterAccountOperations.cs" />
+    <Compile Include="PayLater\PayLaterAccountQueries.cs" />
+    <Compile Include="Queries\AccountQueries.cs" />
+    <Compile Include="Consumer\ConsumerAccount.cs" />
     <Compile Include="PayLater\PayLaterAccount.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Queries\AccountQueriesBase.cs" />
+    <Compile Include="Queries\AccountQueriesDataPresence.cs" />
+    <Compile Include="Queries\AccountQueriesPaymentDetails.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Business\" />
-    <Folder Include="Consumer\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Wonga.QA.Framework.Application\Wonga.QA.Framework.Application.csproj">
       <Project>{E02DE5C9-D5A4-45FE-8997-9C0CC9AAB3AA}</Project>

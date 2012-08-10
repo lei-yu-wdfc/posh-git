@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Wonga.QA.Framework.Account;
 using Wonga.QA.Framework.Account.PayLater;
+using Wonga.QA.Framework.Account.Queries;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Requests.Ops.Commands;
 using Wonga.QA.Framework.Core;
@@ -51,7 +51,7 @@ namespace Wonga.QA.Framework.Builders.PayLater
 
 		private void WaitUntilAccountIsPresentInServiceDatabases()
 		{
-			Do.Until(() =>  AccountQueries.IsAccountPresentInServiceDatabases(AccountId));
+			Do.Until(() =>  AccountQueries.PayLater.DataPresence.IsAccountPresentInServiceDatabases(AccountId));
 		}
 
 		#region "With" Methods - PersonalDetails

@@ -12,11 +12,11 @@ namespace Wonga.QA.Framework.Builders.Consumer.Za
 {
 	public class ConsumerAccountBuilder : ConsumerAccountBuilderBase
 	{
-		public ConsumerAccountBuilder(ConsumerAccountDataBase consumerAccountData) : base(consumerAccountData)
+		public ConsumerAccountBuilder(ConsumerAccountDataBase accountData) : base(accountData)
 		{
 		}
 
-		public ConsumerAccountBuilder(Guid accountId, ConsumerAccountDataBase consumerAccountData) : base(accountId, consumerAccountData)
+		public ConsumerAccountBuilder(Guid accountId, ConsumerAccountDataBase accountData) : base(accountId, accountData)
 		{
 		}
 

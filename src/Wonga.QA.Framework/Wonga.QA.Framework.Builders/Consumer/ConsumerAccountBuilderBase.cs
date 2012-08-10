@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Wonga.QA.Framework.Account;
+using Wonga.QA.Framework.Account.Consumer;
+using Wonga.QA.Framework.Account.Queries;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Enums;
 using Wonga.QA.Framework.Api.Requests.Comms.Commands;
@@ -17,22 +18,22 @@ namespace Wonga.QA.Framework.Builders.Consumer
 		protected ConsumerAccountDataBase AccountData { get; private set; }
 
 
-		protected ConsumerAccountBuilderBase(ConsumerAccountDataBase consumerAccountData) : this(Guid.NewGuid(), consumerAccountData){}
+		protected ConsumerAccountBuilderBase(ConsumerAccountDataBase accountData) : this(Guid.NewGuid(), accountData){}
 
-		protected ConsumerAccountBuilderBase(Guid accountId, ConsumerAccountDataBase consumerAccountData)
+		protected ConsumerAccountBuilderBase(Guid accountId, ConsumerAccountDataBase accountData)
 		{
 			AccountId = accountId;
 			BankAccountId = Guid.NewGuid();
 			PrimaryPhoneVerificationId = Guid.NewGuid();
-			AccountData = consumerAccountData;
+			AccountData = accountData;
 		}
 
-		public Customer Build()
+		public ConsumerAccount Build()
 		{
 			CreateAccount();
 			WaitUntilAccountIsPresentInServiceDatabases();
 
-			return new Customer(AccountId);
+			return new ConsumerAccount(AccountId);
 		}
 
 		protected void CreateAccount()
@@ -61,7 +62,7 @@ namespace Wonga.QA.Framework.Builders.Consumer
 
 		private void WaitUntilAccountIsPresentInServiceDatabases()
 		{
-			Do.Until(() => AccountQueries.IsAccountPresentInServiceDatabases(AccountId));
+			Do.Until(() => AccountQueries.PayLater.DataPresence.IsAccountPresentInServiceDatabases(AccountId));
 		}
 
 		#region "With" Methods - PersonalDetails

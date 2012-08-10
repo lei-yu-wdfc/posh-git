@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{E02DE5C9-D5A4-45FE-8997-9C0CC9AAB3AA}</ProjectGuid>
+    <ProjectGuid>{9A256F3B-865C-48C8-8B2F-398E77532B20}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Wonga.QA.Framework.Application</RootNamespace>
-    <AssemblyName>Wonga.QA.Framework.Application</AssemblyName>
+    <RootNamespace>Wonga.QA.Tests.RefactorSandbox</RootNamespace>
+    <AssemblyName>Wonga.QA.Tests.RefactorSandbox</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,6 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
+    <Reference Include="MbUnit, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -38,38 +40,21 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Wonga.QA.Framework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Wonga.QA.Framework.Builders, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\bin\Wonga.QA.Framework.Builders.dll</HintPath>
+    </Reference>
+    <Reference Include="Wonga.QA.Framework.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationBase.cs" />
-    <Compile Include="Operations\ApplicationOperations.cs" />
-    <Compile Include="Operations\ApplicationOperationsBase.cs" />
-    <Compile Include="Operations\ApplicationOperationsTimeTravel.cs" />
-    <Compile Include="Queries\ApplicationQueries.cs" />
-    <Compile Include="Queries\ApplicationQueriesBase.cs" />
-    <Compile Include="Business\BusinessApplication.cs" />
-    <Compile Include="Business\BusinessApplicationOperations.cs" />
-    <Compile Include="Business\BusinessApplicationQueries.cs" />
-    <Compile Include="Consumer\ConsumerApplication.cs" />
-    <Compile Include="Consumer\ConsumerApplicationOperations.cs" />
-    <Compile Include="Consumer\ConsumerApplicationQueries.cs" />
-    <Compile Include="PayLater\PayLaterApplication.cs" />
-    <Compile Include="PayLater\PayLaterApplicationOperations.cs" />
-    <Compile Include="PayLater\PayLaterApplicationQueries.cs" />
+    <Compile Include="Sandbox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\Wonga.QA.Framework.Data\Wonga.QA.Framework.Data.csproj">
-      <Project>{6DB7E1BD-C5B2-4BEE-A0A3-E2C635768203}</Project>
-      <Name>Wonga.QA.Framework.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Wonga.QA.Framework.Db\Wonga.QA.Framework.Db.csproj">
-      <Project>{06D44CDD-9AB7-47EC-8D7A-0E548465EF9D}</Project>
-      <Name>Wonga.QA.Framework.Db</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Wonga.QA.Framework\Wonga.QA.Framework.csproj">
-      <Project>{5D8AEAB2-EB00-45CA-86D1-A5B4A7C6ED2F}</Project>
-      <Name>Wonga.QA.Framework</Name>
+    <ProjectReference Include="..\Wonga.QA.Tests.Core\Wonga.QA.Tests.Core.csproj">
+      <Project>{36C48933-F3DA-468A-8529-212601FC0FA5}</Project>
+      <Name>Wonga.QA.Tests.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
