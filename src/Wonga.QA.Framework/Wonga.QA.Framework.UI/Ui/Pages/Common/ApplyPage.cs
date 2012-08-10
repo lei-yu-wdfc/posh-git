@@ -15,6 +15,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private IWebElement _editMobileNumber;
         private IWebElement _popupCloseButton;
         private IWebElement _secureCodeError;
+        private IWebElement _minCashError;
         public ApplicationSection ApplicationSection { get; set; }
         public ApplyPage(UiClient client)
             : base(client)
@@ -128,9 +129,32 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             {
                 _secureCodeError =
                             Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.ApplicationSection.SecurcodeError)));
-                string postCodeErrorFormClass = _secureCodeError.GetAttribute("class");
+                string secureCodeErrorClass = _secureCodeError.GetAttribute("class");
 
-                if (postCodeErrorFormClass.Contains("invalid"))
+                if (!secureCodeErrorClass.Contains("success"))
+                {
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Can't find error form" + "\n\n");
+                Console.WriteLine(e.Message);
+                return false;
+            }
+            return false;
+        }
+
+        public bool IsMinCashWarningOccurred()
+        {
+            Client.Driver.FindElement(By.CssSelector(UiMap.Get.ApplyPage.Submit)).Click();
+            try
+            {
+                _minCashError =
+                            Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.ApplicationSection.MinCashError)));
+                string minCashErrorclass = _minCashError.GetAttribute("class");
+
+                if (!minCashErrorclass.Contains("success"))
                 {
                     return true;
                 }

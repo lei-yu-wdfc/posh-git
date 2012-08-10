@@ -15,6 +15,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Sections
         public String BusinessLoanApplicationDetails { get; set; }
         public String AdditionalDirectorsOrPartners { get; set; }
         public String SecurcodeError { get; set; }
+        public String MinCashError { get; set; }
     }
 
 }
