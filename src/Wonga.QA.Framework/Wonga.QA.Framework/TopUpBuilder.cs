@@ -18,6 +18,7 @@ namespace Wonga.QA.Framework.Builders
     {
         private Customer _customer;
         private Application _application;
+        private int _amount;
 
         public TopUp Build()
         {
@@ -50,6 +51,27 @@ namespace Wonga.QA.Framework.Builders
         public TopUpBuilder WithApplication(Application _lapplication)
         {
             _application = _lapplication;
+            return this;
+        }
+
+        public TopUpBuilder WithAmount(int _lamount)
+        {
+            _amount = _lamount;
+            return this;
+        }
+
+        public TopUpBuilder Request()
+        {
+            return this;
+        }
+
+        public TopUpBuilder Accept()
+        {
+            return this;
+        }
+
+        public TopUpBuilder Decline()
+        {
             return this;
         }
     }
