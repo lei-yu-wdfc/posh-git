@@ -21,16 +21,19 @@ namespace Wonga.QA.Tests.Payments
         private static dynamic _primaryPaymentCardId;
         private int _appInternalId;
         private int _secondAppInternalId;
+        private const int FiveAmState=0;
+        private const int EightAmState =1;
+
 
         [Test, JIRA("UKOPS-419"), Owner(Owner.JonHurd)]
         public void PaymentsShouldCreateNewTransactionWhenFiveAmCollectionSucceeds()
         {
             var customer = GetCustomer();
             var application = GetApplicationInArrears(customer);
-            SetCardExpiryDate(customer.GetPaymentCard(), DateTime.Now.AddYears(1));
+            SetCardExpiryDate(customer.GetPaymentCard(), DateTime.Now.AddYears(EightAmState));
             var appInternalId = ApplicationOperations.GetAppInternalId(application);
             _sagaEntityFiveAm = GetSagaEntity(appInternalId);
-            SaagaTimeOutMessageBy5Or8Am(_sagaEntityFiveAm.Id, 0);
+            SaagaTimeOutMessageBy5Or8Am(_sagaEntityFiveAm.Id, FiveAmState);
             PaymentTransactionForArrearPing(application, appInternalId);
         }
 
@@ -51,7 +54,7 @@ namespace Wonga.QA.Tests.Payments
             _appInternalId = ApplicationOperations.GetAppInternalId(_application);
             _customer.AddBadCard();
             _sagaEntityFail = GetSagaEntity(_appInternalId); 
-            SaagaTimeOutMessageBy5Or8Am(_sagaEntityFail.Id,0);
+            SaagaTimeOutMessageBy5Or8Am(_sagaEntityFail.Id,FiveAmState);
             CheckPaymentRequestDeclinedTransaction(_application, _appInternalId);
         }
 
@@ -60,7 +63,7 @@ namespace Wonga.QA.Tests.Payments
         {
             UpdatePrimaryCard(_application.AccountId);
             SetCardExpiryDate(_customer.GetPaymentCard(), DateTime.Now.AddYears(1));
-            SaagaTimeOutMessageBy5Or8Am(_sagaEntityFail.Id, 1);
+            SaagaTimeOutMessageBy5Or8Am(_sagaEntityFail.Id, EightAmState);
             PaymentTransactionForArrearPing(_application, _appInternalId);
         }
 
@@ -78,13 +81,13 @@ namespace Wonga.QA.Tests.Payments
             _secondAppInternalId = ApplicationOperations.GetAppInternalId(_secondApplication);
             customer.AddBadCard(); 
             _sagaSecondEntityFail = GetSagaEntity(_secondAppInternalId); 
-            SaagaTimeOutMessageBy5Or8Am(_sagaSecondEntityFail.Id, 0);
+            SaagaTimeOutMessageBy5Or8Am(_sagaSecondEntityFail.Id, FiveAmState);
         }
 
         [Test, JIRA("UKOPS-419"), DependsOn("PaymentsFirstPingFailsToMakeSecondPingAlsoFail"), Owner(Owner.JonHurd)]
         public void PaymentsRepaymentRequestSecondPingFailsAfterFirstPingFailed()
         {
-            SaagaTimeOutMessageBy5Or8Am(_sagaSecondEntityFail.Id, 1);
+            SaagaTimeOutMessageBy5Or8Am(_sagaSecondEntityFail.Id, EightAmState);
             var amountDue = _secondApplication.GetDueDateBalance();
             Do.With.Timeout(2).Until<bool>(
                 () => Drive.Data.Payments.Db.PaymentCardRepaymentRequests.FindAllBy(ApplicationId: _secondAppInternalId,
