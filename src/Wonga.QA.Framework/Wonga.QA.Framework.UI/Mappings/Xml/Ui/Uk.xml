@@ -428,8 +428,8 @@
 		<OtherPhone>#edit-other-phone-exp.form-text</OtherPhone>
 
 		<Food>#edit-food-milk.form-text</Food>
-		<Cleaning>#edit-cleaning.form-text</Cleaning>
-		<Toiletries>#edit-cleaning-toiletries.form-text</Toiletries>
+		<Cleaning>#edit-cleaning-toiletries.form-text</Cleaning>
+		<Toiletries>#edit-toiletries.form-text</Toiletries>
 		<NewspapersAndMagazines>#edit-newspapers-magazines.form-text</NewspapersAndMagazines>
 		<CigarettesAndTobacco>#edit-cigaretes-tabacco-sweets.form-text</CigarettesAndTobacco>
 		<Alcohol>#edit-alcohol.form-text</Alcohol>

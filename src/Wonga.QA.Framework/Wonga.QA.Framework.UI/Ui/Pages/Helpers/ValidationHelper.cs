@@ -9,54 +9,55 @@ using Wonga.QA.Framework.UI.UiElements.Pages;
 
 namespace Wonga.QA.Framework.UI.Ui.Pages.Helpers
 {
-    public class ValidationHelper<T, C>
-        where T : struct
-        where C : BasePage
+    public class ValidationHelper<TPage>
+        where TPage : BasePage
     {
-        static ValidationHelper()
-        {
-            if (!IsEnum())
-                throw new Exception("Type should be System.Enum type");
-        }
-
-        private static C _page;
+        private static TPage _page;
         private static String _fieldName;
+        private static ExecutableFunction _baseCallBack;
 
-        public delegate void ExecutableFunction(C page, String fieldName, String value);
+        public delegate void ExecutableFunction(TPage page, String fieldName, String value);
 
-        public static void CheckValidation(C page, String fieldName, List<T> restrictionList, FieldTypeList restrictionType, ExecutableFunction function)
+
+        public static void CheckValidation(TPage page, String fieldName, List<Int32> restrictionList, FieldTypeList restrictionType, ExecutableFunction callBack, Dictionary<Int32, Delegate> customRules, FieldType fieldType)
         {
             _page = page;
             _fieldName = fieldName;
+            _baseCallBack = callBack;
 
-            List<T> list = EnumList(restrictionList, restrictionType);
-            ValidateByType(FieldType.String, list, function);
+            List<Int32> list = EnumList(restrictionList, restrictionType, fieldType);
+            ValidateByType(fieldType, list, customRules);
         }
 
-        private static Boolean IsEnum()
+        private static void CallBack(String value)
         {
-            return typeof(T).IsEnum;
-        }
-
-        private static List<T> EnumToList()
-        {
-            Type enumType = typeof(T);
-            Array enumValArray = Enum.GetValues(enumType);
-            List<T> enumValList = new List<T>(enumValArray.Length);
-
-            foreach (int val in enumValArray)
+            if (value != null)
             {
-                enumValList.Add((T)Enum.Parse(enumType, val.ToString()));
+                ExecutableFunction executableFunction = new ExecutableFunction(_baseCallBack);
+                executableFunction(_page, _fieldName, value);
             }
-            return enumValList;
         }
 
-        private static void ValidateByType(FieldType fieldType, List<T> list, ExecutableFunction function)
+        private static List<Int32> GetFullEnumList(FieldType type)
         {
+            List<Int32> fullList = new List<Int32>();
+            switch (type)
+            {
+                case FieldType.String:
+                    fullList = Array.ConvertAll(Enum.GetValues(typeof(FieldTypeString)).Cast<FieldTypeString>().ToArray(), value => (Int32)value).ToList();
+                    break;
+            }
+            return fullList;
+        }
+        private static void ValidateByType(FieldType fieldType, List<Int32> list, Dictionary<Int32, Delegate> customCallBacks)
+        {
+            if (customCallBacks == null)
+                customCallBacks = new Dictionary<Int32, Delegate>();
+
             switch (fieldType)
             {
                 case FieldType.String:
-                    ValidateForString(list, function);
+                    ValidationRulesHelper.ValidateForString(list, CallBack, customCallBacks);
                     break;
                 case FieldType.Date:
                     break;
@@ -64,9 +65,9 @@ namespace Wonga.QA.Framework.UI.Ui.Pages.Helpers
                     break;
             }
         }
-        private static List<T> EnumList(List<T> restrictionList, FieldTypeList restrictionType)
+        private static List<Int32> EnumList(List<Int32> restrictionList, FieldTypeList restrictionType, FieldType fieldType)
         {
-            List<T> fullList = EnumToList();
+            List<Int32> fullList = GetFullEnumList(fieldType);
             switch (restrictionType)
             {
                 case FieldTypeList.IncludeArray:
@@ -77,52 +78,6 @@ namespace Wonga.QA.Framework.UI.Ui.Pages.Helpers
                     break;
             }
             return fullList;
-        }
-
-        // custom validation
-        private static void ValidateForString(List<T> list, ExecutableFunction function)
-        {
-            foreach (T item in list)
-            {
-                FieldTypeString currentType = (FieldTypeString)Enum.Parse(typeof(FieldTypeString), item.ToString());
-                String value = String.Empty;
-
-                switch (currentType)
-                {
-                    case FieldTypeString.Letters:
-                        value = Get.GetName();
-                        break;
-                    case FieldTypeString.NegativeNumbers:
-                        value = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00").Insert(0, "-");
-                        break;
-                    case FieldTypeString.Numbers:
-                        break;
-                    case FieldTypeString.NumbersWithComa:
-                        value = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00").Replace('.', ',');
-                        break;
-                    case FieldTypeString.SpecialSymbols:
-                        value = GetRandomSpecialSymbolsString();
-                        break;
-                    default:
-                        return;
-                }
-
-                ExecutableFunction executableFunction = new ExecutableFunction(function);
-                executableFunction(_page, _fieldName, value);
-            }
-        }
-
-        private static String GetRandomSpecialSymbolsString()
-        {
-            int lenght = Get.RandomInt(0, 10);
-            String strForOut = "";
-            List<char> specialsymbols = new List<char>();
-            specialsymbols.AddRange(@"!@#$%^&*()_".ToCharArray());
-            for (int i = 0; i < lenght; i++)
-            {
-                strForOut += Get.RandomElement<char>(specialsymbols).ToString();
-            }
-            return strForOut;
         }
 
     }

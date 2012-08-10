@@ -157,6 +157,7 @@
     <Compile Include="Ui\Elements\SocialElement.cs" />
     <Compile Include="Ui\Elements\SecciToggleElement.cs" />
     <Compile Include="Ui\Enums\FieldType.cs" />
+    <Compile Include="Ui\Enums\FieldTypeDate.cs" />
     <Compile Include="Ui\Enums\FieldTypeList.cs" />
     <Compile Include="Ui\Enums\FieldTypeString.cs" />
     <Compile Include="Ui\Pages\Common\BusinessSummaryPage.cs" />
@@ -324,8 +325,10 @@
     <Compile Include="Ui\Pages\FinancialAssessment\FALoginPage.cs" />
     <Compile Include="Ui\Pages\FinancialAssessment\FARepaymentPlan.cs" />
     <Compile Include="Ui\Pages\FinancialAssessment\FinancialAssessmentPage.cs" />
+    <Compile Include="Ui\Pages\Helpers\DataValidation.cs" />
     <Compile Include="Ui\Pages\Helpers\PropertiesHelper.cs" />
     <Compile Include="Ui\Pages\Helpers\ValidationHelper.cs" />
+    <Compile Include="Ui\Pages\Helpers\ValidationRulesHelper.cs" />
     <Compile Include="Ui\Pages\Interfaces\IRepayPaymentPage.cs" />
     <Compile Include="Ui\Pages\Interfaces\IExtensionPaymentPage.cs" />
     <Compile Include="Ui\Pages\Interfaces\ITopupDecisionPage.cs" />

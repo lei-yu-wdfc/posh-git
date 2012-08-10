@@ -13,6 +13,7 @@ using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.UI;
 using Wonga.QA.Framework.UI.Ui.Enums;
+using System.Threading;
 
 namespace Wonga.QA.Tests.Ui.FinancialAssessment
 {
@@ -39,85 +40,93 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
             return faexpenditurepage;
         }
 
-        private void GetEsentualExpedentureSectionData(FAExpenditurePage faexpenditurepage, Dictionary<String, String> fields)
+        private void GetEsentualExpedentureSectionData(FAExpenditurePage faexpenditurepage, List<DataValidation> fields)
         {
-            fields.Add("Rent", faexpenditurepage.Rent);
-            fields.Add("GroundRentAndServiceCharges", faexpenditurepage.GroundRentAndServiceCharges);
-            fields.Add("Mortgage", faexpenditurepage.Mortgage);
-            fields.Add("MonthlySecuredLoanPayments", faexpenditurepage.MonthlySecuredLoanPayments);
-            fields.Add("BuildingAndContentsInsurance", faexpenditurepage.BuildingAndContentsInsurance);
-            fields.Add("PensionAndLifeInsurance", faexpenditurepage.PensionAndLifeInsurance);
-            fields.Add("CouncilTaxOrRates", faexpenditurepage.CouncilTaxOrRates);
-            fields.Add("Gas", faexpenditurepage.Gas);
-            fields.Add("Electricity", faexpenditurepage.Electricity);
-            fields.Add("Water", faexpenditurepage.Water);
-            fields.Add("OtherUtilities", faexpenditurepage.OtherUtilities);
-            fields.Add("TvLisense", faexpenditurepage.TvLisense);
-            fields.Add("CourtFines", faexpenditurepage.CourtFines);
-            fields.Add("MaintenenceOrChildSupportPayments", faexpenditurepage.MaintenenceOrChildSupportPayments);
-            fields.Add("HirePurchaseOrConditionalSale", faexpenditurepage.HirePurchaseOrConditionalSale);
-            fields.Add("ChildcareCosts", faexpenditurepage.ChildcareCosts);
-            fields.Add("AdultcareCosts", faexpenditurepage.AdultcareCosts);
-            fields.Add("OtherEssentialExpediture", faexpenditurepage.OtherEssentialExpediture);
+            fields.Add(new DataValidation("Rent", faexpenditurepage.Rent, FieldType.String, FieldTypeList.IncludeArray, new Int32[] { (Int32)FieldTypeString.SpecialSymbols }.ToList()));
+            fields.Add(new DataValidation("GroundRentAndServiceCharges", faexpenditurepage.GroundRentAndServiceCharges, FieldType.String));
+            fields.Add(new DataValidation("Mortgage", faexpenditurepage.Mortgage, FieldType.String));
+            fields.Add(new DataValidation("MonthlySecuredLoanPayments", faexpenditurepage.MonthlySecuredLoanPayments, FieldType.String));
+            fields.Add(new DataValidation("BuildingAndContentsInsurance", faexpenditurepage.BuildingAndContentsInsurance, FieldType.String));
+            fields.Add(new DataValidation("PensionAndLifeInsurance", faexpenditurepage.PensionAndLifeInsurance, FieldType.String));
+            fields.Add(new DataValidation("CouncilTaxOrRates", faexpenditurepage.CouncilTaxOrRates, FieldType.String));
+            fields.Add(new DataValidation("Gas", faexpenditurepage.Gas, FieldType.String));
+            fields.Add(new DataValidation("Electricity", faexpenditurepage.Electricity, FieldType.String));
+            fields.Add(new DataValidation("Water", faexpenditurepage.Water, FieldType.String));
+            fields.Add(new DataValidation("OtherUtilities", faexpenditurepage.OtherUtilities, FieldType.String));
+            fields.Add(new DataValidation("TvLisense", faexpenditurepage.TvLisense, FieldType.String));
+            fields.Add(new DataValidation("CourtFines", faexpenditurepage.CourtFines, FieldType.String));
+            fields.Add(new DataValidation("MaintenenceOrChildSupportPayments", faexpenditurepage.MaintenenceOrChildSupportPayments, FieldType.String));
+            fields.Add(new DataValidation("HirePurchaseOrConditionalSale", faexpenditurepage.HirePurchaseOrConditionalSale, FieldType.String));
+            fields.Add(new DataValidation("ChildcareCosts", faexpenditurepage.ChildcareCosts, FieldType.String));
+            fields.Add(new DataValidation("AdultcareCosts", faexpenditurepage.AdultcareCosts, FieldType.String));
+            fields.Add(new DataValidation("OtherEssentialExpediture", faexpenditurepage.OtherEssentialExpediture, FieldType.String));
         }
 
-        private void GetPhoneSectionData(FAExpenditurePage faexpenditurepage, Dictionary<String, String> fields)
+        private void GetPhoneSectionData(FAExpenditurePage faexpenditurepage, List<DataValidation> fields)
         {
-            fields.Add("HomePhone", faexpenditurepage.HomePhone);
-            fields.Add("MobilePhone", faexpenditurepage.MobilePhone);
-            fields.Add("OtherPhone", faexpenditurepage.OtherPhone);
+            fields.Add(new DataValidation("HomePhone", faexpenditurepage.HomePhone, FieldType.String));
+            fields.Add(new DataValidation("MobilePhone", faexpenditurepage.MobilePhone, FieldType.String));
+            fields.Add(new DataValidation("OtherPhone", faexpenditurepage.OtherPhone, FieldType.String, FieldTypeList.IncludeArray, new Int32[] { (Int32)FieldTypeString.SpecialSymbols }.ToList()));
         }
 
-        private void GetHouseKeepingSectionData(FAExpenditurePage faexpenditurepage, Dictionary<String, String> fields)
+        private void GetHouseKeepingSectionData(FAExpenditurePage faexpenditurepage, List<DataValidation> fields)
         {
-            fields.Add("Food", faexpenditurepage.Food);
-            fields.Add("Cleaning", faexpenditurepage.Cleaning);
-            fields.Add("Toiletries", faexpenditurepage.Toiletries);
-            fields.Add("NewspapersAndMagazines", faexpenditurepage.NewspapersAndMagazines);
-            fields.Add("CigarettesAndTobacco", faexpenditurepage.CigarettesAndTobacco);
-            fields.Add("Alcohol", faexpenditurepage.Alcohol);
-            fields.Add("LaundryAndDryCleaning", faexpenditurepage.LaundryAndDryCleaning);
-            fields.Add("ClothingAndFootwear", faexpenditurepage.ClothingAndFootwear);
-            fields.Add("BabyItems", faexpenditurepage.BabyItems);
-            fields.Add("PetItems", faexpenditurepage.PetItems);
-            fields.Add("OtherHousekeeping", faexpenditurepage.OtherHousekeeping);
+            fields.Add(new DataValidation("Food", faexpenditurepage.Food, FieldType.String));
+            fields.Add(new DataValidation("Cleaning", faexpenditurepage.Cleaning, FieldType.String));
+            fields.Add(new DataValidation("Toiletries", faexpenditurepage.Toiletries, FieldType.String));
+            fields.Add(new DataValidation("NewspapersAndMagazines", faexpenditurepage.NewspapersAndMagazines, FieldType.String));
+            fields.Add(new DataValidation("CigarettesAndTobacco", faexpenditurepage.CigarettesAndTobacco, FieldType.String));
+            fields.Add(new DataValidation("Alcohol", faexpenditurepage.Alcohol, FieldType.String));
+            fields.Add(new DataValidation("LaundryAndDryCleaning", faexpenditurepage.LaundryAndDryCleaning, FieldType.String));
+            fields.Add(new DataValidation("ClothingAndFootwear", faexpenditurepage.ClothingAndFootwear, FieldType.String));
+            fields.Add(new DataValidation("BabyItems", faexpenditurepage.BabyItems, FieldType.String));
+            fields.Add(new DataValidation("PetItems", faexpenditurepage.PetItems, FieldType.String));
+            fields.Add(new DataValidation("OtherHousekeeping", faexpenditurepage.OtherHousekeeping, FieldType.String));
         }
 
-        private void GetTravelSectionData(FAExpenditurePage faexpenditurepage, Dictionary<String, String> fields)
+        private void GetTravelSectionData(FAExpenditurePage faexpenditurepage, List<DataValidation> fields)
         {
-            fields.Add("PublicTransport", faexpenditurepage.PublicTransport);
-            fields.Add("Texis", faexpenditurepage.Texis);
-            fields.Add("CarInsurance", faexpenditurepage.CarInsurance);
-            fields.Add("VehicleTax", faexpenditurepage.VehicleTax);
-            fields.Add("Fuel", faexpenditurepage.Fuel);
-            fields.Add("MOTAndCarMeintenece", faexpenditurepage.MOTAndCarMeintenece);
-            fields.Add("Breakdown", faexpenditurepage.Breakdown);
-            fields.Add("ParkingChargesOrTolls", faexpenditurepage.ParkingChargesOrTolls);
-            fields.Add("OtherTravelcosts", faexpenditurepage.OtherTravelcosts);
+            fields.Add(new DataValidation("PublicTransport", faexpenditurepage.PublicTransport, FieldType.String));
+            fields.Add(new DataValidation("Texis", faexpenditurepage.Texis, FieldType.String));
+            fields.Add(new DataValidation("CarInsurance", faexpenditurepage.CarInsurance, FieldType.String));
+            fields.Add(new DataValidation("VehicleTax", faexpenditurepage.VehicleTax, FieldType.String));
+            fields.Add(new DataValidation("Fuel", faexpenditurepage.Fuel, FieldType.String));
+            fields.Add(new DataValidation("MOTAndCarMeintenece", faexpenditurepage.MOTAndCarMeintenece, FieldType.String));
+            fields.Add(new DataValidation("Breakdown", faexpenditurepage.Breakdown, FieldType.String));
+            fields.Add(new DataValidation("ParkingChargesOrTolls", faexpenditurepage.ParkingChargesOrTolls, FieldType.String));
+            fields.Add(new DataValidation("OtherTravelcosts", faexpenditurepage.OtherTravelcosts, FieldType.String));
         }
 
-        private Dictionary<String, String> SetNewValue(FAExpenditurePage faexpenditurepage, Dictionary<String, String> fields)
+        private List<DataValidation> SetNewValue(FAExpenditurePage faexpenditurepage, List<DataValidation> fields)
         {
-            Dictionary<String, String> newFields = new Dictionary<String, String>();
+            List<DataValidation> newFields = new List<DataValidation>();
             foreach (var field in fields)
             {
                 String currentValue = Get.RandomInt(10).ToString();
-                PropertiesHelper<FAExpenditurePage>.SetFieldValue(faexpenditurepage, field.Key, currentValue);
-                newFields.Add(field.Key, field.Value);
-                newFields[field.Key] = currentValue;
+                PropertiesHelper<FAExpenditurePage>.SetFieldValue(faexpenditurepage, field.FieldName, currentValue);
+                if (field.IsExtended)
+                    newFields.Add(new DataValidation(field.FieldName, currentValue, field.FieldType, field.FieldTypeList, field.RulesArray));
+                else
+                    newFields.Add(new DataValidation(field.FieldName, currentValue, field.FieldType));
             }
             return newFields;
         }
 
-        private void CheckDataValidation(FAExpenditurePage faexpenditurepage, Dictionary<String, String> fields)
+        private void CheckDataValidation(FAExpenditurePage faexpenditurepage, List<DataValidation> fields)
         {
-            FieldTypeString[] typesArr = new FieldTypeString[] { FieldTypeString.Numbers };
+            Dictionary<FieldType, Int32[]> dictionary = new Dictionary<FieldType, Int32[]>();
+            dictionary.Add(FieldType.String, new Int32[] { (Int32)FieldTypeString.Numbers });
+
             foreach (var field in fields)
             {
-                ValidationHelper<FieldTypeString, FAExpenditurePage>.CheckValidation(faexpenditurepage, field.Key, typesArr.ToList(), FieldTypeList.ExcludeArray, Validation);
-                PropertiesHelper<FAExpenditurePage>.SetFieldValue(faexpenditurepage, field.Key, field.Value);
+                if (!field.IsExtended)
+                    ValidationHelper<FAExpenditurePage>.CheckValidation(faexpenditurepage, field.FieldName, dictionary[field.FieldType].ToList(), FieldTypeList.ExcludeArray, Validation, null, field.FieldType);
+                else
+                    ValidationHelper<FAExpenditurePage>.CheckValidation(faexpenditurepage, field.FieldName, field.RulesArray, field.FieldTypeList, Validation, null, field.FieldType);
+                PropertiesHelper<FAExpenditurePage>.SetFieldValue(faexpenditurepage, field.FieldName, field.FieldValue);
             }
         }
+
 
         private void Validation(FAExpenditurePage faexpenditurepage, String fieldName, String value)
         {
@@ -129,7 +138,7 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
             if (faexpenditurepage.Url.Contains("/debts")) { faexpenditurepage = (basepage as FADebtsPage).PreviousClick() as FAExpenditurePage; }
         }
 
-        private void CheckDataAfterGoBack(FAExpenditurePage faexpenditurepage, Dictionary<String, String> fields)
+        private void CheckDataAfterGoBack(FAExpenditurePage faexpenditurepage, List<DataValidation> fields)
         {
             var fadebtspage = faexpenditurepage.NextClick() as FADebtsPage;
             Assert.Contains(fadebtspage.Url, "/debts", "Pass to debts page, with right data in fields");
@@ -138,95 +147,95 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
 
             foreach (var field in fields)
             {
-                Object fieldValue = PropertiesHelper<FAExpenditurePage>.GetFieldValue(faexpenditurepage, field.Key);
-                Assert.AreEqual(fieldValue, field.Value, field.Key + " check after go back");
+                Object fieldValue = PropertiesHelper<FAExpenditurePage>.GetFieldValue(faexpenditurepage, field.FieldName);
+                Assert.AreEqual(fieldValue, field.FieldValue, field.FieldName + " check after go back");
             }
         }
 
         //1
-        [Test, AUT(AUT.Uk), JIRA(""), MultipleAsserts, Owner(Owner.DmytroRomanii), Pending("Financial Assessment")]
+        [Test, AUT(AUT.Uk), JIRA(""), MultipleAsserts, Owner(Owner.DmytroRomanii), Pending("Financial Assessment functionality is under development")]
         public void CheckDataValidationForEsentualExpedenture()
         {
             FAExpenditurePage faexpenditurepage = ExedenturePageTeleport();
-            Dictionary<String, String> fields = new Dictionary<String, String>();
+            List<DataValidation> fields = new List<DataValidation>();
             GetEsentualExpedentureSectionData(faexpenditurepage, fields);
             CheckDataValidation(faexpenditurepage, fields);
         }
 
-        [Test, AUT(AUT.Uk), JIRA(""), MultipleAsserts, Owner(Owner.DmytroRomanii), Pending("Financial Assessment")]
+        [Test, AUT(AUT.Uk), JIRA(""), MultipleAsserts, Owner(Owner.DmytroRomanii), Pending("Financial Assessment functionality is under development")]
         public void CheckDataValidationForPhone()
         {
             FAExpenditurePage faexpenditurepage = ExedenturePageTeleport();
-            Dictionary<String, String> fields = new Dictionary<String, String>();
+            List<DataValidation> fields = new List<DataValidation>();
             GetPhoneSectionData(faexpenditurepage, fields);
             CheckDataValidation(faexpenditurepage, fields);
         }
 
-        [Test, AUT(AUT.Uk), JIRA(""), MultipleAsserts, Owner(Owner.DmytroRomanii), Pending("Financial Assessment")]
+        [Test, AUT(AUT.Uk), JIRA(""), MultipleAsserts, Owner(Owner.DmytroRomanii), Pending("Financial Assessment functionality is under development")]
         public void CheckDataValidationForHouseKeeping()
         {
             FAExpenditurePage faexpenditurepage = ExedenturePageTeleport();
-            Dictionary<String, String> fields = new Dictionary<String, String>();
+            List<DataValidation> fields = new List<DataValidation>();
             GetHouseKeepingSectionData(faexpenditurepage, fields);
             CheckDataValidation(faexpenditurepage, fields);
         }
 
-        [Test, AUT(AUT.Uk), JIRA(""), MultipleAsserts, Owner(Owner.DmytroRomanii), Pending("Financial Assessment")]
+        [Test, AUT(AUT.Uk), JIRA(""), MultipleAsserts, Owner(Owner.DmytroRomanii), Pending("Financial Assessment functionality is under development")]
         public void CheckDataValidationForTravel()
         {
             FAExpenditurePage faexpenditurepage = ExedenturePageTeleport();
-            Dictionary<String, String> fields = new Dictionary<String, String>();
+            List<DataValidation> fields = new List<DataValidation>();
             GetTravelSectionData(faexpenditurepage, fields);
             CheckDataValidation(faexpenditurepage, fields);
         }
 
         //2
-        [Test, AUT(AUT.Uk), JIRA(""), MultipleAsserts, Owner(Owner.DmytroRomanii), Pending("Financial Assessment")]
+        [Test, AUT(AUT.Uk), JIRA(""), MultipleAsserts, Owner(Owner.DmytroRomanii), Pending("Financial Assessment functionality is under development")]
         public void CheckDataAfterGoBackForEsentualExpedenture()
         {
             FAExpenditurePage faexpenditurepage = ExedenturePageTeleport();
-            Dictionary<String, String> fields = new Dictionary<String, String>();
+            List<DataValidation> fields = new List<DataValidation>();
             GetEsentualExpedentureSectionData(faexpenditurepage, fields);
             fields = SetNewValue(faexpenditurepage, fields);
             CheckDataAfterGoBack(faexpenditurepage, fields);
         }
 
-        [Test, AUT(AUT.Uk), JIRA(""), MultipleAsserts, Owner(Owner.DmytroRomanii), Pending("Financial Assessment")]
+        [Test, AUT(AUT.Uk), JIRA(""), MultipleAsserts, Owner(Owner.DmytroRomanii), Pending("Financial Assessment functionality is under development")]
         public void CheckDataAfterGoBackForPhone()
         {
             FAExpenditurePage faexpenditurepage = ExedenturePageTeleport();
-            Dictionary<String, String> fields = new Dictionary<String, String>();
+            List<DataValidation> fields = new List<DataValidation>();
             GetPhoneSectionData(faexpenditurepage, fields);
             fields = SetNewValue(faexpenditurepage, fields);
             CheckDataAfterGoBack(faexpenditurepage, fields);
         }
 
-        [Test, AUT(AUT.Uk), JIRA(""), MultipleAsserts, Owner(Owner.DmytroRomanii), Pending("Financial Assessment")]
+        [Test, AUT(AUT.Uk), JIRA(""), MultipleAsserts, Owner(Owner.DmytroRomanii), Pending("Financial Assessment functionality is under development")]
         public void CheckDataAfterGoBackForHouseKeeping()
         {
             FAExpenditurePage faexpenditurepage = ExedenturePageTeleport();
-            Dictionary<String, String> fields = new Dictionary<String, String>();
+            List<DataValidation> fields = new List<DataValidation>();
             GetHouseKeepingSectionData(faexpenditurepage, fields);
             fields = SetNewValue(faexpenditurepage, fields);
             CheckDataAfterGoBack(faexpenditurepage, fields);
         }
 
-        [Test, AUT(AUT.Uk), JIRA(""), MultipleAsserts, Owner(Owner.DmytroRomanii), Pending("Financial Assessment")]
+        [Test, AUT(AUT.Uk), JIRA(""), MultipleAsserts, Owner(Owner.DmytroRomanii), Pending("Financial Assessment functionality is under development")]
         public void CheckDataAfterGoBackForTravel()
         {
             FAExpenditurePage faexpenditurepage = ExedenturePageTeleport();
-            Dictionary<String, String> fields = new Dictionary<String, String>();
+            List<DataValidation> fields = new List<DataValidation>();
             GetTravelSectionData(faexpenditurepage, fields);
             fields = SetNewValue(faexpenditurepage, fields);
             CheckDataAfterGoBack(faexpenditurepage, fields);
         }
 
         //3
-        [Test, AUT(AUT.Uk), JIRA(""), MultipleAsserts, Owner(Owner.DmytroRomanii), Pending("Financial Assessment")]
+        [Test, AUT(AUT.Uk), JIRA(""), MultipleAsserts, Owner(Owner.DmytroRomanii), Pending("Financial Assessment functionality is under development")]
         public void CheckBlankDataAutoProceed()
         {
             FAExpenditurePage faexpenditurepage = ExedenturePageTeleport();
-            Dictionary<String, String> fields = new Dictionary<String, String>();
+            List<DataValidation> fields = new List<DataValidation>();
             GetEsentualExpedentureSectionData(faexpenditurepage, fields);
             GetPhoneSectionData(faexpenditurepage, fields);
             GetHouseKeepingSectionData(faexpenditurepage, fields);
@@ -234,7 +243,7 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
 
             foreach (var field in fields)
             {
-                PropertiesHelper<FAExpenditurePage>.SetFieldValue(faexpenditurepage, field.Key, String.Empty);
+                PropertiesHelper<FAExpenditurePage>.SetFieldValue(faexpenditurepage, field.FieldName, String.Empty);
             }
 
             var fadebtspage = faexpenditurepage.NextClick() as FADebtsPage;

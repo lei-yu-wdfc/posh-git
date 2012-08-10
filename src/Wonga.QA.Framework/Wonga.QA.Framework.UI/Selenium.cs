@@ -27,13 +27,12 @@ namespace Wonga.QA.Framework.UI
             elements.SelectLabel(label => label.Trim() == value);
         }
 
-         public static Boolean VerifyTextEntering(this IWebElement element, string text)
- 	 	
+        public static Boolean VerifyTextEntering(this IWebElement element, string text)
         {
-           element.SendValue(text);
-           return element.GetValue().Equals(text);
+            element.SendValue(text);
+            return element.GetValue().Equals(text);
         }
- 	 	
+
 
         public static void SelectLabel(this ReadOnlyCollection<IWebElement> elements, Func<String, Boolean> func)
         {
@@ -41,7 +40,7 @@ namespace Wonga.QA.Framework.UI
             labels.First(label => func(label.Text)).Click();
         }
 
-         public static Boolean CanSelectLabel(ReadOnlyCollection<IWebElement> elements, string label)
+        public static Boolean CanSelectLabel(ReadOnlyCollection<IWebElement> elements, string label)
         {
             try
             {
@@ -65,9 +64,9 @@ namespace Wonga.QA.Framework.UI
             element.SelectOption(option => option.Trim() == value);
         }
 
-         public static Boolean CanSelectOption(this IWebElement element, string text)
+        public static Boolean CanSelectOption(this IWebElement element, string text)
         {
-             try
+            try
             {
                 element.SelectOption(text);
                 return true;
@@ -102,21 +101,20 @@ namespace Wonga.QA.Framework.UI
             element.Clear();
             element.SendKeys(value);
         }
-         public static Boolean CanSendValue(this IWebElement element, string text) 	 	
+        public static Boolean CanSendValue(this IWebElement element, string text)
         {
             try
             {
                 element.SendValue(text);
                 return true;
             }
-            catch(Exception)
-           {
+            catch (Exception)
+            {
                 return false;
-           }
+            }
         }
 
         public static Boolean CanSendValue(this IWebElement element)
- 	 	
         {
             try
             {
@@ -139,20 +137,20 @@ namespace Wonga.QA.Framework.UI
             if (element.Selected != value)
                 element.Click();
         }
-         public static Boolean CanToggle(this IWebElement element)
+        public static Boolean CanToggle(this IWebElement element)
         {
-             try
+            try
             {
                 element.Toggle(true);
                 return true;
             }
- 	 	    catch (Exception)
+            catch (Exception)
             {
                 return false;
             }
- 	 	
+
         }
-        
+
         public static bool DragAndDropToOffset(this IWebElement element, int xOffset, int yOffset)
         {
             Actions actions = new Actions(element.Driver());
@@ -178,7 +176,7 @@ namespace Wonga.QA.Framework.UI
         {
             element.Click();
             element.SendKeys(Keys.End);
-            for(int i =0; i<numberOfCharsToErase;i++)
+            for (int i = 0; i < numberOfCharsToErase; i++)
             {
                 element.SendKeys(Keys.Backspace);
             }
@@ -200,7 +198,7 @@ namespace Wonga.QA.Framework.UI
 
         //Does not work in Firefox and IE only Chrome atm.
         //public static void MouseOver(this IWebElement element)
-        //{
+        //        {
         //    Actions actions = new Actions(element.Driver());
         //    actions.MoveToElement(element);
         //}
@@ -210,15 +208,15 @@ namespace Wonga.QA.Framework.UI
             return selectors.SelectMany(parent.FindElements).Single();
         }
 
-        public static Boolean IsChoiseItems (BasePage page, string selector, string label)
-       {
-           ReadOnlyCollection<IWebElement> elements = page.Client.Driver.FindElements(By.CssSelector(selector));
- 	 	   return CanSelectLabel(elements, label);
-       }
-        public static Boolean IsDropdownList (BasePage page, string selector, string text)
+        public static Boolean IsChoiseItems(BasePage page, string selector, string label)
+        {
+            ReadOnlyCollection<IWebElement> elements = page.Client.Driver.FindElements(By.CssSelector(selector));
+            return CanSelectLabel(elements, label);
+        }
+        public static Boolean IsDropdownList(BasePage page, string selector, string text)
         {
             IWebElement element = page.Client.Driver.FindElement(By.CssSelector(selector));
-            return !CanSendValue(element, text) && CanSelectOption(element,text);
+            return !CanSendValue(element, text) && CanSelectOption(element, text);
         }
 
         public static Boolean IsTextBox(BasePage page, string selector, string text)
