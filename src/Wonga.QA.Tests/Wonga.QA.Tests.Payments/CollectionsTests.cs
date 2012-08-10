@@ -44,7 +44,7 @@ namespace Wonga.QA.Tests.Payments
 			db.Ops.SubmitChanges();
 		}
 
-		[Test, AUT(AUT.Za)]
+		[Test, AUT(AUT.Za), Pending, Owner(Owner.AdrianMurphy)]
 		public void CollectionsNaedoEntireWorkflowTest()
 		{
 			const int term = 25;
