@@ -138,8 +138,8 @@ namespace Wonga.QA.Tests.Payments
 
         private string GetThreeMinutesFromNow()
         {
-            var time = DateTime.Now.AddMinutes(3).ToString("HH:mm");
-            time += ";" + DateTime.Now.AddMinutes(4).ToString("HH:mm");
+            var time = DateTime.Now.AddMinutes(2).ToString("HH:mm");
+            time += ";" + DateTime.Now.AddMinutes(3).ToString("HH:mm");
             return time;
         }
 
