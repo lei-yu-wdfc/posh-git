@@ -70,20 +70,5 @@ namespace Wonga.QA.Framework.Builders
             _amount = _lamount;
             return this;
         }
-
-        public TopUpBuilder Request()
-        {
-            return this;
-        }
-
-        public TopUpBuilder Accept()
-        {
-            return this;
-        }
-
-        public TopUpBuilder Decline()
-        {
-            return this;
-        }
     }
 }
