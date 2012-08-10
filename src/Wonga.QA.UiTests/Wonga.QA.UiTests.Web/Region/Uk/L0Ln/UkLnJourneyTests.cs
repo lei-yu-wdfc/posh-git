@@ -204,9 +204,12 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
                 .New(customer)
                 .Build();
             application.RepayOnDueDate();
+            var mySummaryPage = loginPage.LoginAs(email);
             var journey = JourneyFactory.GetLnJourney(Client.Home());
             var applyPage = journey.Teleport<ApplyPage>() as ApplyPage;
-
+            applyPage.SetSecureCode = "111";
+            applyPage.ApplicationSection.SetMinCash = "100";
+            Assert.IsTrue(applyPage.IsSecurecodeWarningOccurred());
         }
 
         [Test, AUT(AUT.Uk), JIRA("QA-344"), Owner(Owner.PetrTarasenko)]
@@ -229,6 +232,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
             var mySummaryPage = loginPage.LoginAs(email);
             var journey = JourneyFactory.GetLnJourney(Client.Home());
             var applyPage = journey.Teleport<ApplyPage>() as ApplyPage;
+            applyPage.ApplicationSection.SetMinCash = "100";
             applyPage.SetSecureCode = "abc";
             Assert.IsTrue(applyPage.IsSecurecodeWarningOccurred());
             applyPage.SetSecureCode = "12a";
