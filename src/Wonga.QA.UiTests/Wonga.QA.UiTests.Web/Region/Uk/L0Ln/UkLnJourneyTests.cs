@@ -213,7 +213,37 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
             Assert.IsTrue(applyPage.IsSecurecodeWarningOccurred());
             applyPage.SetSecureCode = "";
             Assert.IsTrue(applyPage.IsSecurecodeWarningOccurred());
-            
+
         }
+
+        [Test, AUT(AUT.Uk), JIRA("QA-345"), Owner(Owner.PetrTarasenko)]
+        public void LnCashFieldValidation()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            string name = Get.GetName();
+            string surname = Get.RandomString(10);
+            Customer customer = CustomerBuilder
+                .New()
+                .WithEmailAddress(email)
+                .WithForename(name)
+                .WithSurname(surname)
+                .Build();
+            Application application = ApplicationBuilder
+                .New(customer)
+                .Build();
+            application.RepayOnDueDate();
+            var mySummaryPage = loginPage.LoginAs(email);
+            var journey = JourneyFactory.GetLnJourney(Client.Home());
+            var applyPage = journey.Teleport<ApplyPage>() as ApplyPage;
+            applyPage.ApplicationSection.SetMinCash = "ab";
+            Assert.IsTrue(applyPage.IsMinCashWarningOccurred());
+            applyPage.ApplicationSection.SetMinCash = "@#";
+            Assert.IsTrue(applyPage.IsMinCashWarningOccurred());
+            applyPage.ApplicationSection.SetMinCash = "";
+            Assert.IsTrue(applyPage.IsMinCashWarningOccurred());
+
+        }
+
     }
 }
