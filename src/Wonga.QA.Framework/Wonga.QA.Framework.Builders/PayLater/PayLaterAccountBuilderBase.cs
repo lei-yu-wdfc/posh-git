@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Api.Requests.Ops.Commands;
 
 namespace Wonga.QA.Framework.Builders.PayLater
 {
@@ -29,19 +30,19 @@ namespace Wonga.QA.Framework.Builders.PayLater
 		protected void CreateAccount()
 		{
 			var commands = new List<ApiRequest>();
-
 			commands.AddRange(GetGenericApiCommands());
-			commands.AddRange(GetRegionSpecificApiCommands());
-
 			Drive.Api.Commands.Post(commands);
 		}
 
 		protected IEnumerable<ApiRequest> GetGenericApiCommands()
 		{
-			throw new NotImplementedException();
+			yield return new CreateAccountCommand
+			             	{
+			             		AccountId = this.AccountId,
+			             		Login = AccountData.Email,
+			             		Password = AccountData.Password
+			             	};
 		}
-
-		abstract protected IEnumerable<ApiRequest> GetRegionSpecificApiCommands();
 
 		private void WaitUntilAccountIsPresentInServiceDatabases()
 		{
