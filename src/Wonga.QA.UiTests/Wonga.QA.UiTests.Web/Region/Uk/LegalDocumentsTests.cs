@@ -34,6 +34,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         [Test, JIRA("UKWEB-365", "UKWEB-1005"), Owner(Owner.OrizuNwokeji, Owner.PavithranVangiti), Pending("UKWEB-1005: With document links turned off, clicking Next button in Account Details page should show the error message")]
         public void L0AccountDetails_DocumentsLinkIsTurnedOff_DisplayErrorMessage()
         {
+            Client.Driver.Manage().Window.Maximize();
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
             Console.WriteLine("email={0}", email);
@@ -96,6 +97,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         [Test, JIRA("UKWEB-365", "UKWEB-1005"), Pending("UKWEB-1005: With document links turned off, clicking Next button in Account Details page should show the error message"), Owner(Owner.PavithranVangiti)]
         public void L0AccountDetailsRestartL0AndContinueWithoutOpeningLegalDocumentsL0ShouldSucceed()
         {
+            Client.Driver.Manage().Window.Maximize();
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
             Console.WriteLine("email={0}", email);
@@ -155,6 +157,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         [Test, JIRA("UKWEB-365"), Owner(Owner.StanDesyatnikov)]
         public void L0AccountDetailsContinueWithoutOpeningLegalDocumentsL0ShouldSucceed()
         {
+            Client.Driver.Manage().Window.Maximize();
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
             Console.WriteLine("email={0}", email);
@@ -200,6 +203,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         {
             const String errorMessage = "Oops. We are having technical issues and are unable to complete your application. Please try again shortly or call us on 08448 429 109.";
 
+            Client.Driver.Manage().Window.Maximize();
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
             Console.WriteLine("email={0}", email);
@@ -243,6 +247,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         [Test, JIRA("UKWEB-365"), Owner(Owner.PavithranVangiti)]
         public void L0AcceptPageContinueWithoutOpeningLegalDocumentsL0ShouldSucceed()
         {
+            Client.Driver.Manage().Window.Maximize();
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
             Console.WriteLine("email={0}", email);
@@ -289,6 +294,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer).WithLoanAmount(loanAmount).WithLoanTerm(loanTerm).Build();
 
+            Client.Driver.Manage().Window.Maximize();
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
 
@@ -351,6 +357,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer).WithLoanAmount(loanAmount).WithLoanTerm(loanTerm).Build();
 
+            Client.Driver.Manage().Window.Maximize();
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
 
@@ -441,6 +448,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer).WithLoanAmount(loanAmount).WithLoanTerm(loanTerm).Build();
 
+            Client.Driver.Manage().Window.Maximize();
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
 

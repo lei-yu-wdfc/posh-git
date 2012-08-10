@@ -4,6 +4,7 @@ using MbUnit.Framework;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.Ui.Elements;
+using Wonga.QA.Framework.UI.Ui.Validators;
 using Wonga.QA.Framework.UI.UiElements.Pages.Interfaces;
 using Wonga.QA.Framework.UI.Mappings;
 
@@ -23,8 +24,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public IWebElement _SecciTogglelink;
         
-        public ExtensionAgreementPage(UiClient client)
-            : base(client)
+        public ExtensionAgreementPage(UiClient client, Validator validator = null)
+            : base(client, validator)
         {
             _nextButton = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionAgreementPage.ExtensionAgreementAcceptButton));
             _agreementLegals = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionAgreementPage.ExtensionAgreementscroll));
@@ -157,8 +158,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public ExtensionAgreementPage ClickAcceptGetError()
         {
+            Validator validator = new ValidatorBuilder().Default(Client).WithoutErrorsCheck().Build();
             _nextButton.Click();
-            return new ExtensionAgreementPage(Client);
+            return new ExtensionAgreementPage(Client, validator);
         }
 
         public string GetErrorText()
