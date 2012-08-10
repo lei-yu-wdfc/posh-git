@@ -81,6 +81,7 @@
     <MinCash>#edit-min-cash</MinCash>
     <ChangeMobileButton>#change-number</ChangeMobileButton>
     <EditPin>#edit-pin</EditPin>
+    <SecurcodeError>#edit-security-code-wrapper div div</SecurcodeError>
   </ApplicationSection>
 
   <ApplyPage>
