@@ -25,6 +25,7 @@ namespace Wonga.QA.Tests.Risk.Workflows
 		                                                                     	{
 																					"AccountNumberApplicationsAcceptableVerification",
 		                                                                     		"CustomerIsEmployedVerification",
+																					"CustomerIsNotOnBenefitsVerification",
 		                                                                     		"ApplicantIsNotMinorVerification",
 		                                                                     		"MonthlyIncomeBCVerification",
 		                                                                     		"MonthlyIncomeVerification",
@@ -45,8 +46,8 @@ namespace Wonga.QA.Tests.Risk.Workflows
 
 		private static readonly List<string> ExpectedVerificationNamesLnCa = new List<string>
 		                                                                     	{
-																					"AccountNumberApplicationsAcceptableVerification",
-		                                                                     		"CustomerIsEmployedVerification",
+																					"CustomerIsEmployedVerification",
+		                                                                     		"CustomerIsNotOnBenefitsVerification",
 		                                                                     		"ApplicantIsNotMinorVerification",
 		                                                                     		"MonthlyIncomeBCVerification",
 		                                                                     		"MonthlyIncomeVerification",
