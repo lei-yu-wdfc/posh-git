@@ -162,10 +162,5 @@ namespace Wonga.QA.Framework.Builders.Consumer.Ca
 				r.HomePhone = AccountData.HomePhoneNumber;
 			});
 		}
-
-		protected override void CompletePhoneVerification()
-		{
-			throw new NotImplementedException();
-		}
 	}
 }

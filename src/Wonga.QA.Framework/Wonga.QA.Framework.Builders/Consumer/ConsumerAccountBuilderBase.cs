@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Wonga.QA.Framework.Account;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Enums;
 using Wonga.QA.Framework.Api.Requests.Comms.Commands;
@@ -30,7 +31,6 @@ namespace Wonga.QA.Framework.Builders.Consumer
 		{
 			CreateAccount();
 			WaitUntilAccountIsPresentInServiceDatabases();
-			CompletePhoneVerification();
 
 			return new Customer(AccountId);
 		}
@@ -59,14 +59,9 @@ namespace Wonga.QA.Framework.Builders.Consumer
 
 		abstract protected IEnumerable<ApiRequest> GetRegionSpecificApiCommands();
 
-		abstract protected void CompletePhoneVerification();
-
 		private void WaitUntilAccountIsPresentInServiceDatabases()
 		{
-			Do.Until(() => Drive.Data.Ops.Db.Accounts.FindByExternalId(AccountId));
-			Do.Until(() => Drive.Data.Comms.Db.CustomerDetails.FindByAccountId(AccountId));
-			Do.Until(() => Drive.Data.Payments.Db.AccountPreferences.FindByAccountId(AccountId));
-			Do.Until(() => Drive.Data.Risk.Db.RiskAccounts.FindByAccountId(AccountId));
+			Do.Until(() => AccountQueries.IsAccountPresentInServiceDatabases(AccountId));
 		}
 
 		#region "With" Methods - PersonalDetails

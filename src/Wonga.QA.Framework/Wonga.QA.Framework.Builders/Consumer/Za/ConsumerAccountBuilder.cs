@@ -119,7 +119,5 @@ namespace Wonga.QA.Framework.Builders.Consumer.Za
 			                                            		r.MobilePhone = AccountData.MobilePhoneNumber;
 			                                            	});
 		}
-
-		protected override void CompletePhoneVerification(){}
 	}
 }

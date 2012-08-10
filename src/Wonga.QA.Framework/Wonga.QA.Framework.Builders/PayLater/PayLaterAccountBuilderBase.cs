@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using Wonga.QA.Framework.Account;
+using Wonga.QA.Framework.Account.PayLater;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Requests.Ops.Commands;
+using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.Framework.Builders.PayLater
 {
 	public abstract class PayLaterAccountBuilderBase
 	{
 		protected Guid AccountId { get; private set; }
+		protected Guid PrimaryPhoneVerificationId { get; private set; }
 		protected PayLaterAccountDataBase AccountData { get; private set; }
 
 
@@ -19,12 +23,11 @@ namespace Wonga.QA.Framework.Builders.PayLater
 			AccountData = accountData;
 		}
 
-		public Customer Build()
+		public PayLaterAccount Build()
 		{
 			CreateAccount();
 			WaitUntilAccountIsPresentInServiceDatabases();
-
-			return new Customer(AccountId);
+			return new PayLaterAccount(AccountId);
 		}
 
 		protected void CreateAccount()
@@ -44,9 +47,11 @@ namespace Wonga.QA.Framework.Builders.PayLater
 			             	};
 		}
 
+		abstract protected IEnumerable<ApiRequest> GetRegionSpecificApiCommands();
+
 		private void WaitUntilAccountIsPresentInServiceDatabases()
 		{
-			throw new NotImplementedException();
+			Do.Until(() =>  AccountQueries.IsAccountPresentInServiceDatabases(AccountId));
 		}
 
 		#region "With" Methods - PersonalDetails
