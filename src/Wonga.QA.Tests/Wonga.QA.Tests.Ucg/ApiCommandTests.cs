@@ -7,10 +7,10 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Ucg
 {
-	[TestFixture, AUT(AUT.Za)]
+	[TestFixture, Parallelizable(TestScope.All), AUT(AUT.Uk, AUT.Ca, AUT.Za)]
 	public class ApiCommandTests
 	{
-		[Test, AUT(AUT.Za)]
+		[Test]
 		public void CreateAccountCommandTest()
 		{
 			var accountId = Guid.NewGuid();
