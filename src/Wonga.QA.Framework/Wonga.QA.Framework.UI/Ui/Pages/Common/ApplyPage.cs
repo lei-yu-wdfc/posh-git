@@ -14,6 +14,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
     {
         private IWebElement _editMobileNumber;
         private IWebElement _popupCloseButton;
+        private IWebElement _secureCodeError;
         public ApplicationSection ApplicationSection { get; set; }
         public ApplyPage(UiClient client)
             : base(client)
@@ -59,6 +60,15 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                 _editMobileNumber.SendValue(value);
                 Client.Driver.FindElement(By.CssSelector(UiMap.Get.ApplyPage.PopupSaveButton)).Click();
                 Do.Until(IsPhoneNumberNotChangedMessageVisible);
+            }
+        }
+
+        public string SetSecureCode
+        {
+            set
+            {
+                _secureCodeError = Client.Driver.FindElement(By.CssSelector(UiMap.Get.ApplicationSection.SecurityCode));
+                _secureCodeError.SendValue(value);
             }
         }
 
@@ -111,5 +121,27 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             close.Click();
         }
 
+        public bool IsSecurecodeWarningOccurred()
+        {
+            Client.Driver.FindElement(By.CssSelector(UiMap.Get.ApplyPage.Submit)).Click();
+            try
+            {
+                _secureCodeError =
+                            Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.ApplicationSection.SecurcodeError)));
+                string postCodeErrorFormClass = _secureCodeError.GetAttribute("class");
+
+                if (postCodeErrorFormClass.Contains("invalid"))
+                {
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Can't find error form" + "\n\n");
+                Console.WriteLine(e.Message);
+                return false;
+            }
+            return false;
+        }
     }
 }

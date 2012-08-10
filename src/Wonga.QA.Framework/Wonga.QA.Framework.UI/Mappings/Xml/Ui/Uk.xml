@@ -81,6 +81,7 @@
     <MinCash>#edit-min-cash</MinCash>
     <ChangeMobileButton>#change-number</ChangeMobileButton>
     <EditPin>#edit-pin</EditPin>
+    <SecurcodeError>#edit-security-code-wrapper div div</SecurcodeError>
   </ApplicationSection>
 
   <ApplyPage>
@@ -135,7 +136,8 @@
     <AmountPlusButton>.wonga-amount-slider-wrapper .sliderplus</AmountPlusButton>
     <DurationMinusButton>.wonga-duration-slider-wrapper .sliderminus</DurationMinusButton>
     <DurationPlusButton>.wonga-duration-slider-wrapper .sliderplus</DurationPlusButton>
-    <MaxAvailableCredit>.field-suffix</MaxAvailableCredit>
+    <!--<MaxAvailableCredit>.description</MaxAvailableCredit>-->
+    <MaxAvailableCredit>#edit-loan-amount-wrapper .field-suffix</MaxAvailableCredit>
   </SlidersElement>
 
   <ApplyPage>

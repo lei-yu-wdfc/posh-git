@@ -186,5 +186,34 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
             var applyPage = journey.Teleport<MySummaryPage>() as MySummaryPage;
 
         }
+
+        [Test, AUT(AUT.Uk), JIRA("QA-344"), Owner(Owner.PetrTarasenko)]
+        public void LnSecretCodeValidation()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            string name = Get.GetName();
+            string surname = Get.RandomString(10);
+            Customer customer = CustomerBuilder
+                .New()
+                .WithEmailAddress(email)
+                .WithForename(name)
+                .WithSurname(surname)
+                .Build();
+            Application application = ApplicationBuilder
+                .New(customer)
+                .Build();
+            application.RepayOnDueDate();
+            var mySummaryPage = loginPage.LoginAs(email);
+            var journey = JourneyFactory.GetLnJourney(Client.Home());
+            var applyPage = journey.Teleport<ApplyPage>() as ApplyPage;
+            applyPage.SetSecureCode = "abc";
+            Assert.IsTrue(applyPage.IsSecurecodeWarningOccurred());
+            applyPage.SetSecureCode = "12a";
+            Assert.IsTrue(applyPage.IsSecurecodeWarningOccurred());
+            applyPage.SetSecureCode = "";
+            Assert.IsTrue(applyPage.IsSecurecodeWarningOccurred());
+            
+        }
     }
 }
