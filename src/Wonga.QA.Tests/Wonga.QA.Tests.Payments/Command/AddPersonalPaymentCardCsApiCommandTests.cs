@@ -29,7 +29,7 @@ namespace Wonga.QA.Tests.Payments.Command
                                      new
                                          {
                                              Type = "Visa Debit",
-                                             Number = "1111222233334444",
+                                             Number = "4001152233334444",
                                              SecurityCode = "222",
                                              ExpiryDate = lastDayOfThisMonth.AddMonths(7),
                                              IsPrimary = true,
