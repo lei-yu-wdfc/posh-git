@@ -64,7 +64,7 @@ namespace Wonga.QA.Tests.Comms.Email
                 [Test, AUT(AUT.Uk), JIRA("UK-1032"), Owner(Owner.SeamusHoban)]
                 public void ThenAPaymentConfirmationEmailIsSent()
                 {
-                    Do.With.Timeout(5).Interval(20).Until(CheckPaymentConfirmationEmailSent);
+                    Do.With.Timeout(1).Interval(20).Until(CheckPaymentConfirmationEmailSent);
                 }
             }
         }
