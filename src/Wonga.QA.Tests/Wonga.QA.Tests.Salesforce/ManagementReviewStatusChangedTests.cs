@@ -9,7 +9,7 @@ namespace Wonga.QA.Tests.Salesforce
 
     [TestFixture(Order = -1)]
     [AUT(AUT.Uk)]
-    [Parallelizable(TestScope.Self)]
+    [Parallelizable(TestScope.All)]
     public class ManagementReviewStatusChangedTests
     {
         private Framework.ThirdParties.Salesforce _sales;
@@ -111,7 +111,7 @@ namespace Wonga.QA.Tests.Salesforce
         }
 
         [Test]
-        [AUT(AUT.Uk), JIRA("UKOPS-140"), Owner(Owner.ShaneMcHugh), Pending("UKOPS-824")]
+        [AUT(AUT.Uk), JIRA("UKOPS-140"), Owner(Owner.ShaneMcHugh), Pending("before an application can have a repayment arrangement it must be in arrears for 25 days by default or as specified in Payments.InArrearsMinDays service config setting. Test needs to be updated to reflect this.")]
         [Description("Verifies that when an application is in Repayment Arrangement status and it is moved to management review status salesforce is informed. When the management review status is removed return to previous status")]
         public void ApplicationRepaymentArrangement_SubmitsManagementReview_ToSalesforce()
         {
