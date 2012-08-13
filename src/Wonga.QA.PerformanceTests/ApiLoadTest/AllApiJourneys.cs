@@ -1,9 +1,6 @@
-﻿using MbUnit.Framework;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
-using Wonga.QA.Framework.Core;
-using Wonga.QA.Tests.Core;
 
 namespace ApiLoadTest
 {
@@ -18,7 +15,7 @@ namespace ApiLoadTest
         }
 
         [TestMethod]
-        public void L0JourneyAccepted()
+        public void ApiL0JourneyAccepted()
         {
             Customer cust = CustomerBuilder.New().Build();
             ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
@@ -39,10 +36,14 @@ namespace ApiLoadTest
         }
 
         [TestMethod]
-        public void ApiNoMobilePhoneL0JourneyDeclined()
+        public void ApiLnJourneyAccepted()
         {
-            Customer cust = CustomerBuilder.New().WithEmployer("Wonga").WithMobileNumber(null).Build();
-            ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+            Customer cust = CustomerBuilder.New().Build();
+            var applicationL0 = ApplicationBuilder.New(cust).Build();
+
+            applicationL0.RepayOnDueDate();
+
+            ApplicationBuilder.New(cust).Build();
         }
     }
 }
