@@ -40,8 +40,9 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
             return faexpenditurepage;
         }
 
-        private void GetEsentualExpedentureSectionData(FAExpenditurePage faexpenditurepage, List<DataValidation> fields)
+        private List<DataValidation> GetEsentualExpedentureSectionData(FAExpenditurePage faexpenditurepage)
         {
+            List<DataValidation> fields = new List<DataValidation>();
             fields.Add(new DataValidation("Rent", faexpenditurepage.Rent, FieldType.String, FieldTypeList.IncludeArray, new Int32[] { (Int32)FieldTypeString.SpecialSymbols }.ToList()));
             fields.Add(new DataValidation("GroundRentAndServiceCharges", faexpenditurepage.GroundRentAndServiceCharges, FieldType.String));
             fields.Add(new DataValidation("Mortgage", faexpenditurepage.Mortgage, FieldType.String));
@@ -60,17 +61,21 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
             fields.Add(new DataValidation("ChildcareCosts", faexpenditurepage.ChildcareCosts, FieldType.String));
             fields.Add(new DataValidation("AdultcareCosts", faexpenditurepage.AdultcareCosts, FieldType.String));
             fields.Add(new DataValidation("OtherEssentialExpediture", faexpenditurepage.OtherEssentialExpediture, FieldType.String));
+            return fields;
         }
 
-        private void GetPhoneSectionData(FAExpenditurePage faexpenditurepage, List<DataValidation> fields)
+        private List<DataValidation> GetPhoneSectionData(FAExpenditurePage faexpenditurepage)
         {
+            List<DataValidation> fields = new List<DataValidation>();
             fields.Add(new DataValidation("HomePhone", faexpenditurepage.HomePhone, FieldType.String));
             fields.Add(new DataValidation("MobilePhone", faexpenditurepage.MobilePhone, FieldType.String));
             fields.Add(new DataValidation("OtherPhone", faexpenditurepage.OtherPhone, FieldType.String, FieldTypeList.IncludeArray, new Int32[] { (Int32)FieldTypeString.SpecialSymbols }.ToList()));
+            return fields;
         }
 
-        private void GetHouseKeepingSectionData(FAExpenditurePage faexpenditurepage, List<DataValidation> fields)
+        private List<DataValidation> GetHouseKeepingSectionData(FAExpenditurePage faexpenditurepage)
         {
+            List<DataValidation> fields = new List<DataValidation>();
             fields.Add(new DataValidation("Food", faexpenditurepage.Food, FieldType.String));
             fields.Add(new DataValidation("Cleaning", faexpenditurepage.Cleaning, FieldType.String));
             fields.Add(new DataValidation("Toiletries", faexpenditurepage.Toiletries, FieldType.String));
@@ -82,10 +87,12 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
             fields.Add(new DataValidation("BabyItems", faexpenditurepage.BabyItems, FieldType.String));
             fields.Add(new DataValidation("PetItems", faexpenditurepage.PetItems, FieldType.String));
             fields.Add(new DataValidation("OtherHousekeeping", faexpenditurepage.OtherHousekeeping, FieldType.String));
+            return fields;
         }
 
-        private void GetTravelSectionData(FAExpenditurePage faexpenditurepage, List<DataValidation> fields)
+        private List<DataValidation> GetTravelSectionData(FAExpenditurePage faexpenditurepage)
         {
+            List<DataValidation> fields = new List<DataValidation>();
             fields.Add(new DataValidation("PublicTransport", faexpenditurepage.PublicTransport, FieldType.String));
             fields.Add(new DataValidation("Texis", faexpenditurepage.Texis, FieldType.String));
             fields.Add(new DataValidation("CarInsurance", faexpenditurepage.CarInsurance, FieldType.String));
@@ -95,6 +102,7 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
             fields.Add(new DataValidation("Breakdown", faexpenditurepage.Breakdown, FieldType.String));
             fields.Add(new DataValidation("ParkingChargesOrTolls", faexpenditurepage.ParkingChargesOrTolls, FieldType.String));
             fields.Add(new DataValidation("OtherTravelcosts", faexpenditurepage.OtherTravelcosts, FieldType.String));
+            return fields;
         }
 
         private List<DataValidation> SetNewValue(FAExpenditurePage faexpenditurepage, List<DataValidation> fields)
@@ -148,7 +156,7 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
             foreach (var field in fields)
             {
                 Object fieldValue = PropertiesHelper<FAExpenditurePage>.GetFieldValue(faexpenditurepage, field.FieldName);
-                Assert.AreEqual(fieldValue, field.FieldValue, field.FieldName + " check after go back");
+                Assert.AreEqual(fieldValue.ToString(), field.FieldValue, field.FieldName + " check after go back");
             }
         }
 
@@ -157,8 +165,7 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
         public void CheckDataValidationForEsentualExpedenture()
         {
             FAExpenditurePage faexpenditurepage = ExedenturePageTeleport();
-            List<DataValidation> fields = new List<DataValidation>();
-            GetEsentualExpedentureSectionData(faexpenditurepage, fields);
+            List<DataValidation> fields = GetEsentualExpedentureSectionData(faexpenditurepage);
             CheckDataValidation(faexpenditurepage, fields);
         }
 
@@ -166,8 +173,7 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
         public void CheckDataValidationForPhone()
         {
             FAExpenditurePage faexpenditurepage = ExedenturePageTeleport();
-            List<DataValidation> fields = new List<DataValidation>();
-            GetPhoneSectionData(faexpenditurepage, fields);
+            List<DataValidation> fields = GetPhoneSectionData(faexpenditurepage);
             CheckDataValidation(faexpenditurepage, fields);
         }
 
@@ -175,8 +181,7 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
         public void CheckDataValidationForHouseKeeping()
         {
             FAExpenditurePage faexpenditurepage = ExedenturePageTeleport();
-            List<DataValidation> fields = new List<DataValidation>();
-            GetHouseKeepingSectionData(faexpenditurepage, fields);
+            List<DataValidation> fields = GetHouseKeepingSectionData(faexpenditurepage);
             CheckDataValidation(faexpenditurepage, fields);
         }
 
@@ -184,8 +189,7 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
         public void CheckDataValidationForTravel()
         {
             FAExpenditurePage faexpenditurepage = ExedenturePageTeleport();
-            List<DataValidation> fields = new List<DataValidation>();
-            GetTravelSectionData(faexpenditurepage, fields);
+            List<DataValidation> fields = GetTravelSectionData(faexpenditurepage);
             CheckDataValidation(faexpenditurepage, fields);
         }
 
@@ -194,8 +198,7 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
         public void CheckDataAfterGoBackForEsentualExpedenture()
         {
             FAExpenditurePage faexpenditurepage = ExedenturePageTeleport();
-            List<DataValidation> fields = new List<DataValidation>();
-            GetEsentualExpedentureSectionData(faexpenditurepage, fields);
+            List<DataValidation> fields = GetEsentualExpedentureSectionData(faexpenditurepage);
             fields = SetNewValue(faexpenditurepage, fields);
             CheckDataAfterGoBack(faexpenditurepage, fields);
         }
@@ -204,8 +207,7 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
         public void CheckDataAfterGoBackForPhone()
         {
             FAExpenditurePage faexpenditurepage = ExedenturePageTeleport();
-            List<DataValidation> fields = new List<DataValidation>();
-            GetPhoneSectionData(faexpenditurepage, fields);
+            List<DataValidation> fields = GetPhoneSectionData(faexpenditurepage);
             fields = SetNewValue(faexpenditurepage, fields);
             CheckDataAfterGoBack(faexpenditurepage, fields);
         }
@@ -214,8 +216,7 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
         public void CheckDataAfterGoBackForHouseKeeping()
         {
             FAExpenditurePage faexpenditurepage = ExedenturePageTeleport();
-            List<DataValidation> fields = new List<DataValidation>();
-            GetHouseKeepingSectionData(faexpenditurepage, fields);
+            List<DataValidation> fields = GetHouseKeepingSectionData(faexpenditurepage);
             fields = SetNewValue(faexpenditurepage, fields);
             CheckDataAfterGoBack(faexpenditurepage, fields);
         }
@@ -224,8 +225,7 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
         public void CheckDataAfterGoBackForTravel()
         {
             FAExpenditurePage faexpenditurepage = ExedenturePageTeleport();
-            List<DataValidation> fields = new List<DataValidation>();
-            GetTravelSectionData(faexpenditurepage, fields);
+            List<DataValidation> fields = GetTravelSectionData(faexpenditurepage);
             fields = SetNewValue(faexpenditurepage, fields);
             CheckDataAfterGoBack(faexpenditurepage, fields);
         }
@@ -235,11 +235,10 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
         public void CheckBlankDataAutoProceed()
         {
             FAExpenditurePage faexpenditurepage = ExedenturePageTeleport();
-            List<DataValidation> fields = new List<DataValidation>();
-            GetEsentualExpedentureSectionData(faexpenditurepage, fields);
-            GetPhoneSectionData(faexpenditurepage, fields);
-            GetHouseKeepingSectionData(faexpenditurepage, fields);
-            GetTravelSectionData(faexpenditurepage, fields);
+            List<DataValidation> fields = GetEsentualExpedentureSectionData(faexpenditurepage);
+            fields.AddRange(GetPhoneSectionData(faexpenditurepage));
+            fields.AddRange(GetHouseKeepingSectionData(faexpenditurepage));
+            fields.AddRange(GetTravelSectionData(faexpenditurepage));
 
             foreach (var field in fields)
             {
