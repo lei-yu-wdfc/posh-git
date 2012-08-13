@@ -10,6 +10,7 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Cs;
 using Wonga.QA.Framework.Cs.Requests.Payments.Csapi.Queries;
 using Wonga.QA.Framework.Msmq;
+using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Core;
 //using CreateTransactionCommand = Wonga.QA.Framework.Cs.CreateTransactionCommand;
 

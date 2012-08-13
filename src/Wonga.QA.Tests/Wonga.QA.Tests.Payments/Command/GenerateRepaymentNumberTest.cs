@@ -12,6 +12,7 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Cs.Requests.Payments.Csapi.Commands;
 using Wonga.QA.Framework.Db.Ops;
 using Wonga.QA.Framework.Msmq;
+using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Core;
 using System.Threading;
 

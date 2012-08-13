@@ -7,6 +7,7 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api.Exceptions;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Cs.Requests.Payments.Csapi.Commands;
+using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Cs

@@ -9,6 +9,7 @@ using Wonga.QA.Framework.Cs.Requests.Payments.Csapi.Queries;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Helpers;
 using Wonga.QA.Framework.Msmq.Enums.Common.Iso;
+using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments.Queries

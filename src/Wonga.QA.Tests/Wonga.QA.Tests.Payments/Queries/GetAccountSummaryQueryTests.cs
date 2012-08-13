@@ -8,6 +8,7 @@ using Wonga.QA.Framework.Api.Enums;
 using Wonga.QA.Framework.Api.Requests.Payments.Queries;
 using Wonga.QA.Framework.Api.Requests.Payments.Queries.Za;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments

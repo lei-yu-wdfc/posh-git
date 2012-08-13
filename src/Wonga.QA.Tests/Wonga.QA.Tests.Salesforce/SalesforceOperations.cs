@@ -3,6 +3,7 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Ops;
 using Wonga.QA.Framework.Msmq.Messages.Payments.PublicMessages;
+using Wonga.QA.Framework.Old;
 
 namespace Wonga.QA.Tests.Salesforce
 {

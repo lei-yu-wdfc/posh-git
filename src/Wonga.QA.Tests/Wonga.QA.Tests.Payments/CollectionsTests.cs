@@ -9,6 +9,7 @@ using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.SagaMessages;
+using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments

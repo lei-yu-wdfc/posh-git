@@ -1,5 +1,6 @@
 ﻿using MbUnit.Framework;
 using Wonga.QA.Framework.Account.Consumer;
+using Wonga.QA.Framework.Application.Consumer;
 using Wonga.QA.Framework.Builders;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;

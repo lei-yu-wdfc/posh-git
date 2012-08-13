@@ -10,6 +10,7 @@ using Wonga.QA.Framework.Db;
 using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Msmq;
+using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Core;
 using RepayLoanViaBankCommand = Wonga.QA.Framework.Api.Requests.Payments.Commands.RepayLoanViaBankCommand;
 

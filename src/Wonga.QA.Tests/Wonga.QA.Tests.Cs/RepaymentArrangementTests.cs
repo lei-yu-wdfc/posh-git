@@ -11,6 +11,7 @@ using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Framework.Msmq.Enums.Common.Iso;
 using Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.SagaMessages;
 using Wonga.QA.Framework.Msmq.Messages.Risk;
+using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Helpers;
 

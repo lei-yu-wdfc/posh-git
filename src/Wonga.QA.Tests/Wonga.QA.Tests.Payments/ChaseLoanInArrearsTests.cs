@@ -7,6 +7,7 @@ using Wonga.QA.Framework.Db;
 using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Msmq.Enums.Integration.Payments.Enums;
 using Wonga.QA.Framework.Msmq.Messages.Payments.PublicMessages;
+using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments
