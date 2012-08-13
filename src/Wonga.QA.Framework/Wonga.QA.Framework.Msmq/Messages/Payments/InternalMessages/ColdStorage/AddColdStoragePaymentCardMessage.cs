@@ -5,7 +5,8 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.ColdStorage
 {
     /// <summary> Wonga.Payments.InternalMessages.ColdStorage.AddColdStoragePaymentCardMessage </summary>
-    [XmlRoot("AddColdStoragePaymentCardMessage", Namespace = "Wonga.Payments.InternalMessages.ColdStorage", DataType = "")]
+    [XmlRoot("AddColdStoragePaymentCardMessage", Namespace = "Wonga.Payments.InternalMessages.ColdStorage", DataType = "" )
+    , SourceAssembly("Wonga.Payments.InternalMessages.ColdStorage, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class AddColdStoragePaymentCardMessage : MsmqMessage<AddColdStoragePaymentCardMessage>
     {
         public Guid ExternalId { get; set; }

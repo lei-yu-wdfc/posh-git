@@ -7,7 +7,8 @@ using Wonga.QA.Framework.Msmq.Enums.Common.Iso;
 namespace Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.SagaMessages
 {
     /// <summary> Wonga.Payments.InternalMessages.SagaMessages.DirectDebitRegularPaymentTakenMessage </summary>
-    [XmlRoot("DirectDebitRegularPaymentTakenMessage", Namespace = "Wonga.Payments.InternalMessages.SagaMessages", DataType = "Wonga.Payments.InternalMessages.SagaMessages.BaseDirectDebitMessage,Wonga.Payments.InternalMessages.SagaMessages.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
+    [XmlRoot("DirectDebitRegularPaymentTakenMessage", Namespace = "Wonga.Payments.InternalMessages.SagaMessages", DataType = "Wonga.Payments.InternalMessages.SagaMessages.BaseDirectDebitMessage,Wonga.Payments.InternalMessages.SagaMessages.BaseSagaMessage,NServiceBus.Saga.ISagaMessage" )
+    , SourceAssembly("Wonga.Payments.InternalMessages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class DirectDebitRegularPaymentTakenMessage : MsmqMessage<DirectDebitRegularPaymentTakenMessage>
     {
         public Decimal Amount { get; set; }

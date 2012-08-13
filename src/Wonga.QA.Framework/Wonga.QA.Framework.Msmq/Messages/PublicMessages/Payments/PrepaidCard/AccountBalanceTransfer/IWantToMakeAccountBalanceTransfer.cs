@@ -8,7 +8,8 @@ using Wonga.QA.Framework.Msmq.Enums.PublicMessages.Payments.PrepaidCard.Enums;
 namespace Wonga.QA.Framework.Msmq.Messages.PublicMessages.Payments.PrepaidCard.AccountBalanceTransfer
 {
     /// <summary> Wonga.PublicMessages.Payments.PrepaidCard.AccountBalanceTransfer.IWantToMakeAccountBalanceTransfer </summary>
-    [XmlRoot("IWantToMakeAccountBalanceTransfer", Namespace = "Wonga.PublicMessages.Payments.PrepaidCard.AccountBalanceTransfer", DataType = "")]
+    [XmlRoot("IWantToMakeAccountBalanceTransfer", Namespace = "Wonga.PublicMessages.Payments.PrepaidCard.AccountBalanceTransfer", DataType = "" )
+    , SourceAssembly("Wonga.PublicMessages.Payments.PrepaidCard, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class IWantToMakeAccountBalanceTransfer : MsmqMessage<IWantToMakeAccountBalanceTransfer>
     {
         public Guid SagaId { get; set; }

@@ -8,7 +8,8 @@ using Wonga.QA.Framework.Msmq.Enums.Common.Enums;
 namespace Wonga.QA.Framework.Msmq.Messages.Comms.Csapi.Commands
 {
     /// <summary> Wonga.Comms.Csapi.Commands.SaveCustomerDetailsCsApiMessage </summary>
-    [XmlRoot("SaveCustomerDetailsCsApiMessage", Namespace = "Wonga.Comms.Csapi.Commands", DataType = "")]
+    [XmlRoot("SaveCustomerDetailsCsApiMessage", Namespace = "Wonga.Comms.Csapi.Commands", DataType = "" )
+    , SourceAssembly("Wonga.Comms.Csapi.Commands, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class CsSaveCustomerDetails : MsmqMessage<CsSaveCustomerDetails>
     {
         public Guid AccountId { get; set; }

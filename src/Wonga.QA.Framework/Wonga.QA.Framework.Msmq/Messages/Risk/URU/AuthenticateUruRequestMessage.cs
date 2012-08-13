@@ -5,7 +5,8 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Messages.Risk.URU
 {
     /// <summary> Wonga.Risk.URU.AuthenticateUruRequestMessage </summary>
-    [XmlRoot("AuthenticateUruRequestMessage", Namespace = "Wonga.Risk.URU", DataType = "Wonga.Risk.Uru.UruRequestMessage,Wonga.Risk.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
+    [XmlRoot("AuthenticateUruRequestMessage", Namespace = "Wonga.Risk.URU", DataType = "Wonga.Risk.Uru.UruRequestMessage,Wonga.Risk.BaseSagaMessage,NServiceBus.Saga.ISagaMessage" )
+    , SourceAssembly("Wonga.Risk.InternalMessages.Uk, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class AuthenticateUruRequestMessage : MsmqMessage<AuthenticateUruRequestMessage>
     {
         public Guid AccountId { get; set; }

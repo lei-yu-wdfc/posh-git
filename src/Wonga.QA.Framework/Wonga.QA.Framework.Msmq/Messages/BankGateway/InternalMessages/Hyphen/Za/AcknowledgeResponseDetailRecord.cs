@@ -5,7 +5,8 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Messages.BankGateway.InternalMessages.Hyphen.Za
 {
     /// <summary> Wonga.BankGateway.InternalMessages.Hyphen.Za.AcknowledgeResponseDetailRecord </summary>
-    [XmlRoot("AcknowledgeResponseDetailRecord", Namespace = "Wonga.BankGateway.InternalMessages.Hyphen.Za", DataType = "")]
+    [XmlRoot("AcknowledgeResponseDetailRecord", Namespace = "Wonga.BankGateway.InternalMessages.Hyphen.Za", DataType = "" )
+    , SourceAssembly("Wonga.BankGateway.InternalMessages.Hyphen.Za, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class AcknowledgeResponseDetailRecord : MsmqMessage<AcknowledgeResponseDetailRecord>
     {
         public String AccountName { get; set; }

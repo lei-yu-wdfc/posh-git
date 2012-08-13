@@ -7,7 +7,8 @@ using Wonga.QA.Framework.Msmq.Enums.Common.Enums;
 namespace Wonga.QA.Framework.Msmq.Messages.Risk
 {
     /// <summary> Wonga.Risk.RiskSaveCustomerDetailsCommand </summary>
-    [XmlRoot("RiskSaveCustomerDetailsCommand", Namespace = "Wonga.Risk", DataType = "")]
+    [XmlRoot("RiskSaveCustomerDetailsCommand", Namespace = "Wonga.Risk", DataType = "" )
+    , SourceAssembly("Wonga.Risk.Commands, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class RiskSaveCustomerDetails : MsmqMessage<RiskSaveCustomerDetails>
     {
         public Guid AccountId { get; set; }

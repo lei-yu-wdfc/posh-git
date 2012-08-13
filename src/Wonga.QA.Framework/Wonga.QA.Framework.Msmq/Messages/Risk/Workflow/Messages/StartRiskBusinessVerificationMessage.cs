@@ -7,7 +7,8 @@ using Wonga.QA.Framework.Msmq.Enums.Risk.Workflow;
 namespace Wonga.QA.Framework.Msmq.Messages.Risk.Workflow.Messages
 {
     /// <summary> Wonga.Risk.Workflow.Messages.StartRiskBusinessVerificationMessage </summary>
-    [XmlRoot("StartRiskBusinessVerificationMessage", Namespace = "Wonga.Risk.Workflow.Messages", DataType = "")]
+    [XmlRoot("StartRiskBusinessVerificationMessage", Namespace = "Wonga.Risk.Workflow.Messages", DataType = "" )
+    , SourceAssembly("Wonga.Risk.Workflow.Messages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class StartRiskBusinessVerificationMessage : MsmqMessage<StartRiskBusinessVerificationMessage>
     {
         public Guid OrganisationId { get; set; }

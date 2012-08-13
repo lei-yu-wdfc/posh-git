@@ -7,7 +7,8 @@ using Wonga.QA.Framework.Msmq.Enums.Integration.Risk;
 namespace Wonga.QA.Framework.Msmq.Messages.Risk.ApiCore.Commands
 {
     /// <summary> Wonga.Risk.ApiCore.Commands.SaveSocialDetailsMessageBase </summary>
-    [XmlRoot("SaveSocialDetailsMessageBase", Namespace = "Wonga.Risk.ApiCore.Commands", DataType = "")]
+    [XmlRoot("SaveSocialDetailsMessageBase", Namespace = "Wonga.Risk.ApiCore.Commands", DataType = "" )
+    , SourceAssembly("Wonga.Risk.ApiCore.Commands, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class SaveSocialDetailsMessageBase : MsmqMessage<SaveSocialDetailsMessageBase>
     {
         public Guid AccountId { get; set; }

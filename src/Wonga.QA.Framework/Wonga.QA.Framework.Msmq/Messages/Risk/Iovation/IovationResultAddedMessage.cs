@@ -7,7 +7,8 @@ using Wonga.QA.Framework.Msmq.Enums.Integration.Iovation;
 namespace Wonga.QA.Framework.Msmq.Messages.Risk.Iovation
 {
     /// <summary> Wonga.Risk.Iovation.IovationResultAddedMessage </summary>
-    [XmlRoot("IovationResultAddedMessage", Namespace = "Wonga.Risk.Iovation", DataType = "Wonga.Risk.BaseSagaMessage,NServiceBus.Saga.ISagaMessage,Wonga.Risk.IResumeRiskWorkflow")]
+    [XmlRoot("IovationResultAddedMessage", Namespace = "Wonga.Risk.Iovation", DataType = "Wonga.Risk.BaseSagaMessage,NServiceBus.Saga.ISagaMessage,Wonga.Risk.IResumeRiskWorkflow" )
+    , SourceAssembly("Wonga.Risk.InternalMessages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class IovationResultAddedMessage : MsmqMessage<IovationResultAddedMessage>
     {
         public Guid AccountId { get; set; }

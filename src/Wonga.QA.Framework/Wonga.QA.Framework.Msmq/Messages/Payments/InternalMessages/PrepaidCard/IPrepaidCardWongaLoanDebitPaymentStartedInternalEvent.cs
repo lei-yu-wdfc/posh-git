@@ -7,7 +7,8 @@ using Wonga.QA.Framework.Msmq.Enums.Common.Iso;
 namespace Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.PrepaidCard
 {
     /// <summary> Wonga.Payments.InternalMessages.PrepaidCard.IPrepaidCardWongaLoanDebitPaymentStartedInternalEvent </summary>
-    [XmlRoot("IPrepaidCardWongaLoanDebitPaymentStartedInternalEvent", Namespace = "Wonga.Payments.InternalMessages.PrepaidCard", DataType = "")]
+    [XmlRoot("IPrepaidCardWongaLoanDebitPaymentStartedInternalEvent", Namespace = "Wonga.Payments.InternalMessages.PrepaidCard", DataType = "" )
+    , SourceAssembly("Wonga.Payments.InternalMessages.PrepaidCard, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class IPrepaidCardWongaLoanDebitPaymentStartedInternalEvent : MsmqMessage<IPrepaidCardWongaLoanDebitPaymentStartedInternalEvent>
     {
         public Guid SagaId { get; set; }

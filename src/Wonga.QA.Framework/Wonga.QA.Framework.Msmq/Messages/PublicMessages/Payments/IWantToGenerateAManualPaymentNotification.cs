@@ -7,7 +7,8 @@ using Wonga.QA.Framework.Msmq.Enums.Integration.Payments.Enums;
 namespace Wonga.QA.Framework.Msmq.Messages.PublicMessages.Payments
 {
     /// <summary> Wonga.PublicMessages.Payments.IWantToGenerateAManualPaymentNotification </summary>
-    [XmlRoot("IWantToGenerateAManualPaymentNotification", Namespace = "Wonga.PublicMessages.Payments", DataType = "")]
+    [XmlRoot("IWantToGenerateAManualPaymentNotification", Namespace = "Wonga.PublicMessages.Payments", DataType = "" )
+    , SourceAssembly("Wonga.PublicMessages.Payments, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class IWantToGenerateAManualPaymentNotification : MsmqMessage<IWantToGenerateAManualPaymentNotification>
     {
         public Guid ManualPaymentNotificationId { get; set; }

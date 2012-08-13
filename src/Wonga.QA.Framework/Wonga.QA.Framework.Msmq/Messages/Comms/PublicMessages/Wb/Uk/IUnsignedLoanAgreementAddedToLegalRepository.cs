@@ -5,7 +5,8 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Messages.Comms.PublicMessages.Wb.Uk
 {
     /// <summary> Wonga.Comms.PublicMessages.Wb.Uk.IUnsignedLoanAgreementAddedToLegalRepository </summary>
-    [XmlRoot("IUnsignedLoanAgreementAddedToLegalRepository", Namespace = "Wonga.Comms.PublicMessages.Wb.Uk", DataType = "Wonga.Comms.PublicMessages.Wb.Uk.ILoanAgreementAddedToLegalRepository")]
+    [XmlRoot("IUnsignedLoanAgreementAddedToLegalRepository", Namespace = "Wonga.Comms.PublicMessages.Wb.Uk", DataType = "Wonga.Comms.PublicMessages.Wb.Uk.ILoanAgreementAddedToLegalRepository" )
+    , SourceAssembly("Wonga.Comms.PublicMessages.Wb.Uk, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class IUnsignedLoanAgreementAddedToLegalRepository : MsmqMessage<IUnsignedLoanAgreementAddedToLegalRepository>
     {
         public Guid AccountId { get; set; }

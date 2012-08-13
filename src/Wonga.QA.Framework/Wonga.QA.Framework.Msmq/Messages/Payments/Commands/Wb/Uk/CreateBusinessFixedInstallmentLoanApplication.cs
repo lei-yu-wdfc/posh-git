@@ -7,7 +7,8 @@ using Wonga.QA.Framework.Msmq.Enums.Common.Iso;
 namespace Wonga.QA.Framework.Msmq.Messages.Payments.Commands.Wb.Uk
 {
     /// <summary> Wonga.Payments.Commands.Wb.Uk.CreateBusinessFixedInstallmentLoanApplication </summary>
-    [XmlRoot("CreateBusinessFixedInstallmentLoanApplication", Namespace = "Wonga.Payments.Commands.Wb.Uk", DataType = "")]
+    [XmlRoot("CreateBusinessFixedInstallmentLoanApplication", Namespace = "Wonga.Payments.Commands.Wb.Uk", DataType = "" )
+    , SourceAssembly("Wonga.Payments.Commands.Wb.Uk, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class CreateBusinessFixedInstallmentLoanApplication : MsmqMessage<CreateBusinessFixedInstallmentLoanApplication>
     {
         public Guid AccountId { get; set; }

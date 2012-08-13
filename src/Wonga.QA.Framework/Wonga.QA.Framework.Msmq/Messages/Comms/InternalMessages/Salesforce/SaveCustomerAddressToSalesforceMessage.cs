@@ -7,7 +7,8 @@ using Wonga.QA.Framework.Msmq.Enums.Integration.Comms.Enums;
 namespace Wonga.QA.Framework.Msmq.Messages.Comms.InternalMessages.Salesforce
 {
     /// <summary> Wonga.Comms.InternalMessages.Salesforce.SaveCustomerAddressToSalesforceMessage </summary>
-    [XmlRoot("SaveCustomerAddressToSalesforceMessage", Namespace = "Wonga.Comms.InternalMessages.Salesforce", DataType = "")]
+    [XmlRoot("SaveCustomerAddressToSalesforceMessage", Namespace = "Wonga.Comms.InternalMessages.Salesforce", DataType = "" )
+    , SourceAssembly("Wonga.Comms.InternalMessages.Salesforce, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class SaveCustomerAddressToSalesforceMessage : MsmqMessage<SaveCustomerAddressToSalesforceMessage>
     {
         public Guid AddressId { get; set; }

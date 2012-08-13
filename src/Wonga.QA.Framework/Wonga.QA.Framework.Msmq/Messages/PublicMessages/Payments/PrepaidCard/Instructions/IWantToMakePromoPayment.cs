@@ -8,7 +8,8 @@ using Wonga.QA.Framework.Msmq.Enums.Common.Iso;
 namespace Wonga.QA.Framework.Msmq.Messages.PublicMessages.Payments.PrepaidCard.Instructions
 {
     /// <summary> Wonga.PublicMessages.Payments.PrepaidCard.Instructions.IWantToMakePromoPayment </summary>
-    [XmlRoot("IWantToMakePromoPayment", Namespace = "Wonga.PublicMessages.Payments.PrepaidCard.Instructions", DataType = "NServiceBus.Saga.ISagaMessage")]
+    [XmlRoot("IWantToMakePromoPayment", Namespace = "Wonga.PublicMessages.Payments.PrepaidCard.Instructions", DataType = "NServiceBus.Saga.ISagaMessage" )
+    , SourceAssembly("Wonga.PublicMessages.Payments.PrepaidCard, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class IWantToMakePromoPayment : MsmqMessage<IWantToMakePromoPayment>
     {
         public Guid AccountId { get; set; }

@@ -8,7 +8,8 @@ using Wonga.QA.Framework.Msmq.Enums.Common.TimeZone;
 namespace Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Events
 {
     /// <summary> Wonga.Payments.InternalMessages.Events.IRepayLoanViaCardRequestStarted </summary>
-    [XmlRoot("IRepayLoanViaCardRequestStarted", Namespace = "Wonga.Payments.InternalMessages.Events", DataType = "")]
+    [XmlRoot("IRepayLoanViaCardRequestStarted", Namespace = "Wonga.Payments.InternalMessages.Events", DataType = "" )
+    , SourceAssembly("Wonga.Payments.InternalMessages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class IRepayLoanViaCardRequestStarted : MsmqMessage<IRepayLoanViaCardRequestStarted>
     {
         public Guid SagaId { get; set; }

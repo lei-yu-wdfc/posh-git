@@ -8,7 +8,8 @@ using Wonga.QA.Framework.Msmq.Enums.Common.Iso;
 namespace Wonga.QA.Framework.Msmq.Messages.Payments.Csapi.Commands
 {
     /// <summary> Wonga.Payments.Csapi.Commands.CreateTransaction </summary>
-    [XmlRoot("CreateTransaction", Namespace = "Wonga.Payments.Csapi.Commands", DataType = "")]
+    [XmlRoot("CreateTransaction", Namespace = "Wonga.Payments.Csapi.Commands", DataType = "" )
+    , SourceAssembly("Wonga.Payments.Csapi.Commands, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class CreateTransaction : MsmqMessage<CreateTransaction>
     {
         public Guid ApplicationGuid { get; set; }

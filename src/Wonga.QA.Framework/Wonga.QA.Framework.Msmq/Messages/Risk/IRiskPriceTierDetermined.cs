@@ -7,7 +7,8 @@ using Wonga.QA.Framework.Msmq.Enums.Integration.Risk;
 namespace Wonga.QA.Framework.Msmq.Messages.Risk
 {
     /// <summary> Wonga.Risk.IRiskPriceTierDetermined </summary>
-    [XmlRoot("IRiskPriceTierDetermined", Namespace = "Wonga.Risk", DataType = "Wonga.Risk.IPriceTierDetermined,Wonga.Risk.IRiskEvent")]
+    [XmlRoot("IRiskPriceTierDetermined", Namespace = "Wonga.Risk", DataType = "Wonga.Risk.IPriceTierDetermined,Wonga.Risk.IRiskEvent" )
+    , SourceAssembly("Wonga.Risk.InternalMessages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class IRiskPriceTierDetermined : MsmqMessage<IRiskPriceTierDetermined>
     {
         public RiskPriceTierEnum RiskPriceTier { get; set; }

@@ -5,7 +5,8 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Messages.BankGateway.InternalMessages.Bmo.Ca
 {
     /// <summary> Wonga.BankGateway.InternalMessages.Bmo.Ca.SettlementReportMessage </summary>
-    [XmlRoot("SettlementReportMessage", Namespace = "Wonga.BankGateway.InternalMessages.Bmo.Ca", DataType = "")]
+    [XmlRoot("SettlementReportMessage", Namespace = "Wonga.BankGateway.InternalMessages.Bmo.Ca", DataType = "" )
+    , SourceAssembly("Wonga.BankGateway.InternalMessages.Bmo.Ca, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class SettlementReportMessage : MsmqMessage<SettlementReportMessage>
     {
         public Decimal Amount { get; set; }

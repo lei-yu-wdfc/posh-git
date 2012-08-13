@@ -5,7 +5,8 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Messages.Payments.Ca
 {
     /// <summary> Wonga.Payments.Ca.AddBankAccount </summary>
-    [XmlRoot("AddBankAccount", Namespace = "Wonga.Payments.Ca", DataType = "")]
+    [XmlRoot("AddBankAccount", Namespace = "Wonga.Payments.Ca", DataType = "" )
+    , SourceAssembly("Wonga.Payments.Commands.Ca, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class AddBankAccount : MsmqMessage<AddBankAccount>
     {
         public String BranchNumber { get; set; }

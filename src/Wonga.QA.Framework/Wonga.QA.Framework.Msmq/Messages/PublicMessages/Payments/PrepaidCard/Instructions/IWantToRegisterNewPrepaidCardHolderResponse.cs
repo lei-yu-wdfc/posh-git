@@ -7,7 +7,8 @@ using Wonga.QA.Framework.Msmq.Enums.Integration.PrepaidCard.DataEntity;
 namespace Wonga.QA.Framework.Msmq.Messages.PublicMessages.Payments.PrepaidCard.Instructions
 {
     /// <summary> Wonga.PublicMessages.Payments.PrepaidCard.Instructions.IWantToRegisterNewPrepaidCardHolderResponse </summary>
-    [XmlRoot("IWantToRegisterNewPrepaidCardHolderResponse", Namespace = "Wonga.PublicMessages.Payments.PrepaidCard.Instructions", DataType = "")]
+    [XmlRoot("IWantToRegisterNewPrepaidCardHolderResponse", Namespace = "Wonga.PublicMessages.Payments.PrepaidCard.Instructions", DataType = "" )
+    , SourceAssembly("Wonga.PublicMessages.Payments.PrepaidCard, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class IWantToRegisterNewPrepaidCardHolderResponse : MsmqMessage<IWantToRegisterNewPrepaidCardHolderResponse>
     {
         public Guid SagaId { get; set; }

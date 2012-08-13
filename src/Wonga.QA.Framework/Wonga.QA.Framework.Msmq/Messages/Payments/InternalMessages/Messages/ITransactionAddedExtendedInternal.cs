@@ -8,7 +8,8 @@ using Wonga.QA.Framework.Msmq.Enums.Integration.Payments.Enums;
 namespace Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Messages
 {
     /// <summary> Wonga.Payments.InternalMessages.Messages.ITransactionAddedExtendedInternal </summary>
-    [XmlRoot("ITransactionAddedExtendedInternal", Namespace = "Wonga.Payments.InternalMessages.Messages", DataType = "Wonga.Payments.InternalMessages.Messages.ITransactionAddedInternal,Wonga.Payments.PublicMessages.ITransactionAdded,Wonga.Payments.PublicMessages.IPaymentsEvent")]
+    [XmlRoot("ITransactionAddedExtendedInternal", Namespace = "Wonga.Payments.InternalMessages.Messages", DataType = "Wonga.Payments.InternalMessages.Messages.ITransactionAddedInternal,Wonga.Payments.PublicMessages.ITransactionAdded,Wonga.Payments.PublicMessages.IPaymentsEvent" )
+    , SourceAssembly("Wonga.Payments.InternalMessages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class ITransactionAddedExtendedInternal : MsmqMessage<ITransactionAddedExtendedInternal>
     {
         public Guid AccountId { get; set; }

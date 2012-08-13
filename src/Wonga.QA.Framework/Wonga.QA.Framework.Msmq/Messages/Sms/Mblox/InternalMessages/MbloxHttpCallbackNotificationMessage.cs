@@ -7,7 +7,8 @@ using Wonga.QA.Framework.Msmq.Enums.Sms.Mblox.Data;
 namespace Wonga.QA.Framework.Msmq.Messages.Sms.Mblox.InternalMessages
 {
     /// <summary> Wonga.Sms.Mblox.InternalMessages.MbloxHttpCallbackNotificationMessage </summary>
-    [XmlRoot("MbloxHttpCallbackNotificationMessage", Namespace = "Wonga.Sms.Mblox.InternalMessages", DataType = "Wonga.Sms.Mblox.InternalMessages.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
+    [XmlRoot("MbloxHttpCallbackNotificationMessage", Namespace = "Wonga.Sms.Mblox.InternalMessages", DataType = "Wonga.Sms.Mblox.InternalMessages.BaseSagaMessage,NServiceBus.Saga.ISagaMessage" )
+    , SourceAssembly("Wonga.Sms.Mblox.InternalMessages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class MbloxHttpCallbackNotificationMessage : MsmqMessage<MbloxHttpCallbackNotificationMessage>
     {
         public Int32 SmsId { get; set; }

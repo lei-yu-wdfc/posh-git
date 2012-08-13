@@ -5,7 +5,8 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Messages.Comms.InternalMessages.Email.Ca
 {
     /// <summary> Wonga.Comms.InternalMessages.Email.Ca.SendCollatedLegalDocumentsAtApprovalMessage </summary>
-    [XmlRoot("SendCollatedLegalDocumentsAtApprovalMessage", Namespace = "Wonga.Comms.InternalMessages.Email.Ca", DataType = "Wonga.Comms.InternalMessages.SagaMessages.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
+    [XmlRoot("SendCollatedLegalDocumentsAtApprovalMessage", Namespace = "Wonga.Comms.InternalMessages.Email.Ca", DataType = "Wonga.Comms.InternalMessages.SagaMessages.BaseSagaMessage,NServiceBus.Saga.ISagaMessage" )
+    , SourceAssembly("Wonga.Comms.InternalMessages.Email.Ca, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class SendCollatedLegalDocumentsAtApprovalMessage : MsmqMessage<SendCollatedLegalDocumentsAtApprovalMessage>
     {
         public Guid AccountId { get; set; }

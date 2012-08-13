@@ -4,10 +4,11 @@ using System.Xml.Serialization;
 
 using Wonga.QA.Framework.Msmq.Enums.Integration.Risk;
 
-namespace Wonga.QA.Framework.Msmq.Messages.Risk.Commands.Pl
+namespace Wonga.QA.Framework.Msmq.Messages.Risk.Commands.PL
 {
-    /// <summary> Wonga.Risk.Commands.Pl.SaveSocialDetailsMessage </summary>
-    [XmlRoot("SaveSocialDetailsMessage", Namespace = "Wonga.Risk.Commands.Pl", DataType = "")]
+    /// <summary> Wonga.Risk.Commands.PL.SaveSocialDetailsMessage </summary>
+    [XmlRoot("SaveSocialDetailsMessage", Namespace = "Wonga.Risk.Commands.PL", DataType = "" )
+    , SourceAssembly("Wonga.Risk.Commands.PL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class SaveSocialDetails : MsmqMessage<SaveSocialDetails>
     {
         public VehicleOwnerPlEnum VehicleOwner { get; set; }

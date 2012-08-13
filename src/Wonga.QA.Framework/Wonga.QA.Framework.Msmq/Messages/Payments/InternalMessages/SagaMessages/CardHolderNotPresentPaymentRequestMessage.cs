@@ -7,7 +7,8 @@ using Wonga.QA.Framework.Msmq.Enums.Common.Iso;
 namespace Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.SagaMessages
 {
     /// <summary> Wonga.Payments.InternalMessages.SagaMessages.CardHolderNotPresentPaymentRequestMessage </summary>
-    [XmlRoot("CardHolderNotPresentPaymentRequestMessage", Namespace = "Wonga.Payments.InternalMessages.SagaMessages", DataType = "")]
+    [XmlRoot("CardHolderNotPresentPaymentRequestMessage", Namespace = "Wonga.Payments.InternalMessages.SagaMessages", DataType = "" )
+    , SourceAssembly("Wonga.Payments.InternalMessages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class CardHolderNotPresentPaymentRequestMessage : MsmqMessage<CardHolderNotPresentPaymentRequestMessage>
     {
         public Guid AccountId { get; set; }

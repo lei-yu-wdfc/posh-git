@@ -7,7 +7,8 @@ using Wonga.QA.Framework.Msmq.Enums.Common.Iso;
 namespace Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Messages
 {
     /// <summary> Wonga.Payments.InternalMessages.Messages.TakeExternalPaymentMessage </summary>
-    [XmlRoot("TakeExternalPaymentMessage", Namespace = "Wonga.Payments.InternalMessages.Messages", DataType = "")]
+    [XmlRoot("TakeExternalPaymentMessage", Namespace = "Wonga.Payments.InternalMessages.Messages", DataType = "" )
+    , SourceAssembly("Wonga.Payments.InternalMessages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class TakeExternalPaymentMessage : MsmqMessage<TakeExternalPaymentMessage>
     {
         public Guid AccountId { get; set; }

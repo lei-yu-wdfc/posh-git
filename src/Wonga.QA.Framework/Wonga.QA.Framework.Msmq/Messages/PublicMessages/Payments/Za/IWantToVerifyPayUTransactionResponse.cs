@@ -7,7 +7,8 @@ using Wonga.QA.Framework.Msmq.Enums.PublicMessages.Payments.Za.Enums;
 namespace Wonga.QA.Framework.Msmq.Messages.PublicMessages.Payments.Za
 {
     /// <summary> Wonga.PublicMessages.Payments.Za.IWantToVerifyPayUTransactionResponse </summary>
-    [XmlRoot("IWantToVerifyPayUTransactionResponse", Namespace = "Wonga.PublicMessages.Payments.Za", DataType = "")]
+    [XmlRoot("IWantToVerifyPayUTransactionResponse", Namespace = "Wonga.PublicMessages.Payments.Za", DataType = "" )
+    , SourceAssembly("Wonga.PublicMessages.Payments.Za, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class IWantToVerifyPayUTransactionResponse : MsmqMessage<IWantToVerifyPayUTransactionResponse>
     {
         public Int32 PaymentId { get; set; }

@@ -7,7 +7,8 @@ using Wonga.QA.Framework.Msmq.Enums.Common.Iso;
 namespace Wonga.QA.Framework.Msmq.Messages.Payments.PrepaidCard.Csapi.Commands
 {
     /// <summary> Wonga.Payments.PrepaidCard.Csapi.Commands.CsAdjustPrepaidCardAccountBalance </summary>
-    [XmlRoot("CsAdjustPrepaidCardAccountBalance", Namespace = "Wonga.Payments.PrepaidCard.Csapi.Commands", DataType = "")]
+    [XmlRoot("CsAdjustPrepaidCardAccountBalance", Namespace = "Wonga.Payments.PrepaidCard.Csapi.Commands", DataType = "" )
+    , SourceAssembly("Wonga.Payments.PrepaidCard.Csapi.Commands, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class CsAdjustPrepaidCardAccountBalance : MsmqMessage<CsAdjustPrepaidCardAccountBalance>
     {
         public Decimal Amount { get; set; }

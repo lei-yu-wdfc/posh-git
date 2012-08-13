@@ -7,7 +7,8 @@ using Wonga.QA.Framework.Msmq.Enums.Integration.Comms.Enums;
 namespace Wonga.QA.Framework.Msmq.Messages.Comms.ContactManagement.Commands
 {
     /// <summary> Wonga.Comms.ContactManagement.Commands.AddPrimaryOrganisationDirectorMessage </summary>
-    [XmlRoot("AddPrimaryOrganisationDirectorMessage", Namespace = "Wonga.Comms.ContactManagement.Commands", DataType = "")]
+    [XmlRoot("AddPrimaryOrganisationDirectorMessage", Namespace = "Wonga.Comms.ContactManagement.Commands", DataType = "" )
+    , SourceAssembly("Wonga.Comms.ContactManagement.Commands, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class AddPrimaryOrganisationDirector : MsmqMessage<AddPrimaryOrganisationDirector>
     {
         public Guid AccountId { get; set; }

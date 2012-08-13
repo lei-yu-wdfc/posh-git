@@ -5,7 +5,8 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Messages.Payments
 {
     /// <summary> Wonga.Payments.SavePaymentCardBillingAddress </summary>
-    [XmlRoot("SavePaymentCardBillingAddress", Namespace = "Wonga.Payments", DataType = "")]
+    [XmlRoot("SavePaymentCardBillingAddress", Namespace = "Wonga.Payments", DataType = "" )
+    , SourceAssembly("Wonga.Payments.Commands, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class SavePaymentCardBillingAddress : MsmqMessage<SavePaymentCardBillingAddress>
     {
         public Guid PaymentCardId { get; set; }

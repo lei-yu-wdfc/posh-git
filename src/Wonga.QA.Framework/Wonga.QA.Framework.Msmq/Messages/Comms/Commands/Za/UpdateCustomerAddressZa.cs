@@ -7,7 +7,8 @@ using Wonga.QA.Framework.Msmq.Enums.Integration.Comms.Enums;
 namespace Wonga.QA.Framework.Msmq.Messages.Comms.Commands.Za
 {
     /// <summary> Wonga.Comms.Commands.Za.UpdateCustomerAddressMessage </summary>
-    [XmlRoot("UpdateCustomerAddressMessage", Namespace = "Wonga.Comms.Commands.Za", DataType = "")]
+    [XmlRoot("UpdateCustomerAddressMessage", Namespace = "Wonga.Comms.Commands.Za", DataType = "" )
+    , SourceAssembly("Wonga.Comms.Commands.Za, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class UpdateCustomerAddressZa : MsmqMessage<UpdateCustomerAddressZa>
     {
         public Guid AddressId { get; set; }

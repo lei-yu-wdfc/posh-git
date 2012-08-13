@@ -5,7 +5,8 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Messages.Comms.Csapi.Commands
 {
     /// <summary> Wonga.Comms.Csapi.Commands.CsRemoveManagementReview </summary>
-    [XmlRoot("CsRemoveManagementReview", Namespace = "Wonga.Comms.Csapi.Commands", DataType = "")]
+    [XmlRoot("CsRemoveManagementReview", Namespace = "Wonga.Comms.Csapi.Commands", DataType = "" )
+    , SourceAssembly("Wonga.Comms.Csapi.Commands, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class CsRemoveManagementReview : MsmqMessage<CsRemoveManagementReview>
     {
         public Guid ApplicationId { get; set; }

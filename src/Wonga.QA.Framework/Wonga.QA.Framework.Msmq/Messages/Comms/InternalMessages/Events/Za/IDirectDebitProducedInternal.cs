@@ -5,7 +5,8 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Messages.Comms.InternalMessages.Events.Za
 {
     /// <summary> Wonga.Comms.InternalMessages.Events.Za.IDirectDebitProducedInternal </summary>
-    [XmlRoot("IDirectDebitProducedInternal", Namespace = "Wonga.Comms.InternalMessages.Events.Za", DataType = "Wonga.Comms.PublicMessages.Za.IDirectDebitProduced")]
+    [XmlRoot("IDirectDebitProducedInternal", Namespace = "Wonga.Comms.InternalMessages.Events.Za", DataType = "Wonga.Comms.PublicMessages.Za.IDirectDebitProduced" )
+    , SourceAssembly("Wonga.Comms.InternalMessages.Events.Za, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class IDirectDebitProducedInternal : MsmqMessage<IDirectDebitProducedInternal>
     {
         public Guid AccountId { get; set; }

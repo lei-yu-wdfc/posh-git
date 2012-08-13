@@ -5,7 +5,8 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Messages.BankGateway.InternalMessages.Easypay.Za
 {
     /// <summary> Wonga.BankGateway.InternalMessages.Easypay.Za.PaymentResponseDetailRecordMessage </summary>
-    [XmlRoot("PaymentResponseDetailRecordMessage", Namespace = "Wonga.BankGateway.InternalMessages.Easypay.Za", DataType = "")]
+    [XmlRoot("PaymentResponseDetailRecordMessage", Namespace = "Wonga.BankGateway.InternalMessages.Easypay.Za", DataType = "" )
+    , SourceAssembly("Wonga.BankGateway.InternalMessages.Easypay.Za, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class PaymentResponseDetailRecordMessage : MsmqMessage<PaymentResponseDetailRecordMessage>
     {
         public String RepaymentNumber { get; set; }

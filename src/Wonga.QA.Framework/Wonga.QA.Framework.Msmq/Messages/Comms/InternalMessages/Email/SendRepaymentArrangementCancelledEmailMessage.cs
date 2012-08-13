@@ -5,7 +5,8 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Messages.Comms.InternalMessages.Email
 {
     /// <summary> Wonga.Comms.InternalMessages.Email.SendRepaymentArrangementCancelledEmailMessage </summary>
-    [XmlRoot("SendRepaymentArrangementCancelledEmailMessage", Namespace = "Wonga.Comms.InternalMessages.Email", DataType = "Wonga.Comms.InternalMessages.Email.BaseSimpleEmailMessage,Wonga.Comms.InternalMessages.SagaMessages.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
+    [XmlRoot("SendRepaymentArrangementCancelledEmailMessage", Namespace = "Wonga.Comms.InternalMessages.Email", DataType = "Wonga.Comms.InternalMessages.Email.BaseSimpleEmailMessage,Wonga.Comms.InternalMessages.SagaMessages.BaseSagaMessage,NServiceBus.Saga.ISagaMessage" )
+    , SourceAssembly("Wonga.Comms.InternalMessages.Email, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class SendRepaymentArrangementCancelledEmailMessage : MsmqMessage<SendRepaymentArrangementCancelledEmailMessage>
     {
         public String FirstName { get; set; }

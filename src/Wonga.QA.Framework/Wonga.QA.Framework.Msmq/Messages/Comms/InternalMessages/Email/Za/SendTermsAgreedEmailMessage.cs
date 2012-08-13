@@ -5,7 +5,8 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Messages.Comms.InternalMessages.Email.Za
 {
     /// <summary> Wonga.Comms.InternalMessages.Email.Za.SendTermsAgreedEmailMessage </summary>
-    [XmlRoot("SendTermsAgreedEmailMessage", Namespace = "Wonga.Comms.InternalMessages.Email.Za", DataType = "Wonga.Comms.InternalMessages.Email.SendTermsAgreedEmailMessage,Wonga.Comms.InternalMessages.SagaMessages.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
+    [XmlRoot("SendTermsAgreedEmailMessage", Namespace = "Wonga.Comms.InternalMessages.Email.Za", DataType = "Wonga.Comms.InternalMessages.Email.SendTermsAgreedEmailMessage,Wonga.Comms.InternalMessages.SagaMessages.BaseSagaMessage,NServiceBus.Saga.ISagaMessage" )
+    , SourceAssembly("Wonga.Comms.InternalMessages.Email.Za, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class SendTermsAgreedEmailMessage : MsmqMessage<SendTermsAgreedEmailMessage>
     {
         public Guid DirectDebitFileId { get; set; }

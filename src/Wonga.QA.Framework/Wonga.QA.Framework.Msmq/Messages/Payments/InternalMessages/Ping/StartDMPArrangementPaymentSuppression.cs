@@ -5,7 +5,8 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Ping
 {
     /// <summary> Wonga.Payments.InternalMessages.Ping.StartDMPArrangementPaymentSuppression </summary>
-    [XmlRoot("StartDMPArrangementPaymentSuppression", Namespace = "Wonga.Payments.InternalMessages.Ping", DataType = "")]
+    [XmlRoot("StartDMPArrangementPaymentSuppression", Namespace = "Wonga.Payments.InternalMessages.Ping", DataType = "" )
+    , SourceAssembly("Wonga.Payments.InternalMessages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class StartDMPArrangementPaymentSuppression : MsmqMessage<StartDMPArrangementPaymentSuppression>
     {
         public Guid AccountId { get; set; }

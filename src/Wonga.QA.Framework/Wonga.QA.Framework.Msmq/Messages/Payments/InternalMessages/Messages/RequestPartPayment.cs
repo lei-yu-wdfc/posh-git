@@ -5,7 +5,8 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Messages
 {
     /// <summary> Wonga.Payments.InternalMessages.Messages.RequestPartPayment </summary>
-    [XmlRoot("RequestPartPayment", Namespace = "Wonga.Payments.InternalMessages.Messages", DataType = "")]
+    [XmlRoot("RequestPartPayment", Namespace = "Wonga.Payments.InternalMessages.Messages", DataType = "" )
+    , SourceAssembly("Wonga.Payments.InternalMessages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class RequestPartPayment : MsmqMessage<RequestPartPayment>
     {
         public Guid SagaId { get; set; }

@@ -8,7 +8,8 @@ using Wonga.QA.Framework.Msmq.Enums.Common.Iso;
 namespace Wonga.QA.Framework.Msmq.Messages.Payments.Ca
 {
     /// <summary> Wonga.Payments.Ca.CreateFixedTermLoanApplication </summary>
-    [XmlRoot("CreateFixedTermLoanApplication", Namespace = "Wonga.Payments.Ca", DataType = "")]
+    [XmlRoot("CreateFixedTermLoanApplication", Namespace = "Wonga.Payments.Ca", DataType = "" )
+    , SourceAssembly("Wonga.Payments.Commands.Ca, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class CreateFixedTermLoanApplication : MsmqMessage<CreateFixedTermLoanApplication>
     {
         public LoanProvinceEnum Province { get; set; }

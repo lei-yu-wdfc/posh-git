@@ -5,7 +5,8 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Messages.FileStorage.InternalMessages
 {
     /// <summary> Wonga.FileStorage.InternalMessages.CreatePreTopUpDocument </summary>
-    [XmlRoot("CreatePreTopUpDocument", Namespace = "Wonga.FileStorage.InternalMessages", DataType = "")]
+    [XmlRoot("CreatePreTopUpDocument", Namespace = "Wonga.FileStorage.InternalMessages", DataType = "" )
+    , SourceAssembly("Wonga.FileStorage.InternalMessages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class CreatePreTopUpDocument : MsmqMessage<CreatePreTopUpDocument>
     {
         public Guid TopupId { get; set; }

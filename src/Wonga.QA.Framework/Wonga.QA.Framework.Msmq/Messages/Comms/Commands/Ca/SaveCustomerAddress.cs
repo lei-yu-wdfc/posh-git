@@ -7,7 +7,8 @@ using Wonga.QA.Framework.Msmq.Enums.Integration.Comms.Enums;
 namespace Wonga.QA.Framework.Msmq.Messages.Comms.Commands.Ca
 {
     /// <summary> Wonga.Comms.Commands.Ca.SaveAddressCaMessage </summary>
-    [XmlRoot("SaveAddressCaMessage", Namespace = "Wonga.Comms.Commands.Ca", DataType = "")]
+    [XmlRoot("SaveAddressCaMessage", Namespace = "Wonga.Comms.Commands.Ca", DataType = "" )
+    , SourceAssembly("Wonga.Comms.Commands.Ca, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class SaveCustomerAddress : MsmqMessage<SaveCustomerAddress>
     {
         public String Province { get; set; }

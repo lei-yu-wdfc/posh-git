@@ -4,6 +4,7 @@ using Wonga.QA.Framework.Msmq.Messages.Graydon.PublicMessages.events;
 using Wonga.QA.Framework.Msmq.Messages.Payments.PublicMessages;
 using Wonga.QA.Framework.Msmq.Messages.Risk;
 using Wonga.QA.Framework.Msmq.Messages.Risk.Commands;
+using Wonga.QA.Framework.Msmq.Messages.Risk.Commands.Wb;
 
 namespace Wonga.QA.ServiceTests.Risk
 {

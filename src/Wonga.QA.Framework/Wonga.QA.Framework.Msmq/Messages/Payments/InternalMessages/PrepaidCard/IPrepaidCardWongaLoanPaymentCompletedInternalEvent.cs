@@ -5,7 +5,8 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.PrepaidCard
 {
     /// <summary> Wonga.Payments.InternalMessages.PrepaidCard.IPrepaidCardWongaLoanPaymentCompletedInternalEvent </summary>
-    [XmlRoot("IPrepaidCardWongaLoanPaymentCompletedInternalEvent", Namespace = "Wonga.Payments.InternalMessages.PrepaidCard", DataType = "")]
+    [XmlRoot("IPrepaidCardWongaLoanPaymentCompletedInternalEvent", Namespace = "Wonga.Payments.InternalMessages.PrepaidCard", DataType = "" )
+    , SourceAssembly("Wonga.Payments.InternalMessages.PrepaidCard, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class IPrepaidCardWongaLoanPaymentCompletedInternalEvent : MsmqMessage<IPrepaidCardWongaLoanPaymentCompletedInternalEvent>
     {
         public Guid SagaId { get; set; }

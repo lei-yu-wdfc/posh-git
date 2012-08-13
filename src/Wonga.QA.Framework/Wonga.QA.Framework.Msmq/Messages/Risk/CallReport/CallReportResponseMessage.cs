@@ -5,7 +5,8 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Messages.Risk.CallReport
 {
     /// <summary> Wonga.Risk.CallReport.CallReportResponseMessage </summary>
-    [XmlRoot("CallReportResponseMessage", Namespace = "Wonga.Risk.CallReport", DataType = "Wonga.Risk.BaseSagaMessage,NServiceBus.Saga.ISagaMessage,Wonga.Risk.IResumeRiskWorkflow")]
+    [XmlRoot("CallReportResponseMessage", Namespace = "Wonga.Risk.CallReport", DataType = "Wonga.Risk.BaseSagaMessage,NServiceBus.Saga.ISagaMessage,Wonga.Risk.IResumeRiskWorkflow" )
+    , SourceAssembly("Wonga.Risk.InternalMessages.Uk, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class CallReportResponseMessage : MsmqMessage<CallReportResponseMessage>
     {
         public Object Response { get; set; }

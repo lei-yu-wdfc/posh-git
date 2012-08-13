@@ -5,7 +5,8 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.SagaMessages
 {
     /// <summary> Wonga.Payments.InternalMessages.SagaMessages.CardHolderNotPresentPaymentTakenInternalMessage </summary>
-    [XmlRoot("CardHolderNotPresentPaymentTakenInternalMessage", Namespace = "Wonga.Payments.InternalMessages.SagaMessages", DataType = "Wonga.Payments.InternalMessages.SagaMessages.CardHolderNotPresentPaymentTakenMessage,Wonga.Payments.InternalMessages.SagaMessages.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
+    [XmlRoot("CardHolderNotPresentPaymentTakenInternalMessage", Namespace = "Wonga.Payments.InternalMessages.SagaMessages", DataType = "Wonga.Payments.InternalMessages.SagaMessages.CardHolderNotPresentPaymentTakenMessage,Wonga.Payments.InternalMessages.SagaMessages.BaseSagaMessage,NServiceBus.Saga.ISagaMessage" )
+    , SourceAssembly("Wonga.Payments.InternalMessages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class CardHolderNotPresentPaymentTakenInternalMessage : MsmqMessage<CardHolderNotPresentPaymentTakenInternalMessage>
     {
         public Int64 PaymentReference { get; set; }

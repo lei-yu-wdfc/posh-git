@@ -5,7 +5,8 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Messages.Comms.PublicMessages.Za
 {
     /// <summary> Wonga.Comms.PublicMessages.Za.IRepaymentArrangementPaymentReminderEmailCompiled </summary>
-    [XmlRoot("IRepaymentArrangementPaymentReminderEmailCompiled", Namespace = "Wonga.Comms.PublicMessages.Za", DataType = "Wonga.Comms.PublicMessages.Za.IEmailCompiled")]
+    [XmlRoot("IRepaymentArrangementPaymentReminderEmailCompiled", Namespace = "Wonga.Comms.PublicMessages.Za", DataType = "Wonga.Comms.PublicMessages.Za.IEmailCompiled" )
+    , SourceAssembly("Wonga.Comms.PublicMessages.Za, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class IRepaymentArrangementPaymentReminderEmailCompiled : MsmqMessage<IRepaymentArrangementPaymentReminderEmailCompiled>
     {
         public Guid AccountId { get; set; }

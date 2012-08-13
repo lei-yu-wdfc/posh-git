@@ -7,7 +7,8 @@ using Wonga.QA.Framework.Msmq.Enums.Integration.Comms.Enums;
 namespace Wonga.QA.Framework.Msmq.Messages.PublicMessages.Comms.Instructions
 {
     /// <summary> Wonga.PublicMessages.Comms.Instructions.IWantToSendArrearsCommunicationSms </summary>
-    [XmlRoot("IWantToSendArrearsCommunicationSms", Namespace = "Wonga.PublicMessages.Comms.Instructions", DataType = "")]
+    [XmlRoot("IWantToSendArrearsCommunicationSms", Namespace = "Wonga.PublicMessages.Comms.Instructions", DataType = "" )
+    , SourceAssembly("Wonga.PublicMessages.Comms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class IWantToSendArrearsCommunicationSms : MsmqMessage<IWantToSendArrearsCommunicationSms>
     {
         public Guid ArrearsCommunicationId { get; set; }

@@ -5,7 +5,8 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Messages.Risk.InternalMessages.Salesforce.business
 {
     /// <summary> Wonga.Risk.InternalMessages.Salesforce.business.GeneralManualVerificationInternalRequest </summary>
-    [XmlRoot("GeneralManualVerificationInternalRequest", Namespace = "Wonga.Risk.InternalMessages.Salesforce.business", DataType = "Wonga.Risk.InternalMessages.Salesforce.NeedManualVerificationMessage,Wonga.Risk.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
+    [XmlRoot("GeneralManualVerificationInternalRequest", Namespace = "Wonga.Risk.InternalMessages.Salesforce.business", DataType = "Wonga.Risk.InternalMessages.Salesforce.NeedManualVerificationMessage,Wonga.Risk.BaseSagaMessage,NServiceBus.Saga.ISagaMessage" )
+    , SourceAssembly("Wonga.Risk.InternalMessages.Salesforce, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class GeneralManualVerificationInternalRequest : MsmqMessage<GeneralManualVerificationInternalRequest>
     {
         public Guid OrganisationId { get; set; }

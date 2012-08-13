@@ -5,7 +5,8 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Messages.Comms.PublicMessages.DocumentGeneration.Wb.Uk
 {
     /// <summary> Wonga.Comms.PublicMessages.DocumentGeneration.Wb.Uk.CompileDeclineEmail </summary>
-    [XmlRoot("CompileDeclineEmail", Namespace = "Wonga.Comms.PublicMessages.DocumentGeneration.Wb.Uk", DataType = "")]
+    [XmlRoot("CompileDeclineEmail", Namespace = "Wonga.Comms.PublicMessages.DocumentGeneration.Wb.Uk", DataType = "" )
+    , SourceAssembly("Wonga.Comms.PublicMessages.DocumentGeneration.Wb.Uk, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class CompileDeclineEmail : MsmqMessage<CompileDeclineEmail>
     {
         public Guid AccountId { get; set; }

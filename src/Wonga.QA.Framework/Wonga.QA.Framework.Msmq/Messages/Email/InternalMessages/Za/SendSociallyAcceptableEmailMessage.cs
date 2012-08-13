@@ -5,7 +5,8 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Messages.Email.InternalMessages.Za
 {
     /// <summary> Wonga.Email.InternalMessages.Za.SendSociallyAcceptableEmailMessage </summary>
-    [XmlRoot("SendSociallyAcceptableEmailMessage", Namespace = "Wonga.Email.InternalMessages.Za", DataType = "")]
+    [XmlRoot("SendSociallyAcceptableEmailMessage", Namespace = "Wonga.Email.InternalMessages.Za", DataType = "" )
+    , SourceAssembly("Wonga.Email.InternalMessages.Za, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class SendSociallyAcceptableEmailMessage : MsmqMessage<SendSociallyAcceptableEmailMessage>
     {
         public Guid AccountId { get; set; }

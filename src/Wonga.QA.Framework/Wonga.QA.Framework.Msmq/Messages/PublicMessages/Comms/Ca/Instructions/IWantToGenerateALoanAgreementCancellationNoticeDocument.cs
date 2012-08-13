@@ -5,7 +5,8 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Messages.PublicMessages.Comms.Ca.Instructions
 {
     /// <summary> Wonga.PublicMessages.Comms.Ca.Instructions.IWantToGenerateALoanAgreementCancellationNoticeDocument </summary>
-    [XmlRoot("IWantToGenerateALoanAgreementCancellationNoticeDocument", Namespace = "Wonga.PublicMessages.Comms.Ca.Instructions", DataType = "Wonga.PublicMessages.Comms.Instructions.IWantToGenerateALegalDocument")]
+    [XmlRoot("IWantToGenerateALoanAgreementCancellationNoticeDocument", Namespace = "Wonga.PublicMessages.Comms.Ca.Instructions", DataType = "Wonga.PublicMessages.Comms.Instructions.IWantToGenerateALegalDocument" )
+    , SourceAssembly("Wonga.PublicMessages.Comms.Ca, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class IWantToGenerateALoanAgreementCancellationNoticeDocument : MsmqMessage<IWantToGenerateALoanAgreementCancellationNoticeDocument>
     {
         public Guid AccountId { get; set; }

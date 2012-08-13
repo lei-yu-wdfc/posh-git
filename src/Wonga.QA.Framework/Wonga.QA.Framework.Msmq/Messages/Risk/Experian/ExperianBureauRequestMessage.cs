@@ -5,7 +5,8 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Messages.Risk.Experian
 {
     /// <summary> Wonga.Risk.Experian.ExperianBureauRequestMessage </summary>
-    [XmlRoot("ExperianBureauRequestMessage", Namespace = "Wonga.Risk.Experian", DataType = "Wonga.Risk.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
+    [XmlRoot("ExperianBureauRequestMessage", Namespace = "Wonga.Risk.Experian", DataType = "Wonga.Risk.BaseSagaMessage,NServiceBus.Saga.ISagaMessage" )
+    , SourceAssembly("Wonga.Risk.InternalMessages.Uk, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class ExperianBureauRequestMessage : MsmqMessage<ExperianBureauRequestMessage>
     {
         public Guid ApplicationId { get; set; }

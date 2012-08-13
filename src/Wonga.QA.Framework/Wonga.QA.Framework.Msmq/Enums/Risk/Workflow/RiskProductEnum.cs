@@ -8,5 +8,6 @@ namespace Wonga.QA.Framework.Msmq.Enums.Risk.Workflow
         LineOfCreditInitial = 3,
         LineOfCreditAdvance = 4,
         BillPayment = 5,
+        PayLater = 6,
     }
 }

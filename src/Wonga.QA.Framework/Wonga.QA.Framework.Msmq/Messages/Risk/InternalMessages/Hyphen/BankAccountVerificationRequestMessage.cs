@@ -5,7 +5,8 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Messages.Risk.InternalMessages.Hyphen
 {
     /// <summary> Wonga.Risk.InternalMessages.Hyphen.BankAccountVerificationRequestMessage </summary>
-    [XmlRoot("BankAccountVerificationRequestMessage", Namespace = "Wonga.Risk.InternalMessages.Hyphen", DataType = "Wonga.Risk.BaseSagaMessage,NServiceBus.Saga.ISagaMessage")]
+    [XmlRoot("BankAccountVerificationRequestMessage", Namespace = "Wonga.Risk.InternalMessages.Hyphen", DataType = "Wonga.Risk.BaseSagaMessage,NServiceBus.Saga.ISagaMessage" )
+    , SourceAssembly("Wonga.Risk.InternalMessages.Za, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class BankAccountVerificationRequestMessage : MsmqMessage<BankAccountVerificationRequestMessage>
     {
         public Guid AccountId { get; set; }

@@ -8,7 +8,8 @@ using Wonga.QA.Framework.Msmq.Enums.PublicMessages.Payments.PrepaidCard.Enums;
 namespace Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.PrepaidCard
 {
     /// <summary> Wonga.Payments.InternalMessages.PrepaidCard.IPrepaidCardPromoPaymentStartedInternalEvent </summary>
-    [XmlRoot("IPrepaidCardPromoPaymentStartedInternalEvent", Namespace = "Wonga.Payments.InternalMessages.PrepaidCard", DataType = "")]
+    [XmlRoot("IPrepaidCardPromoPaymentStartedInternalEvent", Namespace = "Wonga.Payments.InternalMessages.PrepaidCard", DataType = "" )
+    , SourceAssembly("Wonga.Payments.InternalMessages.PrepaidCard, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class IPrepaidCardPromoPaymentStartedInternalEvent : MsmqMessage<IPrepaidCardPromoPaymentStartedInternalEvent>
     {
         public Guid SagaId { get; set; }

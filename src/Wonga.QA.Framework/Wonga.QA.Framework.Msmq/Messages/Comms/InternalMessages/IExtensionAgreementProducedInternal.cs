@@ -5,7 +5,8 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Messages.Comms.InternalMessages
 {
     /// <summary> Wonga.Comms.InternalMessages.IExtensionAgreementProducedInternal </summary>
-    [XmlRoot("IExtensionAgreementProducedInternal", Namespace = "Wonga.Comms.InternalMessages", DataType = "Wonga.Comms.PublicMessages.IExtensionAgreementProduced")]
+    [XmlRoot("IExtensionAgreementProducedInternal", Namespace = "Wonga.Comms.InternalMessages", DataType = "Wonga.Comms.PublicMessages.IExtensionAgreementProduced" )
+    , SourceAssembly("Wonga.Comms.InternalMessages.Events, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class IExtensionAgreementProducedInternal : MsmqMessage<IExtensionAgreementProducedInternal>
     {
         public Guid AccountId { get; set; }

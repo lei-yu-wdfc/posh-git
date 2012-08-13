@@ -5,7 +5,8 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Messages.Comms.InternalMessages.Email.SagaMessages
 {
     /// <summary> Wonga.Comms.InternalMessages.Email.SagaMessages.SendRepaymentArrangementPreCancelEmailDedicatedMessage </summary>
-    [XmlRoot("SendRepaymentArrangementPreCancelEmailDedicatedMessage", Namespace = "Wonga.Comms.InternalMessages.Email.SagaMessages", DataType = "")]
+    [XmlRoot("SendRepaymentArrangementPreCancelEmailDedicatedMessage", Namespace = "Wonga.Comms.InternalMessages.Email.SagaMessages", DataType = "" )
+    , SourceAssembly("Wonga.Comms.InternalMessages.Email, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class SendRepaymentArrangementPreCancelEmailDedicatedMessage : MsmqMessage<SendRepaymentArrangementPreCancelEmailDedicatedMessage>
     {
         public String FirstName { get; set; }

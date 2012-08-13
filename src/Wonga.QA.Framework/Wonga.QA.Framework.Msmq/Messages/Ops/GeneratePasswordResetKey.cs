@@ -7,7 +7,8 @@ using Wonga.QA.Framework.Msmq.Enums.Ops;
 namespace Wonga.QA.Framework.Msmq.Messages.Ops
 {
     /// <summary> Wonga.Ops.GeneratePwdResetKeyMessage </summary>
-    [XmlRoot("GeneratePwdResetKeyMessage", Namespace = "Wonga.Ops", DataType = "")]
+    [XmlRoot("GeneratePwdResetKeyMessage", Namespace = "Wonga.Ops", DataType = "" )
+    , SourceAssembly("Wonga.Ops.Commands, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class GeneratePasswordResetKey : MsmqMessage<GeneratePasswordResetKey>
     {
         public Guid NotificationId { get; set; }

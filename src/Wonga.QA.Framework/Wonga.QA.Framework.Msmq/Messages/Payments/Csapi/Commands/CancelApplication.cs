@@ -5,7 +5,8 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Messages.Payments.Csapi.Commands
 {
     /// <summary> Wonga.Payments.Csapi.Commands.AbandonApplication </summary>
-    [XmlRoot("AbandonApplication", Namespace = "Wonga.Payments.Csapi.Commands", DataType = "")]
+    [XmlRoot("AbandonApplication", Namespace = "Wonga.Payments.Csapi.Commands", DataType = "" )
+    , SourceAssembly("Wonga.Payments.Csapi.Commands, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class CancelApplication : MsmqMessage<CancelApplication>
     {
         public Guid AccountId { get; set; }

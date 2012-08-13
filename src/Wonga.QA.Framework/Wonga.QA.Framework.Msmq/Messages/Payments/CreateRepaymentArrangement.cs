@@ -7,7 +7,8 @@ using Wonga.QA.Framework.Msmq.Enums.Integration.Payments.Enums;
 namespace Wonga.QA.Framework.Msmq.Messages.Payments
 {
     /// <summary> Wonga.Payments.CreateRepaymentArrangement </summary>
-    [XmlRoot("CreateRepaymentArrangement", Namespace = "Wonga.Payments", DataType = "")]
+    [XmlRoot("CreateRepaymentArrangement", Namespace = "Wonga.Payments", DataType = "" )
+    , SourceAssembly("Wonga.Payments.Commands, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class CreateRepaymentArrangement : MsmqMessage<CreateRepaymentArrangement>
     {
         public Guid ApplicationId { get; set; }

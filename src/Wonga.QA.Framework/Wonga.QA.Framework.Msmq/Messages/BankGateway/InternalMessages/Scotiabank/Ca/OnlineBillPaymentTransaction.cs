@@ -5,7 +5,8 @@ using System.Xml.Serialization;
 namespace Wonga.QA.Framework.Msmq.Messages.BankGateway.InternalMessages.Scotiabank.Ca
 {
     /// <summary> Wonga.BankGateway.InternalMessages.Scotiabank.Ca.OnlineBillPaymentTransaction </summary>
-    [XmlRoot("OnlineBillPaymentTransaction", Namespace = "Wonga.BankGateway.InternalMessages.Scotiabank.Ca", DataType = "")]
+    [XmlRoot("OnlineBillPaymentTransaction", Namespace = "Wonga.BankGateway.InternalMessages.Scotiabank.Ca", DataType = "" )
+    , SourceAssembly("Wonga.BankGateway.InternalMessages.Scotiabank.Ca, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
     public partial class OnlineBillPaymentTransaction : MsmqMessage<OnlineBillPaymentTransaction>
     {
         public String RecordType { get; set; }
