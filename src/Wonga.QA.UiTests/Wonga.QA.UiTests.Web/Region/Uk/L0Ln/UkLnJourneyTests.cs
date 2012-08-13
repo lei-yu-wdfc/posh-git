@@ -162,7 +162,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
             }
         }
 
-        [Test, AUT(AUT.Uk), JIRA("QA-347"), Pending("Functional is not ready")]
+        [Test, AUT(AUT.Uk), JIRA("QA-347"), Owner(Owner.MihailPodobivsky), Pending("Functional is not ready")]
         public void LnCustomerWithoutLiveLoanPassLnWithNewCard()
         {
             var loginPage = Client.Login();
@@ -183,8 +183,35 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
             var myPayments = mySummaryPage.Navigation.MyPaymentDetailsButtonClick();
             myPayments.AddVisaElectronCard("4222 2222 2222 2222");
             var journey = JourneyFactory.GetLnJourney(Client.Home());
-            var applyPage = journey.Teleport<MySummaryPage>() as MySummaryPage;
+            var mySummary = journey.Teleport<MySummaryPage>() as MySummaryPage;
 
+        }
+
+        [Test, AUT(AUT.Uk), JIRA("QA-346"), Owner(Owner.MihailPodobivsky)]
+        public void CustomerOnApplyLnPageEntersWrongSecretCodeShouldntBeAbleToProceed()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            string name = Get.GetName();
+            string surname = Get.RandomString(10);
+            Customer customer = CustomerBuilder
+                .New()
+                .WithEmailAddress(email)
+                .WithForename(name)
+                .WithSurname(surname)
+                .Build();
+            Application application = ApplicationBuilder
+                .New(customer)
+                .Build();
+            application.RepayOnDueDate();
+            var mySummaryPage = loginPage.LoginAs(email);
+            var journey = JourneyFactory.GetLnJourney(Client.Home());
+            var applyPage = journey.Teleport<ApplyPage>() as ApplyPage;
+            applyPage.SetSecureCode = "111";
+            applyPage.ApplicationSection.SetMinCash = "100";
+            Assert.IsFalse(applyPage.IsSecurecodeWarningOccurred());
+            Do.Until(() => Client.Driver is ApplyPage);
+            Assert.IsFalse(Client.Driver is ProcessingPage);
         }
 
         [Test, AUT(AUT.Uk), JIRA("QA-344"), Owner(Owner.PetrTarasenko)]
@@ -207,6 +234,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
             var mySummaryPage = loginPage.LoginAs(email);
             var journey = JourneyFactory.GetLnJourney(Client.Home());
             var applyPage = journey.Teleport<ApplyPage>() as ApplyPage;
+            applyPage.ApplicationSection.SetMinCash = "100";
             applyPage.SetSecureCode = "abc";
             Assert.IsTrue(applyPage.IsSecurecodeWarningOccurred());
             applyPage.SetSecureCode = "12a";
