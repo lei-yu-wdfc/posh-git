@@ -123,7 +123,7 @@ namespace Wonga.QA.Tests.Comms
                     VerifyEmailIsSentAfterDaysInArrearsZa(30, TemplateA6);
                     break;
                 case AUT.Ca:
-                    VerifyEmailIsSentAfterDaysInArrearsCa(27, SendCollectionsReminderA6Email, "132.44");
+                    VerifyEmailIsSentAfterDaysInArrearsCa(27, SendCollectionsReminderA6Email, "131.81");
                     break;
             }
            
