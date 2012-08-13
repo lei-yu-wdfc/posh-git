@@ -81,7 +81,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.FinancialAssessment
             _mobilePhone = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentExpenditurePage.MobilePhone));
             _otherPhone = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentExpenditurePage.OtherPhone));
             _foodAndMilk = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentExpenditurePage.Food));
-            _cleaningAndToilet = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentExpenditurePage.LaundryAndDryCleaning));
+            _cleaningAndToilet = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentExpenditurePage.Cleaning));
             _toiletries = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentExpenditurePage.Toiletries));
             _newspapersAndMagazines = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentExpenditurePage.NewspapersAndMagazines));
             _cigaretesTabaccoSweets = Content.FindElement(By.CssSelector(UiMap.Get.FinancialAssessmentExpenditurePage.CigarettesAndTobacco));
