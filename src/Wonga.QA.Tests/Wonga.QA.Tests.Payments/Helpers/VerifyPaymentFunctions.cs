@@ -76,17 +76,13 @@ namespace Wonga.QA.Tests.Payments.Helpers
 
         public static bool VerifyApplicationInArrears(Guid applicationGuid)
         {
-			if (Drive.Data.Ops.GetServiceConfiguration<bool>(MultipleRepresentmentsInArrearsKeyName))
-			{
-				return
-					Do.With.Timeout(2).Interval(10).Until(
-						() =>
-						Drive.Data.OpsSagas.Db.MultipleRepresentmentsInArrearsSagaEntity.FindByApplicationId(ApplicationId: applicationGuid)) != null;
-			}
-
-            return
-                Do.With.Timeout(2).Interval(10).Until(
-                    () => Drive.Db.OpsSagas.PaymentsInArrearsSagaEntities.Single(s => s.ApplicationId == applicationGuid)) != null;
+			return
+        		Do.With.Timeout(3).Interval(10).Until(
+        			() =>
+        			Drive.Data.Ops.GetServiceConfiguration<bool>(MultipleRepresentmentsInArrearsKeyName)
+        				? Drive.Data.OpsSagas.Db.MultipleRepresentmentsInArrearsSagaEntity.FindByApplicationId(ApplicationId: applicationGuid)
+        				: Drive.Db.OpsSagas.PaymentsInArrearsSagaEntities.Single(s => s.ApplicationId == applicationGuid)
+				) != null;
         }
 
         public static bool VerifyVariableInterestRatesApplied(List<TransactionEntity> actual, List<TransactionEntity> expected)
