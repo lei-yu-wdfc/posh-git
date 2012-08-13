@@ -6,6 +6,7 @@ using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.UiTests.Web.Region.Ca.MyAccounts;
 
 namespace Wonga.QA.UiTests.Web
 {
