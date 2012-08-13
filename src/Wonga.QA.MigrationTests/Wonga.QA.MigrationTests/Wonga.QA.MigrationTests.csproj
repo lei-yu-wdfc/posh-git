@@ -36,12 +36,16 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\Users\lukasz.tyde@wonga.com\Desktop\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="MbUnit, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
+    <Reference Include="MbUnit, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />    
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml" />
+	 <Reference Include="NServiceBus">
+      <HintPath>..\..\lib\nuget\packages\NServiceBus.2.6.0.1511</HintPath>
+    </Reference>
     <Reference Include="WebDriver">
       <HintPath>..\..\..\bin\WebDriver.dll</HintPath>
     </Reference>
