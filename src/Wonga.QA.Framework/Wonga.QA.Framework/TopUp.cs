@@ -19,11 +19,13 @@ namespace Wonga.QA.Framework
         public int daysTillRepaymentDate { get; set; }
         public string Currency { get; set; }
         public DateTime updateOn { get; set; }
+        public Guid FixedTermLoanTopupId;
 
-        public TopUp(double _interestAndFeesAmount, double _totalToRepay)
+        public TopUp(double _interestAndFeesAmount, double _totalToRepay, Guid _TopUpId)
         {
             interestAndFeesAmount = _interestAndFeesAmount;
             totalToRepay = _totalToRepay;
+            FixedTermLoanTopupId = _TopUpId;
         }
     }
 }
