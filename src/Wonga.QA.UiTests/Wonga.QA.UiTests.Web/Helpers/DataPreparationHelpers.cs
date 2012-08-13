@@ -9,7 +9,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.UiTests.Web.Helpers
 {
-    [TestFixture]
+    [TestFixture, Parallelizable(TestScope.All)]
     [Description("Prepare L0, Ln users for various testing purposes")]
     [Explicit("The tests are to be launched manually only - to prepare test data (L0/Ln users)")] 
     public class DataPreparationHelpers
