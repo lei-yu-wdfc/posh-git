@@ -43,7 +43,7 @@
     <Compile Include="ApplicationBase.cs" />
     <Compile Include="Operations\ApplicationOperations.cs" />
     <Compile Include="Operations\ApplicationOperationsBase.cs" />
-    <Compile Include="Operations\ApplicationOperationsTimeTravel.cs" />
+    <Compile Include="Operations\ApplicationOperationsTimeShift.cs" />
     <Compile Include="Queries\ApplicationQueries.cs" />
     <Compile Include="Queries\ApplicationQueriesBase.cs" />
     <Compile Include="Business\BusinessApplication.cs" />
