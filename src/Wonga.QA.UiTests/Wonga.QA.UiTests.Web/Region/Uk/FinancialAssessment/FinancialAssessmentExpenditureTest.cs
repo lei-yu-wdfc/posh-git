@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MbUnit.Framework;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Old;
 using Wonga.QA.Framework.UI.Ui.Pages.Helpers;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.UiTests.Web;

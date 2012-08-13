@@ -5,6 +5,7 @@ using System.Text;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Old;
 using Wonga.QA.Framework.UI.UiElements.Pages.FinancialAssessment;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.UiTests.Web;

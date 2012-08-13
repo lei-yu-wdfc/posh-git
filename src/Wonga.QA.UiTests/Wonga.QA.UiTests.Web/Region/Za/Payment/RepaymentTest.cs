@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Old;
 using Wonga.QA.Framework.UI.Mappings;
 using Wonga.QA.Tests.Core;
 

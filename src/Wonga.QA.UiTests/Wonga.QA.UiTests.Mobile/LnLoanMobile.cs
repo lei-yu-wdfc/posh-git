@@ -5,6 +5,7 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Mobile;
 using Wonga.QA.Framework.Mobile.Journey;
 using Wonga.QA.Framework.Mobile.Ui.Pages;
+using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.UiTests.Mobile
