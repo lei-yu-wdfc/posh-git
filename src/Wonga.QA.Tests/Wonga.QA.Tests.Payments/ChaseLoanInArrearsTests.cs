@@ -121,7 +121,7 @@ namespace Wonga.QA.Tests.Payments
         [Test, JIRA("UKOPS-419"), Owner(Owner.JonHurd), Pending("Ticket Not Implemented")]
         public void PaymentsShouldSuppressFiveAmPingIfSuppressionsAreActive()
         {
-            // To Do .. not implemented yet
+            // To Do
         }
 
         [Test, JIRA("UKOPS-419"), Owner(Owner.JonHurd), Pending("Ticket Not Implemented")]
