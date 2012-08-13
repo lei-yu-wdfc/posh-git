@@ -48,6 +48,7 @@
     <Compile Include="Consumer\ConsumerAccountDataBase.cs" />
     <Compile Include="Consumer\ConsumerApplicationBuilderBase.cs" />
     <Compile Include="Consumer\ConsumerApplicationDataBase.cs" />
+    <Compile Include="Consumer\ConsumerTopUpDataBase.cs" />
     <Compile Include="Consumer\Uk\ConsumerAccountBuilder.cs" />
     <Compile Include="Consumer\Uk\ConsumerApplicationBuilder.cs" />
     <Compile Include="Consumer\Za\ConsumerAccountBuilder.cs" />

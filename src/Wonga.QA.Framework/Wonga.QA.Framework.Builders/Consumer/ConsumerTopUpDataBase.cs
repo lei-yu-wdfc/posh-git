@@ -8,8 +8,8 @@ namespace Wonga.QA.Framework.Builders.Consumer
     public class ConsumerTopUpDataBase
     {
         public int amount;
-        public Customer customer;
-        public Application application;
+        public Guid customerId;
+        public Guid applicationId;
         public bool isEnabled;
         public double amountMax;
         public double totalToRepay;

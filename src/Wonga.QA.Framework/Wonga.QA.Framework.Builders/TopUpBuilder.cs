@@ -12,12 +12,12 @@ namespace Wonga.QA.Framework.Builders
     {
         public static class Consumer
         {
-            public static ConsumerTopUpBaseBuilder New(Customer customer, Application application, int amount)
+            public static ConsumerTopUpBaseBuilder New(Guid customerId, Guid applicationId, int amount)
             {
                 switch (Config.AUT)
                 {
                     case AUT.Uk:
-                        return new Builders.Consumer.Uk.ConsumerTopUpBuilder(customer, application, amount);
+                        return new Builders.Consumer.Uk.ConsumerTopUpBuilder(customerId, applicationId, amount);
                     default:
                         throw new NotSupportedException(Config.AUT.ToString());
                 }
