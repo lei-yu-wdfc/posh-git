@@ -81,7 +81,7 @@ namespace Wonga.QA.Tests.Payments.Helpers
         			() =>
         			Drive.Data.Ops.GetServiceConfiguration<bool>(MultipleRepresentmentsInArrearsKeyName)
         				? Drive.Data.OpsSagas.Db.MultipleRepresentmentsInArrearsSagaEntity.FindByApplicationId(ApplicationId: applicationGuid)
-        				: Drive.Db.OpsSagas.PaymentsInArrearsSagaEntities.Single(s => s.ApplicationId == applicationGuid)
+						: Drive.Data.OpsSagas.Db.PaymentsInArrearsSagaEntity.FindByApplicationId(ApplicationId: applicationGuid)
 				) != null;
         }
 
