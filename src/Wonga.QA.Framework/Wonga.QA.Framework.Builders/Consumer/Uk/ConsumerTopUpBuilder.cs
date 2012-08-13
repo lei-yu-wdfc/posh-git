@@ -6,9 +6,9 @@ using Wonga.QA.Framework.Api.Requests.Payments.Queries;
 
 namespace Wonga.QA.Framework.Builders.Consumer.Uk
 {
-    class CunsomerTopUpBuilder : ConsumerTopUpBaseBuilder
+    class ConsumerTopUpBuilder : ConsumerTopUpBaseBuilder
     {
-        public CunsomerTopUpBuilder(Customer customer, Application application, int amount)
+        public ConsumerTopUpBuilder(Customer customer, Application application, int amount)
             : base(customer, application, amount)
         {
         }

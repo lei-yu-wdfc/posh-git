@@ -51,7 +51,7 @@
     <Compile Include="Consumer\ConsumerTopUpBaseBuilder.cs" />
     <Compile Include="Consumer\Uk\ConsumerAccountBuilder.cs" />
     <Compile Include="Consumer\Uk\ConsumerApplicationBuilder.cs" />
-    <Compile Include="Consumer\Uk\CunsomerTopUpBuilder.cs" />
+    <Compile Include="Consumer\Uk\ConsumerTopUpBuilder.cs" />
     <Compile Include="Consumer\Za\ConsumerAccountBuilder.cs" />
     <Compile Include="Consumer\Za\ConsumerApplicationBuilder.cs" />
     <Compile Include="PayLater\PayLaterAccountBuilderBase.cs" />

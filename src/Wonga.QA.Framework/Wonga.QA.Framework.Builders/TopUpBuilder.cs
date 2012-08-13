@@ -20,7 +20,7 @@ namespace Wonga.QA.Framework.Builders
                 switch (Config.AUT)
                 {
                     case AUT.Uk:
-                        return new Builders.Consumer.Uk.CunsomerTopUpBuilder(customer, application, amount);
+                        return new Builders.Consumer.Uk.ConsumerTopUpBuilder(customer, application, amount);
                     default:
                         throw new NotSupportedException(Config.AUT.ToString());
                 }
