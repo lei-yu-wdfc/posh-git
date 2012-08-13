@@ -10,6 +10,7 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Data.Enums.Risk;
 using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Helpers;
+using Wonga.QA.Framework.Old;
 using CreateFixedTermLoanApplicationUkCommand = Wonga.QA.Framework.Api.Requests.Payments.Commands.Uk.CreateFixedTermLoanApplicationUkCommand;
 using CreateFixedTermLoanApplicationCaCommand = Wonga.QA.Framework.Api.Requests.Payments.Commands.Ca.CreateFixedTermLoanApplicationCaCommand;
 using CreateFixedTermLoanApplicationZaCommand = Wonga.QA.Framework.Api.Requests.Payments.Commands.Za.CreateFixedTermLoanApplicationZaCommand;

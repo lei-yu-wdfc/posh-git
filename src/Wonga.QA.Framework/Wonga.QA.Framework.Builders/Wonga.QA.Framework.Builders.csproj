@@ -72,6 +72,10 @@
       <Project>{87FC18E9-2B6B-4B8C-BDA0-544E51AC8D96}</Project>
       <Name>Wonga.QA.Framework.Api</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Wonga.QA.Framework.Application\Wonga.QA.Framework.Application.csproj">
+      <Project>{E02DE5C9-D5A4-45FE-8997-9C0CC9AAB3AA}</Project>
+      <Name>Wonga.QA.Framework.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Wonga.QA.Framework.Core\Wonga.QA.Framework.Core.csproj">
       <Project>{BACA1D90-F604-476F-ACDE-A9839E85147F}</Project>
       <Name>Wonga.QA.Framework.Core</Name>

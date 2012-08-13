@@ -23,7 +23,7 @@ using CreateRepaymentArrangementCommand = Wonga.QA.Framework.Api.Requests.Paymen
 using PaymentTransactionEnum =  Wonga.QA.Framework.Msmq.Enums.Integration.Payments.Enums.PaymentTransactionEnum;
 using PaymentTransactionScopeEnum = Wonga.QA.Framework.Msmq.Enums.Integration.Payments.Enums.PaymentTransactionScopeEnum;
 
-namespace Wonga.QA.Framework
+namespace Wonga.QA.Framework.Old
 {
 	public class Application
 	{

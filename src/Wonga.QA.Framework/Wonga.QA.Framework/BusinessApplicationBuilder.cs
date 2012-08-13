@@ -10,6 +10,7 @@ using Wonga.QA.Framework.Api.Requests.Risk.Commands;
 using Wonga.QA.Framework.Api.Requests.Risk.Commands.Wb.Uk;
 using Wonga.QA.Framework.Api.Requests.Risk.Queries;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Old;
 
 namespace Wonga.QA.Framework
 {

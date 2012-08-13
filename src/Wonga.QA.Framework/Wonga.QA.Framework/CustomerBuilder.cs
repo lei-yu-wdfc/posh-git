@@ -25,6 +25,7 @@ using Wonga.QA.Framework.Api.Requests.Risk.Commands.Za;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db;
 using Wonga.QA.Framework.Db.Comms;
+using Wonga.QA.Framework.Old;
 
 namespace Wonga.QA.Framework
 {

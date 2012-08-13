@@ -11,6 +11,7 @@ using Wonga.QA.Framework.Data;
 using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Db.Risk;
+using Wonga.QA.Framework.Old;
 
 namespace Wonga.QA.Framework
 {

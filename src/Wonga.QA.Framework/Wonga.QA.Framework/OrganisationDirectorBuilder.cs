@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Requests.Comms.ContactManagement.Commands;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Old;
 
 namespace Wonga.QA.Framework
 {

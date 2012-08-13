@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Wonga.QA.Framework.Account.PayLater;
+using Wonga.QA.Framework.Application.PayLater;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 
@@ -20,13 +21,13 @@ namespace Wonga.QA.Framework.Builders.PayLater
 			ApplicationData = applicationData;
 		}
 
-		public Application Build()
+		public PayLaterApplication Build()
 		{
 			CreateApplication();
 			WaitForApplicationDecision();
 			WaitForApplicationToBecomeLive();
 
-			return new Application(ApplicationId);
+			return new PayLaterApplication(ApplicationId);
 		}
 
 		private void CreateApplication()
