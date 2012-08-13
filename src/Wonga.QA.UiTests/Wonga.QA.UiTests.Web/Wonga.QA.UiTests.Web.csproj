@@ -94,7 +94,6 @@
     <Compile Include="Region\Uk\LoginTest.cs" />
     <Compile Include="LogoutTest.cs" />
     <Compile Include="MyAccountTests.cs" />
-    <Compile Include="MySummaryScenarioTest.cs" />
     <Compile Include="PayLater\PayLaterLoginTest.cs" />
     <Compile Include="Prepaid\PrepaidAccountTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
