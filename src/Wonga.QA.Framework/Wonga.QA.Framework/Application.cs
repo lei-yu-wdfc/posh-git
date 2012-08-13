@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Data.Linq;
 using System.Linq;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Enums;
@@ -8,15 +6,12 @@ using Wonga.QA.Framework.Api.Requests.Payments.Queries;
 using Wonga.QA.Framework.Api.Requests.Payments.Queries.Za;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Cs.Requests.Payments.Csapi.Commands;
-using Wonga.QA.Framework.Db;
 using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Db.Ops;
 using Wonga.QA.Framework.Db.OpsSagas;
 using Wonga.QA.Framework.Db.Payments;
-using Wonga.QA.Framework.Helpers;
 using Wonga.QA.Framework.Mocks;
 using Wonga.QA.Framework.Msmq;
-using Wonga.QA.Framework.Db.Risk;
 using Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Messages;
 using Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.SagaMessages;
 using CreateRepaymentArrangementCommand = Wonga.QA.Framework.Api.Requests.Payments.Commands.CreateRepaymentArrangementCommand;
@@ -41,7 +36,7 @@ namespace Wonga.QA.Framework.Old
 	    private readonly dynamic _fixedTermLoanAppTab = Drive.Data.Payments.Db.FixedTermLoanApplications;
 	    private readonly dynamic _riskAppTab = Drive.Data.Risk.Db.RiskApplications;
         private readonly dynamic _transactionsTab = Drive.Data.Payments.Db.Transactions;
-	    private readonly dynamic _loanDueDateNotifiSagaEntityTab = Drive.Data.OpsSagas.Db.LoanDueDateNotificationSagaEntity;
+	    private readonly dynamic _loanDueDateNotificationSagaEntityTable = Drive.Data.OpsSagas.Db.LoanDueDateNotificationSagaEntity;
 	    private readonly dynamic _fixedTermLoanSagaEntityTab = Drive.Data.OpsSagas.Db.FixedTermLoanSagaEntity;
 	    private readonly dynamic _scheduledPostAccruedInterestSagaEntityTab = Drive.Data.OpsSagas.Db.ScheduledPostAccruedInterestSagaEntity;
 	    private readonly dynamic _arrearsTab = Drive.Data.Payments.Db.Arrears;
@@ -67,7 +62,7 @@ namespace Wonga.QA.Framework.Old
 
 		public bool IsClosed
 		{
-			get { return _applicationsTab.FindAll(_applicationsTab.ExternalId == Id).Single().ClosedOn == null ? false : true; }
+			get { return _applicationsTab.FindAll(_applicationsTab.ExternalId == Id).Single().ClosedOn != null; }
 		}
 		 
 		public Guid AccountId
@@ -255,24 +250,18 @@ namespace Wonga.QA.Framework.Old
 		public void MakeDueToday(dynamic application)
 		{
 			RewindAppDates(application);
-            var ldd = _loanDueDateNotifiSagaEntityTab.FindAll(_loanDueDateNotifiSagaEntityTab.ApplicationId == Id).Single();
-            if (Drive.Data.Ops.GetServiceConfiguration<bool>("Payments.FeatureSwitches.UseLoanDurationSaga") == false)
-            {
-                Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = ldd.Id });
-            _loanDueDateNotifiSagaEntityTab.Update(ldd);
+			var entity = _loanDueDateNotificationSagaEntityTable.FindAll(_loanDueDateNotificationSagaEntityTable.ApplicationId == Id).Single();
 
-            var ftl = _fixedTermLoanSagaEntityTab.FindAll(_fixedTermLoanSagaEntityTab.ApplicationGuid == Id).Single();
-                Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = ftl.Id });
-            _fixedTermLoanSagaEntityTab.Update(ftl);
-            }
-            else
-            {
-                //We should timeout the LoanDurationSaga...
-                dynamic loanDurationSagaEntities = Drive.Data.OpsSagas.Db.LoanDurationSagaEntity;
-                var loanDurationSaga = loanDurationSagaEntities.FindAllByAccountGuid(AccountGuid: application.AccountId).FirstOrDefault();
+			Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = entity.Id });
+			_loanDueDateNotificationSagaEntityTable.Update(entity);
 
-                Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = loanDurationSaga.Id });
-            }
+			if (Config.AUT != AUT.Uk)
+			{
+				//The ScheduledPaymentSaga is used for Za and Ca
+				var ftl = _fixedTermLoanSagaEntityTab.FindAll(_fixedTermLoanSagaEntityTab.ApplicationGuid == Id).Single();
+				Drive.Msmq.Payments.Send(new TimeoutMessage {SagaId = ftl.Id});
+				_fixedTermLoanSagaEntityTab.Update(ftl);
+			}
 		}
 
 
@@ -347,24 +336,25 @@ namespace Wonga.QA.Framework.Old
                                 Reject();
             }
 
-            var ftl = _fixedTermLoanSagaEntityTab.FindAll(_fixedTermLoanSagaEntityTab.ApplicationGuid == Id).Single();
-            Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = ftl.Id });
-            _fixedTermLoanSagaEntityTab.Update(ftl);
+			var ftl = _fixedTermLoanSagaEntityTab.FindAll(_fixedTermLoanSagaEntityTab.ApplicationGuid == Id).Single();
+			Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = ftl.Id });
+			_fixedTermLoanSagaEntityTab.Update(ftl);
 
-            if (Config.AUT != AUT.Ca || (Config.AUT == AUT.Ca && !Boolean.Parse(caScotiaMocksEnabled.Value)))
-            {
-                var sp = Do.Until(() => _scheduledPaymentSagaEntityTab.FindAll(_scheduledPaymentSagaEntityTab.ApplicationGuid == Id).Single());
-                Drive.Msmq.Payments.Send(Config.AUT == AUT.Uk ? new TakePaymentFailedMessage { SagaId = sp.Id, CreatedOn = DateTime.UtcNow, ValueDate = DateTime.UtcNow, PaymentCardId = this.GetCustomer().GetPaymentCard() } :
-                                                                new TakePaymentFailedMessage { SagaId = sp.Id, CreatedOn = DateTime.UtcNow, ValueDate = DateTime.UtcNow });
+			if (Config.AUT != AUT.Ca || (Config.AUT == AUT.Ca && !Boolean.Parse(caScotiaMocksEnabled.Value)))
+			{
+				var sp = Do.Until(() => _scheduledPaymentSagaEntityTab.FindAll(_scheduledPaymentSagaEntityTab.ApplicationGuid == Id).Single());
+				Drive.Msmq.Payments.Send(Config.AUT == AUT.Uk ? new TakePaymentFailedMessage { SagaId = sp.Id, CreatedOn = DateTime.UtcNow, ValueDate = DateTime.UtcNow, PaymentCardId = this.GetCustomer().GetPaymentCard() } :
+																new TakePaymentFailedMessage { SagaId = sp.Id, CreatedOn = DateTime.UtcNow, ValueDate = DateTime.UtcNow });
 
-                Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = sp.Id }); 
-            }
+				Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = sp.Id });
+			}
+
 
             Do.Until(() => _arrearsTab.FindAll(_arrearsTab.ApplicationId == application.ApplicationId).Single());
 
             if (Config.AUT == AUT.Uk)
             {
-                this.UnexpireCard();
+                UnexpireCard();
             }
 
 			var arrearsDate = (DateTime)(Drive.Data.Payments.Db.Arrears.FindByApplicationId(application.ApplicationId)).CreatedOn;
@@ -416,7 +406,7 @@ namespace Wonga.QA.Framework.Old
         {
             var dbApplication = _applicationsTab.FindAll(_applicationsTab.ExternalId == Id).Single();
             var repaymentArrangement = Do.Until(() => _repaymentArrangementsTab.FindAll(_repaymentArrangementsTab.ApplicationId == dbApplication.ApplicationId).Single());
-            Drive.Cs.Commands.Post(new CancelRepaymentArrangementCommand()
+            Drive.Cs.Commands.Post(new CancelRepaymentArrangementCommand
             {
                 RepaymentArrangementId = repaymentArrangement.ExternalId
             });
