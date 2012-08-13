@@ -19,6 +19,7 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages.FinancialAssessment
         public String Water { get; set; }
         public String OtherUtilities { get; set; }
         public String TVLicense { get; set; }
+        public String Magistrates { get; set; }
         public String CourtFines { get; set; }
         public String MaintenenceOrChildSupportPayments { get; set; }
         public String HirePurchaseOrConditionalSale { get; set; }

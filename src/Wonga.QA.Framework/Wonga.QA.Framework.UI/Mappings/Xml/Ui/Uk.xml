@@ -1,153 +1,153 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <UiMap>
-  <PersonalDetailsPage>
-    <FormId>#lzero-personal-form</FormId>
-  </PersonalDetailsPage>
+	<PersonalDetailsPage>
+		<FormId>#lzero-personal-form</FormId>
+	</PersonalDetailsPage>
 
-  <EmploymentDetailsSection>
-    <NextPaydayDateDay>#edit-next-payday-day</NextPaydayDateDay>
-    <NextPaydayDateMonth>#edit-next-payday-month</NextPaydayDateMonth>
-    <NextPaydayDateYear>#edit-next-payday-year</NextPaydayDateYear>
-  </EmploymentDetailsSection>
+	<EmploymentDetailsSection>
+		<NextPaydayDateDay>#edit-next-payday-day</NextPaydayDateDay>
+		<NextPaydayDateMonth>#edit-next-payday-month</NextPaydayDateMonth>
+		<NextPaydayDateYear>#edit-next-payday-year</NextPaydayDateYear>
+	</EmploymentDetailsSection>
 
-  <AddressDetailsPage>
-    <FormId>#lzero-address-form</FormId>
-    <LookupButton>#edit-submit-lookup</LookupButton>
-    <AddressOptionsWrapper>#edit-address-options-wrapper</AddressOptionsWrapper>
-    <PostcodeValid>#edit-postcode-lookup-uk-wrapper .form-error</PostcodeValid>
-    <PostcodeLookup>#edit-postcode-lookup-uk</PostcodeLookup>
-    <Postcode>#edit-postcode-lookup-uk</Postcode>
-    <District>#edit-district</District>
-    <HouseNumber>#edit-house-number</HouseNumber>
-    <County>#edit-county</County>
-    <Street>#edit-street</Street>
-    <Town>#edit-town</Town>
-    <PostcodeInForm>#edit-postcode-uk</PostcodeInForm>
-    <AddressPeriod>#edit-address-period</AddressPeriod>
-    <NextButton>#edit-submit</NextButton>
-    <AddressOptions>#edit-address-options</AddressOptions>
-    <HouseNumberErrorForm>#edit-house-number-wrapper div.invalid</HouseNumberErrorForm>
-    <StreetErrorForm>#edit-street-wrapper div.invalid</StreetErrorForm>
-    <TownErrorForm>#edit-town-wrapper div.invalid</TownErrorForm>
-    <PostcodeErrorForm>#edit-postcode-uk-wrapper div.form-error div.invalid</PostcodeErrorForm>
-    <AddressPeriodErrorForm>#edit-address-period-wrapper div.invalid</AddressPeriodErrorForm>
-  </AddressDetailsPage>
+	<AddressDetailsPage>
+		<FormId>#lzero-address-form</FormId>
+		<LookupButton>#edit-submit-lookup</LookupButton>
+		<AddressOptionsWrapper>#edit-address-options-wrapper</AddressOptionsWrapper>
+		<PostcodeValid>#edit-postcode-lookup-uk-wrapper .form-error</PostcodeValid>
+		<PostcodeLookup>#edit-postcode-lookup-uk</PostcodeLookup>
+		<Postcode>#edit-postcode-lookup-uk</Postcode>
+		<District>#edit-district</District>
+		<HouseNumber>#edit-house-number</HouseNumber>
+		<County>#edit-county</County>
+		<Street>#edit-street</Street>
+		<Town>#edit-town</Town>
+		<PostcodeInForm>#edit-postcode-uk</PostcodeInForm>
+		<AddressPeriod>#edit-address-period</AddressPeriod>
+		<NextButton>#edit-submit</NextButton>
+		<AddressOptions>#edit-address-options</AddressOptions>
+		<HouseNumberErrorForm>#edit-house-number-wrapper div.invalid</HouseNumberErrorForm>
+		<StreetErrorForm>#edit-street-wrapper div.invalid</StreetErrorForm>
+		<TownErrorForm>#edit-town-wrapper div.invalid</TownErrorForm>
+		<PostcodeErrorForm>#edit-postcode-uk-wrapper div.form-error div.invalid</PostcodeErrorForm>
+		<AddressPeriodErrorForm>#edit-address-period-wrapper div.invalid</AddressPeriodErrorForm>
+	</AddressDetailsPage>
 
-  <BankAccountPage>
-    <FormId>#lzero-business-bank-form</FormId>
-    <NextButton>#edit-submit</NextButton>
-  </BankAccountPage>
+	<BankAccountPage>
+		<FormId>#lzero-business-bank-form</FormId>
+		<NextButton>#edit-submit</NextButton>
+	</BankAccountPage>
 
-  <DealDonePage>
-    <HeaderText>Your application has been accepted</HeaderText>
-    <GoToMyAccount>.wonga-box-top-right a</GoToMyAccount>
-  </DealDonePage>
+	<DealDonePage>
+		<HeaderText>Your application has been accepted</HeaderText>
+		<GoToMyAccount>.wonga-box-top-right a</GoToMyAccount>
+	</DealDonePage>
 
-  <TopupDealDonePage>
-    <AccountLink>#content-area h2 a</AccountLink>
-  </TopupDealDonePage>
+	<TopupDealDonePage>
+		<AccountLink>#content-area h2 a</AccountLink>
+	</TopupDealDonePage>
 
-  <DebitCardSection>
-    <Fieldset>#card-details</Fieldset>
-    <CardType>#edit-card-type</CardType>
-    <CardNumber>#edit-card-number</CardNumber>
-    <CardName>#edit-card-name</CardName>
-    <CardExpiryDateMonth>#edit-card-expiry-date-month</CardExpiryDateMonth>
-    <CardExpiryDateYear>#edit-card-expiry-date-year</CardExpiryDateYear>
-    <CardSecurityNumber>#edit-card-security</CardSecurityNumber>
-    <CardStartDateMonth>#edit-card-start-date-month</CardStartDateMonth>
-    <CardStartDateYear>#edit-card-start-date-year</CardStartDateYear>
-  </DebitCardSection>
+	<DebitCardSection>
+		<Fieldset>#card-details</Fieldset>
+		<CardType>#edit-card-type</CardType>
+		<CardNumber>#edit-card-number</CardNumber>
+		<CardName>#edit-card-name</CardName>
+		<CardExpiryDateMonth>#edit-card-expiry-date-month</CardExpiryDateMonth>
+		<CardExpiryDateYear>#edit-card-expiry-date-year</CardExpiryDateYear>
+		<CardSecurityNumber>#edit-card-security</CardSecurityNumber>
+		<CardStartDateMonth>#edit-card-start-date-month</CardStartDateMonth>
+		<CardStartDateYear>#edit-card-start-date-year</CardStartDateYear>
+	</DebitCardSection>
 
-  <AcceptedPage>
-    <FormId>#vanilla-agreement-form</FormId>
-    <AgreementConfirm>#edit-accept</AgreementConfirm>
-    <NodeWrap>.node-type-wonga-decision-page</NodeWrap>
-    <SecciLink>a#secci_link.doc_link</SecciLink>
-    <ExplanationLink>a#explanation_link.doc_link</ExplanationLink>
-    <PopupContentFrame>#fancybox-frame</PopupContentFrame>
-    <PopupClose>#fancybox-close</PopupClose>
-    <SecciHeader>div .secci-intro</SecciHeader>
-    <SecciPrint>div #secci-print-link a</SecciPrint>
-    <SecciContent>.secci</SecciContent>
-    <WrittenExplanationHeader>.secci-intro</WrittenExplanationHeader>
-    <WrittenExplanationPrint>#secci-print-link a</WrittenExplanationPrint>
-    <WrittenExplanationContent>.content</WrittenExplanationContent>
-  </AcceptedPage>
+	<AcceptedPage>
+		<FormId>#vanilla-agreement-form</FormId>
+		<AgreementConfirm>#edit-accept</AgreementConfirm>
+		<NodeWrap>.node-type-wonga-decision-page</NodeWrap>
+		<SecciLink>a#secci_link.doc_link</SecciLink>
+		<ExplanationLink>a#explanation_link.doc_link</ExplanationLink>
+		<PopupContentFrame>#fancybox-frame</PopupContentFrame>
+		<PopupClose>#fancybox-close</PopupClose>
+		<SecciHeader>div .secci-intro</SecciHeader>
+		<SecciPrint>div #secci-print-link a</SecciPrint>
+		<SecciContent>.secci</SecciContent>
+		<WrittenExplanationHeader>.secci-intro</WrittenExplanationHeader>
+		<WrittenExplanationPrint>#secci-print-link a</WrittenExplanationPrint>
+		<WrittenExplanationContent>.content</WrittenExplanationContent>
+	</AcceptedPage>
 
-  <ApplicationSection>
-    <FormId>#wonga-applyln-form</FormId>
-    <SecurityCode>#edit-security-code</SecurityCode>
-    <MinCash>#edit-min-cash</MinCash>
-    <ChangeMobileButton>#change-number</ChangeMobileButton>
-    <EditPin>#edit-pin</EditPin>
+	<ApplicationSection>
+		<FormId>#wonga-applyln-form</FormId>
+		<SecurityCode>#edit-security-code</SecurityCode>
+		<MinCash>#edit-min-cash</MinCash>
+		<ChangeMobileButton>#change-number</ChangeMobileButton>
+		<EditPin>#edit-pin</EditPin>
     <SecurcodeError>#edit-security-code-wrapper div div</SecurcodeError>
     <MinCashError>#edit-min-cash-wrapper div div </MinCashError>
-  </ApplicationSection>
+	</ApplicationSection>
 
-  <ApplyPage>
-    <Submit>#wonga-applyln-form #edit-submit</Submit>
-  </ApplyPage>
+	<ApplyPage>
+		<Submit>#wonga-applyln-form #edit-submit</Submit>
+	</ApplyPage>
 
-  <MyAccountNavigationSection>
-    <MySummary>.menu-mlid-2869</MySummary>
-    <MyPaymentsDetails>.leaf.last.menu-mlid-2871 a</MyPaymentsDetails>
-    <MyPersonalDetails>.menu-mlid-2871</MyPersonalDetails>
-    <MyPrepaidCardPageDetails>.menu-mlid-9403</MyPrepaidCardPageDetails>
-  </MyAccountNavigationSection>
+	<MyAccountNavigationSection>
+		<MySummary>.menu-mlid-2869</MySummary>
+    <MyPaymentsDetails>.menu-mlid-2870</MyPaymentsDetails>
+		<MyPersonalDetails>.menu-mlid-2871</MyPersonalDetails>
+		<MyPrepaidCardPageDetails>.menu-mlid-9403</MyPrepaidCardPageDetails>
+	</MyAccountNavigationSection>
 
-  <TopupSlidersElement>
-    <FormId>#wonga-sliders-form</FormId>
-    <AmountSlider>.wonga-amount-slider-wrapper .sliderbit</AmountSlider>
-    <LoanAmount>#edit-loan-amount</LoanAmount>
-    <SubmitButton>#edit-submit</SubmitButton>
-    <TotalAmount>span.loan-amount</TotalAmount>
-    <TotalFees>span.loan-fees</TotalFees>
-    <TotalToRepay>span.loan-total</TotalToRepay>
-    <AmountMinusButton>.wonga-amount-slider-wrapper div.sliderminus</AmountMinusButton>
-    <AmountPlusButton>.wonga-amount-slider-wrapper div.sliderplus</AmountPlusButton>
-  </TopupSlidersElement>
+	<TopupSlidersElement>
+		<FormId>#wonga-sliders-form</FormId>
+		<AmountSlider>.wonga-amount-slider-wrapper .sliderbit</AmountSlider>
+		<LoanAmount>#edit-loan-amount</LoanAmount>
+		<SubmitButton>#edit-submit</SubmitButton>
+		<TotalAmount>span.loan-amount</TotalAmount>
+		<TotalFees>span.loan-fees</TotalFees>
+		<TotalToRepay>span.loan-total</TotalToRepay>
+		<AmountMinusButton>.wonga-amount-slider-wrapper div.sliderminus</AmountMinusButton>
+		<AmountPlusButton>.wonga-amount-slider-wrapper div.sliderplus</AmountPlusButton>
+	</TopupSlidersElement>
 
-  <SmallTopupSlidersElement>
-    <FormId>#wonga-account-topup-form</FormId>
-    <AmountSlider>#wonga-single-slider a</AmountSlider>
-    <TopupLoanAmount>#edit-topup-amount-wrapper input#edit-topup-amount</TopupLoanAmount>
-    <SubmitButton>#edit-submit</SubmitButton>
-    <TopupAmount>span.credit-request-amount</TopupAmount>
-    <TopupFees>span.credit-request-fees</TopupFees>
-    <TopupToRepay>span.credit-request-subtotal</TopupToRepay>
-    <TotalToRepay>span.credit-request-total</TotalToRepay>
-    <RepaymentDate>span.loan-period-clarification</RepaymentDate>
-    <AmountMinusButton>#wonga-single-slider-wrapper button.slider-minus</AmountMinusButton>
-    <AmountPlusButton>#wonga-single-slider-wrapper button.slider-plus</AmountPlusButton>
-  </SmallTopupSlidersElement>
+	<SmallTopupSlidersElement>
+		<FormId>#wonga-account-topup-form</FormId>
+		<AmountSlider>#wonga-single-slider a</AmountSlider>
+		<TopupLoanAmount>#edit-topup-amount-wrapper input#edit-topup-amount</TopupLoanAmount>
+		<SubmitButton>#edit-submit</SubmitButton>
+		<TopupAmount>span.credit-request-amount</TopupAmount>
+		<TopupFees>span.credit-request-fees</TopupFees>
+		<TopupToRepay>span.credit-request-subtotal</TopupToRepay>
+		<TotalToRepay>span.credit-request-total</TotalToRepay>
+		<RepaymentDate>span.loan-period-clarification</RepaymentDate>
+		<AmountMinusButton>#wonga-single-slider-wrapper button.slider-minus</AmountMinusButton>
+		<AmountPlusButton>#wonga-single-slider-wrapper button.slider-plus</AmountPlusButton>
+	</SmallTopupSlidersElement>
 
-  <SlidersElement>
-    <FormId>#wonga-sliders-form</FormId>
-    <AmountSlider>.wonga-amount-slider-wrapper .sliderbit</AmountSlider>
-    <DurationSlider>.wonga-duration-slider-wrapper .sliderbit</DurationSlider>
-    <LoanAmount>#edit-loan-amount</LoanAmount>
-    <LoanDuration>#edit-loan-duration</LoanDuration>
-    <SubmitButton>#edit-submit</SubmitButton>
-    <TotalAmount>span.loan-amount</TotalAmount>
-    <TotalFees>span.loan-fees</TotalFees>
-    <TotalToRepay>span.loan-total</TotalToRepay>
-    <RepaymentDate>span.repayment-date</RepaymentDate>
-    <AmountMinusButton>.wonga-amount-slider-wrapper .sliderminus</AmountMinusButton>
-    <AmountPlusButton>.wonga-amount-slider-wrapper .sliderplus</AmountPlusButton>
-    <DurationMinusButton>.wonga-duration-slider-wrapper .sliderminus</DurationMinusButton>
-    <DurationPlusButton>.wonga-duration-slider-wrapper .sliderplus</DurationPlusButton>
+	<SlidersElement>
+		<FormId>#wonga-sliders-form</FormId>
+		<AmountSlider>.wonga-amount-slider-wrapper .sliderbit</AmountSlider>
+		<DurationSlider>.wonga-duration-slider-wrapper .sliderbit</DurationSlider>
+		<LoanAmount>#edit-loan-amount</LoanAmount>
+		<LoanDuration>#edit-loan-duration</LoanDuration>
+		<SubmitButton>#edit-submit</SubmitButton>
+		<TotalAmount>span.loan-amount</TotalAmount>
+		<TotalFees>span.loan-fees</TotalFees>
+		<TotalToRepay>span.loan-total</TotalToRepay>
+		<RepaymentDate>span.repayment-date</RepaymentDate>
+		<AmountMinusButton>.wonga-amount-slider-wrapper .sliderminus</AmountMinusButton>
+		<AmountPlusButton>.wonga-amount-slider-wrapper .sliderplus</AmountPlusButton>
+		<DurationMinusButton>.wonga-duration-slider-wrapper .sliderminus</DurationMinusButton>
+		<DurationPlusButton>.wonga-duration-slider-wrapper .sliderplus</DurationPlusButton>
     <!--<MaxAvailableCredit>.description</MaxAvailableCredit>-->
     <MaxAvailableCredit>#edit-loan-amount-wrapper .field-suffix</MaxAvailableCredit>
-  </SlidersElement>
+	</SlidersElement>
 
-  <ApplyPage>
-    <EditMobileNumber>#edit-mobile-phone</EditMobileNumber>
-    <PopupSaveButton>#edit-submit[value='Save']</PopupSaveButton>
-    <PopupCloseButton>#edit-submit[value='Close']</PopupCloseButton>
-    <PopupCancelButton>#edit-back[value='Cancel']</PopupCancelButton>
-    <PopupErrorMessage>.messages</PopupErrorMessage>
-  </ApplyPage>
+	<ApplyPage>
+		<EditMobileNumber>#edit-mobile-phone</EditMobileNumber>
+		<PopupSaveButton>#edit-submit[value='Save']</PopupSaveButton>
+		<PopupCloseButton>#edit-submit[value='Close']</PopupCloseButton>
+		<PopupCancelButton>#edit-back[value='Cancel']</PopupCancelButton>
+		<PopupErrorMessage>.messages</PopupErrorMessage>
+	</ApplyPage>
 
   <PayLater>
     <LoginPage>
@@ -172,241 +172,288 @@
     </SubmitionPage>
   </PayLater>
   
-  <PayLaterLoginPage>
-    <InputEmailId>#edit-name</InputEmailId>
-    <InputPassId>#edit-pass</InputPassId>
-    <SubmitButton>#edit-login</SubmitButton>
-    <Apr>#apr-footer</Apr>
-    <ForgottenPassword>#recovery-pass</ForgottenPassword>
-    <SingUp>#sign-up</SingUp>
-    <Fee>#fee</Fee>
-    <PaymentAmount>#month-payment</PaymentAmount>
-  </PayLaterLoginPage>
+	<PayLaterLoginPage>
+		<InputEmailId>#edit-name</InputEmailId>
+		<InputPassId>#edit-pass</InputPassId>
+		<SubmitButton>#edit-login</SubmitButton>
+		<Apr>#apr-footer</Apr>
+		<ForgottenPassword>#recovery-pass</ForgottenPassword>
+		<SingUp>#sign-up</SingUp>
+		<Fee>#fee</Fee>
+		<PaymentAmount>#month-payment</PaymentAmount>
+	</PayLaterLoginPage>
 
-  <SubmitionPage>
-    <FooterInfo>.legal-info</FooterInfo>
-    <AvailabelCreditCookie>#credit-w-cookie</AvailabelCreditCookie>
-    <AvailabelCredit>#credit-wo-cookie</AvailabelCredit>
-    <InfoCirculButton>#pay-q a</InfoCirculButton>
-    <TextApproved>#title-approved</TextApproved>
-    <RepaymentDetails>#repayment-details</RepaymentDetails>
-    <SubmitButton>#edit-agree</SubmitButton>
-    <ThanksText>#title-thanks</ThanksText>
-  </SubmitionPage>
+	<SubmitionPage>
+		<FooterInfo>.legal-info</FooterInfo>
+		<AvailabelCreditCookie>#credit-w-cookie</AvailabelCreditCookie>
+		<AvailabelCredit>#credit-wo-cookie</AvailabelCredit>
+		<InfoCirculButton>#pay-q a</InfoCirculButton>
+		<TextApproved>#title-approved</TextApproved>
+		<RepaymentDetails>#repayment-details</RepaymentDetails>
+		<SubmitButton>#edit-agree</SubmitButton>
+		<ThanksText>#title-thanks</ThanksText>
+	</SubmitionPage>
 
-  <MobilePinVerificationSection>
-    <ResendPin>#edit-resend-pin</ResendPin>
-    <ResendPinMessage>.pin_resend</ResendPinMessage>
-  </MobilePinVerificationSection>
-  <PaymentCardsPage>
-    <AddCardLink>a.bottom-link</AddCardLink>
-  </PaymentCardsPage>
+	<MobilePinVerificationSection>
+		<ResendPin>#edit-resend-pin</ResendPin>
+		<ResendPinMessage>.pin_resend</ResendPinMessage>
+	</MobilePinVerificationSection>
+	<PaymentCardsPage>
+		<AddCardLink>a.bottom-link</AddCardLink>
+	</PaymentCardsPage>
 
-  <PrepaidCardPage>
-    <ApplyCardButton>.button</ApplyCardButton>
-    <FAQLink>#block-wonga_prepaid-2 div.content div a:nth-of-type(1)</FAQLink>
-    <TSLink>#block-wonga_prepaid-2 div.content div a:nth-of-type(2)</TSLink>
-    <PremiumRewardsLink>#block-wonga_prepaid-2 div.content div a:nth-of-type(3)</PremiumRewardsLink>
-    <TSInFeesLink>.wonga_prepaid_box a</TSInFeesLink>
-    <ForgottenPinButton>.menu-mlid-9438 a</ForgottenPinButton>
-    <GetResetCodeButton>#send_request</GetResetCodeButton>
-    <ResetCodeTextField>#request</ResetCodeTextField>
-    <BalanceBlock>#block-wonga_prepaid-1 div.content div </BalanceBlock>
-    <HighlightedOffersBlock>.wonga_prepaid_wrapper</HighlightedOffersBlock>
-    <AvailableBalanceField>#block-wonga_prepaid-1 div p</AvailableBalanceField>
-  </PrepaidCardPage>
+	<PrepaidCardPage>
+		<ApplyCardButton>.button</ApplyCardButton>
+		<FAQLink>#block-wonga_prepaid-2 div.content div a:nth-of-type(1)</FAQLink>
+		<TSLink>#block-wonga_prepaid-2 div.content div a:nth-of-type(2)</TSLink>
+		<PremiumRewardsLink>#block-wonga_prepaid-2 div.content div a:nth-of-type(3)</PremiumRewardsLink>
+		<TSInFeesLink>.wonga_prepaid_box a</TSInFeesLink>
+		<ForgottenPinButton>.menu-mlid-9438 a</ForgottenPinButton>
+		<GetResetCodeButton>#send_request</GetResetCodeButton>
+		<ResetCodeTextField>#request</ResetCodeTextField>
+		<BalanceBlock>#block-wonga_prepaid-1 div.content div </BalanceBlock>
+		<HighlightedOffersBlock>.wonga_prepaid_wrapper</HighlightedOffersBlock>
+		<AvailableBalanceField>#block-wonga_prepaid-1 div p</AvailableBalanceField>
+	</PrepaidCardPage>
 
-  <PrepaidRegisterDetailsPage>
-    <RegisterDetailsBox>.wonga_prepaid_box</RegisterDetailsBox>
-  </PrepaidRegisterDetailsPage>
+	<PrepaidRegisterDetailsPage>
+		<RegisterDetailsBox>.wonga_prepaid_box</RegisterDetailsBox>
+	</PrepaidRegisterDetailsPage>
 
-  <AccountingPage>
-    <AddFileLink>li#liAddFile.ui-state-default a</AddFileLink>
-    <CashOutLink>li#liTransactionsSearch.ui-state-default a</CashOutLink>
-  </AccountingPage>
+	<AccountingPage>
+		<AddFileLink>li#liAddFile.ui-state-default a</AddFileLink>
+		<CashOutLink>li#liTransactionsSearch.ui-state-default a</CashOutLink>
+	</AccountingPage>
 
-  <CashOutPage>
-    <TransactionTypeOptions>select#TransactionType</TransactionTypeOptions>
-    <FilterOptions>select#SearchBy</FilterOptions>
-    <FilterValue>input#SearchByValue</FilterValue>
-    <SearchButton>input#btnSearch</SearchButton>
-    <SendPaymentCheckBox>input[name='PaymentSelected']</SendPaymentCheckBox>
-    <CancelCheckBox>input[name='CancelSelected']</CancelCheckBox>
-    <UpdateButton>#GridContainer > input[name='Command']</UpdateButton>
-  </CashOutPage>
+	<CashOutPage>
+		<TransactionTypeOptions>select#TransactionType</TransactionTypeOptions>
+		<FilterOptions>select#SearchBy</FilterOptions>
+		<FilterValue>input#SearchByValue</FilterValue>
+		<SearchButton>input#btnSearch</SearchButton>
+		<SendPaymentCheckBox>input[name='PaymentSelected']</SendPaymentCheckBox>
+		<CancelCheckBox>input[name='CancelSelected']</CancelCheckBox>
+		<UpdateButton>#GridContainer > input[name='Command']</UpdateButton>
+	</CashOutPage>
 
-  <PrepaidCardMenuElement>
-    <Summary>.menu-mlid-9440 a</Summary>
-    <Transaction>.menu-mlid-9442</Transaction>
-    <TopUp>.menu-mlid-9441 a</TopUp>
-    <Budjet>.menu-mlid-9436</Budjet>
-    <Cashback>.menu-mlid-9437</Cashback>
-    <Rewards>.menu-mlid-9439 a</Rewards>
-    <ForgottenPin>.menu-mlid-9438</ForgottenPin>
-  </PrepaidCardMenuElement>
+	<PrepaidCardMenuElement>
+		<Summary>.menu-mlid-9440 a</Summary>
+		<Transaction>.menu-mlid-9442</Transaction>
+		<TopUp>.menu-mlid-9441 a</TopUp>
+		<Budjet>.menu-mlid-9436</Budjet>
+		<Cashback>.menu-mlid-9437</Cashback>
+		<Rewards>.menu-mlid-9439 a</Rewards>
+		<ForgottenPin>.menu-mlid-9438</ForgottenPin>
+	</PrepaidCardMenuElement>
 
-  <DeclinedPage>
-    <DeclineAdvice>.wonga-decision-box</DeclineAdvice>
-  </DeclinedPage>
+	<DeclinedPage>
+		<DeclineAdvice>.wonga-decision-box</DeclineAdvice>
+	</DeclinedPage>
 
 
-  <ChooseCardTypeMenuElement>
-    <StandardCard>.menu-mlid-9419 a</StandardCard>
-    <PremiumCard>.menu-mlid-9420 a</PremiumCard>
-  </ChooseCardTypeMenuElement>
+	<ChooseCardTypeMenuElement>
+		<StandardCard>.menu-mlid-9419 a</StandardCard>
+		<PremiumCard>.menu-mlid-9420 a</PremiumCard>
+	</ChooseCardTypeMenuElement>
 
-  <PrepiadAdminPage>
-    <DisablePremiumCard>#edit-wonga-prepaid-premium-disable</DisablePremiumCard>
-    <SaveConfiguration>#edit-submit-1</SaveConfiguration>
-  </PrepiadAdminPage>
+	<PrepiadAdminPage>
+		<DisablePremiumCard>#edit-wonga-prepaid-premium-disable</DisablePremiumCard>
+		<SaveConfiguration>#edit-submit-1</SaveConfiguration>
+	</PrepiadAdminPage>
 
-  <PrepaidTopupChoiceElement>
-    <Loan>#wonga_loan</Loan>
-    <Debit>#target_debit_card</Debit>
-    <Salary>#target_salary</Salary>
-  </PrepaidTopupChoiceElement>
+	<PrepaidTopupChoiceElement>
+		<Loan>#wonga_loan</Loan>
+		<Debit>#target_debit_card</Debit>
+		<Salary>#target_salary</Salary>
+	</PrepaidTopupChoiceElement>
 
-  <PrepaidCardMenuElement>
-    <Summary>.menu-mlid-9440 a</Summary>
-    <Transaction>.menu-mlid-9442</Transaction>
-    <TopUp>.menu-mlid-9441 a</TopUp>
-    <Budjet>.menu-mlid-9436</Budjet>
-    <Cashback>.menu-mlid-9437</Cashback>
-    <Rewards>.menu-mlid-9439 a</Rewards>
-    <ForgottenPin>.menu-mlid-9438</ForgottenPin>
-  </PrepaidCardMenuElement>
+	<PrepaidCardMenuElement>
+		<Summary>.menu-mlid-9440 a</Summary>
+		<Transaction>.menu-mlid-9442</Transaction>
+		<TopUp>.menu-mlid-9441 a</TopUp>
+		<Budjet>.menu-mlid-9436</Budjet>
+		<Cashback>.menu-mlid-9437</Cashback>
+		<Rewards>.menu-mlid-9439 a</Rewards>
+		<ForgottenPin>.menu-mlid-9438</ForgottenPin>
+	</PrepaidCardMenuElement>
 
-  <AccountDetailsPage>
-    <FormId>.wonga-apply-lzero-form</FormId>
-    <SecciLink>a#secci_link.doc_link</SecciLink>
-    <TermAndConditionsLink>a#conditions_link.doc_link</TermAndConditionsLink>
-    <ExplanationLink>a#explanation_link.doc_link</ExplanationLink>
-    <PopupContentFrame>#fancybox-frame</PopupContentFrame>
-    <PopupClose>#fancybox-close</PopupClose>
-  </AccountDetailsPage>
+	<AccountDetailsPage>
+		<FormId>.wonga-apply-lzero-form</FormId>
+		<SecciLink>a#secci_link.doc_link</SecciLink>
+		<TermAndConditionsLink>a#conditions_link.doc_link</TermAndConditionsLink>
+		<ExplanationLink>a#explanation_link.doc_link</ExplanationLink>
+		<PopupContentFrame>#fancybox-frame</PopupContentFrame>
+		<PopupClose>#fancybox-close</PopupClose>
+	</AccountDetailsPage>
 
-  <SecciToggleElement>
-    <Link>#secci-toggler a.secci-toggle</Link>
-    <Message>.wonga-secci-toggle</Message>
-  </SecciToggleElement>
+	<SecciToggleElement>
+		<Link>#secci-toggler a.secci-toggle</Link>
+		<Message>.wonga-secci-toggle</Message>
+	</SecciToggleElement>
 
-  <HomePage>
-    <WelcomeHeaderMessage>#block-wonga-1 .content h2</WelcomeHeaderMessage>
-    <WelcomeSubMessage>#block-wonga-1 .content p</WelcomeSubMessage>
-    <BodyFramework>body.node-type-homepage</BodyFramework>
-    <PromoBoxes>#bottom-promo-boxes</PromoBoxes>
-    <AwardsList>#footer-front #awards-list</AwardsList>
-    <SeoLinks>#footer-front #seo-links</SeoLinks>
-    <Mocked>a#staticmock-trigger.trigger.active</Mocked>
-    <CodeOfPracticeLink>a[title='Code of practice']</CodeOfPracticeLink>
-    <TrustRatingLink>.path-trust-rating a</TrustRatingLink>
-    <AprLink>.path-apr a</AprLink>
-    <ContactUsLink>.path-contact a</ContactUsLink>
-    <PrivacyPolicyLink>.path-privacy-policy a</PrivacyPolicyLink>
-    <VeriSignLink>a[title='Norton secured (Verisign)']</VeriSignLink>
-    <FlaLink>a[title='FLA']</FlaLink>
-    <KivaLink>a[title='Kiva']</KivaLink>
-    <MediaGuardianAwardsLink>a[title='Media Guardian Innovation Awards']</MediaGuardianAwardsLink>
-    <WebbyAwardsLink>a[title='Webby Award']</WebbyAwardsLink>
-    <CcrCreditAwardLink>a[title='CCR Credit Excellence Awards']</CcrCreditAwardLink>
-    <TechTrack100Link>a[title='Tech Track 100']</TechTrack100Link>
-    <CashLoanLink>.path-content--cash-loan a</CashLoanLink>
-    <PaydayLoansLink>.path-content--payday-loans-alternative a</PaydayLoansLink>
-    <QuickLoanLink>.path-content--quick-loan a</QuickLoanLink>
-    <ContentSlot1Title>#ctl00_ContentPlaceHolder1_A1</ContentSlot1Title>
-    <WongaCustomersBoxText>.populus-survey</WongaCustomersBoxText>
-    <ResponsibleLendingBoxText>.responsible-lending-box h1</ResponsibleLendingBoxText>
+	<HomePage>
+		<WelcomeHeaderMessage>#block-wonga-1 .content h2</WelcomeHeaderMessage>
+		<WelcomeSubMessage>#block-wonga-1 .content p</WelcomeSubMessage>
+		<BodyFramework>body.node-type-homepage</BodyFramework>
+		<PromoBoxes>#bottom-promo-boxes</PromoBoxes>
+		<AwardsList>#footer-front #awards-list</AwardsList>
+		<SeoLinks>#footer-front #seo-links</SeoLinks>
+		<Mocked>a#staticmock-trigger.trigger.active</Mocked>
+		<CodeOfPracticeLink>a[title='Code of practice']</CodeOfPracticeLink>
+		<TrustRatingLink>.path-trust-rating a</TrustRatingLink>
+		<AprLink>.path-apr a</AprLink>
+		<ContactUsLink>.path-contact a</ContactUsLink>
+		<PrivacyPolicyLink>.path-privacy-policy a</PrivacyPolicyLink>
+		<VeriSignLink>a[title='Norton secured (Verisign)']</VeriSignLink>
+		<FlaLink>a[title='FLA']</FlaLink>
+		<KivaLink>a[title='Kiva']</KivaLink>
+		<MediaGuardianAwardsLink>a[title='Media Guardian Innovation Awards']</MediaGuardianAwardsLink>
+		<WebbyAwardsLink>a[title='Webby Award']</WebbyAwardsLink>
+		<CcrCreditAwardLink>a[title='CCR Credit Excellence Awards']</CcrCreditAwardLink>
+		<TechTrack100Link>a[title='Tech Track 100']</TechTrack100Link>
+		<CashLoanLink>.path-content--cash-loan a</CashLoanLink>
+		<PaydayLoansLink>.path-content--payday-loans-alternative a</PaydayLoansLink>
+		<QuickLoanLink>.path-content--quick-loan a</QuickLoanLink>
+		<ContentSlot1Title>#ctl00_ContentPlaceHolder1_A1</ContentSlot1Title>
+		<WongaCustomersBoxText>.populus-survey</WongaCustomersBoxText>
+		<ResponsibleLendingBoxText>.responsible-lending-box h1</ResponsibleLendingBoxText>
     <RepresentativeExampleTrigger>.apr-tooltiptrigger</RepresentativeExampleTrigger>
     <RepresentativeExampleText>div .apr-tooltipbox</RepresentativeExampleText>
     <AprExplanationText>.apr-explanation</AprExplanationText>
-    <TrustratingLinkAboveSliders>a[href='/money/about-trust']</TrustratingLinkAboveSliders>
-    <ExistingCustomersLink>a[href='/login']</ExistingCustomersLink>
-    <WelcomeMessageClickHereLink>a[href='/visitor/refresh']</WelcomeMessageClickHereLink>
-    <HeaderBarText>.inline-panel</HeaderBarText>
-    <LogoutLink>.inline-link</LogoutLink>
-    <HeaderBarClickHereLink>.inline-link</HeaderBarClickHereLink>
+		<TrustratingLinkAboveSliders>a[href='/money/about-trust']</TrustratingLinkAboveSliders>
+		<ExistingCustomersLink>a[href='/login']</ExistingCustomersLink>
+		<WelcomeMessageClickHereLink>a[href='/visitor/refresh']</WelcomeMessageClickHereLink>
+		<HeaderBarText>.inline-panel</HeaderBarText>
+		<LogoutLink>.inline-link</LogoutLink>
+		<HeaderBarClickHereLink>.inline-link</HeaderBarClickHereLink>
     <PromoCode>edit-promocode</PromoCode>
     <ApplyNowToolTip>.tooltipbox</ApplyNowToolTip>
     <ApplyNowButton>#edit-submit [value='Apply now']</ApplyNowButton>
     <ApplyNowToolTipTrigger>.apply-now-disabled</ApplyNowToolTipTrigger>
-  </HomePage>
+	</HomePage>
 
-  <SocialElement>
-    <SocialTrigger>#social-trigger</SocialTrigger>
-  </SocialElement>
+	<SocialElement>
+		<SocialTrigger>#social-trigger</SocialTrigger>
+	</SocialElement>
 
-  <FinancialAssessmentPage>
-    <PrepopulatedName>#wonga-repayment-start-form.form-element-type-form div.form-inner div.form-markup-wrapper div.form-markup-wrapper div.wonga-user-name</PrepopulatedName>
-    <AssesmentsTeamEmail>#wonga-repayment-start-form.form-element-type-form div.form-inner div.form-markup-wrapper div.form-markup-wrapper div.wonga-invitein-text a</AssesmentsTeamEmail>
-    <GetStartedButton>#wonga-repayment-start-form.form-element-type-form div.form-inner div.form-markup-wrapper div.form-markup-wrapper div.wonga-started-button</GetStartedButton>
-  </FinancialAssessmentPage>
+	<FinancialAssessmentPage>
+		<PrepopulatedName>#wonga-repayment-start-form.form-element-type-form div.form-inner div.form-markup-wrapper div.form-markup-wrapper div.wonga-user-name</PrepopulatedName>
+		<AssesmentsTeamEmail>#wonga-repayment-start-form.form-element-type-form div.form-inner div.form-markup-wrapper div.form-markup-wrapper div.wonga-invitein-text a</AssesmentsTeamEmail>
+		<GetStartedButton>#wonga-repayment-start-form.form-element-type-form div.form-inner div.form-markup-wrapper div.form-markup-wrapper div.wonga-started-button</GetStartedButton>
+	</FinancialAssessmentPage>
 
-  <FALoginPage>
-    <Username>#edit-xsd-fapi--Call-GetAccount--FieldName-Login</Username>
-    <Password>#edit-xsd-fapi--Call-GetAccount--FieldName-Password</Password>
-    <LoginButton>#edit-login</LoginButton>
-    <ForgotPassword>#wonga-login-new-form.form-element-type-form div.form-inner div.form-markup-wrapper</ForgotPassword>
-  </FALoginPage>
+	<FALoginPage>
+		<Username>#edit-xsd-fapi--Call-GetAccount--FieldName-Login</Username>
+		<Password>#edit-xsd-fapi--Call-GetAccount--FieldName-Password</Password>
+		<LoginButton>#edit-login</LoginButton>
+		<ForgotPassword>#wonga-login-new-form.form-element-type-form div.form-inner div.form-markup-wrapper</ForgotPassword>
+	</FALoginPage>
 
-  <FAAboutYouPage>
-    <AgreementReference>#edit-agreement</AgreementReference>
-    <EmailAddress>#edit-email.form-text</EmailAddress>
-    <Name>#edit-first-name.form-text</Name>
-    <Surname>#edit-last-name.form-text</Surname>
-    <DateOfBirthDay>#edit-birthdate-day.form-select</DateOfBirthDay>
-    <DateOfBirthMonth>#edit-birthdate-month.form-select</DateOfBirthMonth>
-    <DateOfBirthYear>#edit-birthdate-year.form-select</DateOfBirthYear>
-    <HouseNumber>#edit-house-number.form-text</HouseNumber>
-    <PostCode>#edit-postcode.form-text</PostCode>
-    <Employer>#edit-employer-name.form-text</Employer>
-    <YourHousehold>#edit-number-household.form-text</YourHousehold>
-    <ChildrenInHousehold>#edit-children.form-text</ChildrenInHousehold>
-    <NumberOfVehiles>#edit-number-vehicles.form-text</NumberOfVehiles>
-    <ButtonPrevious>#edit-previous.form-submit</ButtonPrevious>
-    <ButtonNext>#edit-next.form-submit</ButtonNext>
-    <PostCodeError>#edit-postcode-wrapper.form-item div.form-error div.invalid</PostCodeError>
-  </FAAboutYouPage>
+	<FAAboutYouPage>
+		<AgreementReference>#edit-agreement</AgreementReference>
+		<EmailAddress>#edit-email.form-text</EmailAddress>
+		<Name>#edit-first-name.form-text</Name>
+		<Surname>#edit-last-name.form-text</Surname>
+		<DateOfBirthDay>#edit-birthdate-day.form-select</DateOfBirthDay>
+		<DateOfBirthMonth>#edit-birthdate-month.form-select</DateOfBirthMonth>
+		<DateOfBirthYear>#edit-birthdate-year.form-select</DateOfBirthYear>
+		<HouseNumber>#edit-house-number.form-text</HouseNumber>
+		<PostCode>#edit-postcode.form-text</PostCode>
+		<Employer>#edit-employer-name.form-text</Employer>
+		<YourHousehold>#edit-number-household.form-text</YourHousehold>
+		<ChildrenInHousehold>#edit-children.form-text</ChildrenInHousehold>
+		<NumberOfVehiles>#edit-number-vehicles.form-text</NumberOfVehiles>
+		<ButtonPrevious>#edit-previous.form-submit</ButtonPrevious>
+		<ButtonNext>#edit-next.form-submit</ButtonNext>
+		<PostCodeError>#edit-postcode-wrapper.form-item div.form-error div.invalid</PostCodeError>
+	</FAAboutYouPage>
 
-  <FAIncomePage>
-    <SalaryAfterTax>#edit-salary.form-text</SalaryAfterTax>
-    <PartnerSalaryAfterTax>#edit-partners-salary.form-text</PartnerSalaryAfterTax>
-    <JobseekerAllowance>#edit-jobseekers-allowance.form-text</JobseekerAllowance>
-    <IncomeSupport>#edit-income-support.form-text</IncomeSupport>
-    <WorkingTaxCredit>#edit-working-tax-credit.form-text</WorkingTaxCredit>
-    <ChildTaxCredit>#edit-child-tax-credit.form-text</ChildTaxCredit>
-    <StatePension>#edit-state-pensions.form-text</StatePension>
-    <PrivateOrWorkPension>#edit-private-work-pensions.form-text</PrivateOrWorkPension>
-    <PensionCredit>#edit-pension-credit.form-text</PensionCredit>
-    <Other>#edit-other-pension-income.form-text</Other>
-    <MaintenenceOrChildSupport>#edit-maintenence.form-text</MaintenenceOrChildSupport>
-    <IncomeFromBoardersOrLodgers>#edit-boarders.form-text</IncomeFromBoardersOrLodgers>
-    <StudentLoansOrGrants>#edit-loans-or-grants.form-text</StudentLoansOrGrants>
-    <OtherIncome>#edit-other-income.form-text</OtherIncome>
-    <TotalIncome>#edit-all-income.form-text</TotalIncome>
-    <ButtonPrevious>#edit-previous.form-submit</ButtonPrevious>
-    <ButtonNext>#edit-next.form-submit</ButtonNext>
-    <SalaryAfterTaxError>#edit-salary-wrapper.form-item div.form-error div.invalid</SalaryAfterTaxError>
-    <PartnerSalaryAfterTaxError>#edit-partners-salary-wrapper.form-item div.form-error div.invalid</PartnerSalaryAfterTaxError>
-    <JobseekerAllowanceError>#edit-jobseekers-allowance-wrapper.form-item div.form-error div.invalid</JobseekerAllowanceError>
-    <IncomeSupportError>#edit-income-support-wrapper.form-item div.form-error div.invalid</IncomeSupportError>
-    <WorkingTaxCreditError>#edit-working-tax-credit-wrapper.form-item div.form-error div.invalid</WorkingTaxCreditError>
-    <ChildTaxCreditError>#edit-child-tax-credit-wrapper.form-item div.form-error div.invalid</ChildTaxCreditError>
-    <StatePensionError>#edit-state-pensions-wrapper.form-item div.form-error div.invalid</StatePensionError>
-    <PrivateOrWorkPensionError>#edit-private-work-pensions-wrapper.form-item div.form-error div.invalid</PrivateOrWorkPensionError>
-    <PensionCreditError>#edit-pension-credit-wrapper.form-item div.form-error div.invalid</PensionCreditError>
-    <OtherError>#edit-other-pension-income-wrapper.form-item div.form-error div.invalid</OtherError>
-    <MaintenenceOrChildSupportError>#edit-maintenence-wrapper.form-item div.form-error div.invalid</MaintenenceOrChildSupportError>
-    <IncomeFromBoardersOrLodgersError>#edit-boarders-wrapper.form-item div.form-error div.invalid</IncomeFromBoardersOrLodgersError>
-    <StudentLoansOrGrantsError>#edit-loans-or-grants-wrapper.form-item div.form-error div.invalid</StudentLoansOrGrantsError>
-    <OtherIncomeError>#edit-other-income-wrapper.form-item div.form-error div.invalid</OtherIncomeError>
-  </FAIncomePage>
+	<FAIncomePage>
+		<SalaryAfterTax>#edit-salary.form-text</SalaryAfterTax>
+		<PartnerSalaryAfterTax>#edit-partners-salary.form-text</PartnerSalaryAfterTax>
+		<JobseekerAllowance>#edit-jobseekers-allowance.form-text</JobseekerAllowance>
+		<IncomeSupport>#edit-income-support.form-text</IncomeSupport>
+		<WorkingTaxCredit>#edit-working-tax-credit.form-text</WorkingTaxCredit>
+		<ChildTaxCredit>#edit-child-tax-credit.form-text</ChildTaxCredit>
+		<StatePension>#edit-state-pensions.form-text</StatePension>
+		<PrivateOrWorkPension>#edit-private-work-pensions.form-text</PrivateOrWorkPension>
+		<PensionCredit>#edit-pension-credit.form-text</PensionCredit>
+		<Other>#edit-other-pension-income.form-text</Other>
+		<MaintenenceOrChildSupport>#edit-maintenence.form-text</MaintenenceOrChildSupport>
+		<IncomeFromBoardersOrLodgers>#edit-boarders.form-text</IncomeFromBoardersOrLodgers>
+		<StudentLoansOrGrants>#edit-loans-or-grants.form-text</StudentLoansOrGrants>
+		<OtherIncome>#edit-other-income.form-text</OtherIncome>
+		<TotalIncome>#edit-all-income.form-text</TotalIncome>
+		<ButtonPrevious>#edit-previous.form-submit</ButtonPrevious>
+		<ButtonNext>#edit-next.form-submit</ButtonNext>
+		<SalaryAfterTaxError>#edit-salary-wrapper.form-item div.form-error div.invalid</SalaryAfterTaxError>
+		<PartnerSalaryAfterTaxError>#edit-partners-salary-wrapper.form-item div.form-error div.invalid</PartnerSalaryAfterTaxError>
+		<JobseekerAllowanceError>#edit-jobseekers-allowance-wrapper.form-item div.form-error div.invalid</JobseekerAllowanceError>
+		<IncomeSupportError>#edit-income-support-wrapper.form-item div.form-error div.invalid</IncomeSupportError>
+		<WorkingTaxCreditError>#edit-working-tax-credit-wrapper.form-item div.form-error div.invalid</WorkingTaxCreditError>
+		<ChildTaxCreditError>#edit-child-tax-credit-wrapper.form-item div.form-error div.invalid</ChildTaxCreditError>
+		<StatePensionError>#edit-state-pensions-wrapper.form-item div.form-error div.invalid</StatePensionError>
+		<PrivateOrWorkPensionError>#edit-private-work-pensions-wrapper.form-item div.form-error div.invalid</PrivateOrWorkPensionError>
+		<PensionCreditError>#edit-pension-credit-wrapper.form-item div.form-error div.invalid</PensionCreditError>
+		<OtherError>#edit-other-pension-income-wrapper.form-item div.form-error div.invalid</OtherError>
+		<MaintenenceOrChildSupportError>#edit-maintenence-wrapper.form-item div.form-error div.invalid</MaintenenceOrChildSupportError>
+		<IncomeFromBoardersOrLodgersError>#edit-boarders-wrapper.form-item div.form-error div.invalid</IncomeFromBoardersOrLodgersError>
+		<StudentLoansOrGrantsError>#edit-loans-or-grants-wrapper.form-item div.form-error div.invalid</StudentLoansOrGrantsError>
+		<OtherIncomeError>#edit-other-income-wrapper.form-item div.form-error div.invalid</OtherIncomeError>
+	</FAIncomePage>
 
-  <FAExpenditurePage>
-    <ButtonPrevious>#edit-previous.form-submit</ButtonPrevious>
-    <ButtonNext>#edit-next.form-submit</ButtonNext>
-  </FAExpenditurePage>
+	<FAExpenditurePage>
+		<Rent>#edit-rent.form-text</Rent>
+		<GroundRentAndServiceCharges>#edit-ground-rent-service-charges.form-text</GroundRentAndServiceCharges>
+		<Mortgage>#edit-mortgage.form-text</Mortgage>
+		<MonthlySecuredLoanPayments>#edit-other-secured-loans.form-text</MonthlySecuredLoanPayments>
+		<MortgageEndowment>edit-mortgage-endowment.form-text</MortgageEndowment>
+		<BuildingAndContentsInsurance>#edit-building-insurance.form-text</BuildingAndContentsInsurance>
+		<PensionAndLifeInsurance>#edit-pension-insurence.form-text</PensionAndLifeInsurance>
+		<CouncilTaxOrRates>#edit-council-tax.form-text</CouncilTaxOrRates>
+		<Gas>#edit-gas.form-text</Gas>
+		<Electricity>#edit-electricity.form-text</Electricity>
+		<Water>#edit-water.form-text</Water>
+		<OtherUtilities>#edit-other-utilites.form-text</OtherUtilities>
+		<TVLicense>#edit-tv-lecense.form-text</TVLicense>
+		<Magistrates>#edit-magistrates.form-text</Magistrates>
+		<CourtFines>#edit-magistrates.form-text</CourtFines>
+		<MaintenenceOrChildSupportPayments>#edit-maintence.form-text</MaintenenceOrChildSupportPayments>
+		<HirePurchaseOrConditionalSale>#edit-hire-purchase.form-text</HirePurchaseOrConditionalSale>
+		<ChildcareCosts>#edit-childcare.form-text</ChildcareCosts>
+		<AdultcareCosts>#edit-adultcare.form-text</AdultcareCosts>
+		<OtherEssentialExpediture>#edit-other-exp.form-text</OtherEssentialExpediture>
 
-  <FADebtsPage>
+		<HomePhone>#edit-home-phone-exp.form-text</HomePhone>
+		<MobilePhone>#edit-mobile-phone-exp.form-text</MobilePhone>
+		<OtherPhone>#edit-other-phone-exp.form-text</OtherPhone>
+
+		<Food>#edit-food-milk.form-text</Food>
+		<Cleaning>#edit-cleaning-toiletries.form-text</Cleaning>
+		<Toiletries>#edit-toiletries.form-text</Toiletries>
+		<NewspapersAndMagazines>#edit-newspapers-magazines.form-text</NewspapersAndMagazines>
+		<CigarettesAndTobacco>#edit-cigaretes-tabacco-sweets.form-text</CigarettesAndTobacco>
+		<Alcohol>#edit-alcohol.form-text</Alcohol>
+		<LaundryAndDryCleaning>#edit-laundry-dry-cleaning.form-text</LaundryAndDryCleaning>
+		<ClothingAndFootwear>#edit-clothing-footwear.form-text</ClothingAndFootwear>
+		<BabyItems>#edit-baby-items.form-text</BabyItems>
+		<PetItems>#edit-pet-items.form-text</PetItems>
+		<OtherHousekeeping>#edit-other-housekeeping.form-text</OtherHousekeeping>
+
+		<PublicTransport>#edit-public-transport.form-text</PublicTransport>
+		<Texis>#edit-other-taxis.form-text</Texis>
+		<CarInsurance>#edit-car-insurance.form-text</CarInsurance>
+		<VehicleTax>#edit-vehicle-taxi.form-text</VehicleTax>
+		<Fuel>#edit-fuel.form-text</Fuel>
+		<MOTAndCarMeintenece>#edit-mot-exp.form-text</MOTAndCarMeintenece>
+		<Breakdown>#edit-breakdown.form-text</Breakdown>
+		<ParkingChargesOrTolls>#edit-parking-charges.form-text</ParkingChargesOrTolls>
+		<OtherTravelcosts>#edit-other-travel-exp.form-text</OtherTravelcosts>
+
+		<ButtonPrevious>#edit-previous.form-submit</ButtonPrevious>
+		<ButtonNext>#edit-next.form-submit</ButtonNext>
+	</FAExpenditurePage>
+
+	<FADebtsPage>
     <CurrentBalance>#edit-wonga.form-text</CurrentBalance>
     <RentPayments>#edit-rent.form-text</RentPayments>
     <Mortgage>#edit-mortgage.form-text</Mortgage>
@@ -456,9 +503,9 @@
     <NonPriorityDebtsAmount7Error>#edit-loan-value-7-wrapper.form-item div.form-error div.invalid</NonPriorityDebtsAmount7Error>
     <NonPriorityDebtsAmount8Error>#edit-loan-value-8-wrapper.form-item div.form-error div.invalid</NonPriorityDebtsAmount8Error>
     <NonPriorityDebtsAmount9Error>#edit-loan-value-9-wrapper.form-item div.form-error div.invalid</NonPriorityDebtsAmount9Error>
-    <ButtonPrevious>#edit-previous.form-submit</ButtonPrevious>
-    <ButtonNext>#edit-next.form-submit</ButtonNext>
-  </FADebtsPage>
+		<ButtonPrevious>#edit-previous.form-submit</ButtonPrevious>
+		<ButtonNext>#edit-next.form-submit</ButtonNext>
+	</FADebtsPage>
 
   <FARepaymentPlan>
     <ButtonPrevious>#edit-previous.form-submit</ButtonPrevious>
