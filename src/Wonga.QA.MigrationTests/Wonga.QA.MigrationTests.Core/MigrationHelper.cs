@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Text;
 using Wonga.QA.Framework;
 
 namespace Wonga.QA.MigrationTests.Core
@@ -88,7 +89,7 @@ namespace Wonga.QA.MigrationTests.Core
             _migrationRunId = GetLatestMigrationRunId();
             DataSet opsUsersToControlTable = new DataSet();
             //get top 1000 users this will be replaced by a lite version of db and can't seem to do this with drive.data
-            String query = "SELECT TOP 1000 [ExternalId],[Login] FROM [Ops].[ops].[Accounts]";
+            String query = "SELECT TOP 10 [ExternalId],[Login] FROM [Ops].[ops].[Accounts]";
             SqlCommand cmd = new SqlCommand(query, new SqlConnection("Data Source='(local)';Initial Catalog=GreyfaceShell;Integrated Security=True"));
             SqlDataAdapter adapter = new SqlDataAdapter(cmd);
             adapter.Fill(opsUsersToControlTable);
@@ -117,18 +118,44 @@ namespace Wonga.QA.MigrationTests.Core
 
             return dsDecryptedPassword.Tables[0].Rows[0].ItemArray[0].ToString();
         }
-
-        public void StoreTestResults(string batchId, string testName, MigratedUser migratedUser, DateTime testStartTime, DateTime testEndTime, byte testResult)
+        //public void StoreTestResults(string batchId, string testName, MigratedUser migratedUser, DateTime testStartTime, DateTime testEndTime, byte testResult)
+        public void StoreTestResults(AcceptanceTestResults acceptanceTestResults)
         {
             var acceptanceTestResultsTable = Drive.Data.MigrationStaging.Db.test.AcceptanceTestResults;
 
-            acceptanceTestResultsTable.Insert(RunId: migratedUser.MigratedRunId, BatchId: batchId, TestName: testName, AccountId: migratedUser.AccountId,
-                                              Login: migratedUser.Login, TestStartTime: testStartTime, TestEndTime: testEndTime,
-                                              TestResult: testResult);
+            acceptanceTestResultsTable.Insert(RunId: acceptanceTestResults.MigratedUser.MigratedRunId, BatchId: acceptanceTestResults.BatchId,
+                                            TestName: acceptanceTestResults.TestName, AccountId: acceptanceTestResults.MigratedUser.AccountId,
+                                              Login: acceptanceTestResults.MigratedUser.Login, TestParameters: acceptanceTestResults.TestParameters.ToString(),
+                                              TestStartDate: acceptanceTestResults.TestStartDate, TestEndDate: acceptanceTestResults.TestEndDate,
+                                              TestResult: acceptanceTestResults.TestResult);
 
-            var acceptanceTestControlTable = Drive.Data.MigrationStaging.Db.test.AcceptanceTestControlTable;
+            var acceptanceTestControlTable = Drive.Data.MigrationStaging.Db.test.AcceptanceTestControl;
 
-            acceptanceTestControlTable.DeleteByAccountId(migratedUser.AccountId);
+            acceptanceTestControlTable.DeleteByAccountId(acceptanceTestResults.MigratedUser.AccountId);
+        }
+
+        public void UpdateTestResultsTable(AcceptanceTestResults acceptanceTestResults)
+        {
+            
+            //var test = Drive.Data.MigrationStaging.Db.test.AcceptanceTestResults;
+            //var acceptanceTestResultsTable = test.FindbyAccountId(accountId);
+            //acceptanceTestResultsTable.TestParameters = testParameters;
+            //Console.WriteLine(acceptanceTestResultsTable.Count());
+            //Console.WriteLine(test.Count());
+            
+           // acceptanceTestResultsTable.TestEndDate = testEndTime;
+            //acceptanceTestResultsTable.TestResult = testResult;
+
+
+            //Drive.Data.MigrationStaging.Db.test.AcceptanceTestResults.Update(acceptanceTestResultsTable);
+
+            var acceptanceTestResultsTable = Drive.Data.MigrationStaging.Db.test.AcceptanceTestResults;
+            
+            acceptanceTestResultsTable.UpdateByAccountId(acceptanceTestResults.MigratedUser.AccountId, RunId: acceptanceTestResults.MigratedUser.MigratedRunId, BatchId: acceptanceTestResults.BatchId,
+                                            TestName: acceptanceTestResults.TestName, AccountId: acceptanceTestResults.MigratedUser.AccountId,
+                                              Login: acceptanceTestResults.MigratedUser.Login, TestParameters: acceptanceTestResults.TestParameters.ToString(),
+                                              TestStartDate: acceptanceTestResults.TestStartDate, TestEndDate: acceptanceTestResults.TestEndDate,
+                                              TestResult: acceptanceTestResults.TestResult);
         }
 
         public bool IsControlTableEmpty()
@@ -139,6 +166,16 @@ namespace Wonga.QA.MigrationTests.Core
                 return false;
             }
             return true;
+        }
+
+        public bool KeepRunningTests()
+        {
+            var acceptanceTestControl = Drive.Data.MigrationStaging.Db.test.AcceptanceTestControl;
+            if (acceptanceTestControl.All().Count() > 0)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

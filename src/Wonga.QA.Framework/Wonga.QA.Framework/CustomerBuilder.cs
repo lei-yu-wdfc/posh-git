@@ -816,6 +816,17 @@ namespace Wonga.QA.Framework
                         select acct.Login).Take(1);
 
             return latestLnCustomer.Single();
+            
+            #region drive.data alternative
+            /*var apps = Drive.Data.Payments.Db.payments.Applications;
+            var accts = Drive.Data.Ops.Db.ops.Accounts;
+            var returnval = apps.Query()
+                            .Join(accts).On(accts.ExternalId == apps.AccountId)
+                            .Select(accts.Login).Single();//.Where(apps.ClosedOn != null).OrderByCreatedOnDescending;
+
+
+            return returnval;*/
+            #endregion
         }
 
         /// <summary>

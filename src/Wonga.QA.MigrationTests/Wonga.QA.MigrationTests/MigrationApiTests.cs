@@ -18,13 +18,14 @@ namespace Wonga.QA.MigrationTests
     //[Parallelizable(TestScope.All)]
     class MigrationApiTests
     {
-        private int _batchId = 1;
-        private MigratedUser _migratedUser;
+        //private int _batchId = 1;
+        //private MigratedUser _migratedUser;
         private readonly MigrationHelper _migHelper = new MigrationHelper();
-        private byte _loginStatus = new byte();
-        private string _testName;
-        private DateTime _testStartTime;
-        private DateTime _testEndTime;
+        //private byte _loginStatus = new byte();
+        //private string _testName;
+        //private DateTime _testStartTime;
+        //private DateTime _testEndTime;
+        private readonly AcceptanceTestResults _acceptanceTestResults = new AcceptanceTestResults();
 
         private string GetFunctionName()
         {
@@ -37,30 +38,32 @@ namespace Wonga.QA.MigrationTests
 
         public void StoreTestResults()
         {
-            _migHelper.StoreTestResults(_batchId.ToString(CultureInfo.InvariantCulture), _testName,
-                                                   _migratedUser, _testStartTime, _testEndTime, _loginStatus);
+            //_migHelper.StoreTestResults(_batchId.ToString(CultureInfo.InvariantCulture), _testName,
+            //                                       _migratedUser, _testStartTime, _testEndTime, _loginStatus);
+            _migHelper.StoreTestResults(_acceptanceTestResults);
         }
 
         [FixtureSetUp]
         public void FixtureSetup()
         {
-            //if (_migHelper.IsControlTableEmpty())
-            //{
-            //    _migHelper.FillAcceptanceTestControlTable();
-            //}
-            _testStartTime = DateTime.Now;
+            if (_migHelper.IsControlTableEmpty())
+            {
+                _migHelper.FillAcceptanceTestControlTable();
+            }
+            _acceptanceTestResults.TestStartDate = DateTime.Now;
         }
         [Test, JIRA("UKMIG-226"),/*Parallelizable,*/ Owner(Owner.MuhammadQureshi)]
         public void MigratedApiLnJournery()
         {
-            _testName = GetFunctionName();
-            _testStartTime = DateTime.Now;
-            //_migratedUser = new MigratedUser();
-            //_migratedUser = _migHelper.GetMigratedAccountLogin();
+            _acceptanceTestResults.TestName = GetFunctionName();
+            _acceptanceTestResults.TestStartDate = DateTime.Now;
+            _acceptanceTestResults.MigratedUser = new MigratedUser();
+            _acceptanceTestResults.MigratedUser = _migHelper.GetMigratedAccountLogin();
+
             var customer = new Customer(Guid.Parse
                                             (Drive.Api.Queries.Post
-                                                 //(new GetAccountQuery { Login = _migratedUser.Login, Password = _migratedUser.Password }).
-                (new GetAccountQuery{ Login = "qa.wonga.com+BUILD-WIN21-7af66e12-7664-4bec-8a51-f5ffb17f41b2@gmail.com", Password = "Passw0rd"}).
+                                                 (new GetAccountQuery { Login = _acceptanceTestResults.MigratedUser.Login, Password = _acceptanceTestResults.MigratedUser.Password }).
+                //(new GetAccountQuery{ Login = "qa.wonga.com+BUILD-WIN21-7af66e12-7664-4bec-8a51-f5ffb17f41b2@gmail.com", Password = "Passw0rd"}).
                                                  Values["AccountId"].Single()));
 
             //var promiseDate = new Date(DateTime.Now.AddDays(10));
@@ -70,15 +73,15 @@ namespace Wonga.QA.MigrationTests
             ApplicationBuilder.New(customer).Build();
             //ApplicationBuilder.New(customer).Build().RepayOnDueDate();
 
-            _testEndTime = DateTime.Now;
+            _acceptanceTestResults.TestEndDate= DateTime.Now;
             //StoreTestResults();
         }
 
         [Test, JIRA("UKMIG-231"),/*Parallelizable,*/ Owner(Owner.MuhammadQureshi)]
         public void MigratedApiLnJourneryAndRepayOnDueDate()
         {
-            _testName = GetFunctionName();
-            _testStartTime = DateTime.Now;
+            _acceptanceTestResults.TestName = GetFunctionName();
+            _acceptanceTestResults.TestStartDate = DateTime.Now;
             //_migratedUser = new MigratedUser();
             //_migratedUser = _migHelper.GetMigratedAccountLogin();
             var customer = new Customer(Guid.Parse
@@ -93,15 +96,15 @@ namespace Wonga.QA.MigrationTests
             //ApplicationBuilder.New(customer,promiseDate,loanAmmount).Build();
             ApplicationBuilder.New(customer).Build().RepayOnDueDate();
 
-            _testEndTime = DateTime.Now;
+            _acceptanceTestResults.TestEndDate = DateTime.Now;
             //StoreTestResults();
         }
 
         [Test, JIRA("UKMIG-231"),/*Parallelizable,*/ Owner(Owner.MuhammadQureshi)]
         public void MigratedApiLnJourneryAndRepayEarly()
         {
-            _testName = GetFunctionName();
-            _testStartTime = DateTime.Now;
+            _acceptanceTestResults.TestName = GetFunctionName();
+            _acceptanceTestResults.TestStartDate= DateTime.Now;
             //_migratedUser = new MigratedUser();
             //_migratedUser = _migHelper.GetMigratedAccountLogin();
             var customer = new Customer(Guid.Parse
@@ -120,7 +123,7 @@ namespace Wonga.QA.MigrationTests
             lnApplication.RepayEarly(repayAmmount, 15);
             //ApplicationBuilder.New(customer, promiseDate, loanAmmount).Build().RepayEarly(repayAmmount,2);
 
-            _testEndTime = DateTime.Now;
+            _acceptanceTestResults.TestEndDate = DateTime.Now;
             //StoreTestResults();
         }
     }
