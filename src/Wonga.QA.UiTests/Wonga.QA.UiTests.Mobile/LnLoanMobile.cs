@@ -32,11 +32,11 @@ namespace Wonga.QA.UiTests.Mobile
         {
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
-            //Customer customer = CustomerBuilder.New()
-            //    .WithEmailAddress(email)
-            //    .Build();
-            //Application application = ApplicationBuilder.New(customer).Build();
-            //application.RepayOnDueDate();
+            Customer customer = CustomerBuilder.New()
+                .WithEmailAddress(email)
+                .Build();
+            Application application = ApplicationBuilder.New(customer).Build();
+            application.RepayOnDueDate();
             loginPage.LoginAs(email, "Passw0rd");
             var journey = JourneyFactory.GetLnJourney(Client.MobileHome());
             var page = journey.Teleport<DealDonePage>() as DealDonePage;

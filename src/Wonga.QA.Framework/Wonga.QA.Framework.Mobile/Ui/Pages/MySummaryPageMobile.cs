@@ -14,7 +14,7 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
         private readonly IWebElement _myPaymentDetailsButton;
         private readonly IWebElement _mySummaryButton;
         private readonly IWebElement _myPersonalDetailsButton;
-        private readonly IWebElement _warningBox;
+        //private readonly IWebElement _warningBox;
 
         public IWebElement ViewLoanDetails;
 
@@ -28,7 +28,7 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
                 Client.Driver.FindElement(By.CssSelector(UiMapMobile.Get.MySummaryPage.MyPersonalDetailsButton));
             _myPaymentDetailsButton =
                 Client.Driver.FindElement(By.CssSelector(UiMapMobile.Get.MySummaryPage.MyPaymentDetailsButton));
-            _warningBox = Client.Driver.FindElement(By.CssSelector(UiMapMobile.Get.MySummaryPage.WarningBox));
+            //_warningBox = Client.Driver.FindElement(By.CssSelector(UiMapMobile.Get.MySummaryPage.WarningBox));
         }
 
         public ApplyPageMobile ApplyForLoan(string howlong, string howmuch)
