@@ -25,8 +25,6 @@ namespace Wonga.QA.Framework.Api.Enums
         Other,
         [Description("Sales")]
         Sales,
-        [Description("Retail1")]
-        Retail1,
         [Description("Services")]
         Services,
         [Description("Teacher")]
