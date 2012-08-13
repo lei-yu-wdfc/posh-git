@@ -48,6 +48,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
         private IWebElement _trustratingLinkAboveSliders;
         private IWebElement _headerBarText;
         private IWebElement _aprExplanationText;
+        private IWebElement _promoCodeMessage;
         //private IWebElement _promoCode;
         //private IWebElement _fastCashLink;
         //private IWebElement _cashAdvanceLink;
@@ -97,6 +98,27 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
             }
             //Tabs = new TabsElement(this);
 
+        }
+
+        public String PromoCode
+        {
+            set
+            {
+                Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.PromoCode)).SendValue(value);
+            }
+        }
+
+        public void ClickGoButton()
+        {
+            Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.GoButton)).Click();
+        }
+
+        public String GetPromoCodeInValidMessage()
+        {
+            Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.PromoCodeInvalidMessage)));
+            _promoCodeMessage = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.PromoCodeInvalidMessage));
+            var promoCodeMessage = _promoCodeMessage.Text.Replace("\r\n", " ");
+            return promoCodeMessage;
         }
 
         public string PopupSetProvince
@@ -414,6 +436,14 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
             IWebElement applyNowToolTip = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.ApplyNowToolTip));
             var applyNowToolTipText = applyNowToolTip.Text;
             return applyNowToolTipText.Replace("\r\n", "");
+        }
+
+        public String GetSliderLoanSummaryText()
+        {
+            Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.SliderLoanSummaryText)));
+            IWebElement sliderLoanSummary = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.SliderLoanSummaryText));
+            var sliderLoansummaryText = sliderLoanSummary.Text;
+            return sliderLoansummaryText.Replace("\r\n", "");
         }
 
         public bool IsApplyNowButtonEnabled()

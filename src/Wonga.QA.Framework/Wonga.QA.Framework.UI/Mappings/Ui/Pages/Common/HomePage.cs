@@ -48,5 +48,9 @@ namespace Wonga.QA.Framework.UI.Mappings.Ui.Pages.Common
         public String ApplyNowToolTip { get; set; }
         public String ApplyNowToolTipTrigger { get; set; }
         public String ApplyNowButton { get; set; }
+        public String GoButton { get; set; }
+        public String PromoCodeInvalidMessage{ get; set; }
+        public String PromoCodeValidMessage { get; set; }
+        public String SliderLoanSummaryText { get; set; }
     }
 }
