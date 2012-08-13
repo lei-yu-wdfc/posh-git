@@ -51,7 +51,8 @@ namespace Wonga.QA.Framework.UI.Ui.Pages.Helpers
         }
         private static void ValidateByType(FieldType fieldType, List<Int32> list, Dictionary<Int32, Delegate> customCallBacks)
         {
-            customCallBacks = customCallBacks ?? new Dictionary<Int32, Delegate>();
+            if (customCallBacks == null)
+                customCallBacks = new Dictionary<Int32, Delegate>();
 
             switch (fieldType)
             {

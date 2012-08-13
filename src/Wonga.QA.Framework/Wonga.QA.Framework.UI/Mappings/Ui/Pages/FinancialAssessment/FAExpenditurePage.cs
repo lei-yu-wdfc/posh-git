@@ -30,7 +30,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages.FinancialAssessment
         public String MobilePhone { get; set; }
         public String OtherPhone { get; set; }
         public String Food { get; set; }
-        public String Cleaning { get; set; }
         public String Toiletries { get; set; }
         public String NewspapersAndMagazines { get; set; }
         public String CigarettesAndTobacco { get; set; }

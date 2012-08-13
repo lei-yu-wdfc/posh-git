@@ -21,6 +21,7 @@ namespace Wonga.QA.Framework.UI.Ui.Pages.Helpers
             return property;
         }
 
+
         public static void SetFieldValue(T obj, String fieldName, String value)
         {
             PropertyInfo property = GetPropertyInfo(fieldName);
