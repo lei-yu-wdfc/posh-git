@@ -8,6 +8,7 @@
 	using Wonga.QA.Framework.Db.Payments;
 	using Wonga.QA.Framework.Msmq.Enums.Common.Iso;
 	using Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Messages;
+	using Wonga.QA.Framework.Old;
 	using Wonga.QA.Tests.Core;
 	using Wonga.QA.Tests.Payments.Helpers;
 	using AddPaymentCardCommand = Wonga.QA.Framework.Api.Requests.Payments.Commands.AddPaymentCardCommand;

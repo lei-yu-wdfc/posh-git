@@ -6,6 +6,7 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Framework.Msmq.Messages.Payments.PublicMessages;
+using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Helpers;
 

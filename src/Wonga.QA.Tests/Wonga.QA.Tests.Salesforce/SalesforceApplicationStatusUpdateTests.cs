@@ -11,6 +11,7 @@ using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Db.Risk;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Framework.Msmq.Enums.Common.Iso;
+using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Core;
 using PaymentTransactionEnum = Wonga.QA.Framework.Msmq.Enums.Integration.Payments.Enums.PaymentTransactionEnum;
 using PaymentTransactionScopeEnum = Wonga.QA.Framework.Msmq.Enums.Integration.Payments.Enums.PaymentTransactionScopeEnum;

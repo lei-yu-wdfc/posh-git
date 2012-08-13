@@ -7,6 +7,7 @@ using Wonga.QA.Framework.Api.Requests.FileStorage.Queries;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Framework.Msmq.Messages.Payments.PublicMessages;
+using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Core;
 using CreateFixedTermLoanTopupCommand = Wonga.QA.Framework.Api.Requests.Payments.Commands.CreateFixedTermLoanTopupCommand;
 

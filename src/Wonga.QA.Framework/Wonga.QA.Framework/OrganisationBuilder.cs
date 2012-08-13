@@ -5,9 +5,7 @@ using Wonga.QA.Framework.Api.Requests.Comms.ContactManagement.Commands;
 using Wonga.QA.Framework.Api.Requests.Payments.Commands;
 using Wonga.QA.Framework.Api.Requests.Payments.Commands.Wb.Uk;
 using Wonga.QA.Framework.Core;
-using System.Linq;
-using Wonga.QA.Framework.Db;
-using System.Threading;
+using Wonga.QA.Framework.Old;
 
 namespace Wonga.QA.Framework
 {

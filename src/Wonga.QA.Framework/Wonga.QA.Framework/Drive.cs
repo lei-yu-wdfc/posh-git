@@ -9,6 +9,7 @@ using Wonga.QA.Framework.Mocks;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Framework.Svc;
 using Wonga.QA.Framework.ThirdParties;
+using Wonga.QA.Framework.Ucg;
 
 namespace Wonga.QA.Framework
 {

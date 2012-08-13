@@ -3,6 +3,7 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Core;
 using System.Dynamic;
 

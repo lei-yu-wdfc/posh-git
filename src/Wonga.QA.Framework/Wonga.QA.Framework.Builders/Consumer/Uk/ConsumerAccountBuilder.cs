@@ -14,11 +14,11 @@ namespace Wonga.QA.Framework.Builders.Consumer.Uk
 {
 	public class ConsumerAccountBuilder : ConsumerAccountBuilderBase
 	{
-		public ConsumerAccountBuilder(ConsumerAccountDataBase consumerAccountData) : base(consumerAccountData)
+		public ConsumerAccountBuilder(ConsumerAccountDataBase accountData) : base(accountData)
 		{
 		}
 
-		public ConsumerAccountBuilder(Guid accountId, ConsumerAccountDataBase consumerAccountData) : base(accountId, consumerAccountData)
+		public ConsumerAccountBuilder(Guid accountId, ConsumerAccountDataBase accountData) : base(accountId, accountData)
 		{
 		}
 
@@ -107,7 +107,7 @@ namespace Wonga.QA.Framework.Builders.Consumer.Uk
 			                                       		r.Number = AccountData.PaymentCardNumber;
 			                                       		r.HolderName = String.Format("{0} {1}", AccountData.Forename, AccountData.Surname);
 			                                       		r.IsPrimary = true;
-			                                       		r.ExpiryDate = DateTime.Today.AddYears(2).ToPaymentCardDate();
+			                                       		r.ExpiryDate = AccountData.PaymentCardExpiryDate;
 			                                       		r.SecurityCode = AccountData.PaymentCardSecurityCode;
 			                                       		r.CardType = AccountData.PaymentCardType;
 			                                       	});
@@ -117,7 +117,7 @@ namespace Wonga.QA.Framework.Builders.Consumer.Uk
 			                                           		r.AccountId = AccountId;
 			                                           		r.Number = AccountData.PaymentCardNumber;
 			                                           		r.HolderName = String.Format("{0} {1}", AccountData.Forename, AccountData.Surname);
-			                                           		r.ExpiryDate = DateTime.Today.AddYears(2).ToPaymentCardDate();
+															r.ExpiryDate = AccountData.PaymentCardExpiryDate;
 			                                           		r.SecurityCode = AccountData.PaymentCardSecurityCode;
 			                                           		r.CardType = AccountData.PaymentCardType;
 			                                           	});
@@ -145,7 +145,5 @@ namespace Wonga.QA.Framework.Builders.Consumer.Uk
 			                                             		r.MobilePhone = AccountData.MobilePhoneNumber;
 			                                             	});
 		}
-		
-		protected override void CompletePhoneVerification(){}
 	}
 }

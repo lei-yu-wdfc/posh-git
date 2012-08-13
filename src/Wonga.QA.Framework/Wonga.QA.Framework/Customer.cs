@@ -13,7 +13,7 @@ using Wonga.QA.Framework.Db.Comms;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Helpers;
 
-namespace Wonga.QA.Framework
+namespace Wonga.QA.Framework.Old
 {
     public class Customer
     {

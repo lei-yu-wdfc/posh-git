@@ -11,6 +11,7 @@ using Wonga.QA.Framework.Msmq.Messages.Payments;
 using Wonga.QA.Framework.Msmq.Messages.Payments.Uk;
 using Wonga.QA.Framework.Msmq.Messages.PublicMessages.Payments;
 using Wonga.QA.Framework.Msmq.Messages.Risk;
+using Wonga.QA.Framework.Old;
 
 namespace Wonga.QA.Tests.Payments.Helpers
 {

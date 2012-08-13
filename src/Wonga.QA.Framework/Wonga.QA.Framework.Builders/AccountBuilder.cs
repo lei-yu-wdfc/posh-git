@@ -16,7 +16,13 @@ namespace Wonga.QA.Framework.Builders
 				return New(accountId, accountData);
 			}
 
-			public static ConsumerAccountBuilderBase New(Guid accountId, ConsumerAccountDataBase accountData)
+			public static ConsumerAccountBuilderBase New(Guid accountId)
+			{
+				var accountData = new ConsumerAccountDataBase();
+				return New(accountId, accountData);
+			}
+
+			private static ConsumerAccountBuilderBase New(Guid accountId, ConsumerAccountDataBase accountData)
 			{
 				switch (Config.AUT)
 				{
@@ -42,7 +48,13 @@ namespace Wonga.QA.Framework.Builders
 				return New(accountId, accountData);
 			}
 
-			public static PayLaterAccountBuilderBase New(Guid accountId, PayLaterAccountDataBase accountData)
+			public static PayLaterAccountBuilderBase New(Guid accountId)
+			{
+				var accountData = new PayLaterAccountDataBase();
+				return New(accountId, accountData);
+			}
+
+			private static PayLaterAccountBuilderBase New(Guid accountId, PayLaterAccountDataBase accountData)
 			{
 				switch (Config.AUT)
 				{

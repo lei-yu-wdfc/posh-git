@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Wonga.QA.Framework.Account.Consumer;
+using Wonga.QA.Framework.Account.Queries;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Requests.Payments.Commands.Uk;
 using Wonga.QA.Framework.Api.Requests.Payments.Queries;
@@ -10,19 +12,19 @@ namespace Wonga.QA.Framework.Builders.Consumer.Uk
 {
 	public class ConsumerApplicationBuilder : ConsumerApplicationBuilderBase
 	{
-		public ConsumerApplicationBuilder(Customer consumerAccountBase, ConsumerApplicationDataBase consumerApplicationData) : base(consumerAccountBase, consumerApplicationData)
+		public ConsumerApplicationBuilder(ConsumerAccount account, ConsumerApplicationDataBase applicationData) : base(account, applicationData)
 		{
 		}
-
+		
 		protected override IEnumerable<ApiRequest> GetRegionSpecificApiCommands()
 		{
-			var primaryPaymentCardGuid = ConsumerAccountBase.GetPaymentCard();
-			var primaryBankAccountGuid = ConsumerAccountBase.GetBankAccount();
+			var primaryPaymentCardGuid = AccountQueries.Consumer.PaymentDetails.GetPrimaryPaymentCardGuid(Account);
+			var primaryBankAccountGuid = AccountQueries.Consumer.PaymentDetails.GetPrimaryBankAccountGuid(Account);
 
 			yield return CreateFixedTermLoanApplicationUkCommand.New(r =>
 			                                                         	{
 			                                                         		r.ApplicationId = ApplicationId;
-			                                                         		r.AccountId = ConsumerAccountBase.Id;
+			                                                         		r.AccountId = Account.Id;
 			                                                         		r.BankAccountId = primaryBankAccountGuid;
 			                                                         		r.PaymentCardId = primaryPaymentCardGuid;
 			                                                         		r.LoanAmount = ConsumerApplicationData.LoanAmount;
@@ -31,7 +33,7 @@ namespace Wonga.QA.Framework.Builders.Consumer.Uk
 			yield return RiskCreateFixedTermLoanApplicationCommand.New(r =>
 			                                                           	{
 			                                                           		r.ApplicationId = ApplicationId;
-			                                                           		r.AccountId = ConsumerAccountBase.Id;
+			                                                           		r.AccountId = Account.Id;
 			                                                           		r.BankAccountId = primaryBankAccountGuid;
 			                                                           		r.LoanAmount = ConsumerApplicationData.LoanAmount;
 			                                                           		r.PromiseDate = ConsumerApplicationData.PromiseDate;
@@ -39,14 +41,14 @@ namespace Wonga.QA.Framework.Builders.Consumer.Uk
 			                                                           	});
 			yield return VerifyFixedTermLoanCommand.New(r =>
 			                                            	{
-			                                            		r.AccountId = ConsumerAccountBase.Id;
+			                                            		r.AccountId = Account.Id;
 			                                            		r.ApplicationId = ApplicationId;
 			                                            	});
 		}
 
 		protected override void WaitForApplicationToBecomeLive()
 		{
-			Do.Until(() => Drive.Api.Queries.Post(new GetAccountSummaryQuery{AccountId = ConsumerAccountBase.Id}).Values["HasCurrentLoan"].Single() == "true");
+			Do.Until(() => Drive.Api.Queries.Post(new GetAccountSummaryQuery{AccountId = Account.Id}).Values["HasCurrentLoan"].Single() == "true");
 		}
 	}
 }

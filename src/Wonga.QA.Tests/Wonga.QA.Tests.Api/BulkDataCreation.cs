@@ -14,6 +14,7 @@ using Wonga.QA.Framework.Api.Requests.Comms.Queries;
 using Wonga.QA.Framework.Api.Requests.Ops.Commands;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Comms;
+using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Framework.Api.Exceptions;
 

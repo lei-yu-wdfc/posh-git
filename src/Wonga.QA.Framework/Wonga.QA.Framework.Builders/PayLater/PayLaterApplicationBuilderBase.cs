@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Wonga.QA.Framework.Account.PayLater;
+using Wonga.QA.Framework.Application.PayLater;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 
@@ -9,23 +11,23 @@ namespace Wonga.QA.Framework.Builders.PayLater
 	{
 		protected Guid ApplicationId { get; private set; }
 		protected PayLaterApplicationDataBase ApplicationData { get; private set; }
-		protected Customer Account { get; private set; }
+		protected PayLaterAccount Account { get; private set; }
 
 
-		protected PayLaterApplicationBuilderBase(Customer account, PayLaterApplicationDataBase applicationData)
+		protected PayLaterApplicationBuilderBase(PayLaterAccount account, PayLaterApplicationDataBase applicationData)
 		{
 			ApplicationId = Guid.NewGuid();
 			Account = account;
 			ApplicationData = applicationData;
 		}
 
-		public Application Build()
+		public PayLaterApplication Build()
 		{
 			CreateApplication();
 			WaitForApplicationDecision();
 			WaitForApplicationToBecomeLive();
 
-			return new Application(ApplicationId);
+			return new PayLaterApplication(ApplicationId);
 		}
 
 		private void CreateApplication()

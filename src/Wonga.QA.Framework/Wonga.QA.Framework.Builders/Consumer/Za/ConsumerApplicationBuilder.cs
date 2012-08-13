@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Wonga.QA.Framework.Account.Consumer;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Requests.Payments.Queries.Za;
 using Wonga.QA.Framework.Core;
@@ -8,7 +9,7 @@ namespace Wonga.QA.Framework.Builders.Consumer.Za
 {
 	public class ConsumerApplicationBuilder : ConsumerApplicationBuilderBase
 	{
-		public ConsumerApplicationBuilder(Customer consumerAccountBase, ConsumerApplicationDataBase consumerApplicationData) : base(consumerAccountBase, consumerApplicationData)
+		public ConsumerApplicationBuilder(ConsumerAccount account, ConsumerApplicationDataBase consumerApplicationData) : base(account, consumerApplicationData)
 		{
 		}
 
@@ -19,7 +20,7 @@ namespace Wonga.QA.Framework.Builders.Consumer.Za
 
 		protected override void WaitForApplicationToBecomeLive()
 		{
-			Do.Until(() => Drive.Api.Queries.Post(new GetAccountSummaryZaQuery { AccountId = ConsumerAccountBase.Id }).Values["HasCurrentLoan"].Single() == "true");
+			Do.Until(() => Drive.Api.Queries.Post(new GetAccountSummaryZaQuery { AccountId = Account.Id }).Values["HasCurrentLoan"].Single() == "true");
 		}
 	}
 }

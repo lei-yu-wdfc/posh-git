@@ -8,6 +8,7 @@ using Wonga.QA.Framework.Cs;
 using Wonga.QA.Framework.Cs.Requests.Payments.Csapi.Queries;
 using Wonga.QA.Framework.Msmq.Enums.Common.Iso;
 using Wonga.QA.Framework.Msmq.Enums.Integration.Payments.Enums;
+using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Core;
 using CreateTransactionCommand = Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Messages.CreateTransaction;
 using PaymentTransactionEnum = Wonga.QA.Framework.Msmq.Enums.Integration.Payments.Enums.PaymentTransactionEnum;

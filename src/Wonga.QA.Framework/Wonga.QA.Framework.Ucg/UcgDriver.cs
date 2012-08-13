@@ -1,7 +1,7 @@
 ﻿using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 
-namespace Wonga.QA.Framework.Cs
+namespace Wonga.QA.Framework.Ucg
 {
 	public class UcgDriver
 	{

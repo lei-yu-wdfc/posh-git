@@ -13,6 +13,7 @@ using Wonga.QA.Framework.Api.Requests.Payments.Queries;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db;
 using Wonga.QA.Framework.Db.QaData;
+using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments.Command

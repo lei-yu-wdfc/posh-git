@@ -9,6 +9,7 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db;
 using Wonga.QA.Framework.Db.Ops;
 using Wonga.QA.Framework.Db.Payments;
+using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Helpers;
 

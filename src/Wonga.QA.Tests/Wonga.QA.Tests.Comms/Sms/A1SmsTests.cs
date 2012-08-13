@@ -8,6 +8,7 @@ using Wonga.QA.Framework.Api.Requests.Comms.Commands;
 using Wonga.QA.Framework.Api.Requests.Ops.Commands;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Msmq;
+using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Comms.Sms

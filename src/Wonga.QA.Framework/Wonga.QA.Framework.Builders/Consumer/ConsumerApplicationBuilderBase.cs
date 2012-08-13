@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Wonga.QA.Framework.Account.Consumer;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Requests.Payments.Commands;
 using Wonga.QA.Framework.Api.Requests.Risk.Commands;
 using Wonga.QA.Framework.Api.Requests.Risk.Queries;
+using Wonga.QA.Framework.Application.Consumer;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Data.Enums.Risk;
 
@@ -14,24 +16,24 @@ namespace Wonga.QA.Framework.Builders.Consumer
 	{
 		protected Guid ApplicationId { get; private set; }
 		protected ConsumerApplicationDataBase ConsumerApplicationData { get; private set; }
-		protected Customer ConsumerAccountBase { get; private set; }
+		protected ConsumerAccount Account { get; private set; }
 
 
-		protected ConsumerApplicationBuilderBase(Customer consumerAccountBase, ConsumerApplicationDataBase consumerApplicationData)
+		protected ConsumerApplicationBuilderBase(ConsumerAccount account, ConsumerApplicationDataBase consumerApplicationData)
 		{
 			ApplicationId = Guid.NewGuid();
-			ConsumerAccountBase = consumerAccountBase;
+			Account = account;
 			ConsumerApplicationData = consumerApplicationData;
 		}
 
-		public Application Build()
+		public ConsumerApplication Build()
 		{
 			CreateApplication();
 			WaitForApplicationDecision();
 			SignApplicationIfRequired();
 			WaitForApplicationToBecomeLive();
 
-			return new Application(ApplicationId);
+			return new ConsumerApplication(ApplicationId);
 		}
 
 		private void CreateApplication()
@@ -49,7 +51,7 @@ namespace Wonga.QA.Framework.Builders.Consumer
 			yield return SubmitClientWatermarkCommand.New(r =>
 			                                              	{
 			                                              		r.ApplicationId = ApplicationId;
-			                                              		r.AccountId = ConsumerAccountBase.Id;
+			                                              		r.AccountId = Account.Id;
 			                                              		r.BlackboxData = ConsumerApplicationData.IovationResponse.ToString();
 			                                              	});
 		}
@@ -84,7 +86,7 @@ namespace Wonga.QA.Framework.Builders.Consumer
 				if (ConsumerApplicationData.ExpectedDecision == ApplicationDecisionStatus.Accepted || 
 					ConsumerApplicationData.ExpectedDecision == ApplicationDecisionStatus.ReadyToSign)
 				{
-					Drive.Api.Commands.Post(new SignApplicationCommand { AccountId = ConsumerAccountBase.Id, ApplicationId = ApplicationId });
+					Drive.Api.Commands.Post(new SignApplicationCommand { AccountId = Account.Id, ApplicationId = ApplicationId });
 				}
 			}
 		}

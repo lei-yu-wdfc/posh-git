@@ -4,6 +4,7 @@ using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Data;
 using Wonga.QA.Framework.Mocks;
+using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.BankGateway.Helpers;
 using Wonga.QA.Tests.Core;
 

@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E02DE5C9-D5A4-45FE-8997-9C0CC9AAB3AA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Wonga.QA.Framework.Application</RootNamespace>
+    <AssemblyName>Wonga.QA.Framework.Application</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApplicationBase.cs" />
+    <Compile Include="Operations\ApplicationOperations.cs" />
+    <Compile Include="Operations\ApplicationOperationsBase.cs" />
+    <Compile Include="Operations\ApplicationOperationsTimeTravel.cs" />
+    <Compile Include="Queries\ApplicationQueries.cs" />
+    <Compile Include="Queries\ApplicationQueriesBase.cs" />
+    <Compile Include="Business\BusinessApplication.cs" />
+    <Compile Include="Business\BusinessApplicationOperations.cs" />
+    <Compile Include="Business\BusinessApplicationQueries.cs" />
+    <Compile Include="Consumer\ConsumerApplication.cs" />
+    <Compile Include="Consumer\ConsumerApplicationOperations.cs" />
+    <Compile Include="Consumer\ConsumerApplicationQueries.cs" />
+    <Compile Include="PayLater\PayLaterApplication.cs" />
+    <Compile Include="PayLater\PayLaterApplicationOperations.cs" />
+    <Compile Include="PayLater\PayLaterApplicationQueries.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Wonga.QA.Framework.Data\Wonga.QA.Framework.Data.csproj">
+      <Project>{6DB7E1BD-C5B2-4BEE-A0A3-E2C635768203}</Project>
+      <Name>Wonga.QA.Framework.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wonga.QA.Framework.Db\Wonga.QA.Framework.Db.csproj">
+      <Project>{06D44CDD-9AB7-47EC-8D7A-0E548465EF9D}</Project>
+      <Name>Wonga.QA.Framework.Db</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wonga.QA.Framework\Wonga.QA.Framework.csproj">
+      <Project>{5D8AEAB2-EB00-45CA-86D1-A5B4A7C6ED2F}</Project>
+      <Name>Wonga.QA.Framework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

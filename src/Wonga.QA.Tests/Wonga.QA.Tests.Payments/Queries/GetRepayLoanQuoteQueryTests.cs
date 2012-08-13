@@ -10,6 +10,7 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Msmq.Enums.Common.Iso;
 using Wonga.QA.Framework.Msmq.Enums.Integration.Payments.Enums;
 using Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Messages;
+using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Helpers;
 using CreateFixedTermLoanApplicationCommand = Wonga.QA.Framework.Api.Requests.Payments.Commands.Uk.CreateFixedTermLoanApplicationUkCommand;

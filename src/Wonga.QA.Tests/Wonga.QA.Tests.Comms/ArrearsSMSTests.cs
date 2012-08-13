@@ -7,6 +7,7 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api.Requests.Comms.Commands;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Comms.Helpers;
 using Wonga.QA.Tests.Core;
 using Api = Wonga.QA.Framework.Api;

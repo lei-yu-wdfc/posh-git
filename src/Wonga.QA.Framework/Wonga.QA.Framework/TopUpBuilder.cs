@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Xml;
-using Wonga.QA.Framework;
-using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Requests.Payments.Queries;
-using Wonga.QA.Framework.Api.Requests.Payments.Queries.Uk;
-using Wonga.QA.Framework.Api.Requests.Risk.Queries;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.Data.Enums.Risk;
-using Wonga.QA.Framework.Db.Extensions;
-using Wonga.QA.Framework.Helpers;
+using Wonga.QA.Framework.Old;
 
 namespace Wonga.QA.Framework
 {

@@ -4,6 +4,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Text;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Old;
 
 namespace Wonga.QA.Framework.Helpers
 {

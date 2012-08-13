@@ -7,6 +7,7 @@ using Wonga.QA.Framework.Api.Requests.Payments.Commands;
 using Wonga.QA.Framework.Api.Requests.Payments.Queries;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Payments;
+using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments
