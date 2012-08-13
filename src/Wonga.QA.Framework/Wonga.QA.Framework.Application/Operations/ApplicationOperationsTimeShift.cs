@@ -2,25 +2,25 @@
 
 namespace Wonga.QA.Framework.Application.Operations
 {
-	public class ApplicationOperationsTimeTravel
+	public class ApplicationOperationsTimeShift
 	{
-		public void RewindApplicationDates(ApplicationBase application, TimeSpan span)
+		public void TimeShiftApplicationDates(ApplicationBase application, TimeSpan span)
 		{
-			RewindApplicationEntityPayments(application.Id, span);
-			RewindApplicationEntityRisk(application.Id, span);
+			TimeShiftApplicationEntityPayments(application.Id, span);
+			TimeShiftApplicationEntityRisk(application.Id, span);
 		}
 
-		private void RewindApplicationEntityPayments(Guid applicationGuid, TimeSpan span)
+		private void TimeShiftApplicationEntityPayments(Guid applicationGuid, TimeSpan span)
 		{
 			var paymentsApplicationId = (int)Drive.Data.Payments.Db.Applications.FindByExternalId(applicationGuid).ApplicationId;
 
-			RewindPaymentsApplicationEntity(paymentsApplicationId, span);
-			RewindPaymentsFixedTermLoanApplicationEntity(paymentsApplicationId, span);
-			RewindPaymentsTransactionEntities(paymentsApplicationId, span);
-			RewindPaymentsArrearsEntities(paymentsApplicationId, span);
+			TimeShiftPaymentsApplicationEntity(paymentsApplicationId, span);
+			TimeShiftPaymentsFixedTermLoanApplicationEntity(paymentsApplicationId, span);
+			TimeShiftPaymentsTransactionEntities(paymentsApplicationId, span);
+			TimeShiftPaymentsArrearsEntities(paymentsApplicationId, span);
 		}
 
-		private void RewindPaymentsApplicationEntity(int paymentsApplicationId, TimeSpan span)
+		private void TimeShiftPaymentsApplicationEntity(int paymentsApplicationId, TimeSpan span)
 		{
 			var appEntity = Drive.Data.Payments.Db.Applications.FindByApplicationId(paymentsApplicationId);
 			appEntity.ApplicationDate -= span;
@@ -32,7 +32,7 @@ namespace Wonga.QA.Framework.Application.Operations
 			Drive.Data.Payments.Db.Applications.Update(appEntity);
 		}
 
-		private void RewindPaymentsFixedTermLoanApplicationEntity(int paymentsApplicationId, TimeSpan span)
+		private void TimeShiftPaymentsFixedTermLoanApplicationEntity(int paymentsApplicationId, TimeSpan span)
 		{
 			var fixedTermAppEntity = Drive.Data.Payments.Db.FixedTermLoanApplications.FindByApplicationId(paymentsApplicationId);
 			fixedTermAppEntity.PromiseDate -= span;
@@ -40,7 +40,7 @@ namespace Wonga.QA.Framework.Application.Operations
 			Drive.Data.Payments.Db.FixedTermLoanApplications.Update(fixedTermAppEntity);
 		}
 
-		private void RewindPaymentsTransactionEntities(int paymentsApplicationId, TimeSpan span)
+		private void TimeShiftPaymentsTransactionEntities(int paymentsApplicationId, TimeSpan span)
 		{
 			var transactions = Drive.Data.Payments.Db.Transactions.FindAllByApplicationId(paymentsApplicationId);
 
@@ -52,7 +52,7 @@ namespace Wonga.QA.Framework.Application.Operations
 			}
 		}
 
-		private void RewindPaymentsArrearsEntities(int paymentsApplicationId, TimeSpan span)
+		private void TimeShiftPaymentsArrearsEntities(int paymentsApplicationId, TimeSpan span)
 		{
 			var arrearEntity = Drive.Data.Payments.Db.Arrears.FindByApplicationId(paymentsApplicationId);
 
@@ -63,7 +63,7 @@ namespace Wonga.QA.Framework.Application.Operations
 			}
 		}
 
-		private void RewindApplicationEntityRisk(Guid applicationGuid, TimeSpan span)
+		private void TimeShiftApplicationEntityRisk(Guid applicationGuid, TimeSpan span)
 		{
 			var riskAppEntity = Drive.Data.Risk.Db.RiskApplications.FindByApplicationId(applicationGuid);
 

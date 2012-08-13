@@ -14,6 +14,7 @@ using Wonga.QA.Framework.Api.Requests.Payments.Queries.Wb.Uk;
 using Wonga.QA.Framework.Api.Requests.Payments.Queries.Za;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Helpers;
+using Wonga.QA.Framework.Old;
 using Wonga.QA.Framework.UI.Mappings;
 using Wonga.QA.Framework.UI.Ui.Validators;
 using Wonga.QA.Framework.UI.UiElements.Pages;

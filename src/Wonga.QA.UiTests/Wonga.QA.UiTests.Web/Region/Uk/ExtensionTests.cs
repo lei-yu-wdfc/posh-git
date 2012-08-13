@@ -9,6 +9,7 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Db.Risk;
+using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Core;
 using System.Linq;
 using System;

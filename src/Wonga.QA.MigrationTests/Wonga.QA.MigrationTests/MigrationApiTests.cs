@@ -9,6 +9,7 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api.Requests.Ops.Queries;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Old;
 using Wonga.QA.MigrationTests.Core;
 using Wonga.QA.Tests.Core;
 

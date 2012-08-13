@@ -2,6 +2,6 @@
 {
 	public abstract class ApplicationOperationsBase
 	{
-		public static ApplicationOperationsTimeTravel TimeTravel = new ApplicationOperationsTimeTravel();
+		public static ApplicationOperationsTimeShift TimeShift = new ApplicationOperationsTimeShift();
 	}
 }

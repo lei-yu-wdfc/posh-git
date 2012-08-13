@@ -10,6 +10,7 @@ using Wonga.QA.Framework.Api.Requests.Payments.Queries;
 using Wonga.QA.Framework.Api.Requests.Payments.Queries.Uk;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Messages;
+using Wonga.QA.Framework.Old;
 using Wonga.QA.Framework.UI;
 using Wonga.QA.Framework.UI.Elements;
 using Wonga.QA.Framework.UI.Testing.Attributes;
