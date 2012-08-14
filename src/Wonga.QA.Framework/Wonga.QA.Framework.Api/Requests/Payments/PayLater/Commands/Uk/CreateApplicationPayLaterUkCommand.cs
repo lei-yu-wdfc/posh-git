@@ -10,6 +10,10 @@ namespace Wonga.QA.Framework.Api.Requests.Payments.PayLater.Commands.Uk
         public Object AccountId { get; set; }
         public Object ApplicationId { get; set; }
         public Object MerchantId { get; set; }
+        public Object MerchantReference { get; set; }
+        public Object MerchantOrderId { get; set; }
         public Object TotalAmount { get; set; }
+        public Object Currency { get; set; }
+        public Object PostCode { get; set; }
     }
 }

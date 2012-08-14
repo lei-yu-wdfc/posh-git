@@ -133,6 +133,8 @@
     <Compile Include="Requests\Comms\Commands\Ca\UpdateHomePhoneCaCommand.cs" />
     <Compile Include="Requests\Comms\Commands\Ca\VerifyHomePhoneCaCommand.cs" />
     <Compile Include="Requests\Comms\Commands\Ca\VerifyMobilePhoneCaCommand.cs" />
+    <Compile Include="Requests\Comms\Commands\PayLater\Uk\SavePayLaterCustomerAddressPayLaterUkCommand.cs" />
+    <Compile Include="Requests\Comms\Commands\PayLater\Uk\SavePayLaterCustomerDetailsPayLaterUkCommand.cs" />
     <Compile Include="Requests\Comms\Commands\Pl\SaveCustomerAddressPlCommand.cs" />
     <Compile Include="Requests\Comms\Commands\Pl\SaveCustomerDetailsPlCommand.cs" />
     <Compile Include="Requests\Comms\Commands\Pl\VerifyMobilePhonePlCommand.cs" />
@@ -164,6 +166,7 @@
     <Compile Include="Requests\Comms\Queries\GetFullDeclineAdviceQuery.cs" />
     <Compile Include="Requests\Comms\Queries\GetMatchingAccountsQuery.cs" />
     <Compile Include="Requests\Comms\Queries\GetReviewDetailsQuery.cs" />
+    <Compile Include="Requests\Comms\Queries\Ca\GetCustomerSubRegionCaQuery.cs" />
     <Compile Include="Requests\Comms\Queries\Wb\Uk\GetEmailReturnLinkCorrelationRecordWbUkQuery.cs" />
     <Compile Include="Requests\FileStorage\Queries\GetExtensionAeDocumentQuery.cs" />
     <Compile Include="Requests\FileStorage\Queries\GetExtensionSecciQuery.cs" />
@@ -171,12 +174,19 @@
     <Compile Include="Requests\FileStorage\Queries\GetLoanExtensionAgreementQuery.cs" />
     <Compile Include="Requests\FileStorage\Queries\GetLoanTopUpAgreementQuery.cs" />
     <Compile Include="Requests\FileStorage\Queries\GetSecciQuery.cs" />
+    <Compile Include="Requests\FileStorage\Queries\Ca\GetPreApprovedDirectDebitFormCaQuery.cs" />
+    <Compile Include="Requests\FileStorage\Queries\PLater\Uk\GetAgreementUkQuery.cs" />
+    <Compile Include="Requests\FileStorage\Queries\PLater\Uk\GetPayLaterLegalAgreementUkQuery.cs" />
+    <Compile Include="Requests\FileStorage\Queries\PLater\Uk\GetPayLaterSecciAgreementUkQuery.cs" />
     <Compile Include="Requests\FileStorage\Queries\Wb\Uk\GetFixedInstallmentAgreementWbUkQuery.cs" />
     <Compile Include="Requests\FileStorage\Queries\Wb\Uk\GetGuarantorAgreementWbUkQuery.cs" />
     <Compile Include="Requests\FileStorage\Queries\Za\GetDirectDebitFormZaQuery.cs" />
     <Compile Include="Requests\Marketing\Commands\AssociateTrackingSessionWithApplicationIdCommand.cs" />
     <Compile Include="Requests\Marketing\Commands\CreateTrackingSessionCommand.cs" />
     <Compile Include="Requests\Marketing\Commands\RegisterPrePaidCardEmailCommand.cs" />
+    <Compile Include="Requests\Marketing\Commands\SaveCustomerFeedbackCommand.cs" />
+    <Compile Include="Requests\Marketing\Commands\SaveCustomerFeedbackRateCommand.cs" />
+    <Compile Include="Requests\Marketing\Commands\SaveCustomerFeedbackStoryCommand.cs" />
     <Compile Include="Requests\Marketing\Commands\UpdateTrackingSessionCommand.cs" />
     <Compile Include="Requests\Marketing\Queries\GetCustomerPrepaidEligibilityQuery.cs" />
     <Compile Include="Requests\Marketing\Queries\GetTrackingReferenceQuery.cs" />
@@ -240,6 +250,7 @@
     <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetCreditInUsePayLaterUkQuery.cs" />
     <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetInstallmentQuotePayLaterUkQuery.cs" />
     <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetNextRepaymentDatePayLaterUkQuery.cs" />
+    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetOrderSummaryPayLaterUkQuery.cs" />
     <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetPayLaterCustomerTransactionsStatusPayLaterUkQuery.cs" />
     <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetPayLaterTransactionsPayLaterUkQuery.cs" />
     <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetRepaymentDetailsPayLaterUkQuery.cs" />
@@ -273,6 +284,7 @@
     <Compile Include="Requests\Payments\Queries\GetRepaymentArrangementParametersQuery.cs" />
     <Compile Include="Requests\Payments\Queries\GetRepaymentArrangementQuery.cs" />
     <Compile Include="Requests\Payments\Queries\Ca\GetFixedTermLoanOfferCaQuery.cs" />
+    <Compile Include="Requests\Payments\Queries\Ca\GetInstitutionBranchCodeIsValidCaQuery.cs" />
     <Compile Include="Requests\Payments\Queries\Pl\GetFixedTermLoanOfferPlQuery.cs" />
     <Compile Include="Requests\Payments\Queries\Uk\GetAccountOptionsUkQuery.cs" />
     <Compile Include="Requests\Payments\Queries\Uk\GetFixedTermLoanExtensionQuoteUkQuery.cs" />
@@ -293,6 +305,12 @@
     <Compile Include="Requests\Payments\Queries\Za\GetFixedTermLoanCalculationZaQuery.cs" />
     <Compile Include="Requests\Payments\Queries\Za\GetFixedTermLoanOfferZaQuery.cs" />
     <Compile Include="Requests\Payments\Queries\Za\GetIncomingPartnerPaymentRequestParametersZaQuery.cs" />
+    <Compile Include="Requests\PpsProvider\Queries\GetCustomerHasActivePrePaidCardQuery.cs" />
+    <Compile Include="Requests\PpsProvider\Queries\GetLastMonthClearedPrepaidCardTransactionsQuery.cs" />
+    <Compile Include="Requests\PpsProvider\Queries\GetPendingPrepaidCardTransactionsQuery.cs" />
+    <Compile Include="Requests\PpsProvider\Queries\GetPrepaidAccountMaximumTopupAllowedQuery.cs" />
+    <Compile Include="Requests\PpsProvider\Queries\GetPrepaidAvailableAccountBalanceQuery.cs" />
+    <Compile Include="Requests\PpsProvider\Queries\GetPrePaidPinResetCodeQuery.cs" />
     <Compile Include="Requests\Risk\Commands\CancelUserActionCommand.cs" />
     <Compile Include="Requests\Risk\Commands\RiskAddPaymentCardCommand.cs" />
     <Compile Include="Requests\Risk\Commands\RiskCreateFixedTermLoanApplicationCommand.cs" />
@@ -308,6 +326,11 @@
     <Compile Include="Requests\Risk\Commands\Ca\RiskSaveCustomerDetailsCaCommand.cs" />
     <Compile Include="Requests\Risk\Commands\Ca\SaveEmploymentDetailsCaCommand.cs" />
     <Compile Include="Requests\Risk\Commands\Ca\SaveSocialDetailsCaCommand.cs" />
+    <Compile Include="Requests\Risk\Commands\PayLater\Uk\RiskPayLaterAddPaymentCardPayLaterUkCommand.cs" />
+    <Compile Include="Requests\Risk\Commands\PayLater\Uk\RiskPayLaterSaveCustomerAddressPayLaterUkCommand.cs" />
+    <Compile Include="Requests\Risk\Commands\PayLater\Uk\RiskPayLaterSaveEmploymentDetailsPayLaterUkCommand.cs" />
+    <Compile Include="Requests\Risk\Commands\PayLater\Uk\RiskSavePayLaterCustomerDetailsPayLaterUkCommand.cs" />
+    <Compile Include="Requests\Risk\Commands\PayLater\Uk\VerifyApplicationPayLaterUkCommand.cs" />
     <Compile Include="Requests\Risk\Commands\Pl\RiskAddBankAccountPlCommand.cs" />
     <Compile Include="Requests\Risk\Commands\Pl\RiskAddHomePhonePlCommand.cs" />
     <Compile Include="Requests\Risk\Commands\Pl\RiskAddLegalAddressPlCommand.cs" />
