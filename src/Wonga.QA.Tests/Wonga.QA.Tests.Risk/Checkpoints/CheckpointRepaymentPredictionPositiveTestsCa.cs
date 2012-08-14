@@ -198,6 +198,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
         }
 
 		[Test, AUT(AUT.Ca), JIRA("CA-1956")]
+		[Ignore("This Checkpoint is not part of the LN workflow any more.. keeping this to be used in future when we implement LN scorecard")]
         public void VerifyLnCustomersAreNotBlockedByScoreCardForDeclined()
         {
             const string forename = "DAWN";
@@ -233,6 +234,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
         }
 
 		[Test, AUT(AUT.Ca), JIRA("CA-1956")]
+		[Ignore("This Checkpoint is not part of the LN workflow any more.. keeping this to be used in future when we implement LN scorecard")]
         public void VerifyTurningOnScorecardDoesNotAfftectLnForDeclined()
         {
             const string forename = "DAWN";
