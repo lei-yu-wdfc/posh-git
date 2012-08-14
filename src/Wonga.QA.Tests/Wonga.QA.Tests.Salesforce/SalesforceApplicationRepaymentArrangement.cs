@@ -12,8 +12,7 @@ namespace Wonga.QA.Tests.Salesforce
     [Pending("Repayment Arrangement bug 823")]
     class SalesforceApplicationRepaymentArrangement
     {
-        private readonly dynamic _commsSuppressionsRepo = Drive.Data.Comms.Db.Suppressions;
-        private readonly dynamic _paymentsSuppressionsRepo = Drive.Data.Payments.Db.PaymentCollectionSuppressions;
+        
 
         #region setup#
         [SetUp]
@@ -27,8 +26,9 @@ namespace Wonga.QA.Tests.Salesforce
         [AUT(AUT.Uk), JIRA("UKOPS-62"), Owner(Owner.AnilKrishnamaneni)]
         public void LiveApplicationRepaymentArrangementCycle()
         {
-            var application = CreateLiveApplication();
-            RepaymentArrangementCycle( application);
+            var customer = CustomerBuilder.New().Build();;
+            var application = CreateLiveApplication(customer);
+            RepaymentArrangementCycle(customer,application);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live);
         }
 
@@ -36,10 +36,11 @@ namespace Wonga.QA.Tests.Salesforce
         [AUT(AUT.Uk), JIRA("UKOPS-62"), Owner(Owner.AnilKrishnamaneni)]
         public void DueTodayApplicationRepaymentArrangementCycle()
         {
-            var application = CreateLiveApplication();
+            var customer = CustomerBuilder.New().Build();; 
+            var application = CreateLiveApplication(customer);
             SalesforceOperations.RewindDatesToMakeDueToday(application);
             SalesforceOperations.MakeDueToday(application);
-            RepaymentArrangementCycle( application);
+            RepaymentArrangementCycle(customer,application);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.DueToday);
         }
 
@@ -47,9 +48,10 @@ namespace Wonga.QA.Tests.Salesforce
         [AUT(AUT.Uk), JIRA("UKOPS-62"), Owner(Owner.AnilKrishnamaneni)]
         public void ArrearApplicationRepaymentArrangementCycle()
         {
-            var application = CreateLiveApplication();
+            var customer = CustomerBuilder.New().Build();; 
+            var application = CreateLiveApplication(customer);
             application.PutIntoArrears(3);
-            RepaymentArrangementCycle( application);
+            RepaymentArrangementCycle(customer,application);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.InArrears);
         }
 
@@ -58,11 +60,11 @@ namespace Wonga.QA.Tests.Salesforce
         public void SuspectFraudApplicationRepaymentArrangementCycle()
         {
             var caseId = new Guid();
-            var customer = CreateCustomer();
+            var customer = CustomerBuilder.New().Build();;
             var application = SalesforceOperations.CreateApplication(customer);
             ApplicationOperations.SuspectFraud(application, customer, caseId);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Fraud);
-            RepaymentArrangementCycle( application);
+            RepaymentArrangementCycle(customer,application);
             ApplicationOperations.ConfirmNotFraud(application, customer, caseId);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live);
         }
@@ -72,10 +74,11 @@ namespace Wonga.QA.Tests.Salesforce
         public void HardshipApplicationRepaymentArrangementCycle()
         {
             var caseId = new Guid();
-            var application = CreateLiveApplication();
+            var customer = CustomerBuilder.New().Build();; 
+            var application = CreateLiveApplication(customer);
             ApplicationOperations.ReportHardship(application, caseId);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Hardship);
-            RepaymentArrangementCycle( application);
+            RepaymentArrangementCycle(customer,application);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Hardship);
         }
 
@@ -84,10 +87,11 @@ namespace Wonga.QA.Tests.Salesforce
         public void BankruptApplicationRepaymentArrangementCycle()
         {
             var caseId = new Guid();
-            var application = CreateLiveApplication();
+            var customer = CustomerBuilder.New().Build();; 
+            var application = CreateLiveApplication(customer);
             ApplicationOperations.ReportBankrupt(application, caseId);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Bankrupt);
-            RepaymentArrangementCycle( application);
+            RepaymentArrangementCycle(customer,application);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Bankrupt);
         }
 
@@ -96,9 +100,10 @@ namespace Wonga.QA.Tests.Salesforce
         public void ComplaintApplicationRepaymentArrangementpCycle()
         {
             var caseId = Guid.NewGuid();
-            var application = CreateLiveApplication();
+            var customer = CustomerBuilder.New().Build();; 
+            var application = CreateLiveApplication(customer);
             ApplicationOperations.ReportComplaint(application, caseId);
-            RepaymentArrangementCycle(application);
+            RepaymentArrangementCycle(customer,application);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Complaint);
         }
 
@@ -107,10 +112,11 @@ namespace Wonga.QA.Tests.Salesforce
         public void ManagementReviewApplicationRepaymentArrangementCycle()
         {
             var caseId = new Guid();
-            var application = CreateLiveApplication();
+            var customer = CustomerBuilder.New().Build();; 
+            var application = CreateLiveApplication(customer);
             ApplicationOperations.ManagementReview(application, caseId);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.ManagementReview);
-            RepaymentArrangementCycle( application);
+            RepaymentArrangementCycle(customer,application);
             ApplicationOperations.RemoveManagementReview(application, caseId);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live);
         }
@@ -120,10 +126,11 @@ namespace Wonga.QA.Tests.Salesforce
         public void RefundApplicationRepaymentArrangementCycle()
         {
             var caseId = new Guid();
-            var application = CreateLiveApplication();
+            var customer = CustomerBuilder.New().Build();; 
+            var application = CreateLiveApplication(customer);
             ApplicationOperations.Refundrequest(application, caseId);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Refund);
-            RepaymentArrangementCycle( application);
+            RepaymentArrangementCycle(customer,application);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Refund);
         }
 
@@ -132,7 +139,8 @@ namespace Wonga.QA.Tests.Salesforce
         public void ManagementReviewRepaymentArrangementCycleWhileApplicationGoesDueTodayAndInToArrears()
         {
             var caseId = new Guid();
-            var application = CreateLiveApplication();
+            var customer = CustomerBuilder.New().Build();; 
+            var application = CreateLiveApplication(customer);
             SalesforceOperations.CheckPreviousStatus(application.Id, Framework.ThirdParties.Salesforce.ApplicationStatus.TermsAgreed.ToString(), Framework.ThirdParties.Salesforce.ApplicationStatus.Live.ToString());
             ApplicationOperations.ManagementReview(application, caseId);
             SalesforceOperations.CheckPreviousStatus(application.Id, Framework.ThirdParties.Salesforce.ApplicationStatus.Live.ToString(), Framework.ThirdParties.Salesforce.ApplicationStatus.ManagementReview.ToString());
@@ -152,44 +160,19 @@ namespace Wonga.QA.Tests.Salesforce
 
         #region Helpers#
 
-        private Application CreateLiveApplication()
+        private Application CreateLiveApplication(Customer customer)
         {
-            var customer = CreateCustomer();
             Application application = SalesforceOperations.CreateApplication(customer);
             return application;
         }
 
-        private static Customer CreateCustomer()
+        private void RepaymentArrangementCycle(Customer customer,Application application)
         {
-            return CustomerBuilder.New().Build();
-        }
-
-        private void RepaymentArrangementCycle(Application application)
-        {
-            application.CreateRepaymentArrangement();
+            SalesforceOperations.CreateRepaymentArrangement(customer,application);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.RepaymentArrangement);
-            application.CancelRepaymentArrangement();
+            SalesforceOperations.CancelRepaymnetArrangement(application);
         }
 
-        private void ReportComplaint( Application application)
-        {
-            var caseId = new Guid();
-            ApplicationOperations.ReportComplaint(application, caseId);
-            SalesforceOperations.CheckSalesApplicationStatus(application,
-                                                            (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Complaint);
-            CheckSupressionTable(application);
-        }
-
-        private void CheckSupressionTable(Application application)
-        {
-            int appInternalId = ApplicationOperations.GetAppInternalId(application);
-            Do.Until(() => _commsSuppressionsRepo.FindAll(
-                           _commsSuppressionsRepo.AccountId == application.AccountId && _commsSuppressionsRepo.Complaint == 1).Single());
-            Do.Until(() => _paymentsSuppressionsRepo.FindAll(
-                _paymentsSuppressionsRepo.ApplicationId == appInternalId && _paymentsSuppressionsRepo.ComplaintSuppression == 1).Single());
-        }
-
-      
         #endregion helpers#
 
     }
