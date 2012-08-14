@@ -7,22 +7,14 @@ using Wonga.QA.Framework.Api.Requests.Payments.Queries;
 
 namespace Wonga.QA.Framework.Builders.Consumer.Uk
 {
-    class ConsumerTopUpBuilder : ConsumerTopUpBaseBuilder
+    class ConsumerTopUpBuilder : ConsumerTopUpBuilderBase
     {
         public ConsumerTopUpBuilder(Guid customerId, Guid applicationId, int amount)
             : base(customerId, applicationId, amount)
         {
         }
 
-        public TopUp Build()
-        {
-            TopUpData.interestAndFeesAmount = GetTopUpInterest(TopUpData.amount);
-            TopUpData.totalToRepay = GetTopUpRepayble(TopUpData.amount);
-            return CreateTopUp(TopUpData.interestAndFeesAmount, TopUpData.totalToRepay, TopUpData.FixedTermLoanTopupId, TopUpData.customerId, TopUpData.applicationId);
-        }
-
-
-        protected override double GetTopUpInterest(int amount)
+        protected override double GetInterest(int amount)
         {
             var response = Drive.Api.Queries.Post(GetFixedTermLoanTopupCalculationQuery.New(r =>
             {
@@ -33,7 +25,7 @@ namespace Wonga.QA.Framework.Builders.Consumer.Uk
             return Convert.ToDouble(response.Values["InterestAndFeesAmount"].Single());
         }
 
-        protected override double GetTopUpRepayble(int amount)
+        protected override double GetTotalRepayble(int amount)
         {
             var response = Drive.Api.Queries.Post(GetFixedTermLoanTopupCalculationQuery.New(r =>
             {
@@ -56,7 +48,7 @@ namespace Wonga.QA.Framework.Builders.Consumer.Uk
                 r.ApplicationId = TopUpData.applicationId;
                 r.TopupAmount = TopUpData.amount;
             }));
-            TopUpData.FixedTermLoanTopupId = new Guid(response.Values["FixedTermLoanTopupId"].Single());
+            TopUpData.FixedTermLoanTopupId = response.Values["FixedTermLoanTopupId"].Single();
         }
 
         public override void AcceptTopUp()

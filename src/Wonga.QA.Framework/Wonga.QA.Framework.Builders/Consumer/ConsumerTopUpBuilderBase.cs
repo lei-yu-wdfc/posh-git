@@ -8,11 +8,11 @@ using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.Framework.Builders.Consumer
 {
-    public abstract class ConsumerTopUpBuilderBuilder
+    public abstract class ConsumerTopUpBuilderBase
     {
         protected ConsumerTopUpDataBase TopUpData;
 
-        public ConsumerTopUpBuilderBuilder(Guid customerId, Guid applicationId, int amount)
+        public ConsumerTopUpBuilderBase(Guid customerId, Guid applicationId, int amount)
         {
             TopUpData.customerId = Convert.ToString(customerId);
             TopUpData.applicationId = Convert.ToString(applicationId);
