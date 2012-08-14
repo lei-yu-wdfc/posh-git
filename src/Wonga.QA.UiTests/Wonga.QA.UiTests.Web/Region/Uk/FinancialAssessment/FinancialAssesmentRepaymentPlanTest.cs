@@ -14,6 +14,7 @@ using Wonga.QA.Framework.UI.Ui.Enums;
 using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Framework.Old;
+using Wonga.QA.Framework.Db.Ops;
 
 namespace Wonga.QA.Tests.Ui.FinancialAssessment
 {
@@ -28,7 +29,8 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
         {
             var email = Get.RandomEmail();
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-            ApplicationBuilder.New(customer).WithLoanTerm(4).Build();
+            Application application = ApplicationBuilder.New(customer).WithLoanTerm(4).Build();
+            application.PutIntoArrears(10);
             return customer;
         }
 
@@ -121,7 +123,26 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
         private String Monthly() { return "Monthly"; }
         private String PleaseSelect() { return "--- Please Select ---"; }
         private String WeeklyFake() { return "WeeklyFake"; }
-        // var serviceConfigurations = Drive.Data.Ops.Db.ServiceConfigurations;
+
+        private void SetCustomConfigurations()
+        {
+            String period1Interval = "1"; //25
+            String period2Interval = "45"; //45
+            String period1MaxMonths = "4"; //4
+            String period2MaxMonths = "6"; //6
+            String minStartDays = "1"; //1
+            String maxStartDays = "30"; //30
+
+            List<ServiceConfigurationEntity> serviceConfigurations = Drive.Db.Ops.ServiceConfigurations.Where(sc => sc.Key.Contains("Payments.RepaymentArrang")).ToList();
+            serviceConfigurations.Single(sc => sc.Key.Contains("Payments.RepaymentArrangementPeriod1Interval")).Value = period1Interval;
+            serviceConfigurations.Single(sc => sc.Key.Contains("Payments.RepaymentArrangementPeriod2Interval")).Value = period2Interval;
+            serviceConfigurations.Single(sc => sc.Key.Contains("Payments.RepaymentArrangmentPeriod1MaxMonths")).Value = period1MaxMonths;
+            serviceConfigurations.Single(sc => sc.Key.Contains("Payments.RepaymentArrangmentPeriod2MaxMonths")).Value = period2MaxMonths;
+            serviceConfigurations.Single(sc => sc.Key.Contains("Payments.RepaymentArrangementFirstRepaymentMinDays")).Value = minStartDays;
+            serviceConfigurations.Single(sc => sc.Key.Contains("Payments.RepaymentArrangementFirstRepaymentMaxDays")).Value = maxStartDays;
+            foreach (ServiceConfigurationEntity serviceConfiguration in serviceConfigurations)
+                serviceConfiguration.Submit();
+        }
 
         //1
         [Test, AUT(AUT.Uk), JIRA(""), MultipleAsserts, Owner(Owner.DmytroRomanii), Pending("Financial Assessment functionality is under development")]
@@ -149,14 +170,23 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
         [Test, AUT(AUT.Uk), JIRA(""), MultipleAsserts, Owner(Owner.DmytroRomanii), Pending("Financial Assessment functionality is under development")]
         public void Test()
         {
-            FARepaymentPlanPage faRepaymentPlanPage = RepaymentPlanPageTeleport();
-            var serviceConfigurations = Drive.Data.Ops.Db.ServiceConfigurations;
-            var period1Interval = serviceConfigurations.FindByKey("Payments.RepaymentArrangementPeriod1Interval").Value.ToString();
-            var period1MaxMonths = serviceConfigurations.FindByKey("Payments.RepaymentArrangmentPeriod1MaxMonths").Value.ToString();
-            var period2Interval = serviceConfigurations.FindByKey("Payments.RepaymentArrangementPeriod2Interval").Value.ToString();
-            var period2MaxMonths = serviceConfigurations.FindByKey("Payments.RepaymentArrangmentPeriod2MaxMonths").Value.ToString();
-            var minStartDays = serviceConfigurations.FindByKey("Payments.RepaymentArrangementFirstRepaymentMinDays").Value.ToString();
-            var maxStartDays = serviceConfigurations.FindByKey("Payments.RepaymentArrangementFirstRepaymentMaxDays").Value.ToString();
+            var loginPage = Client.Login();
+            Customer customer = Init();
+            Application custApp = customer.GetApplication();
+          
+            Boolean isUserHasArrears = custApp.IsInArrears();
+            loginPage.LoginAs(customer.Email);
+
+            //Application custApp = customer.GetApplication();
+            //custApp.PutIntoArrears(2);
+            // Int32 arrearDays = custApp.GetArrearDays();
+            //custApp.LoanTerm = 40;
+            //DateTime? NextPayDate = (customer.GetNextPayDate() == null) ? (DateTime?)null : DateTime.Parse(customer.GetNextPayDate());
+            var journeyLn = JourneyFactory.GetFaLnJourney(Client.FinancialAssessment());
+            FARepaymentPlanPage faRepaymentPlanPage =
+                journeyLn.FillAndStop().Teleport<FARepaymentPlanPage>() as FARepaymentPlanPage;
+
+            SetCustomConfigurations();
 
 
         }
