@@ -60,16 +60,8 @@ namespace Wonga.QA.Tests.Payments
 		{
 			Customer customer = CustomerBuilder.New().Build();
 			Do.Until(customer.GetBankAccount);
-			if (Config.AUT == AUT.Uk)
-			{
-				return ApplicationBuilder.New(customer).Build()
-					.PutIntoArrears(20);
-			}
-			else
-			{
-				return ApplicationBuilder.New(customer).Build()
-					.PutIntoArrears(20);
-			}
+
+			return ApplicationBuilder.New(customer).Build().PutIntoArrears(20);
 		}
 	}
 }
