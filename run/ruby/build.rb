@@ -49,6 +49,6 @@ end
 #--
 
 desc 'Builds everything'
-task :build => [:framework, :tests, :ui_tests, :migration_tests, :service_tests, :data_tests, :performance_tests, :tools, :generators, :pre_generate_serializers]
+task :build => [:framework, :tests, :ui_tests, :migration_tests, :service_tests, :data_tests, :tools, :generators, :pre_generate_serializers]
 #--
 
