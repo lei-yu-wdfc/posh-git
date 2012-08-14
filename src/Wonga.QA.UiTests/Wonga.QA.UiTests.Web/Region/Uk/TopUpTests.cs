@@ -199,8 +199,12 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
         [Test, JIRA("QA-336")]
         [Owner(Owner.PetrTarasenko)]
-        public void CustomerCantTopupIfMaxSumChooosen()
+        [Row(10)]
+        [Row(6)]
+        //Covering scenarious 5 & 6
+        public void CustomerCantTopupIfMaxSumChooosen(int daysToDueDate)
         {
+            int loanTerm = 30;
             var request = new GetFixedTermLoanOfferUkQuery();
             var response = Drive.Api.Queries.Post(request);
             var amountMax = (int)Decimal.Parse(response.Values["AmountMax"].Single(), CultureInfo.InvariantCulture);
@@ -209,9 +213,9 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
             var application = ApplicationBuilder.New(customer)
                 .WithLoanAmount(amountMax)
-                .WithLoanTerm(30)
+                .WithLoanTerm(loanTerm)
                 .Build();
-            application.RewindApplicationDatesForDays(20);
+            application.RewindApplicationDatesForDays(loanTerm - daysToDueDate);
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
             Assert.IsFalse(mySummaryPage.LookForTopupSliders());
