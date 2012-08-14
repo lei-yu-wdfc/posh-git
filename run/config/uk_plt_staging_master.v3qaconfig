@@ -1,0 +1,21 @@
+<Configuration>
+	<Include>base_ci</Include>
+	<SUT>Staging</SUT>
+	<AUT>Uk</AUT>
+	<Region>Uk</Region>
+		
+	<Svc>
+		<ServicesHost>plt-stg-app1.test.wonga.com</ServicesHost>
+		<ComponentsHost>plt-stg-app2.test.wonga.com</ComponentsHost>
+	</Svc>
+	
+	<Msmq>
+		<ServicesHost>%%//Svc/ServicesHost%%</ServicesHost>
+		<ComponentsHost>%%//Svc/ComponentsHost%%</ComponentsHost>
+	</Msmq>
+	
+	<Db>
+		<Host>plt-stg-db1.test.wonga.com</Host>
+		<HdsHost>plt-stg-db1.test.wonga.com</HdsHost>
+	</Db>
+</Configuration>
