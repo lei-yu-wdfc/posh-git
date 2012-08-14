@@ -18,6 +18,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         {
             if (Config.AUT != AUT.Uk)
                 Assert.That(Headers, Has.Item(Wonga.QA.Framework.UI.ContentMap.Get.ExtensionProcessingPage.HeaderText));
+
+            Do.With.Message("Processing page does not have a title").Timeout(new TimeSpan(0, 0, 5)).Until(() => Content.FindElement(By.CssSelector(UiMap.Get.ExtensionProcessingPage.ProcessingTextContainer)));
             _processingTextContainer = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionProcessingPage.ProcessingTextContainer));
             _staticLink = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionProcessingPage.ProcessingStaticLink));
         }
