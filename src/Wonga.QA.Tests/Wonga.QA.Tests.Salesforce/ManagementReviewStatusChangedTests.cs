@@ -185,18 +185,9 @@ namespace Wonga.QA.Tests.Salesforce
         {
             RewindApplicationDates(application);
             var ldd = _loanDueDateNotifiSagaEntityTab.FindAll(_loanDueDateNotifiSagaEntityTab.ApplicationId == application.Id).Single();
-            if (Drive.Data.Ops.GetServiceConfiguration<bool>("Payments.FeatureSwitches.UseLoanDurationSaga") == false)
-            {
-                Drive.Msmq.Payments.Send(new Framework.Msmq.TimeoutMessage { SagaId = ldd.Id });
-                _loanDueDateNotifiSagaEntityTab.Update(ldd);
-            }
-            else
-            {
-                //We should timeout the LoanDurationSaga...
-                dynamic loanDurationSagaEntities = Drive.Data.OpsSagas.Db.LoanDurationSagaEntity;
-                var loanDurationSaga = loanDurationSagaEntities.FindAllByAccountGuid(AccountGuid: application.AccountId).FirstOrDefault();
-                Drive.Msmq.Payments.Send(new Framework.Msmq.TimeoutMessage() { SagaId = loanDurationSaga.Id });
-            }
+
+            Drive.Msmq.Payments.Send(new Framework.Msmq.TimeoutMessage { SagaId = ldd.Id });
+            _loanDueDateNotifiSagaEntityTab.Update(ldd);
         }
 
         private Application CreateLiveApplication()

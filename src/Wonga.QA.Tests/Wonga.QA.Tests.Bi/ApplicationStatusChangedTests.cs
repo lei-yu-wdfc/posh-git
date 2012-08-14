@@ -2,7 +2,6 @@ using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.Cs;
 using Wonga.QA.Framework.Cs.Requests.Comms.Csapi.Commands;
 using Wonga.QA.Framework.Cs.Requests.Payments.Csapi.Commands;
 using Wonga.QA.Framework.Db.Ops;
@@ -13,8 +12,6 @@ using Wonga.QA.Tests.Core;
 using Wonga.QA.Framework.ThirdParties;
 using System;
 using System.Collections.Generic;
-
-
 
 namespace Wonga.QA.Tests.Bi
 {
@@ -31,8 +28,6 @@ namespace Wonga.QA.Tests.Bi
         private dynamic applicationRepo = Drive.Data.Payments.Db.Applications;
         private dynamic commsSuppressionsRepo = Drive.Data.Comms.Db.Suppressions;
         private dynamic paymentsSuppressionsRepo = Drive.Data.Payments.Db.PaymentCollectionSuppressions;
-        private readonly dynamic _loanDueDateNotifiSagaEntityTab = Drive.Data.OpsSagas.Db.LoanDueDateNotificationSagaEntity;
-        private readonly dynamic _fixedTermLoanAppTab = Drive.Data.Payments.Db.FixedTermLoanApplications;
 
         [SetUp]
         public void SetUp()
@@ -54,7 +49,7 @@ namespace Wonga.QA.Tests.Bi
         public void FundsTransferred_SubmitsApplicactionStatusLive_ToSalesforce()
         {
             // create live application and confirm that salesforce is told that its Live
-            int appInternalId = 0;
+            int appInternalId;
             CreateLiveApplication(out appInternalId);
 
         }
@@ -70,7 +65,7 @@ namespace Wonga.QA.Tests.Bi
             var application=CreateLiveApplication(out appInternalId);
 
             // Make a complaint
-            var cmd = new CsReportComplaintCommand()
+            var cmd = new CsReportComplaintCommand
                                 {
                                     AccountId = application.AccountId,
                                     ApplicationId = application.Id,
@@ -123,13 +118,13 @@ namespace Wonga.QA.Tests.Bi
             Do.Until(() =>
             {
                 var app = sales.GetApplicationById(application.Id);
-                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live;
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Salesforce.ApplicationStatus.Live;
             });
 
             var caseId = Guid.NewGuid();
 
             // Make a complaint
-            var cmd = new CsReportComplaintCommand()
+            var cmd = new CsReportComplaintCommand
             {
                 AccountId = application.AccountId,
                 ApplicationId = application.Id,
@@ -142,10 +137,10 @@ namespace Wonga.QA.Tests.Bi
             Do.Until(() =>
             {
                 var app = sales.GetApplicationById(application.Id);
-                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Complaint;
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Salesforce.ApplicationStatus.Complaint;
             });
 
-            var removeComplaint = new CsRemoveComplaintCommand()
+            var removeComplaint = new CsRemoveComplaintCommand
                                       {
                                           AccountId = application.AccountId,
                                           ApplicationId = application.Id,
@@ -157,7 +152,7 @@ namespace Wonga.QA.Tests.Bi
             Do.Until(() =>
             {
                 var app = sales.GetApplicationById(application.Id);
-                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live;
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Salesforce.ApplicationStatus.Live;
             });
         }
 
@@ -191,13 +186,13 @@ namespace Wonga.QA.Tests.Bi
             Do.Until(() =>
             {
                 var app = sales.GetApplicationById(application.Id);
-                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live;
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Salesforce.ApplicationStatus.Live;
             });
 
             var caseId = Guid.NewGuid();
 
             // Make a complaint
-            var cmd = new CsReportComplaintCommand()
+            var cmd = new CsReportComplaintCommand
             {
                 AccountId = application.AccountId,
                 ApplicationId = application.Id,
@@ -210,7 +205,7 @@ namespace Wonga.QA.Tests.Bi
             Do.Until(() =>
             {
                 var app = sales.GetApplicationById(application.Id);
-                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Complaint;
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Salesforce.ApplicationStatus.Complaint;
             });
 
             application.PutIntoArrears(2);
@@ -219,10 +214,10 @@ namespace Wonga.QA.Tests.Bi
             Do.Until(() =>
             {
                 var app = sales.GetApplicationById(application.Id);
-                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Complaint;
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Salesforce.ApplicationStatus.Complaint;
             });
 
-            var removeComplaint = new CsRemoveComplaintCommand()
+            var removeComplaint = new CsRemoveComplaintCommand
             {
                 AccountId = application.AccountId,
                 ApplicationId = application.Id,
@@ -234,7 +229,7 @@ namespace Wonga.QA.Tests.Bi
             Do.Until(() =>
             {
                 var app = sales.GetApplicationById(application.Id);
-                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.InArrears;
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Salesforce.ApplicationStatus.InArrears;
             });
         }
 
@@ -251,7 +246,7 @@ namespace Wonga.QA.Tests.Bi
 			var application = CreateLiveApplication(out appInternalId);
 
 			// report bankruptcy
-			var cmd = new CsReportBankruptcyCommand()
+			var cmd = new CsReportBankruptcyCommand
 			{
 				AccountId = application.AccountId,
 				ApplicationId = application.Id,
@@ -263,7 +258,7 @@ namespace Wonga.QA.Tests.Bi
 			Do.Until(() =>
 			{
 				var app = sales.GetApplicationById(application.Id);
-				return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Bankrupt;
+				return app.Status_ID__c != null && app.Status_ID__c == (double)Salesforce.ApplicationStatus.Bankrupt;
 			});
 
 
@@ -286,7 +281,7 @@ namespace Wonga.QA.Tests.Bi
             var application = CreateLiveApplication(out appInternalId);
 
             // report hardship
-            var cmd = new CsReportHardshipCommand()
+            var cmd = new CsReportHardshipCommand
             {
                 AccountId = application.AccountId,
                 ApplicationId = application.Id,
@@ -298,7 +293,7 @@ namespace Wonga.QA.Tests.Bi
             Do.Until(() =>
             {
                 var app = sales.GetApplicationById(application.Id);
-                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Hardship;
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Salesforce.ApplicationStatus.Hardship;
             });
 
 
@@ -321,7 +316,7 @@ namespace Wonga.QA.Tests.Bi
             var application = CreateLiveApplication(out appInternalId);
 
             // Make a complaint
-            var cmd = new CsReportManagementReviewCommand()
+            var cmd = new CsReportManagementReviewCommand
             {
                 AccountId = application.AccountId,
                 ApplicationId = application.Id,
@@ -369,13 +364,13 @@ namespace Wonga.QA.Tests.Bi
             Do.Until(() =>
             {
                 var app = sales.GetApplicationById(application.Id);
-                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live;
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Salesforce.ApplicationStatus.Live;
             });
 
             var caseGuid = Guid.NewGuid();
 
             // Make a complaint
-            var cmd = new CsReportManagementReviewCommand()
+            var cmd = new CsReportManagementReviewCommand
             {
                 AccountId = application.AccountId,
                 ApplicationId = application.Id,
@@ -387,10 +382,10 @@ namespace Wonga.QA.Tests.Bi
             Do.Until(() =>
             {
                 var app = sales.GetApplicationById(application.Id);
-                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.ManagementReview;
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Salesforce.ApplicationStatus.ManagementReview;
             });
 
-            var remove = new CsRemoveManagementReviewCommand()
+            var remove = new CsRemoveManagementReviewCommand
                              {
                                  AccountId = application.AccountId,
                                  ApplicationId = application.Id,
@@ -400,7 +395,7 @@ namespace Wonga.QA.Tests.Bi
             Do.Until(() =>
             {
                 var app = sales.GetApplicationById(application.Id);
-                return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live;
+                return app.Status_ID__c != null && app.Status_ID__c == (double)Salesforce.ApplicationStatus.Live;
             });
         }
 
@@ -423,7 +418,7 @@ namespace Wonga.QA.Tests.Bi
                                                                   ApplicationId = application.Id,
                                                                   TransactionId = Guid.NewGuid() });
 
-            bool present = ConfirmStatusValues(application.Id, new string[] { "Accepted", "Terms Agreed", "Live (Not Due)" });
+            bool present = ConfirmStatusValues(application.Id, new[] { "Accepted", "Terms Agreed", "Live (Not Due)" });
             Assert.IsTrue(present);
         }
 
@@ -488,15 +483,6 @@ namespace Wonga.QA.Tests.Bi
 
         }
 
-        private void CheckSupressionTable(Application application, int appInternalId)
-        {
-            // wait until suppression record is created in comms and payments
-            Do.Until(() => paymentsSuppressionsRepo.FindAll(
-                paymentsSuppressionsRepo.ApplicationId == appInternalId && paymentsSuppressionsRepo.HardshipSuppression == 1).Single());
-            Do.Until(() => commsSuppressionsRepo.FindAll(
-                            commsSuppressionsRepo.AccountId == application.AccountId && commsSuppressionsRepo.Hardship == 1).Single());
-        }
-
         private bool ConfirmStatusValues(Guid appId, IEnumerable<string> statuses)
         {
             var appHistory = sales.GetApplicationHistoryById(appId, "Status__c");
@@ -506,31 +492,6 @@ namespace Wonga.QA.Tests.Bi
                           select s;
 
             return matched.Count() == statuses.Count();
-        }
-
-        private void rewindApplicationDates(dynamic application)
-        {
-            int id = ApplicationOperations.GetAppInternalId(application);
-            TimeSpan span = _fixedTermLoanAppTab.FindByApplicationId(id).NextDueDate - DateTime.Today;
-            application.RewindApplicationDates(span);
-        }
-
-        private void MakeDueToday(dynamic application)
-        {
-            rewindApplicationDates(application);
-            var ldd = _loanDueDateNotifiSagaEntityTab.FindAll(_loanDueDateNotifiSagaEntityTab.ApplicationId == application.Id).Single();
-            if (Drive.Data.Ops.GetServiceConfiguration<bool>("Payments.FeatureSwitches.UseLoanDurationSaga") == false)
-            {
-                Drive.Msmq.Payments.Send(new Framework.Msmq.TimeoutMessage { SagaId = ldd.Id });
-                _loanDueDateNotifiSagaEntityTab.Update(ldd);
-            }
-            else
-            {
-                //We should timeout the LoanDurationSaga...
-                dynamic loanDurationSagaEntities = Drive.Data.OpsSagas.Db.LoanDurationSagaEntity;
-                var loanDurationSaga = loanDurationSagaEntities.FindAllByAccountGuid(AccountGuid: application.AccountId).FirstOrDefault();
-                Drive.Msmq.Payments.Send(new Framework.Msmq.TimeoutMessage() { SagaId = loanDurationSaga.Id });
-            }
         }
 
         /// <summary>
@@ -566,7 +527,7 @@ namespace Wonga.QA.Tests.Bi
             {
                 var app = sales.GetApplicationById(application.Id);
                 return app.Status_ID__c != null &&
-                       app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live;
+                       app.Status_ID__c == (double)Salesforce.ApplicationStatus.Live;
             });
             return application;
         }
