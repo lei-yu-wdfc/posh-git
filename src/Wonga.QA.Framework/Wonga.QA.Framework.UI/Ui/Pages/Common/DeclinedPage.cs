@@ -25,8 +25,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
                   Assert.That(Headers, Has.Item(UiMap.Get.DeclinedPage.HeaderText));
                   break;
               case AUT.Uk:
-                  Do.With.Until(() => Headers.GetLength(0) > 0);
-                  Assert.That(Headers, Has.Item(ContentMap.Get.L0DeclinedPage.HeaderText));
+                  if (Content.Text.Contains(UiMap.Get.DeclinedPage.HeaderText) == false)
+                      throw new SystemException("Declined page header is not displayed");
                   break;
               default:
                     break;

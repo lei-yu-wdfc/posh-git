@@ -246,6 +246,7 @@
   </PrepaidCardMenuElement>
 
   <DeclinedPage>
+    <HeaderText>Unfortunately we can’t approve your application</HeaderText>
     <DeclineAdvice>.wonga-decision-box</DeclineAdvice>
   </DeclinedPage>
 
