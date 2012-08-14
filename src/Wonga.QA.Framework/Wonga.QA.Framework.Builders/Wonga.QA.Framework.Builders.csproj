@@ -42,14 +42,18 @@
   <ItemGroup>
     <Compile Include="AccountBuilder.cs" />
     <Compile Include="ApplicationBuilder.cs" />
+    <Compile Include="TopUpBuilder.cs" />
     <Compile Include="Consumer\Ca\ConsumerAccountBuilder.cs" />
     <Compile Include="Consumer\Ca\ConsumerApplicationBuilder.cs" />
     <Compile Include="Consumer\ConsumerAccountBuilderBase.cs" />
     <Compile Include="Consumer\ConsumerAccountDataBase.cs" />
     <Compile Include="Consumer\ConsumerApplicationBuilderBase.cs" />
     <Compile Include="Consumer\ConsumerApplicationDataBase.cs" />
+    <Compile Include="Consumer\ConsumerTopUpDataBase.cs" />
+    <Compile Include="Consumer\ConsumerTopUpBuilderBase.cs" />
     <Compile Include="Consumer\Uk\ConsumerAccountBuilder.cs" />
     <Compile Include="Consumer\Uk\ConsumerApplicationBuilder.cs" />
+    <Compile Include="Consumer\Uk\ConsumerTopUpBuilder.cs" />
     <Compile Include="Consumer\Za\ConsumerAccountBuilder.cs" />
     <Compile Include="Consumer\Za\ConsumerApplicationBuilder.cs" />
     <Compile Include="PayLater\PayLaterAccountBuilderBase.cs" />
