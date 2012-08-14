@@ -2,25 +2,28 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Data.Enums.Risk;
 
 namespace Wonga.QA.Framework.Builders.Consumer
 {
     public class ConsumerTopUpDataBase
     {
-        public int amount;
-        public Guid customerId;
-        public Guid applicationId;
-        public bool isEnabled;
-        public double amountMax;
-        public double totalToRepay;
-        public double transmissionFee;
-        public double interestRateMonthly;
-        public double interestRateAnnual;
-        public double interestAndFeesAmount;
-        public int interestRateAPR;
-        public int daysTillRepaymentDate;
-        public string Currency;
-        public DateTime updateOn;
-        public Guid FixedTermLoanTopupId;
+        public Int32 amount;
+        public String customerId;
+        public String applicationId;
+        public Boolean isEnabled;
+        public Decimal amountMax;
+        public Decimal totalToRepay;
+        public Decimal transmissionFee;
+        public Decimal interestRateMonthly;
+        public Decimal interestRateAnnual;
+        public Decimal interestAndFeesAmount;
+        public Int32 interestRateAPR;
+        public Int32 daysTillRepaymentDate;
+        public String Currency;
+        public Date updateOn;
+        public String FixedTermLoanTopupId;
     }
 }
