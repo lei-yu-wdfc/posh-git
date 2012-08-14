@@ -29,9 +29,10 @@ namespace Wonga.QA.Framework.Builders.Consumer
             return CreateTopUp((double)TopUpData.interestAndFeesAmount, (double)TopUpData.totalToRepay, new Guid(TopUpData.FixedTermLoanTopupId), new Guid(TopUpData.customerId), new Guid(TopUpData.applicationId));
         }
 
-        public void WithStatusInRequest()
+        public ConsumerTopUpBuilderBase WithStatusInRequest()
         {
             TopUpData.HasStatusAccepted = false;
+            return this;
         }
 
         protected abstract double GetInterest(int amount);

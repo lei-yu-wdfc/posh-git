@@ -12,7 +12,7 @@ namespace Wonga.QA.Framework.Builders
     {
         public static class Consumer
         {
-            public static ConsumerTopUpBaseBuilder New(Guid customerId, Guid applicationId, int amount)
+            public static ConsumerTopUpBuilderBase New(Guid customerId, Guid applicationId, int amount)
             {
                 switch (Config.AUT)
                 {
