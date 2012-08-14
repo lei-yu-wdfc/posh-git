@@ -173,9 +173,9 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
             var loginPage = Client.Login();
             Customer customer = Init();
             Application custApp = customer.GetApplication();
-          
+
             Boolean isUserHasArrears = custApp.IsInArrears();
-            loginPage.LoginAs(customer.Email);
+            // loginPage.LoginAs(customer.Email);
 
             //Application custApp = customer.GetApplication();
             //custApp.PutIntoArrears(2);
