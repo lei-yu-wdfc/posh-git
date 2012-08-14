@@ -92,11 +92,11 @@ namespace Wonga.QA.Tests.Salesforce
         {
             var arrangementDetails = new[]
 										{
-											new ArrangementDetail
-												{Amount = 49.01m, Currency = CurrencyCodeIso4217Enum.GBP, DueDate = DateTime.Today},
-											new ArrangementDetail
+											new RepaymentArrangementDetailCsapi
+												{Amount = 49.00m, Currency = CurrencyCodeIso4217Enum.GBP, DueDate = DateTime.Today.AddDays(2)},
+											new RepaymentArrangementDetailCsapi
 												{
-													Amount = 51.01m,
+													Amount = 51.00m,
 													Currency = CurrencyCodeIso4217Enum.GBP,
 													DueDate = DateTime.Today.AddDays(7)
 												}
@@ -136,7 +136,7 @@ namespace Wonga.QA.Tests.Salesforce
                 PaymentsSuppressionsRepo.ApplicationId == appInternalId && PaymentsSuppressionsRepo.RepaymentArrangementSuppression == value).Single());
         }
 
-        public class ArrangementDetail
+        public class RepaymentArrangementDetailCsapi
         {
             public decimal Amount { get; set; }
             public CurrencyCodeIso4217Enum Currency { get; set; }
