@@ -336,16 +336,21 @@ namespace Wonga.QA.Framework.Old
                                 Reject();
             }
 
-			var ftl = _fixedTermLoanSagaEntityTab.FindAll(_fixedTermLoanSagaEntityTab.ApplicationGuid == Id).Single();
-			Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = ftl.Id });
-			_fixedTermLoanSagaEntityTab.Update(ftl);
+			if(Config.AUT != AUT.Uk)
+			{
+				var ftl = _fixedTermLoanSagaEntityTab.FindAll(_fixedTermLoanSagaEntityTab.ApplicationGuid == Id).Single();
+				Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = ftl.Id });
+				_fixedTermLoanSagaEntityTab.Update(ftl);
+			}
 
-			if (Config.AUT != AUT.Ca || (Config.AUT == AUT.Ca && !Boolean.Parse(caScotiaMocksEnabled.Value)))
+			if(Config.AUT == AUT.Uk)
+			{
+				Drive.Msmq.Payments.Send(new AddArrearsMessage { ApplicationId = application.ApplicationId, PaymentTransactionType = PaymentTransactionEnum.DefaultCharge });
+			}
+			else if (Config.AUT != AUT.Ca || (Config.AUT == AUT.Ca && !Boolean.Parse(caScotiaMocksEnabled.Value)))
 			{
 				var sp = Do.Until(() => _scheduledPaymentSagaEntityTab.FindAll(_scheduledPaymentSagaEntityTab.ApplicationGuid == Id).Single());
-				Drive.Msmq.Payments.Send(Config.AUT == AUT.Uk ? new TakePaymentFailedMessage { SagaId = sp.Id, CreatedOn = DateTime.UtcNow, ValueDate = DateTime.UtcNow, PaymentCardId = this.GetCustomer().GetPaymentCard() } :
-																new TakePaymentFailedMessage { SagaId = sp.Id, CreatedOn = DateTime.UtcNow, ValueDate = DateTime.UtcNow });
-
+				Drive.Msmq.Payments.Send(new TakePaymentFailedMessage { SagaId = sp.Id, CreatedOn = DateTime.UtcNow, ValueDate = DateTime.UtcNow });
 				Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = sp.Id });
 			}
 
