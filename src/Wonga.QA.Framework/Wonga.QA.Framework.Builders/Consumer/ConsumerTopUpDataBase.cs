@@ -25,5 +25,13 @@ namespace Wonga.QA.Framework.Builders.Consumer
         public String Currency;
         public Date updateOn;
         public String FixedTermLoanTopupId;
+        public Boolean HasStatusAccepted;
+
+        public ConsumerTopUpDataBase()
+        {
+            HasStatusAccepted = true;
+            amount = 100;
+            isEnabled = true;
+        }
     }
 }

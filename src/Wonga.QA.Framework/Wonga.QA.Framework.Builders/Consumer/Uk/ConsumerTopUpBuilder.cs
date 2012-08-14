@@ -41,7 +41,7 @@ namespace Wonga.QA.Framework.Builders.Consumer.Uk
             return new TopUp(interest, totalToRepay, topUpId, customerId, applicationId);
         }
 
-        public override void RequestTopUp()
+        protected override void RequestTopUp()
         {
             var response = Drive.Api.Queries.Post(CreateFixedTermLoanTopupCommand.New(r =>
             {
@@ -51,7 +51,7 @@ namespace Wonga.QA.Framework.Builders.Consumer.Uk
             TopUpData.FixedTermLoanTopupId = response.Values["FixedTermLoanTopupId"].Single();
         }
 
-        public override void AcceptTopUp()
+        protected override void AcceptTopUp()
         {
             var response = Drive.Api.Queries.Post(SignFixedTermLoanTopupCommand.New(r =>
                 {
