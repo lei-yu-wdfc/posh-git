@@ -11,7 +11,7 @@ using Wonga.QA.Framework.Api;
 namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
 {
     [Parallelizable(TestScope.All), AUT(AUT.Uk)]
-    public class L0JourneyTests : UiTest
+    public class UkL0JourneyTests : UiTest
     {
 
         // Check L0 loan is accepted and Loan Agreement is displayed

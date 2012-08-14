@@ -61,7 +61,7 @@
     <Compile Include="Region\Uk\L0Ln\UkLnJourneyTests.cs" />
     <Compile Include="Region\Uk\LegalDocumentsTests.cs" />
     <Compile Include="Region\Uk\MySummaryScenariosTests.cs" />
-    <Compile Include="Region\Uk\L0Ln\L0LnJourneyCoreTests.cs" />
+    <Compile Include="Region\Uk\L0Ln\UkL0LnJourneyCoreTests.cs" />
     <Compile Include="Region\Uk\PromoCodeTests.cs" />
     <Compile Include="Region\Uk\TimeoutTest.cs" />
     <Compile Include="Region\Uk\ExtensionAgreementTests.cs" />
@@ -102,7 +102,7 @@
     <Compile Include="Region\Uk\TopUpTests.cs" />
     <Compile Include="L0DeclinedLoan.cs" />
     <Compile Include="UiTest.cs" />
-    <Compile Include="Region\Uk\L0Ln\L0JourneyTests.cs" />
+    <Compile Include="Region\Uk\L0Ln\UkL0JourneyTests.cs" />
     <Compile Include="Region\Wb\Journey\L0LoanWb.cs" />
     <Compile Include="Region\Za\Journey\L0LoanZa.cs" />
   </ItemGroup>
