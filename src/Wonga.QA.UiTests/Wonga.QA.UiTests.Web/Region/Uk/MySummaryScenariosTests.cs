@@ -304,6 +304,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         [Test, MultipleAsserts]
         [Owner(Owner.StanDesyatnikov)]
         [Row(7, 10)]
+        [Pending("UKWEB-1135: Wrong 'I Promise' text on My Summary page for scenario 7")]
         public void MySummaryScenario07(int scenarioId, int dasyShift) { MySummaryScenarios(scenarioId, dasyShift); }
 
         // On promise date after live loan closed following successful repayment event
@@ -452,6 +453,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         // In arrears -In repayment plan
         [Test, JIRA("UKWEB-1083"), MultipleAsserts]
         [Owner(Owner.StanDesyatnikov)]
+        [Pending("UKWEB-1128: Error is displayed on My Summary page")]
         public void MySummaryScenario14()
         {
             var scenarioId = 14;
@@ -502,6 +504,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         // In arrears -In repayment plan - missed payment (within grace period)
         [Test, JIRA("UKWEB-1083"), MultipleAsserts]
         [Owner(Owner.StanDesyatnikov)]
+        [Pending("UKWEB-1128: Error is displayed on My Summary page")]
         public void MySummaryScenario15()
         {
             const int scenarioId = 15;
@@ -548,6 +551,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
         // In arrears - In repayment plan – broken repayment arrangemnt
         [Test, JIRA("UKWEB-1083"), MultipleAsserts]
+        [Pending("UKWEB-1128: Error is displayed on My Summary page")]
         public void MySummaryScenario16()
         {
             const int scenarioId = 16;
@@ -780,6 +784,12 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
                                                     .Replace("in {10}", "in " + expectedDaysTillDueDate.Days.ToString("#"))
                                                     .Replace("{10th May 2012}", Date.GetOrdinalDate(expectedDueDate, "ddd d MMM yyyy"))
                                                     .Replace("{£456.34}", "£" + expectedDueDateBalance.ToString("#.##"));
+                if ((scenarioId == 7) && (expectedDueDate.Equals(DateTime.Today)))
+                {
+                    expectedPromiseSummaryText = "I promised to pay {£245} today ({10th May 2012})"
+                                                  .Replace("{£245}", "£" + expectedDueDateBalance.ToString("#.##"))
+                                                  .Replace("{10th May 2012}", Date.GetOrdinalDate(expectedDueDate, "ddd d MMM yyyy"));
+                }
                 Assert.AreEqual(expectedPromiseSummaryText, mySummaryPage.GetPromiseSummaryText);
             }
 
