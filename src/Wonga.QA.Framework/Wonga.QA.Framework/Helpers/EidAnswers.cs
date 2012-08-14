@@ -2,21 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Wonga.QA.Framework.Helpers
 {
     public static class EidAnswers
     {
-        static readonly Dictionary<String, String> eidAnswers = new Dictionary<String, String>
+		static readonly Dictionary<Regex, String> EidAnswersRegexPatterns = new Dictionary<Regex, String>
         {
-            {"Your credit file indicates you may have an auto loan/lease which was opened approximately January 2003. Please choose the credit provider for this account from the following options.", "ALLY CREDIT CANADA LIMITED"},
-            {"Your credit file indicates you may have a gas card or account which was opened approximately September 2004. Please choose the credit provider for this account from the following options.", "SHELL OIL"}
+            {new Regex("^Your credit file indicates you may have an auto loan/lease which was opened approximately [a-zA-Z 0-9]+. Please choose the credit provider for this account from the following options.$"), "ALLY CREDIT CANADA LIMITED"},
+            {new Regex("^Your credit file indicates you may have a gas card or account which was opened approximately [a-zA-Z 0-9]+. Please choose the credit provider for this account from the following options.$"), "SHELL OIL"}
         };
 
         public static String GetEidAnswer(String question)
         {
-            String result;
-            return eidAnswers.TryGetValue(question, out result) ? result : null;
+			foreach (KeyValuePair<Regex, string> patternValuePair in EidAnswersRegexPatterns)
+        	{
+        		if(patternValuePair.Key.IsMatch(question))
+        		{
+        			return patternValuePair.Value;
+        		}
+        	}
+
+			return null;
         }
     }
 }
