@@ -1,0 +1,57 @@
+<Configuration>
+	<Include>base</Include>
+	<SUT>Dev</SUT>
+	<AUT>Uk</AUT>
+	<Region>Uk</Region>
+
+	<Db>
+		<Host>192.168.70.120</Host>
+		<HdsHost>.</HdsHost>
+		
+		<Ops>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=Ops</Ops>
+		<OpsLogs>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=OpsLogs</OpsLogs>
+		<OpsSagas>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=OpsSagas</OpsSagas>
+		<Comms>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=Comms</Comms>
+		<Payments>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=Payments</Payments>
+		<Risk>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=Risk</Risk>
+		<Marketing>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=Marketing</Marketing>
+		<Accounting>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=Accounting</Accounting>
+		<Bi>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=Bi</Bi>
+		<BiCustomerManagement>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=BiCustomerManagement</BiCustomerManagement>
+		
+		<BankGateway>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=BankGateway</BankGateway>
+		<BlackList>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=BlackList</BlackList>
+		<CallReport>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=CallReport</CallReport>
+		<CallValidate>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=CallValidate</CallValidate>
+		<CardPayment>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=CardPayment</CardPayment>
+		<ColdStorage>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=ColdStorage</ColdStorage>
+		<ContactManagement>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=ContactManagement</ContactManagement>
+		<Experian>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=Experian</Experian>
+		<ExperianBulk>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=ExperianBulk</ExperianBulk>
+		<FileStorage>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=FileStorage</FileStorage>		
+		<IpLookup>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=IpLookup</IpLookup>		
+		<Hpi>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=Hpi</Hpi>
+		<Salesforce>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=Salesforce</Salesforce>
+		<Sms>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=Sms</Sms>
+		<TimeoutManager>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=TimeoutManager</TimeoutManager>
+		<QaData>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=QaData</QaData>
+		<Scheduler>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=Scheduler</Scheduler>
+		<Timezone>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=Timezone</Timezone>
+		<TransUnion>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=TransUnion</TransUnion>
+		<Uru>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=Uru</Uru>
+		<WongaPay>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=WongaPay</WongaPay>
+		<WongaWholeStaging>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=WongaWholeStagingV2</WongaWholeStaging>
+		<GreyfaceShell>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=GreyfaceShell</GreyfaceShell>
+		<Pps>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=Pps</Pps>
+		<PrepaidCard>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=PrepaidCard</PrepaidCard>
+		<MigrationStaging>Data Source=%%//Db/Host%%;User Id=test;Password=test;Initial Catalog=MigrationStaging</MigrationStaging>
+		
+		<Cdc>Data Source=%%//Db/HdsHost%%;User Id=test;Password=test;Initial Catalog=%%//Region%%_CDCStaging</Cdc>
+		<Hds>Data Source=%%//Db/HdsHost%%;User Id=test;Password=test;Initial Catalog=%%//Region%%_WongaHDS</Hds>
+		<DiControl>Data Source=%%//Db/HdsHost%%;User Id=test;Password=test;Initial Catalog=%%//Region%%_DIControl</DiControl>
+		<DiStaging>Data Source=%%//Db/HdsHost%%;User Id=test;Password=test;Initial Catalog=%%//Region%%_DIStaging</DiStaging>
+		<DiStagingWonga>Data Source=%%//Db/HdsHost%%;User Id=test;Password=test;Initial Catalog=%%//Region%%_DIStaging_Wonga</DiStagingWonga>
+		<Warehouse>Data Source=%%//Db/HdsHost%%;User Id=test;Password=test;Initial Catalog=%%//Region%%_DIWarehouse</Warehouse>
+	</Db>
+	
+</Configuration>

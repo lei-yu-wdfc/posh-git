@@ -17,12 +17,14 @@ ECHO   4. Run Wonga.QA.Tests
 ECHO   5. Run Meta and Core tests
 ECHO   6. Run Wonga.QA.Generators
 ECHO   7. Service test configuration
+ECHO   8. Change DB location
 ECHO   0. Exit
 ECHO.
 
-CHOICE /C 12345670 /M "Select an option: " /N
+CHOICE /C 123456780 /M "Select an option: " /N
 
-IF ERRORLEVEL 8 GOTO EOF
+IF ERRORLEVEL 9 GOTO EOF
+IF ERRORLEVEL 8 GOTO 8
 IF ERRORLEVEL 7 GOTO 7
 IF ERRORLEVEL 6 GOTO 6
 IF ERRORLEVEL 5 GOTO 5
@@ -91,6 +93,21 @@ IF ERRORLEVEL 1 GOTO 71
 
 GOTO EOF
 
+:8
+ 
+ECHO.
+ECHO   1. Change DB location
+ECHO   2. Restore orginal configuration
+ECHO   0. Menu
+ECHO.
+
+CHOICE /C 120 /M "But if you already know, how can I make a choice?" /N
+IF ERRORLEVEL 3 GOTO MENU
+IF ERRORLEVEL 2 GOTO 82
+IF ERRORLEVEL 1 GOTO 81
+
+GOTO EOF
+
 :71 
 	SET /P ServiceTest=Enter your server name (e.g. risk):
 	REM SETX QAFTestTarget %TestingTarget%	
@@ -101,6 +118,16 @@ GOTO EOF
 	SET /P ServiceTest=Enter your server name to restore(e.g.risk):
 	REM SETX QAFTestTarget %TestingTarget%
 	powershell -command "& {. %Powershell%\EditEndPointConfig.ps1; configservice_undo %ServiceTest% }"
+ GOTO MENU
+ 
+ 
+:81 
+	SET /P DbLocation=Enter your DB server location (e.g. 192.168.70.120):
+	powershell -command "& {. %Powershell%\EditEndPointConfig.ps1; StartDbChange %DbLocation% }"
+ GOTO MENU
+ 
+:82
+	powershell -command "& {. %Powershell%\EditEndPointConfig.ps1; RestoreChange}"
  GOTO MENU
 
 :GENERATE
