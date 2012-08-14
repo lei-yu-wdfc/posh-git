@@ -108,7 +108,7 @@ namespace Wonga.QA.Framework.Core
             Api = new ApiConfig(GetSettingFromXml("//Api/Url"));
             CommonApi = new CommonApiConfig(GetSettingFromXml("//CommonApi/Url"));
             Cs = new CsConfig(GetSettingFromXml("//CSApi/Url"));
-			Ucg = new UcgConfig(GetSettingFromXml("//UCG/Url"));
+			Ucg = new UcgConfig(GetSettingFromXml("//Ucg/Url"));
             Admin = new AdminConfig { Home = new Uri(GetSettingFromXml("//Admin/HomePage")) };
             PrepaidAdminUI = new PrepaidAdminConfig
             {

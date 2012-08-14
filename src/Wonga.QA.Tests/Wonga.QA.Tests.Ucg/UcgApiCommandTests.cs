@@ -8,7 +8,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.Ucg
 {
 	[TestFixture, Parallelizable(TestScope.All), AUT(AUT.Uk, AUT.Ca, AUT.Za)]
-	public class ApiCommandTests
+	public class UcgApiCommandTests
 	{
 		[Test]
 		public void CreateAccountCommandTest()

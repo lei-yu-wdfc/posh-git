@@ -9,6 +9,10 @@
 		<Url>%%//SUT%%.api.%%//AUT%%.wonga.com</Url>
 	</Api>
 	
+	<Ucg>
+		<Url>%%//SUT%%.ucg.%%//AUT%%.wonga.com</Url>
+	</Ucg>
+	
 	<CommonApi>
 		<Url>%%//SUT%%.IVRWebApi.%%//AUT%%.wonga.com</Url>
 	</CommonApi>

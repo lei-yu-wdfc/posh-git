@@ -48,9 +48,9 @@
 		<Url>localhost/CSAPI</Url>
 	</CSApi>
 	
-	<UCG>
+	<Ucg>
 		<Url>localhost/UCG</Url>
-	</UCG>
+	</Ucg>
 	
 	<Salesforce>
 		<HomePage>http://test.salesforce.com</HomePage>

@@ -14,7 +14,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.Ucg
 {
 	[TestFixture, Parallelizable(TestScope.All), AUT(AUT.Ca)]
-	public class ApiQueryTests
+	public class UcgApiQueryTests
 	{
 		[Test]
 		public void GetAccountQueryTest()
