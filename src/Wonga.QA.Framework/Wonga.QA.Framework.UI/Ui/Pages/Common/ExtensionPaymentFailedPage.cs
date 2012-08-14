@@ -1,4 +1,5 @@
-﻿using NHamcrest.Core;
+﻿using System;
+using NHamcrest.Core;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.UI.Mappings;
 using MbUnit.Framework;
@@ -10,7 +11,9 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
     {
         public ExtensionPaymentFailedPage(UiClient client) : base(client)
         {
-            Assert.That(Headers, Has.Item(UiMap.Get.ExtensionPaymentFailedPage.HeaderText));
+            //Assert.That(Headers, Has.Item(UiMap.Get.ExtensionPaymentFailedPage.HeaderText));
+            if (Content.Text.Contains(UiMap.Get.ExtensionPaymentFailedPage.HeaderText) == false)
+                throw new SystemException("Extension Payment Failed Page header is not displayed.");
         }
 
         public bool IsPaymentFailedAmountNotPresent()

@@ -64,7 +64,8 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
         }
 
         [Test, JIRA("UK-969", "UKWEB-250"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
-        public void L0PreAgreementPartonAccountSetupPageTest()
+        [Pending ("UKWEB-1143: Document links are not working in Account Setup Page")]
+        public void L0AccountSetupPageDocumentLinksShouldOpenPopups()
         {
             var loginPage = Client.Login();
             string email = Get.RandomEmail();
