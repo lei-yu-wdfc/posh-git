@@ -34,7 +34,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             requestPage.SetExtendDays(extensionDays.ToString("#"));
 
             // Set expected values
-            var expectedRepaymentDate = Convert.ToDateTime(requestPage.RepaymentDate.Replace("st", "").Replace("nd", "").Replace("rd","").Replace("th", "")).ToString("dd/MM/yyyy");
+            var expectedRepaymentDate = DateTime.Today.AddDays(loanTerm).AddDays(extensionDays).ToString("dd/MM/yyyy");
             var expectedExtendedLoanTerm = application.LoanTerm + extensionDays;
             var expectedTotalToRepay = requestPage.TotalToRepay;
             var expectedLoanAmount = application.LoanAmount;
