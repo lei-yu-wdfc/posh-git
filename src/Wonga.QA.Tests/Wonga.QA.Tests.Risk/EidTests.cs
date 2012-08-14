@@ -63,7 +63,7 @@ namespace Wonga.QA.Tests.Risk
         public void Eid_TwoCorrectAnswers_Accepted()
         {
             var eidSessionInteraction = new Dictionary<int, List<bool>>
-                                            {{SessionOne, new List<bool>(new bool[] {true, true})}};
+                                            {{SessionOne, new List<bool>{true, true}}};
 
             ApplicationBuilder applicationBuilder =
                 ApplicationBuilder.New(_customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).
@@ -77,8 +77,8 @@ namespace Wonga.QA.Tests.Risk
         {
             var eidSessionInteraction = new Dictionary<int, List<bool>>
                                             {
-                                                {SessionOne, new List<bool>(new bool[] {true, false})},
-                                                {SessionTwo, new List<bool>(new bool[] {true, true})}
+                                                {SessionOne, new List<bool>{true, false}},
+                                                {SessionTwo, new List<bool>{true, true}}
                                             };
 
             ApplicationBuilder applicationBuilder =
@@ -92,9 +92,9 @@ namespace Wonga.QA.Tests.Risk
         {
             var eidSessionInteraction = new Dictionary<int, List<bool>>
                                             {
-                                                {SessionOne, new List<bool>(new bool[] {true, false})},
-                                                {SessionTwo, new List<bool>(new bool[] {true, false})},
-                                                {SessionThree, new List<bool>(new bool[] {true, true})}
+                                                {SessionOne, new List<bool>{true, false}},
+                                                {SessionTwo, new List<bool>{true, false}},
+                                                {SessionThree, new List<bool>{true, true}}
                                             };
 
             ApplicationBuilder applicationBuilder =
@@ -108,9 +108,9 @@ namespace Wonga.QA.Tests.Risk
         {
             var eidSessionInteraction = new Dictionary<int, List<bool>>
                                             {
-                                                {SessionOne, new List<bool>(new bool[] {true, false})},
-                                                {SessionTwo, new List<bool>(new bool[] {true, false})},
-                                                {SessionThree, new List<bool>(new bool[] {true, false})}
+                                                {SessionOne, new List<bool>{true, false}},
+                                                {SessionTwo, new List<bool>{true, false}},
+                                                {SessionThree, new List<bool>{true, false}}
                                             };
 
             ApplicationBuilder applicationBuilder =
@@ -124,9 +124,9 @@ namespace Wonga.QA.Tests.Risk
         {
             var eidSessionInteraction = new Dictionary<int, List<bool>>
                                             {
-                                                {SessionOne, new List<bool>(new bool[] {true, false})},
-                                                {SessionTwo, new List<bool>(new bool[] {true, false})},
-                                                {SessionThree, new List<bool>(new bool[] {false, false})}
+                                                {SessionOne, new List<bool>{true, false}},
+                                                {SessionTwo, new List<bool>{true, false}},
+                                                {SessionThree, new List<bool>{false, false}}
                                             };
 
             ApplicationBuilder applicationBuilder =
@@ -140,9 +140,9 @@ namespace Wonga.QA.Tests.Risk
         {
             var eidSessionInteraction = new Dictionary<int, List<bool>>
                                             {
-                                                {SessionOne, new List<bool>(new bool[] {true, false})},
-                                                {SessionTwo, new List<bool>(new bool[] {false, false})},
-                                                {SessionThree, new List<bool>(new bool[] {true, true})}
+                                                {SessionOne, new List<bool>{true, false}},
+                                                {SessionTwo, new List<bool>{false, false}},
+                                                {SessionThree, new List<bool>{true, true}}
                                             };
 
             ApplicationBuilder applicationBuilder =
@@ -156,9 +156,9 @@ namespace Wonga.QA.Tests.Risk
         {
             var eidSessionInteraction = new Dictionary<int, List<bool>>
                                             {
-                                                {SessionOne, new List<bool>(new bool[] {true, false})},
-                                                {SessionTwo, new List<bool>(new bool[] {false, false})},
-                                                {SessionThree, new List<bool>(new bool[] {true, false})}
+                                                {SessionOne, new List<bool>{true, false}},
+                                                {SessionTwo, new List<bool>{false, false}},
+                                                {SessionThree, new List<bool>{true, false}}
                                             };
 
             ApplicationBuilder applicationBuilder =
@@ -172,9 +172,9 @@ namespace Wonga.QA.Tests.Risk
         {
             var eidSessionInteraction = new Dictionary<int, List<bool>>
                                             {
-                                                {SessionOne, new List<bool>(new bool[] {true, false})},
-                                                {SessionTwo, new List<bool>(new bool[] {false, false})},
-                                                {SessionThree, new List<bool>(new bool[] {false, false})}
+                                                {SessionOne, new List<bool>{true, false}},
+                                                {SessionTwo, new List<bool>{false, false}},
+                                                {SessionThree, new List<bool>{false, false}}
                                             };
 
             ApplicationBuilder applicationBuilder =
@@ -188,8 +188,8 @@ namespace Wonga.QA.Tests.Risk
         {
             var eidSessionInteraction = new Dictionary<int, List<bool>>
                                             {
-                                                {SessionOne, new List<bool>(new bool[] {false, false})},
-                                                {SessionTwo, new List<bool>(new bool[] {true, true, true})}
+                                                {SessionOne, new List<bool>{false, false}},
+                                                {SessionTwo, new List<bool>{true, true, true}}
                                             };
 
             ApplicationBuilder applicationBuilder =
@@ -203,8 +203,8 @@ namespace Wonga.QA.Tests.Risk
         {
             var eidSessionInteraction = new Dictionary<int, List<bool>>
                                             {
-                                                {SessionOne, new List<bool>(new bool[] {false, false})},
-                                                {SessionTwo, new List<bool>(new bool[] {true, true, false})}
+                                                {SessionOne, new List<bool>{false, false}},
+                                                {SessionTwo, new List<bool>{true, true, false}}
                                             };
 
             ApplicationBuilder applicationBuilder =
@@ -218,8 +218,8 @@ namespace Wonga.QA.Tests.Risk
         {
             var eidSessionInteraction = new Dictionary<int, List<bool>>
                                             {
-                                                {SessionOne, new List<bool>(new bool[] {false, false})},
-                                                {SessionTwo, new List<bool>(new bool[] {true, false, false})}
+                                                {SessionOne, new List<bool>{false, false}},
+                                                {SessionTwo, new List<bool>{true, false, false}}
                                             };
 
             ApplicationBuilder applicationBuilder =
@@ -233,8 +233,8 @@ namespace Wonga.QA.Tests.Risk
         {
             var eidSessionInteraction = new Dictionary<int, List<bool>>
                                             {
-                                                {SessionOne, new List<bool>(new bool[] {false, false})},
-                                                {SessionTwo, new List<bool>(new bool[] {false, false, false})}
+                                                {SessionOne, new List<bool>{false, false}},
+                                                {SessionTwo, new List<bool>{false, false, false}}
                                             };
 
             ApplicationBuilder applicationBuilder =
