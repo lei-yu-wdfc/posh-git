@@ -13,6 +13,7 @@ using Wonga.QA.Framework.UI.UiElements.Pages.FinancialAssessment;
 using Wonga.QA.Framework.UI.Ui.Enums;
 using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Tests.Core;
+using Wonga.QA.Framework.Old;
 
 namespace Wonga.QA.Tests.Ui.FinancialAssessment
 {
@@ -149,6 +150,15 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
         public void Test()
         {
             FARepaymentPlanPage faRepaymentPlanPage = RepaymentPlanPageTeleport();
+            var serviceConfigurations = Drive.Data.Ops.Db.ServiceConfigurations;
+            var period1Interval = serviceConfigurations.FindByKey("Payments.RepaymentArrangementPeriod1Interval").Value.ToString();
+            var period1MaxMonths = serviceConfigurations.FindByKey("Payments.RepaymentArrangmentPeriod1MaxMonths").Value.ToString();
+            var period2Interval = serviceConfigurations.FindByKey("Payments.RepaymentArrangementPeriod2Interval").Value.ToString();
+            var period2MaxMonths = serviceConfigurations.FindByKey("Payments.RepaymentArrangmentPeriod2MaxMonths").Value.ToString();
+            var minStartDays = serviceConfigurations.FindByKey("Payments.RepaymentArrangementFirstRepaymentMinDays").Value.ToString();
+            var maxStartDays = serviceConfigurations.FindByKey("Payments.RepaymentArrangementFirstRepaymentMaxDays").Value.ToString();
+
+
         }
         // CheckNextButton
         //CheckSubmitButton
