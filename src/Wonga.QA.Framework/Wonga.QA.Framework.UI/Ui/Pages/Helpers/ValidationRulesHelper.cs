@@ -12,15 +12,20 @@ namespace Wonga.QA.Framework.UI.Ui.Pages.Helpers
         public delegate void Callback(String value);
         public delegate String CustomCallback();
 
-        public static void ValidateForString(List<Int32> list, Callback callback, Dictionary<Int32, Delegate> customCallBacks)
+        public static void ValidateForString(List<Int32> list, Callback callback, List<KeyValuePair<Int32, Delegate>> customCallBacks)
         {
             foreach (Int32 item in list)
             {
                 String value = null;
-                if (customCallBacks.Count() != 0 && customCallBacks[item] != null)
+                if (customCallBacks.Count() != 0 && customCallBacks.Where(z => z.Key == item).Select(p => new { Key = p.Key, Value = p.Value }).FirstOrDefault() != null)
                 {
-                    CustomCallback customFunction = new CustomCallback((CustomCallback)customCallBacks[item]);
-                    value = customFunction();
+                    foreach (KeyValuePair<Int32, Delegate> customCallBack in customCallBacks.Where(z => z.Key == item))
+                    {
+                        CustomCallback customFunction = new CustomCallback((CustomCallback)customCallBack.Value);
+                        value = customFunction();
+                        CallBack(callback, value);
+                    }
+                    break;
                 }
                 else
                     switch ((FieldTypeString)item)
@@ -41,9 +46,14 @@ namespace Wonga.QA.Framework.UI.Ui.Pages.Helpers
                             break;
                     }
 
-                Callback function = new Callback(callback);
-                function(value);
+                CallBack(callback, value);
             }
+        }
+
+        private static void CallBack(Callback callback, String value)
+        {
+            Callback function = new Callback(callback);
+            function(value);
         }
 
         private static String GetStringLetters()

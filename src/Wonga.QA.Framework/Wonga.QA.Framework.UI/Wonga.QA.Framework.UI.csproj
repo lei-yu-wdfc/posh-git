@@ -159,6 +159,7 @@
     <Compile Include="Ui\Enums\FieldType.cs" />
     <Compile Include="Ui\Enums\FieldTypeDate.cs" />
     <Compile Include="Ui\Enums\FieldTypeList.cs" />
+    <Compile Include="Ui\Enums\FieldTypeSelect.cs" />
     <Compile Include="Ui\Enums\FieldTypeString.cs" />
     <Compile Include="Ui\Pages\Common\BusinessSummaryPage.cs" />
     <Compile Include="Ui\Pages\Common\DebitOrderPage.cs" />
@@ -323,7 +324,7 @@
     <Compile Include="Ui\Pages\FinancialAssessment\FAExpenditurePage.cs" />
     <Compile Include="Ui\Pages\FinancialAssessment\FAIncomePage.cs" />
     <Compile Include="Ui\Pages\FinancialAssessment\FALoginPage.cs" />
-    <Compile Include="Ui\Pages\FinancialAssessment\FARepaymentPlan.cs" />
+    <Compile Include="Ui\Pages\FinancialAssessment\FARepaymentPlanPage.cs" />
     <Compile Include="Ui\Pages\FinancialAssessment\FinancialAssessmentPage.cs" />
     <Compile Include="Ui\Pages\Helpers\DataValidation.cs" />
     <Compile Include="Ui\Pages\Helpers\PropertiesHelper.cs" />

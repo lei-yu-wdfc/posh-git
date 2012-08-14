@@ -7,10 +7,10 @@ namespace Wonga.QA.Framework.UI.Ui.Enums
 {
     public enum FieldTypeString
     {
-        Letters,
-        SpecialSymbols,
-        Numbers,
-        NegativeNumbers,
-        NumbersWithComa
+        Letters = 1,
+        SpecialSymbols = 2,
+        Numbers = 3,
+        NegativeNumbers = 4,
+        NumbersWithComa = 5
     }
 }

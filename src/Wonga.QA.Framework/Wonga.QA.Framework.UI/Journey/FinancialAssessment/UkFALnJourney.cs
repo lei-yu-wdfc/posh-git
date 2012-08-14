@@ -26,7 +26,7 @@ namespace Wonga.QA.Framework.UI.Journey
             _childrenInHousehold = Get.RandomInt(1, 5).ToString();
             _numberOfVehiles = Get.RandomInt(1, 5).ToString();
 
-            _salaryAfterTax = Get.RandomInt(0,10000).ToString() + Get.Random().ToString(".00");
+            _salaryAfterTax = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
             _partnerSalaryAfterTax = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
             _jobseekerAllowance = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
             _incomeSupport = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
@@ -41,41 +41,42 @@ namespace Wonga.QA.Framework.UI.Journey
             _studentLoansOrGrants = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
             _otherIncome = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
 
-            _rentPayments = Get.RandomInt(0,10000).ToString() + Get.Random().ToString(".00");
-            _mortgage = Get.RandomInt(0,10000).ToString() + Get.Random().ToString(".00");
-            _otherSecuredLoans = Get.RandomInt(0,10000).ToString() + Get.Random().ToString(".00");
-            _councilTax = Get.RandomInt(0,10000).ToString() + Get.Random().ToString(".00");
-            _maintenceOrChildSupport = Get.RandomInt(0,10000).ToString() + Get.Random().ToString(".00");
-            _gas = Get.RandomInt(0,10000).ToString() + Get.Random().ToString(".00");
-            _electricity = Get.RandomInt(0,10000).ToString() + Get.Random().ToString(".00");
-            _hirePurchaseOrConditionalSale = Get.RandomInt(0,10000).ToString() + Get.Random().ToString(".00");
-            _otherOnDebts = Get.RandomInt(0,10000).ToString() + Get.Random().ToString(".00");
+            _rentPayments = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
+            _mortgage = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
+            _otherSecuredLoans = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
+            _councilTax = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
+            _maintenceOrChildSupport = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
+            _gas = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
+            _electricity = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
+            _hirePurchaseOrConditionalSale = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
+            _otherOnDebts = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
             _nonPriorityDebtsCreditor0 = Get.GetName();
-            _nonPriorityDebtsAmount0 = Get.RandomInt(0,10000).ToString() + Get.Random().ToString(".00");
+            _nonPriorityDebtsAmount0 = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
             _nonPriorityDebtsCreditor1 = Get.GetName();
-            _nonPriorityDebtsAmount1 = Get.RandomInt(0,10000).ToString() + Get.Random().ToString(".00");
+            _nonPriorityDebtsAmount1 = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
             _nonPriorityDebtsCreditor2 = Get.GetName();
-            _nonPriorityDebtsAmount2 = Get.RandomInt(0,10000).ToString() + Get.Random().ToString(".00");
+            _nonPriorityDebtsAmount2 = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
             _nonPriorityDebtsCreditor3 = Get.GetName();
-            _nonPriorityDebtsAmount3 = Get.RandomInt(0,10000).ToString() + Get.Random().ToString(".00");
+            _nonPriorityDebtsAmount3 = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
             _nonPriorityDebtsCreditor4 = Get.GetName();
-            _nonPriorityDebtsAmount4 = Get.RandomInt(0,10000).ToString() + Get.Random().ToString(".00");
+            _nonPriorityDebtsAmount4 = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
             _nonPriorityDebtsCreditor5 = Get.GetName();
-            _nonPriorityDebtsAmount5 = Get.RandomInt(0,10000).ToString() + Get.Random().ToString(".00");
+            _nonPriorityDebtsAmount5 = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
             _nonPriorityDebtsCreditor6 = Get.GetName();
-            _nonPriorityDebtsAmount6 = Get.RandomInt(0,10000).ToString() + Get.Random().ToString(".00");
+            _nonPriorityDebtsAmount6 = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
             _nonPriorityDebtsCreditor7 = Get.GetName();
-            _nonPriorityDebtsAmount7 = Get.RandomInt(0,10000).ToString() + Get.Random().ToString(".00");
+            _nonPriorityDebtsAmount7 = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
             _nonPriorityDebtsCreditor8 = Get.GetName();
-            _nonPriorityDebtsAmount8 = Get.RandomInt(0,10000).ToString() + Get.Random().ToString(".00");
+            _nonPriorityDebtsAmount8 = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
             _nonPriorityDebtsCreditor9 = Get.GetName();
-            _nonPriorityDebtsAmount9 = Get.RandomInt(0,10000).ToString() + Get.Random().ToString(".00");
+            _nonPriorityDebtsAmount9 = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
 
             journey.Add(typeof(FinancialAssessmentPage), GetStarted);
             journey.Add(typeof(FAAboutYouPage), PassAboutYou);
             journey.Add(typeof(FAIncomePage), PassIncomePage);
             journey.Add(typeof(FAExpenditurePage), PassExpenditurePage);
             journey.Add(typeof(FADebtsPage), PassDebtsPage);
+            journey.Add(typeof(FARepaymentPlanPage), PassRepaymentPlanPage);
         }
 
         protected override BaseFALnJourney GetStarted(bool submit = true)
@@ -133,7 +134,7 @@ namespace Wonga.QA.Framework.UI.Journey
         protected override BaseFALnJourney PassExpenditurePage(bool submit = true)
         {
             var faExpenditurePage = CurrentPage as FAExpenditurePage;
-           
+
             if (submit)
             {
                 CurrentPage = faExpenditurePage.NextClick() as FADebtsPage;
@@ -147,7 +148,7 @@ namespace Wonga.QA.Framework.UI.Journey
 
             faDebtsPage.RentPayments = _rentPayments;
             faDebtsPage.Mortgage = _mortgage;
-            faDebtsPage.OtherSecuredLoans= _otherSecuredLoans;
+            faDebtsPage.OtherSecuredLoans = _otherSecuredLoans;
             faDebtsPage.CouncilTax = _councilTax;
             faDebtsPage.MaintenanceOrChildSupport = _maintenceOrChildSupport;
             faDebtsPage.Gas = _gas;
@@ -179,6 +180,12 @@ namespace Wonga.QA.Framework.UI.Journey
             {
                 CurrentPage = faDebtsPage.NextClick() as FARepaymentPlanPage;
             }
+            return this;
+        }
+
+        protected override BaseFALnJourney PassRepaymentPlanPage(bool submit = true)
+        {
+            //var faRepaymentPlanPage = CurrentPage as FARepaymentPlanPage;
             return this;
         }
     }

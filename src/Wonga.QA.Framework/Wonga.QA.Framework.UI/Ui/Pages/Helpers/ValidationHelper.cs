@@ -19,11 +19,13 @@ namespace Wonga.QA.Framework.UI.Ui.Pages.Helpers
         public delegate void ExecutableFunction(TPage page, String fieldName, String value);
 
 
-        public static void CheckValidation(TPage page, String fieldName, List<Int32> restrictionList, FieldTypeList restrictionType, ExecutableFunction callBack, Dictionary<Int32, Delegate> customRules, FieldType fieldType)
+        public static void CheckValidation(TPage page, String fieldName, List<Int32> restrictionList, FieldTypeList restrictionType, Delegate callBack, List<KeyValuePair<Int32, Delegate>> customRules, FieldType fieldType)
         {
             _page = page;
             _fieldName = fieldName;
-            _baseCallBack = callBack;
+
+            ExecutableFunction callBackFunction = new ExecutableFunction((ExecutableFunction)callBack);
+            _baseCallBack = callBackFunction;
 
             List<Int32> list = EnumList(restrictionList, restrictionType, fieldType);
             ValidateByType(fieldType, list, customRules);
@@ -49,9 +51,9 @@ namespace Wonga.QA.Framework.UI.Ui.Pages.Helpers
             }
             return fullList;
         }
-        private static void ValidateByType(FieldType fieldType, List<Int32> list, Dictionary<Int32, Delegate> customCallBacks)
+        private static void ValidateByType(FieldType fieldType, List<Int32> list, List<KeyValuePair<Int32, Delegate>> customCallBacks)
         {
-            customCallBacks = customCallBacks ?? new Dictionary<Int32, Delegate>();
+            customCallBacks = customCallBacks ?? new List<KeyValuePair<Int32, Delegate>>();
 
             switch (fieldType)
             {

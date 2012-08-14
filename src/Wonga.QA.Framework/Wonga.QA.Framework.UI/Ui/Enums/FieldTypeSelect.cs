@@ -5,11 +5,8 @@ using System.Text;
 
 namespace Wonga.QA.Framework.UI.Ui.Enums
 {
-    public enum FieldType
+    public enum FieldTypeSelect
     {
-        String = 1,
-        Date = 2,
-        DateTime = 3,
-        Select = 4
+        Equal = 1
     }
 }
