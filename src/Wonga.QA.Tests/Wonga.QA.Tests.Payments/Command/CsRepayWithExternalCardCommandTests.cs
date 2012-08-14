@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.Cs;
 using Wonga.QA.Framework.Cs.Requests.Payments.Csapi.Commands;
-using Wonga.QA.Framework.Helpers;
 using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Core;
-using Wonga.QA.Framework.Db.Payments;
 
 namespace Wonga.QA.Tests.Payments.Command
 {
@@ -92,6 +86,29 @@ namespace Wonga.QA.Tests.Payments.Command
                                                                                                               _paymentCardRepaymentRequests.SuccessOn != null).FirstOrDefault());
 
                     Do.With.Timeout(5).Interval(20).Until(() => _application.GetBalance() == _startingBalance - _paymentAmount);
+                }
+            }
+
+            [Parallelizable(TestScope.Self)]
+            public class GivenAPaymentHigherThanTheBalanceHasBeenRequestedWithAValidCard : GivenACustomerWithAnApprovedLoan
+            {
+                [SetUp]
+                public override void Setup()
+                {
+                    _paymentAmount = 1000;
+                    base.Setup();
+                }
+
+                [Test, AUT(AUT.Uk), JIRA("UKOPS-109"), Owner(Owner.ShaneMcHugh), Pending("Currently payment higher than the balance is allowed and should not be UKOPS-846")]
+                public void TheLoanAmountRemainsTheSameFailedPaymentRequestAdded()
+                {
+                   Do.With.Timeout(2).Interval(20).Until(() => null != _paymentCardRepaymentRequests.FindAll(_paymentCardRepaymentRequests.Applications.ExternalId == _application.Id &&
+                                                                            _paymentCardRepaymentRequests.ExternalId == _paymentId &&
+                                                                            _paymentCardRepaymentRequests.Amount == _paymentAmount &&
+                                                                            _paymentCardRepaymentRequests.FailedOn != null &&
+                                                                            _paymentCardRepaymentRequests.SuccessOn == null).FirstOrDefault());
+
+                    Do.With.Timeout(5).Interval(20).Until(() => _application.GetBalance() == _startingBalance);
                 }
             }
 

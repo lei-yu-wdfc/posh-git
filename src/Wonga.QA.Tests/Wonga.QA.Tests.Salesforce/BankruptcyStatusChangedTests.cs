@@ -1,7 +1,6 @@
 ﻿using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.Msmq.Messages.Payments.PublicMessages;
 using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Core;
 using System;
@@ -13,15 +12,12 @@ namespace Wonga.QA.Tests.Salesforce
     [Parallelizable(TestScope.Self)]
     public class BankruptcyStatusChangedTests
     {
-        private Framework.ThirdParties.Salesforce _sales;
-        private readonly dynamic _loanDueDateNotifiSagaEntityTab = Drive.Data.OpsSagas.Db.LoanDueDateNotificationSagaEntity;
-        private readonly dynamic _fixedTermLoanAppTab = Drive.Data.Payments.Db.FixedTermLoanApplications;
 
         #region setup#
         [SetUp]
         public void SetUp()
         {
-            _sales = SalesforceOperations.SalesforceSetup();
+            SalesforceOperations.SalesforceSetup();
         }
         #endregion setup#
 
@@ -153,20 +149,10 @@ namespace Wonga.QA.Tests.Salesforce
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Bankrupt);
         }
 
-        private void RewindApplicationDates(dynamic application)
-        {
-            int id = ApplicationOperations.GetAppInternalId(application);
-            TimeSpan span = _fixedTermLoanAppTab.FindByApplicationId(id).NextDueDate - DateTime.Today;
-            application.RewindApplicationDates(span);
-        }
-
         private void MakeDueToday(dynamic application)
         {
-            RewindApplicationDates(application);
-            var ldd = _loanDueDateNotifiSagaEntityTab.FindAll(_loanDueDateNotifiSagaEntityTab.ApplicationId == application.Id).Single();
-  
-            Drive.Msmq.Payments.Send(new Framework.Msmq.TimeoutMessage { SagaId = ldd.Id });
-            _loanDueDateNotifiSagaEntityTab.Update(ldd);
+            SalesforceOperations.RewindDatesToMakeDueToday(application);
+            SalesforceOperations.MakeDueToday(application);
         }
 
         private Application CreateLiveApplication()
