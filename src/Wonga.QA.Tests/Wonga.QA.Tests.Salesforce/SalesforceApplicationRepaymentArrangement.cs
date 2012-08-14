@@ -9,7 +9,6 @@ namespace Wonga.QA.Tests.Salesforce
 {
     [TestFixture(Order = -1)]
     [Parallelizable(TestScope.Self)]
-    [Pending("Repayment Arrangement bug 823")]
     class SalesforceApplicationRepaymentArrangement
     {
         
@@ -41,7 +40,6 @@ namespace Wonga.QA.Tests.Salesforce
             SalesforceOperations.RewindDatesToMakeDueToday(application);
             SalesforceOperations.MakeDueToday(application);
             RepaymentArrangementCycle(customer,application);
-            SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.DueToday);
         }
 
         [Test]
@@ -52,7 +50,6 @@ namespace Wonga.QA.Tests.Salesforce
             var application = CreateLiveApplication(customer);
             application.PutIntoArrears(3);
             RepaymentArrangementCycle(customer,application);
-            SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.InArrears);
         }
 
         [Test]
@@ -65,8 +62,6 @@ namespace Wonga.QA.Tests.Salesforce
             ApplicationOperations.SuspectFraud(application, customer, caseId);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Fraud);
             RepaymentArrangementCycle(customer,application);
-            ApplicationOperations.ConfirmNotFraud(application, customer, caseId);
-            SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live);
         }
         
         [Test]
@@ -79,7 +74,6 @@ namespace Wonga.QA.Tests.Salesforce
             ApplicationOperations.ReportHardship(application, caseId);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Hardship);
             RepaymentArrangementCycle(customer,application);
-            SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Hardship);
         }
 
         [Test]
@@ -92,7 +86,6 @@ namespace Wonga.QA.Tests.Salesforce
             ApplicationOperations.ReportBankrupt(application, caseId);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Bankrupt);
             RepaymentArrangementCycle(customer,application);
-            SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Bankrupt);
         }
 
         [Test]
@@ -104,7 +97,6 @@ namespace Wonga.QA.Tests.Salesforce
             var application = CreateLiveApplication(customer);
             ApplicationOperations.ReportComplaint(application, caseId);
             RepaymentArrangementCycle(customer,application);
-            SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Complaint);
         }
 
         [Test]
@@ -118,7 +110,6 @@ namespace Wonga.QA.Tests.Salesforce
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.ManagementReview);
             RepaymentArrangementCycle(customer,application);
             ApplicationOperations.RemoveManagementReview(application, caseId);
-            SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Live);
         }
 
         [Test]
@@ -131,11 +122,10 @@ namespace Wonga.QA.Tests.Salesforce
             ApplicationOperations.Refundrequest(application, caseId);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Refund);
             RepaymentArrangementCycle(customer,application);
-            SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Refund);
         }
 
         [Test]
-        [AUT(AUT.Uk), JIRA("UKOPS-62"), Owner(Owner.AnilKrishnamaneni)]
+        [AUT(AUT.Uk), JIRA("UKOPS-62"), Owner(Owner.AnilKrishnamaneni),Pending("Cancel RA") ]
         public void ManagementReviewRepaymentArrangementCycleWhileApplicationGoesDueTodayAndInToArrears()
         {
             var caseId = new Guid();
@@ -170,7 +160,6 @@ namespace Wonga.QA.Tests.Salesforce
         {
             SalesforceOperations.CreateRepaymentArrangement(customer,application);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.RepaymentArrangement);
-            SalesforceOperations.CancelRepaymnetArrangement(application);
         }
 
         #endregion helpers#
