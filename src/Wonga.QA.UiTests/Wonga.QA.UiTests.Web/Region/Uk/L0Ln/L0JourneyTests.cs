@@ -39,11 +39,9 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
         }
 
         [Test, JIRA("UK-438", "UK-1823", "UKWEB-253"), Owner(Owner.StanDesyatnikov)]
-        [Pending("Stops on Accept page. Then also opens Success page, not Decline")]
         public void L0DeclinedForEmployedPartTimeTest()
         {
             var journeyL0 = JourneyFactory.GetL0Journey(Client.Home())
-                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask))
                 .WithAmount(400).WithDuration(30)
                 .WithDeclineDecision();
             var declinedPage = journeyL0.Teleport<DeclinedPage>() as DeclinedPage;
