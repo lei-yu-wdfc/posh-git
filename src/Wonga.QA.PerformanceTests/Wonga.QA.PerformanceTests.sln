@@ -3,14 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.PerformanceTests.Load", "Wonga.QA.PerformanceTests.Load\Wonga.QA.PerformanceTests.Load.csproj", "{13C0ABB8-7918-461C-9AB3-D13069C2D7A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiLoadTest", "ApiLoadTest\ApiLoadTest.csproj", "{F6000009-FB92-4F22-B651-A81AFA52B90A}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EF298216-D384-4CE5-ADDA-FDF32D8BDD07}"
 	ProjectSection(SolutionItems) = preProject
 		Local.testsettings = Local.testsettings
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 		Wonga.QA.PerformanceTests.vsmdi = Wonga.QA.PerformanceTests.vsmdi
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.PerformanceTests.Load.Api", "Wonga.QA.PerformanceTests.Load.Api\Wonga.QA.PerformanceTests.Load.Api.csproj", "{F6000009-FB92-4F22-B651-A81AFA52B90A}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution

@@ -1,8 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Old;
 
-namespace ApiLoadTest
+namespace Wonga.QA.PerformanceTests.Load.Api
 {
     [TestClass]
     public class AllApiJourneys
