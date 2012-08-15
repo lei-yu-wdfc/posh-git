@@ -1,8 +1,24 @@
 <Configuration>
 	<Include>base_ci</Include>
 	<SUT>Perf</SUT>
-	<AUT>Uk</AUT>
-	<Region>Uk</Region>
+	<AUT>Za</AUT>
+	<Region>Za</Region>
+	
+	<Admin>
+		<HomePage>http://preprod.admin.%%//AUT%%.wongatest.com</HomePage>
+	</Admin>
+	
+	<Api>
+		<Url>preprod.api.%%//AUT%%.wongatest.com</Url>
+	</Api>
+	
+	<CSApi>
+		<Url>preprod.csapi.%%//AUT%%.wongatest.com</Url>
+	</CSApi>
+	
+	<Ucg>
+		<Url>preprod.ucg.%%//AUT%%.wongatest.com</Url>
+	</Ucg>
 	
 	<Salesforce>
 		<ApiUsername>v3integration@wonga.com.rc</ApiUsername>
