@@ -40,15 +40,17 @@ namespace Wonga.QA.Tests.Payments.Helpers.Ca
             return Decimal.Round(interestAmountOne + interestAmountTwo, 2, MidpointRounding.AwayFromZero);
         }
 
-        public static decimal CalculateExpectedArrearsInterestAmountAppliedCa(decimal loanAmount, int loanTerm)
+        public static decimal CalculateExpectedArrearsInterestAmountAppliedCa(decimal loanAmount, int loanTerm, bool round = true)
         {
+        	decimal interestAmount = loanAmount*CalculateTotalDailyInterestRateCa(loanTerm, 1, true);
 
-            return Decimal.Round(loanAmount*CalculateTotalDailyInterestRateCa(loanTerm, 1, true), 2,
-                                 MidpointRounding.AwayFromZero);
-
+        	return
+        		round
+        			? Decimal.Round(interestAmount, 2, MidpointRounding.AwayFromZero)
+        			: interestAmount;
         }
 
-        public static decimal CalculateActualDailyInterestRateCa(List<TransactionEntity> actualRatesApplied)
+    	public static decimal CalculateActualDailyInterestRateCa(List<TransactionEntity> actualRatesApplied)
         {
             decimal dailyInterestRate = 0;
 
