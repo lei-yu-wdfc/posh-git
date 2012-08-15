@@ -86,34 +86,37 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             mySummaryPage.TopupSliders.HowMuch = topupAmount;
 
             ApiResponse _response = Drive.Api.Queries.Post(new GetFixedTermLoanTopupCalculationQuery { ApplicationId = application.Id, TopupAmount = topupAmountDec });
-            var totalRepayable = _response.Values["TotalRepayable"].Single();
+            var totalTopUpAmountRepayable = _response.Values["TotalRepayable"].Single();
             var interestAndFees = _response.Values["InterestAndFeesAmount"].Single();
 
-            Assert.AreEqual(mySummaryPage.TopupSliders.GetTotalToRepay.Remove(0, 1), totalRepayable, "Total to Repay on Sliders on My Summary page is wrong");
+            // Check values on TopUp Sliders on My Summary page after setting a TopUp value
+            Assert.AreEqual(mySummaryPage.TopupSliders.GetTotalToRepay.Remove(0, 1), totalTopUpAmountRepayable, "Total to Repay on Sliders on My Summary page is wrong");
             Assert.AreEqual(mySummaryPage.TopupSliders.GetTotalAmount.Remove(0, 1), topupAmount, "Total Amount on Sliders on My Summary page is wrong");
             Assert.AreEqual(mySummaryPage.TopupSliders.GetTotalFees.Remove(0, 1), interestAndFees, "Interest Fees on Sliders on My Summary page is wrong");
 
-            var requestPage =
-                mySummaryPage.TopupSliders.Apply();
-
-            //Runs assertions internally
-            requestPage.IsTopupRequestPageSliderReturningCorrrectValuesOnChange(application.Id.ToString());
+            var requestPage = mySummaryPage.TopupSliders.Apply();
 
             requestPage.SubmitButtonClick();
 
             var processPage = new TopupProcessingPage(this.Client);
             var agreementPage = processPage.WaitForAgreementPage(Client);
 
+            // Check that tokens are not displayed
+            // TODO: instead check correct values are displayed
             Assert.IsFalse(agreementPage.IsTopupAgreementPageDateNotPresent(), "Date on Agreement page is not displayed");
             Assert.IsTrue(agreementPage.IsTopupAgreementPageLegalInfoDisplayed(), "Legal Info on Agreement page is not displayed");
             Assert.IsFalse(agreementPage.IsTopupAgreementPageTopupAmountNotPresent(), "Topup Amount on Agreement page is not displayed");
             Assert.IsFalse(agreementPage.IsTopupTotalAmountTokenBeingReplaced(), "Amount Token Agreement page is not replaced with value");
 
             var dealDonePage = agreementPage.Accept();
-            Assert.IsFalse(dealDonePage.IsDealDonePageDateNotPresent(), "Date on Deal Done page is not displayed");
+
+            _response = Drive.Api.Queries.Post(new GetFixedTermLoanApplicationQuery { ApplicationId = application.Id});
+            var nextDueDateBalance = _response.Values["BalanceNextDueDate"].Single();
+            var nextDueDate = Date.GetOrdinalDate(Convert.ToDateTime(_response.Values["NextDueDate"].Single()), "dddd d MMM yyyy");
+
             Assert.IsFalse(dealDonePage.IsDealDonePageJiffyNotPresent(), "Jiffy on Deal Done page is not displayed");
-            Assert.IsFalse(dealDonePage.IsDealDonePageTopupAmountNotPresent(), "Topup Amount on Deal Done page is not displayed");
-            Assert.Contains(dealDonePage.SucessMessage, totalRepayable, "Success Message on Deal Done page does not contain correct Total Repayable");
+            Assert.Contains(dealDonePage.SucessMessage, nextDueDateBalance, "Success Message on Deal Done page does not contain correct Total Repayable");
+            Assert.Contains(dealDonePage.SucessMessage, nextDueDate, "Success Message on Deal Done page does not contain correct Next Due Date");
             Assert.Contains(dealDonePage.SucessMessage, topupAmount, "Success Message on Deal Done page does not contain correct Topup Amount");
 
             dealDonePage.ContinueToMyAccount();
