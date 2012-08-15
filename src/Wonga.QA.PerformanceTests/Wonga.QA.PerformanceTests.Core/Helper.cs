@@ -1,42 +1,58 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
+using System.Reflection;
+using System.Text;
 using System.Threading;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Wonga.QA.PerformanceTests.Load.Api;
-using Wonga.QA.Tests.Core;
+using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.PerformanceTests.Core
 {
-    [TestClass]
     public class Helper
     {
-        public int Users = 10;
-        public int Iterations = 100;
-        public int MaxWaitTime = 30;
+        //Read Config values from App.config
+        public int Users = int.Parse(ConfigurationManager.AppSettings["numberOfUsers"]);
+        public int Iterations = int.Parse(ConfigurationManager.AppSettings["iterations"]);
+        public int MaxWaitTime = int.Parse(ConfigurationManager.AppSettings["maxWaitTime"]);
+        public String TestName = ConfigurationManager.AppSettings["tests"];
+        public String DllName = ConfigurationManager.AppSettings["dllName"];
+        public String TypeName = ConfigurationManager.AppSettings["namespace"];
 
+        //All running, completed thread data saved here
         public List<ThreadData> ThreadPool = new List<ThreadData>();
 
-        [TestMethod]
-        public void ApiJourneyLoadTest()
+        /// <summary>
+        /// Setup the Test Target and Configuration Directory path
+        /// </summary>
+        public void Setup()
         {
-            var tests = 0;
+            Config.Configure(testTarget: ConfigurationManager.AppSettings["aut"]);
+            Config.Configure(configsDirectoryPath: ConfigurationManager.AppSettings["configDir"]);
+        }
 
-            while (tests < Iterations)
+        /// <summary>
+        /// Entry point from where the test will be trigerred
+        /// </summary>
+        public void StartTest()
+        {
+            Setup();
+
+            var tests = 1;
+
+            while (tests <= Iterations)
             {
-                for (var i = 0; i < Users; i++)
+                for (var user = 1; user <= Users; user++)
                 {
-                    var journey = new AllApiJourneys();
-                    //Change here to run different API Tests
-                    var thread = new Thread(journey.ApiL0JourneyAccepted) { IsBackground = true };
-                    ThreadPool.Add(new ThreadData(thread, "Thread: " + i, DateTime.Now, "Started"));
+                    var thread = new Thread(new TestRunner().Run) { IsBackground = true };
+                    ThreadPool.Add(new ThreadData(thread, "User: " + user + " Iteration: " + tests++, DateTime.Now, Status.Running, TestName));
 
                     thread.Start();
                 }
                 MonitorStatus();
-                tests += Users;
             }
-
             PrintResults();
+            WriteResultsToCsv();
         }
 
         /// <summary>
@@ -47,9 +63,43 @@ namespace Wonga.QA.PerformanceTests.Core
             Console.WriteLine("Thread Name :: Test Status :: Execution Time");
             foreach (var loadThread in ThreadPool)
             {
-                Console.WriteLine(loadThread.Name + "::" + loadThread.Status + "::" + (loadThread.EndTime.Subtract(loadThread.StartTime).Seconds));
+                Console.WriteLine(loadThread.Name + "::" + loadThread.CurrentStatus.ToString() + "::" + 
+                    (loadThread.EndTime.Subtract(loadThread.StartTime).Seconds));
             }
         }
+
+        /// <summary>
+        /// Write the results in to a CSV file
+        /// </summary>
+        public void WriteResultsToCsv()
+        {
+            var csvFileName = string.Format(@"{0}.txt", Guid.NewGuid()) + ".csv";
+            var data = GenerateResults();
+            var sb = new StringBuilder();
+            const string delimiter = ",";
+
+            foreach (var stringse in data)
+                sb.AppendLine(string.Join(delimiter, stringse));
+
+            File.WriteAllText(ConfigurationManager.AppSettings["outputDir"] + "\\" + csvFileName , sb.ToString()); 
+        }
+
+        /// <summary>
+        /// Generate Results to be able to write in to a CSV file
+        /// </summary>
+        /// <returns></returns>
+        public List<string[]> GenerateResults()
+        {
+            var data = new List<string[]> { new string[4] { "Thread Name", "Test Name", "Test Status", "Execution Time (seconds)" } };
+
+            foreach (var loadThread in ThreadPool)
+            {
+                data.Add(new string[4] { loadThread.Name, loadThread.TestName ,loadThread.CurrentStatus.ToString(), 
+                    loadThread.EndTime.Subtract(loadThread.StartTime).Seconds.ToString()});
+            }
+            return data;
+        } 
+
         /// <summary>
         /// Monitor the running threads
         /// </summary>
@@ -69,9 +119,8 @@ namespace Wonga.QA.PerformanceTests.Core
                     {
                         var endTime = DateTime.Now;
                         TimeSpan totalTimeTaken = endTime.Subtract(loadThread.StartTime);
-                        Console.WriteLine("Execution Time: " + totalTimeTaken.Seconds);
                         ThreadPool[GetThreadIndex(loadThread.Thread)].EndTime = endTime;
-                        ThreadPool[GetThreadIndex(loadThread.Thread)].Status = "Completed";
+                        ThreadPool[GetThreadIndex(loadThread.Thread)].CurrentStatus = Status.Completed;
                     }
                 }
 
@@ -95,7 +144,7 @@ namespace Wonga.QA.PerformanceTests.Core
                     if (loadThread.Thread.IsAlive)
                     {
                         ThreadPool[GetThreadIndex(loadThread.Thread)].EndTime = DateTime.Now;
-                        ThreadPool[GetThreadIndex(loadThread.Thread)].Status = "Aborted";
+                        ThreadPool[GetThreadIndex(loadThread.Thread)].CurrentStatus = Status.Aborted;
 
                         loadThread.Thread.Interrupt();
                         if (!loadThread.Thread.Join(2000))
@@ -125,7 +174,7 @@ namespace Wonga.QA.PerformanceTests.Core
 
             foreach (var loadThread in ThreadPool)
             {
-                if (loadThread.Status.ToLower().Equals("started"))
+                if (loadThread.CurrentStatus.Equals(Status.Running))
                     runningThreads.Add(loadThread);
             }
             return runningThreads;
