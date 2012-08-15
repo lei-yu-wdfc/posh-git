@@ -1,44 +1,41 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Wonga.QA.Framework;
-using Wonga.QA.Framework.Api.Requests.Payments.Queries;
+using Wonga.QA.Framework.Application.Queries.Consumer;
 using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.Framework.Builders.Consumer
 {
-    public abstract class ConsumerTopUpBuilderBase
+    public abstract class ConsumerTopupBuilderBase
     {
-        protected ConsumerTopUpDataBase TopUpData;
+		protected ConsumerTopupDataBase TopupData;
 
-        public ConsumerTopUpBuilderBase(Guid customerId, Guid applicationId, int amount)
+		protected Int32 TopupId { get; private set; }
+		protected Guid ApplicationId { get; private set; }
+
+    	protected ConsumerTopupBuilderBase(Guid applicationId, ConsumerTopupDataBase consumerTopupData)
         {
-            TopUpData.customerId = Convert.ToString(customerId);
-            TopUpData.applicationId = Convert.ToString(applicationId);
-            TopUpData.amount = amount;
+            ApplicationId = applicationId;
+        	TopupData = consumerTopupData;
         }
 
-        public TopUp Build()
+        public Topup Build()
         {
-            RequestTopUp();
-            if(TopUpData.HasStatusAccepted)
+            TopupId = RequestTopUp();
+
+            if(TopupData.StatusAccepted)
                 AcceptTopUp();
-            TopUpData.interestAndFeesAmount = (decimal)GetInterest(TopUpData.amount);
-            TopUpData.totalToRepay = (decimal)GetTotalRepayble(TopUpData.amount);
-            return CreateTopUp((double)TopUpData.interestAndFeesAmount, (double)TopUpData.totalToRepay, new Guid(TopUpData.FixedTermLoanTopupId), new Guid(TopUpData.customerId), new Guid(TopUpData.applicationId));
+
+            return new Topup(TopupId, ApplicationId, TopupData.StatusAccepted);
         }
 
-        public ConsumerTopUpBuilderBase OnlyInRequest()
+        public ConsumerTopupBuilderBase WithInRequestStatus()
         {
-            TopUpData.HasStatusAccepted = false;
+            TopupData.StatusAccepted = false;
             return this;
         }
 
-        protected abstract double GetInterest(int amount);
-        protected abstract double GetTotalRepayble(int amount);
-        protected abstract TopUp CreateTopUp(double interest, double totalToRepay, Guid topUpId, Guid customerId, Guid applicationId);
-        protected abstract void RequestTopUp();
+        protected abstract Decimal GetInterest(int amount);
+        protected abstract Decimal GetTotalRepayable(int amount);
+        protected abstract int RequestTopUp();
         protected abstract void AcceptTopUp();
     }
 }

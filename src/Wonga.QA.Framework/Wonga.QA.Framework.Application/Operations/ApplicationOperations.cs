@@ -1,6 +1,6 @@
-﻿using Wonga.QA.Framework.Application.Business;
-using Wonga.QA.Framework.Application.Consumer;
-using Wonga.QA.Framework.Application.PayLater;
+﻿using Wonga.QA.Framework.Application.Operations.Business;
+using Wonga.QA.Framework.Application.Operations.Consumer;
+using Wonga.QA.Framework.Application.Operations.PayLater;
 
 namespace Wonga.QA.Framework.Application.Operations
 {

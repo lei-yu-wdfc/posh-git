@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Wonga.QA.Framework.Application.Operations
+namespace Wonga.QA.Framework.Application.Operations.Consumer
 {
-	public class ApplicationOperationsTimeShift
+	public class ConsumerApplicationOperationsTimeShift
 	{
 		public void TimeShiftApplicationDates(ApplicationBase application, TimeSpan span)
 		{

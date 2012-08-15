@@ -6,7 +6,7 @@ using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Requests.Payments.Commands;
 using Wonga.QA.Framework.Api.Requests.Risk.Commands;
 using Wonga.QA.Framework.Api.Requests.Risk.Queries;
-using Wonga.QA.Framework.Application.Consumer;
+using Wonga.QA.Framework.Application;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Data.Enums.Risk;
 
