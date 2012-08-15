@@ -26,6 +26,10 @@
 		<Url>rc.release.csapi.%%//AUT%%.wonga.com</Url>
 	</CSApi>
 	
+	<Ucg>
+		<Url>rc.release.ucg.%%//AUT%%.wonga.com</Url>
+	</Ucg>
+	
 	<Salesforce>
 		<ApiUsername>v3integration@wonga.com.rc</ApiUsername>
 	</Salesforce>
