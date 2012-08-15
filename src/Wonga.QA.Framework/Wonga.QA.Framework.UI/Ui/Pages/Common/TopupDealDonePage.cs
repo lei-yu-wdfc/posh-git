@@ -17,9 +17,17 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public TopupDealDonePage(UiClient client) : base(client)
         {
-            Assert.That(Headers, Has.Item(ContentMap.Get.TopupDealDonePage.SuccessMessage));
-            _accountLink = Content.FindElement(By.CssSelector(UiMap.Get.TopupDealDonePage.AccountLink));
-
+            if (Config.AUT == AUT.Uk)
+            {
+                Do.With.Message("TopUp Deal Done page does not show the success message").Timeout(new TimeSpan(0, 0, 8))
+                    .Until(() => Content.Text.Contains(ContentMap.Get.TopupDealDonePage.SuccessMessage));
+                _accountLink = Content.FindElement(By.CssSelector(UiMap.Get.TopupDealDonePage.AccountLink));
+            }
+            else
+            {
+                Assert.That(Headers, Has.Item(ContentMap.Get.TopupDealDonePage.SuccessMessage));
+                _accountLink = Content.FindElement(By.CssSelector(UiMap.Get.TopupDealDonePage.AccountLink));
+            }
         }
 
         public bool IsDealDonePageTopupAmountNotPresent()
