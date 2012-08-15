@@ -1,7 +1,6 @@
 ﻿using System;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
-using Wonga.QA.Framework.Api.Requests.Comms.Commands.PayLater.Uk;
 using Wonga.QA.Framework.Api.Requests.Risk.Commands.PayLater.Uk;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;

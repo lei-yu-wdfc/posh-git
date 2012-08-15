@@ -55,6 +55,7 @@
     <Reference Include="Wonga.QA.Framework">
       <HintPath>..\..\..\bin\Wonga.QA.Framework.dll</HintPath>
     </Reference>
+    <Reference Include="Wonga.QA.Framework.Api, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Wonga.QA.Framework.Core">
       <HintPath>..\..\..\bin\Wonga.QA.Framework.Core.dll</HintPath>
     </Reference>
@@ -67,9 +68,12 @@
     <Reference Include="Wonga.QA.Framework.Msmq">
       <HintPath>..\..\..\bin\Wonga.QA.Framework.Msmq.dll</HintPath>
     </Reference>
+    <Reference Include="Wonga.QA.Tests.Core">
+      <HintPath>..\..\..\bin\Wonga.QA.Tests.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApiCommandsTests.cs" />
+    <Compile Include="PaymentsPayLaterApiCommandsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
