@@ -12,11 +12,21 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
     public class TopupProcessingPage : BasePage
     {
         private IWebElement _staticLink;
+        private IWebElement _processingTextContainer;
 
         public TopupProcessingPage(UiClient client) : base(client)
         {
-            Assert.That(Headers, Has.Item(Wonga.QA.Framework.UI.ContentMap.Get.ExtensionProcessingPage.HeaderText));
-            _staticLink = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionProcessingPage.ProcessingStaticLink));
+            if (Config.AUT == AUT.Uk)
+            {
+                Do.With.Message("Topup Processing page does not have a title").Timeout(new TimeSpan(0, 0, 5)).Until(() => Content.FindElement(By.CssSelector(UiMap.Get.TopupProcessingPage.ProcessingTextContainer)));
+                _processingTextContainer = Content.FindElement(By.CssSelector(UiMap.Get.TopupProcessingPage.ProcessingTextContainer));
+                _staticLink = Content.FindElement(By.CssSelector(UiMap.Get.TopupProcessingPage.ProcessingStaticLink));
+            }
+            else
+            {
+                Assert.That(Headers, Has.Item(Wonga.QA.Framework.UI.ContentMap.Get.ExtensionProcessingPage.HeaderText));
+                _staticLink = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionProcessingPage.ProcessingStaticLink));
+            }
         }
 
         public TopupAgreementPage WaitForAgreementPage(UiClient client)

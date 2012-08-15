@@ -16,12 +16,17 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public ExtensionProcessingPage(UiClient client) : base(client)
         {
-            if (Config.AUT != AUT.Uk)
+            if (Config.AUT == AUT.Uk)
+            {
+                Do.With.Message("Extension Processing page does not have a title").Timeout(new TimeSpan(0, 0, 5)).Until(() => Content.FindElement(By.CssSelector(UiMap.Get.ExtensionProcessingPage.ProcessingTextContainer)));
+                _processingTextContainer = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionProcessingPage.ProcessingTextContainer));
+                _staticLink = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionProcessingPage.ProcessingStaticLink));
+            }
+            else
+            {
                 Assert.That(Headers, Has.Item(Wonga.QA.Framework.UI.ContentMap.Get.ExtensionProcessingPage.HeaderText));
-
-            Do.With.Message("Processing page does not have a title").Timeout(new TimeSpan(0, 0, 5)).Until(() => Content.FindElement(By.CssSelector(UiMap.Get.ExtensionProcessingPage.ProcessingTextContainer)));
-            _processingTextContainer = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionProcessingPage.ProcessingTextContainer));
-            _staticLink = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionProcessingPage.ProcessingStaticLink));
+                _staticLink = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionProcessingPage.ProcessingStaticLink));
+            }
         }
 
         public IExtensionPaymentPage WaitFor<T>() where T : IExtensionPaymentPage
