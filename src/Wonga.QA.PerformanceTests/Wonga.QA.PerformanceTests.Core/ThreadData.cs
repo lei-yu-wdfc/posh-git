@@ -9,14 +9,16 @@ namespace Wonga.QA.PerformanceTests.Core
         public String Name;
         public DateTime StartTime;
         public DateTime EndTime;
-        public String Status;
+        public Status CurrentStatus;
+        public String TestName;
 
-        public ThreadData(Thread thread, String name, DateTime startTime, String status)
+        public ThreadData(Thread thread, String name, DateTime startTime, Status status, String testName)
         {
             Thread = thread;
             Name = name;
             StartTime = startTime;
-            Status = status;
+            CurrentStatus = status;
+            TestName = testName;
         }
     }
 }
