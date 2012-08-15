@@ -90,7 +90,7 @@
 		<BankGatewayEasyPay Name="Wonga.BankGateway.EasyPay.Handlers">%%//Svc/ComponentsHost%%</BankGatewayEasyPay>
 		<BankGatewayBre Name="Wonga.BankGateway.Bre.Handlers">%%//Svc/ComponentsHost%%</BankGatewayBre>
 		<BankGatewayP24 Name="Wonga.BankGateway.P24.Handlers">%%//Svc/ComponentsHost%%</BankGatewayP24>
-		<BankGatewayScotia Name="Wonga.BankGateway.Scotia.Handlers">%%//Svc/ComponentsHost%%</BankGatewayScotia>
+		<BankGatewayScotia Name="Wonga.BankGateway.ScotiaBank.Handlers">%%//Svc/ComponentsHost%%</BankGatewayScotia>
 		<BlackList Name="Wonga.BlackList.Handlers">%%//Svc/ComponentsHost%%</BlackList>
 		<CallReport Name="Wonga.CallReport.Handlers">%%//Svc/ComponentsHost%%</CallReport>
 		<CallValidate Name="Wonga.CallValidate.Handlers">%%//Svc/ComponentsHost%%</CallValidate>
