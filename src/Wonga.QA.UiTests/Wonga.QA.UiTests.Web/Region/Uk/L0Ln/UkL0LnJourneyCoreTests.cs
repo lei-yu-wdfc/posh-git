@@ -25,7 +25,6 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
         }
 
         [Test, AUT(AUT.Uk), Owner(Owner.StanDesyatnikov)]
-        [Pending("UKWEB-1132: L0 Deal Done page does not have the title")]
         public void L0JourneyTest()
         {
             var loginPage = Client.Login();
@@ -43,6 +42,8 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
 
             // Repay
             application.RepayOnDueDate();
+
+            Assert.IsTrue(application.IsClosed, "Application was not closed");
         }
 
         [Test, AUT(AUT.Uk), JIRA("UK-1533"), DependsOn("RepaymentOnDueDateTest"), Owner(Owner.StanDesyatnikov)]
