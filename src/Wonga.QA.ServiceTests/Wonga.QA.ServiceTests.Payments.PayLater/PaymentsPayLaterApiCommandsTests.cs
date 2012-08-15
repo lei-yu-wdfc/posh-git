@@ -13,7 +13,7 @@ namespace Wonga.QA.ServiceTests.Payments.PayLater
         [Test, AUT(AUT.Uk), Ignore("Awaiting bug fixes")]
         public void CreateApplication()
         {
-            Drive.Api.Commands.Post(new CreateApplicationPayLaterUkCommand
+            /*Drive.Api.Commands.Post(new CreateApplicationPayLaterUkCommand
                                         {
                                             AccountId = Guid.NewGuid(),
                                             ApplicationId = Guid.NewGuid(),
@@ -23,7 +23,7 @@ namespace Wonga.QA.ServiceTests.Payments.PayLater
                                             TotalAmount = 100.00m,
                                             Currency = CurrencyCodeEnum.GBP,
                                             PostCode = "SW6 6PN"
-                                        });
+                                        });*/
         }
     }
 }
