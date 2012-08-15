@@ -12,14 +12,13 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
     public class ExtensionProcessingPage : BasePage
     {
         private IWebElement _staticLink;
-        private IWebElement _processingTextContainer;
 
         public ExtensionProcessingPage(UiClient client) : base(client)
         {
             if (Config.AUT == AUT.Uk)
             {
-                Do.With.Message("Extension Processing page does not have a title").Timeout(new TimeSpan(0, 0, 5)).Until(() => Content.FindElement(By.CssSelector(UiMap.Get.ExtensionProcessingPage.ProcessingTextContainer)));
-                _processingTextContainer = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionProcessingPage.ProcessingTextContainer));
+                Do.With.Message("Extension Processing page does not show wait message").Timeout(new TimeSpan(0, 0, 8))
+                    .Until(() => Content.Text.Contains(ContentMap.Get.ExtensionProcessingPage.WaitMessage));
                 _staticLink = Content.FindElement(By.CssSelector(UiMap.Get.ExtensionProcessingPage.ProcessingStaticLink));
             }
             else

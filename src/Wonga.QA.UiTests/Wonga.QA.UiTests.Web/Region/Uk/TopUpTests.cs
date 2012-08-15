@@ -222,7 +222,58 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
             Assert.IsFalse(mySummaryPage.LookForTopupSliders());
-            
+        }
+
+        [Test, JIRA("UKWEB-928"), MultipleAsserts, Owner(Owner.PavithranVangiti)]
+        [Pending("UKWEB-1131: Top Up fails on Accept and Deal Done pages")]
+        public void TopUp4Times()
+        {
+            string email = Get.RandomEmail();
+
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            var application = ApplicationBuilder.New(customer).WithLoanAmount(100).WithLoanTerm(30).Build();
+
+            var loginPage = Client.Login();
+            loginPage.LoginAs(email);
+            Console.WriteLine(email);
+
+            ApiResponse response;
+
+            for (int i = 1; i <= 4; i++)
+            {
+                var mySummaryPage = new MySummaryPage(Client);
+                var requestPage = mySummaryPage.TopupSliders.Apply();
+
+                //Enter Topup amount and click submit button
+                var topUpAmount = i * 20m;
+                requestPage.Sliders.HowMuch = topUpAmount.ToString("#");
+                requestPage.SubmitButtonClick();
+
+                var processPage = new TopupProcessingPage(Client);
+                var agreementPage = processPage.WaitForAgreementPage(Client);
+
+                Assert.IsFalse(agreementPage.IsTopupAgreementPageDateNotPresent(), "Date on Agreement page is not displayed");
+                Assert.IsTrue(agreementPage.IsTopupAgreementPageLegalInfoDisplayed(), "Legal Info on Agreement page is not displayed");
+                Assert.IsFalse(agreementPage.IsTopupAgreementPageTopupAmountNotPresent(), "Topup Amount on Agreement page is not displayed");
+                Assert.IsFalse(agreementPage.IsTopupTotalAmountTokenBeingReplaced(), "Amount Token Agreement page is not replaced with value");
+
+                var dealDonePage = agreementPage.Accept();
+
+                response = Drive.Api.Queries.Post(new GetFixedTermLoanApplicationQuery { ApplicationId = application.Id });
+                var nextDueDateBalance = response.Values["BalanceNextDueDate"].Single();
+                var nextDueDate = Date.GetOrdinalDate(Convert.ToDateTime(response.Values["NextDueDate"].Single()), "dddd d MMM yyyy");
+
+                //Ensure the values and date are displayed correctly on the Deal Done page
+                Assert.IsFalse(dealDonePage.IsDealDonePageJiffyNotPresent(), "Jiffy on Deal Done page is not displayed");
+                Assert.Contains(dealDonePage.SucessMessage, nextDueDateBalance, "Success Message on Deal Done page does not contain correct Total Repayable");
+                Assert.Contains(dealDonePage.SucessMessage, nextDueDate, "Success Message on Deal Done page does not contain correct Next Due Date");
+                Assert.Contains(dealDonePage.SucessMessage, topUpAmount.ToString("#"), "Success Message on Deal Done page does not contain correct Topup Amount");
+
+                dealDonePage.ContinueToMyAccount();
+
+                //Test my account summary page
+                Assert.IsTrue(Client.Driver.Url.Contains("my-account"), "My Account page was not open");
+            }
         }
     }
 }
