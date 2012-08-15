@@ -48,6 +48,8 @@ namespace Wonga.QA.Framework.Builders.Consumer.Uk
 			{
 				r.ApplicationId = ApplicationId;
 				r.TopupAmount = TopupData.Amount;
+                r.FixedTermLoanTopupId = TopUpData.FixedTermLoanTopupId;
+                r.AccountId = new Guid(TopUpData.customerId);
 			}));
 
 			return Convert.ToInt32(response.Values["FixedTermLoanTopupId"].Single());
