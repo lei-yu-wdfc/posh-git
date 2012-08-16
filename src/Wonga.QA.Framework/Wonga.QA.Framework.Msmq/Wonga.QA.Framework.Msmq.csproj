@@ -37,6 +37,8 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Messages\PublicMessages\Payments\PayLater\UK\ICustomerTransactionFeeAdded.cs" />
+    <Compile Include="Messages\PublicMessages\Payments\PayLater\UK\IInstalmentAdded.cs" />
     <Compile Include="MissingSourceAssemblyAttributeException.cs" />
     <Compile Include="SourceAssemblyAttribute.cs" />
     <Compile Include="Defaults\RiskAddBankAccountCommand.cs" />

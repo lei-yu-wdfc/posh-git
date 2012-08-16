@@ -70,7 +70,7 @@ namespace Wonga.QA.ServiceTests.Risk.PayLater
         [Test, AUT(AUT.Uk), Ignore("Awaiting bug fixes")]
         public void VerifyApplicationPayLater()
         {
-            Drive.Api.Commands.Post(new VerifyApplicationPayLaterUkCommand
+            Drive.Api.Commands.Post(new VerifyPayLaterApplicationUkCommand
                                         {
                                             AccountId = Guid.NewGuid(),
                                             ApplicationId = Guid.NewGuid()
