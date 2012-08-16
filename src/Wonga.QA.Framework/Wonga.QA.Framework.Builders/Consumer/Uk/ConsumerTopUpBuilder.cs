@@ -57,7 +57,7 @@ namespace Wonga.QA.Framework.Builders.Consumer.Uk
         {
 			Drive.Api.Queries.Post(SignFixedTermLoanTopupCommand.New(r =>
 			{
-				r.AccountId = ApplicationQueries.Consumer.GetAccountIdForApplication(ApplicationId);
+				r.AccountId = ApplicationQueries.Consumer.GetAccountGuidForApplication(ApplicationId);
 				r.FixedTermLoanTopupId = TopupId;
 			}));
         }
