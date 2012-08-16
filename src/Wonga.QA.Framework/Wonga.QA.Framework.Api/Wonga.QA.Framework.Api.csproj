@@ -25,7 +25,8 @@
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <NoWarn>1591</NoWarn>
-    <DocumentationFile></DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -327,8 +328,8 @@
     <Compile Include="Requests\Risk\Commands\Ca\SaveEmploymentDetailsCaCommand.cs" />
     <Compile Include="Requests\Risk\Commands\Ca\SaveSocialDetailsCaCommand.cs" />
     <Compile Include="Requests\Risk\Commands\PayLater\Uk\RiskPayLaterAddPaymentCardPayLaterUkCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\PayLater\Uk\RiskPayLaterSaveCustomerAddressPayLaterUkCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\PayLater\Uk\RiskPayLaterSaveEmploymentDetailsPayLaterUkCommand.cs" />
+    <Compile Include="Requests\Risk\Commands\PayLater\Uk\RiskSavePayLaterCustomerAddressPayLaterUkCommand.cs" />
+    <Compile Include="Requests\Risk\Commands\PayLater\Uk\RiskSavePayLaterEmploymentDetailsPayLaterUkCommand.cs" />
     <Compile Include="Requests\Risk\Commands\PayLater\Uk\RiskSavePayLaterCustomerDetailsPayLaterUkCommand.cs" />
     <Compile Include="Requests\Risk\Commands\PayLater\Uk\VerifyApplicationPayLaterUkCommand.cs" />
     <Compile Include="Requests\Risk\Commands\Pl\RiskAddBankAccountPlCommand.cs" />

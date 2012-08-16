@@ -23,9 +23,9 @@ namespace Wonga.QA.ServiceTests.Risk.PayLater
         }
 
         [Test, AUT(AUT.Uk), Ignore("Awaiting bug fixes")]
-        public void RiskPayLaterSaveCustomerAddress()
+        public void RiskSavePayLaterCustomerAddress()
         {
-            Drive.Api.Commands.Post(new RiskPayLaterSaveCustomerAddressPayLaterUkCommand
+            Drive.Api.Commands.Post(new RiskSavePayLaterCustomerAddressPayLaterUkCommand
                                         {
                                             AccountId = Guid.NewGuid(),
                                             AddressId = Guid.NewGuid(),
@@ -40,7 +40,7 @@ namespace Wonga.QA.ServiceTests.Risk.PayLater
         [Test, AUT(AUT.Uk), Ignore("Awaiting bug fixes")]
         public void RiskSavePayLaterEmploymentDetails()
         {
-            Drive.Api.Commands.Post(new RiskPayLaterSaveEmploymentDetailsPayLaterUkCommand
+            Drive.Api.Commands.Post(new RiskSavePayLaterEmploymentDetailsPayLaterUkCommand
                                         {
                                             AccountId = Guid.NewGuid(),
                                             IncomeFrequency = "LastFridayOfMonth",
