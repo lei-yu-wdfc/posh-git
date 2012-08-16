@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Wonga.QA.Generators.Core;
 
 namespace Wonga.QA.Generators.Api
