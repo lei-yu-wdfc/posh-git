@@ -225,19 +225,9 @@ namespace Wonga.QA.Tests.Salesforce
             ApplicationOperations.ReportComplaint(application, caseId);
             SalesforceOperations.CheckSalesApplicationStatus(application,
                                                             (double) salesforceStatusAlias.Complaint);
-            CheckSupressionTable(application);
         }
 
-        private void CheckSupressionTable(Application application)
-        {
-            int appInternalId =ApplicationOperations.GetAppInternalId(application);
-            Do.Until(() => _commsSuppressionsRepo.FindAll(
-                           _commsSuppressionsRepo.AccountId == application.AccountId && _commsSuppressionsRepo.Complaint == 1).Single());
-            Do.Until(() => _paymentsSuppressionsRepo.FindAll(
-                _paymentsSuppressionsRepo.ApplicationId == appInternalId && _paymentsSuppressionsRepo.ComplaintSuppression == 1).Single());
-        }
-
-        #endregion helpers#
+    	#endregion helpers#
 
     }
 }
