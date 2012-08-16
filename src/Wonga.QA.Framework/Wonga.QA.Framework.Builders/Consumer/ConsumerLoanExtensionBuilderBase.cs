@@ -8,29 +8,29 @@ namespace Wonga.QA.Framework.Builders.Consumer
     abstract class ConsumerLoanExtensionBuilderBase
     {
         protected ConsumerLoanExtensionDataBase ExtensionData;
-        public string PaymentCardId;
+        public Guid PaymentCardId;
         public string PaymentCardCv2;
-        public string CustomerId;
-        public string ApplicationId;
+        public Guid CustomerId;
+        public Guid ApplicationId;
 
         public ConsumerLoanExtensionBuilderBase(Guid customerId, Guid applicationId, DateTime term, double partPaymentAmount)
         {
-            CustomerId = Convert.ToString(customerId);
-            ApplicationId = Convert.ToString(applicationId);
+            CustomerId = customerId;
+            ApplicationId = applicationId;
             ExtensionData.Term = term;
             ExtensionData.PartPaymentAmount = (Decimal)partPaymentAmount;
         }
 
         public LoanExtension Build()
         {
-            GetGetPaymentCardId(new Guid(CustomerId));
+            GetGetPaymentCardId(CustomerId);
             ExtensionData.OriginalBalance = (decimal)GetOriginalBalance();
             ExtensionData.NewFinalBalance = (decimal)GetNewFinalBalance();
             RequestLoanExtension();
             if (ExtensionData.HasStatusAccepted)
                 AcceptLoanExtension();
 
-            return CreateLoanExtension((bool)ExtensionData.HasStatusAccepted, new Guid(ExtensionData.LoanExtensionId), new Guid(CustomerId), new Guid(ApplicationId), (DateTime)ExtensionData.Term, (double)ExtensionData.PartPaymentAmount, (double)ExtensionData.OriginalBalance, (double)ExtensionData.NewFinalBalance);
+            return CreateLoanExtension((bool)ExtensionData.HasStatusAccepted, new Guid(ExtensionData.LoanExtensionId), CustomerId, ApplicationId, (DateTime)ExtensionData.Term, (double)ExtensionData.PartPaymentAmount, (double)ExtensionData.OriginalBalance, (double)ExtensionData.NewFinalBalance);
         }
 
         public ConsumerLoanExtensionBuilderBase OnlyInRequest()
