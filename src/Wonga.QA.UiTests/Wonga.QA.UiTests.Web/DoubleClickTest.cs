@@ -27,7 +27,6 @@ namespace Wonga.QA.UiTests.Web
             var journeyL0 = JourneyFactory.GetL0Journey(Client.DoubleclickCookiesHome())
               .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
             var acceptedPage = journeyL0.Teleport<AcceptedPage>() as AcceptedPage;
-            var home = Client.Home();
         }
 
         [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-321")]

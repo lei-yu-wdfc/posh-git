@@ -35,7 +35,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
             Do.Until(() => Source);
             
             _validator.Run();
-
+            Headers = _validator.Headers;
             Content = Config.Ui.Browser.Equals(Config.UiConfig.BrowserType.FirefoxMobile) ? Do.Until(() => Client.Driver.FindElement(By.Id("content-content"))) : Do.Until(() => Client.Driver.FindElement(By.Id("content-area")));
 
             ReadOnlyCollection<IWebElement> errors = Client.Driver.FindElements(By.ClassName("error"));

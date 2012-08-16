@@ -72,9 +72,9 @@
     <Compile Include="Region\Wb\MyAccounts\HelpTest.cs" />
     <Compile Include="Region\Wb\MyAccounts\MyAccountTests.cs" />
     <Compile Include="Region\Wb\SliderTests.cs" />
-    <Compile Include="Region\Za\BehaviourAndAdvertTracking.cs" />
+    <Compile Include="Region\Za\ZaBehaviourAndAdvertTracking.cs" />
     <Compile Include="Region\Za\EnabledModulesTests.cs" />
-    <Compile Include="Region\Za\Journey\L0JourneyTests.cs" />
+    <Compile Include="Region\Za\Journey\ZaL0JourneyTests.cs" />
     <Compile Include="Region\Za\Journey\LnJourneyTests.cs" />
     <Compile Include="Region\Za\MyAccounts\HelpTest.cs" />
     <Compile Include="Region\Za\MyAccounts\MyAccountTests.cs" />
