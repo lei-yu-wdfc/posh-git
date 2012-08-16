@@ -8,9 +8,15 @@ namespace Wonga.QA.Generators.Api
 	{
 		public void Generate()
 		{
-			var schemaFile = Origin.GetApiSchema();
-			var classes = SchemaToClassGenerator.Generate(schemaFile);
-			HierarchicalClassFileWriter.WriteClassFilesToDisk(new DirectoryInfo("C:/Api"), classes as List<MessageClassDefinition>);
+			var outputDirectory = new DirectoryInfo("C:/");
+
+			var commandsSchemaFile = Origin.GetApiCommandsSchema();
+			var commandClasses = SchemaToClassGenerator.Generate(commandsSchemaFile, outputDirectory);
+			HierarchicalClassFileWriter.WriteClassFilesToDisk(outputDirectory, commandClasses as List<MessageClassDefinition>);
+
+			var queriesSchemaFile = Origin.GetApiQueriesSchema();
+			var queryClasses = SchemaToClassGenerator.Generate(queriesSchemaFile, outputDirectory);
+			HierarchicalClassFileWriter.WriteClassFilesToDisk(outputDirectory, queryClasses as List<MessageClassDefinition>);
 		}
 	}
 }

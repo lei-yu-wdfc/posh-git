@@ -24,6 +24,7 @@ namespace Wonga.QA.Generators.Core
 			FileName = String.Format("{0}.cs", ClassName);
 			MessageType = GetMessageType();
 			Component = GetComponent();
+			Region = GetRegion();
 		}
 
 		private String GetRegion()
@@ -53,7 +54,25 @@ namespace Wonga.QA.Generators.Core
 
 		private String GetComponent()
 		{
-			return Namespace.Split('.')[1];
+			var parts = Namespace.Split('.').ToArray();
+			var component = String.Empty;
+
+			var i0 = Array.IndexOf(parts, "Wonga") + 1;
+			int i1;
+			
+			if( MessageType == "Command")
+				i1 = Array.IndexOf(parts, "Commands") - 1;
+
+			else
+				i1 = Array.IndexOf(parts, "Queries") - 1;
+
+			for(int i = i0; i <= i1 ; i++)
+			{
+				component += parts[i];
+				component += ".";
+			}
+
+			return component.TrimEnd('.');
 		}
 	}
 }
