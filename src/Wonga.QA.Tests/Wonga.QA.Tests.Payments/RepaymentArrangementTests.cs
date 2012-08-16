@@ -98,7 +98,7 @@ namespace Wonga.QA.Tests.Payments
 			_application.CancelRepaymentArrangement();
 		}
 
-		[Test, JIRA("UKOPS-79"), DependsOn("CancelRepaymentArrangemntAfterRepaymentToday")]
+		[Test, AUT(AUT.Uk), JIRA("UKOPS-79"), DependsOn("CancelRepaymentArrangemntAfterRepaymentToday")]
 		public void RepaymentArrangemetnDetailsQueryForCanceledRA()
 		{
 			var repaymentArrangementDetails = Drive.Cs.Queries.Post(new GetRepaymentArrangementsQuery() { ApplicationId = _application.Id });
