@@ -78,9 +78,16 @@ namespace Wonga.QA.Generators.Core
 			return types;
 		}
 
-		public static FileInfo GetApiSchema()
+		public static FileInfo GetApiCommandsSchema()
 		{
-			return ApiDirectory.GetFiles("Api.xsd", SearchOption.AllDirectories).First();
+			var dir = new DirectoryInfo(Path.Combine(ApiDirectory.FullName, "commands"));
+			return dir.GetFiles("Api.xsd", SearchOption.AllDirectories).First();
+		}
+
+		public static FileInfo GetApiQueriesSchema()
+		{
+			var dir = new DirectoryInfo(Path.Combine(ApiDirectory.FullName, "queries"));
+			return dir.GetFiles("Api.xsd", SearchOption.AllDirectories).First();
 		}
 
 		private static void LogAssemblyLoaderExceptions(Assembly assembly, ReflectionTypeLoadException ex)

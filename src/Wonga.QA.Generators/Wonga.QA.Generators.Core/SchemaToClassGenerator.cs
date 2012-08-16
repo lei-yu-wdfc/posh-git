@@ -1,7 +1,6 @@
 ﻿using System;
 using System.CodeDom;
 using System.CodeDom.Compiler;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,15 +13,27 @@ namespace Wonga.QA.Generators.Core
 {
 	public static class SchemaToClassGenerator
 	{
-		private static DirectoryInfo directory = new DirectoryInfo("c:/Api");
+		private static DirectoryInfo _directory = new DirectoryInfo("c:/Api");
 
-		public static IEnumerable<MessageClassDefinition> Generate(FileInfo schemaFile)
+		public static IEnumerable<MessageClassDefinition> Generate(FileInfo schemaFile, DirectoryInfo directory)
 		{
+			_directory = directory;
+
+			CreateDirectoryIfDoesntExist(_directory.FullName);
+
 			var schema = GetValidatedSchema(schemaFile);
 			var messages = GetNamespaceMessagesDictionary(schema);
 			var types = GetSchemaTypes(schema);
 			
-			return ClassBuilder.Build(messages, types, directory);
+			return ClassBuilder.Build(messages, types, _directory);
+		}
+
+		private static void CreateDirectoryIfDoesntExist(String directory)
+		{
+			if (!Directory.Exists(directory))
+			{
+				Directory.CreateDirectory(directory);
+			}
 		}
 
 		private static XmlSchema GetValidatedSchema(FileInfo schemaFile)
@@ -49,7 +60,7 @@ namespace Wonga.QA.Generators.Core
 		private static Dictionary<String, Type> GetSchemaTypes(XmlSchema schema)
 		{
 			var rootElement = schema.Items.OfType<XmlSchemaElement>().First();
-			var results = CompileGeneratedClassFileForXmlSchemaElement(directory, rootElement, schema);
+			var results = CompileGeneratedClassFileForXmlSchemaElement(_directory, rootElement, schema);
 			return results.CompiledAssembly.GetTypes().Where(a => a.Name.Contains("Messages") && !a.Name.Contains("Response")).ToDictionary(t => t.GetName());
 		}
 

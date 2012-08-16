@@ -1,28 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace Wonga.QA.Generators.Core
 {
 	public static class HierarchicalClassFileWriter
 	{
-		private static DirectoryInfo _parentDirectory;
-		private static DirectoryInfo _commandsDirectory;
-		private static DirectoryInfo _queriesDirectory;
-
-		private static readonly String[] Regions = new [] {"Ca", "Pl", "Uk", "Za"};
-
 		public static void WriteClassFilesToDisk(DirectoryInfo parentDirectory, List<MessageClassDefinition> classes )
 		{
-			WriteFiles(_commandsDirectory, classes);
+			WriteFiles(parentDirectory, classes);
 		}
 
-		private static void CreateDirectoryIfDoesntExist(DirectoryInfo directory)
+		private static void CreateDirectoryIfDoesntExist(String directory)
 		{
-			if( !Directory.Exists(directory.FullName))
+			if( !Directory.Exists(directory))
 			{
-				Directory.CreateDirectory(directory.FullName);
+				Directory.CreateDirectory(directory);
 			}
 		}
 
@@ -36,8 +29,11 @@ namespace Wonga.QA.Generators.Core
 
 		private static void WriteFile(DirectoryInfo parentDirectory, MessageClassDefinition messageClassDefinition)
 		{
-			var fileFullName = GetDirectory(parentDirectory, messageClassDefinition);
-			var file = new FileInfo(fileFullName);
+			var fileDirectory = GetDirectory(parentDirectory, messageClassDefinition);
+			CreateDirectoryIfDoesntExist(fileDirectory);
+
+			var file = new FileInfo(Path.Combine(fileDirectory, messageClassDefinition.FileName));
+			DeleteFileIfExists(file);
 
 			using (StreamWriter writer = file.CreateText())
 				writer.Write(messageClassDefinition.ClassBody);
@@ -45,7 +41,29 @@ namespace Wonga.QA.Generators.Core
 
 		private static String GetDirectory(DirectoryInfo parentDirectory, MessageClassDefinition messageClassDefinition)
 		{
-			return Path.Combine(parentDirectory.FullName, messageClassDefinition.Component, messageClassDefinition.MessageType, messageClassDefinition.Region, messageClassDefinition.FileName);
+			var typeFolder = messageClassDefinition.MessageType == "Command" ? "Commands" : "Queries";
+			var componentFolder = GetSubDirectoryFromComponent(messageClassDefinition.Component);
+			return Path.Combine(parentDirectory.FullName, 
+				componentFolder,
+				typeFolder, 
+				messageClassDefinition.Region);
+		}
+
+		private static String GetSubDirectoryFromComponent(String component)
+		{
+			if(!component.Contains("."))
+				return component;
+
+			var parts = component.Split('.');
+			return Path.Combine(parts);
+		}
+
+		private static void DeleteFileIfExists(FileInfo file)
+		{
+			if(File.Exists(file.FullName))
+			{
+				File.Delete(file.FullName);
+			}
 		}
 	}
 }
