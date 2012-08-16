@@ -24,8 +24,9 @@ namespace Wonga.QA.Framework.UI.Ui.Pages.Helpers
             _page = page;
             _fieldName = fieldName;
 
-            ExecutableFunction callBackFunction = new ExecutableFunction((ExecutableFunction)callBack);
-            _baseCallBack = callBackFunction;
+            _baseCallBack = (ExecutableFunction)Delegate.CreateDelegate(typeof(ExecutableFunction),
+                                                           callBack.Target,
+                                                           callBack.Method);
 
             List<Int32> list = EnumList(restrictionList, restrictionType, fieldType);
             ValidateByType(fieldType, list, customRules);
@@ -48,6 +49,12 @@ namespace Wonga.QA.Framework.UI.Ui.Pages.Helpers
                 case FieldType.String:
                     fullList = Array.ConvertAll(Enum.GetValues(typeof(FieldTypeString)).Cast<FieldTypeString>().ToArray(), value => (Int32)value).ToList();
                     break;
+                case FieldType.Select:
+                    fullList = Array.ConvertAll(Enum.GetValues(typeof(FieldTypeSelect)).Cast<FieldTypeSelect>().ToArray(), value => (Int32)value).ToList();
+                    break;
+                case FieldType.Date:
+                    fullList = Array.ConvertAll(Enum.GetValues(typeof(FieldTypeDate)).Cast<FieldTypeDate>().ToArray(), value => (Int32)value).ToList();
+                    break;
             }
             return fullList;
         }
@@ -60,7 +67,11 @@ namespace Wonga.QA.Framework.UI.Ui.Pages.Helpers
                 case FieldType.String:
                     ValidationRulesHelper.ValidateForString(list, CallBack, customCallBacks);
                     break;
+                case FieldType.Select:
+                    ValidationRulesHelper.ValidateForSelect(list, CallBack, customCallBacks);
+                    break;
                 case FieldType.Date:
+                    ValidationRulesHelper.ValidateForDate(list, CallBack, customCallBacks);
                     break;
                 case FieldType.DateTime:
                     break;

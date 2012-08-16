@@ -38,7 +38,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.FinancialAssessment
         public string PaymentFrequency
         {
             get { return _paymentFrequency.GetValue(); }
-            set { _paymentFrequency.SendValue(value); }
+            set { _paymentFrequency.SendKeys(value); }
         }
 
         public string RepaymentAmount
@@ -51,6 +51,17 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.FinancialAssessment
         {
             _buttonPrevious.Click();
             return new FADebtsPage(Client);
+        }
+
+        public BasePage NextClick(bool error = false)
+        {
+            _buttonNext.Click();
+            if (error)
+            {
+                var validator = new ValidatorBuilder().WithoutErrorsCheck().Build();
+                return new FARepaymentPlanPage(Client, validator);
+            }
+            return new FAWaitPage(Client);
         }
     }
 }

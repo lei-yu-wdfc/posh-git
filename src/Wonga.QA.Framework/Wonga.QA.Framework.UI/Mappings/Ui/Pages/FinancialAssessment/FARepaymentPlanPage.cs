@@ -7,7 +7,7 @@ using MbUnit.Framework.ContractVerifiers;
 
 namespace Wonga.QA.Framework.UI.Mappings.Pages.FinancialAssessment
 {
-    public sealed class FARepaymentPlan
+    public sealed class FARepaymentPlanPage
     {
         public String FirstRepaymentDate { get; set; }
         public String PaymentFrequency { get; set; }

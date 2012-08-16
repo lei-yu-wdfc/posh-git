@@ -150,7 +150,7 @@
     <Compile Include="Mappings\Ui\Pages\FinancialAssessment\FAExpenditurePage.cs" />
     <Compile Include="Mappings\Ui\Pages\FinancialAssessment\FAIncomePage.cs" />
     <Compile Include="Mappings\Ui\Pages\FinancialAssessment\FALoginPage.cs" />
-    <Compile Include="Mappings\Ui\Pages\FinancialAssessment\FARepaymentPlan.cs" />
+    <Compile Include="Mappings\Ui\Pages\FinancialAssessment\FARepaymentPlanPage.cs" />
     <Compile Include="Mappings\Ui\Pages\FinancialAssessment\FinancialAssessmentPage.cs" />
     <Compile Include="Mappings\Ui\Pages\PayLater\PayLater.cs" />
     <Compile Include="Testing\Attributes\IgnorePageErrorsAttribute.cs" />
@@ -161,6 +161,7 @@
     <Compile Include="Ui\Enums\FieldTypeList.cs" />
     <Compile Include="Ui\Enums\FieldTypeSelect.cs" />
     <Compile Include="Ui\Enums\FieldTypeString.cs" />
+    <Compile Include="Ui\Enums\MonthShortName.cs" />
     <Compile Include="Ui\Pages\Common\BusinessSummaryPage.cs" />
     <Compile Include="Ui\Pages\Common\DebitOrderPage.cs" />
     <Compile Include="Ui\Pages\Common\DebitOrderSuccessPage.cs" />
@@ -325,8 +326,10 @@
     <Compile Include="Ui\Pages\FinancialAssessment\FAIncomePage.cs" />
     <Compile Include="Ui\Pages\FinancialAssessment\FALoginPage.cs" />
     <Compile Include="Ui\Pages\FinancialAssessment\FARepaymentPlanPage.cs" />
+    <Compile Include="Ui\Pages\FinancialAssessment\FAWaitPage.cs" />
     <Compile Include="Ui\Pages\FinancialAssessment\FinancialAssessmentPage.cs" />
     <Compile Include="Ui\Pages\Helpers\DataValidation.cs" />
+    <Compile Include="Ui\Pages\Helpers\Extensions.cs" />
     <Compile Include="Ui\Pages\Helpers\PropertiesHelper.cs" />
     <Compile Include="Ui\Pages\Helpers\ValidationHelper.cs" />
     <Compile Include="Ui\Pages\Helpers\ValidationRulesHelper.cs" />

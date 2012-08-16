@@ -12,6 +12,8 @@ namespace Wonga.QA.Framework.UI.Ui.Pages.Helpers
         public delegate void Callback(String value);
         public delegate String CustomCallback();
 
+        private static CustomCallback _customCallBack;
+
         public static void ValidateForString(List<Int32> list, Callback callback, List<KeyValuePair<Int32, Delegate>> customCallBacks)
         {
             foreach (Int32 item in list)
@@ -21,8 +23,10 @@ namespace Wonga.QA.Framework.UI.Ui.Pages.Helpers
                 {
                     foreach (KeyValuePair<Int32, Delegate> customCallBack in customCallBacks.Where(z => z.Key == item))
                     {
-                        CustomCallback customFunction = new CustomCallback((CustomCallback)customCallBack.Value);
-                        value = customFunction();
+                        _customCallBack = (CustomCallback)Delegate.CreateDelegate(typeof(CustomCallback),
+                                                            customCallBack.Value.Target,
+                                                            customCallBack.Value.Method);
+                        value = _customCallBack();
                         CallBack(callback, value);
                     }
                     break;
@@ -50,10 +54,80 @@ namespace Wonga.QA.Framework.UI.Ui.Pages.Helpers
             }
         }
 
+        public static void ValidateForSelect(List<Int32> list, Callback callback, List<KeyValuePair<Int32, Delegate>> customCallBacks)
+        {
+            foreach (Int32 item in list)
+            {
+                String value = null;
+                if (customCallBacks.Count() != 0 && customCallBacks.Where(z => z.Key == item).Select(p => new { Key = p.Key, Value = p.Value }).FirstOrDefault() != null)
+                {
+                    foreach (KeyValuePair<Int32, Delegate> customCallBack in customCallBacks.Where(z => z.Key == item))
+                    {
+                        CustomCallback customFunction = (CustomCallback)Delegate.CreateDelegate(typeof(CustomCallback),
+                                                           customCallBack.Value.Target,
+                                                           customCallBack.Value.Method);
+                        value = customFunction();
+                        CallBack(callback, value);
+                    }
+                    break;
+                }
+                else
+                    switch ((FieldTypeSelect)item)
+                    {
+                        case FieldTypeSelect.Equal:
+                            value = GetSelectEqual();
+                            break;
+                    }
+
+                CallBack(callback, value);
+            }
+        }
+
+        public static void ValidateForDate(List<Int32> list, Callback callback, List<KeyValuePair<Int32, Delegate>> customCallBacks)
+        {
+            foreach (Int32 item in list)
+            {
+                String value = null;
+                if (customCallBacks.Count() != 0 && customCallBacks.Where(z => z.Key == item).Select(p => new { Key = p.Key, Value = p.Value }).FirstOrDefault() != null)
+                {
+                    foreach (KeyValuePair<Int32, Delegate> customCallBack in customCallBacks.Where(z => z.Key == item))
+                    {
+                        CustomCallback customFunction = (CustomCallback)Delegate.CreateDelegate(typeof(CustomCallback),
+                                                           customCallBack.Value.Target,
+                                                           customCallBack.Value.Method);
+                        value = customFunction();
+                        CallBack(callback, value);
+                    }
+                    break;
+                }
+                else
+                    switch ((FieldTypeDate)item)
+                    {
+                        case FieldTypeDate.Equal:
+                            value = GetCurrentDateInShortFormat();
+                            break;
+                        case FieldTypeDate.Past:
+                            value = GetPastDateInShortFormat();
+                            break;
+                        case FieldTypeDate.Future:
+                            value = GetFutureDateInShortFormat();
+                            break;
+                    }
+
+                CallBack(callback, value);
+            }
+        }
+
         private static void CallBack(Callback callback, String value)
         {
             Callback function = new Callback(callback);
             function(value);
+        }
+
+        #region StringFunctions
+        private static String GetSelectRandomValue()
+        {
+            return Get.GetName();
         }
 
         private static String GetStringLetters()
@@ -83,5 +157,30 @@ namespace Wonga.QA.Framework.UI.Ui.Pages.Helpers
             }
             return new string(buffer);
         }
+        #endregion
+
+        #region SelectFunctions
+        private static String GetSelectEqual()
+        {
+            return "-- Please Select --";
+        }
+        #endregion
+
+        #region DateFunctions
+        private static String GetCurrentDateInShortFormat()
+        {
+            return DateTime.UtcNow.ToShortDate();
+        }
+
+        private static String GetPastDateInShortFormat()
+        {
+            return DateTime.UtcNow.AddDays(-Get.RandomInt(1, 30)).ToShortDate();
+        }
+
+        private static String GetFutureDateInShortFormat()
+        {
+            return DateTime.UtcNow.AddDays(Get.RandomInt(1, 30)).ToShortDate();
+        }
+        #endregion
     }
 }

@@ -7,22 +7,23 @@ namespace Wonga.QA.Framework.UI.Ui.Enums
 {
     public enum FieldTypeDate
     {
-        LessThan = 1,
-        MoreThan = 2,
+        Equal = 1,
+        Past = 2,
+        Future = 3,
 
         // UK formats
         //  dd Month yyyy
-        UkFullNow = 3,
-        UkFullRandom = 4,
+        UkFullNow = 4,
+        UkFullRandom = 5,
         // dd Month yyyy
-        UkLongNow = 5,
-        UkLongRandom = 6,
+        UkLongNow = 6,
+        UkLongRandom = 7,
         // dd-Mon-yyyy
-        UkMediumNow = 7,
-        UkMediumRandom = 8,
+        UkMediumNow = 8,
+        UkMediumRandom = 9,
         // dd/mm/yy
-        UkShortNow = 9,
-        UkShortRandom = 10,
+        UkShortNow = 10,
+        UkShortRandom = 11,
 
     }
 }
