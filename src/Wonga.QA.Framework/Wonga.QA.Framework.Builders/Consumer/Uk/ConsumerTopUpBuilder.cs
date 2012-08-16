@@ -1,63 +1,65 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Requests.Payments.Commands;
 using Wonga.QA.Framework.Api.Requests.Payments.Queries;
+using Wonga.QA.Framework.Application.Queries;
 
 namespace Wonga.QA.Framework.Builders.Consumer.Uk
 {
-    class ConsumerTopUpBuilder : ConsumerTopUpBuilderBase
+    class ConsumerTopupBuilder : ConsumerTopupBuilderBase
     {
-        public ConsumerTopUpBuilder(Guid customerId, Guid applicationId, int amount)
-            : base(customerId, applicationId, amount)
+    	private ApiResponse _cachedTopupCalculationResponse = null;
+
+        public ConsumerTopupBuilder(Guid applicationId, ConsumerTopupDataBase consumerTopupData)
+            : base(applicationId, consumerTopupData)
         {
         }
 
-        protected override double GetInterest(int amount)
+        protected override Decimal GetInterest(int amount)
         {
-            var response = Drive.Api.Queries.Post(GetFixedTermLoanTopupCalculationQuery.New(r =>
-            {
-                r.ApplicationId = TopUpData.applicationId;
-                r.TopupAmount = TopUpData.amount;
-            }));
-
-            return Convert.ToDouble(response.Values["InterestAndFeesAmount"].Single());
+        	var response = GetTopUpCalculationQueryResponse();
+            return Convert.ToDecimal(response.Values["InterestAndFeesAmount"].Single());
         }
 
-        protected override double GetTotalRepayble(int amount)
+        protected override Decimal GetTotalRepayable(int amount)
         {
-            var response = Drive.Api.Queries.Post(GetFixedTermLoanTopupCalculationQuery.New(r =>
-            {
-                r.ApplicationId = TopUpData.applicationId;
-                r.TopupAmount = TopUpData.amount;
-            }));
-
-            return Convert.ToDouble(response.Values["TotalRepayable"].Single());
+        	var response = GetTopUpCalculationQueryResponse();
+            return Convert.ToDecimal(response.Values["TotalRepayable"].Single());
         }
 
-        protected override TopUp CreateTopUp(double interest, double totalToRepay, Guid topUpId, Guid customerId, Guid applicationId)
-        {
-            return new TopUp(interest, totalToRepay, topUpId, customerId, applicationId);
-        }
+		private ApiResponse GetTopUpCalculationQueryResponse()
+		{
+			if(_cachedTopupCalculationResponse == null)
+			{
+				_cachedTopupCalculationResponse = Drive.Api.Queries.Post(GetFixedTermLoanTopupCalculationQuery.New(r =>
+				{
+					r.ApplicationId = ApplicationId;
+					r.TopupAmount = TopupData.Amount;
+				}));
+			}
 
-        protected override void RequestTopUp()
+			return _cachedTopupCalculationResponse;
+		}
+
+        protected override Int32 RequestTopUp()
         {
             var response = Drive.Api.Queries.Post(CreateFixedTermLoanTopupCommand.New(r =>
-            {
-                r.ApplicationId = TopUpData.applicationId;
-                r.TopupAmount = TopUpData.amount;
-            }));
-            TopUpData.FixedTermLoanTopupId = response.Values["FixedTermLoanTopupId"].Single();
+			{
+				r.ApplicationId = ApplicationId;
+				r.TopupAmount = TopupData.Amount;
+			}));
+
+			return Convert.ToInt32(response.Values["FixedTermLoanTopupId"].Single());
         }
 
         protected override void AcceptTopUp()
         {
-            var response = Drive.Api.Queries.Post(SignFixedTermLoanTopupCommand.New(r =>
-                {
-                    r.AccountId = TopUpData.customerId;
-                    r.FixedTermLoanTopupId = TopUpData.FixedTermLoanTopupId;
-                }));
+			Drive.Api.Queries.Post(SignFixedTermLoanTopupCommand.New(r =>
+			{
+				r.AccountId = ApplicationQueries.Consumer.GetAccountIdForApplication(ApplicationId);
+				r.FixedTermLoanTopupId = TopupId;
+			}));
         }
     }
 }

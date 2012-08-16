@@ -18,9 +18,9 @@ namespace Wonga.QA.Generators.Cs
                 Config.RepoName = repo;
                 ILookup<String, Type> requests = Origin.GetTypes().Where(t => t.IsRequest()).ToLookup(t => t.GetName());
 
-                foreach (FileInfo file in Origin.GetSchemas().Where(f => f.IsCs()))
+               // foreach (FileInfo file in Origin.GetSchemas().Where(f => f.IsCs()))
                 {
-                    classGenerator.GenerateXmlSchemaClassesFiles(file, requests);
+                   // classGenerator.GenerateXmlSchemaClassesFiles(file, requests);
                 }
             }
 

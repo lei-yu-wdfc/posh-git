@@ -42,19 +42,17 @@
   <ItemGroup>
     <Compile Include="ApplicationBase.cs" />
     <Compile Include="Operations\ApplicationOperations.cs" />
-    <Compile Include="Operations\ApplicationOperationsBase.cs" />
-    <Compile Include="Operations\ApplicationOperationsTimeShift.cs" />
+    <Compile Include="Operations\Consumer\ConsumerApplicationOperationsTimeShift.cs" />
     <Compile Include="Queries\ApplicationQueries.cs" />
-    <Compile Include="Queries\ApplicationQueriesBase.cs" />
-    <Compile Include="Business\BusinessApplication.cs" />
-    <Compile Include="Business\BusinessApplicationOperations.cs" />
-    <Compile Include="Business\BusinessApplicationQueries.cs" />
-    <Compile Include="Consumer\ConsumerApplication.cs" />
-    <Compile Include="Consumer\ConsumerApplicationOperations.cs" />
-    <Compile Include="Consumer\ConsumerApplicationQueries.cs" />
-    <Compile Include="PayLater\PayLaterApplication.cs" />
-    <Compile Include="PayLater\PayLaterApplicationOperations.cs" />
-    <Compile Include="PayLater\PayLaterApplicationQueries.cs" />
+    <Compile Include="BusinessApplication.cs" />
+    <Compile Include="Operations\Business\BusinessApplicationOperations.cs" />
+    <Compile Include="Queries\Business\BusinessApplicationQueries.cs" />
+    <Compile Include="ConsumerApplication.cs" />
+    <Compile Include="Operations\Consumer\ConsumerApplicationOperations.cs" />
+    <Compile Include="Queries\Consumer\ConsumerApplicationQueries.cs" />
+    <Compile Include="PayLaterApplication.cs" />
+    <Compile Include="Operations\PayLater\PayLaterApplicationOperations.cs" />
+    <Compile Include="Queries\PayLater\PayLaterApplicationQueries.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

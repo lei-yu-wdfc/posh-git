@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Wonga.QA.Framework.Application.Consumer
+namespace Wonga.QA.Framework.Application
 {
 	public class ConsumerApplication : ApplicationBase
 	{

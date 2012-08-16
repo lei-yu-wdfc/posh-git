@@ -66,8 +66,7 @@ namespace Wonga.QA.Generators.Core
 			}
 		}
 
-
-		private void GenerateXmlSchemaClassesFilesInternal(FileInfo xmlSchemaFile, ILookup<String, Type> typesToGenerate)
+		public void GenerateXmlSchemaClassesFilesInternal(FileInfo xmlSchemaFile, ILookup<String, Type> typesToGenerate)
 		{
 			Console.WriteLine(xmlSchemaFile.FullName);
 
@@ -121,7 +120,7 @@ namespace Wonga.QA.Generators.Core
 			}
 		}
 
-		private static CompilerResults CompileGeneratedClassFileForXmlSchemaElement(DirectoryInfo codeDirectory, XmlSchemaElement element, XmlSchema schema)
+		public static CompilerResults CompileGeneratedClassFileForXmlSchemaElement(DirectoryInfo codeDirectory, XmlSchemaElement element, XmlSchema schema)
 		{
 			var ns = new CodeNamespace();
 			var exporter = new XmlCodeExporter(ns);

@@ -24,6 +24,26 @@ namespace Wonga.QA.Generators.Core
 			get { return new DirectoryInfo(Path.Combine(Root.FullName, "package")); }
 		}
 
+		public static DirectoryInfo WwwRootDirectory
+		{
+			get { return new DirectoryInfo(@"C:\inetpub\wwwroot");}
+		}
+
+		public static DirectoryInfo ApiDirectory
+		{
+			get { return new DirectoryInfo(Path.Combine(WwwRootDirectory.FullName, "API")); }
+		}
+
+		public static DirectoryInfo UcgDirectory
+		{
+			get { return new DirectoryInfo(Path.Combine(WwwRootDirectory.FullName, "UCG")); }
+		}
+
+		public static DirectoryInfo CsApiDirectory
+		{
+			get { return new DirectoryInfo(Path.Combine(WwwRootDirectory.FullName, "CSAPI")); }
+		}
+
 		public static IEnumerable<Assembly> GetAssemblies()
 		{
 			var proj = GetProjects();
@@ -58,9 +78,9 @@ namespace Wonga.QA.Generators.Core
 			return types;
 		}
 
-		public static IEnumerable<FileInfo> GetSchemas()
+		public static FileInfo GetApiSchema()
 		{
-			return Src.GetFiles("Wonga.*.xsd", SearchOption.AllDirectories).Where(f => !f.IsTest() && !f.IsArtifact());
+			return ApiDirectory.GetFiles("Api.xsd", SearchOption.AllDirectories).First();
 		}
 
 		private static void LogAssemblyLoaderExceptions(Assembly assembly, ReflectionTypeLoadException ex)
