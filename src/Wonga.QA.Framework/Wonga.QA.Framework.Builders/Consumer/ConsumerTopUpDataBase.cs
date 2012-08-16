@@ -11,7 +11,6 @@ namespace Wonga.QA.Framework.Builders.Consumer
         {
             StatusAccepted = true;
             Amount = 100;
-            FixedTermLoanTopupId = Guid.NewGuid().ToString();
         }
     }
 }

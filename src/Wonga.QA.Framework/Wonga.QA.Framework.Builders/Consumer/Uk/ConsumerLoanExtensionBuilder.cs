@@ -7,6 +7,7 @@ using Wonga.QA.Framework.Account.Consumer;
 using Wonga.QA.Framework.Account.Queries;
 using Wonga.QA.Framework.Api.Requests.Payments.Commands;
 using Wonga.QA.Framework.Api.Requests.Payments.Queries;
+using Wonga.QA.Framework.Application.Queries;
 using Wonga.QA.Framework.Builders;
 using Wonga.QA.Framework.Builders.Consumer;
 using Wonga.QA.Framework.Core;
@@ -16,14 +17,14 @@ namespace Wonga.QA.Framework.Builders.Consumer.Uk
 {
     class ConsumerLoanExtensionBuilder : ConsumerLoanExtensionBuilderBase
     {
-        public ConsumerLoanExtensionBuilder(Guid customerId, Guid applicationId, DateTime term, double partPaymentAmount)
-            : base(customerId, applicationId, term, partPaymentAmount)
+        public ConsumerLoanExtensionBuilder(Guid applicationId, DateTime term, double partPaymentAmount, ConsumerLoanExtensionDataBase loanExtensionData)
+            : base(applicationId, term, partPaymentAmount, loanExtensionData)
         {
         }
 
-        protected override LoanExtension CreateLoanExtension(bool hasStatusAccepted, Guid loanExtensionId, Guid customerId, Guid apllicationId, DateTime term, double partPaymentAmount, double originalBalance, double newFinalBalance)
+        protected override LoanExtension CreateLoanExtension(bool hasStatusAccepted, Guid loanExtensionId, Guid apllicationId, DateTime term, double partPaymentAmount, double originalBalance, double newFinalBalance)
         {
-            return new LoanExtension(hasStatusAccepted, loanExtensionId, customerId, apllicationId, term, partPaymentAmount, originalBalance, newFinalBalance);
+            return new LoanExtension(hasStatusAccepted, loanExtensionId, apllicationId, term, partPaymentAmount, originalBalance, newFinalBalance);
         }
 
         protected override void RequestLoanExtension()
@@ -31,7 +32,7 @@ namespace Wonga.QA.Framework.Builders.Consumer.Uk
             var response = Drive.Api.Queries.Post(CreateFixedTermLoanExtensionCommand.New(r =>
             {
                 r.ApplicationId = ApplicationId;
-                r.ExtensionId = ExtensionData.LoanExtensionId;
+                r.ExtensionId = LoanExtensionId;
                 r.PaymentCardId = PaymentCardId;
                 r.PartPaymentAmount = ExtensionData.PartPaymentAmount;
             }));
@@ -42,14 +43,14 @@ namespace Wonga.QA.Framework.Builders.Consumer.Uk
             var response = Drive.Api.Queries.Post(SignFixedTermLoanExtensionCommand.New(r =>
             {
                 r.ApplicationId = ApplicationId;
-                r.ExtensionId = ExtensionData.LoanExtensionId;
+                r.ExtensionId = LoanExtensionId;
             }));
         }
 
-        protected override void GetGetPaymentCardId(Guid cusotmerId)
+        protected override void GetPaymentCardId()
         {
-            AccountQueriesPaymentDetails accountQueries = new AccountQueriesPaymentDetails();
-            PaymentCardId = accountQueries.GetPrimaryPaymentCardGuid(new ConsumerAccount(cusotmerId));
+            AccountBase accountBase = new ConsumerAccount(ApplicationQueries.Consumer.GetAccountIdForApplication(ApplicationId));
+            PaymentCardId = AccountQueries.Consumer.PaymentDetails.GetPrimaryPaymentCardGuid(accountBase);
         }
 
         protected override double GetOriginalBalance()
@@ -57,7 +58,7 @@ namespace Wonga.QA.Framework.Builders.Consumer.Uk
             var response = Drive.Api.Queries.Post(GetFixedTermLoanExtensionCalculationQuery.New(r =>
             {
                 r.ApplicationId = ApplicationId;
-                r.ExtendDate = ExtensionData.ExtendDate;
+                r.ExtendDate = ExtensionData.Term;
             }));
 
             return Convert.ToDouble(response.Values["OriginalBalance"].Single());
@@ -68,7 +69,7 @@ namespace Wonga.QA.Framework.Builders.Consumer.Uk
             var response = Drive.Api.Queries.Post(GetFixedTermLoanExtensionCalculationQuery.New(r =>
             {
                 r.ApplicationId = ApplicationId;
-                r.ExtendDate = ExtensionData.ExtendDate;
+                r.ExtendDate = ExtensionData.Term;
             }));
 
             return Convert.ToDouble(response.Values["NewFinalBalance"].Single());

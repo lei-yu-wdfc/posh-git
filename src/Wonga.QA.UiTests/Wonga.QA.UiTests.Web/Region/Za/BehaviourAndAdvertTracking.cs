@@ -10,7 +10,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.UiTests.Web.Region.Za
 {
     [Parallelizable(TestScope.All), AUT(AUT.Za)]
-    class BehaviourAndAdvertTracking : UiTest
+    class BehaviourAndAdvertTracking2 : UiTest
     {
         #region DoubleClickTags
 

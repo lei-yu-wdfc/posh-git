@@ -8,18 +8,19 @@ namespace Wonga.QA.Framework.Builders.Consumer
     {
 		protected ConsumerTopupDataBase TopupData;
 
-		protected Int32 TopupId { get; private set; }
+		protected Guid TopupId { get; private set; }
 		protected Guid ApplicationId { get; private set; }
 
     	protected ConsumerTopupBuilderBase(Guid applicationId, ConsumerTopupDataBase consumerTopupData)
         {
             ApplicationId = applicationId;
+    	    TopupId = Guid.NewGuid();
         	TopupData = consumerTopupData;
         }
 
         public Topup Build()
         {
-            TopupId = RequestTopUp();
+            RequestTopUp();
 
             if(TopupData.StatusAccepted)
                 AcceptTopUp();
@@ -35,7 +36,7 @@ namespace Wonga.QA.Framework.Builders.Consumer
 
         protected abstract Decimal GetInterest(int amount);
         protected abstract Decimal GetTotalRepayable(int amount);
-        protected abstract int RequestTopUp();
+        protected abstract void RequestTopUp();
         protected abstract void AcceptTopUp();
     }
 }

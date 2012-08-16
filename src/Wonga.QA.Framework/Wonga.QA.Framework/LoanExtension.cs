@@ -8,7 +8,6 @@ namespace Wonga.QA.Framework
     public class LoanExtension
     {
         public DateTime Term;
-        public Guid CustomerId;
         public Guid ApplicationId;
         public bool IsEnabled;
         public Guid LoanExtensionId;
@@ -18,13 +17,12 @@ namespace Wonga.QA.Framework
         public double NewFinalBalance;
 
 
-        public LoanExtension(bool hasStatusAccepted, Guid loanExtensionId, Guid customerId, Guid apllicationId, DateTime term, double partPaymentAmount, double originalBalance, double newFinalBalance)
+        public LoanExtension(bool hasStatusAccepted, Guid loanExtensionId, Guid apllicationId, DateTime term, double partPaymentAmount, double originalBalance, double newFinalBalance)
         {
             HasStatusAccepted = hasStatusAccepted;
             Term = term;
             IsEnabled = true;
             LoanExtensionId = loanExtensionId;
-            CustomerId = customerId;
             ApplicationId = apllicationId;
             PartPaymentAmount = partPaymentAmount;
             OriginalBalance = originalBalance;

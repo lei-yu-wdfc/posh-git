@@ -17,7 +17,7 @@ namespace Wonga.QA.Framework.Builders.Consumer
                 switch (Config.AUT)
                 {
                     case AUT.Uk:
-                        return new Builders.Consumer.Uk.ConsumerLoanExtensionBuilder(customerId, applicationId, term, partPaymentAmount);
+                        return new Builders.Consumer.Uk.ConsumerLoanExtensionBuilder(customerId, applicationId, term, partPaymentAmount, new ConsumerLoanExtensionDataBase());
                     default:
                         throw new NotSupportedException(Config.AUT.ToString());
                 }
