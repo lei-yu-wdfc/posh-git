@@ -28,7 +28,7 @@ namespace Wonga.QA.ServiceTests.Risk.PayLater
                                             Town = Get.RandomString(10)
                                         });
 
-            Do.Until(() => _riskSavePayLaterCustomerDetailsSagaEntity.FindByAccountId(accountId));
+            Do.Until(() => _riskSavePayLaterCustomerAddressSagaEntity.FindByAccountId(accountId));
         }
 
         [Test, AUT(AUT.Uk), Ignore("Awaiting bug fixes")]
