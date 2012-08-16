@@ -80,9 +80,8 @@ namespace Wonga.QA.Generators.Core
     		                                                              		"	{{",
     		                                                              	},
 																		  classNamespace,
-																		  elementName,
+																		  elementName.Quote(),
 																		  className);
-			var va = builder.ToString();
 			return builder;
 		}
 
