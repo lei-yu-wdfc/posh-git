@@ -39,7 +39,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
         }
 
         [Test, JIRA("UK-438", "UK-1823", "UKWEB-253"), Owner(Owner.StanDesyatnikov)]
-        public void L0DeclinedForEmployedPartTimeTest()
+        public void L0Declined()
         {
             var journeyL0 = JourneyFactory.GetL0Journey(Client.Home())
                 .WithAmount(400).WithDuration(30)
@@ -49,7 +49,8 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
             Assert.IsTrue(declinedPage.DeclineAdviceExists());
         }
 
-        [Test, JIRA("UK-438", "UK-1823"), Owner(Owner.StanDesyatnikov)]
+        /* TODO: check if it is possible to simulate different employment statuses
+         * [Test, JIRA("UK-438", "UK-1823"), Owner(Owner.StanDesyatnikov)]
         [Pending("Enable if we need to simulate different Employment statuses for declined loan")]
         public void L0DeclinedForNotFullEmployedTest([EnumData(typeof(EmploymentStatusEnum), ExcludeArray = new object[] { EmploymentStatusEnum.EmployedFullTime })] EmploymentStatusEnum employmentStatus)
         {
@@ -61,7 +62,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
             var declinedPage = journeyL0.Teleport<DeclinedPage>() as DeclinedPage;
 
             Assert.IsTrue(declinedPage.DeclineAdviceExists());
-        }
+        }*/
 
         [Test, JIRA("UK-969", "UKWEB-250"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
         [Pending ("UKWEB-1143: Document links are not working in Account Setup Page")]
