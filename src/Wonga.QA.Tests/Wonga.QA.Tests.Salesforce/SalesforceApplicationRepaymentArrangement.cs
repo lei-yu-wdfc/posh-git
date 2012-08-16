@@ -52,7 +52,7 @@ namespace Wonga.QA.Tests.Salesforce
         }
 
         [Test]
-        [AUT(AUT.Uk), JIRA("UKOPS-62"), Owner(Owner.AnilKrishnamaneni)]
+        [AUT(AUT.Uk), JIRA("UKOPS-62"), Owner(Owner.AnilKrishnamaneni),Pending("Ticket pending") ]
         public void SuspectFraudApplicationRepaymentArrangementCycle()
         {
             var caseId = Guid.NewGuid();
