@@ -110,18 +110,21 @@ namespace Wonga.QA.Framework.UI.Journey
         {
             var faIncomePage = CurrentPage as FAIncomePage;
             faIncomePage.SalaryAfterTax = _salaryAfterTax;
-            faIncomePage.PartnerSalaryAfterTax = _partnerSalaryAfterTax;
-            faIncomePage.JobseekerAllowance = _jobseekerAllowance;
-            faIncomePage.IncomeSupport = _incomeSupport;
-            faIncomePage.WorkingTaxCredit = _workingTaxCredit;
-            faIncomePage.ChildTaxCredit = _childTaxCredit;
-            faIncomePage.StatePension = _statePension;
-            faIncomePage.PrivateOrWorkPension = _privateOrWorkPension;
-            faIncomePage.PensionCredit = _pensionCredit;
-            faIncomePage.Other = _otherOnIncome;
-            faIncomePage.MaintenenceOrChildSupport = _maintenenceOrChildSupport;
-            faIncomePage.IncomeFromBoardersOrLodgers = _incomeFromBoardersOrLodgers;
-            faIncomePage.StudentLoansOrGrants = _studentLoansOrGrants;
+            if (!_isQuickJump)
+            {
+                faIncomePage.PartnerSalaryAfterTax = _partnerSalaryAfterTax;
+                faIncomePage.JobseekerAllowance = _jobseekerAllowance;
+                faIncomePage.IncomeSupport = _incomeSupport;
+                faIncomePage.WorkingTaxCredit = _workingTaxCredit;
+                faIncomePage.ChildTaxCredit = _childTaxCredit;
+                faIncomePage.StatePension = _statePension;
+                faIncomePage.PrivateOrWorkPension = _privateOrWorkPension;
+                faIncomePage.PensionCredit = _pensionCredit;
+                faIncomePage.Other = _otherOnIncome;
+                faIncomePage.MaintenenceOrChildSupport = _maintenenceOrChildSupport;
+                faIncomePage.IncomeFromBoardersOrLodgers = _incomeFromBoardersOrLodgers;
+                faIncomePage.StudentLoansOrGrants = _studentLoansOrGrants;
+            }
             faIncomePage.OtherIncome = _otherIncome;
 
             if (submit)
@@ -146,35 +149,38 @@ namespace Wonga.QA.Framework.UI.Journey
         {
             var faDebtsPage = CurrentPage as FADebtsPage;
 
-            faDebtsPage.RentPayments = _rentPayments;
-            faDebtsPage.Mortgage = _mortgage;
-            faDebtsPage.OtherSecuredLoans = _otherSecuredLoans;
-            faDebtsPage.CouncilTax = _councilTax;
-            faDebtsPage.MaintenanceOrChildSupport = _maintenceOrChildSupport;
-            faDebtsPage.Gas = _gas;
-            faDebtsPage.Electricity = _electricity;
-            faDebtsPage.HirePurchaseOrConditionalSale = _hirePurchaseOrConditionalSale;
-            faDebtsPage.Other = _otherOnDebts;
-            faDebtsPage.NonPriorityDebtsCreditor0 = _nonPriorityDebtsCreditor0;
-            faDebtsPage.NonPriorityDebtsAmount0 = _nonPriorityDebtsAmount0;
-            faDebtsPage.NonPriorityDebtsCreditor1 = _nonPriorityDebtsCreditor1;
-            faDebtsPage.NonPriorityDebtsAmount1 = _nonPriorityDebtsAmount1;
-            faDebtsPage.NonPriorityDebtsCreditor2 = _nonPriorityDebtsCreditor2;
-            faDebtsPage.NonPriorityDebtsAmount2 = _nonPriorityDebtsAmount2;
-            faDebtsPage.NonPriorityDebtsCreditor3 = _nonPriorityDebtsCreditor3;
-            faDebtsPage.NonPriorityDebtsAmount3 = _nonPriorityDebtsAmount3;
-            faDebtsPage.NonPriorityDebtsCreditor4 = _nonPriorityDebtsCreditor4;
-            faDebtsPage.NonPriorityDebtsAmount4 = _nonPriorityDebtsAmount4;
-            faDebtsPage.NonPriorityDebtsCreditor5 = _nonPriorityDebtsCreditor5;
-            faDebtsPage.NonPriorityDebtsAmount5 = _nonPriorityDebtsAmount5;
-            faDebtsPage.NonPriorityDebtsCreditor6 = _nonPriorityDebtsCreditor6;
-            faDebtsPage.NonPriorityDebtsAmount6 = _nonPriorityDebtsAmount6;
-            faDebtsPage.NonPriorityDebtsCreditor7 = _nonPriorityDebtsCreditor7;
-            faDebtsPage.NonPriorityDebtsAmount7 = _nonPriorityDebtsAmount7;
-            faDebtsPage.NonPriorityDebtsCreditor8 = _nonPriorityDebtsCreditor8;
-            faDebtsPage.NonPriorityDebtsAmount8 = _nonPriorityDebtsAmount8;
-            faDebtsPage.NonPriorityDebtsCreditor9 = _nonPriorityDebtsCreditor9;
-            faDebtsPage.NonPriorityDebtsAmount9 = _nonPriorityDebtsAmount9;
+            if (!_isQuickJump)
+            {
+                faDebtsPage.RentPayments = _rentPayments;
+                faDebtsPage.Mortgage = _mortgage;
+                faDebtsPage.OtherSecuredLoans = _otherSecuredLoans;
+                faDebtsPage.CouncilTax = _councilTax;
+                faDebtsPage.MaintenanceOrChildSupport = _maintenceOrChildSupport;
+                faDebtsPage.Gas = _gas;
+                faDebtsPage.Electricity = _electricity;
+                faDebtsPage.HirePurchaseOrConditionalSale = _hirePurchaseOrConditionalSale;
+                faDebtsPage.Other = _otherOnDebts;
+                faDebtsPage.NonPriorityDebtsCreditor0 = _nonPriorityDebtsCreditor0;
+                faDebtsPage.NonPriorityDebtsAmount0 = _nonPriorityDebtsAmount0;
+                faDebtsPage.NonPriorityDebtsCreditor1 = _nonPriorityDebtsCreditor1;
+                faDebtsPage.NonPriorityDebtsAmount1 = _nonPriorityDebtsAmount1;
+                faDebtsPage.NonPriorityDebtsCreditor2 = _nonPriorityDebtsCreditor2;
+                faDebtsPage.NonPriorityDebtsAmount2 = _nonPriorityDebtsAmount2;
+                faDebtsPage.NonPriorityDebtsCreditor3 = _nonPriorityDebtsCreditor3;
+                faDebtsPage.NonPriorityDebtsAmount3 = _nonPriorityDebtsAmount3;
+                faDebtsPage.NonPriorityDebtsCreditor4 = _nonPriorityDebtsCreditor4;
+                faDebtsPage.NonPriorityDebtsAmount4 = _nonPriorityDebtsAmount4;
+                faDebtsPage.NonPriorityDebtsCreditor5 = _nonPriorityDebtsCreditor5;
+                faDebtsPage.NonPriorityDebtsAmount5 = _nonPriorityDebtsAmount5;
+                faDebtsPage.NonPriorityDebtsCreditor6 = _nonPriorityDebtsCreditor6;
+                faDebtsPage.NonPriorityDebtsAmount6 = _nonPriorityDebtsAmount6;
+                faDebtsPage.NonPriorityDebtsCreditor7 = _nonPriorityDebtsCreditor7;
+                faDebtsPage.NonPriorityDebtsAmount7 = _nonPriorityDebtsAmount7;
+                faDebtsPage.NonPriorityDebtsCreditor8 = _nonPriorityDebtsCreditor8;
+                faDebtsPage.NonPriorityDebtsAmount8 = _nonPriorityDebtsAmount8;
+                faDebtsPage.NonPriorityDebtsCreditor9 = _nonPriorityDebtsCreditor9;
+                faDebtsPage.NonPriorityDebtsAmount9 = _nonPriorityDebtsAmount9;
+            }
 
             if (submit)
             {
@@ -185,7 +191,6 @@ namespace Wonga.QA.Framework.UI.Journey
 
         protected override BaseFALnJourney PassRepaymentPlanPage(bool submit = true)
         {
-            //var faRepaymentPlanPage = CurrentPage as FARepaymentPlanPage;
             return this;
         }
     }

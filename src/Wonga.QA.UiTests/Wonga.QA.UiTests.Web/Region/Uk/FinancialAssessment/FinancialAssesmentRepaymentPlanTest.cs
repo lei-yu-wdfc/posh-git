@@ -25,6 +25,7 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
     [TestFixture, Parallelizable(TestScope.All)]
     public class FinancialAssesmentRepaymentPlanTest : UiTest
     {
+        private UI.FARepaymentPlanPage currentPage = null;
 
         public delegate void ExecutableFunction(UI.FARepaymentPlanPage page, String fieldName, String value);
         public delegate String CustomFunction();
@@ -38,18 +39,6 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
             return customer;
         }
 
-        private UI.FARepaymentPlanPage RepaymentPlanPageTeleport()
-        {
-            var loginPage = Client.Login();
-            Customer customer = Init();
-            loginPage.LoginAs(customer.Email);
-
-            var journeyLn = JourneyFactory.GetFaLnJourney(Client.FinancialAssessment());
-            UI.FARepaymentPlanPage faRepaymentPlanPage =
-                journeyLn.FillAndStop().Teleport<UI.FARepaymentPlanPage>() as UI.FARepaymentPlanPage;
-            return faRepaymentPlanPage;
-        }
-
         private List<KeyValuePair<DataValidation, List<KeyValuePair<Int32, Delegate>>>> GetData(UI.FARepaymentPlanPage faRepaymentPlanPage, Boolean isSuccessValidation)
         {
             List<KeyValuePair<Int32, Delegate>> customDateFunctions = new List<KeyValuePair<Int32, Delegate>>();
@@ -58,61 +47,77 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
 
             if (isSuccessValidation)
             {
-                customDateFunctions.Add(new KeyValuePair<int, Delegate>((Int32)FieldTypeDate.Equal, new CustomFunction(MinStartDate)));
-                customDateFunctions.Add(new KeyValuePair<int, Delegate>((Int32)FieldTypeDate.Equal, new CustomFunction(MaxStartDate)));
-
                 customSelectFunctions.Add(new KeyValuePair<int, Delegate>((Int32)FieldTypeSelect.Equal, new CustomFunction(Weekly)));
                 customSelectFunctions.Add(new KeyValuePair<int, Delegate>((Int32)FieldTypeSelect.Equal, new CustomFunction(Biweekly)));
                 customSelectFunctions.Add(new KeyValuePair<int, Delegate>((Int32)FieldTypeSelect.Equal, new CustomFunction(Monthly)));
 
                 customStringFunctions.Add(new KeyValuePair<int, Delegate>((Int32)FieldTypeString.Numbers, new CustomFunction(CorrectNumber)));
+
+                customDateFunctions.Add(new KeyValuePair<int, Delegate>((Int32)FieldTypeDate.Equal, new CustomFunction(MinStartDate)));
+                customDateFunctions.Add(new KeyValuePair<int, Delegate>((Int32)FieldTypeDate.Equal, new CustomFunction(MaxStartDate)));
             }
             else
             {
-                customDateFunctions.Add(new KeyValuePair<int, Delegate>((Int32)FieldTypeDate.Equal, new CustomFunction(CurrentDate)));
-                customDateFunctions.Add(new KeyValuePair<int, Delegate>((Int32)FieldTypeDate.Past, new CustomFunction(PastDate)));
-
                 customSelectFunctions.Add(new KeyValuePair<int, Delegate>((Int32)FieldTypeSelect.Equal, new CustomFunction(EveryFourWeek)));
                 customSelectFunctions.Add(new KeyValuePair<int, Delegate>((Int32)FieldTypeSelect.Equal, new CustomFunction(EveryTwoWeek)));
                 customSelectFunctions.Add(new KeyValuePair<int, Delegate>((Int32)FieldTypeSelect.Equal, new CustomFunction(PleaseSelect)));
                 customSelectFunctions.Add(new KeyValuePair<int, Delegate>((Int32)FieldTypeSelect.Equal, new CustomFunction(WeeklyFake)));
 
                 customStringFunctions.Add(new KeyValuePair<int, Delegate>((Int32)FieldTypeString.Numbers, new CustomFunction(IncorrectNumber)));
+
+                customDateFunctions.Add(new KeyValuePair<int, Delegate>((Int32)FieldTypeDate.Equal, new CustomFunction(CurrentDate)));
+                customDateFunctions.Add(new KeyValuePair<int, Delegate>((Int32)FieldTypeDate.Past, new CustomFunction(PastDate)));
             }
 
             List<KeyValuePair<DataValidation, List<KeyValuePair<Int32, Delegate>>>> fields = new List<KeyValuePair<DataValidation, List<KeyValuePair<Int32, Delegate>>>>();
-            fields.Add(new KeyValuePair<DataValidation, List<KeyValuePair<int, Delegate>>>(new DataValidation("FirstRepaymentDate", faRepaymentPlanPage.FirstRepaymentDate, FieldType.Date,
-                       FieldTypeList.IncludeArray, new Int32[] { (Int32)FieldTypeDate.Past, (Int32)FieldTypeDate.Equal }.ToList()), customDateFunctions));
-            /*fields.Add(new KeyValuePair<DataValidation, List<KeyValuePair<int, Delegate>>>(new DataValidation("PaymentFrequency", faRepaymentPlanPage.PaymentFrequency, FieldType.Select,
-                       FieldTypeList.IncludeArray, new Int32[] { (Int32)FieldTypeSelect.Equal }.ToList()), customSelectFunctions));*/
+            fields.Add(new KeyValuePair<DataValidation, List<KeyValuePair<int, Delegate>>>(new DataValidation("PaymentFrequency", faRepaymentPlanPage.PaymentFrequency, FieldType.Select,
+                       FieldTypeList.IncludeArray, new Int32[] { (Int32)FieldTypeSelect.Equal }.ToList()), customSelectFunctions));
             fields.Add(new KeyValuePair<DataValidation, List<KeyValuePair<int, Delegate>>>(new DataValidation("RepaymentAmount", faRepaymentPlanPage.RepaymentAmount, FieldType.String,
                FieldTypeList.IncludeArray, new Int32[] { (Int32)FieldTypeString.Numbers }.ToList()), customStringFunctions));
+            fields.Add(new KeyValuePair<DataValidation, List<KeyValuePair<int, Delegate>>>(new DataValidation("FirstRepaymentDate", faRepaymentPlanPage.FirstRepaymentDate, FieldType.Date,
+                       FieldTypeList.IncludeArray, new Int32[] { (Int32)FieldTypeDate.Past, (Int32)FieldTypeDate.Equal }.ToList()), customDateFunctions));
             return fields;
         }
 
-        private void CheckValidation(UI.FARepaymentPlanPage faRepaymentPlanPage, List<KeyValuePair<DataValidation, List<KeyValuePair<Int32, Delegate>>>> fields, Delegate callBack)
+        private void CheckValidation(UI.FARepaymentPlanPage faRepaymentPlanPage, List<KeyValuePair<DataValidation, List<KeyValuePair<Int32, Delegate>>>> fields, Delegate callBack, Boolean isSuccessValidation)
         {
             Dictionary<FieldType, Int32[]> dictionary = new Dictionary<FieldType, Int32[]>();
             dictionary.Add(FieldType.String, new Int32[] { (Int32)FieldTypeString.Numbers });
 
             foreach (var field in fields)
             {
-                String oldfieldValue = (field.Key.FieldType == FieldType.Select && field.Key.FieldValue == String.Empty) ? "-- Please Select --" : field.Key.FieldValue;
+                if (!isSuccessValidation && field.Key.FieldType == FieldType.String)
+                    do { PropertiesHelper<UI.FARepaymentPlanPage>.SetFieldValue(faRepaymentPlanPage, "PaymentFrequency", Weekly()); } while (faRepaymentPlanPage.PaymentFrequency == String.Empty);
                 if (!field.Key.IsExtended)
                     ValidationHelper<UI.FARepaymentPlanPage>.CheckValidation(faRepaymentPlanPage, field.Key.FieldName, dictionary[field.Key.FieldType].ToList(), FieldTypeList.ExcludeArray, callBack, field.Value, field.Key.FieldType);
                 else
                     ValidationHelper<UI.FARepaymentPlanPage>.CheckValidation(faRepaymentPlanPage, field.Key.FieldName, field.Key.RulesArray, field.Key.FieldTypeList, callBack, field.Value, field.Key.FieldType);
-                PropertiesHelper<UI.FARepaymentPlanPage>.SetFieldValue(faRepaymentPlanPage, field.Key.FieldName, oldfieldValue);
+                if (!isSuccessValidation && field.Key.FieldType == FieldType.String)
+                    PropertiesHelper<UI.FARepaymentPlanPage>.SetFieldValue(faRepaymentPlanPage, field.Key.FieldName, field.Key.FieldValue);
             }
+            faRepaymentPlanPage = null;
         }
 
         private void FailedValidationCallBack(UI.FARepaymentPlanPage faRepaymentPlanPage, String fieldName, String value)
         {
             BasePage basepage;
+            if (currentPage != null)
+                faRepaymentPlanPage = currentPage;
             PropertiesHelper<UI.FARepaymentPlanPage>.SetFieldValue(faRepaymentPlanPage, fieldName, value);
-            try { basepage = faRepaymentPlanPage.NextClick(error: true); }
-            catch { basepage = new UI.FARepaymentPlanPage(Client); }
-            Assert.Contains(faRepaymentPlanPage.Url, "/repayment-plan", String.Format("Pass to repaymentPlan page, with invalid {0} field", fieldName));
+            try
+            {
+                basepage = faRepaymentPlanPage.NextClick(error: true);
+                if (fieldName == "FirstRepaymentDate")
+                {
+                    faRepaymentPlanPage = basepage as UI.FARepaymentPlanPage;
+                    currentPage = faRepaymentPlanPage;
+                }
+            }
+            catch
+            {
+                basepage = new UI.FARepaymentPlanPage(Client);
+            }
+            Assert.Contains(faRepaymentPlanPage.Url, "repayment-plan", String.Format("Pass to repaymentPlan page, with invalid {0} field", fieldName));
         }
 
         private void SuccessValidationCallBack(UI.FARepaymentPlanPage faRepaymentPlanPage, String fieldName, String value)
@@ -120,8 +125,10 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
             BasePage basepage;
             PropertiesHelper<UI.FARepaymentPlanPage>.SetFieldValue(faRepaymentPlanPage, fieldName, value);
             try { basepage = faRepaymentPlanPage.NextClick(error: true); }
-            catch { basepage = new UI.FARepaymentPlanPage(Client); }
+            catch { basepage = new UI.FAWaitPage(Client); }
             Assert.Contains(faRepaymentPlanPage.Url, "/wait", String.Format("Pass to wait page successfully"));
+            basepage = new UI.FARepaymentPlanPage(Client);
+            currentPage = basepage as UI.FARepaymentPlanPage;
         }
 
         private String Weekly() { return "Weekly"; }
@@ -129,7 +136,10 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
         private String EveryFourWeek() { return "Every four week"; }
         private String Biweekly() { return "Biweekly"; }
         private String Monthly() { return "Monthly"; }
-        private String PleaseSelect() { return "--- Please Select ---"; }
+        private String PleaseSelect()
+        {
+            return "--- Please select ---";
+        }
         private String WeeklyFake() { return "Fake"; }
         private String MinStartDate()
         {
@@ -150,12 +160,12 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
 
         private void SetCustomConfigurations()
         {
-            String period1Interval = "25"; //25
-            String period2Interval = "45"; //45
-            String period1MaxMonths = "4"; //4
-            String period2MaxMonths = "6"; //6
-            String minStartDays = "1"; //1
-            String maxStartDays = "30"; //30
+            String period1Interval = "25";
+            String period2Interval = "45";
+            String period1MaxMonths = "4";
+            String period2MaxMonths = "6";
+            String minStartDays = "1";
+            String maxStartDays = "30";
 
             List<ServiceConfigurationEntity> serviceConfigurations = Drive.Db.Ops.ServiceConfigurations.Where(sc => sc.Key.Contains("Payments.RepaymentArrang")).ToList();
             serviceConfigurations.Single(sc => sc.Key.Contains("Payments.RepaymentArrangementPeriod1Interval")).Value = period1Interval;
@@ -175,20 +185,15 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
             var loginPage = Client.Login();
             Customer customer = Init();
             loginPage.LoginAs(customer.Email);
-
-            Application application = customer.GetApplication();
-            application.UpdateNextDueDate(-2);
-            uint arrearsDays = application.GetDaysInArrears();
             var journeyLn = JourneyFactory.GetFaLnJourney(Client.FinancialAssessment());
             UI.FARepaymentPlanPage faRepaymentPlanPage =
-                journeyLn.FillAndStop().Teleport<UI.FARepaymentPlanPage>() as UI.FARepaymentPlanPage;
+                journeyLn.QuickJump().FillAndStop().Teleport<UI.FARepaymentPlanPage>() as UI.FARepaymentPlanPage;
             faRepaymentPlanPage.FirstRepaymentDate = MinStartDate();
-            faRepaymentPlanPage.PaymentFrequency = Weekly();
 
             List<KeyValuePair<DataValidation, List<KeyValuePair<Int32, Delegate>>>> fields = GetData(faRepaymentPlanPage, false);
             ExecutableFunction callBack = new ExecutableFunction(FailedValidationCallBack);
 
-            CheckValidation(faRepaymentPlanPage, fields, callBack);
+            CheckValidation(faRepaymentPlanPage, fields, callBack, false);
         }
 
         //2
@@ -198,18 +203,14 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
             var loginPage = Client.Login();
             Customer customer = Init();
             loginPage.LoginAs(customer.Email);
-
-            Application application = customer.GetApplication();
-            application.UpdateNextDueDate(-2);
-            uint arrearsDays = application.GetDaysInArrears();
             var journeyLn = JourneyFactory.GetFaLnJourney(Client.FinancialAssessment());
             UI.FARepaymentPlanPage faRepaymentPlanPage =
-                journeyLn.FillAndStop().Teleport<UI.FARepaymentPlanPage>() as UI.FARepaymentPlanPage;
+                journeyLn.QuickJump().FillAndStop().Teleport<UI.FARepaymentPlanPage>() as UI.FARepaymentPlanPage;
             faRepaymentPlanPage.FirstRepaymentDate = MinStartDate();
             List<KeyValuePair<DataValidation, List<KeyValuePair<Int32, Delegate>>>> fields = GetData(faRepaymentPlanPage, true);
             ExecutableFunction callBack = new ExecutableFunction(SuccessValidationCallBack);
 
-            CheckValidation(faRepaymentPlanPage, fields, callBack);
+            CheckValidation(faRepaymentPlanPage, fields, callBack, true);
         }
     }
 }

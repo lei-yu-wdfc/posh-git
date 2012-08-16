@@ -98,9 +98,9 @@ namespace Wonga.QA.Framework.UI.Ui.Pages.Helpers
                         value = customFunction();
                         CallBack(callback, value);
                     }
-                    break;
                 }
                 else
+                {
                     switch ((FieldTypeDate)item)
                     {
                         case FieldTypeDate.Equal:
@@ -114,7 +114,8 @@ namespace Wonga.QA.Framework.UI.Ui.Pages.Helpers
                             break;
                     }
 
-                CallBack(callback, value);
+                    CallBack(callback, value);
+                }
             }
         }
 

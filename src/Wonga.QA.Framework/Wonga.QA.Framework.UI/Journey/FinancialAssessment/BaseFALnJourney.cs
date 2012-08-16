@@ -11,6 +11,7 @@ namespace Wonga.QA.Framework.UI
     {
         protected Dictionary<Type, Func<bool, BaseFALnJourney>> journey = new Dictionary<Type, Func<bool, BaseFALnJourney>>();
         protected bool _submit;
+        protected bool _isQuickJump;
 
         protected String _firstName;
         protected String _lastName;
@@ -101,6 +102,12 @@ namespace Wonga.QA.Framework.UI
         public virtual BaseFALnJourney FillAndStop()
         {
             _submit = false;
+            return this;
+        }
+
+        public virtual BaseFALnJourney QuickJump()
+        {
+            _isQuickJump = true;
             return this;
         }
 
