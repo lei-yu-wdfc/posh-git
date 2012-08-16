@@ -12,10 +12,7 @@ namespace Wonga.QA.Tests.Salesforce
     [Parallelizable(TestScope.Self)]
    class SalesforceApplicationComplaint
     {
-        private readonly dynamic _commsSuppressionsRepo = Drive.Data.Comms.Db.Suppressions;
-        private readonly dynamic _paymentsSuppressionsRepo = Drive.Data.Payments.Db.PaymentCollectionSuppressions;
-
-        #region setup#
+    	#region setup#
         [SetUp]
         public void SetUp()
         {
