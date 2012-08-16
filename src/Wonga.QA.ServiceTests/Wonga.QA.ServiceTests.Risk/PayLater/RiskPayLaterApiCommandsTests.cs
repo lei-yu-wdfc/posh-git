@@ -9,26 +9,17 @@ namespace Wonga.QA.ServiceTests.Risk.PayLater
 {
     public class RiskPayLaterApiCommandsTests
     {
-        [Test, AUT(AUT.Uk), Ignore("Awaiting bug fixes")]
-        public void RiskPayLaterAddPaymentCard()
-        {
-            Drive.Api.Commands.Post(new RiskPayLaterAddPaymentCardPayLaterUkCommand
-                                        {
-                                            AccountId = Guid.NewGuid(),
-                                            PaymentCardId = Guid.NewGuid(),
-                                            ExpiryDate = DateTime.Today.AddMonths(6).ToDate(DateFormat.YearMonth),
-                                            Number = "4444333322221111",
-                                            CardType = "Credit",
-                                            SecurityCode = Get.RandomInt(100, 999),
-                                        });
-        }
+        private readonly dynamic _riskSavePayLaterCustomerDetailsSagaEntity = Drive.Data.OpsSagas.Db.RiskSavePayLaterCustomerDetailsSagaEntity;
+        private readonly dynamic _riskSavePayLaterCustomerAddressSagaEntity = Drive.Data.OpsSagas.Db.RiskSavePayLaterCustomerAddressSagaEntity;
 
         [Test, AUT(AUT.Uk), Ignore("Awaiting bug fixes")]
         public void RiskSavePayLaterCustomerAddress()
         {
+            var accountId = Guid.NewGuid();
+
             Drive.Api.Commands.Post(new RiskSavePayLaterCustomerAddressPayLaterUkCommand
                                         {
-                                            AccountId = Guid.NewGuid(),
+                                            AccountId = accountId,
                                             AddressId = Guid.NewGuid(),
                                             Flat = Get.RandomString(5),
                                             HouseNumber = Get.RandomInt(1, 1000),
@@ -36,6 +27,8 @@ namespace Wonga.QA.ServiceTests.Risk.PayLater
                                             Street = Get.RandomString(15),
                                             Town = Get.RandomString(10)
                                         });
+
+            Do.Until(() => _riskSavePayLaterCustomerDetailsSagaEntity.FindByAccountId(accountId));
         }
 
         [Test, AUT(AUT.Uk), Ignore("Awaiting bug fixes")]
@@ -54,15 +47,19 @@ namespace Wonga.QA.ServiceTests.Risk.PayLater
         [Test, AUT(AUT.Uk), Ignore("Awaiting bug fixes")]
         public void RiskSavePayLaterCustomerDetails()
         {
+            var accountId = Guid.NewGuid();
+
             Drive.Api.Commands.Post(new RiskSavePayLaterCustomerDetailsPayLaterUkCommand
                                         {
-                                            AccountId = Guid.NewGuid(),
+                                            AccountId = accountId,
                                             Forename = "Bart",
                                             Surname = "Simpson",
                                             Email = Get.RandomEmail(),
                                             DateOfBirth = Get.GetDoB(),
                                             MobilePhone = Get.GetMobilePhone()
                                         });
+
+            Do.Until(() => _riskSavePayLaterCustomerDetailsSagaEntity.FindByAccountId(accountId));
         }
 
         [Test, AUT(AUT.Uk), Ignore("Awaiting bug fixes")]
