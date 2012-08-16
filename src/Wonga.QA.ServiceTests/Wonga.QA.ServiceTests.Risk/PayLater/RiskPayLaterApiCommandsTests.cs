@@ -18,6 +18,7 @@ namespace Wonga.QA.ServiceTests.Risk.PayLater
                                             PaymentCardId = Guid.NewGuid(),
                                             ExpiryDate = DateTime.Today.AddMonths(6).ToDate(DateFormat.YearMonth),
                                             Number = "4444333322221111",
+                                            CardType = "Credit",
                                             SecurityCode = Get.RandomInt(100, 999),
                                         });
         }
@@ -65,7 +66,7 @@ namespace Wonga.QA.ServiceTests.Risk.PayLater
         }
 
         [Test, AUT(AUT.Uk), Ignore("Awaiting bug fixes")]
-        public void VerifyApplication()
+        public void VerifyApplicationPayLater()
         {
             Drive.Api.Commands.Post(new VerifyApplicationPayLaterUkCommand
                                         {
