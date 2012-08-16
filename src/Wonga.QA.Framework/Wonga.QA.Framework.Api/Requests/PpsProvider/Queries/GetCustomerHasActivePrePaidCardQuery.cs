@@ -1,12 +1,12 @@
 using System;
 using System.Xml.Serialization;
+using Wonga.QA.Framework.Api;
 
 namespace Wonga.QA.Framework.Api.Requests.PpsProvider.Queries
 {
-    /// <summary> Wonga.PpsProvider.Queries.GetCustomerHasActivePrePaidCard </summary>
-    [XmlRoot("GetCustomerHasActivePrePaidCard")]
-    public partial class GetCustomerHasActivePrePaidCardQuery : ApiRequest<GetCustomerHasActivePrePaidCardQuery>
-    {
-        public Object AccountId { get; set; }
-    }
+	[XmlRoot("GetCustomerHasActivePrePaidCard")]
+	public partial class GetCustomerHasActivePrePaidCardQuery : ApiRequest<GetCustomerHasActivePrePaidCardQuery>
+	{
+		public Object AccountId { get; set; }
+	}
 }

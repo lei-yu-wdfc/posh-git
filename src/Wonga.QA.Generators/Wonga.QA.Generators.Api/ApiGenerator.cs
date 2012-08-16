@@ -8,7 +8,7 @@ namespace Wonga.QA.Generators.Api
 	{
 		public void Generate()
 		{
-			var outputDirectory = new DirectoryInfo("C:/");
+			var outputDirectory = new DirectoryInfo(Path.Combine(Directory.GetCurrentDirectory(), "API"));
 
 			var commandsSchemaFile = Origin.GetApiCommandsSchema();
 			var commandClasses = SchemaToClassGenerator.Generate(commandsSchemaFile, outputDirectory);

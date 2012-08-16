@@ -1,12 +1,12 @@
 using System;
 using System.Xml.Serialization;
+using Wonga.QA.Framework.Api;
 
 namespace Wonga.QA.Framework.Api.Requests.Risk.Queries
 {
-    /// <summary> Wonga.Risk.Queries.GetSocialDetails </summary>
-    [XmlRoot("GetSocialDetails")]
-    public partial class GetSocialDetailsQuery : ApiRequest<GetSocialDetailsQuery>
-    {
-        public Object AccountId { get; set; }
-    }
+	[XmlRoot("GetSocialDetails")]
+	public partial class GetSocialDetailsQuery : ApiRequest<GetSocialDetailsQuery>
+	{
+		public Object AccountId { get; set; }
+	}
 }

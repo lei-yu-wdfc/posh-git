@@ -1,12 +1,12 @@
 using System;
 using System.Xml.Serialization;
+using Wonga.QA.Framework.Api;
 
 namespace Wonga.QA.Framework.Api.Requests.Payments.Queries
 {
-    /// <summary> Wonga.Payments.Queries.GetAccountSummary </summary>
-    [XmlRoot("GetAccountSummary")]
-    public partial class GetAccountSummaryQuery : ApiRequest<GetAccountSummaryQuery>
-    {
-        public Object AccountId { get; set; }
-    }
+	[XmlRoot("GetAccountSummary")]
+	public partial class GetAccountSummaryQuery : ApiRequest<GetAccountSummaryQuery>
+	{
+		public Object AccountId { get; set; }
+	}
 }

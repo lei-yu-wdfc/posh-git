@@ -1,13 +1,13 @@
 using System;
 using System.Xml.Serialization;
+using Wonga.QA.Framework.Api;
 
 namespace Wonga.QA.Framework.Api.Requests.Comms.Commands
 {
-    /// <summary> Wonga.Comms.Commands.SaveContactPreferences </summary>
-    [XmlRoot("SaveContactPreferences")]
-    public partial class SaveContactPreferencesCommand : ApiRequest<SaveContactPreferencesCommand>
-    {
-        public Object AccountId { get; set; }
-        public Object AcceptMarketingContact { get; set; }
-    }
+	[XmlRoot("SaveContactPreferences")]
+	public partial class SaveContactPreferencesCommand : ApiRequest<SaveContactPreferencesCommand>
+	{
+		public Object AccountId { get; set; }
+		public Object AcceptMarketingContact { get; set; }
+	}
 }

@@ -1,12 +1,12 @@
 using System;
 using System.Xml.Serialization;
+using Wonga.QA.Framework.Api;
 
 namespace Wonga.QA.Framework.Api.Requests.Comms.Queries
 {
-    /// <summary> Wonga.Comms.Queries.GetCurrentAddress </summary>
-    [XmlRoot("GetCurrentAddress")]
-    public partial class GetCurrentAddressQuery : ApiRequest<GetCurrentAddressQuery>
-    {
-        public Object AccountId { get; set; }
-    }
+	[XmlRoot("GetCurrentAddress")]
+	public partial class GetCurrentAddressQuery : ApiRequest<GetCurrentAddressQuery>
+	{
+		public Object AccountId { get; set; }
+	}
 }

@@ -1,12 +1,12 @@
 using System;
 using System.Xml.Serialization;
+using Wonga.QA.Framework.Api;
 
 namespace Wonga.QA.Framework.Api.Requests.Marketing.Queries
 {
-    /// <summary> Wonga.Marketing.Queries.Sample </summary>
-    [XmlRoot("Sample")]
-    public partial class SampleQuery : ApiRequest<SampleQuery>
-    {
-        public Object Hello { get; set; }
-    }
+	[XmlRoot("Sample")]
+	public partial class SampleQuery : ApiRequest<SampleQuery>
+	{
+		public Object Hello { get; set; }
+	}
 }

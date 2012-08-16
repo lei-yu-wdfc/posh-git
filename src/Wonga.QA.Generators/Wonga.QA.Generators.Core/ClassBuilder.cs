@@ -31,7 +31,7 @@ namespace Wonga.QA.Generators.Core
 
 		private static IEnumerable<MessageClassDefinition> Build(KeyValuePair<String, IEnumerable<XmlSchemaElement>> elementGroup)
 		{
-			var classNamespace = elementGroup.Key;
+			var classNamespace = GetNamespace(elementGroup.Key);
 			var messageType = classNamespace.Contains("Queries") ? "Query" : "Command";
 			var region = GetRegionFromNamespace(classNamespace);
 			foreach (var xmlSchemaElement in elementGroup.Value)
@@ -40,6 +40,11 @@ namespace Wonga.QA.Generators.Core
 				var classBody = GenerateClassBody(className, classNamespace, xmlSchemaElement).ToString();
 				yield return new MessageClassDefinition(classNamespace, className, classBody);
 			}
+		}
+
+		private static String GetNamespace(String namespaceInV3)
+		{
+			return "Wonga.QA.Framework.Api.Requests." + namespaceInV3.Replace("Wonga.", String.Empty);
 		}
 
 		private static String GetRegionFromNamespace(String classNamespace)
@@ -72,17 +77,17 @@ namespace Wonga.QA.Generators.Core
     		                                                              	{
 																				"using System;",
     		                                                              		"using System.Xml.Serialization;",
+																				"using Wonga.QA.Framework.Api;",
 																				"",
 																				"namespace {0}",
     		                                                              		"{{",
     		                                                              		"	[XmlRoot({1})]",
-    		                                                              		"	public class {2} : ApiRequest<{2}>",
+    		                                                              		"	public partial class {2} : ApiRequest<{2}>",
     		                                                              		"	{{",
     		                                                              	},
 																		  classNamespace,
-																		  elementName,
+																		  elementName.Quote(),
 																		  className);
-			var va = builder.ToString();
 			return builder;
 		}
 
