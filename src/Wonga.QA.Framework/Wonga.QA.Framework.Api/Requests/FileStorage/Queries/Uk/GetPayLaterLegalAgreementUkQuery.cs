@@ -1,10 +1,11 @@
 using System;
 using System.Xml.Serialization;
+using Wonga.QA.Framework.Api;
 
-namespace Wonga.FileStorage.Queries.PLater.Uk
+namespace Wonga.QA.Framework.Api.Requests.FileStorage.Queries.PLater.Uk
 {
-	[XmlRoot(GetPayLaterLegalAgreement)]
-	public class GetPayLaterLegalAgreementUkQuery : ApiRequest<GetPayLaterLegalAgreementUkQuery>
+	[XmlRoot("GetPayLaterLegalAgreement")]
+	public partial class GetPayLaterLegalAgreementUkQuery : ApiRequest<GetPayLaterLegalAgreementUkQuery>
 	{
 		public Object ApplicationId { get; set; }
 	}

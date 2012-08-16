@@ -1,12 +1,12 @@
 using System;
 using System.Xml.Serialization;
+using Wonga.QA.Framework.Api;
 
 namespace Wonga.QA.Framework.Api.Requests.PpsProvider.Queries
 {
-    /// <summary> Wonga.PpsProvider.Queries.GetPrePaidPinResetCode </summary>
-    [XmlRoot("GetPrePaidPinResetCode")]
-    public partial class GetPrePaidPinResetCodeQuery : ApiRequest<GetPrePaidPinResetCodeQuery>
-    {
-        public Object AccountId { get; set; }
-    }
+	[XmlRoot("GetPrePaidPinResetCode")]
+	public partial class GetPrePaidPinResetCodeQuery : ApiRequest<GetPrePaidPinResetCodeQuery>
+	{
+		public Object AccountId { get; set; }
+	}
 }

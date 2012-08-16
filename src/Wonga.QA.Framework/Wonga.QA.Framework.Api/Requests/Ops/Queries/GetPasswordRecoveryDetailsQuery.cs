@@ -1,12 +1,12 @@
 using System;
 using System.Xml.Serialization;
+using Wonga.QA.Framework.Api;
 
 namespace Wonga.QA.Framework.Api.Requests.Ops.Queries
 {
-    /// <summary> Wonga.Ops.Queries.GetPasswordRecoveryDetails </summary>
-    [XmlRoot("GetPasswordRecoveryDetails")]
-    public partial class GetPasswordRecoveryDetailsQuery : ApiRequest<GetPasswordRecoveryDetailsQuery>
-    {
-        public Object AccountId { get; set; }
-    }
+	[XmlRoot("GetPasswordRecoveryDetails")]
+	public partial class GetPasswordRecoveryDetailsQuery : ApiRequest<GetPasswordRecoveryDetailsQuery>
+	{
+		public Object AccountId { get; set; }
+	}
 }

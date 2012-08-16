@@ -1,12 +1,12 @@
 using System;
 using System.Xml.Serialization;
+using Wonga.QA.Framework.Api;
 
 namespace Wonga.QA.Framework.Api.Requests.Marketing.Queries
 {
-    /// <summary> Wonga.Marketing.Queries.GetTrackingReference </summary>
-    [XmlRoot("GetTrackingReference")]
-    public partial class GetTrackingReferenceQuery : ApiRequest<GetTrackingReferenceQuery>
-    {
-        public Object TrackingSession { get; set; }
-    }
+	[XmlRoot("GetTrackingReference")]
+	public partial class GetTrackingReferenceQuery : ApiRequest<GetTrackingReferenceQuery>
+	{
+		public Object TrackingSession { get; set; }
+	}
 }

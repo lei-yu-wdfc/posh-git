@@ -1,12 +1,12 @@
 using System;
 using System.Xml.Serialization;
+using Wonga.QA.Framework.Api;
 
 namespace Wonga.QA.Framework.Api.Requests.Comms.Queries
 {
-    /// <summary> Wonga.Comms.Queries.GetFullDeclineAdvice </summary>
-    [XmlRoot("GetFullDeclineAdvice")]
-    public partial class GetFullDeclineAdviceQuery : ApiRequest<GetFullDeclineAdviceQuery>
-    {
-        public Object DeclineAdviceKey { get; set; }
-    }
+	[XmlRoot("GetFullDeclineAdvice")]
+	public partial class GetFullDeclineAdviceQuery : ApiRequest<GetFullDeclineAdviceQuery>
+	{
+		public Object DeclineAdviceKey { get; set; }
+	}
 }

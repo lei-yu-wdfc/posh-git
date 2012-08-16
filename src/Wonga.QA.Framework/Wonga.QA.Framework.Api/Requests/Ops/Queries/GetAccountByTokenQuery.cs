@@ -1,12 +1,12 @@
 using System;
 using System.Xml.Serialization;
+using Wonga.QA.Framework.Api;
 
 namespace Wonga.QA.Framework.Api.Requests.Ops.Queries
 {
-    /// <summary> Wonga.Ops.Queries.GetAccountByToken </summary>
-    [XmlRoot("GetAccountByToken")]
-    public partial class GetAccountByTokenQuery : ApiRequest<GetAccountByTokenQuery>
-    {
-        public Object Token { get; set; }
-    }
+	[XmlRoot("GetAccountByToken")]
+	public partial class GetAccountByTokenQuery : ApiRequest<GetAccountByTokenQuery>
+	{
+		public Object Token { get; set; }
+	}
 }

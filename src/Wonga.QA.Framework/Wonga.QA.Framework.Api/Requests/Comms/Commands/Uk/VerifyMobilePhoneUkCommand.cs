@@ -1,15 +1,15 @@
 using System;
 using System.Xml.Serialization;
+using Wonga.QA.Framework.Api;
 
 namespace Wonga.QA.Framework.Api.Requests.Comms.Commands.Uk
 {
-    /// <summary> Wonga.Comms.Commands.Uk.VerifyMobilePhone </summary>
-    [XmlRoot("VerifyMobilePhone")]
-    public partial class VerifyMobilePhoneUkCommand : ApiRequest<VerifyMobilePhoneUkCommand>
-    {
-        public Object VerificationId { get; set; }
-        public Object AccountId { get; set; }
-        public Object MobilePhone { get; set; }
-        public Object Forename { get; set; }
-    }
+	[XmlRoot("VerifyMobilePhone")]
+	public partial class VerifyMobilePhoneUkCommand : ApiRequest<VerifyMobilePhoneUkCommand>
+	{
+		public Object VerificationId { get; set; }
+		public Object AccountId { get; set; }
+		public Object MobilePhone { get; set; }
+		public Object Forename { get; set; }
+	}
 }

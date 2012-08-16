@@ -1,12 +1,12 @@
 using System;
 using System.Xml.Serialization;
+using Wonga.QA.Framework.Api;
 
 namespace Wonga.QA.Framework.Api.Requests.PpsProvider.Queries
 {
-    /// <summary> Wonga.PpsProvider.Queries.GetPrepaidAvailableAccountBalance </summary>
-    [XmlRoot("GetPrepaidAvailableAccountBalance")]
-    public partial class GetPrepaidAvailableAccountBalanceQuery : ApiRequest<GetPrepaidAvailableAccountBalanceQuery>
-    {
-        public Object AccountId { get; set; }
-    }
+	[XmlRoot("GetPrepaidAvailableAccountBalance")]
+	public partial class GetPrepaidAvailableAccountBalanceQuery : ApiRequest<GetPrepaidAvailableAccountBalanceQuery>
+	{
+		public Object AccountId { get; set; }
+	}
 }

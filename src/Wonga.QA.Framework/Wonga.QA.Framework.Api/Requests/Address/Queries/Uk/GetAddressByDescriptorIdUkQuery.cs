@@ -1,12 +1,12 @@
 using System;
 using System.Xml.Serialization;
+using Wonga.QA.Framework.Api;
 
 namespace Wonga.QA.Framework.Api.Requests.Address.Queries.Uk
 {
-    /// <summary> Wonga.Address.Queries.Uk.GetAddressByDescriptorId </summary>
-    [XmlRoot("GetAddressByDescriptorId")]
-    public partial class GetAddressByDescriptorIdUkQuery : ApiRequest<GetAddressByDescriptorIdUkQuery>
-    {
-        public Object DescriptorId { get; set; }
-    }
+	[XmlRoot("GetAddressByDescriptorId")]
+	public partial class GetAddressByDescriptorIdUkQuery : ApiRequest<GetAddressByDescriptorIdUkQuery>
+	{
+		public Object DescriptorId { get; set; }
+	}
 }

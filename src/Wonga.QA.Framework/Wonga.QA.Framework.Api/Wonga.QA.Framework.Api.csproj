@@ -113,263 +113,860 @@
     <Compile Include="Exceptions\ValidatorException.cs" />
     <Compile Include="Exceptions\SchemaException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requests\Address\Queries\Uk\GetAddressByDescriptorIdUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Address\Queries\Uk\GetAddressDescriptorsByPostCodeUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\BankValidate\Queries\GetBankValidationResultQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\Ca\CompleteHomePhoneVerificationCaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\Ca\SaveCustomerAddressCaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\Ca\SaveCustomerDetailsCaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\Ca\SaveCustomerLeadCaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\Ca\UpdateCustomerAddressCaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\Ca\UpdateHomePhoneCaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\Ca\VerifyHomePhoneCaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\Ca\VerifyMobilePhoneCaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\CompleteEmailVerificationCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\CompleteMobilePhoneVerificationCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\PayLater\Uk\SavePayLaterCustomerAddressPayLaterUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\PayLater\Uk\SavePayLaterCustomerDetailsPayLaterUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\Pl\SaveCustomerAddressPlCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\Pl\SaveCustomerDetailsPlCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\Pl\VerifyMobilePhonePlCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\ResendMobilePhonePinCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\SaveContactPreferencesCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\SaveExtensionReminderPreferencesCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\SendExtensionWindowOpenedReminderCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\SendExtensionWindowOpenedReminderMessageCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\SendPasswordResetEmailCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\SendVerificationEmailCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\Uk\ResendSmsPinUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\Uk\SaveCustomerAddressUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\Uk\SaveCustomerDetailsUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\Uk\SavePayLaterCustomerAddressUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\Uk\SavePayLaterCustomerDetailsUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\Uk\SaveReviewDetailsUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\Uk\UpdateCustomerAddressUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\Uk\UpdateHomePhoneUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\Uk\UpdateMobilePhoneUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\Uk\UpdateWorkPhoneUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\Uk\VerifyMobilePhoneUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\Za\InsertMissingCustomerDetailsZaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\Za\SaveCustomerAddressZaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\Za\SaveCustomerDetailsZaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\Za\SaveCustomerLeadZaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\Za\UpdateCustomerAddressZaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\Za\UpdateCustomerGenderZaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\Za\UpdateCustomerWorkPhoneZaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\Za\UpdateHomePhoneZaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Commands\Za\VerifyMobilePhoneZaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\ContactManagement\Commands\AddPrimaryOrganisationDirectorCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\ContactManagement\Commands\AddSecondaryOrganisationDirectorCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\ContactManagement\Commands\SaveOrganisationDetailsCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\ContactManagement\Queries\GetOrganisationDetailsQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\ContactManagement\Queries\GetOrganisationGuarantorsQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Queries\Ca\GetCustomerSubRegionCaQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Queries\GetContactPreferencesQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Queries\GetCurrentAddressQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Queries\GetCustomerDetailsByMobilePhoneAndDateOfBirthQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Queries\GetCustomerDetailsQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Queries\GetFullDeclineAdviceQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Queries\GetMatchingAccountsQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Queries\GetReviewDetailsQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Comms\Queries\Wb\Uk\GetEmailReturnLinkCorrelationRecordWbUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\FileStorage\Queries\Ca\GetPreApprovedDirectDebitFormCaQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\FileStorage\Queries\GetExtensionAeDocumentQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\FileStorage\Queries\GetExtensionSecciQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\FileStorage\Queries\GetLoanAgreementQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\FileStorage\Queries\GetLoanExtensionAgreementQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\FileStorage\Queries\GetLoanTopUpAgreementQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\FileStorage\Queries\GetSecciQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\FileStorage\Queries\Uk\GetPaylaterAgreementUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\FileStorage\Queries\Uk\GetPayLaterLegalAgreementUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\FileStorage\Queries\Uk\GetPayLaterSecciAgreementUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\FileStorage\Queries\Wb\Uk\GetFixedInstallmentAgreementWbUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\FileStorage\Queries\Wb\Uk\GetGuarantorAgreementWbUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\FileStorage\Queries\Za\GetDirectDebitFormZaQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Marketing\Commands\AssociateTrackingSessionWithApplicationIdCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Marketing\Commands\CreateTrackingSessionCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Marketing\Commands\RegisterPrePaidCardEmailCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Marketing\Commands\RegisterPrePaidCardEmailCommandCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Marketing\Commands\SaveCustomerFeedbackCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Marketing\Commands\SaveCustomerFeedbackRateCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Marketing\Commands\SaveCustomerFeedbackStoryCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Marketing\Commands\UpdateTrackingSessionCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Marketing\Queries\GetCustomerPrepaidEligibilityQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Marketing\Queries\GetTrackingReferenceQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Marketing\Queries\SampleQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Ops\Commands\Ca\SavePasswordRecoveryDetailsCaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Ops\Commands\ChangePasswordByTokenAndEmailCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Ops\Commands\ChangePasswordCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Ops\Commands\CreateAccountCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Ops\Commands\GeneratePasswordResetKeyCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Ops\Commands\Pl\SavePasswordRecoveryDetailsPlCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Ops\Commands\RecordSecurityQuestionAttemptCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Ops\Commands\ResetPasswordByTokenAndEmailCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Ops\Commands\ResetPasswordCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Ops\Commands\Uk\SavePasswordRecoveryDetailsUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Ops\Commands\Za\SavePasswordRecoveryDetailsZaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Ops\Queries\CheckResetPasswordTokenAndEmailQueryQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Ops\Queries\GetAccountByTokenQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Ops\Queries\GetAccountQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Ops\Queries\GetMigratedStatusQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Ops\Queries\GetPasswordRecoveryDetailsQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Ops\Queries\GetPasswordResetKeyQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Ops\Queries\GetSecurityQuestionPairsQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Ops\Queries\GetSecurityQuestionsDecisionQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Ops\Queries\GetUserLocationQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\AddPaymentCardCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\Ca\AddBankAccountCaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\Ca\CreateFixedTermLoanApplicationCaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\Ca\SetAccountPaymentMethodCaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\CreateFixedTermLoanExtensionCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\CreateFixedTermLoanTopupCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\CreateRepaymentArrangementCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\CreateScheduledPaymentRequestCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\DeleteBankAccountCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\DeletePaymentCardCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\Pl\AddBankAccountPlCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\Pl\CreateFixedTermLoanApplicationPlCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\RepayLoanViaBankCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\RepayLoanViaCardCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\SavePaymentCardBillingAddressCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\SetAccountPreferenceCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\SetBankAccountPrimaryCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\SetFundsTransferMethodCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\SetFundsTransferMethodCommandCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\SetPaymentCardPrimaryCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\SignApplicationCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\SignFixedTermLoanExtensionCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\SignFixedTermLoanTopupCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\SubmitCounterOfferCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\Uk\AddBankAccountUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\Uk\CreateFixedTermLoanApplicationUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\Wb\Uk\AddBusinessBankAccountWbUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\Wb\Uk\AddBusinessPaymentCardWbUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\Wb\Uk\AddGuarantorToApplicationWbUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\Wb\Uk\CreateBusinessFixedInstallmentLoanApplicationWbUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\Wb\Uk\SignBusinessApplicationWbUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\Wb\Uk\UpdateLoanTermWbUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\Za\AddBankAccountZaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\Za\CreateFixedTermLoanApplicationZaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\Za\GenerateEasyPayNumberZaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\Za\SaveIncomingPartnerPaymentRequestZaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Commands\Za\SaveIncomingPartnerPaymentResponseZaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\PayLater\Commands\Uk\CreateApplicationPayLaterUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\PayLater\Commands\Uk\CreatePaylaterApplicationUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\PayLater\Commands\Uk\PayLaterTakeEarlyRepaymentUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetApplicationAprPayLaterUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetApplicationAprUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetAvailableCreditPayLaterUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetAvailableCreditUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetCreditInUsePayLaterUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetCreditInUseUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetInstallmentQuotePayLaterUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetInstallmentQuoteUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetNextRepaymentDatePayLaterUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetNextRepaymentDateUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetOrderSummaryPayLaterUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetOrderSummaryUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetPayLaterCustomerTransactionsStatusPayLaterUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetPayLaterCustomerTransactionsStatusUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetPayLaterTransactionsPayLaterUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetPayLaterTransactionsUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetRepaymentDetailsPayLaterUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetRepaymentDetailsUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetRepaymentTimelinePayLaterUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetRepaymentTimelineUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetTransactionFeePaymentStatusPayLaterUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetTransactionFeePaymentStatusUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\PrepaidCard\Commands\SignupCustomerForPremiumCardCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\PrepaidCard\Commands\SignupCustomerForStandardCardCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\PrepaidCard\Queries\GetClearedTransactionsForMonthQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\PrepaidCard\Queries\GetMonthListWhereClearedTransactionsExistsQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\Ca\GetFixedTermLoanOfferCaQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\Ca\GetInstitutionBranchCodeIsValidCaQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\GetAccountSummaryQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\GetApplicationTransactionsQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\GetBankAccountsQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\GetBankHolidaysQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\GetBanksQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\GetFixedTermLoanApplicationQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\GetFixedTermLoanCalculationQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\GetFixedTermLoanExtensionCalculationQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\GetFixedTermLoanExtensionParametersQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\GetFixedTermLoanTopupCalculationQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\GetFixedTermLoanTopupOfferQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\GetPaymentCardIsValidQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\GetPaymentCardsQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\GetPaymentCardTypesQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\GetPersonalPromoCodeQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\GetPromoCodeParametersQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\GetRepayLoanCalculationQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\GetRepayLoanParametersQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\GetRepayLoanStatusQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\GetRepaymentArrangementAllowedQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\GetRepaymentArrangementCalculationQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\GetRepaymentArrangementParametersQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\GetRepaymentArrangementQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\Pl\GetFixedTermLoanOfferPlQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\Uk\GetAccountOptionsUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\Uk\GetFixedTermLoanExtensionQuoteUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\Uk\GetFixedTermLoanOfferUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\Uk\GetLoanExtensionPaymentStatusUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\Uk\GetLoanExtensionStatusUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\Uk\GetRepayLoanPaymentStatusUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\Uk\GetRepayLoanQuoteUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\Wb\Uk\GetBusinessAccountSummaryWbUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\Wb\Uk\GetBusinessBankAccountsWbUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\Wb\Uk\GetBusinessFixedInstallmentLoanCalculationWbUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\Wb\Uk\GetBusinessFixedInstallmentLoanOfferWbUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\Wb\Uk\GetBusinessPaymentCardsWbUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\Wb\Uk\GetUnsignedApplicationsForAccountWbUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\Za\GetAccountSummaryZaQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\Za\GetBankAccountTypesZaQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\Za\GetFixedTermLoanApplicationZaQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\Za\GetFixedTermLoanCalculationZaQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\Za\GetFixedTermLoanOfferZaQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Payments\Queries\Za\GetIncomingPartnerPaymentRequestParametersZaQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\PpsProvider\Queries\GetCustomerHasActivePrePaidCardQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\PpsProvider\Queries\GetLastMonthClearedPrepaidCardTransactionsQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\PpsProvider\Queries\GetPendingPrepaidCardTransactionsQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\PpsProvider\Queries\GetPrepaidAccountMaximumTopupAllowedQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\PpsProvider\Queries\GetPrepaidAvailableAccountBalanceQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\PpsProvider\Queries\GetPrePaidPinResetCodeQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\CancelUserActionCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Ca\RiskAddBankAccountCaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Ca\RiskAddHomePhoneCaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Ca\RiskAddMobilePhoneCaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Ca\RiskSaveCustomerAddressCaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Ca\RiskSaveCustomerDetailsCaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Ca\SaveEmploymentDetailsCaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Ca\SaveSocialDetailsCaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\PayLater\Uk\RiskPayLaterAddPaymentCardPayLaterUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\PayLater\Uk\RiskSavePayLaterCustomerAddressPayLaterUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\PayLater\Uk\RiskSavePayLaterCustomerDetailsPayLaterUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\PayLater\Uk\RiskSavePayLaterEmploymentDetailsPayLaterUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\PayLater\Uk\VerifyApplicationPayLaterUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Pl\RiskAddBankAccountPlCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Pl\RiskAddHomePhonePlCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Pl\RiskAddLegalAddressPlCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Pl\RiskAddMobilePhonePlCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Pl\RiskSaveCustomerAddressPlCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Pl\RiskSaveCustomerDetailsPlCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Pl\SaveEducationalBackgroundDetailsPlCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Pl\SaveEmploymentDetailsPlCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Pl\SaveSocialDetailsPlCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\RiskAddPaymentCardCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\RiskCreateFixedTermLoanApplicationCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\SubmitApplicationBehaviourCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\SubmitClientWatermarkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\SubmitNumberOfGuarantorsCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\SubmitUidAnswersCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Uk\RiskAddBankAccountUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Uk\RiskAddHomePhoneUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Uk\RiskAddMobilePhoneUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Uk\RiskPayLaterAddPaymentCardUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Uk\RiskSaveCustomerAddressUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Uk\RiskSaveCustomerDetailsUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Uk\RiskSavePayLaterCustomerAddressUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Uk\RiskSavePayLaterCustomerDetailsUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Uk\RiskSavePayLaterEmploymentDetailsUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Uk\SaveEmploymentDetailsUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Uk\SaveSocialDetailsUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Uk\VerifyPaylaterApplicationUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\VerifyFixedTermLoanCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Wb\Uk\RiskAddBankAccountWbUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Wb\Uk\RiskAddHomePhoneWbUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Wb\Uk\RiskAddMobilePhoneWbUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Wb\Uk\RiskCreateBusinessFixedInstallmentLoanApplicationWbUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Wb\Uk\RiskSaveCustomerAddressWbUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Wb\Uk\RiskSaveCustomerDetailsWbUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Wb\Uk\SaveSocialDetailsWbUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Wb\Uk\VerifyMainBusinessApplicantWbUkCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Za\RiskAddBankAccountZaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Za\RiskAddHomePhoneZaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Za\RiskAddMobilePhoneZaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Za\RiskSaveCustomerAddressZaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Za\RiskSaveCustomerDetailsZaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Za\SaveEmploymentDetailsZaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\Za\SaveSocialDetailsZaCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Queries\GetApplicationDecisionDummyQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Queries\GetApplicationDecisionQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Queries\GetDeclineAdviceQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Queries\GetEmploymentDetailsQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Queries\GetSocialDetailsQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Queries\PLater\Uk\VerifyCheckoutUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Queries\Uk\VerifyPaylaterCheckoutUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Queries\Wb\GetMatchedOrganizationsWbQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Temp\ApplicationDecisionStatusEnum.cs" />
     <Compile Include="Temp\RiskMask.cs" />
-    <Compile Include="Requests\Address\Queries\Uk\GetAddressByDescriptorIdUkQuery.cs" />
-    <Compile Include="Requests\Address\Queries\Uk\GetAddressDescriptorsByPostCodeUkQuery.cs" />
-    <Compile Include="Requests\BankValidate\Queries\GetBankValidationResultQuery.cs" />
-    <Compile Include="Requests\Comms\Commands\CompleteEmailVerificationCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\CompleteMobilePhoneVerificationCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\ResendMobilePhonePinCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\SaveContactPreferencesCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\SaveExtensionReminderPreferencesCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\SendExtensionWindowOpenedReminderCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\SendPasswordResetEmailCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\SendVerificationEmailCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\Ca\CompleteHomePhoneVerificationCaCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\Ca\SaveCustomerAddressCaCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\Ca\SaveCustomerDetailsCaCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\Ca\SaveCustomerLeadCaCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\Ca\UpdateCustomerAddressCaCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\Ca\UpdateHomePhoneCaCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\Ca\VerifyHomePhoneCaCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\Ca\VerifyMobilePhoneCaCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\PayLater\Uk\SavePayLaterCustomerAddressPayLaterUkCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\PayLater\Uk\SavePayLaterCustomerDetailsPayLaterUkCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\Pl\SaveCustomerAddressPlCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\Pl\SaveCustomerDetailsPlCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\Pl\VerifyMobilePhonePlCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\Uk\SaveCustomerAddressUkCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\Uk\SaveCustomerDetailsUkCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\Uk\SaveReviewDetailsUkCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\Uk\UpdateCustomerAddressUkCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\Uk\UpdateHomePhoneUkCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\Uk\UpdateWorkPhoneUkCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\Uk\VerifyMobilePhoneUkCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\Za\InsertMissingCustomerDetailsZaCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\Za\SaveCustomerAddressZaCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\Za\SaveCustomerDetailsZaCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\Za\SaveCustomerLeadZaCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\Za\UpdateCustomerAddressZaCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\Za\UpdateCustomerGenderZaCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\Za\UpdateCustomerWorkPhoneZaCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\Za\UpdateHomePhoneZaCommand.cs" />
-    <Compile Include="Requests\Comms\Commands\Za\VerifyMobilePhoneZaCommand.cs" />
-    <Compile Include="Requests\Comms\ContactManagement\Commands\AddPrimaryOrganisationDirectorCommand.cs" />
-    <Compile Include="Requests\Comms\ContactManagement\Commands\AddSecondaryOrganisationDirectorCommand.cs" />
-    <Compile Include="Requests\Comms\ContactManagement\Commands\SaveOrganisationDetailsCommand.cs" />
-    <Compile Include="Requests\Comms\ContactManagement\Queries\GetOrganisationDetailsQuery.cs" />
-    <Compile Include="Requests\Comms\ContactManagement\Queries\GetOrganisationGuarantorsQuery.cs" />
-    <Compile Include="Requests\Comms\Queries\GetContactPreferencesQuery.cs" />
-    <Compile Include="Requests\Comms\Queries\GetCurrentAddressQuery.cs" />
-    <Compile Include="Requests\Comms\Queries\GetCustomerDetailsByMobilePhoneAndDateOfBirthQuery.cs" />
-    <Compile Include="Requests\Comms\Queries\GetCustomerDetailsQuery.cs" />
-    <Compile Include="Requests\Comms\Queries\GetFullDeclineAdviceQuery.cs" />
-    <Compile Include="Requests\Comms\Queries\GetMatchingAccountsQuery.cs" />
-    <Compile Include="Requests\Comms\Queries\GetReviewDetailsQuery.cs" />
-    <Compile Include="Requests\Comms\Queries\Ca\GetCustomerSubRegionCaQuery.cs" />
-    <Compile Include="Requests\Comms\Queries\Wb\Uk\GetEmailReturnLinkCorrelationRecordWbUkQuery.cs" />
-    <Compile Include="Requests\FileStorage\Queries\GetExtensionAeDocumentQuery.cs" />
-    <Compile Include="Requests\FileStorage\Queries\GetExtensionSecciQuery.cs" />
-    <Compile Include="Requests\FileStorage\Queries\GetLoanAgreementQuery.cs" />
-    <Compile Include="Requests\FileStorage\Queries\GetLoanExtensionAgreementQuery.cs" />
-    <Compile Include="Requests\FileStorage\Queries\GetLoanTopUpAgreementQuery.cs" />
-    <Compile Include="Requests\FileStorage\Queries\GetSecciQuery.cs" />
-    <Compile Include="Requests\FileStorage\Queries\Ca\GetPreApprovedDirectDebitFormCaQuery.cs" />
-    <Compile Include="Requests\FileStorage\Queries\PLater\Uk\GetAgreementUkQuery.cs" />
-    <Compile Include="Requests\FileStorage\Queries\PLater\Uk\GetPayLaterLegalAgreementUkQuery.cs" />
-    <Compile Include="Requests\FileStorage\Queries\PLater\Uk\GetPayLaterSecciAgreementUkQuery.cs" />
-    <Compile Include="Requests\FileStorage\Queries\Wb\Uk\GetFixedInstallmentAgreementWbUkQuery.cs" />
-    <Compile Include="Requests\FileStorage\Queries\Wb\Uk\GetGuarantorAgreementWbUkQuery.cs" />
-    <Compile Include="Requests\FileStorage\Queries\Za\GetDirectDebitFormZaQuery.cs" />
-    <Compile Include="Requests\Marketing\Commands\AssociateTrackingSessionWithApplicationIdCommand.cs" />
-    <Compile Include="Requests\Marketing\Commands\CreateTrackingSessionCommand.cs" />
-    <Compile Include="Requests\Marketing\Commands\RegisterPrePaidCardEmailCommand.cs" />
-    <Compile Include="Requests\Marketing\Commands\SaveCustomerFeedbackCommand.cs" />
-    <Compile Include="Requests\Marketing\Commands\SaveCustomerFeedbackRateCommand.cs" />
-    <Compile Include="Requests\Marketing\Commands\SaveCustomerFeedbackStoryCommand.cs" />
-    <Compile Include="Requests\Marketing\Commands\UpdateTrackingSessionCommand.cs" />
-    <Compile Include="Requests\Marketing\Queries\GetCustomerPrepaidEligibilityQuery.cs" />
-    <Compile Include="Requests\Marketing\Queries\GetTrackingReferenceQuery.cs" />
-    <Compile Include="Requests\Marketing\Queries\SampleQuery.cs" />
-    <Compile Include="Requests\Ops\Commands\ChangePasswordByTokenAndEmailCommand.cs" />
-    <Compile Include="Requests\Ops\Commands\ChangePasswordCommand.cs" />
-    <Compile Include="Requests\Ops\Commands\CreateAccountCommand.cs" />
-    <Compile Include="Requests\Ops\Commands\GeneratePasswordResetKeyCommand.cs" />
-    <Compile Include="Requests\Ops\Commands\RecordSecurityQuestionAttemptCommand.cs" />
-    <Compile Include="Requests\Ops\Commands\ResetPasswordByTokenAndEmailCommand.cs" />
-    <Compile Include="Requests\Ops\Commands\ResetPasswordCommand.cs" />
-    <Compile Include="Requests\Ops\Commands\Ca\SavePasswordRecoveryDetailsCaCommand.cs" />
-    <Compile Include="Requests\Ops\Commands\Pl\SavePasswordRecoveryDetailsPlCommand.cs" />
-    <Compile Include="Requests\Ops\Commands\Uk\SavePasswordRecoveryDetailsUkCommand.cs" />
-    <Compile Include="Requests\Ops\Commands\Za\SavePasswordRecoveryDetailsZaCommand.cs" />
-    <Compile Include="Requests\Ops\Queries\GetAccountByTokenQuery.cs" />
-    <Compile Include="Requests\Ops\Queries\GetAccountQuery.cs" />
-    <Compile Include="Requests\Ops\Queries\GetMigratedStatusQuery.cs" />
-    <Compile Include="Requests\Ops\Queries\GetPasswordRecoveryDetailsQuery.cs" />
-    <Compile Include="Requests\Ops\Queries\GetPasswordResetKeyQuery.cs" />
-    <Compile Include="Requests\Ops\Queries\GetSecurityQuestionsDecisionQuery.cs" />
-    <Compile Include="Requests\Ops\Queries\GetUserLocationQuery.cs" />
-    <Compile Include="Requests\Payments\Commands\AddPaymentCardCommand.cs" />
-    <Compile Include="Requests\Payments\Commands\CreateFixedTermLoanExtensionCommand.cs" />
-    <Compile Include="Requests\Payments\Commands\CreateFixedTermLoanTopupCommand.cs" />
-    <Compile Include="Requests\Payments\Commands\CreateRepaymentArrangementCommand.cs" />
-    <Compile Include="Requests\Payments\Commands\DeleteBankAccountCommand.cs" />
-    <Compile Include="Requests\Payments\Commands\DeletePaymentCardCommand.cs" />
-    <Compile Include="Requests\Payments\Commands\RepayLoanViaBankCommand.cs" />
-    <Compile Include="Requests\Payments\Commands\RepayLoanViaCardCommand.cs" />
-    <Compile Include="Requests\Payments\Commands\SavePaymentCardBillingAddressCommand.cs" />
-    <Compile Include="Requests\Payments\Commands\SetAccountPreferenceCommand.cs" />
-    <Compile Include="Requests\Payments\Commands\SetBankAccountPrimaryCommand.cs" />
-    <Compile Include="Requests\Payments\Commands\SetFundsTransferMethodCommand.cs" />
-    <Compile Include="Requests\Payments\Commands\SetPaymentCardPrimaryCommand.cs" />
-    <Compile Include="Requests\Payments\Commands\SignApplicationCommand.cs" />
-    <Compile Include="Requests\Payments\Commands\SignFixedTermLoanExtensionCommand.cs" />
-    <Compile Include="Requests\Payments\Commands\SignFixedTermLoanTopupCommand.cs" />
-    <Compile Include="Requests\Payments\Commands\SubmitCounterOfferCommand.cs" />
-    <Compile Include="Requests\Payments\Commands\Ca\AddBankAccountCaCommand.cs" />
-    <Compile Include="Requests\Payments\Commands\Ca\CreateFixedTermLoanApplicationCaCommand.cs" />
-    <Compile Include="Requests\Payments\Commands\Ca\SetAccountPaymentMethodCaCommand.cs" />
-    <Compile Include="Requests\Payments\Commands\Pl\AddBankAccountPlCommand.cs" />
-    <Compile Include="Requests\Payments\Commands\Pl\CreateFixedTermLoanApplicationPlCommand.cs" />
-    <Compile Include="Requests\Payments\Commands\Uk\AddBankAccountUkCommand.cs" />
-    <Compile Include="Requests\Payments\Commands\Uk\CreateFixedTermLoanApplicationUkCommand.cs" />
-    <Compile Include="Requests\Payments\Commands\Wb\Uk\AddBusinessBankAccountWbUkCommand.cs" />
-    <Compile Include="Requests\Payments\Commands\Wb\Uk\AddBusinessPaymentCardWbUkCommand.cs" />
-    <Compile Include="Requests\Payments\Commands\Wb\Uk\AddGuarantorToApplicationWbUkCommand.cs" />
-    <Compile Include="Requests\Payments\Commands\Wb\Uk\CreateBusinessFixedInstallmentLoanApplicationWbUkCommand.cs" />
-    <Compile Include="Requests\Payments\Commands\Wb\Uk\SignBusinessApplicationWbUkCommand.cs" />
-    <Compile Include="Requests\Payments\Commands\Wb\Uk\UpdateLoanTermWbUkCommand.cs" />
-    <Compile Include="Requests\Payments\Commands\Za\AddBankAccountZaCommand.cs" />
-    <Compile Include="Requests\Payments\Commands\Za\CreateFixedTermLoanApplicationZaCommand.cs" />
-    <Compile Include="Requests\Payments\Commands\Za\GenerateEasyPayNumberZaCommand.cs" />
-    <Compile Include="Requests\Payments\Commands\Za\SaveIncomingPartnerPaymentRequestZaCommand.cs" />
-    <Compile Include="Requests\Payments\Commands\Za\SaveIncomingPartnerPaymentResponseZaCommand.cs" />
-    <Compile Include="Requests\Payments\PayLater\Commands\Uk\CreateApplicationPayLaterUkCommand.cs" />
-    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetApplicationAprPayLaterUkQuery.cs" />
-    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetAvailableCreditPayLaterUkQuery.cs" />
-    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetCreditInUsePayLaterUkQuery.cs" />
-    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetInstallmentQuotePayLaterUkQuery.cs" />
-    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetNextRepaymentDatePayLaterUkQuery.cs" />
-    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetOrderSummaryPayLaterUkQuery.cs" />
-    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetPayLaterCustomerTransactionsStatusPayLaterUkQuery.cs" />
-    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetPayLaterTransactionsPayLaterUkQuery.cs" />
-    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetRepaymentDetailsPayLaterUkQuery.cs" />
-    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetRepaymentTimelinePayLaterUkQuery.cs" />
-    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetTransactionFeePaymentStatusPayLaterUkQuery.cs" />
-    <Compile Include="Requests\Payments\PrepaidCard\Commands\SignupCustomerForPremiumCardCommand.cs" />
-    <Compile Include="Requests\Payments\PrepaidCard\Commands\SignupCustomerForStandardCardCommand.cs" />
-    <Compile Include="Requests\Payments\PrepaidCard\Queries\GetClearedTransactionsForMonthQuery.cs" />
-    <Compile Include="Requests\Payments\PrepaidCard\Queries\GetMonthListWhereClearedTransactionsExistsQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\GetAccountSummaryQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\GetApplicationTransactionsQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\GetBankAccountsQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\GetBankHolidaysQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\GetBanksQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\GetFixedTermLoanApplicationQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\GetFixedTermLoanCalculationQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\GetFixedTermLoanExtensionCalculationQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\GetFixedTermLoanExtensionParametersQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\GetFixedTermLoanTopupCalculationQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\GetFixedTermLoanTopupOfferQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\GetPaymentCardIsValidQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\GetPaymentCardsQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\GetPaymentCardTypesQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\GetPersonalPromoCodeQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\GetPromoCodeParametersQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\GetRepayLoanCalculationQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\GetRepayLoanParametersQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\GetRepayLoanStatusQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\GetRepaymentArrangementAllowedQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\GetRepaymentArrangementCalculationQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\GetRepaymentArrangementParametersQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\GetRepaymentArrangementQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\Ca\GetFixedTermLoanOfferCaQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\Ca\GetInstitutionBranchCodeIsValidCaQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\Pl\GetFixedTermLoanOfferPlQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\Uk\GetAccountOptionsUkQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\Uk\GetFixedTermLoanExtensionQuoteUkQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\Uk\GetFixedTermLoanOfferUkQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\Uk\GetLoanExtensionPaymentStatusUkQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\Uk\GetLoanExtensionStatusUkQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\Uk\GetRepayLoanPaymentStatusUkQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\Uk\GetRepayLoanQuoteUkQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\Wb\Uk\GetBusinessAccountSummaryWbUkQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\Wb\Uk\GetBusinessBankAccountsWbUkQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\Wb\Uk\GetBusinessFixedInstallmentLoanCalculationWbUkQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\Wb\Uk\GetBusinessFixedInstallmentLoanOfferWbUkQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\Wb\Uk\GetBusinessPaymentCardsWbUkQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\Wb\Uk\GetUnsignedApplicationsForAccountWbUkQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\Za\GetAccountSummaryZaQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\Za\GetBankAccountTypesZaQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\Za\GetFixedTermLoanApplicationZaQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\Za\GetFixedTermLoanCalculationZaQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\Za\GetFixedTermLoanOfferZaQuery.cs" />
-    <Compile Include="Requests\Payments\Queries\Za\GetIncomingPartnerPaymentRequestParametersZaQuery.cs" />
-    <Compile Include="Requests\PpsProvider\Queries\GetCustomerHasActivePrePaidCardQuery.cs" />
-    <Compile Include="Requests\PpsProvider\Queries\GetLastMonthClearedPrepaidCardTransactionsQuery.cs" />
-    <Compile Include="Requests\PpsProvider\Queries\GetPendingPrepaidCardTransactionsQuery.cs" />
-    <Compile Include="Requests\PpsProvider\Queries\GetPrepaidAccountMaximumTopupAllowedQuery.cs" />
-    <Compile Include="Requests\PpsProvider\Queries\GetPrepaidAvailableAccountBalanceQuery.cs" />
-    <Compile Include="Requests\PpsProvider\Queries\GetPrePaidPinResetCodeQuery.cs" />
-    <Compile Include="Requests\Risk\Commands\CancelUserActionCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\RiskAddPaymentCardCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\RiskCreateFixedTermLoanApplicationCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\SubmitApplicationBehaviourCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\SubmitClientWatermarkCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\SubmitNumberOfGuarantorsCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\SubmitUidAnswersCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\VerifyFixedTermLoanCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Ca\RiskAddBankAccountCaCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Ca\RiskAddHomePhoneCaCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Ca\RiskAddMobilePhoneCaCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Ca\RiskSaveCustomerAddressCaCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Ca\RiskSaveCustomerDetailsCaCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Ca\SaveEmploymentDetailsCaCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Ca\SaveSocialDetailsCaCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\PayLater\Uk\RiskPayLaterAddPaymentCardPayLaterUkCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\PayLater\Uk\RiskSavePayLaterCustomerAddressPayLaterUkCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\PayLater\Uk\RiskSavePayLaterEmploymentDetailsPayLaterUkCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\PayLater\Uk\RiskSavePayLaterCustomerDetailsPayLaterUkCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\PayLater\Uk\VerifyApplicationPayLaterUkCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Pl\RiskAddBankAccountPlCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Pl\RiskAddHomePhonePlCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Pl\RiskAddLegalAddressPlCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Pl\RiskAddMobilePhonePlCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Pl\RiskSaveCustomerAddressPlCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Pl\RiskSaveCustomerDetailsPlCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Pl\SaveEducationalBackgroundDetailsPlCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Pl\SaveEmploymentDetailsPlCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Pl\SaveSocialDetailsPlCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Uk\RiskAddBankAccountUkCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Uk\RiskAddHomePhoneUkCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Uk\RiskAddMobilePhoneUkCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Uk\RiskSaveCustomerAddressUkCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Uk\RiskSaveCustomerDetailsUkCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Uk\SaveEmploymentDetailsUkCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Uk\SaveSocialDetailsUkCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Wb\Uk\RiskAddBankAccountWbUkCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Wb\Uk\RiskAddHomePhoneWbUkCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Wb\Uk\RiskAddMobilePhoneWbUkCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Wb\Uk\RiskCreateBusinessFixedInstallmentLoanApplicationWbUkCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Wb\Uk\RiskSaveCustomerAddressWbUkCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Wb\Uk\RiskSaveCustomerDetailsWbUkCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Wb\Uk\SaveSocialDetailsWbUkCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Wb\Uk\VerifyMainBusinessApplicantWbUkCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Za\RiskAddBankAccountZaCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Za\RiskAddHomePhoneZaCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Za\RiskAddMobilePhoneZaCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Za\RiskSaveCustomerAddressZaCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Za\RiskSaveCustomerDetailsZaCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Za\SaveEmploymentDetailsZaCommand.cs" />
-    <Compile Include="Requests\Risk\Commands\Za\SaveSocialDetailsZaCommand.cs" />
-    <Compile Include="Requests\Risk\Queries\GetApplicationDecisionDummyQuery.cs" />
-    <Compile Include="Requests\Risk\Queries\GetApplicationDecisionQuery.cs" />
-    <Compile Include="Requests\Risk\Queries\GetDeclineAdviceQuery.cs" />
-    <Compile Include="Requests\Risk\Queries\GetEmploymentDetailsQuery.cs" />
-    <Compile Include="Requests\Risk\Queries\GetSocialDetailsQuery.cs" />
-    <Compile Include="Requests\Risk\Queries\PLater\Uk\VerifyCheckoutUkQuery.cs" />
-    <Compile Include="Requests\Risk\Queries\Wb\GetMatchedOrganizationsWbQuery.cs" />
     <Compile Include="Enums\AdditionalPaymentCardDetailsEnum.cs" />
     <Compile Include="Enums\BankNamesPlEnum.cs" />
     <Compile Include="Enums\CityOfUniversityEnum.cs" />
