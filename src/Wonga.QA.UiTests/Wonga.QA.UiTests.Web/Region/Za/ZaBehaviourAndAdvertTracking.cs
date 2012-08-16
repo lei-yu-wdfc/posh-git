@@ -10,7 +10,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.UiTests.Web.Region.Za
 {
     [Parallelizable(TestScope.All), AUT(AUT.Za)]
-    class BehaviourAndAdvertTracking2 : UiTest
+    class ZaBehaviourAndAdvertTracking : UiTest
     {
         #region DoubleClickTags
 
@@ -248,7 +248,7 @@ namespace Wonga.QA.UiTests.Web.Region.Za
             SourceDoesNotContain("u1: []");
 
             // Complete the accept page:
-            var dealDonePage = journey.Teleport<DeclinedPage>() as DealDonePage;
+            var dealDonePage = journey.Teleport<DealDonePage>() as DealDonePage;
 
             // Check that the page contains the wonga_doubleclick module v1.0 signature:
             Assert.IsTrue(dealDonePage.Client.Source().Contains(" wonga_doubleclick-v6.x-1.0-"));
