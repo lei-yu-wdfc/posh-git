@@ -49,7 +49,7 @@ namespace Wonga.QA.Framework.Builders.Consumer.Uk
 				r.ApplicationId = ApplicationId;
 				r.TopupAmount = TopupData.Amount;
                 r.FixedTermLoanTopupId = TopupId;
-			    r.AccountId = ApplicationQueries.Consumer.GetAccountIdForApplication(ApplicationId);
+			    r.AccountId = ApplicationQueries.Consumer.GetAccountGuidForApplication(ApplicationId);
 			}));
         }
 
