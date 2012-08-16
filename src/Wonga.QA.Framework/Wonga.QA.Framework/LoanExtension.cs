@@ -14,12 +14,11 @@ namespace Wonga.QA.Framework
         public Guid LoanExtensionId;
         public bool HasStatusAccepted;
         public double PartPaymentAmount;
-        public double TodaysBalance;
         public double OriginalBalance;
         public double NewFinalBalance;
 
 
-        public LoanExtension(bool hasStatusAccepted, Guid loanExtensionId, Guid customerId, Guid apllicationId, DateTime term, double partPaymentAmount, double todaysBalance, double originalBalance, double newFinalBalance)
+        public LoanExtension(bool hasStatusAccepted, Guid loanExtensionId, Guid customerId, Guid apllicationId, DateTime term, double partPaymentAmount, double originalBalance, double newFinalBalance)
         {
             HasStatusAccepted = hasStatusAccepted;
             Term = term;
@@ -28,7 +27,6 @@ namespace Wonga.QA.Framework
             CustomerId = customerId;
             ApplicationId = apllicationId;
             PartPaymentAmount = partPaymentAmount;
-            TodaysBalance = todaysBalance;
             OriginalBalance = originalBalance;
             NewFinalBalance = newFinalBalance;
         }

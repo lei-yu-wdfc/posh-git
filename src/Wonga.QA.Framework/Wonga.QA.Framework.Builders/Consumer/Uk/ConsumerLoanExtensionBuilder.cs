@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Wonga.QA.Framework.Account;
+using Wonga.QA.Framework.Account.Consumer;
+using Wonga.QA.Framework.Account.Queries;
 using Wonga.QA.Framework.Api.Requests.Payments.Commands;
 using Wonga.QA.Framework.Api.Requests.Payments.Queries;
 using Wonga.QA.Framework.Builders;
@@ -18,18 +21,18 @@ namespace Wonga.QA.Framework.Builders.Consumer.Uk
         {
         }
 
-        protected override LoanExtension CreateLoanExtension(bool hasStatusAccepted, Guid loanExtensionId, Guid customerId, Guid apllicationId, DateTime term, double partPaymentAmount, double todaysBalance, double originalBalance, double newFinalBalance)
+        protected override LoanExtension CreateLoanExtension(bool hasStatusAccepted, Guid loanExtensionId, Guid customerId, Guid apllicationId, DateTime term, double partPaymentAmount, double originalBalance, double newFinalBalance)
         {
-            return new LoanExtension(hasStatusAccepted, loanExtensionId, customerId, apllicationId, term, partPaymentAmount, todaysBalance, originalBalance, newFinalBalance);
+            return new LoanExtension(hasStatusAccepted, loanExtensionId, customerId, apllicationId, term, partPaymentAmount, originalBalance, newFinalBalance);
         }
 
         protected override void RequestLoanExtension()
         {
             var response = Drive.Api.Queries.Post(CreateFixedTermLoanExtensionCommand.New(r =>
             {
-                r.ApplicationId = ExtensionData.ApplicationId;
+                r.ApplicationId = ApplicationId;
                 r.ExtensionId = ExtensionData.LoanExtensionId;
-                r.PaymentCardId = ExtensionData.PaymentCardId;
+                r.PaymentCardId = PaymentCardId;
                 r.PartPaymentAmount = ExtensionData.PartPaymentAmount;
             }));
         }
@@ -38,34 +41,22 @@ namespace Wonga.QA.Framework.Builders.Consumer.Uk
         {
             var response = Drive.Api.Queries.Post(SignFixedTermLoanExtensionCommand.New(r =>
             {
-                r.ApplicationId = ExtensionData.ApplicationId;
+                r.ApplicationId = ApplicationId;
                 r.ExtensionId = ExtensionData.LoanExtensionId;
             }));
         }
 
-        protected override void GetCusotmerDetails(Guid cusotmerId)
+        protected override void GetGetPaymentCardId(Guid cusotmerId)
         {
-
-            var customer = Drive.Data.Payments.Db.AccountPreferences.FindAllByAccountId(cusotmerId).Single() as Customer;
-            if (customer != null) ExtensionData.PaymentCardId = customer.GetPaymentCard().ToString();
-        }
-
-        protected override double GetTodaysBalance()
-        {
-            var response = Drive.Api.Queries.Post(GetFixedTermLoanExtensionCalculationQuery.New(r =>
-            {
-                r.ApplicationId = ExtensionData.ApplicationId;
-                r.ExtendDate = ExtensionData.ExtendDate;
-            }));
-
-            return Convert.ToDouble(response.Values["TodaysBalance"].Single());
+            AccountQueriesPaymentDetails accountQueries = new AccountQueriesPaymentDetails();
+            PaymentCardId = accountQueries.GetPrimaryPaymentCardGuid(new ConsumerAccount(cusotmerId));
         }
 
         protected override double GetOriginalBalance()
         {
             var response = Drive.Api.Queries.Post(GetFixedTermLoanExtensionCalculationQuery.New(r =>
             {
-                r.ApplicationId = ExtensionData.ApplicationId;
+                r.ApplicationId = ApplicationId;
                 r.ExtendDate = ExtensionData.ExtendDate;
             }));
 
@@ -76,7 +67,7 @@ namespace Wonga.QA.Framework.Builders.Consumer.Uk
         {
             var response = Drive.Api.Queries.Post(GetFixedTermLoanExtensionCalculationQuery.New(r =>
             {
-                r.ApplicationId = ExtensionData.ApplicationId;
+                r.ApplicationId = ApplicationId;
                 r.ExtendDate = ExtensionData.ExtendDate;
             }));
 
