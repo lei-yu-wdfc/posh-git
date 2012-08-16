@@ -53,6 +53,7 @@ namespace Wonga.QA.Tests.Payments
                 Drive.Data.Payments.Db.AccountPreferences.FindAllByAccountId(_application.AccountId).SingleOrDefault().
                     PrimaryPaymentCardId;
             _appInternalId = ApplicationOperations.GetAppInternalId(_application);
+            SetCardExpiryDate(_customer.GetPaymentCard(), DateTime.Now.AddYears(-1)); // original card must be expired
             _customer.AddBadCard();
             _sagaEntityFail = GetSagaEntity(_appInternalId);
             SaagaTimeOutMessageBy5Or8Am(_sagaEntityFail.Id, FiveAmState);
@@ -62,6 +63,7 @@ namespace Wonga.QA.Tests.Payments
         [Test, JIRA("UKOPS-419"), DependsOn("PaymentsShouldAddRecordToPaymentCardRepaymentRequestWhenFirstPingFails"), Owner(Owner.JonHurd)]
         public void PaymentsShouldCreateNewTransactionWhenEightAmCollectionSucceedsAfterFivePingFails()
         {
+
             UpdatePrimaryCard(_application.AccountId);
             SetCardExpiryDate(_customer.GetPaymentCard(), DateTime.Now.AddYears(1));
             SaagaTimeOutMessageBy5Or8Am(_sagaEntityFail.Id, EightAmState);
@@ -80,17 +82,28 @@ namespace Wonga.QA.Tests.Payments
             var customer = GetCustomer();
             _secondApplication = GetApplicationInArrears(customer);
             _secondAppInternalId = ApplicationOperations.GetAppInternalId(_secondApplication);
+            SetCardExpiryDate(customer.GetPaymentCard(),DateTime.Now.AddMonths(-3));
             customer.AddBadCard();
             _sagaSecondEntityFail = GetSagaEntity(_secondAppInternalId);
             SaagaTimeOutMessageBy5Or8Am(_sagaSecondEntityFail.Id, FiveAmState);
+            var amountDue = _secondApplication.GetDueDateBalance();
+            Do.With.Timeout(1).Until<bool>(
+                () => Drive.Data.Payments.Db.PaymentCardRepaymentRequests.FindAllBy(ApplicationId: _secondAppInternalId,
+                                                                                    Amount: amountDue,
+                                                                                    StatusDescription: "Request Declined"
+                          ).Count() == 1);
         }
 
         [Test, JIRA("UKOPS-419"), DependsOn("PaymentsFirstPingFailsToMakeSecondPingAlsoFail"), Owner(Owner.JonHurd)]
         public void PaymentsRepaymentRequestSecondPingFailsAfterFirstPingFailed()
         {
-            SaagaTimeOutMessageBy5Or8Am(_sagaSecondEntityFail.Id, EightAmState);
+
+            PaymentsFirstPingFailsToMakeSecondPingAlsoFail();
             var amountDue = _secondApplication.GetDueDateBalance();
-            Do.With.Timeout(2).Until<bool>(
+            _sagaSecondEntityFail = GetSagaEntity(_secondAppInternalId);
+            SaagaTimeOutMessageBy5Or8Am(_sagaSecondEntityFail.Id, EightAmState);
+            amountDue = _secondApplication.GetDueDateBalance();
+            Do.Until<bool>(
                 () => Drive.Data.Payments.Db.PaymentCardRepaymentRequests.FindAllBy(ApplicationId: _secondAppInternalId,
                                                                                     Amount: amountDue,
                                                                                     StatusDescription: "Request Declined"
@@ -213,6 +226,14 @@ namespace Wonga.QA.Tests.Payments
             const string cardType = "visa";
             const string cardNumber = "9999888877776666";
             customer.AddPaymentCard(cardType, cardNumber, "777", DateTime.Now.AddMonths(3), true);
+            return customer;
+        }
+
+        public static Customer AddGoodCard(this Customer customer)
+        {
+            const string cardType = "visa";
+            const string cardNumber = "4444333322221111";
+            customer.AddPaymentCard(cardType, cardNumber, "666", DateTime.Now.AddMonths(3), true);
             return customer;
         }
     }
