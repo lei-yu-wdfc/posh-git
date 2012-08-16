@@ -42,15 +42,15 @@ namespace Wonga.QA.Framework.Builders.Consumer.Uk
 			return _cachedTopupCalculationResponse;
 		}
 
-        protected override Int32 RequestTopUp()
+        protected override void RequestTopUp()
         {
             var response = Drive.Api.Queries.Post(CreateFixedTermLoanTopupCommand.New(r =>
 			{
 				r.ApplicationId = ApplicationId;
 				r.TopupAmount = TopupData.Amount;
+                r.FixedTermLoanTopupId = TopupId;
+			    r.AccountId = ApplicationQueries.Consumer.GetAccountIdForApplication(ApplicationId);
 			}));
-
-			return Convert.ToInt32(response.Values["FixedTermLoanTopupId"].Single());
         }
 
         protected override void AcceptTopUp()
