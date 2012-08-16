@@ -83,7 +83,12 @@ namespace Wonga.QA.Tests.Salesforce
             var customer = CustomerBuilder.New().Build();; 
             var application = CreateLiveApplication(customer);
             ApplicationOperations.ReportComplaint(application, caseId);
-            RepaymentArrangementCycle(customer,application);
+        	SalesforceOperations.CreateRepaymentArrangement(customer, application);
+			ApplicationOperations.RemoveComplaint(application, caseId);
+        	SalesforceOperations.CheckSalesApplicationStatus(application,
+        	                                                 (double)
+        	                                                 Framework.ThirdParties.Salesforce.ApplicationStatus.
+        	                                                 	RepaymentArrangement);
         }
 
         [Test]
@@ -95,8 +100,12 @@ namespace Wonga.QA.Tests.Salesforce
             var application = CreateLiveApplication(customer);
             ApplicationOperations.ManagementReview(application, caseId);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.ManagementReview);
-            RepaymentArrangementCycle(customer,application);
-            ApplicationOperations.RemoveManagementReview(application, caseId);
+			SalesforceOperations.CreateRepaymentArrangement(customer, application);
+        	ApplicationOperations.RemoveManagementReview(application, caseId);
+			SalesforceOperations.CheckSalesApplicationStatus(application,
+															  (double)
+															  Framework.ThirdParties.Salesforce.ApplicationStatus.
+																 RepaymentArrangement);
         }
 
         [Test]
