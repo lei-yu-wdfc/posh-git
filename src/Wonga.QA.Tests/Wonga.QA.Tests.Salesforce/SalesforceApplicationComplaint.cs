@@ -12,10 +12,7 @@ namespace Wonga.QA.Tests.Salesforce
     [Parallelizable(TestScope.Self)]
    class SalesforceApplicationComplaint
     {
-        private readonly dynamic _commsSuppressionsRepo = Drive.Data.Comms.Db.Suppressions;
-        private readonly dynamic _paymentsSuppressionsRepo = Drive.Data.Payments.Db.PaymentCollectionSuppressions;
-
-        #region setup#
+    	#region setup#
         [SetUp]
         public void SetUp()
         {
@@ -225,19 +222,9 @@ namespace Wonga.QA.Tests.Salesforce
             ApplicationOperations.ReportComplaint(application, caseId);
             SalesforceOperations.CheckSalesApplicationStatus(application,
                                                             (double) salesforceStatusAlias.Complaint);
-            CheckSupressionTable(application);
         }
 
-        private void CheckSupressionTable(Application application)
-        {
-            int appInternalId =ApplicationOperations.GetAppInternalId(application);
-            Do.Until(() => _commsSuppressionsRepo.FindAll(
-                           _commsSuppressionsRepo.AccountId == application.AccountId && _commsSuppressionsRepo.Complaint == 1).Single());
-            Do.Until(() => _paymentsSuppressionsRepo.FindAll(
-                _paymentsSuppressionsRepo.ApplicationId == appInternalId && _paymentsSuppressionsRepo.ComplaintSuppression == 1).Single());
-        }
-
-        #endregion helpers#
+    	#endregion helpers#
 
     }
 }

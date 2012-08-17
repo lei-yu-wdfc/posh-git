@@ -7,6 +7,7 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Cs.Requests.Payments.Csapi.Queries;
 using Wonga.QA.Framework.Db;
 using Wonga.QA.Framework.Db.Payments;
+using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Framework.Msmq.Enums.Common.Iso;
 using Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Messages;
 using Wonga.QA.Framework.Old;
@@ -48,15 +49,7 @@ namespace Wonga.QA.Tests.Payments
 			Customer customer = CustomerBuilder.New().Build();
 			_application = ApplicationBuilder.New(customer).Build();
 
-			_arrangementDetails = new[]
-										{
-											new ArrangementDetail
-												{Amount = 49.01m, Currency = CurrencyCodeIso4217Enum.GBP, DueDate = DateTime.Today},
-											new ArrangementDetail
-												{
-													Amount = 51.01m,Currency = CurrencyCodeIso4217Enum.GBP,DueDate = DateTime.Today.AddDays(7)
-												}
-										};
+			_arrangementDetails = ArrangementDetails();
 
 			_application.PutIntoArrears();
 
@@ -69,36 +62,35 @@ namespace Wonga.QA.Tests.Payments
 											RepaymentDetails = _arrangementDetails
 										});
 
-			var repaymentArrangement = GetRepaymentArrangementEntity();
+			var repaymentArrangement = GetRepaymentArrangementEntity(_application);
 			Assert.AreEqual(2, repaymentArrangement.RepaymentArrangementDetails.Count);
 		}
 
-		[Test, JIRA("UKOPS-79"), DependsOn("CustomerServiceSetRepaymentArrangementTest"), Pending("Bug 858-CSAPI query not returning Amount PAid ")]
+		#region RA query Tests
+		[Test, JIRA("UKOPS-79"), DependsOn("CustomerServiceSetRepaymentArrangementTest"), Pending("Bug 858-CSAPI query not returning Amount PAid "), Owner(Owner.AnilKrishnamaneni)]
 		public void RepaymentArrangemetnDetailsQuery()
 		{
 			var repaymentArrangementDetails = Drive.Cs.Queries.Post(new GetRepaymentArrangementsQuery() { ApplicationId = _application.Id });
 			var repayDate = repaymentArrangementDetails.Values["DueDate"].ToArray();
 			var repayAmount = repaymentArrangementDetails.Values["Amount"].ToArray();
 			var amountPaid = repaymentArrangementDetails.Values["AmountPaid"].ToArray();
+			var currency = repaymentArrangementDetails.Values["Currency"].ToArray();
+			var canceledOn = repaymentArrangementDetails.Values["CanceledOn"].SingleOrDefault();
+			var closedOn = repaymentArrangementDetails.Values["ClosedOn"].SingleOrDefault();
+			var isBroken = repaymentArrangementDetails.Values["IsBroken"].SingleOrDefault();
 			for (int i = 0; i < _arrangementDetails.Length; i++)
 			{
 				Assert.AreEqual(DateTime.Parse(repayDate[i]).ToString("yyyy-MM-dd"), _arrangementDetails[i].DueDate.ToString("yyyy-MM-dd"));
 				Assert.AreEqual(repayAmount[i], _arrangementDetails[i].Amount.ToString(CultureInfo.InvariantCulture));
+				Assert.AreEqual(currency[i], _arrangementDetails[i].Currency.ToString());
 			}
 			Assert.AreEqual(amountPaid[0], _arrangementDetails[0].Amount.ToString(CultureInfo.InvariantCulture));
+			Assert.IsNull(canceledOn);
+			Assert.IsNull(closedOn);
+			Assert.IsNull(isBroken);
 		}
-
-		[Test, AUT(AUT.Uk), JIRA("UKOPS-49"), Owner(Owner.ShaneMcHugh), DependsOn("RepaymentArrangemetnDetailsQuery")]
-		public void CancelRepaymentArrangemntAfterRepaymentToday()
-		{
-			var repaymentArrangement = GetRepaymentArrangementEntity();
-			var a = _arrangementDetails[0].Amount;
-			var d = _arrangementDetails[0].DueDate;
-			Assert.IsNotNull(repaymentArrangement.RepaymentArrangementDetails.First(ra => ra.Amount == a && ra.DueDate == d));
-			_application.CancelRepaymentArrangement();
-		}
-
-		[Test, AUT(AUT.Uk), JIRA("UKOPS-79"), DependsOn("CancelRepaymentArrangemntAfterRepaymentToday")]
+		
+		[Test, AUT(AUT.Uk), JIRA("UKOPS-79"), DependsOn("CancelRepaymentArrangemntAfterRepaymentToday"), Owner(Owner.AnilKrishnamaneni)]
 		public void RepaymentArrangemetnDetailsQueryForCanceledRA()
 		{
 			var repaymentArrangementDetails = Drive.Cs.Queries.Post(new GetRepaymentArrangementsQuery() { ApplicationId = _application.Id });
@@ -106,18 +98,47 @@ namespace Wonga.QA.Tests.Payments
 			Assert.AreEqual(DateTime.Parse(canceledOn).ToString("yyyy-MM-dd"), DateTime.Today.ToString("yyyy-MM-dd"));
 		}
 
+		[Test, AUT(AUT.Uk), JIRA("UKOPS-49"), Owner(Owner.AnilKrishnamaneni), Pending("Bug 858-CSAPI query not returning Amount PAid ")]
+		public void RepaymentArrangementQueryClosedRA()
+		{
+		    Customer customer = CustomerBuilder.New().Build();
+			Application application = ApplicationBuilder.New(customer).Build();
+			application.CreateRepaymentArrangement(); 
+			var repaymentArrangement = GetRepaymentArrangementEntity(application);
+			var repaymentArrangementSagaId = (Guid)Do.Until(() => Drive.Data.OpsSagas.Db.RepaymentArrangementSagaEntity.FindByRepaymentArrangementId(repaymentArrangement.RepaymentArrangementId).Id);
+			var count = repaymentArrangement.RepaymentArrangementDetails.Count;
+			for (int i = 0; i < count; i++)
+			Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = repaymentArrangementSagaId });
+			var repaymentArrangementDetails = Drive.Cs.Queries.Post(new GetRepaymentArrangementsQuery() { ApplicationId = application.Id });
+			var closedOn = repaymentArrangementDetails.Values["ClosedOn"].SingleOrDefault();
+			Assert.IsTrue(Convert.ToBoolean(closedOn));
+		}
+
+		[Test, JIRA("UKOPS-79"), DependsOn("CancelRepaymentArrangementWhenRepaymentArrangementIsBroken"), Pending("UKOPS-822 Ticket Not Implemeneted Yet"),Owner(Owner.AnilKrishnamaneni)]
+		public void RepaymentArrangemetnDetailsQueryForBrokenRA()
+		{
+			var repaymentArrangementDetails = Drive.Cs.Queries.Post(new GetRepaymentArrangementsQuery() { ApplicationId = _application.Id });
+			var isBroken = repaymentArrangementDetails.Values["IsBroken"].SingleOrDefault();
+			Assert.IsTrue(Convert.ToBoolean(isBroken));
+		}
+
+		#endregion
+
+
+		[Test, AUT(AUT.Uk), JIRA("UKOPS-49"), Owner(Owner.ShaneMcHugh), DependsOn("RepaymentArrangemetnDetailsQuery")]
+		public void CancelRepaymentArrangemntAfterRepaymentToday()
+		{
+			var repaymentArrangement = GetRepaymentArrangementEntity(_application);
+			var a = _arrangementDetails[0].Amount;
+			var d = _arrangementDetails[0].DueDate;
+			Assert.IsNotNull(repaymentArrangement.RepaymentArrangementDetails.First(ra => ra.Amount == a && ra.DueDate == d));
+			_application.CancelRepaymentArrangement();
+		}
+
 		[Test, AUT(AUT.Uk), JIRA("UKOPS-49"), Owner(Owner.ShaneMcHugh), Pending("UKOPS-822 Ticket Not Implemeneted Yet")]
 		public void CancelRepaymentArrangementWhenRepaymentArrangementIsBroken()
 		{
 
-		}
-
-		[Test, JIRA("UKOPS-79"), DependsOn("CancelRepaymentArrangementWhenRepaymentArrangementIsBroken"), Pending("UKOPS-822 Ticket Not Implemeneted Yet")]
-		public void RepaymentArrangemetnDetailsQueryForBrokenRA()
-		{
-			var repaymentArrangementDetails = Drive.Cs.Queries.Post(new GetRepaymentArrangementsQuery() { ApplicationId = _application.Id});
-			var isBroken = repaymentArrangementDetails.Values["IsBroken"].SingleOrDefault();
-			Assert.IsTrue(Convert.ToBoolean(isBroken));
 		}
 
 		[Test, AUT(AUT.Uk), JIRA("UK-725"), Owner(Owner.AlexSloat)]
@@ -144,7 +165,7 @@ namespace Wonga.QA.Tests.Payments
 			Assert.AreEqual(2, repaymentArrangement.RepaymentArrangementDetails.Count);
 			Assert.IsNotNull(Drive.Db.Payments.Transactions.Where(x => x.ApplicationId == dbApplication.ApplicationId && x.Type == "SuspendInterestAccrual"));
 		}
-
+		
 		[Test, AUT(AUT.Uk), JIRA("UK-726"), Owner(Owner.AlexSloat)]
 		public void CustomerMissesRepaymentArrangementInstallmentTest()
 		{
@@ -220,6 +241,19 @@ namespace Wonga.QA.Tests.Payments
 
 		#region Helpers#
 
+		private static ArrangementDetail[] ArrangementDetails()
+		{
+			return new[]
+			       	{
+			       		new ArrangementDetail
+			       			{Amount = 49.01m, Currency = CurrencyCodeIso4217Enum.GBP, DueDate = DateTime.Today},
+			       		new ArrangementDetail
+			       			{
+			       				Amount = 51.01m,Currency = CurrencyCodeIso4217Enum.GBP,DueDate = DateTime.Today.AddDays(7)
+			       			}
+			       	};
+		}
+
 		//Needed for serialization in CreateExtendedRepaymentArrangementCommand
 		private class ArrangementDetail
 		{
@@ -228,9 +262,9 @@ namespace Wonga.QA.Tests.Payments
 			public DateTime DueDate { get; set; }
 		}
 
-		private RepaymentArrangementEntity GetRepaymentArrangementEntity()
+		private RepaymentArrangementEntity GetRepaymentArrangementEntity(Application application)
 		{
-			var dbApplication = Drive.Db.Payments.Applications.Single(a => a.ExternalId == _application.Id);
+			var dbApplication = Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id);
 			var repaymentArrangement =
 					Do.Until(() => Drive.Db.Payments.RepaymentArrangements.Single(x => x.ApplicationId == dbApplication.ApplicationId));
 			return repaymentArrangement;
