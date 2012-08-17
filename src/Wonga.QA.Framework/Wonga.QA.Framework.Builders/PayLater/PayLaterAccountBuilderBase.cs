@@ -34,6 +34,7 @@ namespace Wonga.QA.Framework.Builders.PayLater
 		{
 			var commands = new List<ApiRequest>();
 			commands.AddRange(GetGenericApiCommands());
+            commands.AddRange(GetRegionSpecificApiCommands());
 			Drive.Api.Commands.Post(commands);
 		}
 
@@ -51,7 +52,15 @@ namespace Wonga.QA.Framework.Builders.PayLater
 
 		private void WaitUntilAccountIsPresentInServiceDatabases()
 		{
-			Do.Until(() =>  AccountQueries.PayLater.DataPresence.IsAccountPresentInServiceDatabases(AccountId));
+		    //AccountQueries.PayLater.DataPresence.IsAccountPresentInServiceDatabases(AccountId);
+
+            Do.Until(() => AccountQueries.PayLater.DataPresence.IsAccountPresentInOpsDatabase(AccountId));
+
+            Do.Until(() => AccountQueries.PayLater.DataPresence.IsAccountPresentInCommsDatabase(AccountId));
+
+            Do.Until(() => AccountQueries.PayLater.DataPresence.IsAccountPresentInPaymentsDatabase(AccountId));
+
+            Do.Until(() => AccountQueries.PayLater.DataPresence.IsAccountPresentInRiskDatabase(AccountId));
 		}
 
 		#region "With" Methods - PersonalDetails

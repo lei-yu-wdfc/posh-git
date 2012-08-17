@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Wonga.QA.Framework.Account.Queries
 {
@@ -17,24 +18,24 @@ namespace Wonga.QA.Framework.Account.Queries
 			       IsAccountPresentInRiskDatabase(accountId);
 		}
 
-		private bool IsAccountPresentInOpsDatabase(Guid accountId)
+        public bool IsAccountPresentInOpsDatabase(Guid accountId)
 		{
-			return Drive.Data.Ops.Db.Accounts.FindByExternalId(accountId).Any();
+            return Drive.Db.Ops.Accounts.Any(a => a.ExternalId == accountId);
 		}
 
-		private bool IsAccountPresentInCommsDatabase(Guid accountId)
+        public bool IsAccountPresentInCommsDatabase(Guid accountId)
 		{
-			return Drive.Data.Comms.Db.CustomerDetails.FindByAccountId(accountId).Any();
+            return Drive.Db.Comms.CustomerDetails.Any(a => a.AccountId == accountId);
 		}
 
-		private bool IsAccountPresentInPaymentsDatabase(Guid accountId)
+        public bool IsAccountPresentInPaymentsDatabase(Guid accountId)
 		{
-			return Drive.Data.Payments.Db.AccountPreferences.FindByAccountId(accountId).Any();
+            return Drive.Db.Payments.AccountPreferences.Any(a => a.AccountId == accountId);
 		}
 
-		private bool IsAccountPresentInRiskDatabase(Guid accountId)
+        public bool IsAccountPresentInRiskDatabase(Guid accountId)
 		{
-			return Drive.Data.Risk.Db.RiskAccounts.FindByAccountId(accountId).Any();
+            return Drive.Db.Risk.RiskAccounts.Any(a => a.AccountId == accountId);
 		}
 	}
 }

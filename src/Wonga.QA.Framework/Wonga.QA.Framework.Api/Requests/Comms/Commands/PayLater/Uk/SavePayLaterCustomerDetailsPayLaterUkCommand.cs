@@ -13,6 +13,6 @@ namespace Wonga.QA.Framework.Api.Requests.Comms.Commands.PayLater.Uk
         public Object Forename { get; set; }
         public Object Surname { get; set; }
         public Object MobilePhone { get; set; }
-        public Object Email { get; set; }
+        public Object Email { get; set; }        
     }
 }

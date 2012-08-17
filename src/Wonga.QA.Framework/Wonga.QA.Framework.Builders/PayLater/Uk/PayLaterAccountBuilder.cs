@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Enums;
+using Wonga.QA.Framework.Api.Requests.Comms.Commands.PayLater.Uk;
 using Wonga.QA.Framework.Api.Requests.Comms.Commands.Uk;
 using Wonga.QA.Framework.Api.Requests.Payments.Commands;
 using Wonga.QA.Framework.Api.Requests.Risk.Commands;
+using Wonga.QA.Framework.Api.Requests.Risk.Commands.PayLater.Uk;
 using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.Framework.Builders.PayLater.Uk
@@ -21,7 +23,7 @@ namespace Wonga.QA.Framework.Builders.PayLater.Uk
 
 		protected override IEnumerable<ApiRequest> GetRegionSpecificApiCommands()
 		{
-			yield return SaveCustomerDetailsUkCommand.New(r =>
+            yield return SavePayLaterCustomerDetailsPayLaterUkCommand.New(r =>
 			{
 				r.AccountId = AccountId;
 				r.Forename = AccountData.Forename;
@@ -29,19 +31,20 @@ namespace Wonga.QA.Framework.Builders.PayLater.Uk
 				r.Email = AccountData.Email;
 				r.DateOfBirth = AccountData.DateOfBirth;
 				r.Title = TitleEnum.Mr;
+                r.MobilePhone = AccountData.MobilePhoneNumber;
 			});
 
-			//yield return RiskPayLaterSaveCustomerDetailsUkCommand.New(r =>
-			//{
-			//    r.AccountId = AccountId;
-			//    r.Forename = AccountData.Forename;
-			//    r.Surname = AccountData.Surname;
-			//    r.Email = AccountData.Email;
-			//    r.DateOfBirth = AccountData.DateOfBirth;
-			//    r.MobilePhone = AccountData.MobilePhoneNumber;
-			//});
+            yield return RiskSavePayLaterCustomerDetailsPayLaterUkCommand.New(r =>
+            {
+                r.AccountId = AccountId;
+                r.Forename = AccountData.Forename;
+                r.Surname = AccountData.Surname;
+                r.Email = AccountData.Email;
+                r.DateOfBirth = AccountData.DateOfBirth;
+                r.MobilePhone = AccountData.MobilePhoneNumber;
+            });
 
-			yield return SaveCustomerAddressUkCommand.New(r =>
+            yield return SavePayLaterCustomerAddressPayLaterUkCommand.New(r =>
 			{
 				r.AccountId = AccountId;
 				r.HouseNumber = AccountData.HouseNumber;
@@ -51,15 +54,15 @@ namespace Wonga.QA.Framework.Builders.PayLater.Uk
 				r.Town = AccountData.Town;
 			});
 
-			//yield return RiskPayLaterSaveCustomerAddressUkCommand.New(r =>
-			//{
-			//    r.AccountId = AccountId;
-			//    r.HouseNumber = AccountData.HouseNumber;
-			//    r.Postcode = AccountData.Postcode;
-			//    r.Street = AccountData.Street;
-			//    r.Flat = AccountData.Flat;
-			//    r.Town = AccountData.Town;
-			//});
+            yield return RiskSavePayLaterCustomerAddressPayLaterUkCommand.New(r =>
+            {
+                r.AccountId = AccountId;
+                r.HouseNumber = AccountData.HouseNumber;
+                r.Postcode = AccountData.Postcode;
+                r.Street = AccountData.Street;
+                r.Flat = AccountData.Flat;
+                r.Town = AccountData.Town;
+            });
 
 			yield return AddPaymentCardCommand.New(r =>
 			{
@@ -79,14 +82,15 @@ namespace Wonga.QA.Framework.Builders.PayLater.Uk
 				r.ExpiryDate = AccountData.PaymentCardExpiryDate.ToPaymentCardDate();
 				r.SecurityCode = AccountData.PaymentCardSecurityCode;
 			});
-			
-			//yield return SavePayLaterEmploymentDetailsUkCommand.New(r =>
-			//{
-			//    r.AccountId = AccountId;
-			//    r.EmployerName = AccountData.EmployerName;
-			//    r.Status = AccountData.EmploymentStatus;
-			//    r.NetMonthlyIncome = AccountData.NetMonthlyIncome;
-			//});
+
+            yield return RiskSavePayLaterEmploymentDetailsPayLaterUkCommand.New(r =>
+            {
+                r.AccountId = AccountId;
+                r.EmploymentStatus = AccountData.EmploymentStatus;
+                r.IncomeFrequency = AccountData.IncomeFrequency;
+                r.NetIncome = AccountData.NetMonthlyIncome;
+                r.NextPayDate = AccountData.NextPayDate;
+            });
 		}
 	}
 }

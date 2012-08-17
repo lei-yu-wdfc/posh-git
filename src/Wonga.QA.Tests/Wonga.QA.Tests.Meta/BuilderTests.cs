@@ -1,8 +1,13 @@
 ﻿using MbUnit.Framework;
 using Wonga.QA.Framework;
+using Wonga.QA.Framework.Account.PayLater;
+using Wonga.QA.Framework.Builders;
+using Wonga.QA.Framework.Builders.PayLater;
+using Wonga.QA.Framework.Builders.PayLater.Uk;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Core;
+using ApplicationBuilder = Wonga.QA.Framework.ApplicationBuilder;
 
 namespace Wonga.QA.Tests.Meta
 {
@@ -11,6 +16,7 @@ namespace Wonga.QA.Tests.Meta
     {
         private Customer _customer;
         private Organisation _organisation;
+        private PayLaterAccount _payLaterAccount;
 
         [Test, Owner(Owner.StanDesyatnikov)]
         public void CustomerBuilderTest()
@@ -33,5 +39,11 @@ namespace Wonga.QA.Tests.Meta
 		{
 			Assert.DoesNotThrow(() => _organisation = OrganisationBuilder.New(_customer).Build());
 		}
+
+        [Test, AUT(AUT.Uk), Ignore]
+        public void PayLaterAccountBuilderTests()
+        {
+            Assert.DoesNotThrow(() => _payLaterAccount = AccountBuilder.PayLater.New().Build());
+        }
     }
 }

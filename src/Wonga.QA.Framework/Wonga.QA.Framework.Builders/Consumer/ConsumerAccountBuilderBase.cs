@@ -62,7 +62,7 @@ namespace Wonga.QA.Framework.Builders.Consumer
 
 		private void WaitUntilAccountIsPresentInServiceDatabases()
 		{
-			Do.Until(() => AccountQueries.PayLater.DataPresence.IsAccountPresentInServiceDatabases(AccountId));
+			Do.Until(() => AccountQueries.Consumer.DataPresence.IsAccountPresentInServiceDatabases(AccountId));
 		}
 
 		#region "With" Methods - PersonalDetails

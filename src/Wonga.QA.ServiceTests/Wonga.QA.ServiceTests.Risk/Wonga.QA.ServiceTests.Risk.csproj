@@ -110,6 +110,7 @@
     <Compile Include="MocksSelfTests.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="PayLater\UK\CreatePayLaterApplicationTests.cs" />
     <Compile Include="PayLater\RiskPayLaterApiCommandsTests.cs" />
     <Compile Include="Wb\Uk\ApplicationReadinessWbTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

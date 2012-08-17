@@ -48,6 +48,11 @@
     <Compile Include="Defaults\AddPrimaryOrganisationDirectorCommand.cs" />
     <Compile Include="Defaults\AddSecondaryOrganisationDirectorCommand.cs" />
     <Compile Include="Defaults\CompleteHomePhoneVerificationCaCommand.cs" />
+    <Compile Include="Defaults\RiskSavePayLaterCustomerAddressPayLaterUkCommand.cs" />
+    <Compile Include="Defaults\RiskSavePayLaterCustomerDetailsPayLaterUkCommand.cs" />
+    <Compile Include="Defaults\RiskSavePayLaterEmploymentDetailsPayLaterUkCommand.cs" />
+    <Compile Include="Defaults\SavePayLaterCustomerAddressPayLaterUkCommand.cs" />
+    <Compile Include="Defaults\SavePayLaterCustomerDetailsPayLaterUkCommand.cs" />
     <Compile Include="Defaults\SaveSocialDetailsUkCommand.cs" />
     <Compile Include="Defaults\SaveSocialDetailsPlCommand.cs" />
     <Compile Include="Defaults\SaveSocialDetailsZaCommand.cs" />
@@ -114,6 +119,9 @@
     <Compile Include="Exceptions\SchemaException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\Address\Queries\Uk\GetAddressByDescriptorIdUkQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Requests\Risk\Commands\PayLater\Uk\RiskCreatePayLaterApplicationUkCommand.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Requests\Address\Queries\Uk\GetAddressDescriptorsByPostCodeUkQuery.cs">
@@ -809,9 +817,6 @@
     <Compile Include="Requests\Risk\Commands\PayLater\Uk\RiskSavePayLaterEmploymentDetailsPayLaterUkCommand.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Requests\Risk\Commands\PayLater\Uk\VerifyApplicationPayLaterUkCommand.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Requests\Risk\Commands\Pl\RiskAddBankAccountPlCommand.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -967,6 +972,7 @@
     </Compile>
     <Compile Include="Temp\ApplicationDecisionStatusEnum.cs" />
     <Compile Include="Temp\RiskMask.cs" />
+    <Compile Include="Requests\Risk\Commands\PayLater\Uk\VerifyPayLaterApplicationUkCommand.cs" />
     <Compile Include="Enums\AdditionalPaymentCardDetailsEnum.cs" />
     <Compile Include="Enums\BankNamesPlEnum.cs" />
     <Compile Include="Enums\CityOfUniversityEnum.cs" />
