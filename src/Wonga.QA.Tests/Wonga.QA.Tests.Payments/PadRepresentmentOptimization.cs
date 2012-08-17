@@ -17,7 +17,8 @@ using IncomeFrequencyEnum = Wonga.QA.Framework.Api.Enums.IncomeFrequencyEnum;
 
 namespace Wonga.QA.Tests.Payments
 {
-    [Parallelizable(TestScope.All)]
+    [Parallelizable(TestScope.Self)]
+	[Description("These tests can not be parallelized because we always use the same amount in all of them!!!")]
     public class PadRepresentmentOptimization
     {
         private readonly dynamic _opsSagasPaymentsInArrears = Drive.Data.OpsSagas.Db.PaymentsInArrearsSagaEntity;
@@ -48,8 +49,8 @@ namespace Wonga.QA.Tests.Payments
                 (CalculateFunctionsCa.CalculateExpectedArrearsInterestAmountAppliedCa(
                     (principle + interest), numOfDaysToNextPayDateForRepresentmentOne));
 
-            Assert.IsTrue(GetNumberOfRepresentmentsSent(application.Id) == "0");
-            Assert.IsTrue(GetNextRepresentmentDate(application.Id) == nextPayDateForRepresentmentOne.ToString());
+            Assert.AreEqual(0,GetNumberOfRepresentmentsSent(application.Id));
+            Assert.AreEqual(nextPayDateForRepresentmentOne.ToString(), GetNextRepresentmentDate(application.Id));
 
             TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
 
@@ -67,9 +68,9 @@ namespace Wonga.QA.Tests.Payments
             var amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces =
                 Decimal.Round(amountToBeCollectedForRepresentmentOne, 2, MidpointRounding.AwayFromZero);
 
-            Assert.IsTrue(transactionForRepresentmentOne.Amount == amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces);
-            Assert.IsTrue(CurrentRepresentmentAmount(application.Id) == amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces);
-            Assert.IsTrue(GetNumberOfRepresentmentsSent(application.Id) == "1");
+			Assert.AreEqual(amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces, transactionForRepresentmentOne.Amount);
+            Assert.AreEqual(amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces, CurrentRepresentmentAmount(application.Id));
+            Assert.AreEqual(1,GetNumberOfRepresentmentsSent(application.Id));
             Assert.IsTrue(VerifyPaymentFunctions.VerifyDirectBankPaymentOfAmount(application.Id, -amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces));
         }
 
@@ -97,6 +98,7 @@ namespace Wonga.QA.Tests.Payments
 
             ScotiaResponseBuilder.New().
                 ForBankAccountNumber(customer.BankAccountNumber).
+				ForAmount(principle + interest).
                 Reject();
 
             TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
@@ -115,7 +117,7 @@ namespace Wonga.QA.Tests.Payments
             var amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces =
                 Decimal.Round(amountToBeCollectedForRepresentmentOne, 2, MidpointRounding.AwayFromZero);
 
-            Assert.IsTrue(transactionForRepresentmentOne.Amount == amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces);
+			Assert.AreEqual(amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces, transactionForRepresentmentOne.Amount);
 
             //TODO: add assert to ensure the saga is no longer exists in the db...
         }
@@ -139,7 +141,7 @@ namespace Wonga.QA.Tests.Payments
             application.PutIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
             TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentOne);
 
-            var arrearsInterestForRepresentmentOne =
+			var arrearsInterestForRepresentmentOne =
                 (CalculateFunctionsCa.CalculateExpectedArrearsInterestAmountAppliedCa(
                     (principle + interest), numOfDaysToNextPayDateForRepresentmentOne));
 
@@ -186,9 +188,9 @@ namespace Wonga.QA.Tests.Payments
             var amountToBeCollectedForRepresentmentTwoRoundedToTwoDecimalPlaces =
                 Decimal.Round(amountToBeCollectedForRepresentmentTwo, 2, MidpointRounding.AwayFromZero);
 
-            Assert.IsTrue(transactionForRepresentmentTwo.Amount == amountToBeCollectedForRepresentmentTwoRoundedToTwoDecimalPlaces);
-            Assert.IsTrue(CurrentRepresentmentAmount(application.Id) == amountToBeCollectedForRepresentmentTwoRoundedToTwoDecimalPlaces);
-            Assert.IsTrue(GetNumberOfRepresentmentsSent(application.Id) == "2");
+            Assert.AreEqual(amountToBeCollectedForRepresentmentTwoRoundedToTwoDecimalPlaces,transactionForRepresentmentTwo.Amount);
+			Assert.AreEqual(amountToBeCollectedForRepresentmentTwoRoundedToTwoDecimalPlaces, CurrentRepresentmentAmount(application.Id));
+            Assert.AreEqual(2, GetNumberOfRepresentmentsSent(application.Id));
             Assert.IsTrue(VerifyPaymentFunctions.VerifyDirectBankPaymentOfAmount(application.Id, -amountToBeCollectedForRepresentmentTwoRoundedToTwoDecimalPlaces));
 
         }
@@ -223,7 +225,7 @@ namespace Wonga.QA.Tests.Payments
                                                    (int)BankGatewayTransactionStatus.Paid) == 2);
 
             var amountToBeCollectedForRepresentmentOne =
-                (decimal)(((double)(arrearsInterestForRepresentmentOne + principle + interest + defaultCharge)) * percentageToBeCollectedForRepresentmentOne);
+               (arrearsInterestForRepresentmentOne + principle + interest + defaultCharge) * (decimal)percentageToBeCollectedForRepresentmentOne;
 
             var amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces =
                 Decimal.Round(amountToBeCollectedForRepresentmentOne, 2, MidpointRounding.AwayFromZero);
@@ -239,6 +241,7 @@ namespace Wonga.QA.Tests.Payments
 
             ScotiaResponseBuilder.New().
                 ForBankAccountNumber(customer.BankAccountNumber).
+				ForAmount(principle + interest).
                 Reject();
 
             TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
@@ -258,13 +261,13 @@ namespace Wonga.QA.Tests.Payments
                     (principleBalanceAfterRepresentmentOne + interest), numOfDaysToNextPayDateForRepresentmentTwo));
 
             var amountToBeCollectedForRepresentmentTwo =
-                (decimal)(((double)((arrearsInterestForRepresentmentOne + arrearsInterestForRepresentmentTwo + principleBalanceAfterRepresentmentOne + interest + defaultCharge))
-                                                                                                                                    * percentageToBeCollectedForRepresentmentTwo));
+                (arrearsInterestForRepresentmentOne + arrearsInterestForRepresentmentTwo + principleBalanceAfterRepresentmentOne + interest + defaultCharge)
+                * (decimal)percentageToBeCollectedForRepresentmentTwo;
 
             var amountToBeCollectedForRepresentmentTwoRoundedToTwoDecimalPlaces =
                 Decimal.Round(amountToBeCollectedForRepresentmentTwo, 2, MidpointRounding.AwayFromZero);
 
-            Assert.IsTrue(transactionForRepresentmentTwo.Amount == amountToBeCollectedForRepresentmentTwoRoundedToTwoDecimalPlaces);
+            AssertAmountsAreSimilar(amountToBeCollectedForRepresentmentTwoRoundedToTwoDecimalPlaces, transactionForRepresentmentTwo.Amount);
 
             //TODO: add assert to ensure the saga is no longer exists in the db...
         }
@@ -298,7 +301,7 @@ namespace Wonga.QA.Tests.Payments
                                                    _bgTrans.TransactionStatus ==
                                                    (int)BankGatewayTransactionStatus.Paid) == 2);
         	
-			decimal cumulativeRepresentmentRoundError = 0.0M;
+			//decimal cumulativeRepresentmentRoundError = 0.0M;
 
             var amountToBeCollectedForRepresentmentOne =
                 (arrearsInterestForRepresentmentOne + principle + interest + defaultCharge) 
@@ -307,8 +310,7 @@ namespace Wonga.QA.Tests.Payments
             var amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces =
                 Decimal.Round(amountToBeCollectedForRepresentmentOne, 2, MidpointRounding.AwayFromZero);
 
-			cumulativeRepresentmentRoundError += amountToBeCollectedForRepresentmentOne -
-        	                                     amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces;
+			//cumulativeRepresentmentRoundError += amountToBeCollectedForRepresentmentOne - amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces;
 
             var currentDateForRepresentmentTwo = Convert.ToDateTime(customer.GetNextPayDate());
 
@@ -337,8 +339,7 @@ namespace Wonga.QA.Tests.Payments
             var amountToBeCollectedForRepresentmentTwoRoundedToTwoDecimalPlaces =
                 Decimal.Round(amountToBeCollectedForRepresentmentTwo, 2, MidpointRounding.AwayFromZero);
 
-        	cumulativeRepresentmentRoundError += amountToBeCollectedForRepresentmentTwo -
-        	                                     amountToBeCollectedForRepresentmentTwoRoundedToTwoDecimalPlaces;
+        	//cumulativeRepresentmentRoundError += amountToBeCollectedForRepresentmentTwo - amountToBeCollectedForRepresentmentTwoRoundedToTwoDecimalPlaces;
 
             var currentDateForRepresentmentThree = Convert.ToDateTime(nextPayDateForRepresentmentTwo);
 
@@ -366,12 +367,12 @@ namespace Wonga.QA.Tests.Payments
 			//last representment needs to take into account the round error of the previous ones
         	var amountToBeCollectedForRepresentmentThree =
         		arrearsInterestForRepresentmentOne + arrearsInterestForRepresentmentTwo + arrearsInterestForRepresentmentThree
-        		+ principleBalanceAfterRepresentmentTwo + interest + defaultCharge - cumulativeRepresentmentRoundError;
+        		+ principleBalanceAfterRepresentmentTwo + interest + defaultCharge; // -cumulativeRepresentmentRoundError;
 
             var amountToBeCollectedForRepresentmentThreeRoundedToTwoDecimalPlaces =
                         Decimal.Round(amountToBeCollectedForRepresentmentThree, 2, MidpointRounding.AwayFromZero);
 
-            Assert.IsTrue(transactionForRepresentmentThree.Amount == amountToBeCollectedForRepresentmentThreeRoundedToTwoDecimalPlaces);
+            AssertAmountsAreSimilar(amountToBeCollectedForRepresentmentThreeRoundedToTwoDecimalPlaces, transactionForRepresentmentThree.Amount);
             Assert.IsTrue(VerifyPaymentFunctions.VerifyDirectBankPaymentOfAmount(application.Id, -amountToBeCollectedForRepresentmentThreeRoundedToTwoDecimalPlaces));
             Assert.IsTrue(Do.With.Timeout(1).Until(() => application.IsClosed));
             //TODO: add assert to ensure the saga is no longer exists in the db...
@@ -406,7 +407,7 @@ namespace Wonga.QA.Tests.Payments
                                                    _bgTrans.TransactionStatus ==
                                                    (int)BankGatewayTransactionStatus.Paid) == 2);
 
-			decimal cumulativeRepresentmentRoundError = 0.0M;
+			//decimal cumulativeRepresentmentRoundError = 0.0M;
 
             var amountToBeCollectedForRepresentmentOne =
                 (arrearsInterestForRepresentmentOne + principle + interest + defaultCharge) * (decimal)percentageToBeCollectedForRepresentmentOne;
@@ -414,8 +415,7 @@ namespace Wonga.QA.Tests.Payments
             var amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces =
                 Decimal.Round(amountToBeCollectedForRepresentmentOne, 2, MidpointRounding.AwayFromZero);
 
-			cumulativeRepresentmentRoundError += amountToBeCollectedForRepresentmentOne -
-												 amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces;
+			//cumulativeRepresentmentRoundError += amountToBeCollectedForRepresentmentOne - amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces;
 
             var currentDateForRepresentmentTwo = Convert.ToDateTime(customer.GetNextPayDate());
 
@@ -444,8 +444,7 @@ namespace Wonga.QA.Tests.Payments
             var amountToBeCollectedForRepresentmentTwoRoundedToTwoDecimalPlaces =
                 Decimal.Round(amountToBeCollectedForRepresentmentTwo, 2, MidpointRounding.AwayFromZero);
 
-			cumulativeRepresentmentRoundError += amountToBeCollectedForRepresentmentTwo -
-												 amountToBeCollectedForRepresentmentTwoRoundedToTwoDecimalPlaces;
+			//cumulativeRepresentmentRoundError += amountToBeCollectedForRepresentmentTwo - amountToBeCollectedForRepresentmentTwoRoundedToTwoDecimalPlaces;
 
             var currentDateForRepresentmentThree = Convert.ToDateTime(nextPayDateForRepresentmentTwo);
 
@@ -458,6 +457,7 @@ namespace Wonga.QA.Tests.Payments
 
             ScotiaResponseBuilder.New().
                 ForBankAccountNumber(customer.BankAccountNumber).
+				ForAmount(principle + interest).
                 Reject();
 
             TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
@@ -476,16 +476,16 @@ namespace Wonga.QA.Tests.Payments
                     (principleBalanceAfterRepresentmentTwo + interest), numOfDaysToNextPayDateForRepresentmentThree, false));
 			
 			//last representment needs to take into account the round error of the previous ones
-            var amountToBeCollectedForRepresentmentThree =
-                arrearsInterestForRepresentmentOne + arrearsInterestForRepresentmentTwo + arrearsInterestForRepresentmentThree
-				+ principleBalanceAfterRepresentmentTwo + interest + defaultCharge - cumulativeRepresentmentRoundError;
+        	var amountToBeCollectedForRepresentmentThree =
+        		arrearsInterestForRepresentmentOne + arrearsInterestForRepresentmentTwo + arrearsInterestForRepresentmentThree
+        		+ principleBalanceAfterRepresentmentTwo + interest + defaultCharge; // -cumulativeRepresentmentRoundError;
 
             var amountToBeCollectedForRepresentmentThreeRoundedToTwoDecimalPlaces =
                         Decimal.Round(amountToBeCollectedForRepresentmentThree, 2, MidpointRounding.AwayFromZero);
 
-            Assert.IsTrue(transactionForRepresentmentThree.Amount == amountToBeCollectedForRepresentmentThreeRoundedToTwoDecimalPlaces);
+            AssertAmountsAreSimilar(amountToBeCollectedForRepresentmentThreeRoundedToTwoDecimalPlaces, transactionForRepresentmentThree.Amount);
 
-            //TODO: add assert to ensure the saga is no longer exists in the db...
+        	//TODO: add assert to ensure the saga is no longer exists in the db...
         }
 
         [Test, AUT(AUT.Ca), JIRA("CA-1962"), FeatureSwitch(FeatureSwitchConstants.MultipleRepresentmentsInArrearsFeatureSwitchKey, true), ExpectedException(typeof(DoException))]
@@ -516,10 +516,10 @@ namespace Wonga.QA.Tests.Payments
             Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = multipleRepresentmentSaga.Id });
         }
 
-        private String GetNumberOfRepresentmentsSent(Guid applicationGuid)
+        private int GetNumberOfRepresentmentsSent(Guid applicationGuid)
         {
             var multipleRepresentmentSaga = Do.Until(() => _opsSagasMultipleRepresentmentsInArrearsSagaEntity.FindByApplicationId(applicationGuid));
-            return multipleRepresentmentSaga.RepresentmentsSent.ToString();
+            return multipleRepresentmentSaga.RepresentmentsSent;
         }
 
         private String GetNextRepresentmentDate(Guid applicationGuid)
@@ -544,5 +544,10 @@ namespace Wonga.QA.Tests.Payments
                 Drive.Msmq.Payments.Send(new TimeoutMessage { SagaId = inArrearsNoticeSaga.Id });
             }
         }
+
+		private void AssertAmountsAreSimilar(decimal expectedAmount, decimal actualAmount, decimal allowedDifference = 0.01M)
+		{
+			Assert.LessThanOrEqualTo(Math.Abs(expectedAmount - actualAmount), allowedDifference);
+		}
     }
 }
