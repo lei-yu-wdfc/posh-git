@@ -13,6 +13,7 @@ using Wonga.QA.Framework.Msmq.Messages.Payments.InternalMessages.Messages;
 using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Helpers;
+using Wonga.QA.Tests.Salesforce;
 using AddPaymentCardCommand = Wonga.QA.Framework.Api.Requests.Payments.Commands.AddPaymentCardCommand;
 using CreateRepaymentArrangementCommand = Wonga.QA.Framework.Api.Requests.Payments.Commands.CreateRepaymentArrangementCommand;
 using PaymentFrequencyEnum = Wonga.QA.Framework.Api.Enums.PaymentFrequencyEnum;
@@ -89,7 +90,7 @@ namespace Wonga.QA.Tests.Payments
 			Assert.IsNull(closedOn);
 			Assert.IsNull(isBroken);
 		}
-		
+
 		[Test, AUT(AUT.Uk), JIRA("UKOPS-79"), DependsOn("CancelRepaymentArrangemntAfterRepaymentToday"), Owner(Owner.AnilKrishnamaneni)]
 		public void RepaymentArrangemetnDetailsQueryForCanceledRA()
 		{
@@ -124,16 +125,16 @@ namespace Wonga.QA.Tests.Payments
 
 		#endregion
 
+        [Test, AUT(AUT.Uk), JIRA("UKOPS-49"), Owner(Owner.ShaneMcHugh), DependsOn("RepaymentArrangemetnDetailsQuery")]
+        public void CancelRepaymentArrangemntAfterRepaymentToday()
+        {
+            var repaymentArrangement = GetRepaymentArrangementEntity(_application);
+            var a = _arrangementDetails[0].Amount;
+            var d = _arrangementDetails[0].DueDate;
+            Assert.IsNotNull(repaymentArrangement.RepaymentArrangementDetails.First(ra => ra.Amount == a && ra.DueDate == d));
+            SalesforceOperations.CancelRepaymnetArrangement(_application);
+        }
 
-		[Test, AUT(AUT.Uk), JIRA("UKOPS-49"), Owner(Owner.ShaneMcHugh), DependsOn("RepaymentArrangemetnDetailsQuery")]
-		public void CancelRepaymentArrangemntAfterRepaymentToday()
-		{
-			var repaymentArrangement = GetRepaymentArrangementEntity(_application);
-			var a = _arrangementDetails[0].Amount;
-			var d = _arrangementDetails[0].DueDate;
-			Assert.IsNotNull(repaymentArrangement.RepaymentArrangementDetails.First(ra => ra.Amount == a && ra.DueDate == d));
-			_application.CancelRepaymentArrangement();
-		}
 
 		[Test, AUT(AUT.Uk), JIRA("UKOPS-49"), Owner(Owner.ShaneMcHugh), Pending("UKOPS-822 Ticket Not Implemeneted Yet")]
 		public void CancelRepaymentArrangementWhenRepaymentArrangementIsBroken()
@@ -235,8 +236,8 @@ namespace Wonga.QA.Tests.Payments
 			Customer customer = CustomerBuilder.New().Build();
 			Application application = ApplicationBuilder.New(customer).Build().PutIntoArrears(20);
 
-			application.CreateRepaymentArrangement();
-			application.CancelRepaymentArrangement();
+			SalesforceOperations.CreateRepaymentArrangement(customer, application);
+			SalesforceOperations.CancelRepaymnetArrangement(application);
 		}
 
 		#region Helpers#
