@@ -44,6 +44,7 @@
     <Compile Include="BusinessApplication.cs" />
     <Compile Include="DateOperations.cs" />
     <Compile Include="CustomerOperations.cs" />
+    <Compile Include="Helpers\CustomerCreationProgram.cs" />
     <Compile Include="Helpers\DateHelper.cs" />
     <Compile Include="Helpers\EidAnswers.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />

@@ -46,11 +46,31 @@ namespace Wonga.QA.UiTests.Mobile
         [Test, AUT(AUT.Uk), Pending("Test not yet complete")]
         public void TopupLoanTest()
         {
-            var journey = JourneyFactory.GetL0Journey(Client.MobileHome())
-                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask));
-            var mySummary = journey.Teleport<MySummaryPageMobile>() as MySummaryPageMobile;
+
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder.New(customer).WithLoanAmount(100).WithLoanTerm(7).Build();
+            var mySummary = loginPage.LoginAs(email, "Passw0rd");
+
             var topUpPage = mySummary.TopUpLoan("100");
             topUpPage.SubmitButtonClick();
+            var topUpAcceptPage = Do.Until(() => new TopupAcceptPageMobile(Client));
+            var dealDone = topUpAcceptPage.Accept();
+
+        }
+
+        [Test, AUT(AUT.Uk), Pending("Test not yet complete")]
+        public void LoanExtensionTest()
+        {
+            var loginPage = Client.Login();
+            string email = Get.RandomEmail();
+            Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            Application application = ApplicationBuilder.New(customer).WithLoanAmount(100).WithLoanTerm(7).Build();
+
+            loginPage.LoginAs(email, "Passw0rd");
+            
+           
         }
     }
 }

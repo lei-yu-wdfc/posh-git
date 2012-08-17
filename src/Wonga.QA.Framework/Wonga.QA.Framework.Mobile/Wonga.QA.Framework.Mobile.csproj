@@ -86,7 +86,11 @@
     <Compile Include="Mappings\Ui\Pages\LoginPageMobile.cs" />
     <Compile Include="Mappings\Ui\Pages\MyPersonalDetailsPageMobile.cs" />
     <Compile Include="Mappings\Ui\Pages\PersonalDebitCardPageMobile.cs" />
+    <Compile Include="Mappings\Ui\Pages\TopupAcceptPageMobile.cs" />
+    <Compile Include="Mappings\Ui\Pages\TopUpDealDonePage.cs" />
     <Compile Include="Mappings\Ui\Pages\TopupRequestPage.cs" />
+    <Compile Include="Ui\Pages\TopupAcceptPageMobile.cs" />
+    <Compile Include="Ui\Pages\TopUpDealDonePage.cs" />
     <Compile Include="Ui\Pages\TopupRequestPage.cs" />
     <Compile Include="Mappings\Ui\Sections\AccountDetailsSection.cs" />
     <Compile Include="Mappings\Ui\Sections\ApplicationSection.cs" />
