@@ -11,6 +11,7 @@ namespace Wonga.QA.ServiceTests.Risk.PayLater
     {
         private readonly dynamic _riskSavePayLaterCustomerDetailsSagaEntity = Drive.Data.OpsSagas.Db.RiskSavePayLaterCustomerDetailsSagaEntity;
         private readonly dynamic _riskSavePayLaterCustomerAddressSagaEntity = Drive.Data.OpsSagas.Db.RiskSavePayLaterCustomerAddressSagaEntity;
+        private readonly dynamic _employmentDetails = Drive.Data.Risk.Db.EmploymentDetails;
 
         [Test, AUT(AUT.Uk), Ignore("Awaiting bug fixes")]
         public void RiskSavePayLaterCustomerAddress()
@@ -34,14 +35,18 @@ namespace Wonga.QA.ServiceTests.Risk.PayLater
         [Test, AUT(AUT.Uk), Ignore("Awaiting bug fixes")]
         public void RiskSavePayLaterEmploymentDetails()
         {
+            var accountId = Guid.NewGuid();
+
             Drive.Api.Commands.Post(new RiskSavePayLaterEmploymentDetailsPayLaterUkCommand
                                         {
-                                            AccountId = Guid.NewGuid(),
+                                            AccountId = accountId,
                                             IncomeFrequency = "LastFridayOfMonth",
                                             NetIncome = 20000.0m,
                                             NextPayDate = Date.GetOrdinalDate(DateTime.Now.AddDays(10), "yyyy-MM-dd"),
                                             EmploymentStatus = "EmployedFullTime"
                                         });
+
+            Do.Until(() => _employmentDetails.FindByAccountId(accountId));
         }
 
         [Test, AUT(AUT.Uk), Ignore("Awaiting bug fixes")]
