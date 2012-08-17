@@ -18,11 +18,12 @@ namespace Wonga.QA.UiTests.Mocked.Web.Uk
         public void ExtensionJourneyPass()
         {
             string email = Get.RandomEmail();
+            Client.Driver.Manage().Window.Maximize();
 
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
 
-            SelectMockedScenario("Scenario 3");
+            SelectMockedScenario("Scenario3");
 
             mySummaryPage.ChangePromiseDateButtonClick();
             var requestPage = new ExtensionRequestPage(this.Client);
@@ -46,10 +47,9 @@ namespace Wonga.QA.UiTests.Mocked.Web.Uk
             IWebElement mockedScenariosMenu = Client.Driver.FindElement(By.Id("staticmock-trigger"));
             mockedScenariosMenu.Click();
             IWebElement mockedScenariosDropBox = Client.Driver.FindElement(By.Id("edit-user-status"));
-            mockedScenariosDropBox.Click();
             //Do.With.Message("Mocked Scenarios Drop Box is not displayed").Timeout(new TimeSpan(0,0,3)).Until(() => mockedScenariosDropBox.SelectOption(option => option.Trim() == scenarionName));
-            mockedScenariosDropBox.SelectOption(option => option.Trim() == scenarionName);
-            Client.Driver.FindElement(By.Id("edit-submit-1")).Submit();
+            mockedScenariosDropBox.SelectOption(scenarionName);
+            Client.Driver.FindElement(By.XPath("//input[@value='Save settings']")).Click();
         }
     }
 }

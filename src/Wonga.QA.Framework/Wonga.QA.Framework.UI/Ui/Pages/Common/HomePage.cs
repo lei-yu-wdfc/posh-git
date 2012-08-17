@@ -121,6 +121,14 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
             return promoCodeMessage;
         }
 
+        public String GetPromoCodeValidMessage()
+        {
+            Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.PromoCodeValidMessage)));
+            _promoCodeMessage = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.PromoCodeValidMessage));
+            var promoCodeMessage = _promoCodeMessage.Text.Replace("\r\n", " ");
+            return promoCodeMessage;
+        }
+
         public string PopupSetProvince
         {
             set
