@@ -34,7 +34,7 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
         {
             var email = Get.RandomEmail();
             Customer customer = CustomerBuilder.New().WithEmailAddress(email).Build();
-            Application application = ApplicationBuilder.New(customer).WithLoanTerm(4).Build();
+            Application application = ApplicationBuilder.New(customer).WithLoanTerm(6).Build();
 
             return customer;
         }
@@ -45,6 +45,7 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
             List<KeyValuePair<Int32, Delegate>> customSelectFunctions = new List<KeyValuePair<Int32, Delegate>>();
             List<KeyValuePair<Int32, Delegate>> customStringFunctions = new List<KeyValuePair<Int32, Delegate>>();
             Int32[] stringRulesArray = null;
+            Int32[] datesRulesArray = null;
 
             if (isSuccessValidation)
             {
@@ -57,6 +58,7 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
                 customDateFunctions.Add(new KeyValuePair<int, Delegate>((Int32)FieldTypeDate.Equal, new CustomFunction(MinStartDate)));
                 customDateFunctions.Add(new KeyValuePair<int, Delegate>((Int32)FieldTypeDate.Equal, new CustomFunction(MaxStartDate)));
                 stringRulesArray = new Int32[] { (Int32)FieldTypeString.Numbers };
+                datesRulesArray = new Int32[] { (Int32)FieldTypeDate.Equal };
             }
             else
             {
@@ -65,9 +67,10 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
                 customSelectFunctions.Add(new KeyValuePair<int, Delegate>((Int32)FieldTypeSelect.Equal, new CustomFunction(PleaseSelect)));
                 customSelectFunctions.Add(new KeyValuePair<int, Delegate>((Int32)FieldTypeSelect.Equal, new CustomFunction(WeeklyFake)));
 
-                customDateFunctions.Add(new KeyValuePair<int, Delegate>((Int32)FieldTypeDate.Equal, new CustomFunction(CurrentDate)));
+                //customDateFunctions.Add(new KeyValuePair<int, Delegate>((Int32)FieldTypeDate.Equal, new CustomFunction(FutureDate)));
                 customDateFunctions.Add(new KeyValuePair<int, Delegate>((Int32)FieldTypeDate.Past, new CustomFunction(PastDate)));
                 stringRulesArray = new Int32[] { (Int32)FieldTypeString.Numbers, (Int32)FieldTypeString.NegativeNumbers, (Int32)FieldTypeString.Letters, (Int32)FieldTypeString.NumbersWithComa, (Int32)FieldTypeString.SpecialSymbols };
+                datesRulesArray = new Int32[] { (Int32)FieldTypeDate.Past };
             }
 
             List<KeyValuePair<DataValidation, List<KeyValuePair<Int32, Delegate>>>> fields = new List<KeyValuePair<DataValidation, List<KeyValuePair<Int32, Delegate>>>>();
@@ -76,7 +79,7 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
             fields.Add(new KeyValuePair<DataValidation, List<KeyValuePair<int, Delegate>>>(new DataValidation("RepaymentAmount", faRepaymentPlanPage.RepaymentAmount, FieldType.String,
                FieldTypeList.IncludeArray, stringRulesArray.ToList()), customStringFunctions));
             fields.Add(new KeyValuePair<DataValidation, List<KeyValuePair<int, Delegate>>>(new DataValidation("FirstRepaymentDate", faRepaymentPlanPage.FirstRepaymentDate, FieldType.Date,
-                       FieldTypeList.IncludeArray, new Int32[] { (Int32)FieldTypeDate.Past, (Int32)FieldTypeDate.Equal }.ToList()), customDateFunctions));
+                       FieldTypeList.IncludeArray, datesRulesArray.ToList()), customDateFunctions));
             return fields;
         }
 
@@ -117,10 +120,12 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
         private void SuccessValidationCallBack(UI.FARepaymentPlanPage faRepaymentPlanPage, String fieldName, String value)
         {
             BasePage basepage;
-            PropertiesHelper<UI.FARepaymentPlanPage>.SetFieldValue(faRepaymentPlanPage, fieldName, value);
-            try { basepage = faRepaymentPlanPage.NextClick(error: true); }
+            PropertiesHelper<UI.FARepaymentPlanPage>.SetFieldValue(currentPage ?? faRepaymentPlanPage, fieldName, value);
+            try { basepage = (currentPage == null) ? faRepaymentPlanPage.NextClick(error: true) : currentPage.NextClick(error: true); }
             catch { basepage = new UI.FAWaitPage(Client); }
-            Assert.Contains(faRepaymentPlanPage.Url, "/wait", String.Format("Pass to wait page successfully"));
+            Assert.Contains((currentPage == null) ? faRepaymentPlanPage.Url : currentPage.Url, "/wait", String.Format("Pass to wait page successfully"));
+            String url = faRepaymentPlanPage.Url.Replace("wait", "repayment-plan");
+            Client.Driver.Navigate().GoToUrl(url);
             basepage = new UI.FARepaymentPlanPage(Client);
             currentPage = basepage as UI.FARepaymentPlanPage;
         }
@@ -141,11 +146,21 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
         private String MaxStartDate()
         {
             ServiceConfigurationEntity maxStartDays = Drive.Db.Ops.ServiceConfigurations.Where(sc => sc.Key == "Payments.RepaymentArrangementFirstRepaymentMaxDays").Single();
-            DateTime maxStartDate = DateTime.UtcNow.AddDays(Convert.ToInt32(maxStartDays));
+            DateTime maxStartDate = DateTime.UtcNow.AddDays(Convert.ToInt32(maxStartDays.Value));
             return maxStartDate.ToShortDate();
         }
-        private String CurrentDate() { return DateTime.UtcNow.ToShortDate(); }
-        private String PastDate() { return DateTime.UtcNow.AddDays(-1).ToShortDate(); }
+        private String PastDate()
+        {
+            ServiceConfigurationEntity minStartDays = Drive.Db.Ops.ServiceConfigurations.Where(sc => sc.Key == "Payments.RepaymentArrangementFirstRepaymentMinDays").Single();
+            DateTime pastDate = DateTime.UtcNow.AddDays(Convert.ToInt32(minStartDays.Value) - 1);
+            return pastDate.ToShortDate();
+        }
+        private String FutureDate()
+        {
+            ServiceConfigurationEntity maxStartDays = Drive.Db.Ops.ServiceConfigurations.Where(sc => sc.Key == "Payments.RepaymentArrangementFirstRepaymentMaxDays").Single();
+            DateTime futureDate = DateTime.UtcNow.AddDays(Convert.ToInt32(maxStartDays.Value) + 1);
+            return futureDate.ToShortDate();
+        }
         private String CorrectNumber() { return Get.RandomInt(0, 10000).ToString(); }
 
         private void SetCustomConfigurations()
