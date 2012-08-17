@@ -63,5 +63,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             var tokenResult = !string.IsNullOrWhiteSpace(Content.FindElement(By.CssSelector(UiMap.Get.DeclinedPage.DeclineAdvice)).Text);
             return tokenResult;
         }
+
+        public string DeclineAdvice()
+        {
+            return Content.FindElement(By.CssSelector(UiMap.Get.DeclinedPage.DeclineAdvice)).Text;
+        }
     }
 }
