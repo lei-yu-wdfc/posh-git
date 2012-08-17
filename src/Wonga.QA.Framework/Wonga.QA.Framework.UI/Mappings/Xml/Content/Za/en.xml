@@ -28,7 +28,8 @@
 	
   <AddressDetailsPage>
 	<AddresPeriodLess4Month>Less than 4 month</AddresPeriodLess4Month>
-    <PostcodeError>Sorry, that is not a valid postcode.</PostcodeError>
+    <PostcodeError1>Sorry, that's not a valid value for this field.</PostcodeError1>
+    <PostcodeError2>The value isn't valid for Postcode; please correct this to proceed.</PostcodeError2>
   </AddressDetailsPage>
 
 	<MyPaymentsPage>

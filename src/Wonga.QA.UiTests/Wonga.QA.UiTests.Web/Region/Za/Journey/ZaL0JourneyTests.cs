@@ -165,7 +165,7 @@ namespace Wonga.QA.UiTests.Web.Region.Za.Journey
             }
             catch (Exception e)
             {
-                Assert.IsTrue(e.Message.Contains(ContentMap.Get.AddressDeatailsPage.PostcodeError));
+                Assert.IsTrue(e.Message.Contains(ContentMap.Get.AddressDeatailsPage.PostcodeError1) || e.Message.Contains(ContentMap.Get.AddressDeatailsPage.PostcodeError2));
                 IWebElement form = Client.Driver.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.FormId));
                 IWebElement postCode = form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.Postcode));
                 IWebElement houseNumber = form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.HouseNumber));
@@ -187,7 +187,7 @@ namespace Wonga.QA.UiTests.Web.Region.Za.Journey
                 }
                 catch (Exception ex)
                 {
-                    Assert.IsTrue(ex.Message.Contains(ContentMap.Get.AddressDeatailsPage.PostcodeError));
+                    Assert.IsTrue(ex.Message.Contains(ContentMap.Get.AddressDeatailsPage.PostcodeError1));
                 }
             }
         }
