@@ -96,7 +96,7 @@ namespace Wonga.QA.Framework.Mobile.Ui.Elements
         public EditPasswordPopUpElement(BasePageMobile page)
             : base(page)
         {
-            Assert.IsTrue(PopUpTitle.Equals("Change your password"));
+            Assert.IsTrue(PopUpTitle.Equals("Update my password"));
             _currentPassword = PopUp.FindElement(By.CssSelector("#edit-current-password"));
             _editPassword = PopUp.FindElement(By.CssSelector("#edit-password"));
             _editPasswordConfirm = PopUp.FindElement(By.CssSelector("#edit-password-confirm"));
