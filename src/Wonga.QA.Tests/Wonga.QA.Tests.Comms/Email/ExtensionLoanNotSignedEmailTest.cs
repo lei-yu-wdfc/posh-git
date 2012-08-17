@@ -72,13 +72,14 @@ namespace Wonga.QA.Tests.Comms.Email
         [Test, AUT(AUT.Uk), Owner(Owner.CharlieBarker), JIRA("UKWEB-252")]
         public void TriggerExtensionNotSignedEmailTest()
         {
+            const decimal partPaymentAmount = -10.70M;
             const int loanExtensionCancelledEmailTemplate = 34121;
             var transactionId = Guid.NewGuid();
 
             // Create Card Payment Transaction for Extension Part Payment
             Drive.Msmq.Payments.Send(new CreateTransaction()
                                          {
-                                             Amount = -10.70M,
+                                             Amount = partPaymentAmount,
                                              ApplicationId = _appId,
                                              Currency = CurrencyCodeIso4217Enum.GBP,
                                              ExternalId = transactionId,
@@ -87,7 +88,7 @@ namespace Wonga.QA.Tests.Comms.Email
                                              Reference = "Test Ext Part Payment",
                                              Scope = PaymentTransactionScopeEnum.Credit,
                                              Source = PaymentTransactionSourceEnum.System,
-                                             Type = PaymentTransactionEnum.LoanExtensionCardPayment
+                                             Type = PaymentTransactionEnum.CardPayment
                                          });
             // Check Transaction has been created.
             Do.With.Interval(1).Until(() => Drive.Data.Payments.Db.Transactions.FindByExternalId(transactionId));
@@ -100,7 +101,7 @@ namespace Wonga.QA.Tests.Comms.Email
             var email = Do.With.Interval(1).Until(() => Drive.Data.QaData.Db.Email.FindByEmailAddressAndTemplateName(_emailAddress, loanExtensionCancelledEmailTemplate));
             Assert.IsNotNull(email);
             var emailData = Drive.Data.QaData.Db.EmailTokens.FindByEmailIdAndKey(email.EmailId, "Html_body");
-            Assert.Contains(emailData.Value, "still need to repay <b>&pound;104.93");
+            Assert.Contains(emailData.Value, "still need to repay <b>&pound;104.68");
         }
     }
 }
