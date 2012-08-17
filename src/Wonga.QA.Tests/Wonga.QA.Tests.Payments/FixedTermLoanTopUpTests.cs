@@ -488,6 +488,35 @@ namespace Wonga.QA.Tests.Payments
 
         #endregion
 
+
+        #region ValidTopUpAmount
+        [Test, Owner(Owner.CharlieBarker), JIRA("UKWEB-1131")]
+        public void CheckMaxAmountReturnedIsValidTest()
+        {
+            _loan = 265;
+
+            var customer = CustomerBuilder.New().Build();
+            var application = ApplicationBuilder.New(customer).WithLoanAmount(_loan).Build();
+
+            // Start TopUp application
+            var id = Guid.NewGuid();
+            Drive.Api.Commands.Post(new CreateFixedTermLoanTopupCommand
+            {
+                AccountId = customer.Id,
+                ApplicationId = application.Id,
+                FixedTermLoanTopupId = id,
+                TopupAmount = _topup
+            });
+            Do.Until(() => Drive.Data.Payments.Db.Topups.FindByExternalId(id));
+
+            var calcResponse = Drive.Api.Queries.Post(new GetFixedTermLoanTopupCalculationQuery()
+                                       {ApplicationId = application.Id, TopupAmount = 50.00M});
+            Assert.AreEqual(60.97M, Decimal.Parse(calcResponse.Values["TotalRepayable"].Single()));
+          
+        }
+
+        #endregion
+
         #region SignFixedTermLoanTopup
 
         [Test]
