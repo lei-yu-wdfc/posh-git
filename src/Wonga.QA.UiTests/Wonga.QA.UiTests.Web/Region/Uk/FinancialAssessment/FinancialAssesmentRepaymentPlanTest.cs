@@ -44,6 +44,7 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
             List<KeyValuePair<Int32, Delegate>> customDateFunctions = new List<KeyValuePair<Int32, Delegate>>();
             List<KeyValuePair<Int32, Delegate>> customSelectFunctions = new List<KeyValuePair<Int32, Delegate>>();
             List<KeyValuePair<Int32, Delegate>> customStringFunctions = new List<KeyValuePair<Int32, Delegate>>();
+            Int32[] stringRulesArray = null;
 
             if (isSuccessValidation)
             {
@@ -55,6 +56,7 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
 
                 customDateFunctions.Add(new KeyValuePair<int, Delegate>((Int32)FieldTypeDate.Equal, new CustomFunction(MinStartDate)));
                 customDateFunctions.Add(new KeyValuePair<int, Delegate>((Int32)FieldTypeDate.Equal, new CustomFunction(MaxStartDate)));
+                stringRulesArray = new Int32[] { (Int32)FieldTypeString.Numbers };
             }
             else
             {
@@ -63,17 +65,16 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
                 customSelectFunctions.Add(new KeyValuePair<int, Delegate>((Int32)FieldTypeSelect.Equal, new CustomFunction(PleaseSelect)));
                 customSelectFunctions.Add(new KeyValuePair<int, Delegate>((Int32)FieldTypeSelect.Equal, new CustomFunction(WeeklyFake)));
 
-                customStringFunctions.Add(new KeyValuePair<int, Delegate>((Int32)FieldTypeString.Numbers, new CustomFunction(IncorrectNumber)));
-
                 customDateFunctions.Add(new KeyValuePair<int, Delegate>((Int32)FieldTypeDate.Equal, new CustomFunction(CurrentDate)));
                 customDateFunctions.Add(new KeyValuePair<int, Delegate>((Int32)FieldTypeDate.Past, new CustomFunction(PastDate)));
+                stringRulesArray = new Int32[] { (Int32)FieldTypeString.Numbers, (Int32)FieldTypeString.NegativeNumbers, (Int32)FieldTypeString.Letters, (Int32)FieldTypeString.NumbersWithComa, (Int32)FieldTypeString.SpecialSymbols };
             }
 
             List<KeyValuePair<DataValidation, List<KeyValuePair<Int32, Delegate>>>> fields = new List<KeyValuePair<DataValidation, List<KeyValuePair<Int32, Delegate>>>>();
             fields.Add(new KeyValuePair<DataValidation, List<KeyValuePair<int, Delegate>>>(new DataValidation("PaymentFrequency", faRepaymentPlanPage.PaymentFrequency, FieldType.Select,
                        FieldTypeList.IncludeArray, new Int32[] { (Int32)FieldTypeSelect.Equal }.ToList()), customSelectFunctions));
             fields.Add(new KeyValuePair<DataValidation, List<KeyValuePair<int, Delegate>>>(new DataValidation("RepaymentAmount", faRepaymentPlanPage.RepaymentAmount, FieldType.String,
-               FieldTypeList.IncludeArray, new Int32[] { (Int32)FieldTypeString.Numbers }.ToList()), customStringFunctions));
+               FieldTypeList.IncludeArray, stringRulesArray.ToList()), customStringFunctions));
             fields.Add(new KeyValuePair<DataValidation, List<KeyValuePair<int, Delegate>>>(new DataValidation("FirstRepaymentDate", faRepaymentPlanPage.FirstRepaymentDate, FieldType.Date,
                        FieldTypeList.IncludeArray, new Int32[] { (Int32)FieldTypeDate.Past, (Int32)FieldTypeDate.Equal }.ToList()), customDateFunctions));
             return fields;
@@ -81,21 +82,14 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
 
         private void CheckValidation(UI.FARepaymentPlanPage faRepaymentPlanPage, List<KeyValuePair<DataValidation, List<KeyValuePair<Int32, Delegate>>>> fields, Delegate callBack, Boolean isSuccessValidation)
         {
-            Dictionary<FieldType, Int32[]> dictionary = new Dictionary<FieldType, Int32[]>();
-            dictionary.Add(FieldType.String, new Int32[] { (Int32)FieldTypeString.Numbers });
-
             foreach (var field in fields)
             {
                 if (!isSuccessValidation && field.Key.FieldType == FieldType.String)
                     do { PropertiesHelper<UI.FARepaymentPlanPage>.SetFieldValue(faRepaymentPlanPage, "PaymentFrequency", Weekly()); } while (faRepaymentPlanPage.PaymentFrequency == String.Empty);
-                if (!field.Key.IsExtended)
-                    ValidationHelper<UI.FARepaymentPlanPage>.CheckValidation(faRepaymentPlanPage, field.Key.FieldName, dictionary[field.Key.FieldType].ToList(), FieldTypeList.ExcludeArray, callBack, field.Value, field.Key.FieldType);
-                else
-                    ValidationHelper<UI.FARepaymentPlanPage>.CheckValidation(faRepaymentPlanPage, field.Key.FieldName, field.Key.RulesArray, field.Key.FieldTypeList, callBack, field.Value, field.Key.FieldType);
+                ValidationHelper<UI.FARepaymentPlanPage>.CheckValidation(faRepaymentPlanPage, field.Key.FieldName, field.Key.RulesArray, field.Key.FieldTypeList, callBack, field.Value, field.Key.FieldType);
                 if (!isSuccessValidation && field.Key.FieldType == FieldType.String)
                     PropertiesHelper<UI.FARepaymentPlanPage>.SetFieldValue(faRepaymentPlanPage, field.Key.FieldName, field.Key.FieldValue);
             }
-            faRepaymentPlanPage = null;
         }
 
         private void FailedValidationCallBack(UI.FARepaymentPlanPage faRepaymentPlanPage, String fieldName, String value)
@@ -136,10 +130,7 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
         private String EveryFourWeek() { return "Every four week"; }
         private String Biweekly() { return "Biweekly"; }
         private String Monthly() { return "Monthly"; }
-        private String PleaseSelect()
-        {
-            return "--- Please select ---";
-        }
+        private String PleaseSelect() { return "--- Please select ---"; }
         private String WeeklyFake() { return "Fake"; }
         private String MinStartDate()
         {
@@ -155,7 +146,6 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
         }
         private String CurrentDate() { return DateTime.UtcNow.ToShortDate(); }
         private String PastDate() { return DateTime.UtcNow.AddDays(-1).ToShortDate(); }
-        private String IncorrectNumber() { return Get.GetName(); }
         private String CorrectNumber() { return Get.RandomInt(0, 10000).ToString(); }
 
         private void SetCustomConfigurations()
