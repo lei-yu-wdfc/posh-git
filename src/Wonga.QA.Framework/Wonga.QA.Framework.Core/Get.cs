@@ -45,7 +45,7 @@ namespace Wonga.QA.Framework.Core
 
             return (T)(typeof(T).IsEnum ? Enum.Parse(typeof(T), value.ToString(), true) : Convert.ChangeType(value, typeof(T)));
         }
-        
+
         public static DateTime GetDateTimeMin()
         {
             return SqlDateTime.MinValue.Value;
@@ -118,18 +118,18 @@ namespace Wonga.QA.Framework.Core
         public static String GetPhone()
         {
 
-        	string prefix = null;
-        	switch (Config.AUT)
-        	{
-        		case AUT.Uk:
-        		case AUT.Wb:
-        			prefix = "0287";
-        			break;
-        		default:
-        			prefix = "021";
-        			break;
-        	}
-			return prefix + _random.Next(1000000, 9999999).ToString(CultureInfo.InvariantCulture);
+            string prefix = null;
+            switch (Config.AUT)
+            {
+                case AUT.Uk:
+                case AUT.Wb:
+                    prefix = "0287";
+                    break;
+                default:
+                    prefix = "021";
+                    break;
+            }
+            return prefix + _random.Next(1000000, 9999999).ToString(CultureInfo.InvariantCulture);
         }
 
         public static string GetMobilePhone()
@@ -139,7 +139,7 @@ namespace Wonga.QA.Framework.Core
                 case AUT.Ca:
                     {
                         return "9876543219";
-                    }    
+                    }
                 case AUT.Za:
                     {
                         return "021" + RandomLong(1000000, 9999999);
@@ -159,7 +159,7 @@ namespace Wonga.QA.Framework.Core
             }
         }
 
-        public static string  GetVerificationPin()
+        public static string GetVerificationPin()
         {
             return "0000";
         }
@@ -169,22 +169,22 @@ namespace Wonga.QA.Framework.Core
             return "000000000";
         }
 
-		public static String GetNationalNumber(DateTime dob, Boolean female)
-		{
-			switch (Config.AUT)
-			{
-				case AUT.Za:
-					{
-						Int32[] nin = String.Format("{0:yyMMdd}{1:D4}{2}{3}", dob, female ? _random.Next(5000) : _random.Next(5000, 10000), _random.Next(2), _random.Next(10)).Select(c => Int32.Parse(c.ToString())).ToArray();
-						Int32 z = 10 - (((nin.Where((n, i) => i % 2 == 0).Sum()) + ((2 * (Int32.Parse(String.Join(null, nin.Where((n, i) => i % 2 == 1))))).ToString().Select(c => Int32.Parse(c.ToString())).Sum())) % 10);
-						return String.Format("{0}{1}", String.Join(null, nin), z == 10 ? 0 : z);
-					}
-				default:
-					{
-						throw new NotImplementedException(Config.AUT.ToString());
-					}
-			}
-		}
+        public static String GetNationalNumber(DateTime dob, Boolean female)
+        {
+            switch (Config.AUT)
+            {
+                case AUT.Za:
+                    {
+                        Int32[] nin = String.Format("{0:yyMMdd}{1:D4}{2}{3}", dob, female ? _random.Next(5000) : _random.Next(5000, 10000), _random.Next(2), _random.Next(10)).Select(c => Int32.Parse(c.ToString())).ToArray();
+                        Int32 z = 10 - (((nin.Where((n, i) => i % 2 == 0).Sum()) + ((2 * (Int32.Parse(String.Join(null, nin.Where((n, i) => i % 2 == 1))))).ToString().Select(c => Int32.Parse(c.ToString())).Sum())) % 10);
+                        return String.Format("{0}{1}", String.Join(null, nin), z == 10 ? 0 : z);
+                    }
+                default:
+                    {
+                        throw new NotImplementedException(Config.AUT.ToString());
+                    }
+            }
+        }
 
         public static decimal GetLoanAmount()
         {
@@ -221,12 +221,12 @@ namespace Wonga.QA.Framework.Core
             return new Date(DateTime.UtcNow.AddDays(10), DateFormat.Date);
         }
 
-		public static DateTime GetApplicationDate()
-		{
-			return DateTime.Now;
-		}
+        public static DateTime GetApplicationDate()
+        {
+            return DateTime.Now;
+        }
 
-		public static string GetBankAccountNumber(string bankSortCode = "938600")
+        public static string GetBankAccountNumber(string bankSortCode = "938600")
         {
             switch (Config.AUT)
             {
@@ -236,11 +236,11 @@ namespace Wonga.QA.Framework.Core
                     }
                 case AUT.Za:
                     {
-						return RandomLong(10000000000, 99999999999).ToString();
+                        return RandomLong(10000000000, 99999999999).ToString();
                     }
                 case AUT.Uk:
                     {
-						return RandomUkBankAccountFromSortCode(bankSortCode);
+                        return RandomUkBankAccountFromSortCode(bankSortCode);
                     }
                 case AUT.Wb:
                     {
@@ -254,30 +254,30 @@ namespace Wonga.QA.Framework.Core
             }
         }
 
-		private static string RandomUkBankAccountFromSortCode(string bankSortCode)
-		{
-			//backward compatibility
-			switch(bankSortCode)
-			{
-				case "938600":
-					return "42368003";
+        private static string RandomUkBankAccountFromSortCode(string bankSortCode)
+        {
+            //backward compatibility
+            switch (bankSortCode)
+            {
+                case "938600":
+                    return "42368003";
 
-				case "161027":
-					return "10032650";
+                case "161027":
+                    return "10032650";
 
-				case "180002":
-					return "00000190";
+                case "180002":
+                    return "00000190";
 
-				case "070116":
-					return "34012583";
+                case "070116":
+                    return "34012583";
 
-				case "074456":
-					return "12345112";
-				
-				case "204422":
-					{
-						//tried to implement DoubleAlternateModulus10 but it was failing in UnifiedSoftwareBankValidation
-						var validAccounts = new[]
+                case "074456":
+                    return "12345112";
+
+                case "204422":
+                    {
+                        //tried to implement DoubleAlternateModulus10 but it was failing in UnifiedSoftwareBankValidation
+                        var validAccounts = new[]
 						                    	{
 						                    		"33069079",
 						                    		"42574721",
@@ -285,12 +285,12 @@ namespace Wonga.QA.Framework.Core
 						                    		"54827422",
 						                    		"56320888"
 						                    	};
-						return validAccounts[RandomInt(0, validAccounts.Length)];
-					}
-			}
-			
-			throw new NotImplementedException(string.Format("UK Account Generator not implemented for sort code: {0}", bankSortCode));
-		}
+                        return validAccounts[RandomInt(0, validAccounts.Length)];
+                    }
+            }
+
+            throw new NotImplementedException(string.Format("UK Account Generator not implemented for sort code: {0}", bankSortCode));
+        }
 
         public static Guid GetCsAuthorization()
         {
@@ -305,18 +305,18 @@ namespace Wonga.QA.Framework.Core
                 case AUT.Pl:
                 case AUT.Wb:
                     {
-                        return "SW6 6PN";  
+                        return "SW6 6PN";
                     }
-                    case AUT.Ca:
+                case AUT.Ca:
                     {
                         return "V4F3A9";
                     }
                 default:
                     {
-                        return RandomInt(0000, 9999).ToString().PadLeft(4, '0'); 
+                        return RandomInt(0000, 9999).ToString().PadLeft(4, '0');
                     }
             }
-            
+
         }
 
         public static String GetCountryCode()
@@ -324,7 +324,7 @@ namespace Wonga.QA.Framework.Core
             String result = "";
             switch (Config.AUT)
             {
-               case AUT.Uk:
+                case AUT.Uk:
                     {
                         result = "UK";
                     }
@@ -396,20 +396,20 @@ namespace Wonga.QA.Framework.Core
             return RandomElement(((T[])Enum.GetValues(typeof(T))).Where(t => exclude == null || !exclude.Contains(t)).ToArray());
         }
 
-		public static T RandomEnumOf<T>(params T[] allowed)
-		{
-			if(allowed == null)
-			{
-				throw new ArgumentNullException("allowed");
-			}
+        public static T RandomEnumOf<T>(params T[] allowed)
+        {
+            if (allowed == null)
+            {
+                throw new ArgumentNullException("allowed");
+            }
 
-			if (allowed.Length == 0)
-			{
-				throw new ArgumentOutOfRangeException("allowed", "collection of enum values can not be empty");
-			}
+            if (allowed.Length == 0)
+            {
+                throw new ArgumentOutOfRangeException("allowed", "collection of enum values can not be empty");
+            }
 
-			return RandomElement(((T[])Enum.GetValues(typeof(T))).Where(allowed.Contains).ToArray());
-		}
+            return RandomElement(((T[])Enum.GetValues(typeof(T))).Where(allowed.Contains).ToArray());
+        }
 
 
         public static string EnumToString(Enum en)
@@ -493,5 +493,27 @@ namespace Wonga.QA.Framework.Core
 
             return value.ToString();
         }
+
+        #region DataValidation
+
+        public static String SpecialSymbolsRandomString(Int32 size)
+        {
+            Random _rng = new Random();
+            String _chars = "!@#$%^&*()_<>";
+            char[] buffer = new char[size];
+
+            for (int i = 0; i < size; i++)
+            {
+                buffer[i] = _chars[_rng.Next(_chars.Length)];
+            }
+            return new string(buffer);
+        }
+
+        public static String toSelect()
+        {
+            return "-- Please Select --";
+        }
+
+        #endregion
     }
 }
