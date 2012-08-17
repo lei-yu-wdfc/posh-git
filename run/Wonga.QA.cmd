@@ -131,7 +131,7 @@ GOTO EOF
  GOTO MENU
 
 :GENERATE
-	rake generators || PAUSE
+	CALL rake generators || PAUSE
 	%Bin%\Wonga.QA.Generators.%1.exe %Origin%
 GOTO EOF
 
