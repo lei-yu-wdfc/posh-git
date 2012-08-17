@@ -49,6 +49,7 @@ namespace Wonga.QA.Tests.Payments
         {
             _customer = GetCustomer();
             _application = GetApplicationInArrears(_customer);
+            SetCardExpiryDate(_customer.GetPaymentCard(), DateTime.Now.AddYears(-1));
             _primaryPaymentCardId =
                 Drive.Data.Payments.Db.AccountPreferences.FindAllByAccountId(_application.AccountId).SingleOrDefault().
                     PrimaryPaymentCardId;
@@ -58,6 +59,7 @@ namespace Wonga.QA.Tests.Payments
             _sagaEntityFail = GetSagaEntity(_appInternalId);
             SaagaTimeOutMessageBy5Or8Am(_sagaEntityFail.Id, FiveAmState);
             CheckPaymentRequestDeclinedTransaction(_application, _appInternalId);
+            CheckChaseForArrearSagaIsNotComplete(_sagaEntityFail.Id);
         }
 
         [Test, JIRA("UKOPS-419"), DependsOn("PaymentsShouldAddRecordToPaymentCardRepaymentRequestWhenFirstPingFails"), Owner(Owner.JonHurd)]
@@ -81,6 +83,7 @@ namespace Wonga.QA.Tests.Payments
         {
             var customer = GetCustomer();
             _secondApplication = GetApplicationInArrears(customer);
+            SetCardExpiryDate(customer.GetPaymentCard(), DateTime.Now.AddYears(-1));
             _secondAppInternalId = ApplicationOperations.GetAppInternalId(_secondApplication);
             SetCardExpiryDate(customer.GetPaymentCard(),DateTime.Now.AddMonths(-3));
             customer.AddBadCard();
@@ -92,6 +95,8 @@ namespace Wonga.QA.Tests.Payments
                                                                                     Amount: amountDue,
                                                                                     StatusDescription: "Request Declined"
                           ).Count() == 1);
+            CheckChaseForArrearSagaIsNotComplete(_sagaSecondEntityFail.Id);
+
         }
 
         [Test, JIRA("UKOPS-419"), DependsOn("PaymentsFirstPingFailsToMakeSecondPingAlsoFail"), Owner(Owner.JonHurd)]
@@ -214,6 +219,11 @@ namespace Wonga.QA.Tests.Payments
         private static void CheckChaseForArrearSagaIsComplete(dynamic sagaId)
         {
             Do.With.Timeout(2).Until(() => ChaseLoanInArrearsSagaEntities.FindById((Guid)sagaId) == null);
+        }
+
+        private static void CheckChaseForArrearSagaIsNotComplete(dynamic sagaId)
+        {
+            Assert.IsNotNull(ChaseLoanInArrearsSagaEntities.FindById((Guid)sagaId));
         }
         #endregion
 
