@@ -15,8 +15,8 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
     public class UkL0JourneyTests : UiTest
     {
         Dictionary<RiskMaskForDeclinedLoan, string> DeclineAdvices = new Dictionary<RiskMaskForDeclinedLoan, string> 
-     {
-         {RiskMaskForDeclinedLoan.TESTBankAccountMatchedToApplicant, "Your bank details don't match your personal information\r\n\r\nWe've been unable to match the bank details you submitted with the rest of your personal information. If you suspect this may just be an error made when filling out the form, please check and update your details here before applying again. Or you could try speaking to your bank if you suspect their records might need updating. We also recommend ordering a copy of your credit report to check the status and accuracy of your personal credit history. Please find the contact details below to obtain a free copy of your credit report."}
+        {
+            {RiskMaskForDeclinedLoan.TESTBankAccountMatchedToApplicant, "Your bank details don't match your personal information\r\n\r\nWe've been unable to match the bank details you submitted with the rest of your personal information. If you suspect this may just be an error made when filling out the form, please check and update your details here before applying again. Or you could try speaking to your bank if you suspect their records might need updating. We also recommend ordering a copy of your credit report to check the status and accuracy of your personal credit history. Please find the contact details below to obtain a free copy of your credit report."}
         };
 
         public enum RiskMaskForDeclinedLoan
@@ -166,21 +166,6 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
             Assert.IsTrue(declinedPage.DeclineAdviceExists());
             Console.WriteLine("Ln Decline Advice: {0}", declinedPage.DeclineAdvice());*/
         }
-
-        /* TODO: check if it is possible to simulate different employment statuses
-         * [Test, JIRA("UK-438", "UK-1823"), Owner(Owner.StanDesyatnikov)]
-        [Pending("Enable if we need to simulate different Employment statuses for declined loan")]
-        public void L0DeclinedForNotFullEmployedTest([EnumData(typeof(EmploymentStatusEnum), ExcludeArray = new object[] { EmploymentStatusEnum.EmployedFullTime })] EmploymentStatusEnum employmentStatus)
-        {
-            string email = Get.RandomEmail();
-
-            var journeyL0 = JourneyFactory.GetL0Journey(Client.Home())
-                .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask)).WithEmail(email)
-                .WithAmount(400).WithDuration(30);
-            var declinedPage = journeyL0.Teleport<DeclinedPage>() as DeclinedPage;
-
-            Assert.IsTrue(declinedPage.DeclineAdviceExists());
-        }*/
 
         [Test, JIRA("UK-969", "UKWEB-250"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
         [Pending ("UKWEB-1143: Document links are not working in Account Setup Page")]
