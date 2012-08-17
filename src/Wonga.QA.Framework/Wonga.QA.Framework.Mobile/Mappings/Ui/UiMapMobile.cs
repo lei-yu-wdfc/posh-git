@@ -66,6 +66,8 @@ namespace Wonga.QA.Framework.Mobile.Mappings.Ui
         public virtual ApplyPageMobile ApplyPageMobile { get; set; }
         public virtual MyPersonalDetailsPageMobile MyPersonalDetailsPageMobile { get; set; }
         public virtual TopupRequestPage TopupRequestPage { get; set; }
+        public virtual TopUpDealDonePage TopUpDealDonePage { get; set; }
+        public virtual TopupAcceptPageMobile TopupAcceptPageMobile { get; set; }
         #endregion
 
         #region Sections

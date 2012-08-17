@@ -250,5 +250,15 @@
     <TopupRequestPageSliderSmall>#wonga-account-top-form</TopupRequestPageSliderSmall>
   </TopupRequestPage>
 
+  <TopUpDealDonePage>
+    <BackToMyAccount>.wonga-box>h2>a</BackToMyAccount> 
+    <Title>h2.title</Title>
+  </TopUpDealDonePage>
+
+  <TopupAcceptPageMobile>
+    <Title>h2.title</Title>
+    <Secci>div#agreementscroll</Secci>
+    <AcceptButton>#edit-accept</AcceptButton>
+  </TopupAcceptPageMobile>
 
 </UiMapMobile>
