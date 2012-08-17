@@ -81,7 +81,7 @@ namespace Wonga.QA.Tests.Salesforce
         }
 
         [Test]
-        [AUT(AUT.Uk), JIRA("UKOPS-149"), Owner(Owner.ShaneMcHugh), Pending("UKOPS-815")]
+        [AUT(AUT.Uk), JIRA("UKOPS-149"), Owner(Owner.ShaneMcHugh)]
         [Description("Verifies that when an application is in hardship and it is moved to bankrupt status salesforce is informed and a suppression record is created")]
         public void ApplicationInHardhsip_SubmitsBankruptStatus_ToSalesforce()
         {
@@ -93,14 +93,13 @@ namespace Wonga.QA.Tests.Salesforce
         }
 
         [Test]
-        [AUT(AUT.Uk), JIRA("UKOPS-149"), Owner(Owner.ShaneMcHugh), Pending("before an application can have a repayment arrangement it must be in arrears for 25 days by default or as specified in Payments.InArrearsMinDays service config setting. Test needs to be updated to reflect this.")]
+        [AUT(AUT.Uk), JIRA("UKOPS-149"), Owner(Owner.ShaneMcHugh)]
         [Description("Verifies that when an application is in a repayment arrangement and it is moved to bankrupt status salesforce is informed and a suppression record is created")]
         public void ApplicationInRepaymentArrangement_SubmitsBankruptStatus_ToSalesforce()
         {
             var caseId = Guid.NewGuid();
             Application application = CreateLiveApplication();
-            application.PutIntoArrears(10);
-            application.CreateRepaymentArrangement();
+            SalesforceOperations.CreateRepaymentArrangement(application.GetCustomer(), application);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.RepaymentArrangement);
             ReportBankruptcy(application, caseId);
         }

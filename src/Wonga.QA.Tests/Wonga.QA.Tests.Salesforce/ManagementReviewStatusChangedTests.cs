@@ -52,7 +52,7 @@ namespace Wonga.QA.Tests.Salesforce
 
 
         [Test]
-        [AUT(AUT.Uk), JIRA("UKOPS-140"), Owner(Owner.ShaneMcHugh), Pending("UKOPS-814")]
+        [AUT(AUT.Uk), JIRA("UKOPS-140"), Owner(Owner.ShaneMcHugh)]
         [Description("Verifies that when an application is in fraud status and it is moved to management review status salesforce is informed. When the management review status is removed return to previous status")]
         public void ApplicationFraud_SubmitsManagementReview_ToSalesforce()
         {
@@ -67,7 +67,7 @@ namespace Wonga.QA.Tests.Salesforce
         }
 
         [Test]
-        [AUT(AUT.Uk), JIRA("UKOPS-140"), Owner(Owner.ShaneMcHugh), Pending("UKOPS-814")]
+        [AUT(AUT.Uk), JIRA("UKOPS-140"), Owner(Owner.ShaneMcHugh)]
         [Description("Verifies that when an application is in hardship status and it is moved to management review status salesforce is informed. When the management review status is removed return to previous status")]
         public void ApplicationHardship_SubmitsManagementReview_ToSalesforce()
         {
@@ -109,14 +109,13 @@ namespace Wonga.QA.Tests.Salesforce
         }
 
         [Test]
-        [AUT(AUT.Uk), JIRA("UKOPS-140"), Owner(Owner.ShaneMcHugh), Pending("before an application can have a repayment arrangement it must be in arrears for 25 days by default or as specified in Payments.InArrearsMinDays service config setting. Test needs to be updated to reflect this.")]
+        [AUT(AUT.Uk), JIRA("UKOPS-140"), Owner(Owner.ShaneMcHugh)]
         [Description("Verifies that when an application is in Repayment Arrangement status and it is moved to management review status salesforce is informed. When the management review status is removed return to previous status")]
         public void ApplicationRepaymentArrangement_SubmitsManagementReview_ToSalesforce()
         {
             var caseId = Guid.NewGuid();
             var application = CreateLiveApplication();
-            application.PutIntoArrears(10);
-            application.CreateRepaymentArrangement();
+            SalesforceOperations.CreateRepaymentArrangement(application.GetCustomer(), application);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.RepaymentArrangement);
             ManagementReview(application, caseId);
             ApplicationOperations.RemoveManagementReview(application, caseId);
