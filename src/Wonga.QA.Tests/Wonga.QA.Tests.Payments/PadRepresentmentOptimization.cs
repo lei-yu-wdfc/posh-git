@@ -6,6 +6,7 @@ using System.Text;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Db;
 using Wonga.QA.Framework.Mocks;
 using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Tests.BankGateway.Enums;
@@ -18,7 +19,7 @@ using IncomeFrequencyEnum = Wonga.QA.Framework.Api.Enums.IncomeFrequencyEnum;
 namespace Wonga.QA.Tests.Payments
 {
     [Parallelizable(TestScope.Self)]
-	[Description("These tests can not be parallelized because we always use the same amount in all of them!!!")]
+	[Description("These tests can not be parallelized because it seems there is an issue in BGW mocks")]
     public class PadRepresentmentOptimization
     {
         private readonly dynamic _opsSagasPaymentsInArrears = Drive.Data.OpsSagas.Db.PaymentsInArrearsSagaEntity;
@@ -26,6 +27,7 @@ namespace Wonga.QA.Tests.Payments
                                                     Drive.Data.OpsSagas.Db.MultipleRepresentmentsInArrearsSagaEntity;
         private readonly dynamic _bgTrans = Drive.Data.BankGateway.Db.Transactions;
         private readonly dynamic _inArrearsNoticeSaga = Drive.Data.OpsSagas.Db.InArrearsNoticeSagaEntity;
+		private readonly dynamic _mockedBankGatewayResponses = Drive.Data.QaData.Db.BankGatewayResponseSetups;
 
         [Test, AUT(AUT.Ca), JIRA("CA-1962"), FeatureSwitch(FeatureSwitchConstants.MultipleRepresentmentsInArrearsFeatureSwitchKey)]
         public void WhenACustomerGoesIntoArrearsThenAnAttemptToRetrieve33PercentOfTheBalanceShouldBeMadeOnTheNextPayDate()
@@ -43,6 +45,7 @@ namespace Wonga.QA.Tests.Payments
             var numOfDaysToNextPayDateForRepresentmentOne = (int)nextPayDateForRepresentmentOne.Subtract(DateTime.Today).TotalDays;
 
             application.PutIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
+			WaitForProcessedMockedTransaction(customer.BankAccountNumber);
             TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentOne);
 
             var arrearsInterestForRepresentmentOne =
@@ -90,6 +93,7 @@ namespace Wonga.QA.Tests.Payments
             var numOfDaysToNextPayDateForRepresentmentOne = (int)nextPayDateForRepresentmentOne.Subtract(DateTime.Today).TotalDays;
 
             application.PutIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
+        	WaitForProcessedMockedTransaction(customer.BankAccountNumber);
             TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentOne);
 
             var arrearsInterestForRepresentmentOne =
@@ -98,10 +102,11 @@ namespace Wonga.QA.Tests.Payments
 
             ScotiaResponseBuilder.New().
                 ForBankAccountNumber(customer.BankAccountNumber).
-				ForAmount(principle + interest).
-                Reject();
+				Reject();
 
             TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
+
+        	WaitForProcessedMockedTransaction(customer.BankAccountNumber);
 
             Do.Until(() => (int)_bgTrans.GetCount(_bgTrans.ApplicationId == application.Id &&
                                                    _bgTrans.TransactionStatus ==
@@ -139,6 +144,7 @@ namespace Wonga.QA.Tests.Payments
             var numOfDaysToNextPayDateForRepresentmentOne = (int)nextPayDateForRepresentmentOne.Subtract(DateTime.Today).TotalDays;
 
             application.PutIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
+			WaitForProcessedMockedTransaction(customer.BankAccountNumber);
             TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentOne);
 
 			var arrearsInterestForRepresentmentOne =
@@ -212,6 +218,7 @@ namespace Wonga.QA.Tests.Payments
             var numOfDaysToNextPayDateForRepresentmentOne = (int)nextPayDateForRepresentmentOne.Subtract(DateTime.Today).TotalDays;
 
             application.PutIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
+			WaitForProcessedMockedTransaction(customer.BankAccountNumber);
             TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentOne);
 
             var arrearsInterestForRepresentmentOne =
@@ -241,10 +248,11 @@ namespace Wonga.QA.Tests.Payments
 
             ScotiaResponseBuilder.New().
                 ForBankAccountNumber(customer.BankAccountNumber).
-				ForAmount(principle + interest).
-                Reject();
+				Reject();
 
             TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
+
+			WaitForProcessedMockedTransaction(customer.BankAccountNumber);
 
             Do.Until(() => (int)_bgTrans.GetCount(_bgTrans.ApplicationId == application.Id &&
                                        _bgTrans.TransactionStatus ==
@@ -289,6 +297,7 @@ namespace Wonga.QA.Tests.Payments
             var numOfDaysToNextPayDateForRepresentmentOne = (int)nextPayDateForRepresentmentOne.Subtract(DateTime.Today).TotalDays;
 
             application.PutIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
+			WaitForProcessedMockedTransaction(customer.BankAccountNumber);
             TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentOne);
 
             var arrearsInterestForRepresentmentOne =
@@ -301,18 +310,14 @@ namespace Wonga.QA.Tests.Payments
                                                    _bgTrans.TransactionStatus ==
                                                    (int)BankGatewayTransactionStatus.Paid) == 2);
         	
-			//decimal cumulativeRepresentmentRoundError = 0.0M;
-
-            var amountToBeCollectedForRepresentmentOne =
+			var amountToBeCollectedForRepresentmentOne =
                 (arrearsInterestForRepresentmentOne + principle + interest + defaultCharge) 
 				* (decimal)percentageToBeCollectedForRepresentmentOne;
 
             var amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces =
                 Decimal.Round(amountToBeCollectedForRepresentmentOne, 2, MidpointRounding.AwayFromZero);
 
-			//cumulativeRepresentmentRoundError += amountToBeCollectedForRepresentmentOne - amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces;
-
-            var currentDateForRepresentmentTwo = Convert.ToDateTime(customer.GetNextPayDate());
+			var currentDateForRepresentmentTwo = Convert.ToDateTime(customer.GetNextPayDate());
 
             var nextPayDateForRepresentmentTwo = CalculateNextPayDateFunctionsCa.CalculateNextPayDate(currentDateForRepresentmentTwo, Convert.ToDateTime(customer.GetNextPayDate()),
                                                                             (PaymentFrequency)(Convert.ToInt32(customer.GetIncomeFrequency())));
@@ -339,9 +344,7 @@ namespace Wonga.QA.Tests.Payments
             var amountToBeCollectedForRepresentmentTwoRoundedToTwoDecimalPlaces =
                 Decimal.Round(amountToBeCollectedForRepresentmentTwo, 2, MidpointRounding.AwayFromZero);
 
-        	//cumulativeRepresentmentRoundError += amountToBeCollectedForRepresentmentTwo - amountToBeCollectedForRepresentmentTwoRoundedToTwoDecimalPlaces;
-
-            var currentDateForRepresentmentThree = Convert.ToDateTime(nextPayDateForRepresentmentTwo);
+        	var currentDateForRepresentmentThree = Convert.ToDateTime(nextPayDateForRepresentmentTwo);
 
             var nextPayDateForRepresentmentThree = CalculateNextPayDateFunctionsCa.CalculateNextPayDate(currentDateForRepresentmentThree, Convert.ToDateTime(nextPayDateForRepresentmentTwo),
                                                                 (PaymentFrequency)(Convert.ToInt32(customer.GetIncomeFrequency())));
@@ -367,7 +370,7 @@ namespace Wonga.QA.Tests.Payments
 			//last representment needs to take into account the round error of the previous ones
         	var amountToBeCollectedForRepresentmentThree =
         		arrearsInterestForRepresentmentOne + arrearsInterestForRepresentmentTwo + arrearsInterestForRepresentmentThree
-        		+ principleBalanceAfterRepresentmentTwo + interest + defaultCharge; // -cumulativeRepresentmentRoundError;
+        		+ principleBalanceAfterRepresentmentTwo + interest + defaultCharge;
 
             var amountToBeCollectedForRepresentmentThreeRoundedToTwoDecimalPlaces =
                         Decimal.Round(amountToBeCollectedForRepresentmentThree, 2, MidpointRounding.AwayFromZero);
@@ -395,6 +398,7 @@ namespace Wonga.QA.Tests.Payments
             var numOfDaysToNextPayDateForRepresentmentOne = (int)nextPayDateForRepresentmentOne.Subtract(DateTime.Today).TotalDays;
 
             application.PutIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
+			WaitForProcessedMockedTransaction(customer.BankAccountNumber);
             TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentOne);
 
             var arrearsInterestForRepresentmentOne =
@@ -407,17 +411,13 @@ namespace Wonga.QA.Tests.Payments
                                                    _bgTrans.TransactionStatus ==
                                                    (int)BankGatewayTransactionStatus.Paid) == 2);
 
-			//decimal cumulativeRepresentmentRoundError = 0.0M;
-
-            var amountToBeCollectedForRepresentmentOne =
+			var amountToBeCollectedForRepresentmentOne =
                 (arrearsInterestForRepresentmentOne + principle + interest + defaultCharge) * (decimal)percentageToBeCollectedForRepresentmentOne;
 
             var amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces =
                 Decimal.Round(amountToBeCollectedForRepresentmentOne, 2, MidpointRounding.AwayFromZero);
 
-			//cumulativeRepresentmentRoundError += amountToBeCollectedForRepresentmentOne - amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces;
-
-            var currentDateForRepresentmentTwo = Convert.ToDateTime(customer.GetNextPayDate());
+			var currentDateForRepresentmentTwo = Convert.ToDateTime(customer.GetNextPayDate());
 
             var nextPayDateForRepresentmentTwo = CalculateNextPayDateFunctionsCa.CalculateNextPayDate(currentDateForRepresentmentTwo, Convert.ToDateTime(customer.GetNextPayDate()),
                                                                             (PaymentFrequency)(Convert.ToInt32(customer.GetIncomeFrequency())));
@@ -444,9 +444,7 @@ namespace Wonga.QA.Tests.Payments
             var amountToBeCollectedForRepresentmentTwoRoundedToTwoDecimalPlaces =
                 Decimal.Round(amountToBeCollectedForRepresentmentTwo, 2, MidpointRounding.AwayFromZero);
 
-			//cumulativeRepresentmentRoundError += amountToBeCollectedForRepresentmentTwo - amountToBeCollectedForRepresentmentTwoRoundedToTwoDecimalPlaces;
-
-            var currentDateForRepresentmentThree = Convert.ToDateTime(nextPayDateForRepresentmentTwo);
+			var currentDateForRepresentmentThree = Convert.ToDateTime(nextPayDateForRepresentmentTwo);
 
             var nextPayDateForRepresentmentThree = CalculateNextPayDateFunctionsCa.CalculateNextPayDate(currentDateForRepresentmentThree, Convert.ToDateTime(nextPayDateForRepresentmentTwo),
                                                                 (PaymentFrequency)(Convert.ToInt32(customer.GetIncomeFrequency())));
@@ -457,10 +455,11 @@ namespace Wonga.QA.Tests.Payments
 
             ScotiaResponseBuilder.New().
                 ForBankAccountNumber(customer.BankAccountNumber).
-				ForAmount(principle + interest).
-                Reject();
+				Reject();
 
             TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
+
+			WaitForProcessedMockedTransaction(customer.BankAccountNumber);
 
             Do.Until(() => (int)_bgTrans.GetCount(_bgTrans.ApplicationId == application.Id &&
                            _bgTrans.TransactionStatus ==
@@ -478,7 +477,7 @@ namespace Wonga.QA.Tests.Payments
 			//last representment needs to take into account the round error of the previous ones
         	var amountToBeCollectedForRepresentmentThree =
         		arrearsInterestForRepresentmentOne + arrearsInterestForRepresentmentTwo + arrearsInterestForRepresentmentThree
-        		+ principleBalanceAfterRepresentmentTwo + interest + defaultCharge; // -cumulativeRepresentmentRoundError;
+        		+ principleBalanceAfterRepresentmentTwo + interest + defaultCharge;
 
             var amountToBeCollectedForRepresentmentThreeRoundedToTwoDecimalPlaces =
                         Decimal.Round(amountToBeCollectedForRepresentmentThree, 2, MidpointRounding.AwayFromZero);
@@ -549,5 +548,12 @@ namespace Wonga.QA.Tests.Payments
 		{
 			Assert.LessThanOrEqualTo(Math.Abs(expectedAmount - actualAmount), allowedDifference);
 		}
+
+		private void WaitForProcessedMockedTransaction(string bankAccount)
+		{
+			Do.Until(() => _mockedBankGatewayResponses.FindBy(
+				Gateway: "Scotia", BankAccount: bankAccount) == null);
+		}
+
     }
 }
