@@ -9,6 +9,7 @@ namespace Wonga.QA.Framework.UI.Ui.Enums
     {
         String = 1,
         Date = 2,
-        DateTime = 3
+        DateTime = 3,
+        Select = 4
     }
 }

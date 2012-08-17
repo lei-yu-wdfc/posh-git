@@ -21,6 +21,8 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
     [TestFixture, Parallelizable(TestScope.All)]
     public class FinancialAssessmentExpenditureTest : UiTest
     {
+        public delegate void CallBackFunction(FAExpenditurePage page, String fieldName, String value);
+
         private Customer Init()
         {
             var email = Get.RandomEmail();
@@ -125,13 +127,14 @@ namespace Wonga.QA.Tests.Ui.FinancialAssessment
         {
             Dictionary<FieldType, Int32[]> dictionary = new Dictionary<FieldType, Int32[]>();
             dictionary.Add(FieldType.String, new Int32[] { (Int32)FieldTypeString.Numbers });
+            CallBackFunction callBack = new CallBackFunction(Validation);
 
             foreach (var field in fields)
             {
                 if (!field.IsExtended)
-                    ValidationHelper<FAExpenditurePage>.CheckValidation(faexpenditurepage, field.FieldName, dictionary[field.FieldType].ToList(), FieldTypeList.ExcludeArray, Validation, null, field.FieldType);
+                    ValidationHelper<FAExpenditurePage>.CheckValidation(faexpenditurepage, field.FieldName, dictionary[field.FieldType].ToList(), FieldTypeList.ExcludeArray, callBack, null, field.FieldType);
                 else
-                    ValidationHelper<FAExpenditurePage>.CheckValidation(faexpenditurepage, field.FieldName, field.RulesArray, field.FieldTypeList, Validation, null, field.FieldType);
+                    ValidationHelper<FAExpenditurePage>.CheckValidation(faexpenditurepage, field.FieldName, field.RulesArray, field.FieldTypeList, callBack, null, field.FieldType);
                 PropertiesHelper<FAExpenditurePage>.SetFieldValue(faexpenditurepage, field.FieldName, field.FieldValue);
             }
         }

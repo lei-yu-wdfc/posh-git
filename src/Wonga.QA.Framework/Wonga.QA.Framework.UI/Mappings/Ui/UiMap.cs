@@ -197,7 +197,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual SalesForceHomePage SalesForceHomePage { get; set; }
         public virtual SalesForceSearchResultPage SalesForceSearchResultPage { get; set; }
         public virtual SalesForceCustomerDetailPage SalesForceCustomerDetailPage { get; set; }
-        
+
         #endregion
 
         #region PayLater
@@ -223,7 +223,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual PrepaidCardMenuElement PrepaidCardMenuElement { get; set; }
         public virtual ChooseCardTypeMenuElement ChooseCardTypeMenuElement { get; set; }
         public virtual PrepaidTopupChoiceElement PrepaidTopupChoiceElements { get; set; }
-        public virtual PrepaidAdminPage PrepaidAdminPage { get; set; } 
+        public virtual PrepaidAdminPage PrepaidAdminPage { get; set; }
         #endregion
 
         #region AdminPages
@@ -243,7 +243,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual FAIncomePage FinancialAssessmentIncomePage { get; set; }
         public virtual FAExpenditurePage FinancialAssessmentExpenditurePage { get; set; }
         public virtual FADebtsPage FinancialAssessmentDebtsPage { get; set; }
-        public virtual FARepaymentPlan FinancialAssessmentRepaymentPlanPage { get; set; }
+        public virtual FARepaymentPlanPage FinancialAssessmentRepaymentPlanPage { get; set; }
         #endregion
     }
 }

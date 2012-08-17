@@ -19,11 +19,14 @@ namespace Wonga.QA.Framework.UI.Ui.Pages.Helpers
         public delegate void ExecutableFunction(TPage page, String fieldName, String value);
 
 
-        public static void CheckValidation(TPage page, String fieldName, List<Int32> restrictionList, FieldTypeList restrictionType, ExecutableFunction callBack, Dictionary<Int32, Delegate> customRules, FieldType fieldType)
+        public static void CheckValidation(TPage page, String fieldName, List<Int32> restrictionList, FieldTypeList restrictionType, Delegate callBack, List<KeyValuePair<Int32, Delegate>> customRules, FieldType fieldType)
         {
             _page = page;
             _fieldName = fieldName;
-            _baseCallBack = callBack;
+
+            _baseCallBack = (ExecutableFunction)Delegate.CreateDelegate(typeof(ExecutableFunction),
+                                                           callBack.Target,
+                                                           callBack.Method);
 
             List<Int32> list = EnumList(restrictionList, restrictionType, fieldType);
             ValidateByType(fieldType, list, customRules);
@@ -46,19 +49,29 @@ namespace Wonga.QA.Framework.UI.Ui.Pages.Helpers
                 case FieldType.String:
                     fullList = Array.ConvertAll(Enum.GetValues(typeof(FieldTypeString)).Cast<FieldTypeString>().ToArray(), value => (Int32)value).ToList();
                     break;
+                case FieldType.Select:
+                    fullList = Array.ConvertAll(Enum.GetValues(typeof(FieldTypeSelect)).Cast<FieldTypeSelect>().ToArray(), value => (Int32)value).ToList();
+                    break;
+                case FieldType.Date:
+                    fullList = Array.ConvertAll(Enum.GetValues(typeof(FieldTypeDate)).Cast<FieldTypeDate>().ToArray(), value => (Int32)value).ToList();
+                    break;
             }
             return fullList;
         }
-        private static void ValidateByType(FieldType fieldType, List<Int32> list, Dictionary<Int32, Delegate> customCallBacks)
+        private static void ValidateByType(FieldType fieldType, List<Int32> list, List<KeyValuePair<Int32, Delegate>> customCallBacks)
         {
-            customCallBacks = customCallBacks ?? new Dictionary<Int32, Delegate>();
+            customCallBacks = customCallBacks ?? new List<KeyValuePair<Int32, Delegate>>();
 
             switch (fieldType)
             {
                 case FieldType.String:
                     ValidationRulesHelper.ValidateForString(list, CallBack, customCallBacks);
                     break;
+                case FieldType.Select:
+                    ValidationRulesHelper.ValidateForSelect(list, CallBack, customCallBacks);
+                    break;
                 case FieldType.Date:
+                    ValidationRulesHelper.ValidateForDate(list, CallBack, customCallBacks);
                     break;
                 case FieldType.DateTime:
                     break;
