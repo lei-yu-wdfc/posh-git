@@ -2,6 +2,7 @@
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Old;
+using Wonga.QA.Tests.Api;
 
 namespace Wonga.QA.PerformanceTests.Load.Api
 {
@@ -18,33 +19,29 @@ namespace Wonga.QA.PerformanceTests.Load.Api
         [TestMethod]
         public void ApiL0JourneyAccepted()
         {
-            Customer cust = CustomerBuilder.New().Build();
-            ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+            var journey = new ApiJourneys();
+            journey.L0JourneyAccepted();
         }
 
         [TestMethod]
         public void ApiNoMobilePhoneL0JourneyAccepted()
         {
-            Customer cust = CustomerBuilder.New().WithMobileNumber(null).Build();
-            ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Accepted).WithLoanAmount(200).Build();
+            var journey = new ApiJourneys();
+            journey.ApiNoMobilePhoneL0JourneyAccepted();
         }
 
         [TestMethod]
         public void ApiL0JourneyDeclined()
         {
-            Customer cust = CustomerBuilder.New().WithEmployer("Wonga").Build();
-            ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
+            var journey = new ApiJourneys();
+            journey.ApiL0JourneyDeclined();
         }
 
         [TestMethod]
         public void ApiLnJourneyAccepted()
         {
-            Customer cust = CustomerBuilder.New().Build();
-            var applicationL0 = ApplicationBuilder.New(cust).Build();
-
-            applicationL0.RepayOnDueDate();
-
-            ApplicationBuilder.New(cust).Build();
+            var journey = new ApiJourneys();
+            journey.ApiLnJourneyAccepted();
         }
     }
 }
