@@ -8,7 +8,7 @@ using Wonga.QA.Framework.Msmq.PublicMessages.Payments.PayLater.UK;
 
 namespace Wonga.QA.ServiceTests.Risk.PayLater.UK
 {
-    [Parallelizable(TestScope.All), Ignore("Awaiting bug fixes")]
+    [Parallelizable(TestScope.All)]
     public class CreatePayLaterApplicationTests 
     {
         private Guid _accountId;
@@ -88,7 +88,7 @@ namespace Wonga.QA.ServiceTests.Risk.PayLater.UK
         private void AssertPayLaterApplicationCreated()
         {
             Do.With.Message("No paylater application was found").Until(
-                () => Drive.Data.PayLater.Db.Applications.FindByExternalId(_applicationId));
+                () => Drive.Data.Risk.Db.RiskPayLaterApplications.FindByApplicationId(_applicationId));
         }
 
         [Test]
