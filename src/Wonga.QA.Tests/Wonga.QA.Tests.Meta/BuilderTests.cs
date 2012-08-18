@@ -40,8 +40,8 @@ namespace Wonga.QA.Tests.Meta
 			Assert.DoesNotThrow(() => _organisation = OrganisationBuilder.New(_customer).Build());
 		}
 
-        [Test, AUT(AUT.Uk), Ignore]
-        public void PayLaterAccountBuilderTests()
+        [Test, AUT(AUT.Uk)]
+        public void PayLaterAccountBuilderTest()
         {
             Assert.DoesNotThrow(() => _payLaterAccount = AccountBuilder.PayLater.New().Build());
         }

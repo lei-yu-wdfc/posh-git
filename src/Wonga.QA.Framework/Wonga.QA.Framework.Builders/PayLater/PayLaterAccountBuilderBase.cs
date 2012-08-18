@@ -51,16 +51,8 @@ namespace Wonga.QA.Framework.Builders.PayLater
 		abstract protected IEnumerable<ApiRequest> GetRegionSpecificApiCommands();
 
 		private void WaitUntilAccountIsPresentInServiceDatabases()
-		{
-		    //AccountQueries.PayLater.DataPresence.IsAccountPresentInServiceDatabases(AccountId);
-
-            Do.Until(() => AccountQueries.PayLater.DataPresence.IsAccountPresentInOpsDatabase(AccountId));
-
-            Do.Until(() => AccountQueries.PayLater.DataPresence.IsAccountPresentInCommsDatabase(AccountId));
-
-            Do.Until(() => AccountQueries.PayLater.DataPresence.IsAccountPresentInPaymentsDatabase(AccountId));
-
-            Do.Until(() => AccountQueries.PayLater.DataPresence.IsAccountPresentInRiskDatabase(AccountId));
+		{            
+            Do.Until(() => AccountQueries.PayLater.DataPresence.IsAccountPresentInServiceDatabases(AccountId));           
 		}
 
 		#region "With" Methods - PersonalDetails
