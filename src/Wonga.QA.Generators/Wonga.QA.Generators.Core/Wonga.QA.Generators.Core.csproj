@@ -40,8 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiGenerator.cs" />
     <Compile Include="AssemblyPathFinder.cs" />
-    <Compile Include="Generator.cs" />
     <Compile Include="MessageClassDefinition.cs" />
     <Compile Include="Command.cs" />
     <Compile Include="Config.cs" />
