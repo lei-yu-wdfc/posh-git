@@ -258,6 +258,13 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Drive.Msmq.Comms.Send(new TimeoutMessage { SagaId = sagaEntity.Id });
         }
 
+        private static void TimeoutExtensionCancellation(Guid applicationId)
+        {
+            var sagaTable = Drive.Data.OpsSagas.Db.ExtensionCancellationSagaEntity;
+            dynamic sagaEntity = Do.Until(() => sagaTable.FindAllBy(ApplicationId: applicationId).Single());
+            Drive.Msmq.Comms.Send(new TimeoutMessage { SagaId = sagaEntity.Id });
+        }
+
         [Test, JIRA("UK-1321", "UK-1522", "UK-1746"), MultipleAsserts, Owner(Owner.StanDesyatnikov, Owner.OrizuNwokeji)]
         public void ExtensionJourneyDecline()
         {
@@ -408,6 +415,36 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
                 "expectedFutureInterestAndFees={2} vs." +
                 "actualFutureInterestAndFees={3}",
                 expectedTotalPayable.ToString("#.##"), actualTotalPayable, expectedFutureInterestAndFees, actualFutureInterestAndFees);
+        }
+
+        [Test, JIRA("UKWEB-252"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
+        public void ExtensionApprovedButNotAcceptedByUserbyMidnightShouldbeCancelled()
+        {
+            string email = Get.RandomEmail();
+
+            var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
+            var application = ApplicationBuilder.New(customer).WithLoanAmount(100).WithLoanTerm(10).Build();
+
+            application.RewindApplicationDatesForDays(5);
+
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(email);
+
+            mySummaryPage.ChangePromiseDateButtonClick();
+            var extensionRequestPage = new ExtensionRequestPage(this.Client);
+
+            const int extensionDays = 5;
+            extensionRequestPage.SetInformativeBox(extensionDays);
+
+            extensionRequestPage.setSecurityCode("123");
+            extensionRequestPage.SubmitButtonClick();
+
+            var extensionProcessingPage = new ExtensionProcessingPage(this.Client);
+
+            var extensionAcceptPage = extensionProcessingPage.WaitFor<ExtensionAgreementPage>() as ExtensionAgreementPage;
+
+            TimeoutExtensionReminder(application.Id);
+            TimeoutExtensionCancellation(application.Id);
         }
     }
 }
