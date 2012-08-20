@@ -16,7 +16,7 @@ namespace Wonga.QA.ServiceTests.Risk
 		{
 			base.BeforeEachTest();
 			CheckpointTestSettings = new CheckpointTestSettings();
-			EndpointMock = new EndpointMock("servicetest",Drive.Msmq.Risk);
+			EndpointMock = new EndpointMock("servicetest", Drive.Msmq.Risk);
 			EndpointMock.Start();
 		}
 

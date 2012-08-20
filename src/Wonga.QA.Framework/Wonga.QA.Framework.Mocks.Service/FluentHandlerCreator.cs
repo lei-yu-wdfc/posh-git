@@ -19,7 +19,7 @@ namespace Wonga.QA.Framework.Mocks.Service
 			return this;
 		}
 
-		public FluentHandlerCreator<T> ThenDoThis(Action<T> action)
+		public FluentHandlerCreator<T> ThenDoThis(Action<T, IBus> action)
 		{
 			_endpoint.AddHandler(_filter, action);
 			return this;

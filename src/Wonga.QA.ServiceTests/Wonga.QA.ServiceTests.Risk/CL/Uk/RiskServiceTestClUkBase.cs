@@ -26,6 +26,15 @@ namespace Wonga.QA.ServiceTests.Risk.CL.uk
 
 			Messages.Add<SubmitApplicationBehaviourCommand>(x => x.ApplicationId = ApplicationId);
 
+            Messages.Add<SubmitClientWatermarkCommand>(
+            x =>
+            {
+		        x.ApplicationId = ApplicationId;
+                x.AccountId = MainApplicantAccountId;
+                x.ClientIPAddress = "127.0.0.1";
+                x.BlackboxData = "fdafjksdgsajdgbagsfgtwauiofdh";
+            });
+
 			Messages.Add<RiskCreateFixedTermLoanApplicationCommand>(
 				x =>
 					{
@@ -123,24 +132,6 @@ namespace Wonga.QA.ServiceTests.Risk.CL.uk
 			RunL0Journey();
 		}
 
-		protected void GivenThatApplicantIsOnBlackList()
-		{ 
-			EndpointMock
-				.OnArrivalOf<ConsumerBlackListRequestMessage>()
-				.Matching(x => x.ApplicationId == ApplicationId)
-				.ThenDoThis(receivedMsg =>
-				{
-					var response = CreateBlacklistedMessage();
-					response.SagaId = receivedMsg.SagaId;
-					Send(response);
-				})
 
-				.SeemsLegit().Dude();
-		}
-
-		private ConsumerBlackListResponseMessage CreateBlacklistedMessage()
-		{
-			return new ConsumerBlackListResponseMessage {PresentInBlackList = true};
-		}
 	}
 }

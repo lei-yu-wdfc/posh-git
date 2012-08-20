@@ -10,15 +10,15 @@ namespace Wonga.QA.ServiceTests.Risk.CL.Uk
 	[Parallelizable(TestScope.All), AUT(AUT.Uk)]
 	public class RiskDecisionsPublishingTests : RiskServiceTestClUkBase
 	{
-		[Test]
-		public void IfApplicationIsDeclined_ApplicationDeclinedIsPublished()
-		{
-			ExpectingRiskToPublishApplicationDeclined();
+        //[Test]
+        //public void IfApplicationIsDeclined_ApplicationDeclinedIsPublished()
+        //{
+        //    ExpectingRiskToPublishApplicationDeclined();
 
-			GivenThatApplicantIsOnBlackList();
-			WhenTheL0UserAppliesForALoan();
-			RiskPublishesApplicationDeclinedEvent();
-		}
+        //    GivenThatApplicantIsOnBlackList();
+        //    WhenTheL0UserAppliesForALoan();
+        //    RiskPublishesApplicationDeclinedEvent();
+        //}
 
 		#region Subscription Setup
 
@@ -29,7 +29,7 @@ namespace Wonga.QA.ServiceTests.Risk.CL.Uk
 			EndpointMock
 				.SubscribeTo<IApplicationDeclined>()
 				.Matching(x=> x.ApplicationId == ApplicationId)
-				.ThenDoThis(x =>_eventPublished = true)
+                .ThenDoThis((x, bus) =>_eventPublished = true)
 				
 				.SeemsLegit().Dude();
 		}
