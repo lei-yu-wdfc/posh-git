@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Wonga.QA.Generators.Core
 {
@@ -55,7 +56,8 @@ namespace Wonga.QA.Generators.Core
 				return component;
 
 			var parts = component.Split('.');
-			return Path.Combine(parts);
+
+			return Path.Combine(parts.Where(p => p != "Wonga" && p != "QA" && p != "Framework" && p != "Api" && p != "Cs" && p != "Msmq").ToArray());
 		}
 
 		private static void DeleteFileIfExists(FileInfo file)

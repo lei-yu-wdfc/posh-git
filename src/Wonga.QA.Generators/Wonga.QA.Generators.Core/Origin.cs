@@ -90,6 +90,18 @@ namespace Wonga.QA.Generators.Core
 			return dir.GetFiles("Api.xsd", SearchOption.AllDirectories).First();
 		}
 
+		public static FileInfo GetCsApiCommandsSchema()
+		{
+			var dir = new DirectoryInfo(Path.Combine(CsApiDirectory.FullName, "commands"));
+			return dir.GetFiles("Api.xsd", SearchOption.AllDirectories).First();
+		}
+
+		public static FileInfo GetCsApiQueriesSchema()
+		{
+			var dir = new DirectoryInfo(Path.Combine(CsApiDirectory.FullName, "queries"));
+			return dir.GetFiles("Api.xsd", SearchOption.AllDirectories).First();
+		}
+
 		private static void LogAssemblyLoaderExceptions(Assembly assembly, ReflectionTypeLoadException ex)
 		{
 			Console.ForegroundColor = ConsoleColor.Red;

@@ -1,6 +1,5 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Wonga.QA.Generators.Core;
 
 namespace Wonga.QA.Generators.Cs
@@ -9,23 +8,20 @@ namespace Wonga.QA.Generators.Cs
     {
         public void Generate()
         {
-            Config.RepoName = "";
-            var binRootDirectories = new GeneratorRepoDirectories(Config.CsApi.Folder);
-            var classGenerator = new XmlSchemaClassGenerator(Config.CsApi, binRootDirectories, false);
+			var outputDirectory = new DirectoryInfo(Path.Combine(Directory.GetCurrentDirectory(), "CSAPI", "Requests"));
 
-            foreach (var repo in Config.Repos)
-            {
-                Config.RepoName = repo;
-                ILookup<String, Type> requests = Origin.GetTypes().Where(t => t.IsRequest()).ToLookup(t => t.GetName());
-
-               // foreach (FileInfo file in Origin.GetSchemas().Where(f => f.IsCs()))
-                {
-                   // classGenerator.GenerateXmlSchemaClassesFiles(file, requests);
-                }
-            }
-
-            Repo.Inject(binRootDirectories.ClassesDirectory, Config.CsApi.Folder, Config.CsApi.Project, delete: true, overwrite: true);
-            Repo.Inject(binRootDirectories.EnumsDirectory, Config.Enums.Folder, Config.CsApi.Project, delete: true, overwrite: true);   
+			Generate(Origin.GetCsApiCommandsSchema(), outputDirectory);
+			Generate(Origin.GetCsApiQueriesSchema(), outputDirectory);
+        	
         }
+
+		private void Generate(FileInfo schemaFile, DirectoryInfo outputDirectory)
+		{
+			var schemaToTypesGenerator = new SchemaToTypesGenerator(schemaFile);
+			var namespaceMessagePairs = schemaToTypesGenerator.GenerateNamespaceMessagesPairs();
+			var types = schemaToTypesGenerator.GenerateTypes();
+			var commandClasses = MessageClassBuilder.Build(MessageClassBuilder.MessageClassType.CsApi, namespaceMessagePairs, types, outputDirectory);
+			HierarchicalClassFileWriter.WriteClassFilesToDisk(outputDirectory, commandClasses);
+		}
     }
 }
