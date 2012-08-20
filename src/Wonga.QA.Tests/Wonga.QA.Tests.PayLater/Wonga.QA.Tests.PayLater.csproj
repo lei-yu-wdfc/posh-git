@@ -31,6 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
+    <Reference Include="MbUnit, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -38,10 +40,46 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Wonga.QA.Framework.Account, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Wonga.QA.Framework.Application, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Wonga.QA.Framework.Builders, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Wonga.QA.Framework.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PayLaterAccountBuilderTests.cs" />
+    <Compile Include="BuilderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Wonga.QA.Tests.Core\Wonga.QA.Tests.Core.csproj">
+      <Project>{36C48933-F3DA-468A-8529-212601FC0FA5}</Project>
+      <Name>Wonga.QA.Tests.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CashIn\" />
+    <Folder Include="CashOut\" />
+    <Folder Include="Chargebacks\" />
+    <Folder Include="CollectionsArrears\" />
+    <Folder Include="CollectionsHierarchy\" />
+    <Folder Include="Collections\" />
+    <Folder Include="Comms\" />
+    <Folder Include="CustomerServiceCsa\" />
+    <Folder Include="CustomerServiceMsa\" />
+    <Folder Include="DataSharing\" />
+    <Folder Include="Fees\" />
+    <Folder Include="LegalDocuments\" />
+    <Folder Include="MerchantServiceFees\" />
+    <Folder Include="MerchantStatements\" />
+    <Folder Include="NewUsers\" />
+    <Folder Include="PayLaterSite\" />
+    <Folder Include="PaymentOffers\" />
+    <Folder Include="PlanOffers\" />
+    <Folder Include="Recon\" />
+    <Folder Include="Refunds\" />
+    <Folder Include="Reporting\" />
+    <Folder Include="RiskDecision\" />
+    <Folder Include="Website\" />
+    <Folder Include="WongaCustomers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

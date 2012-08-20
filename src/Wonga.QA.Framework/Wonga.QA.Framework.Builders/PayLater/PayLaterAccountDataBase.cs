@@ -23,14 +23,14 @@ namespace Wonga.QA.Framework.Builders.PayLater
 		public String Postcode;
 		public String CountryCode;
 
-		public String EmploymentStatus;
+		public EmploymentStatusEnum EmploymentStatus;
 		public Decimal NetMonthlyIncome;
 		public Date NextPayDate;
 		public IncomeFrequencyEnum IncomeFrequency;
 
 		public Int64 PaymentCardNumber;
 		public String PaymentCardSecurityCode;
-		public DateTime PaymentCardExpiryDate;
+		public Date PaymentCardExpiryDate;
 
 		public PayLaterAccountDataBase()
 		{
@@ -50,13 +50,13 @@ namespace Wonga.QA.Framework.Builders.PayLater
 			Postcode = Get.GetPostcode();
 			CountryCode = Get.GetCountryCode();
 
-			EmploymentStatus = Get.GetEmploymentStatus();
+			EmploymentStatus = (EmploymentStatusEnum) Enum.Parse(typeof (EmploymentStatusEnum), Get.GetEmploymentStatus());
 			NextPayDate = Get.GetNextPayDate();
 			IncomeFrequency = IncomeFrequencyEnum.LastFridayOfMonth;
 
 			PaymentCardNumber = 4444333322221111;
 			PaymentCardSecurityCode = "777"; ;
-			PaymentCardExpiryDate = DateTime.UtcNow.AddYears(2);
+			PaymentCardExpiryDate = new Date(DateTime.UtcNow.AddYears(2), DateFormat.Date);
 		}
 	}
 }
