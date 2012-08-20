@@ -74,7 +74,6 @@ namespace Wonga.QA.Generators.Core
 
 		public static FileInfo GetAssembly(this FileInfo file, DirectoryInfo directory)
 		{
-			//directory = directory.GetDirectories(file.GetFileNameWithoutExtension()).SingleOrDefault();
 			return directory == null ? null : directory.GetFiles(String.Format("{0}.dll", file.GetAssembly())).SingleOrDefault();
 		}
 

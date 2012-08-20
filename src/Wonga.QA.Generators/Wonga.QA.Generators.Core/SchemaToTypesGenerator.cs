@@ -11,21 +11,26 @@ using Microsoft.CSharp;
 
 namespace Wonga.QA.Generators.Core
 {
-	public static class SchemaToClassGenerator
+	public class SchemaToTypesGenerator
 	{
-		private static DirectoryInfo _directory = new DirectoryInfo("c:/Api");
+		private readonly XmlSchema _schema;
+		private readonly DirectoryInfo _directory = new DirectoryInfo(Directory.GetCurrentDirectory());
 
-		public static IEnumerable<MessageClassDefinition> Generate(FileInfo schemaFile, DirectoryInfo directory)
+		public SchemaToTypesGenerator(FileInfo schema)
 		{
-			_directory = directory;
+			_schema = GetValidatedSchema(schema);
+		}
 
+		public Dictionary<string, Type> GenerateTypes()
+		{
 			CreateDirectoryIfDoesntExist(_directory.FullName);
-
-			var schema = GetValidatedSchema(schemaFile);
-			var messages = GetNamespaceMessagesDictionary(schema);
-			var types = GetSchemaTypes(schema);
-			
-			return ClassBuilder.Build(messages, types, _directory);
+			return GetSchemaTypes(_schema);
+		}
+		
+		public Dictionary<string, IEnumerable<XmlSchemaElement>> GenerateNamespaceMessagesPairs()
+		{
+			CreateDirectoryIfDoesntExist(_directory.FullName);
+			return GetNamespaceMessagesDictionary(_schema);
 		}
 
 		private static void CreateDirectoryIfDoesntExist(String directory)
@@ -36,7 +41,7 @@ namespace Wonga.QA.Generators.Core
 			}
 		}
 
-		private static XmlSchema GetValidatedSchema(FileInfo schemaFile)
+		private XmlSchema GetValidatedSchema(FileInfo schemaFile)
 		{
 			var schema = ConvertFileToSchema(schemaFile);
 			ValidateSchema(schema);
@@ -57,20 +62,20 @@ namespace Wonga.QA.Generators.Core
 			return nameMessagesPairs;
 		}
 
-		private static Dictionary<String, Type> GetSchemaTypes(XmlSchema schema)
+		private Dictionary<String, Type> GetSchemaTypes(XmlSchema schema)
 		{
 			var rootElement = schema.Items.OfType<XmlSchemaElement>().First();
 			var results = CompileGeneratedClassFileForXmlSchemaElement(_directory, rootElement, schema);
 			return results.CompiledAssembly.GetTypes().Where(a => a.Name.Contains("Messages") && !a.Name.Contains("Response")).ToDictionary(t => t.GetName());
 		}
 
-		private static XmlSchema ConvertFileToSchema(FileInfo file)
+		private XmlSchema ConvertFileToSchema(FileInfo file)
 		{
 			using (XmlReader reader = XmlReader.Create(file.FullName))
 				return XmlSchema.Read(reader, (s, a) => { throw a.Exception; });
 		}
 
-		private static void ValidateSchema(XmlSchema schema)
+		private void ValidateSchema(XmlSchema schema)
 		{
 			try
 			{
@@ -84,7 +89,7 @@ namespace Wonga.QA.Generators.Core
 			}
 		}
 		
-		private static CompilerResults CompileGeneratedClassFileForXmlSchemaElement(DirectoryInfo codeDirectory, XmlSchemaElement element, XmlSchema schema)
+		private CompilerResults CompileGeneratedClassFileForXmlSchemaElement(DirectoryInfo codeDirectory, XmlSchemaElement element, XmlSchema schema)
 		{
 			var ns = new CodeNamespace();
 			var exporter = new XmlCodeExporter(ns);

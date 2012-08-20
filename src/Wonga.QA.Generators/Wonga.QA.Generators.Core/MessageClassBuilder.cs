@@ -1,29 +1,34 @@
 ﻿using System;
-using System.CodeDom;
-using System.CodeDom.Compiler;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Xml.Schema;
-using System.Xml.Serialization;
-using Microsoft.CSharp;
 
 namespace Wonga.QA.Generators.Core
 {
-	public static class ClassBuilder
+	public static class MessageClassBuilder
 	{
-		private static Dictionary<String, Type> _types;
 		
-		public static List<MessageClassDefinition> Build(Dictionary<String, IEnumerable<XmlSchemaElement>> elementGroups, Dictionary<String, Type> types, DirectoryInfo directoryInfo)
+		public enum MessageClassType
 		{
+			Api = 0,
+			CsApi = 1,
+			Msmq = 2
+		}
+		private static Dictionary<String, Type> _types;
+		private static MessageClassType _messageClassType;
+		
+
+		public static List<MessageClassDefinition> Build(MessageClassType messageClassType, Dictionary<String, IEnumerable<XmlSchemaElement>> namespaceMessagePairs, Dictionary<String, Type> types, DirectoryInfo directoryInfo)
+		{
+			_messageClassType = messageClassType;
 			_types = types;
 
 			var classes = new List<MessageClassDefinition>(); 
 
-			foreach (var element in elementGroups)
+			foreach (var element in namespaceMessagePairs)
 				classes.AddRange(Build(element));
 
 			return classes;
@@ -44,7 +49,40 @@ namespace Wonga.QA.Generators.Core
 
 		private static String GetNamespace(String namespaceInV3)
 		{
-			return "Wonga.QA.Framework.Api.Requests." + namespaceInV3.Replace("Wonga.", String.Empty);
+			switch (_messageClassType)
+			{
+				case MessageClassType.Api:
+					{
+						return GetNamespaceForApi(namespaceInV3);
+					}
+				case MessageClassType.CsApi:
+					{
+						return GetNamespaceForCsApi(namespaceInV3);
+					}
+				case MessageClassType.Msmq:
+					{
+						return GetNamespaceForMsmq(namespaceInV3);
+					}
+				default:
+					{
+						throw new NotImplementedException();
+					}
+			}
+		}
+
+		private static String GetNamespaceForApi(String namespaceInV3)
+		{
+			throw new NotImplementedException();
+		}
+
+		private static String GetNamespaceForCsApi(String namespaceInV3)
+		{
+			return "Wonga.QA.Framework.Cs." + namespaceInV3.Replace("Wonga.", String.Empty).Replace("Csapi.", String.Empty);
+		}
+
+		private static String GetNamespaceForMsmq(String namespaceInV3)
+		{
+			throw new NotImplementedException();
 		}
 
 		private static String GetRegionFromNamespace(String classNamespace)
