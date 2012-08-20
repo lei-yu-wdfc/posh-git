@@ -7,8 +7,10 @@ using Wonga.QA.Framework.Api.Requests.Payments.Queries;
 using Wonga.QA.Framework.Api.Requests.Payments.Queries.Uk;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Db.Extensions;
+using Wonga.QA.Framework.Db.OpsSagas;
 using Wonga.QA.Framework.Db.Payments;
 using Wonga.QA.Framework.Db.Risk;
+using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Core;
 using System.Linq;
@@ -238,11 +240,22 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             var extensionProcessingPage = new ExtensionProcessingPage(this.Client);
 
             var agreementPage = extensionProcessingPage.WaitFor<ExtensionAgreementPage>() as ExtensionAgreementPage;
+
             agreementPage.Accept();
 
             var dealDonePage = new ExtensionDealDonePage(this.Client);
             Assert.IsFalse(dealDonePage.IsDealDonePageExtensionAmountNotPresent());
             Assert.IsFalse(dealDonePage.IsDealDonePageDateTokenPresent());
+
+            TimeoutExtensionReminder(application.Id);
+        }
+
+        private static void TimeoutExtensionReminder(Guid applicationId)
+        {
+            var sagaTable = Drive.Data.OpsSagas.Db.ExtensionReminderEmailSagaEntity;
+            //dynamic sagaEntity = Do.Until(() => sagaTable.FindAllBy(extensionId: extensionId).Single());
+            dynamic sagaEntity = Do.Until(() => sagaTable.FindAllBy(ApplicationId: applicationId).Single());
+            Drive.Msmq.Comms.Send(new TimeoutMessage { SagaId = sagaEntity.Id });
         }
 
         [Test, JIRA("UK-1321", "UK-1522", "UK-1746"), MultipleAsserts, Owner(Owner.StanDesyatnikov, Owner.OrizuNwokeji)]
@@ -275,6 +288,8 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
             Assert.IsFalse(declinedPage.IsPaymentFailedAmountNotPresent());
             Assert.IsFalse(declinedPage.IsPaymentFailedDateNotPresent());
+
+            TimeoutExtensionReminder(application.Id);
         }
 
         [Test, JIRA("UK-1323", "UK-1523", "UK-1746"), MultipleAsserts, Owner(Owner.StanDesyatnikov, Owner.OrizuNwokeji)]
@@ -304,6 +319,8 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             var extensionProcessingPage = new ExtensionProcessingPage(Client);
 
             var errorPage = extensionProcessingPage.WaitFor<ExtensionErrorPage>() as ExtensionErrorPage;
+
+            TimeoutExtensionReminder(application.Id);
         }
 
         [Test, JIRA("UK-427", "UK-1739", "UK-2121"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
