@@ -70,7 +70,7 @@ namespace Wonga.QA.Framework.Builders.PayLater.Uk
 				r.Number = AccountData.PaymentCardNumber;
 				r.HolderName = String.Format("{0} {1}", AccountData.Forename, AccountData.Surname);
 				r.IsPrimary = true;
-				r.ExpiryDate = AccountData.PaymentCardExpiryDate.ToPaymentCardDate();
+				r.ExpiryDate = AccountData.PaymentCardExpiryDate.DateTime.ToPaymentCardDate();
 				r.SecurityCode = AccountData.PaymentCardSecurityCode;
 			});
 
@@ -79,7 +79,7 @@ namespace Wonga.QA.Framework.Builders.PayLater.Uk
 				r.AccountId = AccountId;
 				r.Number = AccountData.PaymentCardNumber;
 				r.HolderName = String.Format("{0} {1}", AccountData.Forename, AccountData.Surname);
-				r.ExpiryDate = AccountData.PaymentCardExpiryDate.ToPaymentCardDate();
+				r.ExpiryDate = AccountData.PaymentCardExpiryDate.DateTime.ToPaymentCardDate();
 				r.SecurityCode = AccountData.PaymentCardSecurityCode;
 			});
 
