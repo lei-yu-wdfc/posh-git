@@ -57,7 +57,15 @@ namespace Wonga.QA.Generators.Core
 
 			var parts = component.Split('.');
 
-			return Path.Combine(parts.Where(p => p != "Wonga" && p != "QA" && p != "Framework" && p != "Api" && p != "Cs" && p != "Msmq").ToArray());
+			return Path.Combine(parts.Where(p => 
+				!p.Equals("Wonga", StringComparison.InvariantCultureIgnoreCase) && 
+				!p.Equals("QA", StringComparison.InvariantCultureIgnoreCase) && 
+				!p.Equals("Framework", StringComparison.InvariantCultureIgnoreCase) && 
+				!p.Equals("Api", StringComparison.InvariantCultureIgnoreCase) && 
+				!p.Equals("Cs", StringComparison.InvariantCultureIgnoreCase) &&
+				!p.Equals("CsApi", StringComparison.InvariantCultureIgnoreCase) && 
+				!p.Equals("Msmq", StringComparison.InvariantCultureIgnoreCase))
+				.ToArray());
 		}
 
 		private static void DeleteFileIfExists(FileInfo file)

@@ -26,7 +26,7 @@ namespace Wonga.QA.Generators.Msmq
     	public static void Main(String[] args)
     	{
 			ProgramArgumentsParser.ParseArgumentsParameters(args);
-    	    new MsmqGenerator().Generate();
+    	    new MsmqApiGenerator().Generate();
             ProgramTools.ExitPrompt();
     	}
     }

@@ -10,7 +10,7 @@ namespace Wonga.QA.Generators.Cs
 		public static void Main(String[] args)
         {
 			ProgramArgumentsParser.ParseArgumentsParameters(args);
-            new CsGenerator().Generate();
+            new CsApiGenerator().Generate();
             ProgramTools.ExitPrompt();
         }
     }
