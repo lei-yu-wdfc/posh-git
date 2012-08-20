@@ -40,6 +40,7 @@
     <Compile Include="ManagementReviewStatusChangedTests.cs" />
     <Compile Include="SalesforceActivityTests.cs" />
     <Compile Include="SalesforceApplicationComplaint.cs" />
+    <Compile Include="SalesforceApplicationDMP.cs" />
     <Compile Include="SalesforceApplicationHardship.cs" />
     <Compile Include="SalesforceApplicationRefund.cs" />
     <Compile Include="SalesforceApplicationRepaymentArrangement.cs" />
