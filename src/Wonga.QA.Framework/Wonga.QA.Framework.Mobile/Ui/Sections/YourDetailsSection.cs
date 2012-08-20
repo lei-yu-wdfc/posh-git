@@ -16,7 +16,7 @@ namespace Wonga.QA.Framework.Mobile.Ui.Sections
         private readonly IWebElement _dateOfBirthDay;
         private readonly IWebElement _dateOfBirthMonth;
         private readonly IWebElement _dateOfBirthYear;
-        private IWebElement _dateOfBirth;
+        private readonly IWebElement _dateOfBirth;
         private readonly IWebElement _homeStatus;
         private readonly IWebElement _homeLanguage;
         private readonly IWebElement _maritalStatus;
