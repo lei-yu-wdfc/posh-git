@@ -28,7 +28,7 @@ namespace Wonga.QA.UiTests.Mocked.Web.Uk
             _url = Client.Home().Url;
 
             Assert.AreEqual("Welcome to Wonga. We can deposit up to £400 in your bank account by " +
-                            DateTime.Now.AddMinutes(23).ToShortTimeString() +
+                            DateTime.Now.AddMinutes(24).ToShortTimeString() +
                             homePage.GetWelcomeMessageDay(),
                             homePage.GetWelcomeHeaderMessageText(),
                             "The Welcome text is wrong");
@@ -37,7 +37,6 @@ namespace Wonga.QA.UiTests.Mocked.Web.Uk
                             "Welcome submessage is wrong");
             Assert.AreEqual(_url + "login", homePage.GetExistingCustomersLink());                   //Ensure 'Existing Customers' link has correct URL
             Assert.AreEqual(_url + "money/about-trust", homePage.GetAboveSlidersTrustRatingLink()); //Ensure 'Trust rating' link above sliders has correct URL
-            // TODO: Change AddMinutes(23) to AddMinutes(24) when the code is fixed
         }
     }
 }
