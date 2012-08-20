@@ -66,15 +66,5 @@ namespace Wonga.QA.ServiceTests.Risk.PayLater
 
             Do.Until(() => _riskSavePayLaterCustomerDetailsSagaEntity.FindByAccountId(accountId));
         }
-
-        [Test, AUT(AUT.Uk), Ignore("Awaiting bug fixes")]
-        public void VerifyApplicationPayLater()
-        {
-            Drive.Api.Commands.Post(new VerifyPayLaterApplicationUkCommand
-                                        {
-                                            AccountId = Guid.NewGuid(),
-                                            ApplicationId = Guid.NewGuid()
-                                        });
-        }
     }
 }
