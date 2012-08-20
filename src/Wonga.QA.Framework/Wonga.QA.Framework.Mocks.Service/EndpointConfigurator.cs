@@ -6,6 +6,7 @@ using NServiceBus.Config.ConfigurationSource;
 using NServiceBus.Serialization;
 using NServiceBus.Serializers.XML;
 using NServiceBus.Unicast.Transport;
+using Wonga.QA.ServiceTests.Risk.Mocks;
 
 namespace Wonga.QA.Framework.Mocks.Service
 {

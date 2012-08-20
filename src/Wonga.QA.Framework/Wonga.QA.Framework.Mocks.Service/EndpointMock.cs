@@ -1,6 +1,7 @@
 ﻿using System;
 using NServiceBus;
 using Wonga.QA.Framework.Msmq;
+using Wonga.QA.ServiceTests.Risk.Mocks;
 
 
 namespace Wonga.QA.Framework.Mocks.Service
@@ -24,12 +25,12 @@ namespace Wonga.QA.Framework.Mocks.Service
 			_bus = new EndpointConfigurator(_name).InitialiseEndpoint();
 		}
 
-		public void AddHandler<T>(Action<T> action) where T : IMessage
+        public void AddHandler<T>(Action<T, IBus> action) where T : IMessage
 		{
 			AddHandler(null, action);
 		}
 
-		public OnTheFlyHandler<T> AddHandler<T>(Func<T, bool> filter, Action<T> action) where T : IMessage
+        public OnTheFlyHandler<T> AddHandler<T>(Func<T, bool> filter, Action<T, IBus> action) where T : IMessage
 		{
 			var handler = new OnTheFlyHandler<T>(filter, action);
 			GenericHandler.Add(handler);

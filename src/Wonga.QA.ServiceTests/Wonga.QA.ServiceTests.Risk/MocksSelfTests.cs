@@ -13,7 +13,7 @@ namespace Wonga.QA.ServiceTests.Risk
 		[SetUp]
 		public void Setup()
 		{
-			_salesforce = new EndpointMock("servicetest",Drive.Msmq.Risk);
+			_salesforce = new EndpointMock("servicetest", Drive.Msmq.Risk);
 			_salesforce.Start();
 		}
 
@@ -28,7 +28,7 @@ namespace Wonga.QA.ServiceTests.Risk
 			_salesforce.AddHandler<IBusinessApplicationAccepted>(
 
 			filter: x => x.ApplicationId == appId,
-			action: (x) => thisMessageWasSentToSalesforce = true);
+			action: (x, bus) => thisMessageWasSentToSalesforce = true);
 
 			Do.Until(() => thisMessageWasSentToSalesforce);
 		}

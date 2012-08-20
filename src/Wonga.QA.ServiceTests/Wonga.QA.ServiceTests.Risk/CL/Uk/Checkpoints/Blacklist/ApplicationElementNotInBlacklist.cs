@@ -1,6 +1,8 @@
 ﻿using MbUnit.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Mocks.Service;
+using Wonga.QA.Framework.Msmq.Messages.Risk.BlackList;
 using Wonga.QA.ServiceTests.Risk.CL.uk;
 using Wonga.QA.Tests.Core;
 
@@ -22,9 +24,27 @@ namespace Wonga.QA.ServiceTests.Risk.CL.Uk.Checkpoints.Blacklist
 			base.BeforeEachTest();
 			Background(maskName: RiskMask.TESTBlacklist,
 						 checkpointName: "ApplicationElementNotOnBlacklist",
-						 responsibleVerification: "ApplicantIsNotOnBlackListVerification");
+                         responsibleVerification: "IovationVerification");
 		}
 
+        protected void GivenThatApplicantIsOnBlackList()
+        {
+            EndpointMock
+                .OnArrivalOf<ConsumerBlackListRequestMessage>()
+                .Matching(x => x.ApplicationId == ApplicationId)
+                .ThenDoThis((receivedMsg, bus) =>
+                {
+                    var response = CreateBlacklistedMessage();
+                    response.SagaId = receivedMsg.SagaId;
+                    Send(response);
+                })
 
+                .SeemsLegit().Dude();
+        }
+
+	    private ConsumerBlackListResponseMessage CreateBlacklistedMessage()
+        {
+            return new ConsumerBlackListResponseMessage { PresentInBlackList = true };
+        }
 	}
 }

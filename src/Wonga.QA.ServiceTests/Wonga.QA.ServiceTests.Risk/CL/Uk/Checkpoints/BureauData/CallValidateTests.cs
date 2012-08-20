@@ -32,7 +32,7 @@ namespace Wonga.QA.ServiceTests.Risk.CL.Uk.Checkpoints.BureauData
 		{
 			EndpointMock.AddHandler<CallValidateRequestMessage>(
 				filter: x => x.ApplicationId == this.ApplicationId,
-				action: (receivedMsg) =>
+				action: (receivedMsg, bus) =>
 				        	{
 				        		var response = GetCallValidateHappyCaseResponse();
 				        		response.SagaId = receivedMsg.SagaId;
