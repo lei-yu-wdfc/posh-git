@@ -26,7 +26,7 @@ using Wonga.QA.Framework.UI;
 namespace Wonga.QA.UiTests.Web
 {
     [Parallelizable(TestScope.All)]
-    class L0JourneyTests : UiTest
+    class L0JourneyTestsBase : UiTest
     {
         [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-180"), Pending("Wierd problem")]
         public void L0JourneyInvalidPostcodeShouldCauseWarningMessage()

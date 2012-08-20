@@ -231,7 +231,7 @@ namespace Wonga.QA.UiTests.Web.Region.Za.Journey
             HomePage.Sliders.HowLong = _duration.ToString();
 
             totalToRepay = Convert.ToDouble(HomePage.Sliders.GetTotalToRepay.Remove(0, 1));
-            Assert.IsTrue(totalToRepay <= controlSum);
+            Assert.IsTrue((int)totalToRepay <= controlSum);
 
             var journey = JourneyFactory.GetL0Journey(Client.Home())
                 .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask))
@@ -239,11 +239,11 @@ namespace Wonga.QA.UiTests.Web.Region.Za.Journey
             var personalDetails = journey.Teleport<PersonalDetailsPage>() as PersonalDetailsPage;
 
             totalToRepay = Convert.ToDouble(personalDetails.GetTotalToRepay.Remove(0, 1));
-            Assert.IsTrue(totalToRepay <= controlSum);
+            Assert.IsTrue((int)totalToRepay <= controlSum);
 
             var SummaryPage = journey.Teleport<AcceptedPage>() as AcceptedPage;
             totalToRepay = Convert.ToDouble(SummaryPage.GetTotalToRepay.Remove(0, 1));
-            Assert.IsTrue(totalToRepay <= controlSum);
+            Assert.IsTrue((int)totalToRepay <= controlSum);
         }
 
         [Test, JIRA("QA-308")]
