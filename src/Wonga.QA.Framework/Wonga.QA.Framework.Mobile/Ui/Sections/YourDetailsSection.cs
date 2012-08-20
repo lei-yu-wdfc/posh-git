@@ -16,6 +16,7 @@ namespace Wonga.QA.Framework.Mobile.Ui.Sections
         private readonly IWebElement _dateOfBirthDay;
         private readonly IWebElement _dateOfBirthMonth;
         private readonly IWebElement _dateOfBirthYear;
+        private IWebElement _dateOfBirth;
         private readonly IWebElement _homeStatus;
         private readonly IWebElement _homeLanguage;
         private readonly IWebElement _maritalStatus;
@@ -31,10 +32,20 @@ namespace Wonga.QA.Framework.Mobile.Ui.Sections
         {
             set
             {
-                var date = value.Split('/');
-                _dateOfBirthDay.SelectOption(date[0]);
-                _dateOfBirthMonth.SelectOption(date[1]);
-                _dateOfBirthYear.SelectOption(date[2]);
+                switch (Config.AUT)
+                {
+                    case AUT.Za:
+                        _dateOfBirth.SendValue(value);
+                        break;
+                    default:
+                        var date = value.Split('/');
+                        _dateOfBirthDay.SelectOption(date[0]);
+                        _dateOfBirthMonth.SelectOption(date[1]);
+                        _dateOfBirthYear.SelectOption(date[2]);
+                        break;
+
+                }
+
             }
         }
         public String HomeStatus { set { _homeStatus.SelectOption(value); } }
@@ -85,12 +96,16 @@ namespace Wonga.QA.Framework.Mobile.Ui.Sections
                 case AUT.Ca:
                 case AUT.Wb:
                 case AUT.Uk:
-                case AUT.Za:
-                    _homeStatus = Section.FindElement(By.CssSelector(UiMapMobile.Get.YourDetailsSection.HomeStatus));
+
                     _dateOfBirthDay = Section.FindElement(By.CssSelector(UiMapMobile.Get.YourDetailsSection.DateOfBirthDay));
                     _dateOfBirthMonth = Section.FindElement(By.CssSelector(UiMapMobile.Get.YourDetailsSection.DateOfBirthMonth));
                     _dateOfBirthYear = Section.FindElement(By.CssSelector(UiMapMobile.Get.YourDetailsSection.DateOfBirthYear));
                     break;
+                case AUT.Za:
+                    _homeStatus = Section.FindElement(By.CssSelector(UiMapMobile.Get.YourDetailsSection.HomeStatus));
+                    _dateOfBirth = Section.FindElement(By.CssSelector(UiMapMobile.Get.YourDetailsSection.DateOfBirth));
+                    break;
+
             }
         }
 

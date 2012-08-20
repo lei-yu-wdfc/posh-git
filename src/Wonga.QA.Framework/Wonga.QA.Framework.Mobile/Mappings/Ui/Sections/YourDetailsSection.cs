@@ -17,6 +17,7 @@ namespace Wonga.QA.Framework.Mobile.Mappings.Sections
         public String DateOfBirthDay { get; set; }
         public String DateOfBirthMonth { get; set; }
         public String DateOfBirthYear { get; set; }
+        public String DateOfBirth { get; set; }
         public String HomeStatus { get; set; }
         public String MaritalStatus { get; set; }
         public String HomeLanguage { get; set; }
