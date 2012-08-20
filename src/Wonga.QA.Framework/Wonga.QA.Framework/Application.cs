@@ -527,5 +527,13 @@ namespace Wonga.QA.Framework.Old
             ApplicationEntity application = Drive.Db.Payments.Applications.Single(a => a.ExternalId == Id);
             Drive.Db.MoveApplicationTransactionDates(application, span);
         }
+
+        public DateTime GetNextDueDate()
+        {
+            var query = Config.AUT == AUT.Za ? (ApiRequest)
+                new GetFixedTermLoanApplicationZaQuery { ApplicationId = Id } :
+                new GetFixedTermLoanApplicationQuery { ApplicationId = Id };
+            return Convert.ToDateTime(Drive.Api.Queries.Post(query).Values["NextDueDate"].Single());
+        }
     }
 }

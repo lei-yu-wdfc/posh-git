@@ -121,6 +121,30 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         {21, ""}
 	    };
 
+        Dictionary<int, string> sliderType = new Dictionary<int, string> 
+	    {
+	    {1, "full"},
+        {2, "half"},
+        {3, "half"},
+        {4, "half"},
+        {5, "no"},
+        {6, "no"},
+        {7, "no"},
+        {8, "full"},
+        {9, "no"},
+        {10, "no"},
+        {11, "no"},
+        {12, "no"},
+        {13, "no"},
+        {14, "no"},
+        {15, "no"},
+        {16, "no"},
+        {17, "no"},
+        {19, "no"},
+        {20, "full"},
+        {21, "no"}
+	    };
+
         #endregion
 
         // Check the my Summary page after we click My Summary buton
@@ -161,7 +185,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
 
-            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Scenario is wrong.");
+            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Back-End returned wrong Scenario.");
 
             // Check the actual text
             string actuallntroText = mySummaryPage.GetIntroText;
@@ -173,7 +197,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Assert.IsFalse(mySummaryPage.IsTagCloudAvailable());
             Assert.IsFalse(mySummaryPage.IsLoanStatusMessageAvailable());
 
-            CheckSliders(mySummaryPage, "full");
+            CheckSliders(scenarioId, mySummaryPage);
         }
 
         // No live drawdowns: Ln journey
@@ -199,18 +223,18 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
             
-            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Scenario is wrong.");
+            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Back-End returned wrong Scenario.");
 
-            // Check the actual text
             string actuallntroText = mySummaryPage.GetIntroText;
             string expectedIntroText = introTexts[1];
             expectedIntroText = expectedIntroText.Replace("{first name}", customer.GetCustomerFullName().Split(' ')[0]).Replace("{500}", "400.00");
-            Assert.AreEqual(expectedIntroText, actuallntroText);
-            Assert.IsFalse(mySummaryPage.IsPromiseSummaryAvailable(), "PromiseSummary should not be availble");
-            Assert.IsFalse(mySummaryPage.IsTagCloudAvailable());
-            Assert.IsFalse(mySummaryPage.IsLoanStatusMessageAvailable());
+            Assert.AreEqual(expectedIntroText, actuallntroText, "Intro text is wrong");
+            
+            Assert.IsFalse(mySummaryPage.IsPromiseSummaryAvailable(), "I Promise Summary should not be availble");
+            Assert.IsFalse(mySummaryPage.IsTagCloudAvailable(), "Tag Cloud should not be availble");
+            Assert.IsFalse(mySummaryPage.IsLoanStatusMessageAvailable(), "Loan Status Message should not be availble");
 
-            CheckSliders(mySummaryPage, "full");
+            CheckSliders(scenarioId, mySummaryPage);
         }
 
         // One live drawdown -can request credit, too early to extend
@@ -244,14 +268,15 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
-
+            var daysShift = 0;
             for (int i = 1; i <= 3; i++)
             {
                 mySummaryPage.ChangePromiseDateButtonClick();
                 var requestPage = new ExtensionRequestPage(this.Client);
 
                 //Runs assertions internally
-                requestPage.SetExtendDays("1");
+                daysShift = 1;
+                requestPage.SetExtendDays(daysShift.ToString("#"));
 
                 //Branch point - Add Cv2 for each path and proceed
                 requestPage.setSecurityCode("123");
@@ -266,14 +291,17 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
                 Client.Driver.Navigate().GoToUrl(Config.Ui.Home + "/my-account");
                 mySummaryPage = new MySummaryPage(this.Client);
+
+                CheckPromiseSummaryText(scenarioId, mySummaryPage, application);
             }
 
-            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Scenario is wrong.");
+            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Back-End returned wrong Scenario.");
 
             CheckIntroText(scenarioId, mySummaryPage, customer, application);
             CheckLoanStatusText(scenarioId, mySummaryPage, customer, application);
             CheckTagCloud(scenarioId, mySummaryPage);
-            CheckSliders(mySummaryPage, "half");
+            CheckSliders(scenarioId, mySummaryPage);
+            CheckPromiseSummaryText(scenarioId, mySummaryPage, application);
 
             try
             {
@@ -343,7 +371,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
 
-            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Scenario is wrong.");
+            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Back-End returned wrong Scenario.");
 
             response = Drive.Api.Queries.Post(new GetFixedTermLoanApplicationQuery { ApplicationId = appId });
             var expectedNextDueDateRepay = Convert.ToDecimal(response.Values["BalanceNextDueDate"].Single());
@@ -361,7 +389,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage;
             Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
 
-            CheckSliders(mySummaryPage, "no");
+            CheckSliders(scenarioId, mySummaryPage);
 
             ChangeWantToRepayBox(customer, customer.GetApplication());
         }
@@ -395,7 +423,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
             
-            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Scenario is wrong.");
+            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Back-End returned wrong Scenario.");
 
             response = Drive.Api.Queries.Post(new GetFixedTermLoanApplicationQuery { ApplicationId = appId });
             var expectedBalanceToday = String.Format("{0:0.00}", Convert.ToDecimal(response.Values["BalanceToday"].Single()));
@@ -420,7 +448,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             string expectedPromiseSummaryText = PromiseSummaryTexts[scenarioId].Replace("{£456.34}", "£" + expectedBalanceToday);
             Assert.AreEqual(expectedPromiseSummaryText, mySummaryPage.GetPromiseSummaryText);
 
-            CheckSliders(mySummaryPage, "no");
+            CheckSliders(scenarioId, mySummaryPage);
 
             ChangeWantToRepayBox(customer, customer.GetApplication());
         }
@@ -429,8 +457,8 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         [Test, MultipleAsserts]
         [Owner(Owner.StanDesyatnikov)]
         [Row(11, 13)]
-        [Row(11, 14)]
-        [Row(11, 40)]
+        //[Row(11, 14)]
+        //[Row(11, 40)]
         public void MySummaryScenario11(int scenarioId, int dasyShift) { MySummaryScenarios(scenarioId, dasyShift); }
 
         // 31+days in arrears
@@ -480,7 +508,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
 
-            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Scenario is wrong.");
+            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Back-End returned wrong Scenario.");
 
             string expectedIntroText = introTexts[scenarioId].Replace("{first name}", customer.GetCustomerFullName().Split(' ')[0]);
             string actualIntroText = mySummaryPage.GetIntroText;
@@ -498,7 +526,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
             Assert.IsFalse(mySummaryPage.IsTagCloudAvailable());
 
-            CheckSliders(mySummaryPage, "no");
+            CheckSliders(scenarioId, mySummaryPage);
         }
 
         // In arrears -In repayment plan - missed payment (within grace period)
@@ -531,11 +559,11 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
 
-            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Scenario is wrong.");
+            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Back-End returned wrong Scenario.");
 
             string expectedIntroText = introTexts[scenarioId].Replace("{first name}", customer.GetCustomerFullName().Split(' ')[0]);
             string actualIntroText = mySummaryPage.GetIntroText;
-            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Scenario is wrong.");
+            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Back-End returned wrong Scenario.");
             Assert.AreEqual(expectedIntroText, actualIntroText);
 
             /*string expectedTagCloudText = tagCloudTexts[scenarioId];
@@ -546,7 +574,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage;
             Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
 
-            CheckSliders(mySummaryPage, "no");
+            CheckSliders(scenarioId, mySummaryPage);
         }
 
         // In arrears - In repayment plan – broken repayment arrangemnt
@@ -578,11 +606,11 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
             
-            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Scenario is wrong.");
+            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Back-End returned wrong Scenario.");
 
             string expectedIntroText = introTexts[scenarioId].Replace("{first name}", customer.GetCustomerFullName().Split(' ')[0]);
             string actualIntroText = mySummaryPage.GetIntroText;
-            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Scenario is wrong.");
+            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Back-End returned wrong Scenario.");
             Assert.AreEqual(expectedIntroText, actualIntroText);
 
             /*string expectedTagCloudText = tagCloudTexts[scenarioId];
@@ -593,7 +621,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage;
             Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
 
-            CheckSliders(mySummaryPage, "no");
+            CheckSliders(scenarioId, mySummaryPage);
         }
 
         // No live drawdowns
@@ -618,13 +646,13 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
 
-            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Scenario is wrong.");
+            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Back-End returned wrong Scenario.");
             
             // Check the actual text
             string actuallntroText = mySummaryPage.GetIntroText;
             string expectedIntroText = introTexts[17];
             expectedIntroText = expectedIntroText.Replace("{first name}", firstName);
-            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Scenario is wrong.");
+            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Back-End returned wrong Scenario.");
             Assert.AreEqual(expectedIntroText, actuallntroText);
 
             Assert.IsFalse(mySummaryPage.IsTagCloudAvailable());
@@ -633,7 +661,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage.Replace("{within the next 6 hours}", "within the next 6 hours"); //TBD - replace hardcoded hours with a calculated value
             Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
 
-            CheckSliders(mySummaryPage, "no");
+            CheckSliders(scenarioId, mySummaryPage);
         }
 
         // No live drawdowns
@@ -658,12 +686,12 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
             
-            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Scenario is wrong.");
+            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Back-End returned wrong Scenario.");
 
             string actuallntroText = mySummaryPage.GetIntroText;
             string expectedIntroText = introTexts[17];
             expectedIntroText = expectedIntroText.Replace("{first name}", firstName);
-            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Scenario is wrong.");
+            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Back-End returned wrong Scenario.");
             Assert.AreEqual(expectedIntroText, actuallntroText);
 
             Assert.IsFalse(mySummaryPage.IsTagCloudAvailable());
@@ -672,7 +700,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage.Replace("{within the next 6 hours}", "within the next 6 hours"); //TBD - replace hardcoded hours with a calculated value
             Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
 
-            CheckSliders(mySummaryPage, "no");
+            CheckSliders(scenarioId, mySummaryPage);
         }
 
         // Agreement being cancelled
@@ -708,7 +736,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
 
-            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Scenario is wrong.");
+            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Back-End returned wrong Scenario.");
 
             string actuallntroText = mySummaryPage.GetIntroText;
             string expectedIntroText = introTexts[scenarioId];
@@ -722,14 +750,14 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             string actualLoanMessageText = mySummaryPage.GetLoanStatusMessage;
             Assert.AreEqual(expectedLoanMessageText, actualLoanMessageText);
 
-            CheckSliders(mySummaryPage, "no");
+            CheckSliders(scenarioId, mySummaryPage);
         }
 
         # region Functions
 
         private void MySummaryScenarios(int scenarioId, params int[] days)
         {
-            var expectedDueDateBalance = 0.00M;
+            //var expectedDueDateBalance = 0.00M;
             var expectedAmountMax = "0";
 
             int daysShift = days[0];
@@ -743,10 +771,6 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
             RewindApplicationDates(daysShift, application);
             
-            expectedDueDateBalance = application.GetDueDateBalance();
-            var expectedDueDate = Convert.ToDateTime(customer.GetNextPayDate()).Subtract(new TimeSpan(daysShift, 0, 0, 0));
-            var expectedDaysTillDueDate = expectedDueDate - DateTime.Today.Date; 
-
             if (scenarioId == 8)
             {
                 expectedAmountMax = "400.00";
@@ -764,41 +788,13 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
             var mySummaryPage = Client.Login().LoginAs(email);
 
-            // Check the scenario returned by Back-End is correct
-            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Scenario is wrong.");
+            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Back-End returned wrong ScenarioID.");
 
-            CheckTagCloud(scenarioId, mySummaryPage);
-
-            CheckIntroText(scenarioId, mySummaryPage, customer, application, expectedAmountMax, expectedDueDateBalance);
-
-            CheckLoanStatusText(scenarioId, mySummaryPage, customer, application);
-
-            if (PromiseSummaryTexts[scenarioId].Length == 0)
-            {
-                Assert.IsFalse(mySummaryPage.IsPromiseSummaryAvailable());
-            }
-            else
-            {
-                string expectedPromiseSummaryText = PromiseSummaryTexts[scenarioId]
-                                                    .Replace("{£245}", "£" + expectedDueDateBalance.ToString("#.##"))
-                                                    .Replace("in {10}", "in " + expectedDaysTillDueDate.Days.ToString("#"))
-                                                    .Replace("{10th May 2012}", Date.GetOrdinalDate(expectedDueDate, "ddd d MMM yyyy"))
-                                                    .Replace("{£456.34}", "£" + expectedDueDateBalance.ToString("#.##"));
-                if ((scenarioId == 7) && (expectedDueDate.Equals(DateTime.Today)))
-                {
-                    expectedPromiseSummaryText = "I promised to pay {£245} today ({10th May 2012})"
-                                                  .Replace("{£245}", "£" + expectedDueDateBalance.ToString("#.##"))
-                                                  .Replace("{10th May 2012}", Date.GetOrdinalDate(expectedDueDate, "ddd d MMM yyyy"));
-                }
-                Assert.AreEqual(expectedPromiseSummaryText, mySummaryPage.GetPromiseSummaryText);
-            }
-
-            if ((scenarioId == 2) || (scenarioId == 3) || (scenarioId == 4))
-                CheckSliders(mySummaryPage, "half");
-            else if ((scenarioId == 8) || (scenarioId == 20))
-                CheckSliders(mySummaryPage, "full");
-            else
-                CheckSliders(mySummaryPage, "no");
+            //CheckTagCloud(scenarioId, mySummaryPage);
+            //CheckIntroText(scenarioId, mySummaryPage, customer, application, expectedAmountMax, expectedDueDateBalance);
+            //CheckLoanStatusText(scenarioId, mySummaryPage, customer, application);
+            CheckPromiseSummaryText(scenarioId, mySummaryPage, application);
+            //CheckSliders(scenarioId, mySummaryPage);
 
             //if (mySummaryPage.GetTagCloud.IndexOf("Repay") > 0) ChangeWantToRepayBox(customer, application);
         }
@@ -875,7 +871,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             string expectedTagCloudText = tagCloudTexts[scenarioId];
             string actualTagCloudText = mySummaryPage.GetTagCloud;
 
-            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Scenario is wrong.");
+            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Back-End returned wrong Scenario.");
             Assert.AreEqual(expectedTagCloudText, actualTagCloudText);
 
             if (scenarioId == 4)
@@ -958,25 +954,54 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         }
         
         // Check Sliders on My Summary page
-        private void CheckSliders(MySummaryPage mySummaryPage, string sliderType)
+        private void CheckSliders(int scenarioId, MySummaryPage mySummaryPage)
         {
-            if (sliderType == "full")
+            if (sliderType[scenarioId] == "full")
             {
                 Assert.IsNotNull(mySummaryPage.Sliders, "Sliders should be available");
                 Assert.IsNotEmpty(mySummaryPage.Sliders.HowLong, "Duration slider should be available");
                 Assert.IsNotEmpty(mySummaryPage.Sliders.HowMuch, "Amount slider should be available");
             }
-            else if (sliderType == "half")
+            else if (sliderType[scenarioId] == "half")
             {
                 Assert.IsNotNull(mySummaryPage.TopupSliders, "Sliders should be  available");
                 Assert.IsNotEmpty(mySummaryPage.TopupSliders.HowMuch, "Amount slider should be available");
             }
-            else if (sliderType == "no")
+            else if (sliderType[scenarioId] == "no")
             {
                 Assert.IsNull(mySummaryPage.Sliders, "Sliders should not be available");
             }
         }
-        
+
+        // Check Promise Summary Text on My Summary page
+        private void CheckPromiseSummaryText(int scenarioId, MySummaryPage mySummaryPage, Application application)
+        {
+            var expectedDueDateBalance = application.GetDueDateBalance();
+            var expectedDueDate = application.GetNextDueDate();
+            var expectedDaysTillDueDate = expectedDueDate - DateTime.Today.Date; 
+
+            if (PromiseSummaryTexts[scenarioId].Length == 0)
+            {
+                Assert.IsFalse(mySummaryPage.IsPromiseSummaryAvailable());
+            }
+            else
+            {
+                string expectedPromiseSummaryText = PromiseSummaryTexts[scenarioId]
+                                                    .Replace("{£245}", "£" + expectedDueDateBalance.ToString("#.##"))
+                                                    .Replace("in {10}", "in " + expectedDaysTillDueDate.Days.ToString("#"))
+                                                    .Replace("{10th May 2012}", Date.GetOrdinalDate(expectedDueDate, "ddd d MMM yyyy"))
+                                                    .Replace("{£456.34}", "£" + expectedDueDateBalance.ToString("#.##"));
+                if ((scenarioId == 7) && (expectedDueDate.Equals(DateTime.Today)))
+                {
+                    expectedPromiseSummaryText = "I promised to pay {£245} today ({10th May 2012})"
+                                                  .Replace("{£245}", "£" + expectedDueDateBalance.ToString("#.##"))
+                                                  .Replace("{10th May 2012}", Date.GetOrdinalDate(expectedDueDate, "ddd d MMM yyyy"));
+                }
+                Assert.AreEqual(expectedPromiseSummaryText, mySummaryPage.GetPromiseSummaryText);
+            }
+
+        }
+
         // Click Repay in Tag Cloud and check default values on Repay page
         private void ChangeWantToRepayBox(Customer customer, Application application)
         {
