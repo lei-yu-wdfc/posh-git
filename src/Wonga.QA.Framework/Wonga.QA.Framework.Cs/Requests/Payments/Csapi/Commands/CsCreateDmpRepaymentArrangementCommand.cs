@@ -1,8 +1,8 @@
-using System;
+﻿using System;
 using System.Xml.Serialization;
-using Wonga.QA.Framework.Cs;
+using Wonga.QA.Framework.Api;
 
-namespace Wonga.QA.Framework.CsApi.Requests.Payments.Csapi.Commands
+namespace Wonga.QA.Framework.Cs.Requests.Payments.Csapi.Commands
 {
 	[XmlRoot("CsCreateDmpRepaymentArrangement")]
 	public partial class CsCreateDmpRepaymentArrangementCommand : CsRequest<CsCreateDmpRepaymentArrangementCommand>

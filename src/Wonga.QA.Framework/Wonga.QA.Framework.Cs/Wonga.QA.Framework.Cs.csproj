@@ -54,6 +54,7 @@
     <Compile Include="Requests\Payments\Csapi\Commands\CancelRepaymentArrangementCommand.cs" />
     <Compile Include="Requests\Payments\Csapi\Commands\CreateRepaymentArrangementCommand.cs" />
     <Compile Include="Requests\Payments\Csapi\Commands\CreateTransactionCommand.cs" />
+    <Compile Include="Requests\Payments\Csapi\Commands\CsCreateDmpRepaymentArrangementCommand.cs" />
     <Compile Include="Requests\Payments\Csapi\Commands\CsExtendFixedTermLoanCommand.cs" />
     <Compile Include="Requests\Payments\Csapi\Commands\CsRepayWithExternalCardCommand.cs" />
     <Compile Include="Requests\Payments\Csapi\Commands\CsRepayWithPaymentCardCommand.cs" />
