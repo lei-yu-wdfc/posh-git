@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Enums;
 using Wonga.QA.Framework.Api.Requests.Comms.Commands.PayLater.Uk;
-using Wonga.QA.Framework.Api.Requests.Comms.Commands.Uk;
 using Wonga.QA.Framework.Api.Requests.Payments.Commands;
 using Wonga.QA.Framework.Api.Requests.Risk.Commands;
 using Wonga.QA.Framework.Api.Requests.Risk.Commands.PayLater.Uk;
