@@ -25,7 +25,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 			VerifyRiskApplication(application, RiskCheckpointStatus.Failed);
 		}
 
-		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Za), JIRA("CA-1735", "UK-1567"),Category(TestCategories.CoreTest)]
+		[Test, AUT(AUT.Ca, AUT.Uk, AUT.Za), JIRA("CA-1735", "UK-1567"),/*Category(TestCategories.CoreTest)*/]
 		public void L0IovationAllowIsAccepted()
 		{
 			_customer = BuildCustomer();

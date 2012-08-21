@@ -32,7 +32,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
             Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, RiskCheckpointStatus.Verified), Get.EnumToString(RiskCheckpointDefinitionEnum.TooManyLoansAtAddress));
         }
 
-		[Test, AUT(AUT.Uk), JIRA("UK-848"), Category(TestCategories.CoreTest), Owner(Owner.StanDesyatnikov)]
+		[Test, AUT(AUT.Uk), JIRA("UK-848"), /*Category(TestCategories.CoreTest),*/ Owner(Owner.RiskTeam)]
         public void DeclinedIfTooManyOpenLoans()
         {
             /* The test scenario is that there cant be more then 3 loans at the same address
@@ -53,13 +53,13 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
                 WithHouseNumberInAddress(houseNumber).WithStreetInAddress(street).WithHouseNameInAddress(houseName).
                 WithDistrictInAddress(district).WithTownInAddress(town).WithCountyInAddress(county).
                 WithPostcodeInAddress(postcode).Build();
-            var application1 = ApplicationBuilder.New(customer1).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+            var firstApplication = ApplicationBuilder.New(customer1).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
             var customer2 = CustomerBuilder.New().WithEmployer(TestMask).WithFlatInAddress(flat).
                 WithHouseNumberInAddress(houseNumber).WithStreetInAddress(street).WithHouseNameInAddress(houseName).
                 WithDistrictInAddress(district).WithTownInAddress(town).WithCountyInAddress(county).
                 WithPostcodeInAddress(postcode).Build();
-            var application2 = ApplicationBuilder.New(customer2).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+            var secondApplication = ApplicationBuilder.New(customer2).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
 
             var customer3 = CustomerBuilder.New().WithEmployer(TestMask).WithFlatInAddress(flat).
                 WithHouseNumberInAddress(houseNumber).WithStreetInAddress(street).WithHouseNameInAddress(houseName).
