@@ -47,6 +47,9 @@ namespace Wonga.QA.Framework.Mobile.Mappings.Ui
         public virtual FAQElement FAQElement { get; set; }
         public virtual TabsElement TabsElement { get; set; }
         public virtual TopupSlidersElement TopupSlidersElement { get; set; }
+        public virtual MobiScrollElement MobiScrollElement { get; set; }
+        public virtual DayMonthYearMobiScrollElement DayMonthYearMobiScrollElement { get; set; }
+        public virtual MonthYearMobiScrollElement MonthYearMobiScrollElement { get; set; }
         #endregion
 
         #region Pages

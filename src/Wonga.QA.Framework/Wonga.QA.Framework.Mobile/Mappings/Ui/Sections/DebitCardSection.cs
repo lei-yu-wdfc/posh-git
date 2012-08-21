@@ -16,5 +16,6 @@ namespace Wonga.QA.Framework.Mobile.Mappings.Sections
         public String CardStartDateMonth { get; set; }
         public String CardStartDateYear { get; set; }
         public String CardSecurityNumber { get; set; }
+        public String CardExpiry { get; set; }
     }
 }

@@ -1,11 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentMapMobile>
 
-  <!--<TabsElementMobile>
+  <TabsElementMobile>
     <Login>login</Login>
     <ApplyNow>apply now</ApplyNow>
-    <HowItWorks>how it works</HowItWorks>
-    <AboutUs>about us</AboutUs>
+    <HowItWorks>how it works</HowItWorks>    
     <Advice>advice</Advice>
     <MyAccount>my account</MyAccount>
     <News>news</News>
@@ -13,7 +12,7 @@
     <ContactUs>contact us</ContactUs>
   </TabsElementMobile>
 
-  <DealDonePage>
+  <!--<DealDonePage>
     <HeaderText>Your application has been accepted, you’re almost there!</HeaderText>
   </DealDonePage>
 

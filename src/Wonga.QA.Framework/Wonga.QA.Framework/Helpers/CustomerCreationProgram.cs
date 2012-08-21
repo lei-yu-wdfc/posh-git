@@ -49,13 +49,14 @@ namespace Wonga.QA.Framework.Helpers
             var helper = VanillaCustomerHelper.New().WithEnvironment(Config.AUT, Config.SUT);
             while (IsRun)
             {
-                if (!IsScheduledRun()) continue;
+                if (!IsScheduledRun()) 
+                    continue;
                 AvailableCustomerCount = helper.Count();
                 helper.DeleteAllUsedUsers();
 
                 NumberOfUsersToCreate = Threshold - AvailableCustomerCount;
                 if (NumberOfUsersToCreate > 0)
-                    Console.WriteLine(String.Format("Attempting user creation on {0}", DateTime.Now));
+                    Console.WriteLine(String.Format("Attempting user creation at {0}", DateTime.Now));
                 CreateUsersInParallel();
             }
         }

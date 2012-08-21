@@ -14,9 +14,6 @@ namespace Wonga.QA.Framework.Mobile.Mappings.Sections
         public String IdNumber { get; set; }
         public String Dependants { get; set; }
         public String Gender { get; set; }
-        public String DateOfBirthDay { get; set; }
-        public String DateOfBirthMonth { get; set; }
-        public String DateOfBirthYear { get; set; }
         public String DateOfBirth { get; set; }
         public String HomeStatus { get; set; }
         public String MaritalStatus { get; set; }

@@ -175,14 +175,8 @@
 
   <EmploymentDetailsSection>
     <WorkPhone>#edit-work-phone-za</WorkPhone>
-    <NextPaydayDateDay>#edit-next-payday-day</NextPaydayDateDay>
-    <NextPaydayDateMonth>#edit-next-payday-month</NextPaydayDateMonth>
-    <NextPaydayDateYear>#edit-next-payday-year</NextPaydayDateYear>
-    <NextPayDateAll>#edit-next-payday</NextPayDateAll>
-    <SelfNextPaydayDateDay>#edit-next-income-due-day</SelfNextPaydayDateDay>
-    <SelfNextPaydayDateMonth>#edit-next-income-due-month</SelfNextPaydayDateMonth>
-    <SelfNextPaydayDateYear>#edit-next-income-due-year</SelfNextPaydayDateYear>
-    <SelfNextPaydayDateAll>#edit-next-income-due</SelfNextPaydayDateAll>
+    <SelfEmployedDateOfNextDueIncome>#edit-next-income-due</SelfEmployedDateOfNextDueIncome>
+    <SelfEmployedMonthlyIncome>#edit-household-income</SelfEmployedMonthlyIncome>
   </EmploymentDetailsSection>
 
   <MobilePinVerificationSection>
@@ -210,9 +204,6 @@
     <Dependants>#edit-dependants</Dependants>
     <DependantsErrorForm>#edit-dependants-wrapper div div</DependantsErrorForm>
     <Gender>input[type="radio"][name="gender"]</Gender>
-    <DateOfBirthDay>#edit-date-of-birth-day</DateOfBirthDay>
-    <DateOfBirthMonth>#edit-date-of-birth-month</DateOfBirthMonth>
-    <DateOfBirthYear>#edit-date-of-birth-year</DateOfBirthYear>
     <DateOfBirth>#edit-date-of-birth</DateOfBirth>
     <HomeStatus>#edit-home-status</HomeStatus>
     <MaritalStatus>#edit-marital-status</MaritalStatus>

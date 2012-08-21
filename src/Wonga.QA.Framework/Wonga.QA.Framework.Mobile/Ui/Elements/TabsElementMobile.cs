@@ -32,12 +32,19 @@ namespace Wonga.QA.Framework.Mobile.Ui.Elements
             _form = Page.Client.Driver.FindElement(By.CssSelector(UiMapMobile.Get.TabsElementMobile.TabsForm));
             _applyNow = _form.FindElement(By.LinkText(ContentMapMobile.Get.TabsElementMobile.ApplyNow));
             _howItWorks = _form.FindElement(By.LinkText(ContentMapMobile.Get.TabsElementMobile.HowItWorks));
-            _aboutUs = _form.FindElement(By.LinkText(ContentMapMobile.Get.TabsElementMobile.AboutUs));
             _advice = _form.FindElement(By.LinkText(ContentMapMobile.Get.TabsElementMobile.Advice));
             _myAccount = _form.FindElement(By.LinkText(ContentMapMobile.Get.TabsElementMobile.MyAccount));
             _news = _form.FindElement(By.LinkText(ContentMapMobile.Get.TabsElementMobile.News));
             _help = _form.FindElement(By.LinkText(ContentMapMobile.Get.TabsElementMobile.Help));
             _contactUs = _form.FindElement(By.LinkText(ContentMapMobile.Get.TabsElementMobile.ContactUs));
+
+            switch (Config.AUT)
+            {
+                case (AUT.Za):
+                    _aboutUs = _form.FindElement(By.LinkText(ContentMapMobile.Get.TabsElementMobile.AboutUs));
+                    break;
+            }
+            
         }
 
         public HomePageMobile LogOut()

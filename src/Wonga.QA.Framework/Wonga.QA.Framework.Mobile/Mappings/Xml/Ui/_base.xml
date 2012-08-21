@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<UiMap>
+<UiMapMobile>
   <FAQElement>
     <SelectQuestion>#faqQuestions option[selected="selected"]</SelectQuestion>
     <AnswerQuestion>#containerAnswer h2</AnswerQuestion>
@@ -189,7 +189,7 @@
     <IncomeFrequencyErrorForm>#edit-income-frequency-wrapper div div</IncomeFrequencyErrorForm>
     <SalaryPaidToBank>input[type="radio"][name="salary_to_bank"]</SalaryPaidToBank>
     <SalaryPaidToBankErrorForm>#wonga-conditionally-hidden-salary-to-bank .form-error div</SalaryPaidToBankErrorForm>
-    <SelfEmploymentPayDayDate></SelfEmploymentPayDayDate>
+    <NextPayDay>#edit-next-payday</NextPayDay>
   </EmploymentDetailsSection>
 
   <MobilePinVerificationSection>
@@ -203,9 +203,7 @@
     <Dependants>#edit-dependants</Dependants>
     <DependantsErrorForm>#edit-dependants-wrapper div div</DependantsErrorForm>
     <Gender>input[type="radio"][name="gender"]</Gender>
-    <DateOfBirthDay>#edit-date-of-birth-day</DateOfBirthDay>
-    <DateOfBirthMonth>#edit-date-of-birth-month</DateOfBirthMonth>
-    <DateOfBirthYear>#edit-date-of-birth-year</DateOfBirthYear>
+    <DateOfBirth>#edit-date-of-birth</DateOfBirth>
     <HomeStatus>#edit-home-status</HomeStatus>
     <MaritalStatus>#edit-marital-status</MaritalStatus>
     <MartialStatusErrorForm>#edit-marital-status-wrapper div div</MartialStatusErrorForm>
@@ -223,4 +221,26 @@
     <LastName>#edit-last-name</LastName>
     <LastNameErrorForm>#edit-last-name-wrapper div div</LastNameErrorForm>
   </YourNameSection>
-</UiMap>
+
+  <MobiScrollElement>
+    <DatePicker>.dwbg</DatePicker>
+    <Done>.dwb-s a</Done>
+    <Cancel>.dwb-c a</Cancel>
+  </MobiScrollElement>
+  
+  <MonthYearMobiScrollElement>
+    <IncreaseMonth>table tbody tr td:first-child div.dwwl div.dwwbp</IncreaseMonth>
+    <IncreaseYear>table tbody tr td:first-child + td div.dwwl div.dwwbp</IncreaseYear>
+    <DecreaseMonth>table tbody tr td:first-child div.dwwl div.dwwbm</DecreaseMonth>
+    <DecreaseYear>table tbody tr td:first-child + td div.dwwl div.dwwbm</DecreaseYear>
+  </MonthYearMobiScrollElement>
+
+  <DayMonthYearMobiScrollElement>
+    <IncreaseDay>table tbody tr td:first-child div.dwwl div.dwwbp</IncreaseDay>
+    <IncreaseMonth>table tbody tr td:first-child + td div.dwwl div.dwwbp</IncreaseMonth>
+    <IncreaseYear>table tbody tr td:first-child + td + td div.dwwl div.dwwbp</IncreaseYear>
+    <DecreaseDay>table tbody tr td:first-child div.dwwl div.dwwbm</DecreaseDay>
+    <DecreaseMonth>table tbody tr td:first-child + td div.dwwl div.dwwbm</DecreaseMonth>
+    <DecreaseYear>table tbody tr td:first-child + td + td div.dwwl div.dwwbm</DecreaseYear>
+  </DayMonthYearMobiScrollElement>
+</UiMapMobile>

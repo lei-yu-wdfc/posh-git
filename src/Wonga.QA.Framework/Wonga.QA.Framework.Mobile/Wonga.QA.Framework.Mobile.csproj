@@ -75,10 +75,13 @@
     <Compile Include="Mappings\Content\Sections\AccountDetailsSection.cs" />
     <Compile Include="Mappings\Content\Sections\MobilePinVerificationSection.cs" />
     <Compile Include="Mappings\Content\Sections\YourDetailsSection.cs" />
+    <Compile Include="Mappings\Ui\Elements\MonthYearMobiScrollElement.cs" />
+    <Compile Include="Mappings\Ui\Elements\DayMonthYearMobiScrollElement.cs" />
     <Compile Include="Mappings\Ui\Elements\FAQElement.cs" />
     <Compile Include="Mappings\Ui\Elements\HelpElement.cs" />
     <Compile Include="Mappings\Ui\Elements\InternationalElement.cs" />
     <Compile Include="Mappings\Ui\Elements\LoginElement.cs" />
+    <Compile Include="Mappings\Ui\Elements\MobiScrollElement.cs" />
     <Compile Include="Mappings\Ui\Elements\TabsElement.cs" />
     <Compile Include="Mappings\Ui\Elements\TopupSlidersElement.cs" />
     <Compile Include="Mappings\Ui\Pages\ApplyPageMobile.cs" />
@@ -89,6 +92,7 @@
     <Compile Include="Mappings\Ui\Pages\TopupAcceptPageMobile.cs" />
     <Compile Include="Mappings\Ui\Pages\TopUpDealDonePage.cs" />
     <Compile Include="Mappings\Ui\Pages\TopupRequestPage.cs" />
+    <Compile Include="Ui\Elements\MobiScrollElement.cs" />
     <Compile Include="Ui\Pages\TopupAcceptPageMobile.cs" />
     <Compile Include="Ui\Pages\TopUpDealDonePage.cs" />
     <Compile Include="Ui\Pages\TopupRequestPage.cs" />
