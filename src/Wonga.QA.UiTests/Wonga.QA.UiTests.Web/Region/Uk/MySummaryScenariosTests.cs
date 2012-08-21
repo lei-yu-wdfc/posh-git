@@ -761,7 +761,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         //private void MySummaryScenarios(int scenarioId, params int[] days)
         private void MySummaryScenarios(int scenarioId, int daysShift, int loanTerm=10)
         {
-            //var expectedDueDateBalance = 0.00M;
+            var expectedDueDateBalance = 0.00M;
             var expectedAmountMax = "0";
 
             //int daysShift = days[0];
@@ -785,6 +785,8 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
                 expectedAmountMax = Drive.Api.Queries.Post(new GetAccountSummaryQuery { AccountId = customer.Id }).Values["AvailableCredit"].Single();
                 expectedAmountMax = String.Format("{0:0.00}", Convert.ToDecimal(expectedAmountMax));
             }
+
+            expectedDueDateBalance = GetExpectedDueDateBalance(application, scenarioId);
 
             RepayOnDueDate(scenarioId, application);
             
@@ -996,11 +998,10 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             }
         }
 
-        // Check Promise Summary Text on My Summary page
-        private void CheckPromiseSummaryText(int scenarioId, MySummaryPage mySummaryPage, Application application)
+        private decimal GetExpectedDueDateBalance(Application application, int scenarioId)
         {
+            decimal expectedDueDateBalance = 0;
 
-            var expectedDueDateBalance = 0.00m;
             if ((scenarioId == 11) || (scenarioId == 12))
             {
                 expectedDueDateBalance = application.GetBalanceToday();
@@ -1014,6 +1015,14 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
                 expectedDueDateBalance = application.GetDueDateBalance();
             }
 
+            return expectedDueDateBalance;
+        }
+
+        // Check Promise Summary Text on My Summary page
+        private void CheckPromiseSummaryText(int scenarioId, MySummaryPage mySummaryPage, Application application)
+        {
+            
+            var expectedDueDateBalance = GetExpectedDueDateBalance(application, scenarioId);
             var expectedDueDate = application.GetNextDueDate();
             var expectedDaysTillDueDate = expectedDueDate - DateTime.Today.Date; 
 
