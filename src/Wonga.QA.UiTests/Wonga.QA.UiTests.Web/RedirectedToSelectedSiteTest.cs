@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using MbUnit.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
@@ -21,8 +22,9 @@ namespace Wonga.QA.UiTests.Web
                     NavigateToRegionAndTest(AUT.Uk, ukUrl);
                     break;
                 case (AUT.Za):
-                    NavigateToRegionAndTest(AUT.Uk, ukUrl);
                     NavigateToRegionAndTest(AUT.Ca, caUrl);
+                    NavigateToRegionAndTest(AUT.Uk, ukUrl);
+                    
                     break;
             }
         }
@@ -46,6 +48,7 @@ namespace Wonga.QA.UiTests.Web
             }
             Do.With.Interval(2).While(() => url == page.Url + "/#");
             Console.WriteLine(page.Url + "\n" + domain + "\n");
+            Thread.Sleep(2000);
             Assert.IsTrue(page.Url.Contains(domain));
         }
     }
