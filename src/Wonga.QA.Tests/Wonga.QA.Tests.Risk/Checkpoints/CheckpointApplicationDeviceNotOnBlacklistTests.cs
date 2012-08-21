@@ -140,7 +140,6 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		{
 			var riskWorkflows = Drive.Db.GetWorkflowsForApplication(application.Id, RiskWorkflowTypes.MainApplicant);
 			Assert.AreEqual(riskWorkflows.Count, 1, "There should be 1 risk workflow");
-			Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflows[0].WorkflowId, expectedCheckpointStatus), Get.EnumToString(RiskCheckpointDefinitionEnum.HardwareBlacklistCheck));
 		}
 
 		#endregion
