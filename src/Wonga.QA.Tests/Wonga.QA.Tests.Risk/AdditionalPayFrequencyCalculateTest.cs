@@ -10,17 +10,18 @@ using Wonga.QA.Tests.Payments.Helpers.Ca;
 
 namespace Wonga.QA.Tests.Risk
 {
+    [Parallelizable(TestScope.All)]
     class AdditionalPayFrequencyCalculateTest
     {
         [Test, AUT(AUT.Ca), JIRA("CA-2444")]
         public void TwiceMonthly15thAnd30thIncomingFrequencyTestForThisMonth15th()
         {
-            var date = new DateTime(2012, 1, 1);
+            var date = new DateTime(2012, 2, 1);
             var customer = CustomerBuilder.New().WithIncomeFrequency(IncomeFrequencyEnum.TwiceMonthly15thAnd30th).Build();
             var application = ApplicationBuilder.New(customer).Build();
             var nextPayDateForRepresentmentOne = CalculateNextPayDateFunctionsCa.CalculateNextPayDate(date, Convert.ToDateTime(customer.GetNextPayDate()),
                                                                                         (PaymentFrequency)(Convert.ToInt32(customer.GetIncomeFrequency())));
-            var expectedDate = new DateTime(2012, 1, 15);
+            var expectedDate = new DateTime(2012, 2, 15);
             Assert.AreEqual(expectedDate, nextPayDateForRepresentmentOne);
         }
 
@@ -83,5 +84,18 @@ namespace Wonga.QA.Tests.Risk
             var expectedDate = new DateTime(2011, 2, 28);
             Assert.AreEqual(expectedDate, nextPayDateForRepresentmentOne);
         }
+
+        [Test, AUT(AUT.Ca), JIRA("CA-2444")]
+        public void TwiceMonthly15thAnd30thIncomingFrequencyTestForNextPayDayOnWeekend()
+        {
+            var date = new DateTime(2012, 12, 16);
+            var customer = CustomerBuilder.New().WithIncomeFrequency(IncomeFrequencyEnum.TwiceMonthly15thAnd30th).Build();
+            var application = ApplicationBuilder.New(customer).Build();
+            var nextPayDateForRepresentmentOne = CalculateNextPayDateFunctionsCa.CalculateNextPayDate(date, Convert.ToDateTime(customer.GetNextPayDate()),
+                                                                                        (PaymentFrequency)(Convert.ToInt32(customer.GetIncomeFrequency())));
+            var expectedDate = new DateTime(2012, 12, 28);
+            Assert.AreEqual(expectedDate, nextPayDateForRepresentmentOne);
+        }
+
     }
 }
