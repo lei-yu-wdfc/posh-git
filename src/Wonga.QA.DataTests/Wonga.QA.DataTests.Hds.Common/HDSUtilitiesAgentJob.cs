@@ -48,6 +48,14 @@ namespace Wonga.QA.DataTests.Hds.Common
             get { return HDSDatabaseName + "_" + WongaServiceName + "Reconciliation"; }
         }
 
+        /// <summary>
+        /// Return the Warehouse load Job name based on the warehouse database Name
+        /// </summary>
+        public string DiWarehouseWongaHdsLoadAgentJob
+        {
+            get { return DiWarehouseDatabaseName + "_WongaHDSLoad"; }
+        }
+
         #endregion "Properties.Public"
 
         #region "Methods.Private"
@@ -70,7 +78,7 @@ namespace Wonga.QA.DataTests.Hds.Common
                     returnValue = "LoadHds_" + WongaServiceName + "Master";
                     break;
                 default:
-                    throw new Exception(string.Format("System component of [{0}] is unknown."));
+                    throw new Exception(string.Format("System component of [{0}] is unknown.", systemComponent));
             }
 
             return returnValue;

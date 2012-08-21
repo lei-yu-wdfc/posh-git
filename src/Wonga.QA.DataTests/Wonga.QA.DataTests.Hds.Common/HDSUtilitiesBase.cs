@@ -28,7 +28,8 @@ namespace Wonga.QA.DataTests.Hds.Common
         public enum SystemComponent
         {
             CDCStaging = 1,
-            HDS = 2
+            HDS = 2,
+            DiWarehouse = 3
         }
 
         public enum WongaService
@@ -36,7 +37,8 @@ namespace Wonga.QA.DataTests.Hds.Common
             Ops = 1,
             Payments = 2,
             Comms = 3,
-            Risk = 4
+            Risk = 4,
+            BiCustomerManagement = 5
         }
 
         private WongaService WongaServiceUsed { get; set; }
@@ -80,6 +82,14 @@ namespace Wonga.QA.DataTests.Hds.Common
             get
             {
                 return (Region.Length == 0 ? "" : Region + "_") + (Product.Length == 0 ? "" : Product + "_") + "WongaHDS";
+            }
+        }
+
+        public string DiWarehouseDatabaseName
+        {
+            get
+            {
+                return (Region.Length == 0 ? "" : Region + "_") + (Product.Length == 0 ? "" : Product + "_") + "DIWarehouse";
             }
         }
 
