@@ -59,6 +59,7 @@
     <Compile Include="Region\Uk\FinancialAssessment\FinancialAssessmentLoginTest.cs" />
     <Compile Include="Region\Uk\FinancialAssessment\FinancialAssessmentTest.cs" />
     <Compile Include="Region\Uk\HomePageTests.cs" />
+    <Compile Include="Region\Uk\L0Ln\UkL0LnDeclineTests.cs" />
     <Compile Include="Region\Uk\L0Ln\UkLnJourneyTests.cs" />
     <Compile Include="Region\Uk\LegalDocumentsTests.cs" />
     <Compile Include="Region\Uk\MySummaryScenariosTests.cs" />

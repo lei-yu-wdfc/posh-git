@@ -97,7 +97,8 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         }
 
         [Test, AUT(AUT.Uk), MultipleAsserts, Owner(Owner.PavithranVangiti), IgnorePageErrors]
-        [Pending("UKWEB-1122: Error message is displayed when logged in as a recognised user via cookie")]
+        [DependsOn("L0_HomePage_LoggedInUser")]
+        //[Pending("UKWEB-1122: Error message is displayed when logged in as a recognised user via cookie")]
         public void L0_HomePage_CookiedUser()
         {
             Client.Driver.Manage().Window.Maximize();

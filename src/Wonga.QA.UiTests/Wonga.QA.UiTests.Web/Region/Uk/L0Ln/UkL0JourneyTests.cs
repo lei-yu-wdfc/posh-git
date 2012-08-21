@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Threading;
 using MbUnit.Framework;
+using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Msmq.Enums.Integration.Risk;
 using Wonga.QA.Framework.UI;
@@ -14,92 +16,6 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
     [Parallelizable(TestScope.All), AUT(AUT.Uk)]
     public class UkL0JourneyTests : UiTest
     {
-        Dictionary<RiskMaskForDeclinedLoan, string> DeclineAdvices = new Dictionary<RiskMaskForDeclinedLoan, string> 
-        {
-            {RiskMaskForDeclinedLoan.TESTBankAccountMatchedToApplicant, "Your bank details don't match your personal information\r\n\r\nWe've been unable to match the bank details you submitted with the rest of your personal information. If you suspect this may just be an error made when filling out the form, please check and update your details here before applying again. Or you could try speaking to your bank if you suspect their records might need updating. We also recommend ordering a copy of your credit report to check the status and accuracy of your personal credit history. Please find the contact details below to obtain a free copy of your credit report."}
-        };
-
-        public enum RiskMaskForDeclinedLoan
-        {
-            TESTBankAccountMatchedToApplicant,
-            /*TESTDateOfBirth,
-            TESTCustomerDateOfBirthIsCorrect,
-            TESTBankAccountHistoryIsAcceptable,
-            TESTPaymentCardHistoryIsAcceptable,
-            TESTTransUnionandBank,
-            TESTTransUnion,
-            TESTEmployedMask,
-            TESTCardMask,
-            TESTCardBankMask,
-            TESTAll,
-            TESTExcludeVerification,
-            TESTBlacklist,
-            TESTIsAlive,
-            TESTIsSolvent,
-            TESTMonthlyIncome,
-            TESTAccountNumberApplicationsAcceptable,
-            TESTCustomerHistoryIsAcceptable,
-            TESTApplicationElementNotOnBlacklist,
-            TESTDirectFraud,
-            TESTApplicationElementNotCIFASFlagged,
-            TESTCreditBureauDataIsAvailable,
-            TESTApplicantIsNotDeceased,
-            TESTCustomerIsEmployed,
-            TESTCustomerIsSolvent,
-            TESTCustomerDateOfBirthIsCorrectSME,
-            TESTFraudScorePositive,
-            TESTDirectFraudCheck,
-            TESTCreditBureauScoreIsAcceptable,
-            TESTApplicationElementNotOnCSBlacklist,
-            TESTApplicationDeviceNotOnBlacklist,
-            TESTDeviceNotOnBlacklist,
-            TESTMonthlyIncomeEnoughForRepayment,
-            TESTPaymentCardIsValid,
-            TESTRepaymentPredictionPositive,
-            TESTReputationtPredictionPositive,
-            TESTNoSuspiciousApplicationActivity,
-            TESTCallValidateBankAccountMatchedToApplicant,
-            TESTCallValidatePaymentCardIsValid,
-            TESTExperianBankAccountMatchedToApplicant,
-            TESTExperianPaymentCardIsValid,
-            TESTRiskBankAccountMatchedToApplicant,
-            TESTRiskPaymentCardIsValid,
-            TESTRiskFraudScorePositive,
-            TESTExperianCreditBureauDataIsAvailable,
-            TESTExperianApplicationElementNotCIFASFlagged,
-            TESTExperianApplicantIsNotDeceased,
-            TESTExperianCustomerIsSolvent,
-            TESTExperianCustomerDateOfBirthIsCorrect,
-            TESTExperianCustomerDateOfBirthIsCorrectSME,
-            TESTManualReferralIovation,
-            TESTManualReferralCIFAS,
-            TESTManualReferralFraudScore,
-            TESTCustomerNameIsCorrect,
-            TESTMobilePhoneIsUnique,
-            TESTApplicantIsNotMinor,
-            TESTBankAccountIsValid,
-            TESTEquifaxCreditBureauDataIsAvailable,
-            TESTHomePhoneIsAcceptable,
-            TESTBusinessPaymentScoreIsAcceptable,
-            TESTBusinessIsCurrentlyTrading,
-            TESTBusinessBureauDataIsAvailable,
-            TESTMainApplicantMatchesBusinessBureauData,
-            TESTBusinessPerformanceScoreIsAcceptaple,
-            TESTMainApplicantDurationAcceptable,
-            TESTNumberOfDirectorsMatchesBusinessBureauData,
-            TESTBusinessDateOfIncorporationAcceptable,
-            TESTNoCheck,
-            TESTTooManyLoansAtAddress,
-            TESTGuarantorNamesMatchBusinessBureauData,
-            TESTBlacklistSME,
-            TESTGeneralManualVerification,
-            TESTDoNotRelend,
-            TESTFraudBlacklist,
-            TESTApplicantHasPoorRelationshipWithWonga,
-            TESTApplicantIsNotMinorUru,
-            TESTCardLivePaymentCardVerification,*/
-        }
-
         // Check L0 loan is accepted and Loan Agreement is displayed
         // Check L0 loan is completed and text on Deal Done page is correct
         [Test, JIRA("UK-730", "UK-731"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
@@ -133,38 +49,6 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
             var declinedPage = journeyL0.Teleport<DeclinedPage>() as DeclinedPage;
 
             Assert.IsTrue(declinedPage.DeclineAdviceExists());
-        }
-
-        [Test, JIRA("UKWEB-253"), Owner(Owner.StanDesyatnikov, Owner.PavithranVangiti)]
-        public void L0DeclinedWithVariousAdvices([EnumData(typeof(RiskMaskForDeclinedLoan))] RiskMaskForDeclinedLoan riskMask)
-        {
-            var email = Get.RandomEmail();
-            Console.WriteLine("Email: {0}", email);
-            Console.WriteLine("riskMask: {0}", riskMask);
-
-            var journeyL0 = JourneyFactory.GetL0Journey(Client.Home())
-                .WithEmail(email)
-                .WithEmployerName(Get.EnumToString(riskMask))
-                .WithAmount(400).WithDuration(30)
-                .WithDeclineDecision();
-            var declinedPage = journeyL0.Teleport<DeclinedPage>() as DeclinedPage;
-
-            Assert.IsTrue(declinedPage.DeclineAdviceExists());
-            Assert.AreEqual(DeclineAdvices[riskMask], declinedPage.DeclineAdvice());
-            Console.WriteLine("L0 Decline Advice: {0}", declinedPage.DeclineAdvice());
-
-            // TODO: check that "here" link in Decline Advice leads to correct page. Now it leads to Wonga.com/my-account, which does not exists.
-
-            /* TODO: Ln fails with Nearly There page instead of Decline Page
-            // log in
-            var loginPage = Client.Login();
-            var mySummaryPage = loginPage.LoginAs(email);
-
-            var journeyLn = JourneyFactory.GetLnJourney(Client.Home());
-            declinedPage = journeyLn.Teleport<DeclinedPage>() as DeclinedPage;
-
-            Assert.IsTrue(declinedPage.DeclineAdviceExists());
-            Console.WriteLine("Ln Decline Advice: {0}", declinedPage.DeclineAdvice());*/
         }
 
         [Test, JIRA("UK-969", "UKWEB-250"), MultipleAsserts, Owner(Owner.StanDesyatnikov)]
