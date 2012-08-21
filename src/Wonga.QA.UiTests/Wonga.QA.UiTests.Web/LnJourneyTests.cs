@@ -15,7 +15,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.UiTests.Web
 {
     [TestFixture, Parallelizable(TestScope.All)]
-    internal class LnJourneyTests : UiTest
+    internal class LnJourneyTestsBase : UiTest
     {
         [Test, AUT(AUT.Ca, AUT.Za, AUT.Uk), JIRA("QA-199")]
         public void LoggedCustomerWithoutLoanAppliesNewLoanChangesMobilePhoneAndClicksResendPinItShouldBeResent()

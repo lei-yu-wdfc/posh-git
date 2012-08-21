@@ -16,7 +16,7 @@ using Wonga.QA.Framework.UI;
 namespace Wonga.QA.UiTests.Web
 {
     [Parallelizable(TestScope.All)]
-    class MyAccountTests : UiTest
+    class MyAccountTestsBase : UiTest
     {
         [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-218"), Category(TestCategories.SmokeTest)]
         public void CustomerWithLiveLoanShouldNotBeAbleToAddBankAccount()

@@ -71,6 +71,6 @@
   </RepaymentOptionsPage>
 
   <MySummaryPage>
-    <DebitOrderSuccesText>Thank you for taking these steps to repay your Wonga loan</DebitOrderSuccesText>
+    <DebitOrderSuccesText>Thanks so much for taking the first step towards repaying your Wonga loan.</DebitOrderSuccesText>
   </MySummaryPage>
 	</ContentMap>

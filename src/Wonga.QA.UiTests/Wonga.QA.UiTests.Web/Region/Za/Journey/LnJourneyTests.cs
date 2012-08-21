@@ -15,7 +15,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.UiTests.Web.Region.Za.Journey
 {
     [TestFixture, Parallelizable(TestScope.All), AUT(AUT.Za)]
-    internal class LnJourneyTests : UiTest
+    internal class LnJourneyTestsZa : UiTest
     {
         [Test, JIRA("QA-196"), Pending("ZA-2510"), Category(TestCategories.SmokeTest)]
         public void LnCustomerTakesNewLoanAndChangesTheMobilePhoneThenChangesShouldBeReflected()
@@ -83,7 +83,7 @@ namespace Wonga.QA.UiTests.Web.Region.Za.Journey
             }
             catch (AssertionFailureException exception)
             {
-                Assert.IsTrue(exception.Message.Contains("The SMS PIN you entered was incorrect"));
+                Assert.IsTrue(exception.Message.Contains("Please enter the four-digit PIN we sent to your mobile phone. Click 'resend PIN' if you did not receive a message from us."));
             }
         }
 
