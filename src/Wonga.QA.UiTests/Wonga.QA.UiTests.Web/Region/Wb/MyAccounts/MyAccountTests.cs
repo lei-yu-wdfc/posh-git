@@ -16,7 +16,7 @@ using Wonga.QA.Framework.UI;
 namespace Wonga.QA.UiTests.Web.Region.Wb.MyAccounts
 {
     [Parallelizable(TestScope.All), AUT(AUT.Wb)]
-    public class MyAccountTests : UiTest
+    public class WbMyAccountTests : UiTest
     {
         [Test, JIRA("QA-250")]
         public void WbFrontendMyAccountPageLoadsCorrectly()

@@ -16,8 +16,8 @@ namespace Wonga.QA.Framework.UI.Ui.Pages.Common
         private readonly IWebElement _editRepaymentAmount;
         private readonly IWebElement _remainderToPay;
         private readonly IWebElement _editBankAccountMasked;
-        private readonly IWebElement _captcha;
-        private readonly IWebElement _editCaptchaField;
+        //private readonly IWebElement _captcha;
+        //private readonly IWebElement _editCaptchaField;
         private readonly IWebElement _cancelButton;
         private readonly IWebElement _submit;
         
@@ -29,8 +29,9 @@ namespace Wonga.QA.Framework.UI.Ui.Pages.Common
             _editRepaymentAmount = _form.FindElement(By.CssSelector(UiMap.Get.PayNowUsingDebitOrderPage.EditRepaymentAmount));
             _remainderToPay = _form.FindElement(By.CssSelector(UiMap.Get.PayNowUsingDebitOrderPage.RemainderToPay));
             _editBankAccountMasked = _form.FindElement(By.CssSelector(UiMap.Get.PayNowUsingDebitOrderPage.EditBankAccountMasked));
-            _captcha = _form.FindElement(By.CssSelector(UiMap.Get.PayNowUsingDebitOrderPage.Captcha));
-            _editCaptchaField = _form.FindElement(By.CssSelector(UiMap.Get.PayNowUsingDebitOrderPage.EditCaptchaField));
+            // Captcha removed
+            //_captcha = _form.FindElement(By.CssSelector(UiMap.Get.PayNowUsingDebitOrderPage.Captcha));
+            //_editCaptchaField = _form.FindElement(By.CssSelector(UiMap.Get.PayNowUsingDebitOrderPage.EditCaptchaField));
             _cancelButton = _form.FindElement(By.CssSelector(UiMap.Get.PayNowUsingDebitOrderPage.CancelButton));
             _submit = _form.FindElement(By.CssSelector(UiMap.Get.PayNowUsingDebitOrderPage.Submit));
         }

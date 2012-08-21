@@ -222,8 +222,6 @@ namespace Wonga.QA.UiTests.Web.Region.Za.MyAccounts
             Do.With.Message("Problem with changing phone number").Until(() => myPersonalDetailsPage.ChangePhone("0123000000", "0212571908", "0000"));
 
             myPersonalDetailsPage.Submit();
-            myPersonalDetailsPage.WaitForSuccessPopup();
-            myPersonalDetailsPage.Submit();
 
             Do.With.Message("There is no home phone in db").Until(() => Drive.Db.Comms.CustomerDetails.Single(c => c.Email == email).HomePhone != "0210000000");
             var homePhone = Drive.Db.Comms.CustomerDetails.FirstOrDefault(c => c.Email == email).HomePhone;
