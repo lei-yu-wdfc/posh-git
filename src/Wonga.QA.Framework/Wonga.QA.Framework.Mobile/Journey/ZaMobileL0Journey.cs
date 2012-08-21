@@ -28,7 +28,7 @@ namespace Wonga.QA.Framework.Mobile.Journey
             _employerName = Get.RandomString(10);
             _email = Get.RandomEmail();
             _mobilePhone = Get.GetMobilePhone();
-            _dateOfBirth = new DateTime(1957, 10, 30);
+            _dateOfBirth = new DateTime(1970, 01, 01);
             _gender = GenderEnum.Female;
             _nationalId = Get.GetNationalNumber(_dateOfBirth, _gender == GenderEnum.Female);
 

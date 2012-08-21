@@ -6,6 +6,7 @@ using System.Text;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Mobile.Mappings.Ui;
+using Wonga.QA.Framework.Mobile.Ui.Elements;
 using Wonga.QA.Framework.Mobile.Ui.Pages;
 
 namespace Wonga.QA.Framework.Mobile.Ui.Sections
@@ -22,9 +23,13 @@ namespace Wonga.QA.Framework.Mobile.Ui.Sections
         private readonly IWebElement _monthlyIncome;
         private readonly IWebElement _nextPaydayDate;
         private readonly IWebElement _selfNextPaydayDate;
-        private readonly IWebElement _nextPaydayDateDay;
-        private readonly IWebElement _nextPaydayDateMonth;
-        private readonly IWebElement _nextPaydayDateYear;
+        //private readonly IWebElement _nextPaydayDateDay;
+        //private readonly IWebElement _nextPaydayDateMonth;
+        //private readonly IWebElement _nextPaydayDateYear;
+        private readonly IWebElement _nextPayday;
+        //private readonly IWebElement _selfNextPaydayDateDay;
+        //private readonly IWebElement _selfNextPaydayDateMonth;
+        //private readonly IWebElement _selfNextPaydayDateYear;
         private readonly IWebElement _workPhone;
         private readonly IWebElement _incomeFrequency;
         private readonly ReadOnlyCollection<IWebElement> _salaryPaidToBank;
@@ -134,9 +139,12 @@ namespace Wonga.QA.Framework.Mobile.Ui.Sections
                     case AUT.Uk:
                     case AUT.Pl:
                         var date = value.Split('/');
-                        _nextPaydayDateDay.SelectOption(date[0]);
-                        _nextPaydayDateMonth.SelectOption(date[1]);
-                        _nextPaydayDateYear.SelectOption(date[2]);
+                        _nextPayday.Click();
+                        var mobiscroll = Do.Until(() => new DayMonthYearMobiScrollElement(Page.Client));
+                        mobiscroll.SelectNextPayDate();
+                        //_nextPaydayDateDay.SelectOption(date[0]);
+                        //_nextPaydayDateMonth.SelectOption(date[1]);
+                        //_nextPaydayDateYear.SelectOption(date[2]);
                         break;
                     default:
                         _nextPaydayDate.SendValue(value);
@@ -146,12 +154,64 @@ namespace Wonga.QA.Framework.Mobile.Ui.Sections
             }
         }
 
+        //public string NextPayDateOld
+        //{
+        //    set
+        //    {
+        //        switch (Config.AUT)
+        //        {
+        //            case AUT.Uk:
+        //            case AUT.Za:
+        //            case AUT.Pl:
+        //                var date = value.Split('/');
+        //                _nextPaydayDateDay.SelectOption(date[0]);
+        //                _nextPaydayDateMonth.SelectOption(date[1]);
+        //                _nextPaydayDateYear.SelectOption(date[2]);
+        //                break;
+        //            default:
+        //                _nextPaydayDate.SendValue(value);
+        //                break;
+        //        }
+
+        //    }
+        //}
+
         public string SelfNextPayDate
         {
             set
             {
+                switch (Config.AUT)
+                {
+                    case AUT.Uk:
+                    case AUT.Za:
+                    case AUT.Pl:
+                        var date = value.Split('/');
+                        _selfNextPaydayDateDay.SelectOption(date[0]);
+                        _selfNextPaydayDateMonth.SelectOption(date[1]);
+                        _selfNextPaydayDateYear.SelectOption(date[2]);
+                        break;
+                    default:
+                        _selfNextPaydayDate.SendValue(value);
+                        break;
+                }
+
                 _selfNextPaydayDate.SendValue(value);
                        
+                switch (Config.AUT)
+                {
+                    case AUT.Uk:
+                    case AUT.Za:
+                    case AUT.Pl:
+                        var date = value.Split('/');
+                        //_selfNextPaydayDateDay.SelectOption(date[0]);
+                        //_selfNextPaydayDateMonth.SelectOption(date[1]);
+                        //_selfNextPaydayDateYear.SelectOption(date[2]);
+                        break;
+                    default:
+                        _selfNextPaydayDate.SendValue(value);
+                        break;
+                }
+
             }
         }
 
@@ -172,7 +232,14 @@ namespace Wonga.QA.Framework.Mobile.Ui.Sections
                 case (AUT.Za):
                     _employmentPosition = Section.FindElement(By.CssSelector(UiMapMobile.Get.EmploymentDetailsSection.EmploymentPosition));
                     _workPhone = Section.FindElement(By.CssSelector(UiMapMobile.Get.EmploymentDetailsSection.WorkPhone));
+                    _nextPaydayDateDay = Section.FindElement(By.CssSelector(UiMapMobile.Get.EmploymentDetailsSection.NextPaydayDateDay));
+                    _nextPaydayDateMonth = Section.FindElement(By.CssSelector(UiMapMobile.Get.EmploymentDetailsSection.NextPaydayDateMonth));
+                    _nextPaydayDateYear = Section.FindElement(By.CssSelector(UiMapMobile.Get.EmploymentDetailsSection.NextPaydayDateYear));
+                    _selfNextPaydayDateDay = Section.FindElement(By.CssSelector(UiMapMobile.Get.EmploymentDetailsSection.SelfNextPaydayDateDay));
+                    _selfNextPaydayDateMonth = Section.FindElement(By.CssSelector(UiMapMobile.Get.EmploymentDetailsSection.SelfNextPaydayDateMonth));
+                    _selfNextPaydayDateYear = Section.FindElement(By.CssSelector(UiMapMobile.Get.EmploymentDetailsSection.SelfNextPaydayDateYear));
                     //Frontend changed to be one field Pay Date
+                    _nextPayday = Section.FindElement(By.CssSelector("#edit-next-payday"));
                     //_nextPaydayDateDay = Section.FindElement(By.CssSelector(UiMapMobile.Get.EmploymentDetailsSection.NextPaydayDateDay));
                     //_nextPaydayDateMonth = Section.FindElement(By.CssSelector(UiMapMobile.Get.EmploymentDetailsSection.NextPaydayDateMonth));
                     //_nextPaydayDateYear = Section.FindElement(By.CssSelector(UiMapMobile.Get.EmploymentDetailsSection.NextPaydayDateYear));
@@ -181,6 +248,9 @@ namespace Wonga.QA.Framework.Mobile.Ui.Sections
                     //_selfNextPaydayDateMonth = Section.FindElement(By.CssSelector(UiMapMobile.Get.EmploymentDetailsSection.SelfNextPaydayDateMonth));
                     //_selfNextPaydayDateYear = Section.FindElement(By.CssSelector(UiMapMobile.Get.EmploymentDetailsSection.SelfNextPaydayDateYear));
                     _selfNextPaydayDate = Section.FindElement(By.CssSelector(UiMapMobile.Get.EmploymentDetailsSection.SelfNextPaydayDateAll));
+                    //_selfNextPaydayDateDay = Section.FindElement(By.CssSelector(UiMapMobile.Get.EmploymentDetailsSection.SelfNextPaydayDateDay));
+                    //_selfNextPaydayDateMonth = Section.FindElement(By.CssSelector(UiMapMobile.Get.EmploymentDetailsSection.SelfNextPaydayDateMonth));
+                    //_selfNextPaydayDateYear = Section.FindElement(By.CssSelector(UiMapMobile.Get.EmploymentDetailsSection.SelfNextPaydayDateYear));
                     break;
                 case (AUT.Ca):
                     _employmentPosition = Section.FindElement(By.CssSelector(UiMapMobile.Get.EmploymentDetailsSection.EmploymentPosition));
@@ -189,15 +259,16 @@ namespace Wonga.QA.Framework.Mobile.Ui.Sections
                     break;
                 case (AUT.Uk):
                     _employmentPosition = Section.FindElement(By.CssSelector(UiMapMobile.Get.EmploymentDetailsSection.EmploymentPosition));
-                    _nextPaydayDateDay = Section.FindElement(By.CssSelector(UiMapMobile.Get.EmploymentDetailsSection.NextPaydayDateDay));
-                    _nextPaydayDateMonth = Section.FindElement(By.CssSelector(UiMapMobile.Get.EmploymentDetailsSection.NextPaydayDateMonth));
-                    _nextPaydayDateYear = Section.FindElement(By.CssSelector(UiMapMobile.Get.EmploymentDetailsSection.NextPaydayDateYear));
+                    _nextPayday = Section.FindElement(By.CssSelector("#edit-next-payday"));
+                    //_nextPaydayDateDay = Section.FindElement(By.CssSelector(UiMapMobile.Get.EmploymentDetailsSection.NextPaydayDateDay));
+                    //_nextPaydayDateMonth = Section.FindElement(By.CssSelector(UiMapMobile.Get.EmploymentDetailsSection.NextPaydayDateMonth));
+                    //_nextPaydayDateYear = Section.FindElement(By.CssSelector(UiMapMobile.Get.EmploymentDetailsSection.NextPaydayDateYear));
                     _workPhone = Section.FindElement(By.CssSelector(UiMapMobile.Get.EmploymentDetailsSection.WorkPhone));
                     break;
                     case (AUT.Pl):
-                    _nextPaydayDateDay = Section.FindElement(By.CssSelector(UiMapMobile.Get.EmploymentDetailsSection.NextPaydayDateDay));
-                    _nextPaydayDateMonth = Section.FindElement(By.CssSelector(UiMapMobile.Get.EmploymentDetailsSection.NextPaydayDateMonth));
-                    _nextPaydayDateYear = Section.FindElement(By.CssSelector(UiMapMobile.Get.EmploymentDetailsSection.NextPaydayDateYear));
+                    //_nextPaydayDateDay = Section.FindElement(By.CssSelector(UiMapMobile.Get.EmploymentDetailsSection.NextPaydayDateDay));
+                    //_nextPaydayDateMonth = Section.FindElement(By.CssSelector(UiMapMobile.Get.EmploymentDetailsSection.NextPaydayDateMonth));
+                    //_nextPaydayDateYear = Section.FindElement(By.CssSelector(UiMapMobile.Get.EmploymentDetailsSection.NextPaydayDateYear));
                     _workPhone = Section.FindElement(By.CssSelector(UiMapMobile.Get.EmploymentDetailsSection.WorkPhone));
                     _universityType =
                         Section.FindElement(By.CssSelector(UiMapMobile.Get.EmploymentDetailsSection.UniversityType));

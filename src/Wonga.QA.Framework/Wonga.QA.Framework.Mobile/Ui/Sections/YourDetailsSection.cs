@@ -4,6 +4,7 @@ using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Mobile.Mappings.Content;
 using Wonga.QA.Framework.Mobile.Mappings.Ui;
+using Wonga.QA.Framework.Mobile.Ui.Elements;
 using Wonga.QA.Framework.Mobile.Ui.Pages;
 
 namespace Wonga.QA.Framework.Mobile.Ui.Sections
@@ -13,10 +14,10 @@ namespace Wonga.QA.Framework.Mobile.Ui.Sections
         private readonly ReadOnlyCollection<IWebElement> _gender;
         private readonly IWebElement _idNumber;
         private readonly IWebElement _dependants;
-        private readonly IWebElement _dateOfBirthDay;
-        private readonly IWebElement _dateOfBirthMonth;
-        private readonly IWebElement _dateOfBirthYear;
         private readonly IWebElement _dateOfBirth;
+        //private readonly IWebElement _dateOfBirthDay;
+        //private readonly IWebElement _dateOfBirthMonth;
+        //private readonly IWebElement _dateOfBirthYear;
         private readonly IWebElement _homeStatus;
         private readonly IWebElement _homeLanguage;
         private readonly IWebElement _maritalStatus;
@@ -28,26 +29,29 @@ namespace Wonga.QA.Framework.Mobile.Ui.Sections
 
         public String Number { set { _idNumber.SendValue(value); } }
         public String Gender { set { _gender.SelectLabel(value); } }
+        //public String DateOfBirth
+        //{
+        //    set
+        //    {
+        //        var date = value.Split('/');
+        //        _dateOfBirthDay.SelectOption(date[0]);
+        //        _dateOfBirthMonth.SelectOption(date[1]);
+        //        _dateOfBirthYear.SelectOption(date[2]);
+        //    }
+        //}
         public String DateOfBirth
         {
             set
             {
-                switch (Config.AUT)
-                {
-                    case AUT.Za:
-                        _dateOfBirth.SendValue(value);
-                        break;
-                    default:
-                        var date = value.Split('/');
-                        _dateOfBirthDay.SelectOption(date[0]);
-                        _dateOfBirthMonth.SelectOption(date[1]);
-                        _dateOfBirthYear.SelectOption(date[2]);
-                        break;
-
-                }
-
+                var date = value.Split('/');
+                _dateOfBirth.Click();
+                var mobiscroll = Do.Until(() => new MobiScrollElement(Page.Client));
+                mobiscroll.SelectDefaultDate();
             }
+
+
         }
+
         public String HomeStatus { set { _homeStatus.SelectOption(value); } }
         public String HomeLanguage { set { _homeLanguage.SelectOption(value); } }
         public String MaritalStatus { set { _maritalStatus.SelectOption(value); } }
@@ -97,9 +101,10 @@ namespace Wonga.QA.Framework.Mobile.Ui.Sections
                 case AUT.Wb:
                 case AUT.Uk:
 
-                    _dateOfBirthDay = Section.FindElement(By.CssSelector(UiMapMobile.Get.YourDetailsSection.DateOfBirthDay));
-                    _dateOfBirthMonth = Section.FindElement(By.CssSelector(UiMapMobile.Get.YourDetailsSection.DateOfBirthMonth));
-                    _dateOfBirthYear = Section.FindElement(By.CssSelector(UiMapMobile.Get.YourDetailsSection.DateOfBirthYear));
+                    //_dateOfBirthDay = Section.FindElement(By.CssSelector(UiMapMobile.Get.YourDetailsSection.DateOfBirthDay));
+                    //_dateOfBirthMonth = Section.FindElement(By.CssSelector(UiMapMobile.Get.YourDetailsSection.DateOfBirthMonth));
+                    //_dateOfBirthYear = Section.FindElement(By.CssSelector(UiMapMobile.Get.YourDetailsSection.DateOfBirthYear));
+                    _dateOfBirth = Section.FindElement(By.CssSelector("#edit-date-of-birth"));
                     break;
                 case AUT.Za:
                     _homeStatus = Section.FindElement(By.CssSelector(UiMapMobile.Get.YourDetailsSection.HomeStatus));

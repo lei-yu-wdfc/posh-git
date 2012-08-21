@@ -159,7 +159,7 @@ namespace Wonga.QA.Framework.Mobile.Journey
             personalDebitCardPage.DebitCardSection.CardSecurity = _cardSecurity;
             personalDebitCardPage.DebitCardSection.CardType = _cardType;
             personalDebitCardPage.DebitCardSection.ExpiryDate = _expiryDate;
-            personalDebitCardPage.DebitCardSection.StartDate = _startDate;
+            //personalDebitCardPage.DebitCardSection.StartDate = _startDate; //mobiscroll
             personalDebitCardPage.MobilePinVerification.Pin = _pin;
             if (submit)
             {
