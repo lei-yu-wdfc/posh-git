@@ -55,7 +55,7 @@ namespace Wonga.QA.Framework.Mobile.Ui.Sections
             _cardType = Section.FindElement(By.CssSelector(UiMapMobile.Get.DebitCardSection.CardType));
             _cardNumber = Section.FindElement(By.CssSelector(UiMapMobile.Get.DebitCardSection.CardNumber));
             _cardName = Section.FindElement(By.CssSelector(UiMapMobile.Get.DebitCardSection.CardName));
-            _cardExpiry = Section.FindElement(By.CssSelector("#edit-card-expiry-date"));
+            _cardExpiry = Section.FindElement(By.CssSelector(UiMapMobile.Get.DebitCardSection.CardExpiry));
             //_cardExpiryDateMonth = Section.FindElement(By.CssSelector(UiMapMobile.Get.DebitCardSection.CardExpiryDateMonth)); //mobiscroll
             //_cardExpiryDateYear = Section.FindElement(By.CssSelector(UiMapMobile.Get.DebitCardSection.CardExpiryDateYear)); //mobiscroll
             //_cardStartDateMonth = Section.FindElement(By.CssSelector(UiMapMobile.Get.DebitCardSection.CardStartDateMonth)); //mobiscroll

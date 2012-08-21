@@ -56,9 +56,7 @@
     <Dependants>#edit-dependants</Dependants>
     <DependantsErrorForm>#edit-dependants-wrapper div div</DependantsErrorForm>
     <Gender>input[type="radio"][name="gender"]</Gender>
-    <DateOfBirthDay>#edit-date-of-birth-day</DateOfBirthDay>
-    <DateOfBirthMonth>#edit-date-of-birth-month</DateOfBirthMonth>
-    <DateOfBirthYear>#edit-date-of-birth-year</DateOfBirthYear>
+    <DateOfBirth>#edit-date-of-birth</DateOfBirth>
     <HomeStatus>#edit-home-status</HomeStatus>
     <MaritalStatus>#edit-marital-status</MaritalStatus>
     <MartialStatusErrorForm>#edit-marital-status-wrapper div div</MartialStatusErrorForm>
@@ -183,6 +181,7 @@
     <CardSecurityNumber>#edit-card-security</CardSecurityNumber>
     <CardStartDateMonth>#edit-card-start-date-month</CardStartDateMonth>
     <CardStartDateYear>#edit-card-start-date-year</CardStartDateYear>
+    <CardExpiry>#edit-card-expiry-date</CardExpiry>
   </DebitCardSection>
 
   <AcceptedPageMobile>
@@ -260,5 +259,9 @@
     <Secci>div#agreementscroll</Secci>
     <AcceptButton>#edit-accept</AcceptButton>
   </TopupAcceptPageMobile>
+
+  <TabsElementMobile>
+    <TabsForm>#navigation #scroller .links</TabsForm>
+  </TabsElementMobile>
 
 </UiMapMobile>

@@ -189,7 +189,7 @@
     <IncomeFrequencyErrorForm>#edit-income-frequency-wrapper div div</IncomeFrequencyErrorForm>
     <SalaryPaidToBank>input[type="radio"][name="salary_to_bank"]</SalaryPaidToBank>
     <SalaryPaidToBankErrorForm>#wonga-conditionally-hidden-salary-to-bank .form-error div</SalaryPaidToBankErrorForm>
-    <SelfEmploymentPayDayDate></SelfEmploymentPayDayDate>
+    <NextPayDay>#edit-next-payday</NextPayDay>
   </EmploymentDetailsSection>
 
   <MobilePinVerificationSection>
@@ -203,9 +203,7 @@
     <Dependants>#edit-dependants</Dependants>
     <DependantsErrorForm>#edit-dependants-wrapper div div</DependantsErrorForm>
     <Gender>input[type="radio"][name="gender"]</Gender>
-    <DateOfBirthDay>#edit-date-of-birth-day</DateOfBirthDay>
-    <DateOfBirthMonth>#edit-date-of-birth-month</DateOfBirthMonth>
-    <DateOfBirthYear>#edit-date-of-birth-year</DateOfBirthYear>
+    <DateOfBirth>#edit-date-of-birth</DateOfBirth>
     <HomeStatus>#edit-home-status</HomeStatus>
     <MaritalStatus>#edit-marital-status</MaritalStatus>
     <MartialStatusErrorForm>#edit-marital-status-wrapper div div</MartialStatusErrorForm>
