@@ -15,8 +15,9 @@
     <AccountNumber>.info.bank-account.bank-account-primary tbody tr:first-child + tr + tr + tr td b span</AccountNumber>
     <PopupBankAccountException>#edit-account-number-za-wrapper div.form-error div.invalid </PopupBankAccountException>
     <PopupSuccessTitle>#success</PopupSuccessTitle>
-    <AddBankAccountButton>#accounts .add-bank a</AddBankAccountButton>
-    <AddCardButton>#accounts .add-bank a</AddCardButton>
+    <AddCardButton>.reload-on-close</AddCardButton>
+    <AddBankAccountButton>.reload-on-close</AddBankAccountButton>
+    <PopupBankAccountEdit>#edit-submit</PopupBankAccountEdit>
     <!--#success-->
   </MyPaymentsPage>
 
