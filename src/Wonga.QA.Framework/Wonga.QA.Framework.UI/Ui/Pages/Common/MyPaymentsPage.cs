@@ -116,7 +116,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public bool WaitBankAccountPopupClose()
         {
-            var element = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.PopupBankAccountEdit));
+            var element = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.PopupBankAccountType));
             Do.With.Timeout(3).While(() => element.Displayed);
             Console.WriteLine("popup bank account is closed");
             return true;
