@@ -165,7 +165,7 @@ namespace Wonga.QA.UiTests.Web.Region.Za.Journey
             }
             catch (Exception e)
             {
-                Assert.IsTrue(e.Message.Contains(ContentMap.Get.AddressDeatailsPage.PostcodeError));
+                Assert.IsTrue(e.Message.Contains(ContentMap.Get.AddressDeatailsPage.PostcodeError1) || e.Message.Contains(ContentMap.Get.AddressDeatailsPage.PostcodeError2));
                 IWebElement form = Client.Driver.FindElement(By.CssSelector(UiMap.Get.AddressDetailsPage.FormId));
                 IWebElement postCode = form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.Postcode));
                 IWebElement houseNumber = form.FirstOrDefaultElement(By.CssSelector(UiMap.Get.AddressDetailsPage.HouseNumber));
@@ -187,7 +187,7 @@ namespace Wonga.QA.UiTests.Web.Region.Za.Journey
                 }
                 catch (Exception ex)
                 {
-                    Assert.IsTrue(ex.Message.Contains(ContentMap.Get.AddressDeatailsPage.PostcodeError));
+                    Assert.IsTrue(ex.Message.Contains(ContentMap.Get.AddressDeatailsPage.PostcodeError1));
                 }
             }
         }
@@ -216,10 +216,10 @@ namespace Wonga.QA.UiTests.Web.Region.Za.Journey
         }
 
         [Test, JIRA("QA-247")]
-        [Row(100, 37)]
         [Row(100, 31)]
         [Row(131, 34)]
         [Row(153, 37)]
+        [Row(100, 37)]
         public void VerifyThatInduplumNeverBrokenAndTotalToRepayIsSmalestThenTwoLoanAmount(int _loanAmount, int _duration)
         {
             int controlSum = _loanAmount * 2;
@@ -231,19 +231,19 @@ namespace Wonga.QA.UiTests.Web.Region.Za.Journey
             HomePage.Sliders.HowLong = _duration.ToString();
 
             totalToRepay = Convert.ToDouble(HomePage.Sliders.GetTotalToRepay.Remove(0, 1));
-            Assert.IsTrue((int)totalToRepay <= controlSum);
+            Assert.IsTrue(totalToRepay <= controlSum);
 
             var journey = JourneyFactory.GetL0Journey(Client.Home())
                 .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask))
-                .WithAmount(_loanAmount).WithDuration(_loanAmount);
+                .WithAmount(_loanAmount).WithDuration(_duration);
             var personalDetails = journey.Teleport<PersonalDetailsPage>() as PersonalDetailsPage;
 
             totalToRepay = Convert.ToDouble(personalDetails.GetTotalToRepay.Remove(0, 1));
-            Assert.IsTrue((int)totalToRepay <= controlSum);
+            Assert.IsTrue(totalToRepay <= controlSum);
 
             var SummaryPage = journey.Teleport<AcceptedPage>() as AcceptedPage;
             totalToRepay = Convert.ToDouble(SummaryPage.GetTotalToRepay.Remove(0, 1));
-            Assert.IsTrue((int)totalToRepay <= controlSum);
+            Assert.IsTrue(totalToRepay <= controlSum);
         }
 
         [Test, JIRA("QA-308")]

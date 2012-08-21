@@ -17,7 +17,9 @@ namespace Wonga.QA.Framework.Mobile.Mappings.Sections
         public String MonthlyIncome { get; set; }
         public String SelfEmployedMonthlyIncome { get; set; }
         public String NextPaydayDate { get; set; }
+        public String NextPayDateAll { get; set; }
         public String SelfNextPaydayDate { get; set; }
+        public String SelfNextPaydayDateAll { get; set; }
         public String NextPaydayDateDay { get; set; }
         public String NextPaydayDateMonth { get; set; }
         public String NextPaydayDateYear { get; set; }

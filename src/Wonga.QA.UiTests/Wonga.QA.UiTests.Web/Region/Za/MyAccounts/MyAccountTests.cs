@@ -16,7 +16,7 @@ using Wonga.QA.Framework.UI;
 namespace Wonga.QA.UiTests.Web.Region.Za.MyAccounts
 {
     [Parallelizable(TestScope.All), AUT(AUT.Za)]
-    class MyAccountTests : UiTest
+    class ZaMyAccountTests : UiTest
     {
         [Test, JIRA("QA-203"), Category(TestCategories.SmokeTest)]
         public void L0JourneyInvalidAccountNumberShouldCauseWarningMessageOnNextPage()
