@@ -14,16 +14,24 @@ using Wonga.QA.Framework.Api;
 
 namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
 {
-    [Parallelizable(TestScope.All), AUT(AUT.Uk)]
+    [AUT(AUT.Uk)]
     class UkL0LnDeclineTests : UiTest
     {
         private Dictionary<string, string> _outputData = new Dictionary<string, string> { };
 
+        struct Cust
+        {
+            public String email;
+            public String FirstName;
+            public String LastName;
+        }
 
        // private static string _footerTextMessage = " Please find the contact details below to obtain a free copy of your credit report.\r\n " + "Experian Automated advice line: 0844 481 8000 consumer.helpservice@uk.experian.com" + "Customer Support Centre PO Box 1136 Warrington WA4 9GQ\r\n\r\nCallcredit " + "General questions: care@callcreditcheck.com Customer Care Callcredit check PO Box 734 Leeds LS1 9GX";
         public enum RiskMaskForDeclinedLoan
         {
             TESTBankAccountMatchedToApplicant,
+            TESTBlacklist,
+            TESTExperianCreditBureauDataIsAvailable
             //TESTExperianCreditBureauDataIsAvailable,
             //TESTDateOfBirth, //-- does not work
             //TESTCustomerDateOfBirthIsCorrect, -- does not work
@@ -64,15 +72,19 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
         }
 
         [Test, JIRA("UKWEB-253"), Owner(Owner.StanDesyatnikov, Owner.PavithranVangiti)]
-        [Pending ("Test in development")]
+        //[Pending ("Test in development")]
         [Row(RiskMaskForDeclinedLoan.TESTBankAccountMatchedToApplicant)]
         //[Row(RiskMaskForDeclinedLoan.TESTDateOfBirth)]
-        //[Row(RiskMaskForDeclinedLoan.TESTExperianCreditBureauDataIsAvailable)]
+        [Row(RiskMaskForDeclinedLoan.TESTExperianCreditBureauDataIsAvailable)]
         public void L0DeclinedWithVariousAdvices(RiskMaskForDeclinedLoan riskMask)
         //public void L0DeclinedWithVariousAdvices([EnumData(typeof(RiskMaskForDeclinedLoan))]RiskMaskForDeclinedLoan riskMask)
         {
-            var email = Get.RandomEmail();
 
+            var customer = PrepareConditions(riskMask);
+            var declinePage = RunL0Journey(customer, riskMask);
+            Assert.IsTrue(declinePage.DeclineAdviceExists());
+
+/*            var email = Get.RandomEmail();
             _outputData.Add(email, Get.EnumToString(riskMask));
 
             Client.Driver.Manage().Window.Maximize();
@@ -83,7 +95,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
                 //.WithEmployerName(RiskMask.TESTBlacklist.ToString());
             var declinedPage = journeyL0.Teleport<DeclinedPage>() as DeclinedPage;
 
-            Assert.IsTrue(declinedPage.DeclineAdviceExists());
+            Assert.IsTrue(declinedPage.DeclineAdviceExists());*/
             //Assert.AreEqual(DeclineAdvices[riskMask], declinedPage.DeclineAdvice());
             //Console.WriteLine("L0 Decline Advice: {0}", declinedPage.DeclineAdvice());
 
@@ -100,5 +112,59 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
             //Assert.IsTrue(declinedPage.DeclineAdviceExists());
             //Console.WriteLine("Ln Decline Advice: {0}", declinedPage.DeclineAdvice());
         }
+
+        [Test, JIRA("UKWEB-253"), Owner(Owner.StanDesyatnikov, Owner.PavithranVangiti)]
+        //[Pending ("Test in development")]
+        [Row(RiskMaskForDeclinedLoan.TESTBlacklist)]
+        public void L0DeclinedWithGeneralAdvices(RiskMaskForDeclinedLoan riskMask)
+        {
+            var customer = PrepareConditions(riskMask);
+            var declinePage = RunL0Journey(customer, riskMask);
+            Assert.IsTrue(declinePage.DeclineAdviceExists());
+        }
+
+        #region helpers
+
+        private Cust PrepareConditions(RiskMaskForDeclinedLoan riskMask)
+        {
+            //String email = Get.RandomEmail();
+            //String FirstName = Get.RandomString(6);
+            //String LastName = Get.RandomString(6);
+            var cust = new Cust();
+            cust.email = Get.RandomEmail();
+            cust.FirstName = Get.RandomString(6);
+            cust.LastName = Get.RandomString(6);
+            _outputData.Add(cust.email, Get.EnumToString(riskMask));
+
+            if (Get.EnumToString(riskMask) == "TESTBlacklist")
+            {
+                // create blacklisted user
+                var blackListTable = Drive.Data.Blacklist.Db.BlackList;
+                dynamic blackListEntity = new ExpandoObject();
+                blackListEntity.FirstName = cust.FirstName;
+                blackListEntity.LastName = cust.LastName;
+                blackListTable.Insert(blackListEntity);
+            }
+
+            // TODO: add data preparation for other risk masks
+
+            return cust;
+        }
+
+        private DeclinedPage RunL0Journey(Cust customer, RiskMaskForDeclinedLoan riskMask)
+        {
+            Client.Driver.Manage().Window.Maximize();
+            var journeyL0 = JourneyFactory.GetL0Journey(Client.Home())
+                .WithEmail(customer.email)
+                .WithFirstName(customer.FirstName)
+                .WithLastName(customer.LastName)
+                .WithEmployerName(Get.EnumToString(riskMask))
+                .WithDeclineDecision();
+            var declinedPage = journeyL0.Teleport<DeclinedPage>() as DeclinedPage;
+            return declinedPage;
+        }
+
+        #endregion
+
     }
 }
