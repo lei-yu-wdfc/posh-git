@@ -37,20 +37,22 @@ namespace Wonga.QA.UiTests.Web
         {
             string firstName = Get.RandomString(3, 10);
             string lastName = Get.RandomString(3, 10);
+            string middleName = Get.RandomString(3, 10);
             int randomAmount = _amountMin + (new Random()).Next(_amountMax - _amountMin);
             int randomDuration = _termMin + (new Random()).Next(_termMax - _termMin);
             var journey = JourneyFactory.GetL0Journey(Client.Home())
                 .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask))
                 .WithAmount(randomAmount).WithDuration(randomDuration)
-                .WithFirstName(firstName).WithLastName(lastName);
+                .WithFirstName(firstName).WithLastName(lastName).WithMiddleName(middleName);
             var acceptedPage = journey.Teleport<AcceptedPage>() as AcceptedPage;
             switch (Config.AUT)
             {
                 #region case Za
                 case AUT.Za:
                     string fullName = firstName + " " + lastName;
+                    string fullmidlname = firstName + " " + middleName + " " + lastName;
                     Assert.AreEqual(fullName, acceptedPage.GetNameInLoanAgreement);
-                    Assert.AreEqual(fullName, acceptedPage.GetNameInDirectDebit);
+                    Assert.AreEqual(fullmidlname, acceptedPage.GetNameInDirectDebit);
 
                     acceptedPage.SignAgreementConfirm();
                     acceptedPage.SignDirectDebitConfirm();
