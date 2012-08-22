@@ -83,6 +83,7 @@
     <Compile Include="Uk\ExtensionTests.cs" />
     <Compile Include="Uk\HomePageTests.cs" />
     <Compile Include="Uk\L0LnJourneyCoreTests.cs" />
+    <Compile Include="Uk\MockHelpers.cs" />
     <Compile Include="Uk\MySummaryScenariosTests.cs" />
     <Compile Include="Uk\RepayTests.cs" />
     <Compile Include="Uk\TopUpTests.cs" />

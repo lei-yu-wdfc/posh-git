@@ -24,6 +24,7 @@ namespace Wonga.QA.UiTests.Mocked.Web.Uk
         //decimal _amountDueAt60InArrears = 0.00m;
 
         #region Dictionaries
+
         Dictionary<int, string> introTexts = new Dictionary<int, string> 
 	    {
 	    {1, "Hi {first name}. Your current trust rating means you can apply for up to £{500} below."},
@@ -144,6 +145,8 @@ namespace Wonga.QA.UiTests.Mocked.Web.Uk
 
         #endregion
 
+        #region Tests
+
         // Check the my Summary page after we click My Summary buton
         [Test, JIRA("UKWEB-953"), Owner(Owner.StanDesyatnikov)]
         public void ClickMySummaryButton()
@@ -156,8 +159,68 @@ namespace Wonga.QA.UiTests.Mocked.Web.Uk
 
             mySummaryPage.ChangePromiseDateButtonClick();
         }
-    
 
+        // One live drawdown -can request credit, too early to extend
+        [Test, MultipleAsserts, Owner(Owner.StanDesyatnikov)]
+        public void MySummaryScenario02()
+        {
+            const int scenarioId = 2;
+            const decimal expectedDueDateBalance = 115.91m;
+            var expectedDueDate = new DateTime(2012, 07, 14);
+
+            MySummaryScenarios(scenarioId, expectedDueDateBalance, expectedDueDate);
+        }
+
+        #endregion
+
+        #region Helpers
+
+        private void MySummaryScenarios(int scenarioId, decimal expectedDueDateBalance, DateTime expectedDueDate)
+        {
+            string email = Get.RandomEmail();
+            var mySummaryPage = Client.Login().LoginAs(email);
+
+            var helpers = new MockHelpers();
+            helpers.SelectMockedScenario(this.Client, "Scenario"+scenarioId.ToString("#"));
+
+            CheckPromiseSummaryText(scenarioId, mySummaryPage, expectedDueDateBalance, expectedDueDate);
+        }
+
+        /// <summary>
+        /// Checks Promise Summary Text on My Summary page
+        /// </summary>
+        /// <param name="scenarioId"></param>
+        /// <param name="mySummaryPage"></param>
+        /// <param name="expectedDueDateBalance"></param>
+        /// <param name="expectedDueDate"></param>
+        private void CheckPromiseSummaryText(int scenarioId, MySummaryPage mySummaryPage, decimal expectedDueDateBalance, DateTime expectedDueDate)
+        {
+
+            int expectedDaysTillDueDate = (expectedDueDate - DateTime.Today.Date).Days;
+            expectedDaysTillDueDate = expectedDaysTillDueDate < 0 ? -expectedDaysTillDueDate : expectedDaysTillDueDate;
+
+            if (PromiseSummaryTexts[scenarioId].Length == 0)
+            {
+                Assert.IsFalse(mySummaryPage.IsPromiseSummaryAvailable(), "Promise Summary should not be available");
+            }
+            else
+            {
+                string expectedPromiseSummaryText = PromiseSummaryTexts[scenarioId]
+                                                    .Replace("{£245}", "£" + String.Format("{0:0.00}", expectedDueDateBalance))
+                                                    .Replace("in {10}", "in " + expectedDaysTillDueDate.ToString("#"))
+                                                    .Replace("{10th May 2012}", Date.GetOrdinalDate(expectedDueDate, "ddd d MMM yyyy"))
+                                                    .Replace("{£456.34}", "£" + String.Format("{0:0.00}", expectedDueDateBalance));
+                if ((scenarioId == 7) && (expectedDueDate.Equals(DateTime.Today)))
+                {
+                    expectedPromiseSummaryText = "I promised to pay {£245} today ({10th May 2012})"
+                                                  .Replace("{£245}", "£" + String.Format("{0:0.00}", expectedDueDateBalance))
+                                                  .Replace("{10th May 2012}", Date.GetOrdinalDate(expectedDueDate, "ddd d MMM yyyy"));
+                }
+                Assert.AreEqual(expectedPromiseSummaryText, mySummaryPage.GetPromiseSummaryText);
+            }
+
+        }
+        #endregion
     }
 
 }
