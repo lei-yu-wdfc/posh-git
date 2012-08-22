@@ -8,6 +8,7 @@ using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Data;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Cs.Requests.Payments.Csapi.Commands;
+using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Core;
 
@@ -128,18 +129,10 @@ namespace Wonga.QA.DataTests.BiCustomerManagement
             application1.PutIntoArrears(50);
             //Load the Datawarehouse with 1 records for the second application (InArrears) and updates the [dw].[Application].[ApplicationStatusSK] with the new status(InArrears).
             CheckDiWarehouseApplicationStatusHistory(application1, false);
-
-            // Put the application into Hardship
-            var cmd = new CsReportHardshipCommand()
-            {
-                AccountId = application1.AccountId,
-                ApplicationId = application1.Id,
-                CaseId = Guid.NewGuid()
-            };
-            Drive.Cs.Commands.Post(cmd);
+            //Put the application into Hardship
+            ApplicationOperations.ReportHardship(application1, Guid.NewGuid());
             //Load the Datawarehouse with 1 records for the second application (Hardship) and updates the [dw].[Application].[ApplicationStatusSK] with the new status(Hardship).
             CheckDiWarehouseApplicationStatusHistory(application1, false);
-
             //write off the Application
             var cmd1 = new WriteOffApplicationCommand()
             {
@@ -149,7 +142,6 @@ namespace Wonga.QA.DataTests.BiCustomerManagement
             Drive.Cs.Commands.Post(cmd1);
             //Load the Datawarehouse with 1 records for the second application (WrittenOff) and updates the [dw].[Application].[ApplicationStatusSK] with the new status(WrittenOff).
             CheckDiWarehouseApplicationStatusHistory(application1, false);
-
             return;
         }
 
@@ -159,20 +151,15 @@ namespace Wonga.QA.DataTests.BiCustomerManagement
         {
             // Checking validy of data from service DB to HDS DB.
 
-            // Allow for CDC to pick up the data
-            Thread.Sleep(20000);            
             //Arrange
             var sourceData = Do.Until(() => _serviceApplicationStatusHistory.FindAllBy(ApplicationId: application.Id));
             int lastItem = sourceData.Count() - 1;
             int _count = 0;
-            var last = sourceData.OrderByIdDescending().First();
             // Allow for CDC to pick up the data
             Thread.Sleep(HdsUtilitiesAgentJob.CdcWaitTimeMilliseconds);
             _sqlserverAgentJobs.WaitForLoadExecutionCycle(HdsUtilitiesBase.SystemComponent.CDCStaging);
-            Thread.Sleep(HdsUtilitiesAgentJob.CdcWaitTimeMilliseconds);
             _sqlserverAgentJobs.WaitForLoadExecutionCycle(HdsUtilitiesBase.SystemComponent.HDS);
-            Thread.Sleep(20000);
-            
+           
             foreach (var sourceDataRow in sourceData)
             {
                //Checking validy of data from service DB to DIWAREHOUSE DB.
@@ -180,7 +167,6 @@ namespace Wonga.QA.DataTests.BiCustomerManagement
                 if(jobSuccess==false)
                 {
                     jobSuccess = SQLServerAgentJobs.Execute(_sqlserverAgentJobs.DiWarehouseWongaHdsLoadAgentJob);
-                    Thread.Sleep(30000); 
                 }
                 
                 var targetDataDiwarehouse = Do.With.Timeout(90).Until(() => _warehouseApplicationStatusHistory.ALL()
@@ -368,5 +354,6 @@ namespace Wonga.QA.DataTests.BiCustomerManagement
         //}
 
         #endregion "More Status to application like Complaint,Hardship etc"
+        
     }
 }
