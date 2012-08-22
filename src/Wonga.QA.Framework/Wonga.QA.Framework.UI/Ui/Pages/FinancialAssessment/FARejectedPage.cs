@@ -11,7 +11,7 @@ using Wonga.QA.Framework.UI.UiElements.Pages.Interfaces;
 
 namespace Wonga.QA.Framework.UI.UiElements.Pages.FinancialAssessment
 {
-    public class FARejectedPage : BasePage, IDecisionPage
+    public class FARejectedPage : BasePage, IFADecisionPage
     {
         public FARejectedPage(UiClient client, Validator validator = null)
             : base(client, validator)

@@ -340,6 +340,7 @@
     <Compile Include="Ui\Pages\Helpers\PropertiesHelper.cs" />
     <Compile Include="Ui\Pages\Helpers\ValidationHelper.cs" />
     <Compile Include="Ui\Pages\Helpers\ValidationRulesHelper.cs" />
+    <Compile Include="Ui\Pages\Interfaces\IFADecisionPage.cs" />
     <Compile Include="Ui\Pages\Interfaces\IRepayPaymentPage.cs" />
     <Compile Include="Ui\Pages\Interfaces\IExtensionPaymentPage.cs" />
     <Compile Include="Ui\Pages\Interfaces\ITopupDecisionPage.cs" />
