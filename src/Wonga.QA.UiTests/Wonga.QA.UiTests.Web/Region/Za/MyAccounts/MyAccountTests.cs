@@ -505,7 +505,7 @@ namespace Wonga.QA.UiTests.Web.Region.Za.MyAccounts
 
             var customer = CustomerBuilder.New().Build();
             var application = ApplicationBuilder.New(customer).Build();
-
+            
             var appId = _applications.FindByExternalId(application.Id).ApplicationId;
             var naedo = _scheduledPayments.FindByApplicationId(appId);
             Assert.IsNull(naedo);
@@ -517,7 +517,8 @@ namespace Wonga.QA.UiTests.Web.Region.Za.MyAccounts
             var debitOrderPage = repaymentOptionsPage.DebitOrderButtonClick();
             var debitOrderSuccessPage = debitOrderPage.Submit();
             var updatedMyAccountPage = debitOrderSuccessPage.BackToYourAccountButtonClick();
-            Assert.IsTrue(updatedMyAccountPage.GetStatusText.Contains(ContentMap.Get.MySummaryPage.DebitOrderSuccesText));
+            string successText = ContentMap.Get.MySummaryPage.DebitOrderSuccesText.Insert(13, "R" + application.LoanAmount.ToString() + ".00");
+            Assert.IsTrue(updatedMyAccountPage.GetStatusText.Contains(successText));
         }
     }
 }
