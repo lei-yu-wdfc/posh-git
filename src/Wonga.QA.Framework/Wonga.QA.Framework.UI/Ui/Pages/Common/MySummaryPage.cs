@@ -4,6 +4,7 @@ using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.Elements;
 using Wonga.QA.Framework.UI.Mappings;
+using Wonga.QA.Framework.UI.Ui.Validators;
 using Wonga.QA.Framework.UI.UiElements.Pages.Interfaces;
 
 namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
@@ -16,8 +17,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public TopupSlidersElement TopupSliders { get; set; }
 
         public IWebElement RepayButton;
-        
-        public MySummaryPage(UiClient client) : base(client)
+
+        public MySummaryPage(UiClient client, Validator validator = null) : base(client, validator)
         {
             
             switch(Config.AUT)

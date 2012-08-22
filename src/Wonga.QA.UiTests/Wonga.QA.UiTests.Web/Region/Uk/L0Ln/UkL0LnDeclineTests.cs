@@ -23,8 +23,9 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
        // private static string _footerTextMessage = " Please find the contact details below to obtain a free copy of your credit report.\r\n " + "Experian Automated advice line: 0844 481 8000 consumer.helpservice@uk.experian.com" + "Customer Support Centre PO Box 1136 Warrington WA4 9GQ\r\n\r\nCallcredit " + "General questions: care@callcreditcheck.com Customer Care Callcredit check PO Box 734 Leeds LS1 9GX";
         public enum RiskMaskForDeclinedLoan
         {
-            //TESTBankAccountMatchedToApplicant, - works fine
-            //TESTDateOfBirth, -- does not work
+            TESTBankAccountMatchedToApplicant,
+            //TESTExperianCreditBureauDataIsAvailable,
+            //TESTDateOfBirth, //-- does not work
             //TESTCustomerDateOfBirthIsCorrect, -- does not work
             //TESTPaymentCardIsValid, -- does not work
             //TESTCardMask, -- does not work
@@ -38,12 +39,10 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
             //TESTRepaymentPredictionPositive, -- does not work
             //TESTCallValidatePaymentCardIsValid, -- does not work
             //TESTExperianPaymentCardIsValid, -- does not work
-            //TESTRiskBankAccountMatchedToApplicant, -- works fine
-            TESTRiskPaymentCardIsValid,
-            //TESTExperianCreditBureauDataIsAvailable, --works fine
-            //TESTExperianCustomerIsSolvent,
-            //TESTExperianCustomerDateOfBirthIsCorrect,
-            //TESTExperianCustomerDateOfBirthIsCorrectSME,
+            //TESTRiskPaymentCardIsValid, -- does not work          
+            //TESTExperianCustomerIsSolvent, -- does not work
+            //TESTExperianCustomerDateOfBirthIsCorrect, -- does not work
+            //TESTExperianCustomerDateOfBirthIsCorrectSME, -- does not work
         }
 
         [FixtureSetUp]
@@ -66,11 +65,13 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
 
         [Test, JIRA("UKWEB-253"), Owner(Owner.StanDesyatnikov, Owner.PavithranVangiti)]
         [Pending ("Test in development")]
-        public void L0DeclinedWithVariousAdvices([EnumData(typeof(RiskMaskForDeclinedLoan))]RiskMaskForDeclinedLoan riskMask)
+        [Row(RiskMaskForDeclinedLoan.TESTBankAccountMatchedToApplicant)]
+        //[Row(RiskMaskForDeclinedLoan.TESTDateOfBirth)]
+        //[Row(RiskMaskForDeclinedLoan.TESTExperianCreditBureauDataIsAvailable)]
+        public void L0DeclinedWithVariousAdvices(RiskMaskForDeclinedLoan riskMask)
+        //public void L0DeclinedWithVariousAdvices([EnumData(typeof(RiskMaskForDeclinedLoan))]RiskMaskForDeclinedLoan riskMask)
         {
             var email = Get.RandomEmail();
-            //Console.WriteLine("Email: {0}", email);
-            //Console.WriteLine("riskMask: {0}", riskMask);
 
             _outputData.Add(email, Get.EnumToString(riskMask));
 
@@ -88,16 +89,16 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
 
             // TODO: check that "here" link in Decline Advice leads to correct page. Now it leads to Wonga.com/my-account, which does not exists.
 
-            /* TODO: Ln fails with Nearly There page instead of Decline Page
+            // TODO: Ln fails with Nearly There page instead of Decline Page
             // log in
-            var loginPage = Client.Login();
-            var mySummaryPage = loginPage.LoginAs(email);
+            //var loginPage = Client.Login();
+            //var mySummaryPage = loginPage.LoginAs(email);
 
-            var journeyLn = JourneyFactory.GetLnJourney(Client.Home());
-            declinedPage = journeyLn.Teleport<DeclinedPage>() as DeclinedPage;
+            //var journeyLn = JourneyFactory.GetLnJourney(Client.Home());
+            //var processingPage = journeyLn.Teleport<ProcessingPage>() as ProcessingPage;
 
-            Assert.IsTrue(declinedPage.DeclineAdviceExists());
-            Console.WriteLine("Ln Decline Advice: {0}", declinedPage.DeclineAdvice());*/
+            //Assert.IsTrue(declinedPage.DeclineAdviceExists());
+            //Console.WriteLine("Ln Decline Advice: {0}", declinedPage.DeclineAdvice());
         }
     }
 }
