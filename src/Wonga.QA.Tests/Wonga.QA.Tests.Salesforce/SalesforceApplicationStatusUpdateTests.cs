@@ -62,16 +62,9 @@ namespace Wonga.QA.Tests.Salesforce
         {
             Customer customer;
             Application application = CreateApplication(out customer);
-            FixedTermLoanSagaEntity loanSagaEntity = null;
-            ScheduledPaymentSagaEntity paymentSagaEntity = null;
-            Do.Until(() => loanSagaEntity = Drive.Db.OpsSagas.FixedTermLoanSagaEntities.SingleOrDefault(s => s.ApplicationGuid == application.Id));
-            application.MakeDueToday();
-            Do.Until(() => paymentSagaEntity = Drive.Db.OpsSagas.ScheduledPaymentSagaEntities.SingleOrDefault(s => s.ApplicationGuid == application.Id));
-            Drive.Msmq.Payments.Send(new TimeoutMessage() { SagaId = paymentSagaEntity.Id });
-            Do.While(paymentSagaEntity.Refresh);
-            Do.While(() => paymentSagaEntity = Drive.Db.OpsSagas.ScheduledPaymentSagaEntities
-                .SingleOrDefault(s => s.ApplicationGuid == application.Id));
-            Do.With.Timeout(2).Until(() =>
+            application.PutIntoArrears(2);
+
+            Do.With.Until(() =>
             {
                 var app = Salesforce.GetApplicationById(application.Id);
                 return app.Status_ID__c != null && app.Status_ID__c == (double)Framework.ThirdParties.Salesforce.ApplicationStatus.InArrears;
