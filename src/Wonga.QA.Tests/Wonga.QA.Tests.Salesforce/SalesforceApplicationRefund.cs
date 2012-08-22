@@ -38,8 +38,8 @@ namespace Wonga.QA.Tests.Salesforce
         {
             var caseId = Guid.NewGuid();
             var application = CreateLiveApplication();
-            SalesforceOperations.RewindDatesToMakeDueToday(application);
-            SalesforceOperations.MakeDueToday(application);
+            application.ExpireCard();  
+            application .MakeDueToday(application);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.DueToday);
             Refund(caseId, application);
         }

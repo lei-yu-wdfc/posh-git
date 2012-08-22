@@ -39,10 +39,8 @@ namespace Wonga.QA.Tests.Salesforce
         {
             var caseId = Guid.NewGuid();
             var application = CreateLiveApplication();
-            int id = ApplicationOperations.GetAppInternalId(application);
-            TimeSpan span = _fixedTermLoanAppTab.FindByApplicationId(id).NextDueDate - DateTime.Today;
-            application.RewindApplicationDates(span);
-            SalesforceOperations.MakeDueToday(application);
+            application.ExpireCard();  
+            application.MakeDueToday(application);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.DueToday);
             HardshipCycle(caseId, application);
          }

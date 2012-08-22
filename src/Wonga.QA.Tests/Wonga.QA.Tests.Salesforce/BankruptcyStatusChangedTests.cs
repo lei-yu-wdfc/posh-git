@@ -38,7 +38,8 @@ namespace Wonga.QA.Tests.Salesforce
         {
             var caseId = Guid.NewGuid();
             Application application = CreateLiveApplication();
-            MakeDueToday(application);
+            application.ExpireCard();
+            application.MakeDueToday(application);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.DueToday);
             ReportBankruptcy(application, caseId);
         }
@@ -146,12 +147,6 @@ namespace Wonga.QA.Tests.Salesforce
         {
             ApplicationOperations.ReportBankrupt(application, caseId);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.Bankrupt);
-        }
-
-        private void MakeDueToday(dynamic application)
-        {
-            SalesforceOperations.RewindDatesToMakeDueToday(application);
-            SalesforceOperations.MakeDueToday(application);
         }
 
         private Application CreateLiveApplication()

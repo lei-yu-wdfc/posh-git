@@ -73,21 +73,7 @@ namespace Wonga.QA.Tests.Salesforce
                                                                                    PreviousStatus: previousStatus,
                                                                                    CurrentStatus: currentStatus) );
         }
-
-        public static void MakeDueToday(dynamic application)
-        {
-            var ldd = LoanDueDateNotifiSagaEntityTab.FindAll(LoanDueDateNotifiSagaEntityTab.ApplicationId == application.Id).Single();
-            Drive.Msmq.Payments.Send(new Framework.Msmq.TimeoutMessage { SagaId = ldd.Id });
-            LoanDueDateNotifiSagaEntityTab.Update(ldd);
-        }
-
-        public static void RewindDatesToMakeDueToday(Application application)
-        {
-            int id = ApplicationOperations.GetAppInternalId(application);
-            TimeSpan span = FixedTermLoanAppTab.FindByApplicationId(id).NextDueDate - DateTime.Today;
-            application.RewindApplicationDates(span);
-        }
-
+		
         public static void CreateRepaymentArrangement(Customer customer,Application application)
         {
             var arrangementDetails = new[]

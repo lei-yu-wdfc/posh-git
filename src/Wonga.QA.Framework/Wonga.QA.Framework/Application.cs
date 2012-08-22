@@ -286,7 +286,7 @@ namespace Wonga.QA.Framework.Old
 			return this;
 		}
 
-        private Application ExpireCard()
+        public Application ExpireCard()
         {
             Customer customer = this.GetCustomer();
             Drive.Data.Payments.Db.PaymentCardsBase.UpdateByExternalId(ExternalId: customer.GetPaymentCard(),
