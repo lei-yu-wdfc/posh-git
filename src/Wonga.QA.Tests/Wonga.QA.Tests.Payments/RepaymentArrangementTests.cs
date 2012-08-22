@@ -234,10 +234,10 @@ namespace Wonga.QA.Tests.Payments
 		public void CancelRepaymentArrangementTest()
 		{
 			Customer customer = CustomerBuilder.New().Build();
-			Application application = ApplicationBuilder.New(customer).Build().PutIntoArrears(20);
+			Application application = ApplicationBuilder.New(customer).Build();
 
-			SalesforceOperations.CreateRepaymentArrangement(customer, application);
-			SalesforceOperations.CancelRepaymnetArrangement(application);
+            SalesforceOperations.CreateRepaymentArrangement(customer, application);
+            SalesforceOperations.CancelRepaymnetArrangement(application);
 		}
 
 		#region Helpers#
