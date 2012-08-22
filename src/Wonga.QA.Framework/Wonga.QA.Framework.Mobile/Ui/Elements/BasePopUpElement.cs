@@ -7,6 +7,7 @@ using MbUnit.Framework;
 using NHamcrest.Core;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Mobile.Mappings.Ui;
 using Wonga.QA.Framework.Mobile.Ui.Pages;
 
 namespace Wonga.QA.Framework.Mobile.Ui.Elements
@@ -144,8 +145,7 @@ namespace Wonga.QA.Framework.Mobile.Ui.Elements
             _mobilePhone.SendValue(number);
             _update.Click();
             var changeMyPhoneNUmbersPopUp = Do.Until(() => new ChangeMyPhoneNmmbersPopUpElement(Page));
-            var successPopUp = changeMyPhoneNUmbersPopUp.EnterPinAndUpdate();
-            successPopUp.Close();
+            changeMyPhoneNUmbersPopUp.EnterPinAndUpdate();
             return Do.Until(() => new MyPersonalDetailsPageMobile(Page.Client));
         }
     }
@@ -168,12 +168,11 @@ namespace Wonga.QA.Framework.Mobile.Ui.Elements
             _update = PopUp.FindElement(By.CssSelector("#edit-submit"));
         }
 
-        public SuccessPopUpElement EnterPinAndUpdate()
+        public void  EnterPinAndUpdate()
         {
             _pin.SendValue("0000");
             _update.Click();
-            return Do.Until(() => new SuccessPopUpElement(Page, "Thank you: your telephone number has been updated."));
-        }
+         }
     }
 
     public class MyLoanDetailsPopUpElement : BasePopUpElement
