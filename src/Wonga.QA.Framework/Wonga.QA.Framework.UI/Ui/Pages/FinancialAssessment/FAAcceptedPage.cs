@@ -11,11 +11,15 @@ using Wonga.QA.Framework.UI.UiElements.Pages.Interfaces;
 
 namespace Wonga.QA.Framework.UI.UiElements.Pages.FinancialAssessment
 {
-    public class FAAcceptedPage : BasePage, IDecisionPage
+    public class FAAcceptedPage : BasePage, IFADecisionPage
     {
         public FAAcceptedPage(UiClient client, Validator validator = null)
             : base(client, validator)
         {
+            if (!base.Url.Contains("/accepted"))
+            {
+                throw new Exception();
+            }
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.FinancialAssessment
         {
         }
 
-        public IDecisionPage WaitFor<T>() where T : IDecisionPage
+        public IFADecisionPage WaitFor<T>() where T : IFADecisionPage
         {
             if (typeof(T) == typeof(FAAcceptedPage))
                 return Do.With.Timeout(2).Until(() => new FAAcceptedPage(Client));
