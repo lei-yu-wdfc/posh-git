@@ -44,5 +44,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String PopupContentFrame { get; set; }
         public String SecciLink { get; set; }
         public String ExplanationLink { get; set; }
+        public String ButtonAccept { get; set; }
     }
 }

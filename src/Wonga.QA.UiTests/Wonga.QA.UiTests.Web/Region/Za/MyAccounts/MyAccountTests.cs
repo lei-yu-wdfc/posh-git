@@ -368,7 +368,7 @@ namespace Wonga.QA.UiTests.Web.Region.Za.MyAccounts
 
         }
 
-        [Test, JIRA("QA-219"), Category(TestCategories.SmokeTest)]
+        [Test, JIRA("QA-219"), Category(TestCategories.SmokeTest), Pending("ZA-2777")]
         public void CustomerShouldBeAbleToAddBankAccount()
         {
             var accountPreferences = Drive.Data.Payments.Db.AccountPreferences;
