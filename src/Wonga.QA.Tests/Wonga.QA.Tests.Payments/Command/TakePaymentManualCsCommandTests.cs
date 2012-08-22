@@ -17,6 +17,9 @@ namespace Wonga.QA.Tests.Payments.Command
 	[TestFixture, Parallelizable((TestScope.All))]
 	public class TakePaymentManualCsCommandTests
 	{
+		private static readonly dynamic Transactions = Drive.Data.Payments.Db.Transactions;
+		private static readonly dynamic ApplicationStatusHistory = Drive.Data.BiCustomerManagement.Db.ApplicationStatusHistory;
+
 		[Test, AUT(AUT.Wb), JIRA("SME-1161")]
 		public void ShouldCreateTransaction_WhenCommandIsValid()
 		{
@@ -131,14 +134,14 @@ namespace Wonga.QA.Tests.Payments.Command
 			});
 
 			Drive.Cs.Commands.Post(new TakePaymentManualCommand
-			                       	{
-			                       		Amount = 100.00m,
-			                       		ApplicationId = application.Id,
-			                       		Currency = CurrencyCodeEnum.GBP,
-			                       		PaymentCardId = customer.GetPaymentCard(),
-			                       		PaymentId = paymentId,
-			                       		SalesforceUser = "test.user@wonga.com"
-			                       	});
+									{
+										Amount = 100.00m,
+										ApplicationId = application.Id,
+										Currency = CurrencyCodeEnum.GBP,
+										PaymentCardId = customer.GetPaymentCard(),
+										PaymentId = paymentId,
+										SalesforceUser = "test.user@wonga.com"
+									});
 
 			var applicationId = Drive.Data.Payments.Db.Applications.FindByExternalId(application.Id).ApplicationId;
 
@@ -165,5 +168,142 @@ namespace Wonga.QA.Tests.Payments.Command
 																				Scope: (int)PaymentTransactionScopeEnum.Credit,
 																				Reference: "Payment card repayment from CS").Count() == 1);
 		}
+
+		[Test, AUT(AUT.Uk), JIRA("UKOPS-830"), Owner(Owner.ShaneMcHugh)]
+		public void ShouldCreateTransaction_WhenCommandIsValid_Uk()
+		{
+			var customer = CustomerBuilder.New().Build();
+			var application = ApplicationBuilder.New(customer).Build();
+
+			Guid paymentId = Guid.NewGuid();
+			Guid paymentCardId = customer.GetPaymentCard();
+			TakePaymentManual(application, paymentId, paymentCardId);
+
+			CheckDbForTransactionEntry(application);
+		}
+
+		[Test, AUT(AUT.Uk), JIRA("UKOPS-830"), Owner(Owner.ShaneMcHugh)]
+		public void ShouldReturnErrorAndNotInsertTransaction_WhenPaymentIdAlreadyExists_Uk()
+		{
+			var customer = CustomerBuilder.New().Build();
+			var application = ApplicationBuilder.New(customer).Build();
+
+			Guid paymentId = Guid.NewGuid();
+			Guid paymentCardId = customer.GetPaymentCard();
+			TakePaymentManual(application, paymentId, paymentCardId);
+
+			CheckDbForTransactionEntry(application);
+
+			var exception = Assert.Throws<ValidatorException>(() => TakePaymentManual(application, paymentId, paymentCardId));
+			Assert.Contains(exception.Errors, "CsRepayWithPaymentCard_PaymentId_Known");
+
+			CheckDbForTransactionEntry(application);
+		}
+
+		[Test, AUT(AUT.Uk), JIRA("UKOPS-830"), Owner(Owner.ShaneMcHugh)]
+		public void FullManualPayment_ShouldCreateTransactionAndStatusPaidInFull_WhenCommandIsValid_Uk()
+		{
+			var customer = CustomerBuilder.New().Build();
+			var application = ApplicationBuilder.New(customer).Build();
+
+			Guid paymentId = Guid.NewGuid();
+			Guid paymentCardId = customer.GetPaymentCard();
+			decimal amount = application.GetDueDateBalance();
+
+			Drive.Cs.Commands.Post(new TakePaymentManualCommand
+			{
+				Amount = amount,
+				ApplicationId = application.Id,
+				Currency = CurrencyCodeEnum.GBP,
+				PaymentCardId = paymentCardId,
+				PaymentId = paymentId,
+				SalesforceUser = "test.user@wonga.com"
+			});
+
+			Do.Until(() =>
+					Transactions.FindAllBy(Reference: "Payment card repayment from CS, no card holder present",
+										   ApplicationId: ApplicationOperations.GetAppInternalId(application),
+										   Scope: (int)PaymentTransactionScopeEnum.Credit,
+										   Type: PaymentTransactionEnum.CardPayment, Amount: amount));
+
+			Do.Until(() =>
+					 ApplicationStatusHistory.FindAllBy(
+						 ApplicationId: ApplicationOperations.GetAppInternalId(application),
+						 CurrentStatus: (double)Framework.ThirdParties.Salesforce.ApplicationStatus.PaidInFull,
+						 AccountId: application.AccountId));
+		}
+
+		[Test, AUT(AUT.Uk), JIRA("UKOPS-830"), Owner(Owner.ShaneMcHugh)]
+		public void ShouldCreateTransaction_WhenLoanIsInArrears_Uk()
+		{
+			var customer = CustomerBuilder.New().Build();
+			var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build().PutIntoArrears();
+
+			Guid paymentId = Guid.NewGuid();
+			Guid paymentCardId = customer.GetPaymentCard();
+			TakePaymentManual(application, paymentId, paymentCardId);
+
+			CheckDbForTransactionEntry(application);
+		}
+
+		[Test, AUT(AUT.Uk), JIRA("UKOPS-830"), Owner(Owner.ShaneMcHugh)]
+		public void FullManualPayment_ShouldCreateTransactionAndStatusPaidInFull_WhenLoanIsInArrears_Uk()
+		{
+			var customer = CustomerBuilder.New().Build();
+			var application = ApplicationBuilder.New(customer).Build().PutIntoArrears(5);
+
+			Guid paymentId = Guid.NewGuid();
+			Guid paymentCardId = customer.GetPaymentCard();
+			decimal amount = application.GetDueDateBalance();
+
+			Drive.Cs.Commands.Post(new TakePaymentManualCommand
+			{
+				Amount = amount,
+				ApplicationId = application.Id,
+				Currency = CurrencyCodeEnum.GBP,
+				PaymentCardId = paymentCardId,
+				PaymentId = paymentId,
+				SalesforceUser = "test.user@wonga.com"
+			});
+
+			Do.Until(() =>
+					Transactions.FindAllBy(Reference: "Payment card repayment from CS, no card holder present",
+										   ApplicationId: ApplicationOperations.GetAppInternalId(application),
+										   Scope: (int)PaymentTransactionScopeEnum.Credit,
+										   Type: PaymentTransactionEnum.CardPayment, Amount: amount));
+
+			Do.Until(() =>
+					 ApplicationStatusHistory.FindAllBy(
+						 ApplicationId: ApplicationOperations.GetAppInternalId(application),
+						 CurrentStatus: (double)Framework.ThirdParties.Salesforce.ApplicationStatus.PaidInFull,
+						 AccountId: application.AccountId));
+		}
+
+		#region helpers#
+
+		private void TakePaymentManual(dynamic application, Guid paymentId, Guid paymentCardId)
+		{
+			Drive.Cs.Commands.Post(new TakePaymentManualCommand
+			{
+				Amount = 100.00m,
+				ApplicationId = application.Id,
+				Currency = CurrencyCodeEnum.GBP,
+				PaymentCardId = paymentCardId,
+				PaymentId = paymentId,
+				SalesforceUser = "test.user@wonga.com"
+			});
+		}
+
+		private void CheckDbForTransactionEntry(dynamic application)
+		{
+			Do.Until(() =>
+					Transactions.FindAllBy(Reference: "Payment card repayment from CS, no card holder present",
+										   ApplicationId: ApplicationOperations.GetAppInternalId(application),
+										   Scope: (int)PaymentTransactionScopeEnum.Credit,
+										   Type: PaymentTransactionEnum.CardPayment, Amount: 100.00m));
+		}
+
+		#endregion helpers#
+
 	}
 }
