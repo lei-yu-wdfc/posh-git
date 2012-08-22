@@ -21,6 +21,8 @@ namespace Wonga.QA.Tests.Payments
         private const string SendCollectionsReminderA4Email = "Email.SendCollectionsReminderA4Email";
         private const string SendCollectionsReminderA5Email = "Email.SendCollectionsReminderA5Email";
         private const string SendCollectionsReminderA6Email = "Email.SendCollectionsReminderA6Email";
+		private const string SendCollectionsReminderA7Email = "Email.SendCollectionsReminderA7Email";
+		private const string LocalTimeOfDayToSendPaymentReminderEmail = "Comms.LocalTimeOfDayToSendPaymentReminderEmail";
 
         [FixtureSetUp]
         public static void FixtureSetUp()
@@ -145,21 +147,29 @@ namespace Wonga.QA.Tests.Payments
         }
 
         [Test, AUT(AUT.Ca), JIRA("CA-1810"), ExpectedException(typeof(DoException))]
-        public void WhenLoanGoesIntoArrearsThenThereShouldBeNoEmailSentOnDay34()
+		public void WhenLoanGoesIntoArrearsThenThereShouldBeNoEmailSentOnDay34()
         {
             const int numberOfDaysInArrears = 34;
+        	int expectedEmailsToBeSent = 7;
             var customerBuilder = CustomerBuilder.New().WithProvinceInAddress(ProvinceEnum.ON);
             var customer = customerBuilder.Build();
             var application = ApplicationBuilder.New(customer).WithLoanTerm(10).Build();
 
             application.PutIntoArrears(numberOfDaysInArrears);
 
+			var utcDateTimeForReminderEmail = GetUtcDateTimeForReminderEmail(customer.Province);
+        	if (DateTime.UtcNow <= utcDateTimeForReminderEmail)
+			{
+				Console.WriteLine("ReminderEmail will be sent");
+				expectedEmailsToBeSent++;
+			}
+
             TimeoutInArrearsNoticeSaga(application, numberOfDaysInArrears);
 
-            Assert.IsTrue(VerifyTotalNumberOfEmailsSent(customer, 7));
+        	Assert.IsTrue(VerifyTotalNumberOfEmailsSent(customer, expectedEmailsToBeSent));
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1810")]
+    	[Test, AUT(AUT.Ca), JIRA("CA-1810")]
         public void WhenLoanGoesIntoArrearsForBcCustomerThenA2EmailShouldBeSentOnDay0WithoutDefaultChargeBeingApplied()
         {
             const String amount = "110.00";
@@ -207,5 +217,35 @@ namespace Wonga.QA.Tests.Payments
             var db = new DbDriver().QaData;
             return Do.With.Timeout(2).Until(() => db.Emails.Where(e => e.EmailAddress == customer.Email).Count() > toltalSent);
         }
+
+		private static DateTime GetUtcDateTimeForReminderEmail(ProvinceEnum province)
+		{
+			TimeSpan localTimeForReminderEmail =
+				TimeSpan.Parse(Drive.Data.Ops.GetServiceConfiguration(LocalTimeOfDayToSendPaymentReminderEmail, "07:00:00"));
+
+			var localDateTimeForReminderEmail = DateTime.SpecifyKind(
+													DateTime.UtcNow.Date.Add(localTimeForReminderEmail),
+													DateTimeKind.Unspecified);
+
+			var timeZoneInfo = GetTimeZoneInfoFor(province);
+
+			var utcDateTimeForReminderEmail = TimeZoneInfo.ConvertTimeToUtc(localDateTimeForReminderEmail, timeZoneInfo);
+			return utcDateTimeForReminderEmail;
+		}
+
+		private static TimeZoneInfo GetTimeZoneInfoFor(ProvinceEnum province)
+		{
+			switch (province)
+			{
+				case ProvinceEnum.AB:
+					return TimeZoneInfo.FindSystemTimeZoneById("Mountain Standard Time");
+
+				case ProvinceEnum.BC:
+					return TimeZoneInfo.FindSystemTimeZoneById("Pacific Standard Time");
+			}
+
+			return TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+		}
+
     }
 }
