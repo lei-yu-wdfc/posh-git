@@ -2,7 +2,6 @@
 using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
-using Wonga.QA.Framework.Api.Requests.Comms.Commands.Ca;
 using Wonga.QA.MigrationTests.Utils;
 using System.Collections;
 
@@ -23,7 +22,18 @@ namespace Wonga.QA.MigrationTests
 
         [Test]
         [Pending]
+        [Description("This is the V3 Scorecard Testing. For any info please contact alex.pricope@wonga.com")]
         public void TestV2LnSeleniumJourney()
+        {
+            //Note:1) I have a list of V2 deserialized requests
+
+            //Note:2) For each of this, run V3
+
+
+        }
+
+        [TearDown]
+        public void Shutdown()
         {
             
         }
