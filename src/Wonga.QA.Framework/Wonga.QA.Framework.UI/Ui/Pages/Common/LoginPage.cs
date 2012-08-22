@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading;
 using OpenQA.Selenium;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.UI.Ui.Validators;
 using Wonga.QA.Framework.UI.UiElements.Pages.Interfaces;
 using Wonga.QA.Framework.UI.Mappings;
 
@@ -31,6 +32,16 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _password.SendKeys(Get.GetPassword());
             _buttonLogin.Click();
             return new MySummaryPage(Client);
+        }
+
+        public MySummaryPage LoginAsIgnoreError(string email)
+        {
+            Validator validator = new ValidatorBuilder().Default(Client).WithoutErrorsCheck().Build();
+
+            _username.SendKeys(email);
+            _password.SendKeys(Get.GetPassword());
+            _buttonLogin.Click();
+            return new MySummaryPage(Client, validator);
         }
 
         public MySummaryPage LoginAs(string email, string password)
