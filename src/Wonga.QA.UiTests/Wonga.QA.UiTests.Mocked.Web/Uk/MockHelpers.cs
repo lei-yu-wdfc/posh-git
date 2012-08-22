@@ -10,13 +10,13 @@ namespace Wonga.QA.UiTests.Mocked.Web.Uk
         /// Selects a scenario in the Mock Settings menu
         /// </summary>
         /// <param name="scenarionName"></param>
-        public void SelectMockedScenario(string scenarionName)
+        public void SelectMockedScenario(UiClient client, string scenarionName)
         {
-            IWebElement mockedScenariosMenu = Client.Driver.FindElement(By.Id("staticmock-trigger"));
+            IWebElement mockedScenariosMenu = client.Driver.FindElement(By.Id("staticmock-trigger"));
             mockedScenariosMenu.Click();
-            IWebElement mockedScenariosDropBox = Client.Driver.FindElement(By.Id("edit-user-status"));
+            IWebElement mockedScenariosDropBox = client.Driver.FindElement(By.Id("edit-user-status"));
             mockedScenariosDropBox.SelectOption(scenarionName);
-            Client.Driver.FindElement(By.XPath("//input[@value='Save settings']")).Click();
+            client.Driver.FindElement(By.XPath("//input[@value='Save settings']")).Click();
         }
     }
 }

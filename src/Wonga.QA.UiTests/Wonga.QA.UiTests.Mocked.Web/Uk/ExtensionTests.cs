@@ -6,6 +6,7 @@ using Wonga.QA.Framework.UI;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.UiTests.Web;
+using Wonga.QA.UiTests.Mocked.Web.Uk;
 
 
 namespace Wonga.QA.UiTests.Mocked.Web.Uk
@@ -14,7 +15,6 @@ namespace Wonga.QA.UiTests.Mocked.Web.Uk
     internal class ExtensionTests : UiTest
     {
         [Test, AUT(AUT.Uk), JIRA("UK-427", "UK-1627", "UK-1746", "UKWEB-911"), Owner(Owner.StanDesyatnikov)]
-        [Pending("Waiting for refactored 'Mock Settings' popup window in WIP")]
         public void ExtensionJourneyPass()
         {
             string email = Get.RandomEmail();
@@ -23,7 +23,8 @@ namespace Wonga.QA.UiTests.Mocked.Web.Uk
             var loginPage = Client.Login();
             var mySummaryPage = loginPage.LoginAs(email);
 
-            SelectMockedScenario("Scenario3");
+            var helper = new MockHelpers();
+            helper.SelectMockedScenario(Client, "Scenario3");
 
             mySummaryPage.ChangePromiseDateButtonClick();
             var requestPage = new ExtensionRequestPage(this.Client);
@@ -40,16 +41,6 @@ namespace Wonga.QA.UiTests.Mocked.Web.Uk
             var dealDonePage = new ExtensionDealDonePage(this.Client);
             Assert.IsFalse(dealDonePage.IsDealDonePageExtensionAmountNotPresent());
             Assert.IsFalse(dealDonePage.IsDealDonePageDateTokenPresent());
-        }
-
-        private void SelectMockedScenario(string scenarionName)
-        {
-            IWebElement mockedScenariosMenu = Client.Driver.FindElement(By.Id("staticmock-trigger"));
-            mockedScenariosMenu.Click();
-            IWebElement mockedScenariosDropBox = Client.Driver.FindElement(By.Id("edit-user-status"));
-            //Do.With.Message("Mocked Scenarios Drop Box is not displayed").Timeout(new TimeSpan(0,0,3)).Until(() => mockedScenariosDropBox.SelectOption(option => option.Trim() == scenarionName));
-            mockedScenariosDropBox.SelectOption(scenarionName);
-            Client.Driver.FindElement(By.XPath("//input[@value='Save settings']")).Click();
         }
     }
 }
