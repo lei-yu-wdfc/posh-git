@@ -244,6 +244,10 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual FAExpenditurePage FinancialAssessmentExpenditurePage { get; set; }
         public virtual FADebtsPage FinancialAssessmentDebtsPage { get; set; }
         public virtual FARepaymentPlanPage FinancialAssessmentRepaymentPlanPage { get; set; }
+        public virtual FARepaymentPlanPage FinancialAssessmenWaitPage { get; set; }
+        public virtual FARepaymentPlanPage FinancialAssessmentAcceptedPage { get; set; }
+        public virtual FARepaymentPlanPage FinancialAssessmentCounterOfferPage { get; set; }
+        public virtual FARepaymentPlanPage FinancialAssessmentRejectedPage { get; set; }
         #endregion
     }
 }
