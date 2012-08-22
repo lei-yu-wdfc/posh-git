@@ -4,6 +4,7 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api.Requests.Risk.Commands.PayLater.Uk;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.Db.Risk;
 using Wonga.QA.Framework.Msmq.Messages.Comms.PublicMessages;
 using Wonga.QA.Framework.Msmq.Messages.Payments.PublicMessages;
 using Wonga.QA.Framework.Msmq.Messages.Risk;
@@ -11,39 +12,66 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.ServiceTests.Risk.PayLater
 {
+    [Parallelizable(TestScope.All)]
     public class RiskPayLaterApiCommandsTests
     {
-        private readonly dynamic _riskSavePayLaterCustomerDetailsSagaEntity = Drive.Data.OpsSagas.Db.RiskSavePayLaterCustomerDetailsSagaEntity;
-        private readonly dynamic _employmentDetails = Drive.Db.Risk.EmploymentDetails;
         private Guid _accountId;
 
-        [SetUp]
-        public void SetUp()
+        [Test, AUT(AUT.Uk)]
+        public void RiskSavePayLaterCustomerDetails()
         {
             _accountId = Guid.NewGuid();
+
+            Drive.Api.Commands.Post(new RiskSavePayLaterCustomerDetailsPayLaterUkCommand
+            {
+                AccountId = _accountId,
+                Forename = "Bart",
+                Surname = "Simpson",
+                Email = Get.RandomEmail(),
+                DateOfBirth = Get.GetDoB(),
+                MobilePhone = Get.GetMobilePhone()
+            });
+
+            Drive.Msmq.Risk.Send(new IPersonalDetailsAdded {AccountId = _accountId, CreatedOn = DateTime.UtcNow});
+
+            Do.Until(() => Drive.Db.Risk.RiskAccounts.Single(a=> a.AccountId == _accountId));
         }
 
-        [Test, AUT(AUT.Uk), Ignore("Awaiting bug fixes")]
+
+        [Test, AUT(AUT.Uk), DependsOn("RiskSavePayLaterCustomerDetails")]
         public void RiskSavePayLaterCustomerAddress()
         {
+            const string postCode = "SW6 6PN";
+            
             Drive.Api.Commands.Post(new RiskSavePayLaterCustomerAddressPayLaterUkCommand
                                         {
                                             AccountId = _accountId,
                                             AddressId = Guid.NewGuid(),
                                             Flat = Get.RandomString(5),
                                             HouseNumber = Get.RandomInt(1, 1000),
-                                            Postcode = "SW6 6PN",
+                                            Postcode = postCode,
                                             Street = Get.RandomString(15),
                                             Town = Get.RandomString(10)
                                         });
 
-            CreateIRiskAccountAdded();
             CreateICurrentAddressAdded();
 
-            Do.Until(() => Drive.Db.Risk.RiskAccounts.Single(a => a.AccountId == _accountId));
+            RiskAccountEntity riskAccount = null;
+
+            Do.Until(() => riskAccount = Drive.Db.Risk.RiskAccounts.Single(a => a.AccountId == _accountId));
+
+            Assert.IsNotNull(riskAccount.AddressUniqueHash);
         }
 
-        [Test, AUT(AUT.Uk), Ignore("Awaiting bug fixes")]
+        private void CreateICurrentAddressAdded()
+        {
+            Drive.Msmq.Risk.Send(new ICurrentAddressAdded
+            {
+                AccountId = _accountId,
+            });
+        }
+
+        [Test, AUT(AUT.Uk)]
         public void RiskSavePayLaterEmploymentDetails()
         {
             var accountId = Guid.NewGuid();
@@ -57,42 +85,7 @@ namespace Wonga.QA.ServiceTests.Risk.PayLater
                                             EmploymentStatus = "EmployedFullTime"
                                         });
 
-            Do.Until(() => _employmentDetails.FindByAccountId(accountId));
-        }
-
-        [Test, AUT(AUT.Uk), Ignore("Awaiting bug fixes")]
-        public void RiskSavePayLaterCustomerDetails()
-        {
-            var accountId = Guid.NewGuid();
-
-            Drive.Api.Commands.Post(new RiskSavePayLaterCustomerDetailsPayLaterUkCommand
-                                        {
-                                            AccountId = accountId,
-                                            Forename = "Bart",
-                                            Surname = "Simpson",
-                                            Email = Get.RandomEmail(),
-                                            DateOfBirth = Get.GetDoB(),
-                                            MobilePhone = Get.GetMobilePhone()
-                                        });
-
-            Do.Until(() => _riskSavePayLaterCustomerDetailsSagaEntity.FindByAccountId(accountId));
-        }
-
-        private void CreateICurrentAddressAdded()
-        {
-            Drive.Msmq.Risk.Send(new ICurrentAddressAdded
-            {
-                AccountId = _accountId,
-            });
-        }
-
-        private void CreateIRiskAccountAdded()
-        {
-            Drive.Msmq.Risk.Send(new IRiskAccountAdded
-            {
-                AccountId = _accountId,
-                CreatedOn = DateTime.UtcNow
-            });
+            Do.Until(() => Drive.Db.Risk.EmploymentDetails.Single(ed => ed.AccountId == accountId));
         }
     }
 }
