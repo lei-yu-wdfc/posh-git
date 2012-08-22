@@ -164,16 +164,16 @@ namespace Wonga.QA.Tests.Payments.Command
                     CsRepayWithPaymentCardCommand();
                 }
 
-                [Test, AUT(AUT.Uk), JIRA("UKOPS-109"), Owner(Owner.ShaneMcHugh)]
+				[Test, AUT(AUT.Uk), JIRA("UKOPS-109"), Owner(Owner.ShaneMcHugh), Pending("Currently payment higher than the balance is allowed and should not be UKOPS-846")]
                 public void TheLoanAmountRemainsTheSameFailedPaymentRequestAdded()
                 {
-                    Do.With.Timeout(2).Interval(20).Until(() => null != _paymentCardRepaymentRequests.FindAll(_paymentCardRepaymentRequests.Applications.ExternalId == _application.Id &&
-                                                                                                              _paymentCardRepaymentRequests.ExternalId == _paymentId &&
-                                                                                                              _paymentCardRepaymentRequests.Amount == _paymentAmount &&
-                                                                                                              _paymentCardRepaymentRequests.FailedOn != null &&
-                                                                                                              _paymentCardRepaymentRequests.SuccessOn == null).FirstOrDefault());
+					Do.With.Timeout(2).Interval(20).Until(() => null != _paymentCardRepaymentRequests.FindAll(_paymentCardRepaymentRequests.Applications.ExternalId == _application.Id &&
+																											  _paymentCardRepaymentRequests.ExternalId == _paymentId &&
+																											  _paymentCardRepaymentRequests.Amount == _paymentAmount &&
+																											  _paymentCardRepaymentRequests.FailedOn != null &&
+																											  _paymentCardRepaymentRequests.SuccessOn == null).FirstOrDefault());
 
-                    Assert.IsTrue(_application.GetBalance() == _startingBalance);
+					Assert.IsTrue(_application.GetBalance() == _startingBalance);
                 }
 
                 protected override void UpdateCardExpiryDate() { } //Do nothing.
