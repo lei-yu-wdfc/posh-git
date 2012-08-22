@@ -11,5 +11,6 @@ namespace Wonga.QA.Framework.Mobile.Mappings.Pages
         public String PasswordLink { get; set; }
         public String PhoneLink { get; set; }
         public String CommunicationLink { get; set; }
+        public String MobilephoneUpdateSuccessTitle { get; set; }
     }
 }
