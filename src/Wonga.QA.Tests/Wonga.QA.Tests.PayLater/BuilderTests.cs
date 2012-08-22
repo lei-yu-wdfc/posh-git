@@ -17,7 +17,7 @@ namespace Wonga.QA.Tests.PayLater
 			_account = AccountBuilder.PayLater.New().Build();
 		}
 
-		[Test, DependsOn("ApplicationBuilder_CanBuild_AnAccount"), Pending("Until ApplicationBuilder is completed")]
+		[Test, DependsOn("AccountBuilder_CanBuild_AnAccount"), Pending("Until ApplicationBuilder is completed")]
 		public void ApplicationBuilder_CanBuild_AnApplication()
 		{
 			ApplicationBuilder.PayLater.New(_account).Build();
