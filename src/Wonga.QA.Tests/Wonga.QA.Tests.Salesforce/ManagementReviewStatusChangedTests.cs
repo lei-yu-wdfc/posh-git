@@ -29,7 +29,8 @@ namespace Wonga.QA.Tests.Salesforce
         {
             var caseId = Guid.NewGuid();
             var application = CreateLiveApplication();
-            MakeDueToday(application);
+            application.ExpireCard();
+            application.MakeDueToday();
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.DueToday);
             ManagementReview(application, caseId);
             ApplicationOperations.RemoveManagementReview(application, caseId);
@@ -168,12 +169,6 @@ namespace Wonga.QA.Tests.Salesforce
         {
             ApplicationOperations.ManagementReview(application, caseId);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)Framework.ThirdParties.Salesforce.ApplicationStatus.ManagementReview);
-        }
-
-        private void MakeDueToday(dynamic application)
-        {
-            SalesforceOperations.RewindDatesToMakeDueToday(application);
-            SalesforceOperations.MakeDueToday(application);
         }
 
         private Application CreateLiveApplication()
