@@ -73,7 +73,8 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         {
             Client.Driver.Manage().Window.Maximize();
             var loginPage = Client.Login();
-            loginPage.LoginAsIgnoreError(_emailL0);
+            loginPage.LoginAs(_emailL0);
+            //loginPage.LoginAsIgnoreError(_emailL0);
             Console.WriteLine(_emailL0);
 
             // Save user's cookie
@@ -187,6 +188,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Client.Driver.Manage().Window.Maximize();
             var loginPage = Client.Login();
             loginPage.LoginAs(_emailLn);
+            //loginPage.LoginAsIgnoreError(_emailLn);
             var homePage = Client.Home();
 
             // Save cookie
