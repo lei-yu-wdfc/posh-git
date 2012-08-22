@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Framework.UI.Ui.Pages.Helpers;
 using Wonga.QA.Framework.UI.UiElements.Pages;
 using Wonga.QA.Framework.UI.UiElements.Pages.FinancialAssessment;
 
@@ -17,6 +18,7 @@ namespace Wonga.QA.Framework.UI.Journey
 
             _submit = true;
 
+            #region AboutYou
             _firstName = Get.GetName();
             _lastName = Get.RandomString(10);
             _houseNumber = Get.RandomString(10);
@@ -25,7 +27,9 @@ namespace Wonga.QA.Framework.UI.Journey
             _yourHousehold = Get.RandomInt(1, 5).ToString();
             _childrenInHousehold = Get.RandomInt(1, 5).ToString();
             _numberOfVehiles = Get.RandomInt(1, 5).ToString();
+            #endregion AboutYou
 
+            #region Income
             _salaryAfterTax = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
             _partnerSalaryAfterTax = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
             _jobseekerAllowance = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
@@ -40,7 +44,11 @@ namespace Wonga.QA.Framework.UI.Journey
             _incomeFromBoardersOrLodgers = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
             _studentLoansOrGrants = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
             _otherIncome = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
+            #endregion 
 
+            _rent = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
+            
+            #region Debts
             _rentPayments = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
             _mortgage = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
             _otherSecuredLoans = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
@@ -70,13 +78,24 @@ namespace Wonga.QA.Framework.UI.Journey
             _nonPriorityDebtsAmount8 = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
             _nonPriorityDebtsCreditor9 = Get.GetName();
             _nonPriorityDebtsAmount9 = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
+            #endregion 
 
+            #region RepaymentPlan
+            _firstRepaymentDate = DateTime.UtcNow.AddDays(3+ Convert.ToInt32(Drive.Db.Ops.ServiceConfigurations.Where(sc =>
+                sc.Key == "Payments.RepaymentArrangementFirstRepaymentMinDays").Single().Value)).ToShortDate();
+            _paymentFrequency = "Biweekly";
+            _repaymentAmount = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
+            #endregion 
+            
             journey.Add(typeof(FinancialAssessmentPage), GetStarted);
             journey.Add(typeof(FAAboutYouPage), PassAboutYou);
             journey.Add(typeof(FAIncomePage), PassIncomePage);
             journey.Add(typeof(FAExpenditurePage), PassExpenditurePage);
             journey.Add(typeof(FADebtsPage), PassDebtsPage);
             journey.Add(typeof(FARepaymentPlanPage), PassRepaymentPlanPage);
+            journey.Add(typeof(FAAcceptedPage), PassAcceptedPage);
+            journey.Add(typeof(FACounterOfferPage), PassCounterOfferPage);
+            journey.Add(typeof(FARejectedPage), PassRejectedPage);
         }
 
         protected override BaseFALnJourney GetStarted(bool submit = true)
@@ -138,6 +157,8 @@ namespace Wonga.QA.Framework.UI.Journey
         {
             var faExpenditurePage = CurrentPage as FAExpenditurePage;
 
+            faExpenditurePage.Rent = _rent;
+
             if (submit)
             {
                 CurrentPage = faExpenditurePage.NextClick() as FADebtsPage;
@@ -191,7 +212,45 @@ namespace Wonga.QA.Framework.UI.Journey
 
         protected override BaseFALnJourney PassRepaymentPlanPage(bool submit = true)
         {
+            var farepaymentPlanPage = CurrentPage as FARepaymentPlanPage;
+
+            farepaymentPlanPage.FirstRepaymentDate = _firstRepaymentDate;
+            farepaymentPlanPage.PaymentFrequency = _paymentFrequency;
+            farepaymentPlanPage.RepaymentAmount = _repaymentAmount;
+
+            if (submit)
+            {
+                CurrentPage = farepaymentPlanPage.NextClick() as FAWaitPage;
+            }
             return this;
         }
+
+        protected override BaseFALnJourney PassAcceptedPage(bool submit = true)
+        {
+            var fawaitPage = CurrentPage as FAWaitPage;
+
+            fawaitPage.WaitFor<FAAcceptedPage>();
+
+            return this;
+        }
+
+        protected override BaseFALnJourney PassCounterOfferPage(bool submit = true)
+        {
+            var fawaitPage = CurrentPage as FAWaitPage;
+
+            fawaitPage.WaitFor<FACounterOfferPage>();
+
+            return this;
+        }
+
+        protected override BaseFALnJourney PassRejectedPage(bool submit = true)
+        {
+            var fawaitPage = CurrentPage as FAWaitPage;
+
+            fawaitPage.WaitFor<FARejectedPage>();
+
+            return this;
+        }
+
     }
 }

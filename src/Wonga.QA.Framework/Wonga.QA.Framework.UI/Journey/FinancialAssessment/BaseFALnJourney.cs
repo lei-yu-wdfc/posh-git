@@ -38,6 +38,8 @@ namespace Wonga.QA.Framework.UI
         protected String _studentLoansOrGrants;
         protected String _otherIncome;
 
+        protected String _rent;
+
         protected String _rentPayments;
         protected String _mortgage;
         protected String _otherSecuredLoans;
@@ -68,12 +70,36 @@ namespace Wonga.QA.Framework.UI
         protected String _nonPriorityDebtsCreditor9;
         protected String _nonPriorityDebtsAmount9;
 
+        protected String _firstRepaymentDate;
+        protected String _paymentFrequency;
+        protected String _repaymentAmount;
+
+        protected BasePage _desisionPage;
+
         public BasePage CurrentPage { get; set; }
 
         public BasePage Teleport<T>()
         {
-            var pageType = typeof(T);
-            var currentIndex = CurrentPage == null ? 0 : journey.Keys.ToList().IndexOf(CurrentPage.GetType());
+            var pageType = typeof (T);
+
+            if (pageType == typeof (FAAcceptedPage))
+                WithRepaymentAmount("12414");
+
+            if (pageType == typeof (FACounterOfferPage))
+            {
+                WithTotalIncome("121234");
+
+                WithRepaymentAmount("0");
+            }
+        
+
+    if (pageType == typeof(FARejectedPage))
+    {
+        WithTotalExpediture("121234");
+        WithRepaymentAmount("0");
+    }
+
+        var currentIndex = CurrentPage == null ? 0 : journey.Keys.ToList().IndexOf(CurrentPage.GetType());
             for (int i = currentIndex; i < journey.Keys.Count; i++)
             {
                 if (CurrentPage.GetType() == pageType && pageType != typeof(FinancialAssessmentPage))
@@ -98,6 +124,9 @@ namespace Wonga.QA.Framework.UI
         protected abstract BaseFALnJourney PassExpenditurePage(bool submit = true);
         protected abstract BaseFALnJourney PassDebtsPage(bool submit = true);
         protected abstract BaseFALnJourney PassRepaymentPlanPage(bool submit = true);
+        protected abstract BaseFALnJourney PassAcceptedPage(bool submit = true);
+        protected abstract BaseFALnJourney PassCounterOfferPage(bool submit = true);
+        protected abstract BaseFALnJourney PassRejectedPage(bool submit = true);
 
         public virtual BaseFALnJourney FillAndStop()
         {
@@ -114,6 +143,48 @@ namespace Wonga.QA.Framework.UI
         public virtual BaseFALnJourney WithEmployer(string employer)
         {
             _employer = employer;
+            return this;
+        }
+
+        public virtual BaseFALnJourney WithFirstRepaymentDate(string firstRepaymentDate)
+        {
+            _firstRepaymentDate = firstRepaymentDate;
+            return this;
+        }
+
+        public virtual BaseFALnJourney WithPaymentFrequency(string paymentFrequency)
+        {
+            _paymentFrequency = paymentFrequency;
+            return this;
+        }
+
+        public virtual BaseFALnJourney WithRepaymentAmount(string repaymentAmount)
+        {
+            _repaymentAmount = repaymentAmount;
+            return this;
+        }
+
+        public virtual BaseFALnJourney WithTotalIncome(string totalIncome)
+        {
+            _salaryAfterTax = totalIncome;
+            return this;
+        }
+
+        public virtual BaseFALnJourney WithTotalExpediture(string totalExpediture)
+        {
+            _rent = totalExpediture;
+            return this;
+        }
+
+        public virtual BaseFALnJourney WithTotalNonPriorityDebts(string nonPriorityDebts)
+        {
+            _nonPriorityDebtsAmount1 = nonPriorityDebts;
+            return this;
+        }
+
+        public virtual BaseFALnJourney WithTotalPriorityDebts(string priorityDebts)
+        {
+            _rentPayments = priorityDebts;
             return this;
         }
     }
