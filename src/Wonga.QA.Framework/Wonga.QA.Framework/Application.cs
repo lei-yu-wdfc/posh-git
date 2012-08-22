@@ -298,7 +298,8 @@ namespace Wonga.QA.Framework.Old
         {
             Customer customer = this.GetCustomer();
             Drive.Data.Payments.Db.PaymentCardsBase.UpdateByExternalId(ExternalId: customer.GetPaymentCard(),
-                        ExpiryDate: new DateTime(DateTime.Now.Year + 2, 1, 31));
+                ExpiryDate: new DateTime(DateTime.Now.Year + 2, 1, 31), DeactivatedOn: null, DeactivateReason: null);
+
             return this;
         }
 
