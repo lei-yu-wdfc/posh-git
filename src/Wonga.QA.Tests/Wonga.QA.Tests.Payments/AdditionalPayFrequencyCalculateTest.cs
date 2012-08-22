@@ -1,19 +1,18 @@
 ﻿using System;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
-using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Enums;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
 using Wonga.QA.Tests.Payments.Enums;
 using Wonga.QA.Tests.Payments.Helpers.Ca;
 
-namespace Wonga.QA.Tests.Risk
+namespace Wonga.QA.Tests.Payments
 {
     [Parallelizable(TestScope.All)]
     class AdditionalPayFrequencyCalculateTest
     {
-        [Test, AUT(AUT.Ca), JIRA("CA-2444")]
+		[Test, AUT(AUT.Ca), JIRA("CA-2444"), Owner(Owner.TarasKudryavtsev)]
         public void TwiceMonthly15thAnd30thIncomingFrequencyTestForThisMonth15th()
         {
             var date = new DateTime(2012, 2, 1);
@@ -25,7 +24,7 @@ namespace Wonga.QA.Tests.Risk
             Assert.AreEqual(expectedDate, nextPayDateForRepresentmentOne);
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-2444")]
+        [Test, AUT(AUT.Ca), JIRA("CA-2444"), Owner(Owner.TarasKudryavtsev)]
         public void TwiceMonthly15thAnd30thIncomingFrequencyTestForThisMonth30th()
         {
             var date = new DateTime(2012, 1, 16);
@@ -37,7 +36,7 @@ namespace Wonga.QA.Tests.Risk
             Assert.AreEqual(expectedDate, nextPayDateForRepresentmentOne);
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-2444")]
+		[Test, AUT(AUT.Ca), JIRA("CA-2444"), Owner(Owner.TarasKudryavtsev)]
         public void TwiceMonthly15thAnd30thIncomingFrequencyTestForNextMonth15th()
         {
             var date = new DateTime(2012, 1, 31);
@@ -49,7 +48,7 @@ namespace Wonga.QA.Tests.Risk
             Assert.AreEqual(expectedDate, nextPayDateForRepresentmentOne);
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-2444")]
+        [Test, AUT(AUT.Ca), JIRA("CA-2444"), Owner(Owner.TarasKudryavtsev)]
         public void TwiceMonthly15thAnd30thIncomingFrequencyTestForNextYear15th()
         {
             var date = new DateTime(2012, 12, 31);
@@ -61,7 +60,7 @@ namespace Wonga.QA.Tests.Risk
             Assert.AreEqual(expectedDate, nextPayDateForRepresentmentOne);
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-2444")]
+		[Test, AUT(AUT.Ca), JIRA("CA-2444"), Owner(Owner.TarasKudryavtsev)]
         public void TwiceMonthly15thAnd30thIncomingFrequencyTestForFebruary29()
         {
             var date = new DateTime(2012, 2, 16);
@@ -73,7 +72,7 @@ namespace Wonga.QA.Tests.Risk
             Assert.AreEqual(expectedDate, nextPayDateForRepresentmentOne);
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-2444")]
+		[Test, AUT(AUT.Ca), JIRA("CA-2444"), Owner(Owner.TarasKudryavtsev)]
         public void TwiceMonthly15thAnd30thIncomingFrequencyTestForFebruary28()
         {
             var date = new DateTime(2011, 2, 16);
@@ -85,7 +84,7 @@ namespace Wonga.QA.Tests.Risk
             Assert.AreEqual(expectedDate, nextPayDateForRepresentmentOne);
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-2444")]
+		[Test, AUT(AUT.Ca), JIRA("CA-2444"), Owner(Owner.TarasKudryavtsev)]
         public void TwiceMonthly15thAnd30thIncomingFrequencyTestForNextPayDayOnWeekend()
         {
             var date = new DateTime(2012, 12, 16);

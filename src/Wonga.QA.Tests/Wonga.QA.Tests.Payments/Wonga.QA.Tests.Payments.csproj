@@ -38,6 +38,7 @@
     <Compile Include="AccruedInterestSuspensionTests.cs" />
     <Compile Include="AddBankAccountTests.cs" />
     <Compile Include="AddBusinessBankAccountTests.cs" />
+    <Compile Include="AdditionalPayFrequencyCalculateTest.cs" />
     <Compile Include="BusinessRemoveFromArrearsTests.cs" />
     <Compile Include="CashOutInstructionTests.cs" />
     <Compile Include="ChaseLoanInArrearsTests.cs" />

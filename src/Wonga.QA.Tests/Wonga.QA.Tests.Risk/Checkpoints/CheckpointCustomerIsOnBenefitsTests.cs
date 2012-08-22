@@ -16,7 +16,7 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 
         private const RiskMask TESTMask = RiskMask.TESTCustomerIsNotOnBenefits;
 
-        [Test, AUT(AUT.Ca), JIRA("CA-2438")]
+        [Test, AUT(AUT.Ca), JIRA("CA-2438"), Owner(Owner.TarasKudryavtsev)]
         public void L0CustomerIsOnBenefitsThenApplicationDeclined()
         {
             var customer = CustomerBuilder.New().WithEmployer(TESTMask).WithEmployerStatus(EmploymentStatusEnum.OnBenefits.ToString()).Build();
