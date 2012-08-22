@@ -16,6 +16,10 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.FinancialAssessment
         public FAAcceptedPage(UiClient client, Validator validator = null)
             : base(client, validator)
         {
+            if (!base.Url.Contains("/accepted"))
+            {
+                throw new Exception();
+            }
         }
     }
 }

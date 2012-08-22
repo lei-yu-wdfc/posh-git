@@ -44,10 +44,10 @@ namespace Wonga.QA.Framework.UI.Journey
             _incomeFromBoardersOrLodgers = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
             _studentLoansOrGrants = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
             _otherIncome = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
-            #endregion 
+            #endregion
 
             _rent = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
-            
+
             #region Debts
             _rentPayments = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
             _mortgage = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
@@ -78,21 +78,22 @@ namespace Wonga.QA.Framework.UI.Journey
             _nonPriorityDebtsAmount8 = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
             _nonPriorityDebtsCreditor9 = Get.GetName();
             _nonPriorityDebtsAmount9 = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
-            #endregion 
+            #endregion
 
             #region RepaymentPlan
-            _firstRepaymentDate = DateTime.UtcNow.AddDays(3+ Convert.ToInt32(Drive.Db.Ops.ServiceConfigurations.Where(sc =>
+            _firstRepaymentDate = DateTime.UtcNow.AddDays(3 + Convert.ToInt32(Drive.Db.Ops.ServiceConfigurations.Where(sc =>
                 sc.Key == "Payments.RepaymentArrangementFirstRepaymentMinDays").Single().Value)).ToShortDate();
             _paymentFrequency = "Biweekly";
             _repaymentAmount = Get.RandomInt(0, 10000).ToString() + Get.Random().ToString(".00");
-            #endregion 
-            
+            #endregion
+
             journey.Add(typeof(FinancialAssessmentPage), GetStarted);
             journey.Add(typeof(FAAboutYouPage), PassAboutYou);
             journey.Add(typeof(FAIncomePage), PassIncomePage);
             journey.Add(typeof(FAExpenditurePage), PassExpenditurePage);
             journey.Add(typeof(FADebtsPage), PassDebtsPage);
             journey.Add(typeof(FARepaymentPlanPage), PassRepaymentPlanPage);
+            journey.Add(typeof(FAWaitPage), PassWaitPage);
             journey.Add(typeof(FAAcceptedPage), PassAcceptedPage);
             journey.Add(typeof(FACounterOfferPage), PassCounterOfferPage);
             journey.Add(typeof(FARejectedPage), PassRejectedPage);
@@ -225,30 +226,46 @@ namespace Wonga.QA.Framework.UI.Journey
             return this;
         }
 
-        protected override BaseFALnJourney PassAcceptedPage(bool submit = true)
+        protected override BaseFALnJourney PassWaitPage(bool submit = true)
         {
             var fawaitPage = CurrentPage as FAWaitPage;
 
-            fawaitPage.WaitFor<FAAcceptedPage>();
+            if (_desisionPage == typeof(FAAcceptedPage))
+            {
+                CurrentPage = fawaitPage.WaitFor<FAAcceptedPage>() as FAAcceptedPage;
+                journey.Remove(typeof(FACounterOfferPage));
+                journey.Remove(typeof(FARejectedPage));
+            }
 
+            if (_desisionPage == typeof(FACounterOfferPage))
+            {
+                CurrentPage = fawaitPage.WaitFor<FACounterOfferPage>() as FACounterOfferPage;
+                journey.Remove(typeof(FAAcceptedPage));
+                journey.Remove(typeof(FARejectedPage));
+            }
+
+            if (_desisionPage == typeof(FARejectedPage))
+            {
+                CurrentPage = fawaitPage.WaitFor<FARejectedPage>() as FARejectedPage;
+                journey.Remove(typeof(FAAcceptedPage));
+                journey.Remove(typeof(FACounterOfferPage));
+            }
+
+            return this;
+        }
+
+        protected override BaseFALnJourney PassAcceptedPage(bool submit = true)
+        {
             return this;
         }
 
         protected override BaseFALnJourney PassCounterOfferPage(bool submit = true)
         {
-            var fawaitPage = CurrentPage as FAWaitPage;
-
-            fawaitPage.WaitFor<FACounterOfferPage>();
-
             return this;
         }
 
         protected override BaseFALnJourney PassRejectedPage(bool submit = true)
         {
-            var fawaitPage = CurrentPage as FAWaitPage;
-
-            fawaitPage.WaitFor<FARejectedPage>();
-
             return this;
         }
 

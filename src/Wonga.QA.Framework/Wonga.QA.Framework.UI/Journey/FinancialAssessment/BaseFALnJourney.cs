@@ -74,32 +74,17 @@ namespace Wonga.QA.Framework.UI
         protected String _paymentFrequency;
         protected String _repaymentAmount;
 
-        protected BasePage _desisionPage;
+        protected Type _desisionPage;
 
         public BasePage CurrentPage { get; set; }
 
         public BasePage Teleport<T>()
         {
-            var pageType = typeof (T);
+            var pageType = typeof(T);
 
-            if (pageType == typeof (FAAcceptedPage))
-                WithRepaymentAmount("12414");
+            SetupDecision(pageType);
 
-            if (pageType == typeof (FACounterOfferPage))
-            {
-                WithTotalIncome("121234");
-
-                WithRepaymentAmount("0");
-            }
-        
-
-    if (pageType == typeof(FARejectedPage))
-    {
-        WithTotalExpediture("121234");
-        WithRepaymentAmount("0");
-    }
-
-        var currentIndex = CurrentPage == null ? 0 : journey.Keys.ToList().IndexOf(CurrentPage.GetType());
+            var currentIndex = CurrentPage == null ? 0 : journey.Keys.ToList().IndexOf(CurrentPage.GetType());
             for (int i = currentIndex; i < journey.Keys.Count; i++)
             {
                 if (CurrentPage.GetType() == pageType && pageType != typeof(FinancialAssessmentPage))
@@ -118,12 +103,35 @@ namespace Wonga.QA.Framework.UI
             return CurrentPage;
         }
 
+        private void SetupDecision(Type type)
+        {
+            _desisionPage = type;
+            if (type == typeof(FAAcceptedPage))
+            {
+                WithTotalIncome("121234");
+                WithRepaymentAmount("12414");
+            }
+
+            if (type == typeof(FACounterOfferPage))
+            {
+                WithTotalIncome("121234");
+                WithRepaymentAmount("0");
+            }
+
+            if (type == typeof(FARejectedPage))
+            {
+                WithTotalExpediture("121234");
+                WithRepaymentAmount("0");
+            }
+        }
+
         protected abstract BaseFALnJourney GetStarted(bool submit = true);
         protected abstract BaseFALnJourney PassAboutYou(bool submit = true);
         protected abstract BaseFALnJourney PassIncomePage(bool submit = true);
         protected abstract BaseFALnJourney PassExpenditurePage(bool submit = true);
         protected abstract BaseFALnJourney PassDebtsPage(bool submit = true);
         protected abstract BaseFALnJourney PassRepaymentPlanPage(bool submit = true);
+        protected abstract BaseFALnJourney PassWaitPage(bool submit = true);
         protected abstract BaseFALnJourney PassAcceptedPage(bool submit = true);
         protected abstract BaseFALnJourney PassCounterOfferPage(bool submit = true);
         protected abstract BaseFALnJourney PassRejectedPage(bool submit = true);
