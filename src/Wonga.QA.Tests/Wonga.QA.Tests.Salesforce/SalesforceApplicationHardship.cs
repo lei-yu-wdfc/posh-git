@@ -9,7 +9,7 @@ using salesforceStatusAlias = Wonga.QA.Framework.ThirdParties.Salesforce.Applica
 namespace Wonga.QA.Tests.Salesforce
 {
     [TestFixture(Order = -1)]
-    [Parallelizable(TestScope.Self)]
+    [Parallelizable(TestScope.All)]
     class SalesforceApplicationHardship
     {
         private readonly dynamic _fixedTermLoanAppTab = Drive.Data.Payments.Db.FixedTermLoanApplications;
