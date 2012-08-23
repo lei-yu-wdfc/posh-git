@@ -32,7 +32,7 @@ namespace Wonga.QA.UiTests.Web
             _termMin = (int)Drive.Data.Payments.Db.Products.All().FirstOrDefault().TermMin;
         }
 
-        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-192"), Pending("Problem with rounding")]
+        [Test, AUT(AUT.Za, AUT.Ca), JIRA("QA-192")]
         public void CorrectDataShouldBeDisplayedOnApplicationSuccessPage()
         {
             string firstName = Get.RandomString(3, 10);
