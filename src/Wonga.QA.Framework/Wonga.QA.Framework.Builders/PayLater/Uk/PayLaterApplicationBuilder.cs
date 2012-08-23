@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Wonga.QA.Framework.Account.PayLater;
+using Wonga.QA.Framework.Account;
 using Wonga.QA.Framework.Account.Queries;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Api.Enums;
 using Wonga.QA.Framework.Api.Requests.Payments.PayLater.Commands.Uk;
 using Wonga.QA.Framework.Api.Requests.Payments.Queries;
 using Wonga.QA.Framework.Api.Requests.Risk.Commands.PayLater.Uk;
@@ -19,8 +20,8 @@ namespace Wonga.QA.Framework.Builders.PayLater.Uk
 
 		protected override IEnumerable<ApiRequest> GetRegionSpecificApiCommands()
 		{
-            var paymentCardGuid = AccountQueries.PayLater.PaymentDetails.GetPrimaryPaymentCardGuid(Account);
-		    var postCode = AccountQueries.PayLater.CustomerDetails.GetCustomerPostCode(Account);
+            var paymentCardGuid = AccountQueries.PayLater.PaymentDetails.GetPrimaryPaymentCardGuid(Account.Id);
+		    var postCode = AccountQueries.PayLater.CustomerDetails.GetCustomerPostCode(Account.Id);
 
 		    yield return RiskCreatePayLaterApplicationUkCommand.New(r =>
 		                                                                {
@@ -35,11 +36,10 @@ namespace Wonga.QA.Framework.Builders.PayLater.Uk
 		                                                                r.AccountId = Account.Id;
 		                                                                r.ApplicationId = ApplicationId;
 		                                                                r.MerchantId = PayLaterApplicationData.MerchantId;
-		                                                                r.MerchantReference =
-		                                                                    PayLaterApplicationData.MerchantReference;
+		                                                                r.MerchantReference = PayLaterApplicationData.MerchantReference;
 		                                                                r.MerchantOrderId = PayLaterApplicationData.MerchantOrderId;
 		                                                                r.TotalAmount = PayLaterApplicationData.TotalAmount;
-		                                                                r.Currency = PayLaterApplicationData.Currency;
+		                                                                r.Currency = CurrencyCodeEnum.GBP;
 		                                                                r.PostCode = postCode;
 		                                                            });
 

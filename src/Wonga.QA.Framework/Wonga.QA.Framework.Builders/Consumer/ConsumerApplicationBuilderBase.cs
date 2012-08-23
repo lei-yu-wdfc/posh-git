@@ -12,14 +12,14 @@ using Wonga.QA.Framework.Data.Enums.Risk;
 
 namespace Wonga.QA.Framework.Builders.Consumer
 {
-	public abstract class ConsumerApplicationBuilderBase
+	public abstract class ConsumerApplicationBuilderBase : ApplicationBuilderBase
 	{
 		protected Guid ApplicationId { get; private set; }
 		protected ConsumerApplicationDataBase ConsumerApplicationData { get; private set; }
 		protected ConsumerAccount Account { get; private set; }
 
 
-		protected ConsumerApplicationBuilderBase(ConsumerAccount account, ConsumerApplicationDataBase consumerApplicationData)
+		protected ConsumerApplicationBuilderBase(ConsumerAccount account, ConsumerApplicationDataBase consumerApplicationData) : base(account)
 		{
 			ApplicationId = Guid.NewGuid();
 			Account = account;
@@ -52,7 +52,7 @@ namespace Wonga.QA.Framework.Builders.Consumer
 			                                              	{
 			                                              		r.ApplicationId = ApplicationId;
 			                                              		r.AccountId = Account.Id;
-			                                              		r.BlackboxData = ConsumerApplicationData.IovationResponse.ToString();
+			                                              		r.BlackboxData = IovationResponse.ToString();
 			                                              	});
 		}
 
@@ -62,10 +62,10 @@ namespace Wonga.QA.Framework.Builders.Consumer
 
 		private void WaitForApplicationDecision()
 		{
-			if (ConsumerApplicationData.ExpectedDecision == null)
+			if (ExpectedDecision == null)
 				return;
 
-			Do.Until(() => GetApplicationDecision() == ConsumerApplicationData.ExpectedDecision);
+			Do.Until(() => GetApplicationDecision() == ExpectedDecision);
 		}
 
 		private ApplicationDecisionStatus GetApplicationDecision()
@@ -81,10 +81,10 @@ namespace Wonga.QA.Framework.Builders.Consumer
 
 		private void SignApplicationIfRequired()
 		{
-			if( ConsumerApplicationData.SignIfAccepted)
+			if(SignIfAccepted)
 			{
-				if (ConsumerApplicationData.ExpectedDecision == ApplicationDecisionStatus.Accepted || 
-					ConsumerApplicationData.ExpectedDecision == ApplicationDecisionStatus.ReadyToSign)
+				if (ExpectedDecision == ApplicationDecisionStatus.Accepted || 
+					ExpectedDecision == ApplicationDecisionStatus.ReadyToSign)
 				{
 					Drive.Api.Commands.Post(new SignApplicationCommand { AccountId = Account.Id, ApplicationId = ApplicationId });
 				}
@@ -105,30 +105,6 @@ namespace Wonga.QA.Framework.Builders.Consumer
 			return this;
 		}
 
-		public ConsumerApplicationBuilderBase WithExpectedDecision(ApplicationDecisionStatus decision)
-		{
-			ConsumerApplicationData.ExpectedDecision = decision;
-			return this;
-		}
-
-		public ConsumerApplicationBuilderBase WithNoExpectedDecision()
-		{
-			ConsumerApplicationData.ExpectedDecision = null;
-			return this;
-		}
-
-		public ConsumerApplicationBuilderBase WithIovationResponse(IovationMockResponse iovationResponse)
-		{
-			ConsumerApplicationData.IovationResponse = iovationResponse;
-			return this;
-		}
-
 		#endregion
-
-		public ConsumerApplicationBuilderBase WhichIsUnsigned()
-		{
-			ConsumerApplicationData.SignIfAccepted = false;
-			return this;
-		}
 	}
 }

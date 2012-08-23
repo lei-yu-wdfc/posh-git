@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Wonga.QA.Framework.Account.PayLater
+namespace Wonga.QA.Framework.Account
 {
 	public class PayLaterAccount : AccountBase
 	{

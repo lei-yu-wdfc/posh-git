@@ -55,9 +55,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BuilderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TrustRating\TrustRatingTests.cs" />
+    <Compile Include="TrustRating\TrustRatingMissedPaymentFeeTests.cs" />
+    <Compile Include="TrustRating\DefaultTrustRatingTests.cs" />
+    <Compile Include="TrustRating\TrustRatingRepaymentTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Wonga.QA.Tests.Core\Wonga.QA.Tests.Core.csproj">

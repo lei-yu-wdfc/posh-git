@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="AccountBuilder.cs" />
     <Compile Include="ApplicationBuilder.cs" />
+    <Compile Include="ApplicationBuilderBase.cs" />
     <Compile Include="TopUpBuilder.cs" />
     <Compile Include="Consumer\Ca\ConsumerAccountBuilder.cs" />
     <Compile Include="Consumer\Ca\ConsumerApplicationBuilder.cs" />

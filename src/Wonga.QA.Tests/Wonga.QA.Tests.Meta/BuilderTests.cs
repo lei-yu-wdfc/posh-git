@@ -1,6 +1,6 @@
 ﻿using MbUnit.Framework;
 using Wonga.QA.Framework;
-using Wonga.QA.Framework.Account.PayLater;
+using Wonga.QA.Framework.Account;
 using Wonga.QA.Framework.Builders;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Old;
@@ -47,7 +47,8 @@ namespace Wonga.QA.Tests.Meta
         [Test, AUT(AUT.Uk), DependsOn("PayLaterAccountBuilderTest"), Ignore]
         public void PayLaterApplicationBuilderTests()
         {
-            Assert.DoesNotThrow(() => Framework.Builders.ApplicationBuilder.PayLater.New(_payLaterAccount).Build());
+            var payLaterAccount = AccountBuilder.PayLater.New().Build();
+            Framework.Builders.ApplicationBuilder.PayLater.New(payLaterAccount).Build();
         }
     }
 }

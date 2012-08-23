@@ -3,15 +3,15 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Account;
 using Wonga.QA.Framework.Account.Consumer;
-using Wonga.QA.Framework.Account.PayLater;
 using Wonga.QA.Framework.Builders;
 using Wonga.QA.Framework.Core;
+using Wonga.QA.Tests.Core;
 using ApplicationBuilder = Wonga.QA.Framework.Builders.ApplicationBuilder;
 
 namespace Wonga.QA.Tests.PayLater.TrustRating
 {
-    [TestFixture, Parallelizable(TestScope.All)]
-    public class TrustRatingTests
+	[TestFixture, AUT(AUT.Uk), Parallelizable(TestScope.All)]
+    public class DefaultTrustRatingTests
     {
         private const string DefaultPayLaterCreditLimit = "Risk.DefaultPayLaterCreditLimit";
         private decimal? _expectedPayLaterCreditLimit;

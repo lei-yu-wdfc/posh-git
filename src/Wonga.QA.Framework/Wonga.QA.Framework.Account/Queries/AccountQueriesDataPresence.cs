@@ -5,11 +5,6 @@ namespace Wonga.QA.Framework.Account.Queries
 {
 	public sealed class AccountQueriesDataPresence
 	{
-		public bool IsAccountPresentInServiceDatabases(AccountBase account)
-		{
-			return IsAccountPresentInServiceDatabases(account.Id);
-		}
-
 		public bool IsAccountPresentInServiceDatabases(Guid accountId)
 		{
 			return IsAccountPresentInOpsDatabase(accountId) &&
