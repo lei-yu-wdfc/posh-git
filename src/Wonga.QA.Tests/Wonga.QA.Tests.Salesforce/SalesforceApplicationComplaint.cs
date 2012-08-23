@@ -48,7 +48,7 @@ namespace Wonga.QA.Tests.Salesforce
             var caseId = Guid.NewGuid();
             var application = CreateLiveApplication();
             application.ExpireCard();
-            application.MakeDueToday(application);
+            application.MakeDueToday();
             ComplaintCycle( caseId, application);
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.DueToday);
         }
@@ -167,7 +167,7 @@ namespace Wonga.QA.Tests.Salesforce
             ReportComplaint(caseId, application);
             SalesforceOperations.CheckPreviousStatus(application.Id, salesforceStatusAlias.ManagementReview.ToString(), salesforceStatusAlias.Complaint.ToString());
             application.ExpireCard();
-            application.MakeDueToday(application);
+            application.MakeDueToday();
             ApplicationOperations.RemoveComplaint(application, caseId);
             SalesforceOperations.CheckPreviousStatus(application.Id, salesforceStatusAlias.Complaint .ToString(), salesforceStatusAlias.ManagementReview.ToString()); 
             ApplicationOperations.RemoveManagementReview(application, caseId);
@@ -188,7 +188,7 @@ namespace Wonga.QA.Tests.Salesforce
             ReportComplaint(caseId, application);
             SalesforceOperations.CheckPreviousStatus(application.Id, salesforceStatusAlias.ManagementReview.ToString(), salesforceStatusAlias.Complaint.ToString());
             application.ExpireCard();
-            application.MakeDueToday(application);
+            application.MakeDueToday();
             application.PutIntoArrears(3);
             ApplicationOperations.RemoveComplaint(application, caseId);
             SalesforceOperations.CheckPreviousStatus(application.Id, salesforceStatusAlias.Complaint.ToString(), salesforceStatusAlias.ManagementReview.ToString());
