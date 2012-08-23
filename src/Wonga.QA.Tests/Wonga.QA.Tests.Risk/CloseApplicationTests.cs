@@ -46,5 +46,17 @@ namespace Wonga.QA.Tests.Risk
 			                                                                    ManualPaymentTransactionCount: 0, //This is always going to be zero, the transaction source is not currently stored
 			                                                                    MainCardRepayRate: 0).SingleOrDefault().ClosedOn != null);
 		}
+
+        [Test, AUT(AUT.Uk), Owner(Owner.RiskTeam)]
+        public void L1ApplicationWillIncreaseTheRiskAccountRank()
+        {
+            var customer = CustomerBuilder.New().Build();
+            var firstApplication = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
+            firstApplication.RepayOnDueDate();
+            var accountRank = Drive.Data.Risk.Db.RiskAccounts.FindAllBy(AccountId:firstApplication.AccountId).SingleOrDefault().AccountRank;
+
+            Assert.IsNotNull(accountRank,"The account rank should NOT be null");
+            Assert.AreEqual(1,accountRank,"The account rank for L1 should be 1");
+        }
 	}
 }
