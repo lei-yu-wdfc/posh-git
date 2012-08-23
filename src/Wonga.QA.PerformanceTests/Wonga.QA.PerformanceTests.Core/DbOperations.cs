@@ -212,23 +212,5 @@ namespace Wonga.QA.PerformanceTests.Core
             }
         }
         #endregion
-
-        [Test]
-        public void TestBackUp()
-        {
-            EstablishServerConnection();
-            /*foreach (var database in Databases)
-            {
-                DoBackupDatabase(database, BackupFolder + "//" + database + "Current.bak");
-            }*/
-
-            foreach (var database in Databases)
-            {
-                Console.WriteLine("Restoring Database ... " + database);
-                DoRestoreDatabase(database, BackupFolder + "//" + database + "Current.bak");    
-            }
-            
-            TerminateServerConnection();
-        }
     }
 }
