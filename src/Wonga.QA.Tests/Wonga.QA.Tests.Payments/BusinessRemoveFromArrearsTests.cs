@@ -31,7 +31,7 @@ namespace Wonga.QA.Tests.Payments
 			//fire transaction for pay off arrears
 			Drive.Msmq.Payments.Send(new CreateTransaction
 			{
-				Amount = arrearsAmount,
+				Amount = -arrearsAmount,
 				ApplicationId = application.Id,
 				Currency = CurrencyCodeIso4217Enum.GBP,
 				ExternalId = Guid.NewGuid(),
@@ -61,7 +61,7 @@ namespace Wonga.QA.Tests.Payments
 			//fire transaction for pay off arrears
 			Drive.Msmq.Payments.Send(new CreateTransaction
 			{
-				Amount = arrearsAmount - 1,
+				Amount = -(arrearsAmount - 1),
 				ApplicationId = application.Id,
 				Currency = CurrencyCodeIso4217Enum.GBP,
 				ExternalId = Guid.NewGuid(),
@@ -93,7 +93,7 @@ namespace Wonga.QA.Tests.Payments
 			//fire transaction for pay off arrears
 			Drive.Msmq.Payments.Send(new CreateTransaction
 			{
-				Amount = arrearsAmount,
+				Amount = -arrearsAmount,
 				ApplicationId = application.Id,
 				Currency = CurrencyCodeIso4217Enum.GBP,
 				ExternalId = Guid.NewGuid(),
