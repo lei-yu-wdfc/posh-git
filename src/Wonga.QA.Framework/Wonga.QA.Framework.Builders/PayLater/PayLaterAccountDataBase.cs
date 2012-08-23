@@ -55,8 +55,8 @@ namespace Wonga.QA.Framework.Builders.PayLater
 			IncomeFrequency = IncomeFrequencyEnum.LastFridayOfMonth;
 
 			PaymentCardNumber = 4444333322221111;
-			PaymentCardSecurityCode = "777"; ;
-			PaymentCardExpiryDate = new Date(DateTime.UtcNow.AddYears(2), DateFormat.Date);
+			PaymentCardSecurityCode = "777";
+            PaymentCardExpiryDate = DateTime.UtcNow.AddYears(2).ToDate(DateFormat.YearMonth);
 		}
 	}
 }

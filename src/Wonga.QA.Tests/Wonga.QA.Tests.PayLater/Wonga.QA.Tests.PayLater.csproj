@@ -35,19 +35,29 @@
     <Reference Include="MbUnit, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Wonga.QA.Framework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\bin\Wonga.QA.Framework.dll</HintPath>
+    </Reference>
     <Reference Include="Wonga.QA.Framework.Account, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Wonga.QA.Framework.Application, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Wonga.QA.Framework.Builders, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Wonga.QA.Framework.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Wonga.QA.Framework.Db, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\bin\Wonga.QA.Framework.Db.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BuilderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TrustRating\TrustRatingTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Wonga.QA.Tests.Core\Wonga.QA.Tests.Core.csproj">
