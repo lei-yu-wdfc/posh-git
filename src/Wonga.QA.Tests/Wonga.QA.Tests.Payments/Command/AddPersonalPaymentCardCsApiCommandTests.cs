@@ -23,13 +23,21 @@ namespace Wonga.QA.Tests.Payments.Command
             DateTime today = DateTime.Today;
             DateTime lastDayOfThisMonth = new DateTime(today.Year, today.Month, 1).AddMonths(1).AddDays(-1);
 
+            // Generate a valid card Number
+            var binNumberTable = Drive.Data.Payments.Db.PaymentCardBinNumbers;
+            var binRecord = Do.With.Interval(1).Until(() => binNumberTable.FindAll(binNumberTable.PaymentCardBinNumberId == 1).Single());
+
+            var validBin = binRecord.BinNumber.ToString();
+            string validCardOne = validBin + "2233334444";
+            string validCardTwo = validBin + "2233334445";
+
             var customer = CustomerBuilder.New().Build();
             var cardsToAdd = new[]
                                  {
                                      new
                                          {
                                              Type = "Visa Debit",
-                                             Number = "4001152233334444",
+                                             Number = validCardOne,
                                              SecurityCode = "222",
                                              ExpiryDate = lastDayOfThisMonth.AddMonths(7),
                                              IsPrimary = true,
@@ -39,7 +47,7 @@ namespace Wonga.QA.Tests.Payments.Command
                                      new
                                          {
                                              Type = "American Express",
-                                             Number = "4444333322221113",
+                                             Number = validCardTwo,
                                              SecurityCode = "227",
                                              ExpiryDate = lastDayOfThisMonth.AddMonths(19),
                                              IsPrimary = false,
