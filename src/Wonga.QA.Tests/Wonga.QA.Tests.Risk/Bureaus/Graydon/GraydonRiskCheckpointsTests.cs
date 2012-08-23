@@ -8,15 +8,14 @@ using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Data.Enums.Risk;
 using Wonga.QA.Framework.Db.Extensions;
+using Wonga.QA.Framework.Db.Risk;
 using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Core;
-using Wonga.QA.Framework.Db;
-using Wonga.QA.Framework.Db.Risk;
 
-namespace Wonga.QA.Tests.Graydon
+namespace Wonga.QA.Tests.Risk.Bureaus.Graydon
 {
     [Parallelizable(TestScope.All)]
-    public class GraydonRiskCheckpointTests
+    public class GraydonRiskCheckpointsTests
     {
         #region Main Applicant Matches Business Bureau Data
 
@@ -34,7 +33,7 @@ namespace Wonga.QA.Tests.Graydon
             var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithDateOfBirth(dateOfBirth).WithMiddleName(RiskMask.TESTMainApplicantMatchesBusinessBureauData);
             var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
 
-            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id,RiskWorkflowTypes.MainApplicant,RiskWorkflowStatus.Verified,1);
+            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Verified, 1);
 
             VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(businessRiskWorkflows[0],
@@ -43,7 +42,7 @@ namespace Wonga.QA.Tests.Graydon
                                                                      RiskVerificationDefinitions.MainApplicantMatchesBusinessBureauDataVerification);
         }
 
-       
+
 
 
 
@@ -77,7 +76,7 @@ namespace Wonga.QA.Tests.Graydon
             const String surname = "Bridson";
 
             var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithMiddleName(RiskMask.TESTMainApplicantMatchesBusinessBureauData);
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Declined);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber, ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Failed, 1);
@@ -120,7 +119,7 @@ namespace Wonga.QA.Tests.Graydon
             const String goodCompanyRegNumber = "00000086";
 
             var mainApplicantBuilder = CustomerBuilder.New().WithMiddleName(RiskMask.TESTBusinessBureauDataIsAvailable);
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Accepted);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Verified, 1);
@@ -137,7 +136,7 @@ namespace Wonga.QA.Tests.Graydon
         {
             const String goodCompanyRegNumber = "99999999";
             var mainApplicantBuilder = CustomerBuilder.New().WithMiddleName(RiskMask.TESTBusinessBureauDataIsAvailable);
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Declined);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber, ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Failed, 1);
@@ -147,10 +146,10 @@ namespace Wonga.QA.Tests.Graydon
                                                                      RiskCheckpointStatus.Failed,
                                                                      RiskVerificationDefinitions.BusinessDataAvailableInGraydonVerification);
         }
-        
+
         #endregion
 
-        #region Business is Trading 
+        #region Business is Trading
 
         [Test, AUT(AUT.Wb), JIRA("SME-160")]
         [Description("Graydon -> This test creates a loan and checks if the company is trading")]
@@ -158,7 +157,7 @@ namespace Wonga.QA.Tests.Graydon
         {
             const String goodCompanyRegNumber = "00000086";
             var mainApplicantBuilder = CustomerBuilder.New().WithMiddleName(RiskMask.TESTBusinessIsCurrentlyTrading);
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Accepted);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Verified, 1);
@@ -175,7 +174,7 @@ namespace Wonga.QA.Tests.Graydon
         {
             const String goodCompanyRegNumber = "90000001";
             var mainApplicantBuilder = CustomerBuilder.New().WithMiddleName(RiskMask.TESTBusinessIsCurrentlyTrading);
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Declined);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber, ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Failed, 1);
@@ -197,7 +196,7 @@ namespace Wonga.QA.Tests.Graydon
             //good score = 60
             const String goodCompanyRegNumber = "00000086";
             var mainApplicantBuilder = CustomerBuilder.New().WithMiddleName(RiskMask.TESTBusinessPaymentScoreIsAcceptable);
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Accepted);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Verified, 1);
@@ -215,7 +214,7 @@ namespace Wonga.QA.Tests.Graydon
             //bad score = 59
             const String goodCompanyRegNumber = "99999903";
             var mainApplicantBuilder = CustomerBuilder.New().WithMiddleName(RiskMask.TESTBusinessPaymentScoreIsAcceptable);
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Declined);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber, ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Failed, 1);
@@ -233,7 +232,7 @@ namespace Wonga.QA.Tests.Graydon
             //bad score = 59
             const String goodCompanyRegNumber = "99999904";
             var mainApplicantBuilder = CustomerBuilder.New().WithMiddleName(RiskMask.TESTBusinessPaymentScoreIsAcceptable);
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Accepted);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Verified, 1);
@@ -255,7 +254,7 @@ namespace Wonga.QA.Tests.Graydon
             //good augur score = 446
             const String goodCompanyRegNumber = "00000086";
             var mainApplicantBuilder = CustomerBuilder.New().WithMiddleName(RiskMask.TESTBusinessPerformanceScoreIsAcceptaple);
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Accepted);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Verified, 1);
@@ -273,7 +272,7 @@ namespace Wonga.QA.Tests.Graydon
             //good augur score = 300
             const String goodCompanyRegNumber = "99999902";
             var mainApplicantBuilder = CustomerBuilder.New().WithMiddleName(RiskMask.TESTBusinessPerformanceScoreIsAcceptaple);
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Declined);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber, ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Failed, 1);
@@ -298,7 +297,7 @@ namespace Wonga.QA.Tests.Graydon
             var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
 
             var mainApplicantBuilder = CustomerBuilder.New().WithSurname(surname).WithForename(forename).WithDateOfBirth(dateOfBirth).WithMiddleName(RiskMask.TESTMainApplicantDurationAcceptable);
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Accepted);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Verified, 1);
@@ -323,11 +322,11 @@ namespace Wonga.QA.Tests.Graydon
             var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
 
             var mainApplicantBuilder = CustomerBuilder.New().WithSurname(surname).WithForename(forename).WithDateOfBirth(dateOfBirth).WithMiddleName(RiskMask.TESTMainApplicantDurationAcceptable);
-            Drive.Db.SetServiceConfiguration(configKey,newThreshold.ToString());
+            Drive.Db.SetServiceConfiguration(configKey, newThreshold.ToString());
 
             try
             {
-                var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Declined);
+                var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber, ApplicationDecisionStatus.Declined);
                 var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
                 var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Failed, 1);
 
@@ -340,7 +339,7 @@ namespace Wonga.QA.Tests.Graydon
             finally
             {
                 if (!string.IsNullOrEmpty(oldThreshold))
-                    Drive.Db.SetServiceConfiguration(configKey,oldThreshold);
+                    Drive.Db.SetServiceConfiguration(configKey, oldThreshold);
             }
         }
 
@@ -354,7 +353,7 @@ namespace Wonga.QA.Tests.Graydon
             var dateOfBirth = new Date(new DateTime(1960, 01, 09), DateFormat.Date);
 
             var mainApplicantBuilder = CustomerBuilder.New().WithSurname(surname).WithForename(forename).WithDateOfBirth(dateOfBirth).WithMiddleName(RiskMask.TESTMainApplicantDurationAcceptable);
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Declined);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber, ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Failed, 1);
@@ -407,7 +406,7 @@ namespace Wonga.QA.Tests.Graydon
                 listOfGuarantors.Add(CustomerBuilder.New());
             }
 
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber, ApplicationDecisionStatus.Accepted,listOfGuarantors);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber, ApplicationDecisionStatus.Accepted, listOfGuarantors);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Verified, 1);
@@ -434,7 +433,7 @@ namespace Wonga.QA.Tests.Graydon
                 listOfGuarantors.Add(CustomerBuilder.New());
             }
 
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Declined, listOfGuarantors);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber, ApplicationDecisionStatus.Declined, listOfGuarantors);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Failed, 1);
@@ -454,8 +453,8 @@ namespace Wonga.QA.Tests.Graydon
             var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
 
             var mainApplicantBuilder = CustomerBuilder.New().WithSurname(surname).WithForename(forename).WithDateOfBirth(dateOfBirth).WithMiddleName(RiskMask.TESTBusinessDateOfIncorporationAcceptable);
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Accepted);
-            
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
+
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Verified, 1);
 
@@ -476,7 +475,7 @@ namespace Wonga.QA.Tests.Graydon
             var dateOfBirth = new Date(new DateTime(1964, 6, 20), DateFormat.Date);
 
             var mainApplicantBuilder = CustomerBuilder.New().WithSurname(surname).WithForename(forename).WithDateOfBirth(dateOfBirth).WithMiddleName(RiskMask.TESTBusinessDateOfIncorporationAcceptable);
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Declined);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber, ApplicationDecisionStatus.Declined);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Failed, 1);
@@ -505,7 +504,7 @@ namespace Wonga.QA.Tests.Graydon
 
             try
             {
-                var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Declined);
+                var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber, ApplicationDecisionStatus.Declined);
 
                 var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
                 var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Failed, 1);
@@ -525,7 +524,7 @@ namespace Wonga.QA.Tests.Graydon
 
         #endregion
 
-        #region Guarantors names match business bureau data 
+        #region Guarantors names match business bureau data
 
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-1414"), Description("Graydon -> This test creates a loan and checks the main director")]
@@ -566,7 +565,7 @@ namespace Wonga.QA.Tests.Graydon
                                            CustomerBuilder.New().WithForename("Anthony Charles Bramham").WithSurname("Lister"),
                                            CustomerBuilder.New().WithForename("Timothy Charles").WithSurname("Monckton"),
                                        };
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Accepted, listOfGuarantors);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber, ApplicationDecisionStatus.Accepted, listOfGuarantors);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Verified, 1);
@@ -653,7 +652,7 @@ namespace Wonga.QA.Tests.Graydon
                                            CustomerBuilder.New().WithForename("Anthony Charles Bramham").WithSurname("Lister"),
                                            CustomerBuilder.New().WithForename("Timothy Charles").WithSurname("Monckton"),
                                        };
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber,ApplicationDecisionStatus.Declined, listOfGuarantors);
+            var application = CreateApplicationWithAsserts(mainApplicantBuilder, goodCompanyRegNumber, ApplicationDecisionStatus.Declined, listOfGuarantors);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
             var businessRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.BusinessVerification, RiskWorkflowStatus.Failed, 1);
@@ -666,7 +665,7 @@ namespace Wonga.QA.Tests.Graydon
 
         #endregion
 
-        private static Application CreateApplicationWithAsserts(CustomerBuilder mainApplicantBuilder, String companyRegisteredNumber ,ApplicationDecisionStatus applicationDecision, List<CustomerBuilder> guarantors = null )
+        private static Application CreateApplicationWithAsserts(CustomerBuilder mainApplicantBuilder, String companyRegisteredNumber, ApplicationDecisionStatus applicationDecision, List<CustomerBuilder> guarantors = null)
         {
             mainApplicantBuilder.ScrubForename(mainApplicantBuilder.Forename);
             mainApplicantBuilder.ScrubSurname(mainApplicantBuilder.Surname);
@@ -682,7 +681,7 @@ namespace Wonga.QA.Tests.Graydon
             var applicationBuilder = ApplicationBuilder.New(mainDirector, organisation).WithExpectedDecision(applicationDecision) as BusinessApplicationBuilder;
 
             //STEP4 - Create the guarantors list + send it to the application
-            if (guarantors!=null)
+            if (guarantors != null)
             {
                 applicationBuilder.WithGuarantors(guarantors);
 
@@ -711,11 +710,11 @@ namespace Wonga.QA.Tests.Graydon
             return application;
 
         }
-        private List<RiskWorkflowEntity> VerifyRiskWorkflows(Guid applicationId,RiskWorkflowTypes riskWorkflowType,RiskWorkflowStatus expectedRiskWorkflowStatus,Int32 expectedNumberOfWorkflows)
+        private List<RiskWorkflowEntity> VerifyRiskWorkflows(Guid applicationId, RiskWorkflowTypes riskWorkflowType, RiskWorkflowStatus expectedRiskWorkflowStatus, Int32 expectedNumberOfWorkflows)
         {
-            Drive.Db.WaitForRiskWorkflowData(applicationId, riskWorkflowType,expectedNumberOfWorkflows,expectedRiskWorkflowStatus);
+            Drive.Db.WaitForRiskWorkflowData(applicationId, riskWorkflowType, expectedNumberOfWorkflows, expectedRiskWorkflowStatus);
             var riskWorkflows = Drive.Db.GetWorkflowsForApplication(applicationId, riskWorkflowType);
-            Assert.AreEqual(expectedNumberOfWorkflows,riskWorkflows.Count,"There should be "+expectedNumberOfWorkflows+ " workflows");
+            Assert.AreEqual(expectedNumberOfWorkflows, riskWorkflows.Count, "There should be " + expectedNumberOfWorkflows + " workflows");
 
             foreach (var riskWorkflow in riskWorkflows)
             {
@@ -724,7 +723,7 @@ namespace Wonga.QA.Tests.Graydon
 
             return riskWorkflows;
         }
-        private void VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(RiskWorkflowEntity riskWorkflowEntity,RiskCheckpointDefinitionEnum checkpointDefinition, RiskCheckpointStatus checkpointStatus, RiskVerificationDefinitions riskVerification)
+        private void VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(RiskWorkflowEntity riskWorkflowEntity, RiskCheckpointDefinitionEnum checkpointDefinition, RiskCheckpointStatus checkpointStatus, RiskVerificationDefinitions riskVerification)
         {
             Do.Until(() => Drive.Db.Risk.WorkflowCheckpoints.Any(p => p.RiskWorkflowId == riskWorkflowEntity.RiskWorkflowId && p.CheckpointStatus != 0));
             Assert.Contains(Drive.Db.GetExecutedCheckpointDefinitionNamesForRiskWorkflow(riskWorkflowEntity.WorkflowId, checkpointStatus), Get.EnumToString(checkpointDefinition));
