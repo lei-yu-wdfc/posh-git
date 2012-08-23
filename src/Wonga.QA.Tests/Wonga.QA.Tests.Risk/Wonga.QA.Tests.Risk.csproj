@@ -35,6 +35,8 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Bureaus\CallReport\CallReportRiskCheckpointsTests.cs" />
+    <Compile Include="Bureaus\Experian\ExperianRiskCheckpointsTests.cs" />
     <Compile Include="Checkpoints\CheckpointAccountNumberApplicationsAcceptableTests.cs" />
     <Compile Include="Checkpoints\CheckpointApplicationElementNotOnCsBlacklist.cs" />
     <Compile Include="Checkpoints\CheckpointCustomerIsOnBenefitsTests.cs" />

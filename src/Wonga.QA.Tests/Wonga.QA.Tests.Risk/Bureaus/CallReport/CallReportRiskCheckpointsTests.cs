@@ -1,7 +1,7 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
@@ -13,11 +13,11 @@ using Wonga.QA.Framework.Db.Risk;
 using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Core;
 
-namespace Wonga.QA.Tests.CallReport
+namespace Wonga.QA.Tests.Risk.Bureaus.CallReport
 {
     [Parallelizable(TestScope.All)]
-    [AUT(AUT.Wb,AUT.Uk)]
-    public class CallReportRiskCheckpointTests
+    [AUT(AUT.Wb, AUT.Uk)]
+    public class CallReportRiskCheckpointsTests
     {
         private const String GoodCompanyRegNumber = "00000086";
 
@@ -73,7 +73,7 @@ namespace Wonga.QA.Tests.CallReport
 
         [Test, AUT(AUT.Wb, AUT.Uk), Owner(Owner.RiskTeam)]
         [JIRA("SME-575", "UK-853"), Description("CallReport -> This test creates a loan for the customer that is dead according to call report, then checks the risk checkpoint"),
-		Category(TestCategories.CoreTest)]
+        Category(TestCategories.CoreTest)]
         public void TestCallReportMainApplicantIsDeceased_LoanIsDeclined()
         {
             const String forename = "Johnny";
@@ -478,7 +478,7 @@ namespace Wonga.QA.Tests.CallReport
 
         }
 
-        [Test, AUT(AUT.Wb,AUT.Uk)]
+        [Test, AUT(AUT.Wb, AUT.Uk)]
         [JIRA("SME-644", "UKRISK-71"), Description("CallReport -> This test creates a loan for a customer with the not provided date of birth, then checks the risk checkpoint")]
         public void TestCallReportMainApplicantDateOfBirthNotProvided_LoanIsApproved()
         {
