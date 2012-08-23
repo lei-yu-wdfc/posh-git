@@ -37,7 +37,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="CallValidateServiceTests.cs" />
-    <Compile Include="CallValidateRiskCheckpointTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
