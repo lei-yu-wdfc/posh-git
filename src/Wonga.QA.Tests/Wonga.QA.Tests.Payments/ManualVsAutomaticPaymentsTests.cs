@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Globalization;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Cs.Requests.Payments.Csapi.Commands;
+using Wonga.QA.Framework.Cs.Requests.Payments.Csapi.Queries;
 using Wonga.QA.Framework.Msmq.Enums.Integration.Payments.Enums;
 using Wonga.QA.Tests.Core;
+using System.Linq;
 
 namespace Wonga.QA.Tests.Payments
 {
@@ -22,6 +25,7 @@ namespace Wonga.QA.Tests.Payments
 			application.MakeDueToday();
 
 			CheckDbForTransactionEntry(application, "Automatic Ping (Card)");
+			CheckTransactionsQuery(application, "Automatic Ping (Card)");
 		}
 
 		[Test, AUT(AUT.Uk), JIRA("UKOPS-488"), Owner(Owner.ShaneMcHugh)]
@@ -43,6 +47,7 @@ namespace Wonga.QA.Tests.Payments
 			});
 
 			CheckDbForTransactionEntry(application, "Payment card repayment from CS");
+			CheckTransactionsQuery(application, "Payment card repayment from CS");
 		}
 
 		[Test, AUT(AUT.Uk), JIRA("UKOPS-488"), Owner(Owner.ShaneMcHugh)]
@@ -73,6 +78,7 @@ namespace Wonga.QA.Tests.Payments
 				});
 
 			CheckDbForTransactionEntry(application, "External payment card repayment from CS");
+			CheckTransactionsQuery(application, "External payment card repayment from CS");
 		}
 
 		#region Helpers#
@@ -83,6 +89,14 @@ namespace Wonga.QA.Tests.Payments
 			int scope = (int)PaymentTransactionScopeEnum.Credit;
 			string type = PaymentTransactionEnum.CardPayment.ToString();
 			Do.Until(() => Transactions.FindAllBy(Reference: reference, ApplicationId: appId, Scope: scope, Type: type, Amount: application.GetDueDateBalance()));
+		}
+
+		private void CheckTransactionsQuery(dynamic application, string reference)
+		{
+			Do.Until(
+				() =>
+				Drive.Cs.Queries.Post(new GetTransactionsQuery() { ApplicationGuid = application.Id }).Values["Reference"].
+				Last().ToString(CultureInfo.InvariantCulture).Equals(reference));
 		}
 
 		#endregion helpers#
