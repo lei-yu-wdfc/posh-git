@@ -40,6 +40,7 @@
     <Compile Include="Bureaus\CardPayment\CardPaymentRiskCheckpointsTests.cs" />
     <Compile Include="Bureaus\Experian\ExperianRiskCheckpointsTests.cs" />
     <Compile Include="Bureaus\Graydon\GraydonRiskCheckpointsTests.cs" />
+    <Compile Include="Bureaus\Uru\UruRiskCheckpointsTests.cs" />
     <Compile Include="Checkpoints\CheckpointAccountNumberApplicationsAcceptableTests.cs" />
     <Compile Include="Checkpoints\CheckpointApplicationElementNotOnCsBlacklist.cs" />
     <Compile Include="Checkpoints\CheckpointCustomerIsOnBenefitsTests.cs" />
