@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Dynamic;
 using System.Threading;
+using Gallio.Common.IO;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
@@ -26,12 +27,23 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
             public String LastName;
         }
 
-       // private static string _footerTextMessage = " Please find the contact details below to obtain a free copy of your credit report.\r\n " + "Experian Automated advice line: 0844 481 8000 consumer.helpservice@uk.experian.com" + "Customer Support Centre PO Box 1136 Warrington WA4 9GQ\r\n\r\nCallcredit " + "General questions: care@callcreditcheck.com Customer Care Callcredit check PO Box 734 Leeds LS1 9GX";
+        private static string _creditAgenciesContactDetails = " Please find the contact details below to obtain a free copy of your credit report.\r\n\r\n" +
+                                                     "Experian\r\nAutomated advice line: 0844 481 8000\r\nconsumer.helpservice@uk.experian.com\r\n" +
+                                                     "Customer Support Centre\r\nPO Box 1136\r\nWarrington\r\nWA4 9GQ\r\n\r\n" +
+                                                     "Callcredit\r\nGeneral questions: care@callcreditcheck.com\r\nCustomer Care\r\nCallcredit check\r\nPO Box 734\r\nLeeds\r\nLS1 9GX";
+
+        /*private static string _experianContactDetails = " Please find the contact details below to obtain a free copy of your credit report.\r\n\r\n" +
+                                                     "Experian\r\nAutomated advice line: 0844 481 8000\r\nconsumer.helpservice@uk.experian.com\r\n" +
+                                                     "Customer Support Centre\r\nPO Box 1136\r\nWarrington\r\nWA4 9GQ";
+
+        private static string _callCreditContactDetails = " Please find the contact details below to obtain a free copy of your credit report.\r\n\r\n" +
+                                                     "Callcredit\r\nGeneral questions: care@callcreditcheck.com\r\nCustomer Care\r\nCallcredit check\r\nPO Box 734\r\nLeeds\r\nLS1 9GX";*/
+
         public enum RiskMaskForDeclinedLoan
         {
-            TESTBankAccountMatchedToApplicant,
+            //TESTBankAccountMatchedToApplicant,
             TESTBlacklist,
-            TESTExperianCreditBureauDataIsAvailable
+            TESTCreditBureauDataIsAvailable
             //TESTExperianCreditBureauDataIsAvailable,
             //TESTDateOfBirth, //-- does not work
             //TESTCustomerDateOfBirthIsCorrect, -- does not work
@@ -73,9 +85,9 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
 
         [Test, JIRA("UKWEB-253"), Owner(Owner.StanDesyatnikov, Owner.PavithranVangiti)]
         //[Pending ("Test in development")]
-        [Row(RiskMaskForDeclinedLoan.TESTBankAccountMatchedToApplicant)]
+        //[Row(RiskMaskForDeclinedLoan.TESTBankAccountMatchedToApplicant)]
         //[Row(RiskMaskForDeclinedLoan.TESTDateOfBirth)]
-        [Row(RiskMaskForDeclinedLoan.TESTExperianCreditBureauDataIsAvailable)]
+        //[Row(RiskMaskForDeclinedLoan.TESTExperianCreditBureauDataIsAvailable)]
         public void L0DeclinedWithVariousAdvices(RiskMaskForDeclinedLoan riskMask)
         //public void L0DeclinedWithVariousAdvices([EnumData(typeof(RiskMaskForDeclinedLoan))]RiskMaskForDeclinedLoan riskMask)
         {
@@ -116,11 +128,13 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
         [Test, JIRA("UKWEB-253"), Owner(Owner.StanDesyatnikov, Owner.PavithranVangiti)]
         //[Pending ("Test in development")]
         [Row(RiskMaskForDeclinedLoan.TESTBlacklist)]
+        [Row(RiskMaskForDeclinedLoan.TESTCreditBureauDataIsAvailable)]
         public void L0DeclinedWithGeneralAdvices(RiskMaskForDeclinedLoan riskMask)
         {
             var customer = PrepareConditions(riskMask);
             var declinePage = RunL0Journey(customer, riskMask);
             Assert.IsTrue(declinePage.DeclineAdviceExists());
+            VerifyDeclineAdviceText(riskMask, declinePage);
         }
 
         #region helpers
@@ -146,6 +160,64 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
                 blackListTable.Insert(blackListEntity);
             }
 
+            if (Get.EnumToString(riskMask) == "TESTDateOfBirth")
+            {
+            }
+
+            if (Get.EnumToString(riskMask) == "TESTPaymentCardIsValid")
+            {
+            }
+
+            if (Get.EnumToString(riskMask) == "TESTCreditBureauDataIsAvailable")
+            {
+
+            }
+
+            if (Get.EnumToString(riskMask) == "TESTMonthlyIncome")
+            {
+
+            }
+
+            if (Get.EnumToString(riskMask) == "TESTIsSolvent")
+            {
+
+            }
+
+            if (Get.EnumToString(riskMask) == "TESTIsAlive")
+            {
+
+            }
+
+            if (Get.EnumToString(riskMask) == "TESTCustomerHistoryIsAcceptable")
+            {
+
+            }
+
+            if (Get.EnumToString(riskMask) == "TESTDirectFraud")
+            {
+
+            }
+
+            if (Get.EnumToString(riskMask) == "TESTApplicationDeviceNotOnBlacklist")
+            {
+
+            }
+
+            if (Get.EnumToString(riskMask) == "TESTNoSuspiciousApplicationActivity")
+            {
+
+            }
+
+            if (Get.EnumToString(riskMask) == "TESTEmployedMask")
+            {
+
+            }
+
+            if (Get.EnumToString(riskMask) == "TESTApplicationElementNotCIFASFlagged")
+            {
+
+            }
+
             // TODO: add data preparation for other risk masks
 
             return cust;
@@ -162,6 +234,20 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
                 .WithDeclineDecision();
             var declinedPage = journeyL0.Teleport<DeclinedPage>() as DeclinedPage;
             return declinedPage;
+
+        }
+
+        private void VerifyDeclineAdviceText(RiskMaskForDeclinedLoan riskMask, DeclinedPage declinedPage)
+        {
+            if (Get.EnumToString(riskMask) == "TESTBlacklist")
+            {
+                Assert.AreEqual(@ContentMap.Get.L0DeclinedPage.ApplicationBlacklistCheck.Replace("\'", "'").Replace("\\r\\n", "\r\n"), declinedPage.DeclineAdvice());
+            }
+            if (Get.EnumToString(riskMask) == "TESTCreditBureauDataIsAvailable")
+            {
+                string expMessage = ContentMap.Get.L0DeclinedPage.CreditBureauDataIsAvailable.Replace("\'t","'t").Replace("\\r\\n", "\r\n");
+                Assert.AreEqual(expMessage + _creditAgenciesContactDetails, declinedPage.DeclineAdvice().Replace("\'t", "'t"));
+            }
         }
 
         #endregion
