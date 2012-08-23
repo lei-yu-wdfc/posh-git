@@ -44,6 +44,10 @@ namespace Wonga.QA.Framework
         protected Action _setPromiseDateAndLoanTerm;
         private Func<int> _getDaysUntilStartOfLoan;
 
+        //PromoCode specific members
+        protected Guid? PromoCodeId;
+        protected decimal? TransmissionFeeDiscount;
+
         #region Private Members
 
         private int GetLoanTermFromPromiseDate()
@@ -211,6 +215,8 @@ namespace Wonga.QA.Framework
                             r.PaymentCardId = card;
                             r.LoanAmount = LoanAmount;
                             r.PromiseDate = PromiseDate;
+                            r.PromoCodeId = PromoCodeId;
+                            r.TransmissionFeeDiscount = TransmissionFeeDiscount;
                         }),
                         RiskCreateFixedTermLoanApplicationCommand.New(r =>
                         {
@@ -424,6 +430,17 @@ namespace Wonga.QA.Framework
         public ApplicationBuilder WithOutSigning()
         {
             WithSigning = false; 
+            return this;
+        }
+        public ApplicationBuilder WithPromoCode(Guid promoCodeId)
+        {
+            PromoCodeId = promoCodeId;
+            return this;
+        }
+
+        public ApplicationBuilder WithTransmissionFeeDiscount(decimal transmissionFeeDiscount)
+        {
+            TransmissionFeeDiscount = transmissionFeeDiscount;
             return this;
         }
 

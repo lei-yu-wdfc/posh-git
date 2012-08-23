@@ -36,5 +36,21 @@ namespace Wonga.QA.Tests.Payments.Queries
 			Assert.GreaterThanOrEqualTo(product.TermMax, actualTerm);
 			Assert.LessThanOrEqualTo(product.TermMin, actualTerm);
 		}
+
+        [Test, AUT(AUT.Uk), Owner(Owner.MohammadRashid)]
+        public void GetFixedTermLoanCalculation_WhenTransmissionFeeDiscountIsSupplied()
+        {
+            var product = Drive.Data.Payments.Db.Products.FindByProductId(FixedTermLoanProductId);
+
+            var res = Drive.Api.Queries.Post(new GetFixedTermLoanCalculationQuery
+            {
+                Term = 2,
+                LoanAmount = 123.45,
+                TransmissionFeeDiscount = 50
+            });
+
+            decimal transmissionFee = Convert.ToDecimal(res.Values["TransmissionFee"].First());
+            Assert.AreEqual(transmissionFee, (decimal)2.75);
+        }
 	}
 }
