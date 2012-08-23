@@ -27,6 +27,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
     public class MySummaryScenariosTests : UiTest
     {
         decimal _amountDueAt60InArrears = 0.00m;
+        private string _emailScenario14;
 
         #region Dictionaries
         Dictionary<int, string> introTexts = new Dictionary<int, string> 
@@ -86,14 +87,14 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         {5, "If you would like to change your repayment date it's too early to do it just yet, but you can request a new one from {date extensions available}. You can set a handy reminder to do it below. Please bear in mind that you will need to pay any interest and fees up to that point, in order to have your request for a change of promise date approved."},
         {6, "If you would like to change your promised repayment date you can do so here. Please note you can only extend your promise date a maximum of three times and will need to pay any interest and fees up to that point each time you extend, in order to have any request approved."},
         {7, "Changing your promise date isn't possible at this point, so we look forward to collecting your full payment and then being of service again in the future. Thanks for using Wonga!"},
-        {9, "We understand genuine mistakes happen so we hope you can make this payment today and save yourself further costs. If the balance isn't cleared by 5pm today, however, you will incur a missed payment fee of £20, which is the last thing we want to happen! Please click repay now to settle your balance. You can add a new debit card if you need to. If you are unable to pay in full today, please call our friendly collections team straight away on 0844 8429 109. We're here between 9am and 10pm, Monday to Friday."},
-        {10, "You have unfortunately incurred a missed payment fee of £20 and interest continues to accrue. Please click repay now to settle your balance and bring your account back into line. You can add a new debit card if you need to. If you are unable to pay in full today, please call our friendly collections team straight away on 0844 8429 109. We're here between 9am and 10pm, Monday to Friday."},
-        {11, "Please act now to avoid incurring further interest, which continues to accrue. Please click repay now to settle your balance and bring your account back into line. You can add a new debit card if you need to. Alternatively, we will freeze your balance today if you set up an acceptable repayment plan. Please use the self-service function below to repay over a maximum of four months. If this doesn't work for you, you should call our friendly collections team straight away on 0844 8429 109. We're here between 9am and 10pm, Monday to Friday."},
-        {12, "Please act now to avoid incurring further interest, which continues to accrue, and potential negative entries on your credit file. Please click repay now to settle your balance and bring your account back into line. You can add a new debit card if you need to. Alternatively, we will freeze your balance today if you set up an acceptable repayment plan. Please use the self-service function below to repay over a maximum of six months. If this doesn't work for you, please call our friendly collections team straight away on 0844 8429 109. We're here between 9am and 10pm, Monday to Friday."},
-        {13, "Please take action today to avoid incurring further interest, which continues to accrue, and potential negative entries on your credit file. Click Repay now to settle your balance and bring your account back into line. Alternatively, we will freeze your balance today if you set up an acceptable repayment plan. Please use the self-service function below to repay over a maximum of six months. If this doesn't work for you, please call our friendly collections team straight away on 0844 8429 109. If you choose not to deal with this matter immediately, we may need to take more formal steps to recover the balance owed."},
-        {14, "You have an active repayment plan\r\nTo make an early repayment or discuss your plan, please contact our customer care team on 0844 8429 109."},
-        {15, "You have an active repayment plan\r\nTo make an early repayment or discuss your plan, please contact our customer care team on 0844 8429 109."},
-        {16, "You have an active repayment plan\r\nTo make an early repayment or discuss your plan, please contact our customer care team on 0844 8429 109."},
+        {9, "We understand genuine mistakes happen so we hope you can make this payment today and save yourself further costs. If the balance isn't cleared by 5pm today, however, you will incur a missed payment fee of £20, which is the last thing we want to happen! Please click repay now to settle your balance. You can add a new debit card if you need to. If you are unable to pay in full today, please call our friendly collections team straight away on 0844 842 9109. We're here between 9am and 10pm, Monday to Friday."},
+        {10, "You have unfortunately incurred a missed payment fee of £20 and interest continues to accrue. Please click repay now to settle your balance and bring your account back into line. You can add a new debit card if you need to. If you are unable to pay in full today, please call our friendly collections team straight away on 0844 842 9109. We're here between 9am and 10pm, Monday to Friday."},
+        {11, "Please act now to avoid incurring further interest, which continues to accrue. Please click repay now to settle your balance and bring your account back into line. You can add a new debit card if you need to. Alternatively, we will freeze your balance today if you set up an acceptable repayment plan. Please use the self-service function below to repay over a maximum of four months. If this doesn't work for you, you should call our friendly collections team straight away on 0844 842 9109. We're here between 9am and 10pm, Monday to Friday."},
+        {12, "Please act now to avoid incurring further interest, which continues to accrue, and potential negative entries on your credit file. Please click repay now to settle your balance and bring your account back into line. You can add a new debit card if you need to. Alternatively, we will freeze your balance today if you set up an acceptable repayment plan. Please use the self-service function below to repay over a maximum of six months. If this doesn't work for you, please call our friendly collections team straight away on 0844 842 9109. We're here between 9am and 10pm, Monday to Friday."},
+        {13, "Please take action today to avoid incurring further interest, which continues to accrue, and potential negative entries on your credit file. Click Repay now to settle your balance and bring your account back into line. Alternatively, we will freeze your balance today if you set up an acceptable repayment plan. Please use the self-service function below to repay over a maximum of six months. If this doesn't work for you, please call our friendly collections team straight away on 0844 842 9109. If you choose not to deal with this matter immediately, we may need to take more formal steps to recover the balance owed."},
+        {14, "You have an active repayment plan\r\nTo make an early repayment or discuss your plan, please contact our customer care team on 0844 842 9109."},
+        {15, "You have an active repayment plan\r\nTo make an early repayment or discuss your plan, please contact our customer care team on 0844 842 9109."},
+        {16, "You have an active repayment plan\r\nTo make an early repayment or discuss your plan, please contact our customer care team on 0844 842 9109."},
         {17, "Your application is in the final stages of our approval process. We hate to keep you waiting, but, on this rare occasion, we need to check a few more details. There's no need to contact us or do anything and you should hear back from us {within the next 6 hours}. You can also check for updates about your application by logging into your account. As soon as we complete our checks, we will email you and send you a text message, so thanks for your patience in the meantime.\nIf approved you will just need to come back to the site and click the ‘I accept’ button on your agreement and we will then send the money to your bank within 15 minutes."},
         {19, "You informed us that you wanted to cancel your credit agreement please contact us on {CS tel. No} to complete this process by making the required repayment."},
         {21, "One last step to receive your cash.\n\nYour application has been approved! Now you just need to read and accept your new agreement and the loan conditions by clicking the ‘I accept’ button in the agreement below. You will then receive {£loan amount} in your account.\n\nWe’ll then collect {£xx.xx total repayable on due date} from your debit card on {repayment date in format 15th March 2011.}\n\nThanks for using Wonga!"},
@@ -487,6 +488,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
         {
             var scenarioId = 14;
             string email = Get.RandomEmail();
+            _emailScenario14 = email;
             Console.WriteLine("ScenarioId={0}; Email={1}", scenarioId, email);
             var customer = CustomerBuilder.New().WithEmailAddress(email).Build();
 
@@ -529,6 +531,35 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Assert.IsFalse(mySummaryPage.IsPromiseSummaryAvailable(), "PromiseSummary should not be availble");
 
             CheckSliders(scenarioId, mySummaryPage);
+        }
+
+        [Test, MultipleAsserts, JIRA("UKWEB-1178"), Owner(Owner.StanDesyatnikov), DependsOn("MySummaryScenario14")]
+        [Pending("UKWEB-1178: Scenario 14 users state is not being maintained")]
+        public void CheckMySummaryScenario14AfterRelogin()
+        {
+            int scenarioId = 14;
+
+            var loginPage = Client.Login();
+            var mySummaryPage = loginPage.LoginAs(_emailScenario14);
+            //var mySummaryPage = loginPage.LoginAsIgnoreError(_emailScenario14);
+
+            Assert.IsTrue(mySummaryPage.IsBackEndScenarioCorrect(scenarioId), "Scenario is wrong after page refresh.");
+
+            /*Validator validator = new ValidatorBuilder().Default(Client).WithoutErrorsCheck().Build();
+            Client.Driver.Navigate().GoToUrl(Client.Home().Url);
+            var homePage = Client.Home();
+            homePage.ClickWelcomeMessageClickHereLink();
+            //homePage = new HomePage(this.Client);
+            var loginPage = Client.Login();
+            //var mySummaryPage = loginPage.LoginAs(email);
+            mySummaryPage = loginPage.LoginAsIgnoreError(email);
+
+
+            //Assert.IsFalse(mySummaryPage.IsTagCloudAvailable());
+            //Assert.IsFalse(mySummaryPage.IsPromiseSummaryAvailable(), "PromiseSummary should not be availble");
+            //CheckSliders(scenarioId, mySummaryPage);
+            */
+            Console.WriteLine("Page refreshed.");
         }
 
         // In arrears -In repayment plan - missed payment (within grace period)
