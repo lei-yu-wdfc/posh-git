@@ -20,7 +20,7 @@ namespace Wonga.QA.Tests.Payments
 
 			Assert.IsNotNull(response);
 			Assert.AreEqual("3000.00", response.Values["AmountMin"].SingleOrDefault(),"Expected AmountMin is incorrect.");
-			Assert.AreEqual("10000.00", response.Values["AmountMax"].SingleOrDefault(), "Expected AmountMax is incorrect.");
+			Assert.AreEqual("15000.00", response.Values["AmountMax"].SingleOrDefault(), "Expected AmountMax is incorrect.");
 			Assert.AreEqual("9000", response.Values["AmountDefault"].SingleOrDefault(), "Expected AmountDefault is incorrect.");
 			Assert.AreEqual("1", response.Values["TermMin"].SingleOrDefault(), "Expected TermMin is incorrect."); 
 			Assert.AreEqual("52", response.Values["TermMax"].SingleOrDefault(), "Expected TermMax is incorrect.");
@@ -34,7 +34,7 @@ namespace Wonga.QA.Tests.Payments
 
 			Assert.IsNotNull(response);
 			Assert.AreEqual("3000.00", response.Values["AmountMin"].SingleOrDefault(), "Expected AmountMin is incorrect.");
-			Assert.AreEqual("10000.00", response.Values["AmountMax"].SingleOrDefault(), "Expected AmountMax is incorrect.");
+			Assert.AreEqual("15000.00", response.Values["AmountMax"].SingleOrDefault(), "Expected AmountMax is incorrect.");
 			Assert.AreEqual("9000", response.Values["AmountDefault"].SingleOrDefault(), "Expected AmountDefault is incorrect.");
 			Assert.AreEqual("1", response.Values["TermMin"].SingleOrDefault(), "Expected TermMin is incorrect.");
 			Assert.AreEqual("52", response.Values["TermMax"].SingleOrDefault(), "Expected TermMax is incorrect.");

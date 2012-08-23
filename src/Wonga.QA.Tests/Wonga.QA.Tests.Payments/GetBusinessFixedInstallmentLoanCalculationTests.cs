@@ -12,9 +12,15 @@ namespace Wonga.QA.Tests.Payments
     [Parallelizable(TestScope.All)]
 	public class GetBusinessFixedInstallmentLoanCalculationTests
 	{
+        private const string RiskBasedPricingEnabled = "Payments.Wb.RiskBasedPricingEnabled";
+        private const bool RiskBasedPricingStatusEnabled = true;
+
 		[Test, AUT(AUT.Wb), JIRA("SME-889")]
 		public void GetBusinessFixedInstallmentLoanCalculation()
 		{
+            var riskBasedPricingStatus = Drive.Data.Ops.GetServiceConfiguration<bool>(RiskBasedPricingEnabled);
+            Drive.Data.Ops.SetServiceConfiguration<bool>(RiskBasedPricingEnabled, RiskBasedPricingStatusEnabled);
+
             var customer = CustomerBuilder.New().WithGender(GenderEnum.Female).WithSpecificAge(40).WithNumberOfDependants(0).Build();
 			var organisation = OrganisationBuilder.New(customer).Build();
 			var application = ApplicationBuilder.New(customer, organisation).Build();
@@ -32,8 +38,35 @@ namespace Wonga.QA.Tests.Payments
 			Assert.AreEqual("3200.00", response.Values["InterestAmount"].SingleOrDefault(), "Expected InterestAmount value is incorrect.");
 			Assert.AreEqual("13700.00", response.Values["TotalRepayable"].SingleOrDefault(), "Expected TotalRepayable value is incorrect.");
 			Assert.AreEqual("856.25", response.Values["WeeklyRepayable"].SingleOrDefault(), "Expected WeeklyRepayable value is incorrect.");
+
+            Drive.Data.Ops.SetServiceConfiguration<bool>(RiskBasedPricingEnabled, riskBasedPricingStatus);
 		}
 
+        [Test, AUT(AUT.Wb), JIRA("SME-889"), DependsOn("GetBusinessFixedInstallmentLoanCalculation")]
+        public void GetBusinessFixedInstallmentLoanCalculationWhenRiskPricingOff()
+        {
+            var riskBasedPricingStatus = Drive.Data.Ops.GetServiceConfiguration<bool>(RiskBasedPricingEnabled);
+            Drive.Data.Ops.SetServiceConfiguration<bool>(RiskBasedPricingEnabled, !RiskBasedPricingStatusEnabled);
+
+            var customer = CustomerBuilder.New().WithGender(GenderEnum.Female).WithSpecificAge(40).WithNumberOfDependants(0).Build();
+            var organisation = OrganisationBuilder.New(customer).Build();
+            var application = ApplicationBuilder.New(customer, organisation).Build();
+
+            var applicationEntity = Do.Until(() => Drive.Db.Payments.Applications.Single(a => a.ExternalId == application.Id));
+
+            var response = Drive.Api.Queries.Post(new GetBusinessFixedInstallmentLoanCalculationWbUkQuery { LoanAmount = 5000, Term = 16, ApplicationId = application.Id });
+
+            Assert.IsNotNull(response);
+            Assert.AreEqual(applicationEntity.BusinessFixedInstallmentLoanApplicationEntity.LoanAmount.ToString(), response.Values["LoanAmount"].SingleOrDefault(), "Expected LoanAmount value is incorrect.");
+            Assert.AreEqual("16", response.Values["Term"].SingleOrDefault(), "Expected Term value is incorrect.");
+            Assert.AreEqual(applicationEntity.BusinessFixedInstallmentLoanApplicationEntity.ApplicationFee.ToString(), response.Values["ApplicationFeeRate"].SingleOrDefault(), "Expected ApplicationFeeRate value is incorrect.");
+            Assert.AreEqual(applicationEntity.BusinessFixedInstallmentLoanApplicationEntity.InterestRate.ToString(), response.Values["WeeklyInterestRate"].SingleOrDefault(), "Expected WeeklyInterestRate value is incorrect.");
+            Assert.AreEqual("800.00", response.Values["InterestAmount"].SingleOrDefault(), "Expected InterestAmount value is incorrect.");
+            Assert.AreEqual("11100.00", response.Values["TotalRepayable"].SingleOrDefault(), "Expected TotalRepayable value is incorrect.");
+            Assert.AreEqual("693.75", response.Values["WeeklyRepayable"].SingleOrDefault(), "Expected WeeklyRepayable value is incorrect.");
+
+            Drive.Data.Ops.SetServiceConfiguration<bool>(RiskBasedPricingEnabled, riskBasedPricingStatus);
+        }
 
 		/// <summary>
 		/// Scenario - Set the term to minimal allowed

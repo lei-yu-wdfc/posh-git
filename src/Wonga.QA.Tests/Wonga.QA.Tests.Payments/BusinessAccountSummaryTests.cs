@@ -25,6 +25,9 @@ namespace Wonga.QA.Tests.Payments
 		/// When the loan application has not been signed by all guarantors
 		/// Then the loan should be displayed as in progress.
 		/// </summary>
+
+        private const string RiskBasedPricingEnabled = "Payments.Wb.RiskBasedPricingEnabled";
+        private const bool RiskBasedPricingStatusEnabled = true;
 		[Test, AUT(AUT.Wb), JIRA("SME-251")]
 		public void GetBusinessAccountSummary_ShouldNotLoadLoanSummaryDetails_WhenApplicationIsNotSignedByAllGuarantors()
 		{
@@ -151,6 +154,9 @@ namespace Wonga.QA.Tests.Payments
 		[Test, AUT(AUT.Wb), JIRA("SME-251")]
 		public void GetBusinessAccountSummary_ShouldReturnAccountDetails_WhenLoanIsInProgress()
 		{
+            var riskBasedPricingStatus = Drive.Data.Ops.GetServiceConfiguration<bool>(RiskBasedPricingEnabled);
+            Drive.Data.Ops.SetServiceConfiguration<bool>(RiskBasedPricingEnabled, RiskBasedPricingStatusEnabled);
+
 		    var customer =
 		        CustomerBuilder.New().WithNumberOfDependants(0).WithGender(GenderEnum.Female).WithSpecificAge(40).Build();
             var organisation = OrganisationBuilder.New(customer).Build();
@@ -192,7 +198,60 @@ namespace Wonga.QA.Tests.Payments
 			Assert.AreEqual("10000.00", response.Values["OutstandingPrincipalAmount"].SingleOrDefault(), "Expected OutstandingPrincipalAmount value is incorrect.");
 			Assert.AreEqual("500.00", response.Values["OutstandingFees"].SingleOrDefault(), "Expected OutstandingFees value is incorrect.");
 			Assert.AreEqual("4000.00", response.Values["OutstandingInterest"].SingleOrDefault(), "Expected OutstandingInterest value is incorrect.");
+
+            Drive.Data.Ops.SetServiceConfiguration<bool>(RiskBasedPricingEnabled, riskBasedPricingStatus);
 		}
+
+        [Test, AUT(AUT.Wb), JIRA("SME-251"), DependsOn("GetBusinessAccountSummary_ShouldReturnAccountDetails_WhenLoanIsInProgress")]
+        public void GetBusinessAccountSummary_ShouldReturnAccountDetails_WhenLoanIsInProgressWhenRiskBasedPricingOff()
+        {
+            var riskBasedPricingStatus = Drive.Data.Ops.GetServiceConfiguration<bool>(RiskBasedPricingEnabled);
+            Drive.Data.Ops.SetServiceConfiguration<bool>(RiskBasedPricingEnabled, !RiskBasedPricingStatusEnabled);
+
+            var customer =
+                CustomerBuilder.New().WithNumberOfDependants(0).WithGender(GenderEnum.Female).WithSpecificAge(40).Build();
+            var organisation = OrganisationBuilder.New(customer).Build();
+            var application = ApplicationBuilder.New(customer, organisation).WithExpectedDecision(ApplicationDecisionStatus.Accepted).WithLoanTerm(20).Build();
+
+            Do.Until(() =>
+                GetTransactionCount(
+                t => application.Id == t.ApplicationEntity.ExternalId && t.Scope == (int)PaymentTransactionScopeEnum.Debit
+                        && t.Type == PaymentTransactionEnum.Fee.ToString()));
+
+            Do.With.Timeout(TimeSpan.FromSeconds(5)).Until(() =>
+                GetTransactionCount(
+                    t => application.Id == t.ApplicationEntity.ExternalId && t.Scope == (int)PaymentTransactionScopeEnum.Debit
+                         && t.Type == PaymentTransactionEnum.Interest.ToString()));
+
+            Do.With.Timeout(TimeSpan.FromSeconds(5)).Until(() =>
+                GetTransactionCount(
+                    t => application.Id == t.ApplicationEntity.ExternalId && t.Scope == (int)PaymentTransactionScopeEnum.Debit
+                         && t.Type == PaymentTransactionEnum.CashAdvance.ToString()));
+
+            Do.Until(() => Drive.Db.Payments.PaymentPlans.Single(pp => pp.ApplicationEntity.ExternalId == application.Id));
+
+            var response = Drive.Api.Queries.Post(new GetBusinessAccountSummaryWbUkQuery
+            {
+                AccountId = customer.Id
+            });
+
+            Assert.IsNotNull(response);
+            Assert.IsNotNull(response.Values["ApplicationId"]);
+            Assert.AreEqual("true", response.Values["IsApplicationSigned"].SingleOrDefault(), "Expected IsApplicationSigned value is incorrect.");
+            Assert.AreEqual("true", response.Values["IsApplicationAccepted"].SingleOrDefault(), "Expected IsApplicationAccepted value is incorrect.");
+            Assert.AreEqual("0", response.Values["Arrears"].SingleOrDefault(), "Expected Arrears value is incorrect.");
+            Assert.AreEqual("10000.00", response.Values["PrincipalLoanAmount"].SingleOrDefault(), "Expected PrincipalLoanAmount value is incorrect.");
+            Assert.AreEqual("20", response.Values["LoanTerm"].SingleOrDefault(), "Expected LoanTerm value is incorrect.");
+            Assert.AreEqual("565.00", response.Values["WeeklyRepaymentAmount"].SingleOrDefault(), "Expected WeeklyRepaymentAmount value is incorrect.");
+            Assert.AreEqual("0", response.Values["NumberOfPaymentsMade"].SingleOrDefault(), "Expected NumberOfPaymentsMade value is incorrect.");
+            Assert.AreEqual("20", response.Values["RemainingNumberOfPayments"].SingleOrDefault(), "Expected RemainingNumberOfPayments value is incorrect.");
+            Assert.AreEqual("11300.00", response.Values["TotalOutstandingAmount"].SingleOrDefault(), "Expected TotalOutstandingAmount value is incorrect.");
+            Assert.AreEqual("10000.00", response.Values["OutstandingPrincipalAmount"].SingleOrDefault(), "Expected OutstandingPrincipalAmount value is incorrect.");
+            Assert.AreEqual("300.00", response.Values["OutstandingFees"].SingleOrDefault(), "Expected OutstandingFees value is incorrect.");
+            Assert.AreEqual("1000.00", response.Values["OutstandingInterest"].SingleOrDefault(), "Expected OutstandingInterest value is incorrect.");
+
+            Drive.Data.Ops.SetServiceConfiguration<bool>(RiskBasedPricingEnabled, riskBasedPricingStatus);
+        }
 
 		private int GetTransactionCount(Func<TransactionEntity, bool> func)
 		{
