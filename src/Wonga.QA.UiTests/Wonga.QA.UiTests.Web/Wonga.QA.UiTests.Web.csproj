@@ -52,6 +52,7 @@
     <Compile Include="Region\Pl\Journey\L0JourneyTests.cs" />
     <Compile Include="Region\Pl\Journey\LnJourneyTests.cs" />
     <Compile Include="Region\Uk\FinancialAssessment\FinancialAssesmentRepaymentPlanTest.cs" />
+    <Compile Include="Region\Uk\LzeroFlowTest.cs" />
     <Compile Include="Region\Uk\FinancialAssessment\FinancialAssessmentAboutYouTest.cs" />
     <Compile Include="Region\Uk\FinancialAssessment\FinancialAssessmentDebtsTest.cs" />
     <Compile Include="Region\Uk\FinancialAssessment\FinancialAssessmentExpenditureTest.cs" />
