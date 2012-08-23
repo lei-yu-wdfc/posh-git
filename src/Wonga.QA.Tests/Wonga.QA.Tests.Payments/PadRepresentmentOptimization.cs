@@ -31,7 +31,7 @@ namespace Wonga.QA.Tests.Payments
 		private readonly dynamic _paymentTransactions = Drive.Data.Payments.Db.Transactions;
 		private readonly dynamic _paymentApplications = Drive.Data.Payments.Db.Applications;
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1962"), FeatureSwitch(FeatureSwitchConstants.MultipleRepresentmentsInArrearsFeatureSwitchKey)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1962"), FeatureSwitch(FeatureSwitchConstants.MultipleRepresentmentsInArrearsFeatureSwitchKey), Owner(Owner.TarasKudryavtsev)]
         public void WhenACustomerGoesIntoArrearsThenAnAttemptToRetrieve33PercentOfTheBalanceShouldBeMadeOnTheNextPayDate()
         {
             const double percentageToBeCollectedForRepresentmentOne = 0.33;
@@ -76,7 +76,7 @@ namespace Wonga.QA.Tests.Payments
             Assert.IsTrue(VerifyPaymentFunctions.VerifyDirectBankPaymentOfAmount(application.Id, -amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces));
         }
 
-    	[Test, AUT(AUT.Ca), JIRA("CA-1962"), FeatureSwitch(FeatureSwitchConstants.MultipleRepresentmentsInArrearsFeatureSwitchKey)]
+		[Test, AUT(AUT.Ca), JIRA("CA-1962"), FeatureSwitch(FeatureSwitchConstants.MultipleRepresentmentsInArrearsFeatureSwitchKey), Owner(Owner.TarasKudryavtsev)]
         public void WhenTheFirstPadRepresentmentForACustomerInArrearsFailsThenThereShouldBeNoMoreAttemptsToRetrieveMoneyFromTheCustomer()
         {
             const double percentageToBeCollectedForRepresentmentOne = 0.33;
@@ -120,7 +120,7 @@ namespace Wonga.QA.Tests.Payments
             Do.Until(() => (_opsSagasMultipleRepresentmentsInArrearsSagaEntity.FindBy(ApplicationId: application.Id) == null));
         }
 
-    	[Test, AUT(AUT.Ca), JIRA("CA-1962"), FeatureSwitch(FeatureSwitchConstants.MultipleRepresentmentsInArrearsFeatureSwitchKey)]
+		[Test, AUT(AUT.Ca), JIRA("CA-1962"), FeatureSwitch(FeatureSwitchConstants.MultipleRepresentmentsInArrearsFeatureSwitchKey), Owner(Owner.TarasKudryavtsev)]
         public void WhenTheFirstPadRepresentmentForACustomerInArrearsIsSuccessfulThenASecondAttemptToRetrieve50PercentOfTheBalanceShouldBeMadeOnTheNextPayDate()
         {
             const double percentageToBeCollectedForRepresentmentOne = 0.33;
@@ -190,7 +190,7 @@ namespace Wonga.QA.Tests.Payments
 
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1962"), FeatureSwitch(FeatureSwitchConstants.MultipleRepresentmentsInArrearsFeatureSwitchKey)]
+		[Test, AUT(AUT.Ca), JIRA("CA-1962"), FeatureSwitch(FeatureSwitchConstants.MultipleRepresentmentsInArrearsFeatureSwitchKey), Owner(Owner.TarasKudryavtsev)]
         public void WhenTheSecondPadRepresentmentForACustomerInArrearsFailsThenThereShouldBeNoMoreAttemptsToRetrieveMoneyFromTheCustomer()
         {
             const double percentageToBeCollectedForRepresentmentOne = 0.33;
@@ -265,7 +265,7 @@ namespace Wonga.QA.Tests.Payments
 			Do.Until(() => (_opsSagasMultipleRepresentmentsInArrearsSagaEntity.FindBy(ApplicationId: application.Id) == null));
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1962"), FeatureSwitch(FeatureSwitchConstants.MultipleRepresentmentsInArrearsFeatureSwitchKey)]
+		[Test, AUT(AUT.Ca), JIRA("CA-1962"), FeatureSwitch(FeatureSwitchConstants.MultipleRepresentmentsInArrearsFeatureSwitchKey), Owner(Owner.TarasKudryavtsev)]
         public void WhenTheSecondPadRepresentmentForACustomerInArrearsIsSuccessfulThenAThirdAttemptToRetrieveTheRemainingBalanceShouldBeMadeOnTheNextPayDate()
         {
             const double percentageToBeCollectedForRepresentmentOne = 0.33;
@@ -362,7 +362,7 @@ namespace Wonga.QA.Tests.Payments
 			Do.Until(() => (_opsSagasMultipleRepresentmentsInArrearsSagaEntity.FindBy(ApplicationId: application.Id) == null));
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1962"), FeatureSwitch(FeatureSwitchConstants.MultipleRepresentmentsInArrearsFeatureSwitchKey)]
+		[Test, AUT(AUT.Ca), JIRA("CA-1962"), FeatureSwitch(FeatureSwitchConstants.MultipleRepresentmentsInArrearsFeatureSwitchKey), Owner(Owner.TarasKudryavtsev)]
         public void WhenTheThirdPadRepresentmentForACustomerInArrearsFailsThenThereShouldBeNoMoreAttemptsToRetrieveMoneyFromTheCustomer()
         {
             const double percentageToBeCollectedForRepresentmentOne = 0.33;
@@ -458,7 +458,7 @@ namespace Wonga.QA.Tests.Payments
 			Do.Until(() => (_opsSagasMultipleRepresentmentsInArrearsSagaEntity.FindBy(ApplicationId: application.Id) == null));
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1962"), FeatureSwitch(FeatureSwitchConstants.MultipleRepresentmentsInArrearsFeatureSwitchKey, true), ExpectedException(typeof(DoException))]
+		[Test, AUT(AUT.Ca), JIRA("CA-1962"), FeatureSwitch(FeatureSwitchConstants.MultipleRepresentmentsInArrearsFeatureSwitchKey, true), ExpectedException(typeof(DoException)), Owner(Owner.TarasKudryavtsev)]
         public void WhenPadRepresentmentOptimizationFeatureSwitchIsOffThenTheMultipleRepresentmentsForPaymentsInArrearsSagaEntitySagaShouldNotBeUsed()
         {
             var customer = CustomerBuilder.New().Build();
@@ -469,7 +469,7 @@ namespace Wonga.QA.Tests.Payments
             Do.Until(() => _opsSagasMultipleRepresentmentsInArrearsSagaEntity.FindByApplicationId(application.Id));
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1962"), FeatureSwitch(FeatureSwitchConstants.MultipleRepresentmentsInArrearsFeatureSwitchKey, true)]
+		[Test, AUT(AUT.Ca), JIRA("CA-1962"), FeatureSwitch(FeatureSwitchConstants.MultipleRepresentmentsInArrearsFeatureSwitchKey, true), Owner(Owner.TarasKudryavtsev)]
         public void WhenPadRepresentmentOptimizationFeatureSwitchIsOffThenThePaymentsInArrearsSagaEntitySagaShouldBeUsed()
         {
             var customer = CustomerBuilder.New().Build();
