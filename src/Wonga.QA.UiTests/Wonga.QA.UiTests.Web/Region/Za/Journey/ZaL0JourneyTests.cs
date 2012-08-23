@@ -246,7 +246,7 @@ namespace Wonga.QA.UiTests.Web.Region.Za.Journey
             Assert.IsTrue(totalToRepay <= controlSum);
         }
 
-        [Test, JIRA("QA-308")]
+        [Test, JIRA("QA-308"), Pending("ZA-2781")]
         public void ShouldPossibleToCompleteAnL0WithRetiredStatus()
         {
             string firstName = Get.RandomString(3, 10);
