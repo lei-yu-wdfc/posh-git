@@ -13,57 +13,25 @@ using Wonga.QA.Framework.Db.Risk;
 using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Core;
 
-namespace Wonga.QA.Tests.CallValidate
+namespace Wonga.QA.Tests.Risk.Bureaus.CardPayment
 {
     [Parallelizable(TestScope.All)]
-    public class CallValidateRiskCheckpointTests
+    public class CardPaymentRiskCheckpointsTests
     {
         private const String GoodCompanyRegNumber = "00000086";
 
         #region Main Applicant
 
-        /* Main applicant payment card is valid */
-
-        //TODO : Merge these tests
-
-        [Test, AUT(AUT.Uk), JIRA("UK-869")]
-        public void L0Applicant_WhenPaymentCardNotValidated_LoanIsDeclined()
-        {
-            var customer = CustomerBuilder
-                .New()
-                .WithPaymentCardNumber(Int64.Parse("9999888877776666"))
-                .WithEmployer(RiskMask.TESTCallValidatePaymentCardIsValid)
-                .Build();
-
-            ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Declined).Build();
-        }
-
-        [Test, AUT(AUT.Uk), JIRA("UK-869")]
-        public void L0Applicant_WhenPaymentCardValidated_LoanIsApproved()
-        {
-            var customer = CustomerBuilder
-                .New()
-                .WithPaymentCardNumber(Int64.Parse("1111222233334444"))
-                .WithEmployer(RiskMask.TESTCallValidatePaymentCardIsValid)
-                .Build();
-
-            ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
-        }
-
-
-
         [Test, AUT(AUT.Wb)]
-        [JIRA("SME-136")]
-        public void TestCallValidateMainApplicantPaymentCardIsValid_LoanIsApproved()
+        [JIRA("SME-136"),
+        Category(TestCategories.CoreTest)]
+        public void TestCardPaymentMainApplicantPaymentCardIsValid_LoanIsApproved()
         {
             const String forename = "kathleen";
             const String surname = "bridson";
-
             var mainApplicantBuilder =
                 CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithPaymentCardNumber(
-                    Int64.Parse("1111222233334444")).WithMiddleName(RiskMask.TESTCallValidatePaymentCardIsValid);
-
-
+                    Int64.Parse("4444333322221111")).WithMiddleName(RiskMask.TESTRiskPaymentCardIsValid);
             var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
 
             var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
@@ -71,19 +39,20 @@ namespace Wonga.QA.Tests.CallValidate
             VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
                                                                      RiskCheckpointDefinitionEnum.PaymentCardIsValid,
                                                                      RiskCheckpointStatus.Verified,
-                                                                     RiskVerificationDefinitions.CallValidatePaymentCardIsValidVerification);
+                                                                     RiskVerificationDefinitions.CardPaymentPaymentCardIsValidVerification);
         }
 
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-136")]
-        public void TestCallValidateMainApplicantPaymentCardIsInvalid_LoanIsDeclined()
+        [Ignore]
+        public void TestCardPaymentMainApplicantPaymentCardIsNotValid_LoanIsDeclined()
         {
             const String forename = "kathleen";
             const String surname = "bridson";
 
             var mainApplicantBuilder =
-                CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithPaymentCardNumber(
-                    Int64.Parse("9999888877776666")).WithMiddleName(RiskMask.TESTCallValidatePaymentCardIsValid);
+               CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithPaymentCardNumber(
+                   Int64.Parse("9999888877776666")).WithMiddleName(RiskMask.TESTRiskPaymentCardIsValid);
 
             var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Declined);
 
@@ -92,56 +61,16 @@ namespace Wonga.QA.Tests.CallValidate
             VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
                                                                      RiskCheckpointDefinitionEnum.PaymentCardIsValid,
                                                                      RiskCheckpointStatus.Failed,
-                                                                     RiskVerificationDefinitions.CallValidatePaymentCardIsValidVerification);
-        }
-
-        /*Main applicant bank account is valid */
-
-        [Test, AUT(AUT.Wb)]
-		[JIRA("SME-137"), Category(TestCategories.CoreTest)]
-        public void TestCallValidateMainApplicantBankAccountMatch_LoanIsApproved()
-        {
-            const String forename = "kathleen";
-            const String surname = "bridson";
-
-            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithBankAccountNumber("00000190", "180002").WithMiddleName(RiskMask.TESTCallValidateBankAccountMatchedToApplicant);
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted);
-
-            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Verified, 1);
-
-            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
-                                                                     RiskCheckpointDefinitionEnum.BankAccountMatchesTheApplicant,
-                                                                     RiskCheckpointStatus.Verified,
-                                                                     RiskVerificationDefinitions.CallValidateAndExperianBankAccountVerification);
-        }
-
-        [Test, AUT(AUT.Wb)]
-        [JIRA("SME-137")]
-        public void TestCallValidateMainApplicantBankAccountDoesNotMatch_LoanIsDeclined()
-        {
-            const String forename = "kathleen";
-            const String surname = "bridson";
-
-            var mainApplicantBuilder = CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithBankAccountNumber("33069079", "204422").WithMiddleName(RiskMask.TESTCallValidateBankAccountMatchedToApplicant);
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Declined);
-
-            var mainApplicantRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.MainApplicant, RiskWorkflowStatus.Failed, 1);
-
-            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(mainApplicantRiskWorkflows[0],
-                                                                     RiskCheckpointDefinitionEnum.BankAccountMatchesTheApplicant,
-                                                                     RiskCheckpointStatus.Failed,
-                                                                     RiskVerificationDefinitions.CallValidateAndExperianBankAccountVerification);
+                                                                     RiskVerificationDefinitions.CardPaymentPaymentCardIsValidVerification);
         }
 
         #endregion
 
         #region Guarantors
 
-        /* Guarantor Payment card is valid */
-
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-1155")]
-        public void TestCallValidateGuarantorPaymentCardIsValid_LoanIsApproved()
+        public void TestCardPaymentGuarantorPaymentCardIsValid_LoanIsApproved()
         {
             const String forename = "Ashely";
             const String surname = "Marma";
@@ -150,7 +79,7 @@ namespace Wonga.QA.Tests.CallValidate
             var mainApplicantBuilder = CustomerBuilder.New();
             var listOfGuarantors = new List<CustomerBuilder>
                                        {
-                                           CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithPaymentCardNumber(paymentCardNumber).WithMiddleName(RiskMask.TESTCallValidatePaymentCardIsValid),
+                                           CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithPaymentCardNumber(paymentCardNumber).WithMiddleName(RiskMask.TESTRiskPaymentCardIsValid),
                                        };
 
 
@@ -162,12 +91,13 @@ namespace Wonga.QA.Tests.CallValidate
             VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorRiskWorkflows[0],
                                                                      RiskCheckpointDefinitionEnum.PaymentCardIsValid,
                                                                      RiskCheckpointStatus.Verified,
-                                                                     RiskVerificationDefinitions.CallValidatePaymentCardIsValidVerification);
+                                                                     RiskVerificationDefinitions.CardPaymentPaymentCardIsValidVerification);
         }
 
         [Test, AUT(AUT.Wb)]
         [JIRA("SME-1155")]
-        public void TestCallValidateGuarantorPaymentCardIsInvalid_LoanIsDeclined()
+        [Ignore]
+        public void TestCardPaymentGuarantorPaymentCardIsInValid_LoanIsDeclined()
         {
             const String forename = "Ashely";
             const String surname = "Marma";
@@ -192,57 +122,6 @@ namespace Wonga.QA.Tests.CallValidate
                                                                      RiskVerificationDefinitions.CallValidatePaymentCardIsValidVerification);
         }
 
-        /* Guarantor Bank Account is valid */
-
-        [Test, AUT(AUT.Wb)]
-        [JIRA("SME-1157")]
-        public void TestCallValidateGuarantorBankAccountMatch_LoanIsApproved()
-        {
-            const String forename = "Ashely";
-            const String surname = "Marma";
-
-            var mainApplicantBuilder = CustomerBuilder.New();
-            var listOfGuarantors = new List<CustomerBuilder>
-                                       {
-                                           CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithBankAccountNumber("00000190", "180002").WithMiddleName(RiskMask.TESTCallValidateBankAccountMatchedToApplicant),
-                                       };
-
-
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.Accepted, listOfGuarantors);
-
-            var guarantorRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Verified, 1);
-
-            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorRiskWorkflows[0],
-                                                                     RiskCheckpointDefinitionEnum.BankAccountMatchesTheApplicant,
-                                                                     RiskCheckpointStatus.Verified,
-                                                                     RiskVerificationDefinitions.CallValidateAndExperianBankAccountVerification);
-        }
-
-        [Test, AUT(AUT.Wb)]
-        [JIRA("SME-1157")]
-        public void TestCallValidateGuarantorBankAccountDoesNotMatch_LoanIsDeclined()
-        {
-            const String forename = "Ashely";
-            const String surname = "Marma";
-
-            var mainApplicantBuilder = CustomerBuilder.New();
-            var listOfGuarantors = new List<CustomerBuilder>
-                                       {
-                                           CustomerBuilder.New().WithForename(forename).WithSurname(surname).WithBankAccountNumber("33069079", "204422").WithMiddleName(RiskMask.TESTCallValidateBankAccountMatchedToApplicant),
-                                       };
-
-
-            var application = CreateApplicationWithAsserts(mainApplicantBuilder, GoodCompanyRegNumber, ApplicationDecisionStatus.PreAccepted, listOfGuarantors);
-            Do.Until(() => (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), Drive.Api.Queries.Post(new GetApplicationDecisionQuery { ApplicationId = application.Id }).Values["ApplicationDecisionStatus"].Single()) == ApplicationDecisionStatus.Declined);
-
-            var guarantorRiskWorkflows = VerifyRiskWorkflows(application.Id, RiskWorkflowTypes.Guarantor, RiskWorkflowStatus.Failed, 1);
-
-            VerifyCheckpointDefinitionAndVerificationForRiskWorkflow(guarantorRiskWorkflows[0],
-                                                                     RiskCheckpointDefinitionEnum.BankAccountMatchesTheApplicant,
-                                                                     RiskCheckpointStatus.Failed,
-                                                                     RiskVerificationDefinitions.CallValidateAndExperianBankAccountVerification);
-        }
-
         #endregion
 
         private static Application CreateApplicationWithAsserts(CustomerBuilder mainApplicantBuilder, String companyRegisteredNumber, ApplicationDecisionStatus applicationDecision, List<CustomerBuilder> guarantors = null)
@@ -264,12 +143,6 @@ namespace Wonga.QA.Tests.CallValidate
             if (guarantors != null)
             {
                 applicationBuilder.WithGuarantors(guarantors);
-
-                foreach (var customerBuilder in guarantors)
-                {
-                    customerBuilder.ScrubForename(customerBuilder.Forename);
-                    customerBuilder.ScrubSurname(customerBuilder.Surname);
-                }
             }
 
             //STEP5 - Build the application + send the list of guarantors
