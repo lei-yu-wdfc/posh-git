@@ -72,7 +72,7 @@ namespace Wonga.QA.Generators.Core
 
 		private static String GetNamespaceForApi(String namespaceInV3)
 		{
-			throw new NotImplementedException();
+			return "Wonga.QA.Framework.Api." + namespaceInV3;
 		}
 
 		private static String GetNamespaceForCsApi(String namespaceInV3)
