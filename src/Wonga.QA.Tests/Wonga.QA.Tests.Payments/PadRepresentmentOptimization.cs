@@ -28,8 +28,10 @@ namespace Wonga.QA.Tests.Payments
         private readonly dynamic _bgTrans = Drive.Data.BankGateway.Db.Transactions;
         private readonly dynamic _inArrearsNoticeSaga = Drive.Data.OpsSagas.Db.InArrearsNoticeSagaEntity;
 		private readonly dynamic _mockedBankGatewayResponses = Drive.Data.QaData.Db.BankGatewayResponseSetups;
+		private readonly dynamic _paymentTransactions = Drive.Data.Payments.Db.Transactions;
+		private readonly dynamic _paymentApplications = Drive.Data.Payments.Db.Applications;
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1962"), FeatureSwitch(FeatureSwitchConstants.MultipleRepresentmentsInArrearsFeatureSwitchKey)]
+        [Test, AUT(AUT.Ca), JIRA("CA-1962"), FeatureSwitch(FeatureSwitchConstants.MultipleRepresentmentsInArrearsFeatureSwitchKey), Owner(Owner.TarasKudryavtsev)]
         public void WhenACustomerGoesIntoArrearsThenAnAttemptToRetrieve33PercentOfTheBalanceShouldBeMadeOnTheNextPayDate()
         {
             const double percentageToBeCollectedForRepresentmentOne = 0.33;
@@ -45,8 +47,7 @@ namespace Wonga.QA.Tests.Payments
             var numOfDaysToNextPayDateForRepresentmentOne = (int)nextPayDateForRepresentmentOne.Subtract(DateTime.Today).TotalDays;
 
             application.PutIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
-			WaitForProcessedMockedTransaction(customer.BankAccountNumber);
-            TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentOne);
+			TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentOne);
 
             var arrearsInterestForRepresentmentOne =
                 (CalculateFunctionsCa.CalculateExpectedArrearsInterestAmountAppliedCa(
@@ -55,11 +56,9 @@ namespace Wonga.QA.Tests.Payments
             Assert.AreEqual(0,GetNumberOfRepresentmentsSent(application.Id));
             Assert.AreEqual(nextPayDateForRepresentmentOne.ToString(), GetNextRepresentmentDate(application.Id));
 
-            TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
-
-            Do.Until(() => (int)_bgTrans.GetCount(_bgTrans.ApplicationId == application.Id &&
-                                                   _bgTrans.TransactionStatus ==
-                                                   (int)BankGatewayTransactionStatus.Paid) == 2);
+			WaitForProcessedMockedTransaction(customer.BankAccountNumber);
+			TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
+            WaitForSuccessfulCashInTransactions(application.Id, 1);
 
             var transactionForRepresentmentOne = _bgTrans.FindAll(_bgTrans.ApplicationId == application.Id &&
                                             _bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.Paid).
@@ -77,7 +76,7 @@ namespace Wonga.QA.Tests.Payments
             Assert.IsTrue(VerifyPaymentFunctions.VerifyDirectBankPaymentOfAmount(application.Id, -amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces));
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1962"), FeatureSwitch(FeatureSwitchConstants.MultipleRepresentmentsInArrearsFeatureSwitchKey)]
+		[Test, AUT(AUT.Ca), JIRA("CA-1962"), FeatureSwitch(FeatureSwitchConstants.MultipleRepresentmentsInArrearsFeatureSwitchKey), Owner(Owner.TarasKudryavtsev)]
         public void WhenTheFirstPadRepresentmentForACustomerInArrearsFailsThenThereShouldBeNoMoreAttemptsToRetrieveMoneyFromTheCustomer()
         {
             const double percentageToBeCollectedForRepresentmentOne = 0.33;
@@ -93,8 +92,7 @@ namespace Wonga.QA.Tests.Payments
             var numOfDaysToNextPayDateForRepresentmentOne = (int)nextPayDateForRepresentmentOne.Subtract(DateTime.Today).TotalDays;
 
             application.PutIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
-        	WaitForProcessedMockedTransaction(customer.BankAccountNumber);
-            TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentOne);
+        	TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentOne);
 
             var arrearsInterestForRepresentmentOne =
                 (CalculateFunctionsCa.CalculateExpectedArrearsInterestAmountAppliedCa(
@@ -105,12 +103,7 @@ namespace Wonga.QA.Tests.Payments
 				Reject();
 
             TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
-
-        	WaitForProcessedMockedTransaction(customer.BankAccountNumber);
-
-            Do.Until(() => (int)_bgTrans.GetCount(_bgTrans.ApplicationId == application.Id &&
-                                                   _bgTrans.TransactionStatus ==
-                                                   (int)BankGatewayTransactionStatus.Failed) == 2);
+        	WaitForFailedCashInTransactions(application.Id, customer.BankAccountNumber, 2);
 
             var transactionForRepresentmentOne = _bgTrans.FindAll(_bgTrans.ApplicationId == application.Id &&
                                             _bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.Failed).
@@ -124,10 +117,10 @@ namespace Wonga.QA.Tests.Payments
 
 			Assert.AreEqual(amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces, transactionForRepresentmentOne.Amount);
 
-            //TODO: add assert to ensure the saga is no longer exists in the db...
+            Do.Until(() => (_opsSagasMultipleRepresentmentsInArrearsSagaEntity.FindBy(ApplicationId: application.Id) == null));
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1962"), FeatureSwitch(FeatureSwitchConstants.MultipleRepresentmentsInArrearsFeatureSwitchKey)]
+		[Test, AUT(AUT.Ca), JIRA("CA-1962"), FeatureSwitch(FeatureSwitchConstants.MultipleRepresentmentsInArrearsFeatureSwitchKey), Owner(Owner.TarasKudryavtsev)]
         public void WhenTheFirstPadRepresentmentForACustomerInArrearsIsSuccessfulThenASecondAttemptToRetrieve50PercentOfTheBalanceShouldBeMadeOnTheNextPayDate()
         {
             const double percentageToBeCollectedForRepresentmentOne = 0.33;
@@ -144,18 +137,15 @@ namespace Wonga.QA.Tests.Payments
             var numOfDaysToNextPayDateForRepresentmentOne = (int)nextPayDateForRepresentmentOne.Subtract(DateTime.Today).TotalDays;
 
             application.PutIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
-			WaitForProcessedMockedTransaction(customer.BankAccountNumber);
-            TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentOne);
+			TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentOne);
 
 			var arrearsInterestForRepresentmentOne =
                 (CalculateFunctionsCa.CalculateExpectedArrearsInterestAmountAppliedCa(
                     (principle + interest), numOfDaysToNextPayDateForRepresentmentOne));
 
+			WaitForProcessedMockedTransaction(customer.BankAccountNumber);
             TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
-
-            Do.Until(() => (int)_bgTrans.GetCount(_bgTrans.ApplicationId == application.Id &&
-                                                   _bgTrans.TransactionStatus ==
-                                                   (int)BankGatewayTransactionStatus.Paid) == 2);
+			WaitForSuccessfulCashInTransactions(application.Id, 1);
 
             var amountToBeCollectedForRepresentmentOne =
                 (decimal)(((double)(arrearsInterestForRepresentmentOne + principle + interest + defaultCharge)) * percentageToBeCollectedForRepresentmentOne);
@@ -171,11 +161,10 @@ namespace Wonga.QA.Tests.Payments
 
             TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentTwo);
             application.RewindApplicationFurther((uint)numOfDaysToNextPayDateForRepresentmentTwo);
-            TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
 
-            Do.Until(() => (int)_bgTrans.GetCount(_bgTrans.ApplicationId == application.Id &&
-                                       _bgTrans.TransactionStatus ==
-                                       (int)BankGatewayTransactionStatus.Paid) == 3);
+			WaitForProcessedMockedTransaction(customer.BankAccountNumber);
+            TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
+			WaitForSuccessfulCashInTransactions(application.Id, 2);
 
             var transactionForRepresentmentTwo = _bgTrans.FindAll(_bgTrans.ApplicationId == application.Id &&
                                 _bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.Paid).
@@ -201,7 +190,7 @@ namespace Wonga.QA.Tests.Payments
 
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1962"), FeatureSwitch(FeatureSwitchConstants.MultipleRepresentmentsInArrearsFeatureSwitchKey)]
+		[Test, AUT(AUT.Ca), JIRA("CA-1962"), FeatureSwitch(FeatureSwitchConstants.MultipleRepresentmentsInArrearsFeatureSwitchKey), Owner(Owner.TarasKudryavtsev)]
         public void WhenTheSecondPadRepresentmentForACustomerInArrearsFailsThenThereShouldBeNoMoreAttemptsToRetrieveMoneyFromTheCustomer()
         {
             const double percentageToBeCollectedForRepresentmentOne = 0.33;
@@ -218,18 +207,15 @@ namespace Wonga.QA.Tests.Payments
             var numOfDaysToNextPayDateForRepresentmentOne = (int)nextPayDateForRepresentmentOne.Subtract(DateTime.Today).TotalDays;
 
             application.PutIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
-			WaitForProcessedMockedTransaction(customer.BankAccountNumber);
-            TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentOne);
+			TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentOne);
 
             var arrearsInterestForRepresentmentOne =
                 (CalculateFunctionsCa.CalculateExpectedArrearsInterestAmountAppliedCa(
                     (principle + interest), numOfDaysToNextPayDateForRepresentmentOne));
 
-            TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
-
-            Do.Until(() => (int)_bgTrans.GetCount(_bgTrans.ApplicationId == application.Id &&
-                                                   _bgTrans.TransactionStatus ==
-                                                   (int)BankGatewayTransactionStatus.Paid) == 2);
+			WaitForProcessedMockedTransaction(customer.BankAccountNumber);
+			TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
+			WaitForSuccessfulCashInTransactions(application.Id, 1);
 
             var amountToBeCollectedForRepresentmentOne =
                (arrearsInterestForRepresentmentOne + principle + interest + defaultCharge) * (decimal)percentageToBeCollectedForRepresentmentOne;
@@ -251,8 +237,7 @@ namespace Wonga.QA.Tests.Payments
 				Reject();
 
             TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
-
-			WaitForProcessedMockedTransaction(customer.BankAccountNumber);
+			WaitForFailedCashInTransactions(application.Id, customer.BankAccountNumber, 2);
 
             Do.Until(() => (int)_bgTrans.GetCount(_bgTrans.ApplicationId == application.Id &&
                                        _bgTrans.TransactionStatus ==
@@ -277,10 +262,10 @@ namespace Wonga.QA.Tests.Payments
 
             AssertAmountsAreSimilar(amountToBeCollectedForRepresentmentTwoRoundedToTwoDecimalPlaces, transactionForRepresentmentTwo.Amount);
 
-            //TODO: add assert to ensure the saga is no longer exists in the db...
+			Do.Until(() => (_opsSagasMultipleRepresentmentsInArrearsSagaEntity.FindBy(ApplicationId: application.Id) == null));
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1962"), FeatureSwitch(FeatureSwitchConstants.MultipleRepresentmentsInArrearsFeatureSwitchKey)]
+		[Test, AUT(AUT.Ca), JIRA("CA-1962"), FeatureSwitch(FeatureSwitchConstants.MultipleRepresentmentsInArrearsFeatureSwitchKey), Owner(Owner.TarasKudryavtsev)]
         public void WhenTheSecondPadRepresentmentForACustomerInArrearsIsSuccessfulThenAThirdAttemptToRetrieveTheRemainingBalanceShouldBeMadeOnTheNextPayDate()
         {
             const double percentageToBeCollectedForRepresentmentOne = 0.33;
@@ -297,20 +282,17 @@ namespace Wonga.QA.Tests.Payments
             var numOfDaysToNextPayDateForRepresentmentOne = (int)nextPayDateForRepresentmentOne.Subtract(DateTime.Today).TotalDays;
 
             application.PutIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
-			WaitForProcessedMockedTransaction(customer.BankAccountNumber);
-            TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentOne);
-
+			TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentOne);
+			
             var arrearsInterestForRepresentmentOne =
                 (CalculateFunctionsCa.CalculateExpectedArrearsInterestAmountAppliedCa(
                     (principle + interest), numOfDaysToNextPayDateForRepresentmentOne, false));
 
-            TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
+			WaitForProcessedMockedTransaction(customer.BankAccountNumber);
+			TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
+			WaitForSuccessfulCashInTransactions(application.Id, 1);
 
-            Do.Until(() => (int)_bgTrans.GetCount(_bgTrans.ApplicationId == application.Id &&
-                                                   _bgTrans.TransactionStatus ==
-                                                   (int)BankGatewayTransactionStatus.Paid) == 2);
-        	
-			var amountToBeCollectedForRepresentmentOne =
+            var amountToBeCollectedForRepresentmentOne =
                 (arrearsInterestForRepresentmentOne + principle + interest + defaultCharge) 
 				* (decimal)percentageToBeCollectedForRepresentmentOne;
 
@@ -325,11 +307,10 @@ namespace Wonga.QA.Tests.Payments
 
             TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentTwo);
             application.RewindApplicationFurther((uint)numOfDaysToNextPayDateForRepresentmentTwo);
-            TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
 
-            Do.Until(() => (int)_bgTrans.GetCount(_bgTrans.ApplicationId == application.Id &&
-                                       _bgTrans.TransactionStatus ==
-                                       (int)BankGatewayTransactionStatus.Paid) == 3);
+			WaitForProcessedMockedTransaction(customer.BankAccountNumber);
+            TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
+			WaitForSuccessfulCashInTransactions(application.Id, 2);
 
             var principleBalanceAfterRepresentmentOne = principle - amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces;
 
@@ -352,11 +333,10 @@ namespace Wonga.QA.Tests.Payments
 
             TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentThree);
             application.RewindApplicationFurther((uint) numOfDaysToNextPayDateForRepresentmentThree);
-            TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
 
-            Do.Until(() => (int)_bgTrans.GetCount(_bgTrans.ApplicationId == application.Id &&
-                           _bgTrans.TransactionStatus ==
-                           (int)BankGatewayTransactionStatus.Paid) == 4);
+			WaitForProcessedMockedTransaction(customer.BankAccountNumber);
+            TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
+			WaitForSuccessfulCashInTransactions(application.Id, 3);
 
             var transactionForRepresentmentThree = _bgTrans.FindAll(_bgTrans.ApplicationId == application.Id &&
                                             _bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.Paid).OrderByTransactionIdDescending().First();
@@ -378,10 +358,11 @@ namespace Wonga.QA.Tests.Payments
             AssertAmountsAreSimilar(amountToBeCollectedForRepresentmentThreeRoundedToTwoDecimalPlaces, transactionForRepresentmentThree.Amount);
             Assert.IsTrue(VerifyPaymentFunctions.VerifyDirectBankPaymentOfAmount(application.Id, -amountToBeCollectedForRepresentmentThreeRoundedToTwoDecimalPlaces));
             Assert.IsTrue(Do.With.Timeout(1).Until(() => application.IsClosed));
-            //TODO: add assert to ensure the saga is no longer exists in the db...
+
+			Do.Until(() => (_opsSagasMultipleRepresentmentsInArrearsSagaEntity.FindBy(ApplicationId: application.Id) == null));
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1962"), FeatureSwitch(FeatureSwitchConstants.MultipleRepresentmentsInArrearsFeatureSwitchKey)]
+		[Test, AUT(AUT.Ca), JIRA("CA-1962"), FeatureSwitch(FeatureSwitchConstants.MultipleRepresentmentsInArrearsFeatureSwitchKey), Owner(Owner.TarasKudryavtsev)]
         public void WhenTheThirdPadRepresentmentForACustomerInArrearsFailsThenThereShouldBeNoMoreAttemptsToRetrieveMoneyFromTheCustomer()
         {
             const double percentageToBeCollectedForRepresentmentOne = 0.33;
@@ -398,19 +379,17 @@ namespace Wonga.QA.Tests.Payments
             var numOfDaysToNextPayDateForRepresentmentOne = (int)nextPayDateForRepresentmentOne.Subtract(DateTime.Today).TotalDays;
 
             application.PutIntoArrears((uint)numOfDaysToNextPayDateForRepresentmentOne);
-			WaitForProcessedMockedTransaction(customer.BankAccountNumber);
-            TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentOne);
+			TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentOne);
 
             var arrearsInterestForRepresentmentOne =
                 CalculateFunctionsCa.CalculateExpectedArrearsInterestAmountAppliedCa(
                     (principle + interest), numOfDaysToNextPayDateForRepresentmentOne, false);
 
-            TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
+			WaitForProcessedMockedTransaction(customer.BankAccountNumber);
+			TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
+			WaitForSuccessfulCashInTransactions(application.Id, 1);
 
-            Do.Until(() => (int)_bgTrans.GetCount(_bgTrans.ApplicationId == application.Id &&
-                                                   _bgTrans.TransactionStatus ==
-                                                   (int)BankGatewayTransactionStatus.Paid) == 2);
-
+            
 			var amountToBeCollectedForRepresentmentOne =
                 (arrearsInterestForRepresentmentOne + principle + interest + defaultCharge) * (decimal)percentageToBeCollectedForRepresentmentOne;
 
@@ -426,10 +405,7 @@ namespace Wonga.QA.Tests.Payments
             TimeoutInArrearsNoticeSaga(application.Id, numOfDaysToNextPayDateForRepresentmentTwo);
             application.RewindApplicationFurther((uint)numOfDaysToNextPayDateForRepresentmentTwo);
             TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
-
-            Do.Until(() => (int)_bgTrans.GetCount(_bgTrans.ApplicationId == application.Id &&
-                                       _bgTrans.TransactionStatus ==
-                                       (int)BankGatewayTransactionStatus.Paid) == 3);
+			WaitForSuccessfulCashInTransactions(application.Id, 2);
 
             var principleBalanceAfterRepresentmentOne = principle - amountToBeCollectedForRepresentmentOneRoundedToTwoDecimalPlaces;
 
@@ -458,12 +434,7 @@ namespace Wonga.QA.Tests.Payments
 				Reject();
 
             TimeoutMultipleRepresentmentsInArrearsSagaEntity(application.Id);
-
-			WaitForProcessedMockedTransaction(customer.BankAccountNumber);
-
-            Do.Until(() => (int)_bgTrans.GetCount(_bgTrans.ApplicationId == application.Id &&
-                           _bgTrans.TransactionStatus ==
-                           (int)BankGatewayTransactionStatus.Failed) == 2);
+			WaitForFailedCashInTransactions(application.Id, customer.BankAccountNumber, 2);
 
             var transactionForRepresentmentThree = _bgTrans.FindAll(_bgTrans.ApplicationId == application.Id &&
                                             _bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.Failed).OrderByTransactionIdDescending().First();
@@ -484,10 +455,10 @@ namespace Wonga.QA.Tests.Payments
 
             AssertAmountsAreSimilar(amountToBeCollectedForRepresentmentThreeRoundedToTwoDecimalPlaces, transactionForRepresentmentThree.Amount);
 
-        	//TODO: add assert to ensure the saga is no longer exists in the db...
+			Do.Until(() => (_opsSagasMultipleRepresentmentsInArrearsSagaEntity.FindBy(ApplicationId: application.Id) == null));
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1962"), FeatureSwitch(FeatureSwitchConstants.MultipleRepresentmentsInArrearsFeatureSwitchKey, true), ExpectedException(typeof(DoException))]
+		[Test, AUT(AUT.Ca), JIRA("CA-1962"), FeatureSwitch(FeatureSwitchConstants.MultipleRepresentmentsInArrearsFeatureSwitchKey, true), ExpectedException(typeof(DoException)), Owner(Owner.TarasKudryavtsev)]
         public void WhenPadRepresentmentOptimizationFeatureSwitchIsOffThenTheMultipleRepresentmentsForPaymentsInArrearsSagaEntitySagaShouldNotBeUsed()
         {
             var customer = CustomerBuilder.New().Build();
@@ -498,7 +469,7 @@ namespace Wonga.QA.Tests.Payments
             Do.Until(() => _opsSagasMultipleRepresentmentsInArrearsSagaEntity.FindByApplicationId(application.Id));
         }
 
-        [Test, AUT(AUT.Ca), JIRA("CA-1962"), FeatureSwitch(FeatureSwitchConstants.MultipleRepresentmentsInArrearsFeatureSwitchKey, true)]
+		[Test, AUT(AUT.Ca), JIRA("CA-1962"), FeatureSwitch(FeatureSwitchConstants.MultipleRepresentmentsInArrearsFeatureSwitchKey, true), Owner(Owner.TarasKudryavtsev)]
         public void WhenPadRepresentmentOptimizationFeatureSwitchIsOffThenThePaymentsInArrearsSagaEntitySagaShouldBeUsed()
         {
             var customer = CustomerBuilder.New().Build();
@@ -554,6 +525,33 @@ namespace Wonga.QA.Tests.Payments
 			Do.Until(() => _mockedBankGatewayResponses.FindBy(
 				Gateway: "Scotia", BankAccount: bankAccount) == null);
 		}
+
+		private void WaitForFailedCashInTransactions(Guid applicationId, string bankAccount, int count)
+		{
+			Do.Until(() => (int)_bgTrans.GetCount(
+				_bgTrans.ApplicationId == applicationId &&
+				_bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.Failed &&
+				_bgTrans.ServiceTypeID == (int)BankGatewayServiceTypeId.Collection) == count);
+
+			WaitForProcessedMockedTransaction(bankAccount);
+		}
+
+		private void WaitForSuccessfulCashInTransactions(Guid applicationId, int count)
+		{
+			Do.Until(() => (int)_bgTrans.GetCount(
+				_bgTrans.ApplicationId == applicationId &&
+				_bgTrans.TransactionStatus == (int)BankGatewayTransactionStatus.Paid &&
+				_bgTrans.ServiceTypeID == (int)BankGatewayServiceTypeId.Collection) == count);
+
+
+			var application = _paymentApplications.FindBy(ExternalId: applicationId);
+
+			Do.Until(() => (int)_paymentTransactions.GetCount(
+				_paymentTransactions.ApplicationId == application.ApplicationId &&
+				_paymentTransactions.Type == PaymentTransactionType.DirectBankPayment.ToString()) == count);
+		}
+
+    	
 
     }
 }
