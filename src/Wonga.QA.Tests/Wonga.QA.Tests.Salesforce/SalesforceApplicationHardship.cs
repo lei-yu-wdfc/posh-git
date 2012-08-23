@@ -40,7 +40,7 @@ namespace Wonga.QA.Tests.Salesforce
             var caseId = Guid.NewGuid();
             var application = CreateLiveApplication();
             application.ExpireCard();  
-            application.MakeDueToday(application);
+            application.MakeDueToday();
             SalesforceOperations.CheckSalesApplicationStatus(application, (double)salesforceStatusAlias.DueToday);
             HardshipCycle(caseId, application);
          }
