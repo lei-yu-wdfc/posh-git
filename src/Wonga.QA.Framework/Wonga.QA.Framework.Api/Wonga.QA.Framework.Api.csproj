@@ -48,6 +48,8 @@
     <Compile Include="Defaults\AddPrimaryOrganisationDirectorCommand.cs" />
     <Compile Include="Defaults\AddSecondaryOrganisationDirectorCommand.cs" />
     <Compile Include="Defaults\CompleteHomePhoneVerificationCaCommand.cs" />
+    <Compile Include="Defaults\CreateApplicationPayLaterUkCommand.cs" />
+    <Compile Include="Defaults\RiskCreatePayLaterApplicationUkCommand.cs" />
     <Compile Include="Defaults\RiskSavePayLaterCustomerAddressPayLaterUkCommand.cs" />
     <Compile Include="Defaults\RiskSavePayLaterCustomerDetailsPayLaterUkCommand.cs" />
     <Compile Include="Defaults\RiskSavePayLaterEmploymentDetailsPayLaterUkCommand.cs" />
@@ -115,6 +117,7 @@
     <Compile Include="Defaults\SaveCustomerDetailsZaCommand.cs" />
     <Compile Include="Defaults\SaveEmploymentDetailsZaCommand.cs" />
     <Compile Include="Defaults\SaveSocialDetailsCaCommand.cs" />
+    <Compile Include="Defaults\VerifyPaylaterApplicationUkCommand.cs" />
     <Compile Include="Exceptions\ValidatorException.cs" />
     <Compile Include="Exceptions\SchemaException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -958,10 +961,8 @@
     <Compile Include="Requests\Risk\Queries\GetEmploymentDetailsQuery.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Requests\Risk\Queries\PayLater\Uk\GetPaylaterApplicationDecision.cs" />
     <Compile Include="Requests\Risk\Queries\GetSocialDetailsQuery.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Requests\Risk\Queries\PLater\Uk\VerifyCheckoutUkQuery.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Requests\Risk\Queries\Uk\VerifyPaylaterCheckoutUkQuery.cs">
@@ -1013,6 +1014,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="Wonga.QA.Framework.Msmq, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\bin\Wonga.QA.Framework.Msmq.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Wonga.QA.Framework.Core\Wonga.QA.Framework.Core.csproj">

@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Wonga.QA.Framework.Account.PayLater;
 using Wonga.QA.Framework.Api;
+using Wonga.QA.Framework.Api.Requests.Payments.Commands;
+using Wonga.QA.Framework.Api.Requests.Risk.Commands;
+using Wonga.QA.Framework.Api.Requests.Risk.Queries;
+using Wonga.QA.Framework.Api.Requests.Risk.Queries.PayLater.Uk;
 using Wonga.QA.Framework.Application;
 using Wonga.QA.Framework.Core;
 
@@ -10,7 +15,7 @@ namespace Wonga.QA.Framework.Builders.PayLater
 	public abstract class PayLaterApplicationBuilderBase
 	{
 		protected Guid ApplicationId { get; private set; }
-		protected PayLaterApplicationDataBase ApplicationData { get; private set; }
+		protected PayLaterApplicationDataBase PayLaterApplicationData { get; private set; }
 		protected PayLaterAccount Account { get; private set; }
 
 
@@ -18,7 +23,7 @@ namespace Wonga.QA.Framework.Builders.PayLater
 		{
 			ApplicationId = Guid.NewGuid();
 			Account = account;
-			ApplicationData = applicationData;
+			PayLaterApplicationData = applicationData;
 		}
 
 		public PayLaterApplication Build()
@@ -40,7 +45,12 @@ namespace Wonga.QA.Framework.Builders.PayLater
 
 		private IEnumerable<ApiRequest> GetGenericApiCommands()
 		{
-			throw new NotImplementedException();
+            yield return SubmitClientWatermarkCommand.New(r =>
+            {
+                r.ApplicationId = ApplicationId;
+                r.AccountId = Account.Id;
+                r.BlackboxData = PayLaterApplicationData.IovationResponse.ToString();
+            });
 		}
 
 		protected abstract IEnumerable<ApiRequest> GetRegionSpecificApiCommands();
@@ -49,13 +59,31 @@ namespace Wonga.QA.Framework.Builders.PayLater
 
 		private void WaitForApplicationDecision()
 		{
-			Do.Until(() => GetApplicationDecision() == ApplicationData.ExpectedDecision);
+			Do.Until(() => GetApplicationDecision() == PayLaterApplicationData.ExpectedDecision);
 		}
 
 		private ApplicationDecisionStatus GetApplicationDecision()
 		{
-			throw new NotImplementedException();
+            var decision =
+                    Drive.Api.Queries.Post(
+                    new GetPaylaterApplicationDecision { ApplicationId = ApplicationId })
+                    .Values["ApplicationDecisionStatus"]
+                    .Single();
+
+            return (ApplicationDecisionStatus)Enum.Parse(typeof(ApplicationDecisionStatus), decision);
 		}
+
+        private void SignApplicationIfRequired()
+        {
+            if (PayLaterApplicationData.SignIfAccepted)
+            {
+                if (PayLaterApplicationData.ExpectedDecision == ApplicationDecisionStatus.Accepted ||
+                    PayLaterApplicationData.ExpectedDecision == ApplicationDecisionStatus.ReadyToSign)
+                {
+                    Drive.Api.Commands.Post(new SignApplicationCommand { AccountId = Account.Id, ApplicationId = ApplicationId });
+                }
+            }
+        }
 
 		#region "With" Methods
 		#endregion

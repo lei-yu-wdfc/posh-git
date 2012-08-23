@@ -4,5 +4,6 @@
 	{
 		public AccountQueriesDataPresence DataPresence = new AccountQueriesDataPresence();
 		public AccountQueriesPaymentDetails PaymentDetails = new AccountQueriesPaymentDetails();
+        public AccountQueriesCustomerDetails CustomerDetails = new AccountQueriesCustomerDetails();
 	}
 }
