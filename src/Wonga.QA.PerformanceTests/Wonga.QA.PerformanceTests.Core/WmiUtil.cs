@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management;
 using System.Text;
+using MbUnit.Framework;
 
 namespace Wonga.QA.PerformanceTests.Core
 {
@@ -21,7 +22,10 @@ namespace Wonga.QA.PerformanceTests.Core
             if (host.Equals("localhost") || host.Equals("127.0.0.1"))
                 return null;
 
-            mgmtPath = "\\\\" + host + mgmtPath;
+            if (string.IsNullOrEmpty(mgmtPath))
+                mgmtPath = @"\root\CIMV2";
+
+            mgmtPath = @"\\" + host + mgmtPath;
             var connection = new ConnectionOptions
                                  {
                                      Username = username, 
@@ -30,7 +34,17 @@ namespace Wonga.QA.PerformanceTests.Core
                                  };
 
             var scope = new ManagementScope(mgmtPath, connection);
-            scope.Connect();
+
+            try
+            {
+                scope.Connect();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Cannot connect to the host " + host);
+                Console.WriteLine("Exception Message: " + e.Message);
+                Console.WriteLine(e.StackTrace);
+            }
 
             return scope;
         }

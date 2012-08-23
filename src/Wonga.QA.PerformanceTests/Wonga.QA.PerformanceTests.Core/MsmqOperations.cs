@@ -15,7 +15,7 @@ namespace Wonga.QA.PerformanceTests.Core
         /// <param name="ip"></param>
         /// <param name="queueName"></param>
         /// <param name="message"></param>
-        public void WriteToQueue(string ip, string queueName, string message)
+        public void WriteToQueue(string ip, string queueName, Message message)
         {
             var path = "FormatName:Direct=TCP:" + ip + "\\private$\\" + queueName;
             var queue = new MessageQueue(path);
@@ -33,20 +33,23 @@ namespace Wonga.QA.PerformanceTests.Core
         public Message ReadFromQueue(string ip, string queueName)
         {
             var path = "FormatName:Direct=TCP:" + ip + "\\private$\\" + queueName;
-            var queue = new MessageQueue(path)
-                            {
-                                Formatter = new XmlMessageFormatter(new Type[] {typeof (string)})
-                            };
-            Message msg = queue.Receive(MessageQueueTransactionType.Single);
+            var queue = new MessageQueue(path);
+            var msg = queue.Receive(MessageQueueTransactionType.Single);
 
             return msg;
         }
 
-        [Test]
-        public void Test()
+        /// <summary>
+        /// Clen up the given Message Queue in the Remote Server
+        /// </summary>
+        /// <param name="ip"></param>
+        /// <param name="queueName"></param>
+        public void PurgeMessageQueue(string ip, string queueName)
         {
-            WriteToQueue("192.168.65.107", "emailcomponent", "Hello how are you?");
-            //Console.WriteLine(ReadFromQueue("192.168.65.107", "emailcomponent").Body.ToString());
+            var path = "FormatName:Direct=TCP:" + ip + "\\private$\\" + queueName;
+            var queue = new MessageQueue(path);
+
+            queue.Purge();
         }
     }
 }
