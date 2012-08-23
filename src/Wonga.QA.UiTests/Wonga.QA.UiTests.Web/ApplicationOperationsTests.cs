@@ -8,7 +8,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.UiTests.Web
 {
-    [TestFixture, Parallelizable(TestScope.All)]
+    [TestFixture, Parallelizable(TestScope.All), Pending("There still not enough functionality for this tests")]
     class ApplicationOperationsTests
     {
         [Test, Owner(Owner.MihailPodobivsky, Owner.KirillPolishyk), JIRA("QA-328")]

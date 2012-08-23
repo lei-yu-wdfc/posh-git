@@ -81,6 +81,7 @@
     <WrittenExplanationHeader>.secci-intro</WrittenExplanationHeader>
     <WrittenExplanationPrint>#secci-print-link a</WrittenExplanationPrint>
     <WrittenExplanationContent>.content</WrittenExplanationContent>
+    <ButtonAccept>#edit-accept</ButtonAccept>
   </AcceptedPage>
 
   <BankAccountSection>
