@@ -3394,7 +3394,7 @@ namespace Wonga.QA.Framework.Db.Payments
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MetricType", DbType="VarChar(200) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MetricType", DbType="VarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
 		public string MetricType
 		{
 			get

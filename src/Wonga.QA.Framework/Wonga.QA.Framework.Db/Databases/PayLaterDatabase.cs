@@ -33,6 +33,9 @@ namespace Wonga.QA.Framework.Db.PayLater
     partial void Insert__RefactorLog(__RefactorLog instance);
     partial void Update__RefactorLog(__RefactorLog instance);
     partial void Delete__RefactorLog(__RefactorLog instance);
+    partial void InsertAccountPreferenceEntity(AccountPreferenceEntity instance);
+    partial void UpdateAccountPreferenceEntity(AccountPreferenceEntity instance);
+    partial void DeleteAccountPreferenceEntity(AccountPreferenceEntity instance);
     partial void InsertApplicationEntity(ApplicationEntity instance);
     partial void UpdateApplicationEntity(ApplicationEntity instance);
     partial void DeleteApplicationEntity(ApplicationEntity instance);
@@ -85,6 +88,14 @@ namespace Wonga.QA.Framework.Db.PayLater
 			get
 			{
 				return this.GetTable<@__RefactorLog>();
+			}
+		}
+		
+		public System.Data.Linq.Table<AccountPreferenceEntity> AccountPreferences
+		{
+			get
+			{
+				return this.GetTable<AccountPreferenceEntity>();
 			}
 		}
 		
@@ -207,6 +218,140 @@ namespace Wonga.QA.Framework.Db.PayLater
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="paylater.AccountPreferences")]
+	public partial class AccountPreferenceEntity : DbEntity<AccountPreferenceEntity>, INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _AccountPreferenceId;
+		
+		private System.Guid _AccountId;
+		
+		private System.DateTime _CreatedOn;
+		
+		private System.Nullable<decimal> _CreditLimit;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnAccountPreferenceIdChanging(int value);
+    partial void OnAccountPreferenceIdChanged();
+    partial void OnAccountIdChanging(System.Guid value);
+    partial void OnAccountIdChanged();
+    partial void OnCreatedOnChanging(System.DateTime value);
+    partial void OnCreatedOnChanged();
+    partial void OnCreditLimitChanging(System.Nullable<decimal> value);
+    partial void OnCreditLimitChanged();
+    #endregion
+		
+		public AccountPreferenceEntity()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccountPreferenceId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int AccountPreferenceId
+		{
+			get
+			{
+				return this._AccountPreferenceId;
+			}
+			set
+			{
+				if ((this._AccountPreferenceId != value))
+				{
+					this.OnAccountPreferenceIdChanging(value);
+					this.SendPropertyChanging();
+					this._AccountPreferenceId = value;
+					this.SendPropertyChanged("AccountPreferenceId");
+					this.OnAccountPreferenceIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccountId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid AccountId
+		{
+			get
+			{
+				return this._AccountId;
+			}
+			set
+			{
+				if ((this._AccountId != value))
+				{
+					this.OnAccountIdChanging(value);
+					this.SendPropertyChanging();
+					this._AccountId = value;
+					this.SendPropertyChanged("AccountId");
+					this.OnAccountIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedOn", DbType="DateTime NOT NULL")]
+		public System.DateTime CreatedOn
+		{
+			get
+			{
+				return this._CreatedOn;
+			}
+			set
+			{
+				if ((this._CreatedOn != value))
+				{
+					this.OnCreatedOnChanging(value);
+					this.SendPropertyChanging();
+					this._CreatedOn = value;
+					this.SendPropertyChanged("CreatedOn");
+					this.OnCreatedOnChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreditLimit", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> CreditLimit
+		{
+			get
+			{
+				return this._CreditLimit;
+			}
+			set
+			{
+				if ((this._CreditLimit != value))
+				{
+					this.OnCreditLimitChanging(value);
+					this.SendPropertyChanging();
+					this._CreditLimit = value;
+					this.SendPropertyChanged("CreditLimit");
+					this.OnCreditLimitChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="paylater.Applications")]
 	public partial class ApplicationEntity : DbEntity<ApplicationEntity>, INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -252,6 +397,12 @@ namespace Wonga.QA.Framework.Db.PayLater
 		private decimal _TransactionFee;
 		
 		private decimal _TransactionFeeDiscount;
+		
+		private string _MerchantOrderId;
+		
+		private string _PostCode;
+		
+		private string _MerchantReference;
 		
 		private EntityRef<ArrearEntity> _ArrearEntity;
 		
@@ -303,6 +454,12 @@ namespace Wonga.QA.Framework.Db.PayLater
     partial void OnTransactionFeeChanged();
     partial void OnTransactionFeeDiscountChanging(decimal value);
     partial void OnTransactionFeeDiscountChanged();
+    partial void OnMerchantOrderIdChanging(string value);
+    partial void OnMerchantOrderIdChanged();
+    partial void OnPostCodeChanging(string value);
+    partial void OnPostCodeChanged();
+    partial void OnMerchantReferenceChanging(string value);
+    partial void OnMerchantReferenceChanged();
     #endregion
 		
 		public ApplicationEntity()
@@ -709,6 +866,66 @@ namespace Wonga.QA.Framework.Db.PayLater
 					this._TransactionFeeDiscount = value;
 					this.SendPropertyChanged("TransactionFeeDiscount");
 					this.OnTransactionFeeDiscountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MerchantOrderId", DbType="NVarChar(256) NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
+		public string MerchantOrderId
+		{
+			get
+			{
+				return this._MerchantOrderId;
+			}
+			set
+			{
+				if ((this._MerchantOrderId != value))
+				{
+					this.OnMerchantOrderIdChanging(value);
+					this.SendPropertyChanging();
+					this._MerchantOrderId = value;
+					this.SendPropertyChanged("MerchantOrderId");
+					this.OnMerchantOrderIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PostCode", DbType="NVarChar(10)", UpdateCheck=UpdateCheck.Never)]
+		public string PostCode
+		{
+			get
+			{
+				return this._PostCode;
+			}
+			set
+			{
+				if ((this._PostCode != value))
+				{
+					this.OnPostCodeChanging(value);
+					this.SendPropertyChanging();
+					this._PostCode = value;
+					this.SendPropertyChanged("PostCode");
+					this.OnPostCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MerchantReference", DbType="NVarChar(256) NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
+		public string MerchantReference
+		{
+			get
+			{
+				return this._MerchantReference;
+			}
+			set
+			{
+				if ((this._MerchantReference != value))
+				{
+					this.OnMerchantReferenceChanging(value);
+					this.SendPropertyChanging();
+					this._MerchantReference = value;
+					this.SendPropertyChanged("MerchantReference");
+					this.OnMerchantReferenceChanged();
 				}
 			}
 		}
