@@ -44,12 +44,10 @@ namespace Wonga.QA.Tests.Meta
             Assert.DoesNotThrow(() => _payLaterAccount = AccountBuilder.PayLater.New().Build());
         }
 
-        [Test, AUT(AUT.Uk), Ignore]
+        [Test, AUT(AUT.Uk), DependsOn("PayLaterAccountBuilderTest"), Ignore]
         public void PayLaterApplicationBuilderTests()
         {
-            var payLaterAccount = AccountBuilder.PayLater.New().Build();
-            
-            Framework.Builders.ApplicationBuilder.PayLater.New(payLaterAccount).Build();
+            Assert.DoesNotThrow(() => Framework.Builders.ApplicationBuilder.PayLater.New(_payLaterAccount).Build());
         }
     }
 }
