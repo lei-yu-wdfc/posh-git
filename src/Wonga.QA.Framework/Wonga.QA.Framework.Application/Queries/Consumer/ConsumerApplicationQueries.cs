@@ -2,11 +2,11 @@
 
 namespace Wonga.QA.Framework.Application.Queries.Consumer
 {
-	public sealed class ConsumerApplicationQueries
+	public sealed class ConsumerApplicationQueries : ApplicationQueriesBase
 	{
-		public Guid GetAccountGuidForApplication(Guid applicationId)
+		public override decimal GetAmountToRepay(Guid applicationId)
 		{
-			return (Guid)Drive.Data.Payments.Db.Applications.FindByExternalId(applicationId).AccountId;
+			throw new NotImplementedException();
 		}
 	}
 }

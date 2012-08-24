@@ -18,8 +18,8 @@ namespace Wonga.QA.Framework.Builders.Consumer.Uk
 		
 		protected override IEnumerable<ApiRequest> GetRegionSpecificApiCommands()
 		{
-			var primaryPaymentCardGuid = AccountQueries.Consumer.PaymentDetails.GetPrimaryPaymentCardGuid(Account);
-			var primaryBankAccountGuid = AccountQueries.Consumer.PaymentDetails.GetPrimaryBankAccountGuid(Account);
+			var primaryPaymentCardGuid = AccountQueries.Consumer.PaymentDetails.GetPrimaryPaymentCardGuid(Account.Id);
+			var primaryBankAccountGuid = AccountQueries.Consumer.PaymentDetails.GetPrimaryBankAccountGuid(Account.Id);
 
 			yield return CreateFixedTermLoanApplicationUkCommand.New(r =>
 			                                                         	{

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Wonga.QA.Framework.Account.PayLater;
+using Wonga.QA.Framework.Account;
 using Wonga.QA.Framework.Account.Queries;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Enums;

@@ -1,28 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Wonga.QA.Framework.Account.PayLater;
+using Wonga.QA.Framework.Account;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Requests.Payments.Commands;
 using Wonga.QA.Framework.Api.Requests.Risk.Commands;
-using Wonga.QA.Framework.Api.Requests.Risk.Queries;
 using Wonga.QA.Framework.Api.Requests.Risk.Queries.PayLater.Uk;
 using Wonga.QA.Framework.Application;
 using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.Framework.Builders.PayLater
 {
-	public abstract class PayLaterApplicationBuilderBase
+	public abstract class PayLaterApplicationBuilderBase : ApplicationBuilderBase
 	{
 		protected Guid ApplicationId { get; private set; }
 		protected PayLaterApplicationDataBase PayLaterApplicationData { get; private set; }
-		protected PayLaterAccount Account { get; private set; }
 
 
-		protected PayLaterApplicationBuilderBase(PayLaterAccount account, PayLaterApplicationDataBase applicationData)
+		protected PayLaterApplicationBuilderBase(PayLaterAccount account, PayLaterApplicationDataBase applicationData) : base(account)
 		{
 			ApplicationId = Guid.NewGuid();
-			Account = account;
 			PayLaterApplicationData = applicationData;
 		}
 
@@ -30,6 +27,7 @@ namespace Wonga.QA.Framework.Builders.PayLater
 		{
 			CreateApplication();
 			WaitForApplicationDecision();
+			SignApplicationIfRequired();
 			WaitForApplicationToBecomeLive();
 
 			return new PayLaterApplication(ApplicationId);
@@ -49,7 +47,7 @@ namespace Wonga.QA.Framework.Builders.PayLater
             {
                 r.ApplicationId = ApplicationId;
                 r.AccountId = Account.Id;
-                r.BlackboxData = PayLaterApplicationData.IovationResponse.ToString();
+            	r.BlackboxData = IovationResponse;
             });
 		}
 
@@ -59,7 +57,7 @@ namespace Wonga.QA.Framework.Builders.PayLater
 
 		private void WaitForApplicationDecision()
 		{
-			Do.Until(() => GetApplicationDecision() == PayLaterApplicationData.ExpectedDecision);
+			Do.Until(() => GetApplicationDecision() == ExpectedDecision);
 		}
 
 		private ApplicationDecisionStatus GetApplicationDecision()
@@ -75,10 +73,10 @@ namespace Wonga.QA.Framework.Builders.PayLater
 
         private void SignApplicationIfRequired()
         {
-            if (PayLaterApplicationData.SignIfAccepted)
+            if (SignIfAccepted)
             {
-                if (PayLaterApplicationData.ExpectedDecision == ApplicationDecisionStatus.Accepted ||
-                    PayLaterApplicationData.ExpectedDecision == ApplicationDecisionStatus.ReadyToSign)
+                if (ExpectedDecision == ApplicationDecisionStatus.Accepted ||
+                    ExpectedDecision == ApplicationDecisionStatus.ReadyToSign)
                 {
                     Drive.Api.Commands.Post(new SignApplicationCommand { AccountId = Account.Id, ApplicationId = ApplicationId });
                 }
@@ -86,6 +84,31 @@ namespace Wonga.QA.Framework.Builders.PayLater
         }
 
 		#region "With" Methods
+
+		public PayLaterApplicationBuilderBase WithTotalAmount(Decimal amount)
+		{
+			PayLaterApplicationData.TotalAmount = amount;
+			return this;
+		}
+
+		public PayLaterApplicationBuilderBase WithMerchantId(Guid merchantId)
+		{
+			PayLaterApplicationData.MerchantId = merchantId;
+			return this;
+		}
+
+		public PayLaterApplicationBuilderBase WithMerchantReference(String merchantReference)
+		{
+			PayLaterApplicationData.MerchantReference = merchantReference;
+			return this;
+		}
+
+		public PayLaterApplicationBuilderBase WithMerchantOrderId(Guid orderId)
+		{
+			PayLaterApplicationData.MerchantOrderId = orderId;
+			return this;
+		}
+
 		#endregion
 	}
 }

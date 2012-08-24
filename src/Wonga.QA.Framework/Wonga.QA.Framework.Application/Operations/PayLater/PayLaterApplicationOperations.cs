@@ -2,5 +2,6 @@
 {
 	public sealed class PayLaterApplicationOperations
 	{
+		public static readonly PayLaterApplicationOperationsArrears Arrears = new PayLaterApplicationOperationsArrears();
 	}
 }

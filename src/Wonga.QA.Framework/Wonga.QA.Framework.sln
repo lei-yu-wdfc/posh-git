@@ -41,6 +41,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Framework.Account"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Framework.Application", "Wonga.QA.Framework.Application\Wonga.QA.Framework.Application.csproj", "{E02DE5C9-D5A4-45FE-8997-9C0CC9AAB3AA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.Framework.System", "Wonga.QA.Framework.System\Wonga.QA.Framework.System.csproj", "{9156003B-1345-4D06-8825-7B8726D2B007}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -127,6 +129,10 @@ Global
 		{E02DE5C9-D5A4-45FE-8997-9C0CC9AAB3AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E02DE5C9-D5A4-45FE-8997-9C0CC9AAB3AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E02DE5C9-D5A4-45FE-8997-9C0CC9AAB3AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9156003B-1345-4D06-8825-7B8726D2B007}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9156003B-1345-4D06-8825-7B8726D2B007}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9156003B-1345-4D06-8825-7B8726D2B007}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9156003B-1345-4D06-8825-7B8726D2B007}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
