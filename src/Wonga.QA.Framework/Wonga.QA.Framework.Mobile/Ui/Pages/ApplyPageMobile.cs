@@ -25,14 +25,16 @@ namespace Wonga.QA.Framework.Mobile.Ui.Pages
         {
             _phoneNumber = Content.FindElement(By.CssSelector(UiMapMobile.Get.ApplyPageMobile.PhoneNumber));
             _applyNow    = Content.FindElement(By.CssSelector(UiMapMobile.Get.ApplyPageMobile.ApplyNowButton));
-            ApplicationSection = new ApplicationSection(this);
             switch(Config.AUT)
             {
                 case AUT.Za:
                     _bankAccount = Content.FindElement(By.CssSelector(UiMapMobile.Get.ApplyPageMobile.BankAccount));
                     break;
+                default:
+                    ApplicationSection = new ApplicationSection(this);
+                    break;
             }
-            ApplicationSection = new ApplicationSection(this);
+            
         }
 
         public ProcessingPageMobile ClickApplyNowButton()
