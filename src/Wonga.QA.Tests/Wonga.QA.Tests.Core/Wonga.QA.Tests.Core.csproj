@@ -37,6 +37,8 @@
   <ItemGroup>
     <Compile Include="AUTAttribute.cs" />
     <Compile Include="AUTRowAttribute.cs" />
+    <Compile Include="AssertUntil.cs" />
+    <Compile Include="DoUntilExtensions.cs" />
     <Compile Include="ServiceConfigurationRequiredAttribute.cs" />
     <Compile Include="MetadataKeys.cs" />
     <Compile Include="OwnerAttribute.cs" />
