@@ -18,8 +18,8 @@ namespace Wonga.QA.Tests.Payments
         /// <summary>
         /// Test to check if PromoCodeGuids are stored in the Payment.Applications DB when a promo code is supplied
         /// </summary>
-        [Test, AUT(AUT.Uk), Owner(Owner.MohammadRashid)]
-        public void CreateFixedTermLoanApplication_SavesPromoCodeId()
+        [Test, AUT(AUT.Uk), Owner(Owner.MohammadRashid), Pending("Pending on pushing issue8 branch of Payments/Marketing/Ops to master")]
+        public void CreateFixedTermLoanApplication_PromoCodeIdIsSaved()
         {
             var promoCodeId = Guid.NewGuid();
             Customer cust = CustomerBuilder.New().Build();
@@ -29,5 +29,21 @@ namespace Wonga.QA.Tests.Payments
 
             Assert.AreEqual(app.PromoCodeGuid, promoCodeId);
         }
+
+        [Test, AUT(AUT.Uk), Owner(Owner.MohammadRashid), Pending("Pending on pushing issue8 branch of Payments/Marketing/Ops to master")]
+        public void CreateFixedTermLoanApplication_TransmissionFeeDiscountIsApplied()
+        {
+            decimal transmissionFeeDiscount = 50;
+            Customer cust = CustomerBuilder.New().Build();
+            var application = ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Accepted).WithPromoCode(Guid.NewGuid()).WithTransmissionFeeDiscount(transmissionFeeDiscount).Build();
+
+            var app = Do.Until(() => Drive.Data.Payments.Db.Applications.FindByExternalId(application.Id));
+
+            //var appId = app.ApplicationId;
+            var appDetails = Do.Until(() => Drive.Data.Payments.Db.FixedTermLoanApplications.FindByApplicationId(app.ApplicationId));
+
+            //Assert.AreEqual(app.PromoCodeGuid, promoCodeId);
+        }
+
     }
 }

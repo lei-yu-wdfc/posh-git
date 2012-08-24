@@ -6,6 +6,7 @@ using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Requests.Payments.Queries;
+using Wonga.QA.Framework.Api.Requests.Payments.Queries.Uk;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
 
@@ -37,7 +38,7 @@ namespace Wonga.QA.Tests.Payments.Queries
 			Assert.LessThanOrEqualTo(product.TermMin, actualTerm);
 		}
 
-        [Test, AUT(AUT.Uk), Owner(Owner.MohammadRashid)]
+        [Test, AUT(AUT.Uk), Owner(Owner.MohammadRashid), JIRA("UKWEB-1125"), Pending("Pending on pushing issue8 branch of Payments/Marketing/Ops to master")]
         public void GetFixedTermLoanCalculation_WhenTransmissionFeeDiscountIsSupplied()
         {
             var product = Drive.Data.Payments.Db.Products.FindByProductId(FixedTermLoanProductId);
@@ -52,5 +53,19 @@ namespace Wonga.QA.Tests.Payments.Queries
             decimal transmissionFee = Convert.ToDecimal(res.Values["TransmissionFee"].First());
             Assert.AreEqual(transmissionFee, (decimal)2.75);
         }
+
+        [Test, AUT(AUT.Uk), Owner(Owner.MohammadRashid), JIRA("UKWEB-1123"), Pending("Pending on pushing issue8 branch of Payments/Marketing/Ops to master")]
+        public void GetFixedTermLoanOffer_WhenTransmissionFeeDiscountIsSupplied()
+        {
+            var res = Drive.Api.Queries.Post(new GetFixedTermLoanOfferUkQuery
+            {
+                AccountId = Guid.NewGuid(),
+                TransmissionFeeDiscount = 50
+            });
+
+            decimal transmissionFee = Convert.ToDecimal(res.Values["TransmissionFee"].First());
+            Assert.AreEqual(transmissionFee, (decimal)2.75);
+        }
+
 	}
 }
