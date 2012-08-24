@@ -11,5 +11,9 @@ namespace Wonga.QA.Framework.Application
 		{
 			Id = accountId;
 		}
+
+		public abstract void Repay();
+
+		public abstract void Repay(Decimal amount);
 	}
 }

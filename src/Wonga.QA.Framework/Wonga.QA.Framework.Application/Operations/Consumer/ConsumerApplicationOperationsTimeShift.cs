@@ -2,7 +2,7 @@
 
 namespace Wonga.QA.Framework.Application.Operations.Consumer
 {
-	public class ConsumerApplicationOperationsTimeShift
+	public sealed class ConsumerApplicationOperationsTimeShift
 	{
 		public void TimeShiftApplicationDates(ApplicationBase application, TimeSpan span)
 		{
