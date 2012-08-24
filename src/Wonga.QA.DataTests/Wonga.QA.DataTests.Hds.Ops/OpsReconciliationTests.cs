@@ -4,6 +4,7 @@ using Wonga.QA.DataTests.Hds.Common;
 namespace Wonga.QA.DataTests.Hds.Ops
 {
     [TestFixture(Order = 4)]
+    [Category("HDSTest")]
     [Category("Reconciliation")]
     [Category("Ops")]
     [Parallelizable]

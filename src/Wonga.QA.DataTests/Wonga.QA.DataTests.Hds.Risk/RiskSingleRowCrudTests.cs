@@ -11,6 +11,7 @@ using Wonga.QA.Framework.Core;
 namespace Wonga.QA.DataTests.Hds.Risk
 {
     [TestFixture(Order = 2)]
+    [Category("HDSTest")]
     [Category("Auto")]
     [Category("Risk")]
     [Parallelizable(TestScope.All)]

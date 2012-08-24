@@ -4,6 +4,7 @@ using Wonga.QA.DataTests.Hds.Common;
 namespace Wonga.QA.DataTests.Hds.Ops
 {
     [TestFixture(Order = 1)]
+    [Category("HDSTest")]
     [Category("InitialLoad")]
     [Category("Ops")]
     [Parallelizable(TestScope.All)]

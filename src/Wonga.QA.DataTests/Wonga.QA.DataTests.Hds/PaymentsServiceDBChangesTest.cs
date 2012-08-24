@@ -10,6 +10,7 @@ using Wonga.QA.Framework.Data;
 namespace Wonga.QA.DataTests.Hds.Payments
 {
     [TestFixture(Order = 3)]
+    [Category("HDSTest")]
     [Category("Auto")]
     [Category("Payments")]
     public class PaymentsServiceDBChangesTest

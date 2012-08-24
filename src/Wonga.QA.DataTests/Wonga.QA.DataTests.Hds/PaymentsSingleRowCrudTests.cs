@@ -10,6 +10,7 @@ using Wonga.QA.DataTests.Hds.Common;
 namespace Wonga.QA.DataTests.Hds.Payments
 {
     [TestFixture(Order = 2)]
+    [Category("HDSTest")]
     [Category("Auto")]
     [Category("Payments")]
     [Parallelizable(TestScope.All)]
