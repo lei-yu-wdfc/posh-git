@@ -285,7 +285,7 @@ namespace Wonga.QA.Tests.Payments
             applicationInfo.MorningCollectionAttempt(paymentPlan, false, false);
             Drive.Msmq.Payments.Send(new CreateTransaction
                                          {
-                                             Amount = paymentPlan.RegularAmount,
+                                             Amount = -paymentPlan.RegularAmount,
                                              ApplicationId = applicationInfo.Id,
                                              Currency = CurrencyCodeIso4217Enum.GBP,
                                              ExternalId = Guid.NewGuid(),

@@ -258,7 +258,7 @@ namespace Wonga.QA.Framework
         {
             var command = new CreateTransaction
             {
-                Amount = extraPaymentAmount,
+                Amount = -Math.Abs(extraPaymentAmount),
                 ApplicationId = Id,
                 Currency = CurrencyCodeIso4217Enum.GBP,
                 ExternalId = Guid.NewGuid(),

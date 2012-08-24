@@ -167,7 +167,7 @@ namespace Wonga.QA.Tests.Salesforce
 			//fire transaction for pay off arrears
 			Drive.Msmq.Payments.Send(new CreateTransaction
 			{
-				Amount = arrearsAmount,
+				Amount = -arrearsAmount,
 				ApplicationId = application.Id,
 				Currency = CurrencyCodeIso4217Enum.GBP,
 				ExternalId = Guid.NewGuid(),
