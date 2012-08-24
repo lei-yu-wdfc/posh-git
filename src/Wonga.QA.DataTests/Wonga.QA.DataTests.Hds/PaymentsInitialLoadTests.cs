@@ -4,6 +4,7 @@ using Wonga.QA.DataTests.Hds.Common;
 namespace Wonga.QA.DataTests.Hds.Payments
 {
     [TestFixture(Order = 1)]
+    [Category("HDSTest")]
     [Category("InitialLoad")]
     [Category("Payments")]
     [Parallelizable(TestScope.All)]

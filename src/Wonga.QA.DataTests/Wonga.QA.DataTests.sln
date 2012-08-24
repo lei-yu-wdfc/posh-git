@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.DataTests.Hds.Risk
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.DataTests.Dw.WongaHDS", "Wonga.QA.DataTests.Dw.WongaHDS\Wonga.QA.DataTests.Dw.WongaHDS.csproj", "{3FC51197-AB0D-4233-8717-4C00C837B56A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonga.QA.DataTests.Hds.BiCustomerManagement", "Wonga.QA.DataTests.Hds.BiCustomerManagement\Wonga.QA.DataTests.Hds.BiCustomerManagement.csproj", "{B0134992-C2FD-485B-AFE5-61044B91C7A6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,16 @@ Global
 		{3FC51197-AB0D-4233-8717-4C00C837B56A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{3FC51197-AB0D-4233-8717-4C00C837B56A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{3FC51197-AB0D-4233-8717-4C00C837B56A}.Release|x86.ActiveCfg = Release|Any CPU
+		{B0134992-C2FD-485B-AFE5-61044B91C7A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0134992-C2FD-485B-AFE5-61044B91C7A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0134992-C2FD-485B-AFE5-61044B91C7A6}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B0134992-C2FD-485B-AFE5-61044B91C7A6}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B0134992-C2FD-485B-AFE5-61044B91C7A6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B0134992-C2FD-485B-AFE5-61044B91C7A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0134992-C2FD-485B-AFE5-61044B91C7A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0134992-C2FD-485B-AFE5-61044B91C7A6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B0134992-C2FD-485B-AFE5-61044B91C7A6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B0134992-C2FD-485B-AFE5-61044B91C7A6}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -15,6 +15,7 @@ using Wonga.QA.Framework.Core;
 namespace Wonga.QA.DataTests.Hds.Ops
 {
     [TestFixture(Order = 2)]
+    [Category("HDSTest")]
     [Category("Auto")]
     [Category("Ops")]
     [Parallelizable(TestScope.All)]

@@ -8,7 +8,6 @@ using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Data;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.Cs.Requests.Payments.Csapi.Commands;
-using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Core;
 
@@ -18,28 +17,23 @@ namespace Wonga.QA.DataTests.BiCustomerManagement
     /// This class is intended to test the flow of data from BiCustomerManagement.ApplicationStatusHistory to DIWarehouse.ApplicationStatusHistory
     /// </summary>
     [TestFixture]
+    [Category("AcceptanceTest")]
     [Category("ApplicationStatusHistory")]
     [JIRA("DI-593"), Owner(Owner.JimmyJose)]
     class ApplicationStatusHistoryTests
     {
         //Tables to check
         private static string _tablename = "ApplicationStatusHistory";
-        private static string _distagingwongsTablename = "bicustomermanagement_ApplicationStatusHistory";
 
         //Connection to different databases were the data is flowing from sevices to datawarehouse
         dynamic _serviceApplicationStatusHistory = Drive.Data.BiCustomerManagement.Db.bicustomermanagement[_tablename];
-        dynamic _hdsApplicationStatusHistory = Drive.Data.Hds.Db.bicustomermanagement[_tablename];
         dynamic _warehouseApplicationStatusHistory = Drive.Data.Warehouse.Db.dw[_tablename];
-
-        //Connection to the service DB to check the complaints,
-        private dynamic _commsSuppressions = Drive.Data.Comms.Db.Suppressions;
-        private dynamic _paymentsSuppressions = Drive.Data.Payments.Db.PaymentCollectionSuppressions;
 
         //SQL Server Agent jobs
         private HdsUtilitiesAgentJob _sqlserverAgentJobs = null;
         private bool _cdcStagingAgentJobWasStopped;
         private bool _hdsAgentJobWasStopped;
-       
+
 
         [FixtureSetUp]
         [Description("This is the text fixture setup for all tests")]
@@ -48,7 +42,7 @@ namespace Wonga.QA.DataTests.BiCustomerManagement
             _sqlserverAgentJobs = new HdsUtilitiesAgentJob(HdsUtilitiesBase.WongaService.BiCustomerManagement);
             _cdcStagingAgentJobWasStopped = _sqlserverAgentJobs.StartJob(_sqlserverAgentJobs.CdcStagingAgentJob);
             _hdsAgentJobWasStopped = _sqlserverAgentJobs.StartJob(_sqlserverAgentJobs.HdsLoadAgentJob);
-           
+
         }
 
         [FixtureTearDown]
@@ -64,7 +58,7 @@ namespace Wonga.QA.DataTests.BiCustomerManagement
             {
                 _sqlserverAgentJobs.StopJob(_sqlserverAgentJobs.HdsLoadAgentJob);
             }
-            
+
         }
 
         /// <summary>
@@ -72,8 +66,6 @@ namespace Wonga.QA.DataTests.BiCustomerManagement
         /// 3 rows are created with 3 different status when an application is created.
         /// </summary>
         [Test]
-        [Category("AcceptanceTest")]
-        [JIRA("DI-593"), Owner(Owner.JimmyJose)]
         [Description("Verifies that when an application status is 'Live' the status history will have entries for the pre-live events (New, Accepted, TermsAgreed, Live)")]
         public void L0JourneyAcceptedApplicationStatusHistory()
         {
@@ -81,8 +73,7 @@ namespace Wonga.QA.DataTests.BiCustomerManagement
             Customer cust = CustomerBuilder.New().Build();
             Application application = ApplicationBuilder.New(cust).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build();
             //Act & Assert
-            CheckDiWarehouseApplicationStatusHistory(application,false);
-            return;
+            CheckDiWarehouseApplicationStatusHistory(application, false);
         }
 
         /// <summary>
@@ -90,8 +81,6 @@ namespace Wonga.QA.DataTests.BiCustomerManagement
         /// 5 rows are created when a L0 application is closed in the normal workflow.
         /// </summary>
         [Test]
-        [Category("AcceptanceTest")]
-        [JIRA("DI-593"), Owner(Owner.JimmyJose)]
         [Description("Verifies that when an application status is 'PaidInFull' the status history will have entries for the pre-live events (Accepted, TermsAgreed, Live, Due Today, PaidInFull)")]
         public void RepayingOnDueDateClosesApplicationApplicationStatusHistory()
         {
@@ -103,8 +92,7 @@ namespace Wonga.QA.DataTests.BiCustomerManagement
             //Act
             application.RepayOnDueDate();
             //Assert
-            CheckDiWarehouseApplicationStatusHistory(application,false);
-            return;
+            CheckDiWarehouseApplicationStatusHistory(application, false);
         }
 
         /// <summary>
@@ -113,8 +101,6 @@ namespace Wonga.QA.DataTests.BiCustomerManagement
         /// 11 rows are created while running the test in service DB. These rows are moved into the warehouse and the application is updated with latest status.
         /// </summary>
         [Test]
-        [Category("AcceptanceTest")]
-        [JIRA("DI-593"), Owner(Owner.JimmyJose)]
         public void LnJourneyAcceptedApplicationStatusHistory()
         {
             Customer cust = CustomerBuilder.New().Build();
@@ -124,15 +110,23 @@ namespace Wonga.QA.DataTests.BiCustomerManagement
             //Create the second Application for the same customer
             Application application1 = ApplicationBuilder.New(cust).Build();
             //Load the Datawarehouse with 8 records which contains 2 application (PaidInFull and Live)
-            CheckDiWarehouseApplicationStatusHistory(application,false);
+            CheckDiWarehouseApplicationStatusHistory(application, false);
             //Put the application into Arrears
             application1.PutIntoArrears(50);
             //Load the Datawarehouse with 1 records for the second application (InArrears) and updates the [dw].[Application].[ApplicationStatusSK] with the new status(InArrears).
             CheckDiWarehouseApplicationStatusHistory(application1, false);
-            //Put the application into Hardship
-            ApplicationOperations.ReportHardship(application1, Guid.NewGuid());
+
+            // Put the application into Hardship
+            var cmd = new CsReportHardshipCommand()
+            {
+                AccountId = application1.AccountId,
+                ApplicationId = application1.Id,
+                CaseId = Guid.NewGuid()
+            };
+            Drive.Cs.Commands.Post(cmd);
             //Load the Datawarehouse with 1 records for the second application (Hardship) and updates the [dw].[Application].[ApplicationStatusSK] with the new status(Hardship).
             CheckDiWarehouseApplicationStatusHistory(application1, false);
+
             //write off the Application
             var cmd1 = new WriteOffApplicationCommand()
             {
@@ -142,33 +136,38 @@ namespace Wonga.QA.DataTests.BiCustomerManagement
             Drive.Cs.Commands.Post(cmd1);
             //Load the Datawarehouse with 1 records for the second application (WrittenOff) and updates the [dw].[Application].[ApplicationStatusSK] with the new status(WrittenOff).
             CheckDiWarehouseApplicationStatusHistory(application1, false);
-            return;
         }
 
-        
+
 
         private void CheckDiWarehouseApplicationStatusHistory(Application application, bool jobSuccess)
         {
             // Checking validy of data from service DB to HDS DB.
 
+            // Allow for CDC to pick up the data
+            Thread.Sleep(20000);
             //Arrange
             var sourceData = Do.Until(() => _serviceApplicationStatusHistory.FindAllBy(ApplicationId: application.Id));
             int lastItem = sourceData.Count() - 1;
             int _count = 0;
+            //var last = sourceData.OrderByIdDescending().First();
             // Allow for CDC to pick up the data
             Thread.Sleep(HdsUtilitiesAgentJob.CdcWaitTimeMilliseconds);
             _sqlserverAgentJobs.WaitForLoadExecutionCycle(HdsUtilitiesBase.SystemComponent.CDCStaging);
+            Thread.Sleep(HdsUtilitiesAgentJob.CdcWaitTimeMilliseconds);
             _sqlserverAgentJobs.WaitForLoadExecutionCycle(HdsUtilitiesBase.SystemComponent.HDS);
-           
+            Thread.Sleep(20000);
+
             foreach (var sourceDataRow in sourceData)
             {
-               //Checking validy of data from service DB to DIWAREHOUSE DB.
+                //Checking validy of data from service DB to DIWAREHOUSE DB.
                 //Act
-                if(jobSuccess==false)
+                if (jobSuccess == false)
                 {
                     jobSuccess = SQLServerAgentJobs.Execute(_sqlserverAgentJobs.DiWarehouseWongaHdsLoadAgentJob);
+                    Thread.Sleep(30000);
                 }
-                
+
                 var targetDataDiwarehouse = Do.With.Timeout(90).Until(() => _warehouseApplicationStatusHistory.ALL()
                     .Join(Drive.Data.Warehouse.Db.dw.application)
                         .On(Drive.Data.Warehouse.Db.dw.application.ApplicationSK == _warehouseApplicationStatusHistory.ApplicationSK)
@@ -221,11 +220,11 @@ namespace Wonga.QA.DataTests.BiCustomerManagement
         //    };
         //    Drive.Cs.Commands.Post(cmd);
 
-            //When a application is moved to complaints the following tables are updated
-            //[Comms].[comms].[Suppressions]
-            //[Payments].[payment].[PaymentCollectionSuppressions]
+        //When a application is moved to complaints the following tables are updated
+        //[Comms].[comms].[Suppressions]
+        //[Payments].[payment].[PaymentCollectionSuppressions]
 
-            //TODO: Need to check how Datawarehouse interprets the applicaions in complaint
+        //TODO: Need to check how Datawarehouse interprets the applicaions in complaint
         //}
 
 
@@ -354,6 +353,5 @@ namespace Wonga.QA.DataTests.BiCustomerManagement
         //}
 
         #endregion "More Status to application like Complaint,Hardship etc"
-        
     }
 }
