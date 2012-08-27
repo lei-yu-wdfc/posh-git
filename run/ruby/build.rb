@@ -37,6 +37,11 @@ msbuild :tools do |msb|
   msb.solution = File.join(SRC, TOOLS, "#{TOOLS}.sln")
 end
 
+desc 'Builds Emailer'
+msbuild :emailer do |msb|
+  msb.solution = File.join(SRC, EMAILER,  "#{EMAILER}.sln")
+end
+
 desc 'Builds the performance tests'  
 msbuild :performance_tests do |msb|
   msb.solution = File.join(SRC, PERFORMANCETESTS, "#{PERFORMANCETESTS}.sln")
@@ -47,6 +52,21 @@ msbuild :generators do |msb|
   msb.solution = File.join(SRC, GENERATORS, "#{GENERATORS}.sln")
 end
 #--
+
+desc 'Install emailer'
+task :install_emailer => [:emailer, :uninstall_emailer] do |t|
+  install_emailer
+end
+
+desc 'Uninstall emailer'
+task :uninstall_emailer do |t|
+ 
+  begin
+    uninstall_emailer
+  rescue 
+  end
+
+end
 
 desc 'Builds everything'
 task :build => [:framework, :tests, :ui_tests, :migration_tests, :service_tests, :data_tests, :tools, :generators, :pre_generate_serializers]
