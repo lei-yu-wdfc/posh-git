@@ -21,6 +21,7 @@ PERFORMANCETESTS = 'Wonga.QA.PerformanceTests'
 MIGRATIONTESTS = 'Wonga.QA.MigrationTests'
 TOOLS = 'Wonga.QA.Tools'
 GENERATORS = 'Wonga.QA.Generators'
+EMAILER = 'Wonga.QA.Emailer'
 PREFIX = 'Wonga.QA'
  
  desc 'Reads the registry for the msbuildToolspath key'
@@ -158,6 +159,30 @@ def convert_reports
 	
   sh command + ' ' + params1
   sh command + ' ' + params2
+end
+
+def install_emailer
+  installutil_command = "C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\installutil.exe"
+  installutil_param = '"' + File.join(SRC, "#{EMAILER}", "#{EMAILER}.Service", "bin", "Debug", "#{EMAILER}.Service.exe") + '"'
+
+  net_command = "net"
+  net_param = "start \"#{EMAILER}.Service\""
+  
+    Dir.chdir(File.join(SRC, "#{EMAILER}", "#{EMAILER}.Service", "bin", "Debug"))
+  sh installutil_command + " " + installutil_param
+  sh net_command + " " + net_param
+end
+
+def uninstall_emailer
+  net_command = "net"
+  net_param = "stop \"#{EMAILER}.Service\""
+  
+  installutil_command = "C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\installutil.exe"
+  installutil_param = '/u "' + File.join(SRC, "#{EMAILER}", "#{EMAILER}.Service", "bin", "Debug", "#{EMAILER}.Service.exe") + '"'
+  
+  Dir.chdir(File.join(SRC, "#{EMAILER}", "#{EMAILER}.Service", "bin", "Debug"))
+  sh net_command + " " + net_param
+  sh installutil_command + " " + installutil_param
 end
   
 #--
