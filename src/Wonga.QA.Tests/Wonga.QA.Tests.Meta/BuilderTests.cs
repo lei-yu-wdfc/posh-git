@@ -38,16 +38,22 @@ namespace Wonga.QA.Tests.Meta
 			Assert.DoesNotThrow(() => _organisation = OrganisationBuilder.New(_customer).Build());
 		}
 
-        [Test, AUT(AUT.Uk)]
+        [Test, AUT(AUT.Uk), Owner(Owner.LukeRickard)]
         public void PayLaterAccountBuilderTest()
         {
             Assert.DoesNotThrow(() => _payLaterAccount = AccountBuilder.PayLater.New().Build());
         }
 
-        [Test, AUT(AUT.Uk), DependsOn("PayLaterAccountBuilderTest"), Ignore]
+        [Test, AUT(AUT.Uk), DependsOn("PayLaterAccountBuilderTest"), Owner(Owner.LukeRickard), Ignore]
         public void PayLaterApplicationBuilderTests()
         {
-            Assert.DoesNotThrow(() => Framework.Builders.ApplicationBuilder.PayLater.New(_payLaterAccount).Build());
+            if (_payLaterAccount == null)
+            {
+                PayLaterAccountBuilderTest();
+            }
+
+            // Todo: Remove WithoutSigning when framework updated with new paylater command
+            Framework.Builders.ApplicationBuilder.PayLater.New(_payLaterAccount).WithoutSigning().Build();
         }
     }
 }

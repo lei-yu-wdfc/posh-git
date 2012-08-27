@@ -111,6 +111,8 @@
     <Compile Include="MocksSelfTests.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="PayLater\ApplicationReadinessTests.cs" />
+    <Compile Include="PayLater\RiskServiceTestPayLaterUkBase.cs" />
     <Compile Include="PayLater\UK\CreatePayLaterApplicationTests.cs" />
     <Compile Include="PayLater\RiskPayLaterApiCommandsTests.cs" />
     <Compile Include="Wb\Uk\ApplicationReadinessWbTests.cs" />
