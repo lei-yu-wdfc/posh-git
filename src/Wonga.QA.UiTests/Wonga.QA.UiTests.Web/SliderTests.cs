@@ -394,7 +394,7 @@ namespace Wonga.QA.UiTests.Web
                     _repaymentDate = day + " " + dateArray[2] + " " + dateArray[3];
 
                     var today = DateTime.Today;
-                    var nextPayDate = today.Day <= 25
+                    var nextPayDate = today.Day <= 20
                                           ? new DateTime(today.Year, today.Month, 25)
                                           : new DateTime(today.Year, today.Month, 25).AddMonths(1);
                     var expectedDate = Drive.Db.GetPreviousWorkingDay(new Date(nextPayDate));

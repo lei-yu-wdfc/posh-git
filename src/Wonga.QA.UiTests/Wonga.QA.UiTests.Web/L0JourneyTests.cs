@@ -498,7 +498,7 @@ namespace Wonga.QA.UiTests.Web
             }
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-186"), Category(TestCategories.SmokeTest)]
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-186"), Category(TestCategories.SmokeTest), Pending("ZA-2782")]
         public void InvalidFormatPasswordShouldCauseWarningMessageAndValidPasswordShouldDissmissWarning()
         {
             switch (Config.AUT)
@@ -826,7 +826,7 @@ namespace Wonga.QA.UiTests.Web
             }
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-204")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-204"), Pending("ZA-2783")]
         public void WhenUserAcceptsTheAgreementThenHeGotEmail()
         {
             string email = Get.RandomEmail();
@@ -846,7 +846,7 @@ namespace Wonga.QA.UiTests.Web
             Assert.IsTrue(mailTemplate.value.ToString().Contains("You promise to pay and will make one repayment of"));
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-303")]
+        [Test, AUT(AUT.Ca, AUT.Za), JIRA("QA-303"), Pending("ZA-2784")]
         public void L0ShouldPossibleToCompleteAnL0WithSelfEmployedStatus()
         {
             string Email = Get.RandomEmail();

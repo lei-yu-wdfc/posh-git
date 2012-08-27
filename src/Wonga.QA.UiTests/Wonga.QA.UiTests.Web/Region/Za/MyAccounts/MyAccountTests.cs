@@ -118,7 +118,7 @@ namespace Wonga.QA.UiTests.Web.Region.Za.MyAccounts
             }
         }
 
-        [Test, JIRA("QA-214"), Category(TestCategories.SmokeTest)]
+        [Test, JIRA("QA-214"), Category(TestCategories.SmokeTest), Pending("ZA-2788")]
         public void CustomerOnMyPersonalDetailsShouldBeAbleToChangeCommunicationPrefs()
         {
 
@@ -231,7 +231,7 @@ namespace Wonga.QA.UiTests.Web.Region.Za.MyAccounts
             //TODO check SF
         }
 
-        [Test, JIRA("QA-212"), Category(TestCategories.SmokeTest)]
+        [Test, JIRA("QA-212"), Category(TestCategories.SmokeTest), Pending("ZA-2788")]
         public void CustomerShouldBeAbleToChangeMobileNumber()
         {
             var loginPage = Client.Login();
@@ -429,7 +429,7 @@ namespace Wonga.QA.UiTests.Web.Region.Za.MyAccounts
             }
         }
 
-        [Test, JIRA("QA-210"), Category(TestCategories.SmokeTest)]
+        [Test, JIRA("QA-210"), Category(TestCategories.SmokeTest), Pending("ZA-2787")]
         public void CustomerChangeTelephonFieldsCheckHomePhone()
         {
             var loginPage = Client.Login();

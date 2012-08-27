@@ -17,7 +17,7 @@ namespace Wonga.QA.UiTests.Web
     [TestFixture, Parallelizable(TestScope.All)]
     internal class LnJourneyTestsBase : UiTest
     {
-        [Test, AUT(AUT.Ca, AUT.Za, AUT.Uk), JIRA("QA-199")]
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Uk), JIRA("QA-199"), Pending("ZA-2785")]
         public void LoggedCustomerWithoutLoanAppliesNewLoanChangesMobilePhoneAndClicksResendPinItShouldBeResent()
         {
             string email = Get.RandomEmail();
