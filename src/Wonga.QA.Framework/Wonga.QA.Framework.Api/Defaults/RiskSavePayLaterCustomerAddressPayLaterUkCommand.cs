@@ -11,7 +11,7 @@ namespace Wonga.QA.Framework.Api.Requests.Risk.Commands.PayLater.Uk
         {
             AccountId = Get.GetId();
             AddressId = Get.GetId();
-            HouseNumber = Get.RandomInt(1, 1000);
+            HouseNumber = "101Z";
             Postcode = "0300";
             Street = "Street";
             Town = "City";
