@@ -12,7 +12,7 @@ using Wonga.QA.Framework.Data.Enums.Risk;
 
 namespace Wonga.QA.Framework.Builders.Consumer
 {
-	public abstract class ConsumerApplicationBuilderBase : ApplicationBuilderBase
+    public abstract class ConsumerApplicationBuilderBase : ApplicationBuilderBase<ConsumerApplication>
 	{
 		protected Guid ApplicationId { get; private set; }
 		protected ConsumerApplicationDataBase ConsumerApplicationData { get; private set; }
@@ -26,7 +26,7 @@ namespace Wonga.QA.Framework.Builders.Consumer
 			ConsumerApplicationData = consumerApplicationData;
 		}
 
-		public ConsumerApplication Build()
+		public override ConsumerApplication Build()
 		{
 			CreateApplication();
 			WaitForApplicationDecision();

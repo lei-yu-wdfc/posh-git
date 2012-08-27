@@ -11,7 +11,7 @@ using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.Framework.Builders.PayLater
 {
-	public abstract class PayLaterApplicationBuilderBase : ApplicationBuilderBase
+    public abstract class PayLaterApplicationBuilderBase : ApplicationBuilderBase<PayLaterApplication>
 	{
 		protected Guid ApplicationId { get; private set; }
 		protected PayLaterApplicationDataBase PayLaterApplicationData { get; private set; }
@@ -23,7 +23,7 @@ namespace Wonga.QA.Framework.Builders.PayLater
 			PayLaterApplicationData = applicationData;
 		}
 
-		public PayLaterApplication Build()
+		public override PayLaterApplication Build()
 		{
 			CreateApplication();
 			WaitForApplicationDecision();
