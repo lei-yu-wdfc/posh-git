@@ -76,8 +76,10 @@ namespace Wonga.QA.Tests.Marketing
             //sign application
             Drive.Api.Commands.Post(new SignApplicationCommand { AccountId = cust.Id, ApplicationId = application.Id });
 
-            //check promocode
-            Do.While(() => Drive.Data.Marketing.Db.PromoCodes(promoCodeId).IsActive == false);
+            bool isActive = true;
+            //check promocode until it has been de-activated
+            isActive = Do.Until(() => Drive.Data.Marketing.Db.PromoCodes.FindByPromoCodeGuid(promoCodeId).IsActive.Equals(false));
+            Console.WriteLine("PromoCode " + promoCodeId.ToString() + " IsActive :" + isActive);
         }
     }
 }
