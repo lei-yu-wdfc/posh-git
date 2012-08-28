@@ -10,6 +10,7 @@
 	
 	<Salesforce>
 		<ApiUsername>v3integration@wonga.com.rc</ApiUsername>
+		<Username>qa.wonga.com@gmail.com.rc</Username>
 	</Salesforce>
 	
 	<Svc>
