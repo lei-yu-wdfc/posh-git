@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
-using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Enums;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.Cs;
 using Wonga.QA.Framework.Cs.Requests.Payments.Csapi.Commands;
-using Wonga.QA.Framework.Cs.Requests.Risk.Csapi.Commands;
-using Wonga.QA.Framework.Msmq;
 using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Core;
 
@@ -21,112 +14,110 @@ namespace Wonga.QA.Tests.Payments.PaymentsCollectionSuppression
     [AUT(AUT.Uk)]
     public class FraudPaymentsCollectionSuppressionTests
     {
-        private Customer _customer;
-        private Application _application;
-
-        private dynamic _paymentsSuppressionsTable;
-        private dynamic _applicationsTable;
-
-        [SetUp]
-        public void Setup()
-        {
-            _customer = CustomerBuilder.New().Build();
-            _application = ApplicationBuilder.New(_customer).Build();
-
-            _paymentsSuppressionsTable = Drive.Data.Payments.Db.PaymentCollectionSuppressions;
-            _applicationsTable = Drive.Data.Payments.Db.Applications;
-        }
-
-        [Test, Owner(Owner.PiotrWalat)]
-        public void Application_NotFraudConfirmed_UnsuppressesPayments()
-        {
-            Guid newCaseID = Guid.NewGuid();
-
-            //Suspect fraud through cs api
-            var suspectFraudCommand = new SuspectFraudCommand()
-            {
-                AccountId = _customer.Id,
-                CaseId = newCaseID
-            };
-
-            Drive.Cs.Commands.Post(suspectFraudCommand);
-            dynamic suppression = null;
-
-            dynamic app = null;
-            Do.Until(() => app = _applicationsTable.FindBy(ExternalId: _application.Id));
-            Do.Until(() => suppression = _paymentsSuppressionsTable.FindBy(ApplicationId: app.ApplicationId,
-                FraudSuppression: true));
-            var confirmNotFraudCommand = new ConfirmNotFraudCommand()
-                                             {
-                                                 AccountId = _customer.Id,
-                                                 CaseId = newCaseID
-                                             };
-            Drive.Cs.Commands.Post(confirmNotFraudCommand);
-            Do.Until(() => suppression = _paymentsSuppressionsTable.FindBy(ApplicationId: app.ApplicationId,
-                FraudSuppression:false));
-        }
+        private static readonly dynamic PaymentRequests = Drive.Data.Payments.Db.PaymentCardRepaymentRequests;
+		private static readonly dynamic PaymentTransactions = Drive.Data.Payments.Db.Transactions;
+    	private const decimal Amount = 100.00m;
+    	private Application _liveApplication;
+    	private Customer _liveCustomer;
+    	private int _liveApplicationInternalID;
 
         [Test]
-        public void Application_FraudConfirmed_SuppressesPayments()
-        {
-            Guid newCaseID = Guid.NewGuid();
-
-            //Suspect fraud through cs api
-            var suspectFraudCommand = new SuspectFraudCommand()
-            {
-                AccountId = _customer.Id,
-                CaseId = newCaseID
-            };
-
-            Drive.Cs.Commands.Post(suspectFraudCommand);
-
-            dynamic suppression = null;
-            dynamic app = null;
-            Do.Until(() => app = _applicationsTable.FindBy(ExternalId: _application.Id));
-            Do.Until(() => suppression = _paymentsSuppressionsTable.FindBy(ApplicationId: app.ApplicationId, FraudSuppression: true));
-
-            var confirmFraudCommand = new ConfirmFraudCommand()
-            {
-                AccountId = _customer.Id,
-                CaseId = newCaseID
-            };
-            Drive.Cs.Commands.Post(confirmFraudCommand);
-            Do.Until(() => suppression = _paymentsSuppressionsTable.FindBy(ApplicationId: app.ApplicationId, FraudSuppression: true));
+		[AUT(AUT.Uk), JIRA("UKOPS-885"), Owner(Owner.AnilKrishnamaneni)]
+		public void LiveApplicationFraud()
+		{
+			var caseId = Guid.NewGuid();
+			_liveCustomer = CustomerBuilder.New().Build();
+			_liveApplication = ApplicationBuilder.New(_liveCustomer).Build();
+			_liveApplicationInternalID = ApplicationOperations.GetAppInternalId(_liveApplication);
+			ApplicationOperations.SuspectFraud(_liveApplication, _liveCustomer, caseId);
+			TakePayment(_liveApplication.Id, _liveCustomer.GetPaymentCard());
+			CheckPaymentsSupressionTransaction(_liveApplicationInternalID);
+			ApplicationOperations.ConfirmNotFraud(_liveApplication, _liveCustomer, caseId);
         }
 
-		[Test, AUT(AUT.Uk), Pending]
-		public void ShouldNotTakeManualPayment_WhenPaymentCollectionsAreSuppressedDueToSuspectedFraud()
+		[Test]
+		[AUT(AUT.Uk), JIRA("UKOPS-885"), Owner(Owner.AnilKrishnamaneni), DependsOn("LiveApplicationFraud")]
+		public void DueTodayPaymentTakenWhenApllicationIsConfirmedNotFraud()
 		{
-			var customer = CustomerBuilder.New().Build();
-			var application = ApplicationBuilder.New(customer).WithExpectedDecision(ApplicationDecisionStatus.Accepted).Build().PutIntoArrears();
-
-			var applicationId = Drive.Data.Payments.Db.Applications.FindByExternalId(application.Id).ApplicationId;
-
-			//Suspect fraud through cs api
-			Drive.Cs.Commands.Post(new SuspectFraudCommand
-			{
-				AccountId = customer.Id,
-				CaseId = Guid.NewGuid()
-			});
-
-			dynamic app = null;
-			Do.Until(() => app = _applicationsTable.FindBy(ExternalId: application.Id));
-			Do.Until(() =>  _paymentsSuppressionsTable.FindBy(ApplicationId: app.ApplicationId, FraudSuppression: true));
-
-			Drive.Cs.Commands.Post(new TakePaymentManualCommand
-			{
-				Amount = 100.00m,
-				ApplicationId = application.Id,
-				Currency = CurrencyCodeEnum.GBP,
-				PaymentCardId = customer.GetPaymentCard(),
-				PaymentId = Guid.NewGuid(),
-				SalesforceUser = "test.user@wonga.com"
-			});
-
-			var paymentRequests = Drive.Data.Payments.Db.PaymentCardRepaymentRequests;
-
-			Do.Until(() => paymentRequests.FindAll(paymentRequests.ApplicationId == applicationId &&
-												   paymentRequests.StatusDescription == "PaymentCollectionsSuppressed"));
+			_liveApplication.MakeDueToday();
+			CheckPaymentTransaction(_liveApplicationInternalID, 106.7m);
 		}
+
+    	[Test]
+		[AUT(AUT.Uk), JIRA("UKOPS-885"), Owner(Owner.AnilKrishnamaneni)]
+		public void DueTodayApplicationFraud()
+		{
+			var caseId = Guid.NewGuid();
+			var customer = CustomerBuilder.New().Build();
+			var application = ApplicationBuilder.New(customer).Build();
+			var applicationId = ApplicationOperations.GetAppInternalId(application);
+			ApplicationOperations.SuspectFraud(application, customer, caseId);
+			application.MakeDueToday();
+			CheckPaymentsSupressionTransaction(applicationId);
+			ApplicationOperations.ConfirmNotFraud(application, customer, caseId);
+			TakePayment(application.Id, customer.GetPaymentCard());
+	    }
+
+		[Test]
+		[AUT(AUT.Uk), JIRA("UKOPS-885"), Owner(Owner.AnilKrishnamaneni)]
+		public void ArrearApplicationFraud()
+		{
+			var caseId = Guid.NewGuid();
+			var customer = CustomerBuilder.New().Build();
+			var application = ApplicationBuilder.New(customer).Build();
+			var applicationId = ApplicationOperations.GetAppInternalId(application);
+			application.PutIntoArrears();
+			ApplicationOperations.SuspectFraud(application, customer, caseId);
+			TakePayment(application.Id, customer.GetPaymentCard());
+			CheckPaymentsSupressionTransaction(applicationId);
+			ApplicationOperations.ConfirmNotFraud(application, customer, caseId);
+			TakePayment(application.Id, customer.GetPaymentCard());
+			CheckPaymentTransaction(applicationId, Amount);
+		}
+		
+		[Test]
+		[AUT(AUT.Uk), JIRA("UKOPS-885"), Owner(Owner.AnilKrishnamaneni)]
+		public void RAApplicationFraud()
+		{
+			var caseId = Guid.NewGuid();
+			var customer = CustomerBuilder.New().Build();
+			var application = ApplicationBuilder.New(customer).Build();
+			var applicationId = ApplicationOperations.GetAppInternalId(application);
+			application.CreateRepaymentArrangement();
+			ApplicationOperations.SuspectFraud(application, customer, caseId);
+			TakePayment(application.Id, customer.GetPaymentCard());
+			CheckPaymentsSupressionTransaction(applicationId);
+			ApplicationOperations.ConfirmNotFraud(application, customer, caseId);
+			TakePayment(application.Id, customer.GetPaymentCard());
+			CheckPaymentTransaction(applicationId, Amount);
+		}
+
+		#region Helpers
+
+    	private static void TakePayment(Guid id, Guid paymentCard)
+    	{
+    		Drive.Cs.Commands.Post(new TakePaymentManualCommand
+    		                       	{
+    		                       		Amount = Amount,
+    		                       		ApplicationId = id,
+    		                       		Currency = CurrencyCodeEnum.GBP,
+    		                       		PaymentCardId = paymentCard,
+    		                       		PaymentId = Guid.NewGuid(),
+    		                       		SalesforceUser = "test.user@wonga.com"
+    		                       	});
+    	}
+		
+		private static void CheckPaymentTransaction(int applicationID,decimal paymentamount)
+		{
+			paymentamount = paymentamount*-1;
+			Do.Until(() => PaymentTransactions.FindBy(ApplicationId:applicationID , Amount:paymentamount).Single());
+		}
+
+    	private static void CheckPaymentsSupressionTransaction(int applicationId)
+    	{
+    		Do.Until(() => PaymentRequests.FindAll(PaymentRequests.ApplicationId == applicationId &&
+    		                                       PaymentRequests.StatusDescription == "PaymentCollectionsSuppressed" ).Single());
+    	}
+		#endregion
     }
 }
