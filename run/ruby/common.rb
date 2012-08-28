@@ -24,7 +24,7 @@ GENERATORS = 'Wonga.QA.Generators'
 EMAILER = 'Wonga.QA.Emailer'
 PREFIX = 'Wonga.QA'
  
- desc 'Reads the registry for the msbuildToolspath key'
+desc 'Reads the registry for the msbuildToolspath key'
 def get_MSBuildToolsPath
   Win32::Registry::open(Win32::Registry::HKEY_LOCAL_MACHINE, 'SOFTWARE\\Microsoft\\MSBuild\\ToolsVersions\\4.0') do |reg|
     type, value = reg.read('MSBuildToolsPath')
@@ -54,7 +54,7 @@ def get_dlls_list(names)
 end
 
 def config(config_name)
-   unless config_name.nil?
+  unless config_name.nil?
     cleanup
     if File.exists? File.join(CONFIG, "#{config_name}.v3qaconfig")
       FileUtils.cp File.join(CONFIG, "#{config_name}.v3qaconfig"), BIN
@@ -127,6 +127,7 @@ def gallio(test_dlls, test_filter)
   begin
     g.run
   ensure
+    copy_report_for_emailer
     convert_reports
   end
 end
@@ -161,6 +162,37 @@ def convert_reports
   sh command + ' ' + params2
 end
 
+def copy_report_for_emailer
+  config_name = ENV['QAFTestTarget']
+  xml = File.open(File.join(CONFIG,"#{config_name}.v3qaconfig"))
+  doc = REXML::Document.new(xml)
+  sut = doc.root.get_text("SUT")
+  aut = doc.root.get_text("AUT")
+  time = Time.new
+  year = time.year.to_s
+  month = "%02d" % time.month
+  day = "%02d" % time.day
+  hour = "%02d" % time.hour
+  minute = "%02d" % time.min
+  filename = "#{year}#{month}#{day}#{hour}#{minute}_#{sut}_#{aut}"
+  
+  appconfxml = File.open(File.join(SRC, EMAILER, "#{EMAILER}.Service", "App.config"))
+  appconfdoc = REXML::Document.new(appconfxml)
+  
+  add_elements = appconfdoc.root.get_elements("appSettings/add")
+  temp_folder_path =''
+  add_elements.each do |e|
+    if e.attributes['key'] == "TempFolderPath"
+      temp_folder_path = e.attributes['value']
+    end
+  end
+  
+  temp_folder_path.gsub!('\\','/')
+
+  mkdir_p temp_folder_path
+  cp(File.join(BIN, "#{TESTS}.Report", "#{TESTS}.Report.xml"), File.join(temp_folder_path, "#{filename}.xml"))
+end
+
 def install_emailer
   installutil_command = "C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\installutil.exe"
   installutil_param = '"' + File.join(SRC, "#{EMAILER}", "#{EMAILER}.Service", "bin", "Debug", "#{EMAILER}.Service.exe") + '"'
@@ -168,7 +200,7 @@ def install_emailer
   net_command = "net"
   net_param = "start \"#{EMAILER}.Service\""
   
-    Dir.chdir(File.join(SRC, "#{EMAILER}", "#{EMAILER}.Service", "bin", "Debug"))
+  Dir.chdir(File.join(SRC, "#{EMAILER}", "#{EMAILER}.Service", "bin", "Debug"))
   sh installutil_command + " " + installutil_param
   sh net_command + " " + net_param
 end
