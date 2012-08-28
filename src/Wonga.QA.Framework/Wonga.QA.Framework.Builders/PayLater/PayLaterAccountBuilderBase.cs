@@ -58,6 +58,12 @@ namespace Wonga.QA.Framework.Builders.PayLater
 
 		#region "With" Methods
 
+        public PayLaterAccountBuilderBase WithRiskTestMask(RiskMask mask)
+        {
+            AccountData.Surname += mask.ToString();
+            return this;
+        }
+
 		public PayLaterAccountBuilderBase WithPassword(String value)
 		{
 			AccountData.Password = value;
