@@ -15,12 +15,13 @@ namespace Wonga.QA.Framework.Builders.PayLater
 	{
 		protected Guid ApplicationId { get; private set; }
 		protected PayLaterApplicationDataBase PayLaterApplicationData { get; private set; }
-
+		protected Guid PrimaryPhoneVerificationId { get; private set; }
 
 		protected PayLaterApplicationBuilderBase(PayLaterAccount account, PayLaterApplicationDataBase applicationData) : base(account)
 		{
 			ApplicationId = Guid.NewGuid();
 			PayLaterApplicationData = applicationData;
+			PrimaryPhoneVerificationId = Guid.NewGuid();
 		}
 
 		public override PayLaterApplication Build()

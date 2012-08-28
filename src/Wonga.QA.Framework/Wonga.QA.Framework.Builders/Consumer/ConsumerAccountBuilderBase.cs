@@ -56,6 +56,8 @@ namespace Wonga.QA.Framework.Builders.Consumer
 			                                      	});
 
 			yield return SaveContactPreferencesCommand.New(r => r.AccountId = AccountId);
+
+			yield return CompleteMobilePhoneVerificationCommand.New(r => r.VerificationId = PrimaryPhoneVerificationId);
 		}
 
 		abstract protected IEnumerable<ApiRequest> GetRegionSpecificApiCommands();

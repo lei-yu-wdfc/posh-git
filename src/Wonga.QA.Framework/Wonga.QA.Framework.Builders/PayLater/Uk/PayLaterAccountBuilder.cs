@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Enums;
+using Wonga.QA.Framework.Api.Requests.Comms.Commands;
 using Wonga.QA.Framework.Api.Requests.Comms.Commands.PayLater.Uk;
+using Wonga.QA.Framework.Api.Requests.Comms.Commands.Uk;
 using Wonga.QA.Framework.Api.Requests.Payments.Commands;
 using Wonga.QA.Framework.Api.Requests.Risk.Commands;
 using Wonga.QA.Framework.Api.Requests.Risk.Commands.PayLater.Uk;
@@ -90,6 +92,13 @@ namespace Wonga.QA.Framework.Builders.PayLater.Uk
                 r.NetIncome = AccountData.NetMonthlyIncome;
                 r.NextPayDate = AccountData.NextPayDate;
             });
+
+			yield return VerifyMobilePhoneUkCommand.New(r =>
+			{
+				r.AccountId = AccountId;
+				r.VerificationId = MobilePhoneVerificationId;
+				r.MobilePhone = AccountData.MobilePhoneNumber;
+			});
 		}
 	}
 }

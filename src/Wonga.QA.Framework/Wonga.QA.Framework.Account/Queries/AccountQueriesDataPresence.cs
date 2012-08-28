@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Data;
 using System.Linq;
+using Wonga.QA.Framework.Core;
 
 namespace Wonga.QA.Framework.Account.Queries
 {
@@ -15,22 +17,50 @@ namespace Wonga.QA.Framework.Account.Queries
 
         public bool IsAccountPresentInOpsDatabase(Guid accountId)
 		{
-            return Drive.Db.Ops.Accounts.Any(a => a.ExternalId == accountId);
+        	try
+        	{
+				return Drive.Db.Ops.Accounts.Any(a => a.ExternalId == accountId);
+        	}
+        	catch (DoException)
+        	{
+        		throw new DataException(String.Format("Ops Account not present for AccountId: {0}", accountId));
+        	}
 		}
 
         public bool IsAccountPresentInCommsDatabase(Guid accountId)
 		{
-            return Drive.Db.Comms.CustomerDetails.Any(a => a.AccountId == accountId);
+        	try
+        	{
+				return Drive.Db.Comms.CustomerDetails.Any(a => a.AccountId == accountId);
+        	}
+        	catch (DoException)
+        	{
+				throw new DataException(String.Format("Comms CustomerDetails not present for AccountId: {0}", accountId));
+        	}
 		}
 
         public bool IsAccountPresentInPaymentsDatabase(Guid accountId)
 		{
-            return Drive.Db.Payments.AccountPreferences.Any(a => a.AccountId == accountId);
+        	try
+        	{
+				return Drive.Db.Payments.AccountPreferences.Any(a => a.AccountId == accountId);
+        	}
+        	catch (DoException)
+        	{
+				throw new DataException(String.Format("Payments AccountPreferences not present for AccountId: {0}", accountId));
+        	}
 		}
 
         public bool IsAccountPresentInRiskDatabase(Guid accountId)
 		{
-            return Drive.Db.Risk.RiskAccounts.Any(a => a.AccountId == accountId);
+        	try
+        	{
+				return Drive.Db.Risk.RiskAccounts.Any(a => a.AccountId == accountId);
+        	}
+        	catch (DoException)
+        	{
+				throw new DataException(String.Format("Risk Account not present for AccountId: {0}", accountId));
+        	}
 		}
 	}
 }
