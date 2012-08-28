@@ -24,10 +24,10 @@ using Wonga.QA.Framework.UI;
 
 namespace Wonga.QA.UiTests.Web.Region.Za.Journey
 {
-    [Parallelizable(TestScope.All), AUT(AUT.Za)]
+    [AUT(AUT.Za)]
     class ZaL0JourneyTests : UiTest
     {
-        [Test, JIRA("ZA-2108"), Pending("Broken")]
+        [Test, JIRA("ZA-2108"), Pending("Broken"), Parallelizable(TestScope.All)]
         public void L0VerifyWongaLzeroZaModuleSignatureInsertedInPage()
         {
             // Checks for the presence of "<!-- Output from wonga_lzero_za/<$_GET['q']> -->" in page source.
@@ -63,7 +63,7 @@ namespace Wonga.QA.UiTests.Web.Region.Za.Journey
             Assert.IsTrue(personalBankAccountPage.Client.Source().Contains("<!-- Output from wonga_lzero_za/apply-bank -->"));
         }
 
-        [Test, JIRA("QA-170")] //Removed from smoke because of the problem with sliders update
+        [Test, JIRA("QA-170"), Parallelizable(TestScope.All)] //Removed from smoke because of the problem with sliders update
         public void CustomerOnHowItWorksPageShouldBeAbleUseSlidersProperly()
         {
             //CA is out due to new wonga sliders being implemented on homepage only 
@@ -74,7 +74,7 @@ namespace Wonga.QA.UiTests.Web.Region.Za.Journey
             Assert.IsTrue(personalDetailsPage is PersonalDetailsPage);
         }
 
-        [Test, JIRA("QA-179"), Category(TestCategories.SmokeTest)]
+        [Test, JIRA("QA-179"), Category(TestCategories.SmokeTest), Parallelizable(TestScope.All)]
         public void L0JourneyCustomerIdNumberShouldBeAlignedWithDOBAndGender()
         {
             var email = Get.RandomEmail();
@@ -113,7 +113,7 @@ namespace Wonga.QA.UiTests.Web.Region.Za.Journey
             journeyZa.CurrentPage = personalDetailsPageZa.Submit() as AddressDetailsPage;
         }
 
-        [Test, JIRA("QA-275"), Pending("ZA-1952, Za-2489")]
+        [Test, JIRA("QA-275"), Pending("ZA-1952, Za-2489"), Parallelizable(TestScope.All)]
         public void PasswordThatEqualToTheEmailWithUpperLastSimbolAddressWarningMessageShouldDisplayed()
         {
             var email = Get.RandomEmail();
@@ -151,7 +151,7 @@ namespace Wonga.QA.UiTests.Web.Region.Za.Journey
             }
         }
 
-        [Test, Category(TestCategories.SmokeTest), JIRA("QA-277")]
+        [Test, Category(TestCategories.SmokeTest), JIRA("QA-277"), Parallelizable(TestScope.All)]
         public void L0JourneyInvalidPostcodeShouldCauseWarningMessageValidPostcodeShouldDimissWarning()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home())
@@ -192,7 +192,7 @@ namespace Wonga.QA.UiTests.Web.Region.Za.Journey
             }
         }
 
-        [Test, Category(TestCategories.SmokeTest), JIRA("QA-276")]
+        [Test, Category(TestCategories.SmokeTest), JIRA("QA-276"), Parallelizable(TestScope.All)]
         public void CustomerUsesExistingIdNumberShouldBeAbleToProceed()
         {
             var customer = Do.With.Message("There is no customer in DB").Until(() => Drive.Data.Comms.Db.CustomerDetails.FindAllByGender(2).FirstOrDefault());
@@ -206,7 +206,7 @@ namespace Wonga.QA.UiTests.Web.Region.Za.Journey
             var processingPage = journey.Teleport<ProcessingPage>() as ProcessingPage;
         }
 
-        [Test, Pending("Test is yet to be complete. Author: Ben Ifie")]
+        [Test, Pending("Test is yet to be complete. Author: Ben Ifie"), Parallelizable(TestScope.All)]
         public void L0DropOff()
         {
             var journey = JourneyFactory.GetL0Journey(Client.Home())
@@ -226,10 +226,10 @@ namespace Wonga.QA.UiTests.Web.Region.Za.Journey
             double totalToRepay;
 
             var HomePage = Client.Home();
-
+            
             HomePage.Sliders.HowMuch = _loanAmount.ToString();
             HomePage.Sliders.HowLong = _duration.ToString();
-
+           
             totalToRepay = Convert.ToDouble(HomePage.Sliders.GetTotalToRepay.Remove(0, 1));
             Assert.IsTrue(totalToRepay <= controlSum);
 
@@ -246,7 +246,7 @@ namespace Wonga.QA.UiTests.Web.Region.Za.Journey
             Assert.IsTrue(totalToRepay <= controlSum);
         }
 
-        [Test, JIRA("QA-308"), Pending("ZA-2781")]
+        [Test, JIRA("QA-308"), Pending("ZA-2781"), Parallelizable(TestScope.All)]
         public void ShouldPossibleToCompleteAnL0WithRetiredStatus()
         {
             string firstName = Get.RandomString(3, 10);
@@ -288,7 +288,7 @@ namespace Wonga.QA.UiTests.Web.Region.Za.Journey
             var processingPageZa = journey.Teleport<MySummaryPage>() as MySummaryPage;
         }
 
-        [Test, JIRA("QA-178"), AUT(AUT.Za, AUT.Ca)]
+        [Test, JIRA("QA-178"), AUT(AUT.Za, AUT.Ca), Parallelizable(TestScope.All)]
         public void ShouldPossibleToCompleteAnL0WhenChoosingEmployedFullAndThenRetiredStatus()
         {
             string firstName = Get.RandomString(3, 10);
