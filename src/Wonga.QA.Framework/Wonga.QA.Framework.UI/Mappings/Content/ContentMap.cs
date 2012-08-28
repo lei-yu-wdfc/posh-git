@@ -10,6 +10,7 @@ using Wonga.QA.Framework.UI.Mappings.Content;
 using Wonga.QA.Framework.UI.Mappings.Content.Agreements;
 using Wonga.QA.Framework.UI.Mappings.Content.Elements;
 using Wonga.QA.Framework.UI.Mappings.Content.Links;
+using Wonga.QA.Framework.UI.Mappings.Content.Pages;
 using ExtensionErrorPage = Wonga.QA.Framework.UI.Mappings.Content.ExtensionErrorPage;
 using TopupDealDonePage = Wonga.QA.Framework.UI.Mappings.Content.TopupDealDonePage;
 using Wonga.QA.Framework.UI.Mappings.Content.Sections;
