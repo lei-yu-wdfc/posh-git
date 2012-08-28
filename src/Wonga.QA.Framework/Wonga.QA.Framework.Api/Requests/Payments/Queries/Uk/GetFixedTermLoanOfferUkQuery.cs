@@ -9,6 +9,5 @@ namespace Wonga.QA.Framework.Api.Requests.Payments.Queries.Uk
 	{
 		public Object AccountId { get; set; }
 		public Object PromoCodeId { get; set; }
-        public Object TransmissionFeeDiscount { get; set; }
 	}
 }
