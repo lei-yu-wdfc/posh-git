@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Wonga.QA.Framework.Account;
 using Wonga.QA.Framework.Account.Queries;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Enums;
+using Wonga.QA.Framework.Api.Requests.Comms.Commands;
 using Wonga.QA.Framework.Api.Requests.Ops.Commands;
 using Wonga.QA.Framework.Core;
 
@@ -12,7 +14,7 @@ namespace Wonga.QA.Framework.Builders.PayLater
 	public abstract class PayLaterAccountBuilderBase
 	{
 		protected Guid AccountId { get; private set; }
-		protected Guid PrimaryPhoneVerificationId { get; private set; }
+		protected Guid MobilePhoneVerificationId { get; private set; }
 		protected PayLaterAccountDataBase AccountData { get; private set; }
 
 
@@ -22,12 +24,15 @@ namespace Wonga.QA.Framework.Builders.PayLater
 		{
 			AccountId = accountId;
 			AccountData = accountData;
+			MobilePhoneVerificationId = Guid.NewGuid();
 		}
 
 		public PayLaterAccount Build()
 		{
 			CreateAccount();
 			WaitUntilAccountIsPresentInServiceDatabases();
+			CompleteMobilePhoneVerification();
+			
 			return new PayLaterAccount(AccountId);
 		}
 
@@ -47,6 +52,8 @@ namespace Wonga.QA.Framework.Builders.PayLater
 			             		Login = AccountData.Email,
 			             		Password = AccountData.Password
 			             	};
+
+			yield return CompleteMobilePhoneVerificationCommand.New(r => r.VerificationId = MobilePhoneVerificationId);
 		}
 
 		abstract protected IEnumerable<ApiRequest> GetRegionSpecificApiCommands();
@@ -54,6 +61,21 @@ namespace Wonga.QA.Framework.Builders.PayLater
 		private void WaitUntilAccountIsPresentInServiceDatabases()
 		{            
             Do.Until(() => AccountQueries.PayLater.DataPresence.IsAccountPresentInServiceDatabases(AccountId));           
+		}
+
+		private void CompleteMobilePhoneVerification()
+		{
+			Drive.Api.Commands.Post(CompleteMobilePhoneVerificationCommand.New(r => r.VerificationId = MobilePhoneVerificationId));
+
+			try
+			{
+				Do.Until(() => Drive.Data.Comms.Db.MobilePhoneVerification.FindByVerificationId(MobilePhoneVerificationId).MobileVerifiedOn != null);
+			}
+
+			catch (Exception)
+			{
+				throw new Exception(String.Format("Mobile phone not verified for AccountId: {0}", AccountId));
+			}
 		}
 
 		#region "With" Methods
