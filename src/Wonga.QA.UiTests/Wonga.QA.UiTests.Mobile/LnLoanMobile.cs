@@ -1,4 +1,5 @@
-﻿using MbUnit.Framework;
+﻿using System;
+using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Core;
@@ -25,7 +26,7 @@ namespace Wonga.QA.UiTests.Mobile
             loginPage.LoginAs(email, "Passw0rd");
 
             var journey = JourneyFactory.GetLnJourney(Client.MobileHome());
-            var page = journey.Teleport<ProcessingPageMobile>() as ProcessingPageMobile;
+            var page = journey.Teleport<DealDonePage>() as DealDonePage;
         }
 
         [Test, AUT(AUT.Uk), Pending("Test not yet complete")]
