@@ -1,4 +1,6 @@
-﻿namespace Wonga.QA.Framework.Account.Queries
+﻿using System;
+
+namespace Wonga.QA.Framework.Account.Queries
 {
 	public abstract class AccountQueriesBase
 	{

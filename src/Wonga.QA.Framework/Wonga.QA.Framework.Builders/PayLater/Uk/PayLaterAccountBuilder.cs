@@ -90,6 +90,8 @@ namespace Wonga.QA.Framework.Builders.PayLater.Uk
                 r.NetIncome = AccountData.NetMonthlyIncome;
                 r.NextPayDate = AccountData.NextPayDate;
             });
+
+			
 		}
 	}
 }
