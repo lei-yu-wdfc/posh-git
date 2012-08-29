@@ -51,9 +51,8 @@ namespace Wonga.QA.Tests.Meta
             {
                 PayLaterAccountBuilderTest();
             }
-
-            // Todo: Remove WithoutSigning when framework updated with new paylater command
-            Framework.Builders.ApplicationBuilder.PayLater.New(_payLaterAccount).WithoutSigning().Build();
+            
+            Framework.Builders.ApplicationBuilder.PayLater.New(_payLaterAccount).Build();
         }
     }
 }

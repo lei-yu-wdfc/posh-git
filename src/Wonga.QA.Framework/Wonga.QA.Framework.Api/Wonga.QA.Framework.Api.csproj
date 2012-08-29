@@ -92,6 +92,7 @@
     <Compile Include="Defaults\SaveEmploymentDetailsUkCommand.cs" />
     <Compile Include="Defaults\SaveOrganisationDetailsCommand.cs" />
     <Compile Include="Defaults\SavePaymentCardBillingAddressCommand.cs" />
+    <Compile Include="Defaults\SignApplicationPayLaterCommand.cs" />
     <Compile Include="Defaults\SubmitNumberOfGuarantorsCommand.cs" />
     <Compile Include="Defaults\UpdateLoanTermWbUkCommand.cs" />
     <Compile Include="Defaults\VerifyHomePhoneCaCommand.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="Requests\Address\Queries\Uk\GetAddressByDescriptorIdUkQuery.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Requests\Payments\PayLater\Commands\Uk\SignApplicationPayLaterCommand.cs" />
     <Compile Include="Requests\Risk\Commands\PayLater\Uk\RiskCreatePayLaterApplicationUkCommand.cs">
       <SubType>Code</SubType>
     </Compile>

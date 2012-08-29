@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Wonga.QA.Framework.Account;
 using Wonga.QA.Framework.Api;
-using Wonga.QA.Framework.Api.Requests.Payments.Commands;
+using Wonga.QA.Framework.Api.Requests.Payments.PayLater.Commands.Uk;
 using Wonga.QA.Framework.Api.Requests.Risk.Commands;
 using Wonga.QA.Framework.Api.Requests.Risk.Queries.PayLater.Uk;
 using Wonga.QA.Framework.Application;
@@ -79,7 +79,7 @@ namespace Wonga.QA.Framework.Builders.PayLater
                 if (ExpectedDecision == ApplicationDecisionStatus.Accepted ||
                     ExpectedDecision == ApplicationDecisionStatus.ReadyToSign)
                 {
-                    Drive.Api.Commands.Post(new SignApplicationCommand { AccountId = Account.Id, ApplicationId = ApplicationId });
+                    Drive.Api.Commands.Post(new SignApplicationPayLaterCommand { AccountId = Account.Id, ApplicationId = ApplicationId });
                 }
             }
         }
