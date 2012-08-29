@@ -6,6 +6,7 @@ using Wonga.QA.Framework.Account.Queries;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Enums;
 using Wonga.QA.Framework.Api.Requests.Payments.PayLater.Commands.Uk;
+using Wonga.QA.Framework.Api.Requests.Payments.PayLater.Queries.Uk;
 using Wonga.QA.Framework.Api.Requests.Payments.Queries;
 using Wonga.QA.Framework.Api.Requests.Risk.Commands.PayLater.Uk;
 using Wonga.QA.Framework.Core;
@@ -52,7 +53,10 @@ namespace Wonga.QA.Framework.Builders.PayLater.Uk
 
 		protected override void WaitForApplicationToBecomeLive()
 		{
-            Do.Until(() => Drive.Api.Queries.Post(new GetAccountSummaryQuery { AccountId = Account.Id }).Values["HasCurrentLoan"].Single() == "true");
+		    Do.Until(
+		        () =>
+		        Drive.Api.Queries.Post(new GetPayLaterCustomerTransactionsStatusPayLaterUkQuery {AccountId = Account.Id}).
+		            Values["Status"].Single() == "HasPayLaterLiveTransactionsOnly");
 		}
 	}
 }
