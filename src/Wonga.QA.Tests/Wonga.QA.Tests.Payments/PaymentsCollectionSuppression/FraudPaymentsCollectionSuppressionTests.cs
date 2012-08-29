@@ -1,27 +1,26 @@
 ﻿using System;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
-using Wonga.QA.Framework.Api.Enums;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.Cs.Requests.Payments.Csapi.Commands;
 using Wonga.QA.Framework.Old;
 using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Payments.PaymentsCollectionSuppression
 {
     [TestFixture]
-    [Parallelizable(TestScope.All), Pending("Depends on salesforce tc so will not run reliably on RC")]
+    [Parallelizable(TestScope.All)]
     [AUT(AUT.Uk)]
     public class FraudPaymentsCollectionSuppressionTests
     {
-        private static readonly dynamic PaymentRequests = Drive.Data.Payments.Db.PaymentCardRepaymentRequests;
-		private static readonly dynamic PaymentTransactions = Drive.Data.Payments.Db.Transactions;
     	private const decimal Amount = 100.00m;
     	private Application _liveApplication;
     	private Customer _liveCustomer;
     	private int _liveApplicationInternalID;
+    	private Customer _customer;
+    	private Application _application;
+    	private int _applicationId;
 
-        [Test]
+    	[Test]
 		[AUT(AUT.Uk), JIRA("UKOPS-885"), Owner(Owner.AnilKrishnamaneni)]
 		public void LiveApplicationFraud()
 		{
@@ -29,9 +28,10 @@ namespace Wonga.QA.Tests.Payments.PaymentsCollectionSuppression
 			_liveCustomer = CustomerBuilder.New().Build();
 			_liveApplication = ApplicationBuilder.New(_liveCustomer).Build();
 			_liveApplicationInternalID = ApplicationOperations.GetAppInternalId(_liveApplication);
+    		var paymentCard = _liveCustomer.GetPaymentCard();
 			ApplicationOperations.SuspectFraud(_liveApplication, _liveCustomer, caseId);
-			TakePayment(_liveApplication.Id, _liveCustomer.GetPaymentCard());
-			CheckPaymentsSupressionTransaction(_liveApplicationInternalID);
+			PaymentOperations.TakePayment(_liveApplication.Id, paymentCard ,Amount);
+			PaymentOperations.CheckPaymentsSupressionTransaction(_liveApplicationInternalID,Amount);
 			ApplicationOperations.ConfirmNotFraud(_liveApplication, _liveCustomer, caseId);
         }
 
@@ -39,8 +39,9 @@ namespace Wonga.QA.Tests.Payments.PaymentsCollectionSuppression
 		[AUT(AUT.Uk), JIRA("UKOPS-885"), Owner(Owner.AnilKrishnamaneni), DependsOn("LiveApplicationFraud")]
 		public void DueTodayPaymentTakenWhenApllicationIsConfirmedNotFraud()
 		{
+			var amount=_liveApplication.GetDueDateBalance(); 
 			_liveApplication.MakeDueToday();
-			CheckPaymentTransaction(_liveApplicationInternalID, 106.7m);
+			PaymentOperations.CheckPaymentTransaction(_liveApplicationInternalID, amount);
 		}
 
     	[Test]
@@ -53,9 +54,10 @@ namespace Wonga.QA.Tests.Payments.PaymentsCollectionSuppression
 			var applicationId = ApplicationOperations.GetAppInternalId(application);
 			ApplicationOperations.SuspectFraud(application, customer, caseId);
 			application.MakeDueToday();
-			CheckPaymentsSupressionTransaction(applicationId);
+			PaymentOperations.CheckPaymentsSupressionTransaction(applicationId, Amount);
 			ApplicationOperations.ConfirmNotFraud(application, customer, caseId);
-			TakePayment(application.Id, customer.GetPaymentCard());
+			PaymentOperations.TakePayment(application.Id, customer.GetPaymentCard(),Amount );
+			PaymentOperations.CheckPaymentTransaction(applicationId, Amount);
 	    }
 
 		[Test]
@@ -66,13 +68,14 @@ namespace Wonga.QA.Tests.Payments.PaymentsCollectionSuppression
 			var customer = CustomerBuilder.New().Build();
 			var application = ApplicationBuilder.New(customer).Build();
 			var applicationId = ApplicationOperations.GetAppInternalId(application);
+			var paymentCard = customer.GetPaymentCard();
 			application.PutIntoArrears();
 			ApplicationOperations.SuspectFraud(application, customer, caseId);
-			TakePayment(application.Id, customer.GetPaymentCard());
-			CheckPaymentsSupressionTransaction(applicationId);
+			PaymentOperations.TakePayment(application.Id,paymentCard  ,Amount);
+			PaymentOperations.CheckPaymentsSupressionTransaction(applicationId, Amount);
 			ApplicationOperations.ConfirmNotFraud(application, customer, caseId);
-			TakePayment(application.Id, customer.GetPaymentCard());
-			CheckPaymentTransaction(applicationId, Amount);
+			PaymentOperations.TakePayment(application.Id, paymentCard ,Amount);
+			PaymentOperations.CheckPaymentTransaction(applicationId, Amount);
 		}
 		
 		[Test]
@@ -80,44 +83,22 @@ namespace Wonga.QA.Tests.Payments.PaymentsCollectionSuppression
 		public void RAApplicationFraud()
 		{
 			var caseId = Guid.NewGuid();
-			var customer = CustomerBuilder.New().Build();
-			var application = ApplicationBuilder.New(customer).Build();
-			var applicationId = ApplicationOperations.GetAppInternalId(application);
-			application.CreateRepaymentArrangement();
-			ApplicationOperations.SuspectFraud(application, customer, caseId);
-			TakePayment(application.Id, customer.GetPaymentCard());
-			CheckPaymentsSupressionTransaction(applicationId);
-			ApplicationOperations.ConfirmNotFraud(application, customer, caseId);
-			TakePayment(application.Id, customer.GetPaymentCard());
-			CheckPaymentTransaction(applicationId, Amount);
+			_customer = CustomerBuilder.New().Build();
+			_application = ApplicationBuilder.New(_customer).Build();
+			_applicationId = ApplicationOperations.GetAppInternalId(_application);
+			_application.CreateRepaymentArrangement();
+			ApplicationOperations.SuspectFraud(_application, _customer, caseId);
+			PaymentOperations.TakePayment(_application.Id, _customer.GetPaymentCard(),Amount);
+			PaymentOperations.CheckPaymentsSupressionTransaction(_applicationId, Amount);
+			ApplicationOperations.ConfirmNotFraud(_application, _customer, caseId);
 		}
 
-		#region Helpers
-
-    	private static void TakePayment(Guid id, Guid paymentCard)
-    	{
-    		Drive.Cs.Commands.Post(new TakePaymentManualCommand
-    		                       	{
-    		                       		Amount = Amount,
-    		                       		ApplicationId = id,
-    		                       		Currency = CurrencyCodeEnum.GBP,
-    		                       		PaymentCardId = paymentCard,
-    		                       		PaymentId = Guid.NewGuid(),
-    		                       		SalesforceUser = "test.user@wonga.com"
-    		                       	});
-    	}
-		
-		private static void CheckPaymentTransaction(int applicationID,decimal paymentamount)
+		[Test]
+		[AUT(AUT.Uk), JIRA("UKOPS-885"), Owner(Owner.AnilKrishnamaneni), DependsOn("RAApplicationFraud"),Pending("bug-943") ]
+		public void RAApplicationcomingfromFraud()
 		{
-			paymentamount = paymentamount*-1;
-			Do.Until(() => PaymentTransactions.FindBy(ApplicationId:applicationID , Amount:paymentamount).Single());
+			PaymentOperations.TakePayment(_application.Id, _customer.GetPaymentCard(),Amount );
+			PaymentOperations.CheckPaymentTransaction(_applicationId, Amount);	
 		}
-
-    	private static void CheckPaymentsSupressionTransaction(int applicationId)
-    	{
-    		Do.Until(() => PaymentRequests.FindAll(PaymentRequests.ApplicationId == applicationId &&
-    		                                       PaymentRequests.StatusDescription == "PaymentCollectionsSuppressed" ).Single());
-    	}
-		#endregion
     }
 }
