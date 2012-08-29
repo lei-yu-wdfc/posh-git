@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Wonga.QA.Framework.Account;
+using Wonga.QA.Framework.Account.Consumer;
 using Wonga.QA.Framework.Account.Queries;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Enums;
@@ -18,6 +19,10 @@ namespace Wonga.QA.Framework.Builders.PayLater.Uk
 		public PayLaterApplicationBuilder(PayLaterAccount account, PayLaterApplicationDataBase applicationData) : base(account, applicationData)
 		{
 		}
+
+        public PayLaterApplicationBuilder(ConsumerAccount account, PayLaterApplicationDataBase applicationData) : base(account, applicationData)
+        {
+        }
 
 		protected override IEnumerable<ApiRequest> GetRegionSpecificApiCommands()
 		{

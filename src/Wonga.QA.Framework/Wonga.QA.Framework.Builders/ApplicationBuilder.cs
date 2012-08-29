@@ -41,6 +41,12 @@ namespace Wonga.QA.Framework.Builders
 				return New(account, applicationData);
 			}
 
+            public static PayLaterApplicationBuilderBase New(ConsumerAccount account)
+            {
+                var applicationData = new PayLaterApplicationDataBase();
+                return New(account, applicationData);
+            }
+
 			public static PayLaterApplicationBuilderBase New(PayLaterAccount account, PayLaterApplicationDataBase consumerApplicationData)
 			{
 				switch (Config.AUT)
@@ -51,6 +57,17 @@ namespace Wonga.QA.Framework.Builders
 
 				throw new NotSupportedException(Config.AUT.ToString());
 			}
+
+            public static PayLaterApplicationBuilderBase New(ConsumerAccount account, PayLaterApplicationDataBase consumerApplicationData)
+            {
+                switch (Config.AUT)
+                {
+                    case AUT.Uk:
+                        return new Builders.PayLater.Uk.PayLaterApplicationBuilder(account, consumerApplicationData);
+                }
+
+                throw new NotSupportedException(Config.AUT.ToString());
+            }
 		}
 	}
 }
