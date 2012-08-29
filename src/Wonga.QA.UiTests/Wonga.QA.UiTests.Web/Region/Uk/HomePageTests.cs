@@ -89,7 +89,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
             Assert.AreEqual(expectedWelcomeMessage, homePage.GetWelcomeHeaderMessageText());
             Assert.AreEqual("300", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong."); //Ensure maximum available credit is displayed correctly
             Assert.AreEqual("Welcome " + _truncatedFirstNameL0 + "... Logout", homePage.GetHeaderBarText(), "Header bar text is wrong."); //Check "Welcome <15-symbolsTruncatedFirstName> Logout" in the Navigation Header
-            Assert.AreEqual("You already have an open loan. Go to my account to view and manage this loan.", homePage.GetApplyNowToolTipText()); //Verify apply now button is disabled and tooltip is displayed
+            Assert.AreEqual("You already have an open loan. Go to 'my account' to view and manage it.", homePage.GetApplyNowToolTipText()); //Verify apply now button is disabled and tooltip is displayed
 
             //Esnure 'click here' link in welcome message takes User back to home page.
             homePage.ClickWelcomeMessageClickHereLink();
@@ -121,7 +121,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk
 
             Assert.AreEqual("300", homePage.Sliders.MaxAvailableCredit(), "Max Available Credit in sliders is wrong.");
 
-            Assert.AreEqual("You already have an open loan. Go to my account to view and manage this loan.", homePage.GetApplyNowToolTipText()); //Verify apply now button is disabled and tooltip is displayed
+            Assert.AreEqual("You already have an open loan. Go to 'my account' to view and manage it.", homePage.GetApplyNowToolTipText()); //Verify apply now button is disabled and tooltip is displayed
 
             //Esnure 'click here' link in welcome message takes User back to home page.
             homePage.ClickWelcomeMessageClickHereLink();

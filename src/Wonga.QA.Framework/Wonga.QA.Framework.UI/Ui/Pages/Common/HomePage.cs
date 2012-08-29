@@ -443,7 +443,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages
             Do.With.Timeout(new TimeSpan(0, 0, 5)).Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.ApplyNowToolTip)));
             IWebElement applyNowToolTip = Client.Driver.FindElement(By.CssSelector(UiMap.Get.HomePage.ApplyNowToolTip));
             var applyNowToolTipText = applyNowToolTip.Text;
-            return applyNowToolTipText.Replace("\r\n", "");
+            return applyNowToolTipText.Replace("\r\n", "").Replace("\'my account\'","'my account'");
         }
 
         public String GetSliderLoanSummaryText()

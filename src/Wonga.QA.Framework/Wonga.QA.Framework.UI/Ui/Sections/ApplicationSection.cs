@@ -22,22 +22,34 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
 
         public String SetSecurityCode
         {
-            set { _securityCode.SendValue(value); }
+            set
+            {
+                var securityCode = Do.With.Timeout(new TimeSpan(0, 0, 20)).Until(() => Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.ApplicationSection.SecurityCode)));
+                Do.With.Timeout(new TimeSpan(0, 0, 20)).Until(() => securityCode.Displayed);
+                securityCode.SendValue(value);
+            }
         }
+
         public String SetMinCash
         {
-            set { _minCash.SendValue(value); }
+            set
+            {
+                var setMinCash = Do.With.Timeout(new TimeSpan(0, 0, 20)).Until(() => Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.ApplicationSection.SecurityCode)));
+                Do.With.Timeout(new TimeSpan(0, 0, 20)).Until(() => setMinCash.Displayed);
+                setMinCash.SendValue(value);
+            }
         }
+
         public String SetPin
         {
             set
             {
-                var pin =
-                    Do.Until(() => Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.ApplicationSection.EditPin)));
-                Do.Until(()=>pin.Displayed);
+                var pin = Do.With.Timeout(new TimeSpan(0, 0, 20)).Until(() => Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.ApplicationSection.EditPin)));
+                Do.With.Timeout(new TimeSpan(0, 0, 20)).Until(() => pin.Displayed);
                 pin.SendValue(value);
             }
         }
+
         public ApplicationSection(BasePage page)
             : base(UiMap.Get.ApplicationSection.FormId, page)
         {

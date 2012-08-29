@@ -331,7 +331,7 @@
 		<PromoCodeInvalidMessage>.wonga-promo-invalid</PromoCodeInvalidMessage>
 		<PromoCodeValidMessage></PromoCodeValidMessage>
 		<ApplyNowToolTip>.tooltipbox</ApplyNowToolTip>
-		<ApplyNowButton>#edit-submit [value='Apply now']</ApplyNowButton>
+		<ApplyNowButton>#edit-submit</ApplyNowButton>
 		<ApplyNowToolTipTrigger>.apply-now-disabled</ApplyNowToolTipTrigger>
 		<SliderLoanSummaryText>.wonga-slider-loan-summary</SliderLoanSummaryText>
 	</HomePage>
