@@ -44,7 +44,7 @@ namespace Wonga.QA.Tests.Meta
             Assert.DoesNotThrow(() => _payLaterAccount = AccountBuilder.PayLater.New().Build());
         }
 
-        [Test, AUT(AUT.Uk), DependsOn("PayLaterAccountBuilderTest"), Owner(Owner.LukeRickard), Ignore]
+        [Test, AUT(AUT.Uk), DependsOn("PayLaterAccountBuilderTest"), Owner(Owner.LukeRickard)]
         public void PayLaterApplicationBuilderTests()
         {
             if (_payLaterAccount == null)

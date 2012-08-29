@@ -594,9 +594,6 @@
     <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetPayLaterCustomerTransactionsStatusPayLaterUkQuery.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetPayLaterCustomerTransactionsStatusUkQuery.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Requests\Payments\PayLater\Queries\Uk\GetPayLaterTransactionsPayLaterUkQuery.cs">
       <SubType>Code</SubType>
     </Compile>
