@@ -2,16 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Dynamic;
-using System.Threading;
-using Gallio.Common.IO;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Core;
-using Wonga.QA.Framework.Msmq.Enums.Integration.Risk;
 using Wonga.QA.Framework.UI;
 using Wonga.QA.Framework.UI.UiElements.Pages.Common;
 using Wonga.QA.Tests.Core;
-using Wonga.QA.Framework.Api;
 
 namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
 {
@@ -84,7 +80,7 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
         }
 
         [Test, JIRA("UKWEB-253"), Owner(Owner.StanDesyatnikov, Owner.PavithranVangiti)]
-        //[Pending ("Test in development")]
+        [Pending ("Test in development")]
         //[Row(RiskMaskForDeclinedLoan.TESTBankAccountMatchedToApplicant)]
         //[Row(RiskMaskForDeclinedLoan.TESTDateOfBirth)]
         //[Row(RiskMaskForDeclinedLoan.TESTExperianCreditBureauDataIsAvailable)]
@@ -126,10 +122,10 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
         }
 
         [Test, JIRA("UKWEB-253"), Owner(Owner.StanDesyatnikov, Owner.PavithranVangiti)]
-        //[Pending ("Test in development")]
+        [Pending ("Test in development")]
         [Row(RiskMaskForDeclinedLoan.TESTBlacklist)]
         [Row(RiskMaskForDeclinedLoan.TESTCreditBureauDataIsAvailable)]
-        public void L0DeclinedWithGeneralAdvices(RiskMaskForDeclinedLoan riskMask)
+        public void L0Declined_WithGeneralAdvices(RiskMaskForDeclinedLoan riskMask)
         {
             var customer = PrepareConditions(riskMask);
             var declinePage = RunL0Journey(customer, riskMask);
@@ -150,74 +146,70 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
             cust.LastName = Get.RandomString(6);
             _outputData.Add(cust.email, Get.EnumToString(riskMask));
 
-            if (Get.EnumToString(riskMask) == "TESTBlacklist")
+            switch(riskMask)
             {
-                // create blacklisted user
-                var blackListTable = Drive.Data.Blacklist.Db.BlackList;
-                dynamic blackListEntity = new ExpandoObject();
-                blackListEntity.FirstName = cust.FirstName;
-                blackListEntity.LastName = cust.LastName;
-                blackListTable.Insert(blackListEntity);
-            }
+                case RiskMaskForDeclinedLoan.TESTBlacklist:
+                    // create blacklisted user
+                    var blackListTable = Drive.Data.Blacklist.Db.BlackList;
+                    dynamic blackListEntity = new ExpandoObject();
+                    blackListEntity.FirstName = cust.FirstName;
+                    blackListEntity.LastName = cust.LastName;
+                    blackListTable.Insert(blackListEntity);
+                    break;
 
-            if (Get.EnumToString(riskMask) == "TESTDateOfBirth")
-            {
-            }
+                case RiskMaskForDeclinedLoan.TESTCreditBureauDataIsAvailable:
+                    //To do
+                    break;
 
-            if (Get.EnumToString(riskMask) == "TESTPaymentCardIsValid")
-            {
-            }
+                /*case RiskMaskForDeclinedLoan.TESTDateOfBirth:
+                    To do
+                    break;
 
-            if (Get.EnumToString(riskMask) == "TESTCreditBureauDataIsAvailable")
-            {
+                case RiskMaskForDeclinedLoan.TESTPaymentCardIsValid:
+                    //To do
+                    break;
 
-            }
+                case RiskMaskForDeclinedLoan.TESTCreditBureauDataIsAvailable:
+                    //To do
+                    break;
 
-            if (Get.EnumToString(riskMask) == "TESTMonthlyIncome")
-            {
+                case RiskMaskForDeclinedLoan.TESTMonthlyIncome:
+                    //To do
+                    break;
 
-            }
+                case RiskMaskForDeclinedLoan.TESTIsSolvent:
+                    //To do
+                    break;
 
-            if (Get.EnumToString(riskMask) == "TESTIsSolvent")
-            {
+                case RiskMaskForDeclinedLoan.TESTIsAlive:
+                    //To do
+                    break;
 
-            }
+                case RiskMaskForDeclinedLoan.TESTCustomerHistoryIsAcceptable:
+                    //To do
+                    break;
 
-            if (Get.EnumToString(riskMask) == "TESTIsAlive")
-            {
+                case RiskMaskForDeclinedLoan.TESTDirectFraud:
+                    //To do
+                    break;
 
-            }
+                case RiskMaskForDeclinedLoan.TESTApplicationDeviceNotOnBlacklist:
+                    //To do
+                    break;
 
-            if (Get.EnumToString(riskMask) == "TESTCustomerHistoryIsAcceptable")
-            {
+                case RiskMaskForDeclinedLoan.TESTNoSuspiciousApplicationActivity:
+                    //To do
+                    break;
 
-            }
+                case RiskMaskForDeclinedLoan.TESTEmployedMask:
+                    //To do
+                    break;
 
-            if (Get.EnumToString(riskMask) == "TESTDirectFraud")
-            {
-
-            }
-
-            if (Get.EnumToString(riskMask) == "TESTApplicationDeviceNotOnBlacklist")
-            {
-
-            }
-
-            if (Get.EnumToString(riskMask) == "TESTNoSuspiciousApplicationActivity")
-            {
-
-            }
-
-            if (Get.EnumToString(riskMask) == "TESTEmployedMask")
-            {
-
-            }
-
-            if (Get.EnumToString(riskMask) == "TESTApplicationElementNotCIFASFlagged")
-            {
+                case RiskMaskForDeclinedLoan.TESTApplicationElementNotCIFASFlagged:
+                    //To do
+                    break;*/
 
             }
-
             // TODO: add data preparation for other risk masks
 
             return cust;
@@ -239,14 +231,16 @@ namespace Wonga.QA.UiTests.Web.Region.Uk.L0Ln
 
         private void VerifyDeclineAdviceText(RiskMaskForDeclinedLoan riskMask, DeclinedPage declinedPage)
         {
-            if (Get.EnumToString(riskMask) == "TESTBlacklist")
+            switch (riskMask)
             {
-                Assert.AreEqual(@ContentMap.Get.L0DeclinedPage.ApplicationBlacklistCheck.Replace("\'", "'").Replace("\\r\\n", "\r\n"), declinedPage.DeclineAdvice());
-            }
-            if (Get.EnumToString(riskMask) == "TESTCreditBureauDataIsAvailable")
-            {
-                string expMessage = ContentMap.Get.L0DeclinedPage.CreditBureauDataIsAvailable.Replace("\'t","'t").Replace("\\r\\n", "\r\n");
-                Assert.AreEqual(expMessage + _creditAgenciesContactDetails, declinedPage.DeclineAdvice().Replace("\'t", "'t"));
+                case RiskMaskForDeclinedLoan.TESTBlacklist:
+                    Assert.AreEqual(@ContentMap.Get.L0DeclinedPage.ApplicationBlacklistCheck.Replace("\'", "'").Replace("\\r\\n", "\r\n"), declinedPage.DeclineAdvice());
+                    break;
+
+                case RiskMaskForDeclinedLoan.TESTCreditBureauDataIsAvailable:
+                    string expMessage = (@ContentMap.Get.L0DeclinedPage.CreditBureauDataIsAvailable.Replace("\'","'").Replace("\\r\\n", "\r\n"));
+                    Assert.AreEqual(expMessage + _creditAgenciesContactDetails, declinedPage.DeclineAdvice().Replace("\'t", "'t"));
+                    break;
             }
         }
 

@@ -22,11 +22,26 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
 
         public String SetSecurityCode
         {
-            set { _securityCode.SendValue(value); }
+            //set { _securityCode.SendValue(value); }
+            set
+            {
+                var securityCode =
+                    Do.Until(() => Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.ApplicationSection.SecurityCode)));
+                Do.Until(() => securityCode.Displayed);
+                securityCode.SendValue(value);
+            }
         }
         public String SetMinCash
         {
-            set { _minCash.SendValue(value); }
+            //set { _minCash.SendValue(value); }
+
+            set
+            {
+                var setMinCash =
+                    Do.Until(() => Page.Client.Driver.FindElement(By.CssSelector(UiMap.Get.ApplicationSection.SecurityCode)));
+                Do.Until(() => setMinCash.Displayed);
+                setMinCash.SendValue(value);
+            }
         }
         public String SetPin
         {
