@@ -16,5 +16,6 @@ namespace Wonga.QA.Framework.Api.Requests.Payments.Commands.Uk
 		public Object LoanAmount { get; set; }
 		public Object PromoCodeId { get; set; }
 		public Object AffiliateId { get; set; }
+        public Object TransmissionFeeDiscount { get; set; }
 	}
 }
