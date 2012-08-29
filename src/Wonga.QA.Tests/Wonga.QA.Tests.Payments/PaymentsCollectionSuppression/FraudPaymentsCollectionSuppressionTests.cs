@@ -28,8 +28,9 @@ namespace Wonga.QA.Tests.Payments.PaymentsCollectionSuppression
 			_liveCustomer = CustomerBuilder.New().Build();
 			_liveApplication = ApplicationBuilder.New(_liveCustomer).Build();
 			_liveApplicationInternalID = ApplicationOperations.GetAppInternalId(_liveApplication);
+    		var paymentCard = _liveCustomer.GetPaymentCard();
 			ApplicationOperations.SuspectFraud(_liveApplication, _liveCustomer, caseId);
-			PaymentOperations.TakePayment(_liveApplication.Id, _liveCustomer.GetPaymentCard(),Amount);
+			PaymentOperations.TakePayment(_liveApplication.Id, paymentCard ,Amount);
 			PaymentOperations.CheckPaymentsSupressionTransaction(_liveApplicationInternalID,Amount);
 			ApplicationOperations.ConfirmNotFraud(_liveApplication, _liveCustomer, caseId);
         }
@@ -67,12 +68,13 @@ namespace Wonga.QA.Tests.Payments.PaymentsCollectionSuppression
 			var customer = CustomerBuilder.New().Build();
 			var application = ApplicationBuilder.New(customer).Build();
 			var applicationId = ApplicationOperations.GetAppInternalId(application);
+			var paymentCard = customer.GetPaymentCard();
 			application.PutIntoArrears();
 			ApplicationOperations.SuspectFraud(application, customer, caseId);
-			PaymentOperations.TakePayment(application.Id, customer.GetPaymentCard(),Amount);
+			PaymentOperations.TakePayment(application.Id,paymentCard  ,Amount);
 			PaymentOperations.CheckPaymentsSupressionTransaction(applicationId, Amount);
 			ApplicationOperations.ConfirmNotFraud(application, customer, caseId);
-			PaymentOperations.TakePayment(application.Id, customer.GetPaymentCard(),Amount);
+			PaymentOperations.TakePayment(application.Id, paymentCard ,Amount);
 			PaymentOperations.CheckPaymentTransaction(applicationId, Amount);
 		}
 		
