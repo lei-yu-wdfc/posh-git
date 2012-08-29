@@ -127,7 +127,7 @@ def gallio(test_dlls, test_filter)
   begin
     g.run
   ensure
-    copy_report_for_emailer
+    #copy_report_for_emailer
     convert_reports
   end
 end
