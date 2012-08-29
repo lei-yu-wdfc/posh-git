@@ -7,7 +7,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.UiTests.Web.Region.Za.SalesForce
 {
-    [Parallelizable(TestScope.All), AUT(AUT.Za)]
+    [Parallelizable(TestScope.All), AUT(AUT.Za, AUT.Uk)]
     class SalesForceTest : UiTest
     {
         [Test, JIRA("QA-220"), Pending("Problem with presents customers in SF")]
