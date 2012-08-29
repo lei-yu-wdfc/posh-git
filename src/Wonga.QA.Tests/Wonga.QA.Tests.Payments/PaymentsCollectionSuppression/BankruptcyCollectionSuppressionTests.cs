@@ -37,9 +37,10 @@ namespace Wonga.QA.Tests.Payments.PaymentsCollectionSuppression
 			var customer = CustomerBuilder.New().Build();
 			var application = ApplicationBuilder.New(customer).Build();
 			var applicationId = ApplicationOperations.GetAppInternalId(application);
+			var amount = application.GetDueDateBalance();  
 			ApplicationOperations.ReportBankrupt(application, caseId);
 			application.MakeDueToday();
-			PaymentOperations.CheckPaymentsSupressionTransaction(applicationId, Amount);
+			PaymentOperations.CheckPaymentsSupressionTransaction(applicationId, amount);
 		}
 
 		[Test]

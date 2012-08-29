@@ -32,8 +32,8 @@ namespace Wonga.QA.Tests.Payments
 
 		public static void CheckPaymentsSupressionTransaction(int applicationId,decimal amount)
 		{
-			Do.Until(() => PaymentRequests.FindAll(PaymentRequests.ApplicationId == applicationId && PaymentRequests.Amount == amount &&
-												   PaymentRequests.StatusDescription == "Payment Collections Suppressed"));
+			Do.Until<bool>(() => PaymentRequests.FindAll(PaymentRequests.ApplicationId == applicationId && PaymentRequests.Amount == amount &&
+												   PaymentRequests.StatusDescription == "Payment Collections Suppressed").Count()>0);
 		}
 	}
 }
