@@ -316,6 +316,15 @@
     <Customer>#Account_body table tbody tr:first-child + tr th a</Customer>
   </SalesForceSearchResultPage>
 
+  <SalesForceCustomerDetailPage>
+    <LoanStatus>tr.dataRow td:first-child+th+td+td</LoanStatus>
+    <LoanLink></LoanLink>
+  </SalesForceCustomerDetailPage>
+
+  <SalesForceLoanPage>
+    <LoanStatus>.detailList tr:first-child .dataCol.col02</LoanStatus>
+  </SalesForceLoanPage>
+
   <TabsElement>
     <TabsForm>ul.menu</TabsForm>
     <Home>li:first-child>a</Home>

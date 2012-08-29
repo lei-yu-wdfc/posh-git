@@ -158,6 +158,7 @@
     <Compile Include="Mappings\Ui\Pages\FinancialAssessment\FAWaitPage.cs" />
     <Compile Include="Mappings\Ui\Pages\FinancialAssessment\FinancialAssessmentPage.cs" />
     <Compile Include="Mappings\Ui\Pages\PayLater\PayLater.cs" />
+    <Compile Include="Mappings\Ui\Pages\SalesForce\SalesForceLoanPage.cs" />
     <Compile Include="Testing\Attributes\IgnorePageErrorsAttribute.cs" />
     <Compile Include="Ui\Elements\SocialElement.cs" />
     <Compile Include="Ui\Elements\SecciToggleElement.cs" />
@@ -353,6 +354,7 @@
     <Compile Include="Ui\Pages\SalesForce\BaseSfPage.cs" />
     <Compile Include="Ui\Pages\SalesForce\SalesForceCustomerDetailPage.cs" />
     <Compile Include="Ui\Pages\SalesForce\SalesForceHomePage.cs" />
+    <Compile Include="Ui\Pages\SalesForce\SalesForceLoanPage.cs" />
     <Compile Include="Ui\Pages\SalesForce\SalesForceLoginPage.cs" />
     <Compile Include="Ui\Pages\SalesForce\SalesForceSearchResultPage.cs" />
     <Compile Include="Ui\Pages\Wb\ReferPage.cs" />

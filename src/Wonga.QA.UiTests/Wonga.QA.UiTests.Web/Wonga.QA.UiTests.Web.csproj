@@ -66,6 +66,7 @@
     <Compile Include="Region\Uk\MySummaryScenariosTests.cs" />
     <Compile Include="Region\Uk\L0Ln\UkL0LnJourneyCoreTests.cs" />
     <Compile Include="Region\Uk\PromoCodeTests.cs" />
+    <Compile Include="Region\Uk\SalesForce\SalesForceTestUk.cs" />
     <Compile Include="Region\Uk\TimeoutTest.cs" />
     <Compile Include="Region\Uk\ExtensionAgreementTests.cs" />
     <Compile Include="Region\Wb\AboutUs.cs" />
@@ -84,7 +85,7 @@
     <Compile Include="Region\Za\Payment\RepayLoanTests.cs" />
     <Compile Include="Region\Za\Payment\RepaymentTest.cs" />
     <Compile Include="Region\Za\Payment\SecondLoanTest.cs" />
-    <Compile Include="Region\Za\SalesForce\SalesForceTest.cs" />
+    <Compile Include="Region\Za\SalesForce\SalesForceTestZa.cs" />
     <Compile Include="Region\Uk\RepayTests.cs" />
     <Compile Include="Region\Uk\ExtensionTests.cs" />
     <Compile Include="DealDonePageTest.cs" />

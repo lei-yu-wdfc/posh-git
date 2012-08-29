@@ -24,8 +24,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.SalesForce
         {
             _searchbox.SendKeys(mail);
             _searchbutton.Click();
-            _searchbutton.Click(); // I don't know why, but it's work only with two click
-           return new SalesForceSearchResultPage(Client);
+            return new SalesForceSearchResultPage(Client);
         }
     }
 }

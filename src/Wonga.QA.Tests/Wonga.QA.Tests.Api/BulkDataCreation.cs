@@ -42,36 +42,35 @@ namespace Wonga.QA.Tests.Api
 
 
         [Test, AUT(AUT.Uk), JIRA("QA-320"), Ignore, Owner(Owner.PetrTarasenko)]
-        [Row(255, 1)]
-        [Row(225, 2)]
-        [Row(225, 3)]
-        [Row(200, 5)]
-        [Row(175, 10)]
-        [Row(150, 30)]
-        [Row(120, 60)]
-        [Row(75, 90)]
-        public void CreateArrearsCustomersWithProperInfo(int customerNum, int day)
+        [Row(1, 1)]
+        //[Row(225, 2)]
+        //[Row(225, 3)]
+        //[Row(200, 5)]
+        //[Row(175, 10)]
+        //[Row(150, 30)]
+        //[Row(120, 60)]
+        //[Row(75, 90)]
+        public void CreateArrearsCustomersWithProperInfo(int customerNum, uint day)
         {
             for (int i = 0; i < customerNum; i++)
             {
                 Customer properCustomer = properCustomerCreator();
                 Application aplication = ApplicationBuilder.New(properCustomer).Build();
-                //aplication.PutIntoArrears(day);
-                aplication.UpdateNextDueDate(-day);
-
+                //aplication.UpdateNextDueDate(-day);
+                aplication.PutIntoArrears(day);
             }
 
         }
 
         [Test, AUT(AUT.Uk), JIRA("QA-320"), Ignore, Owner(Owner.PetrTarasenko)]
-        [Row(8, 20)]
-        [Row(125, 10)]
-        [Row(225, 1)]
+        [Row(1, 20)]
+        //[Row(125, 10)]
+        //[Row(225, 1)]
         public void CreateLiveLoanCustomersWithProperInfo(int customersNum, int day)
         {
             for (int i = 0; i < customersNum; i++)
             {
-                Customer properCustomer = properCustomerCreator();
+                var properCustomer = properCustomerCreator();
                 Application application = ApplicationBuilder.New(properCustomer).WithLoanTerm(day).Build();
                 
             }
@@ -274,7 +273,7 @@ namespace Wonga.QA.Tests.Api
                     .WithForename(maleName[r.Next(0, 4900)].InnerText)
                     .WithSurname(surName[r.Next(0, 9000)].InnerText)
                     .WithMiddleName(maleName[r.Next(0, 4385)].InnerText)
-                    .WithEmployer(maleName[r.Next(0, 4385)].InnerText)
+                    //.WithEmployer(maleName[r.Next(0, 4385)].InnerText)
                     .WithStreetInAddress(street[r.Next(0, 635)].InnerText)
                     .WithFlatInAddress(r.Next(0, 100).ToString())
                     .WithTownInAddress(town[r.Next(0, 45)].InnerText)
@@ -289,7 +288,7 @@ namespace Wonga.QA.Tests.Api
                     .WithForename(femaleName[r.Next(0, 4385)].InnerText)
                     .WithSurname(surName[r.Next(0, 9000)].InnerText)
                     .WithMiddleName(femaleName[r.Next(0, 4385)].InnerText)
-                    .WithEmployer(maleName[r.Next(0, 4385)].InnerText)
+                    //.WithEmployer(maleName[r.Next(0, 4385)].InnerText)
                     .WithStreetInAddress(street[r.Next(0, 630)].InnerText)
                     .WithFlatInAddress(r.Next(0, 100).ToString())
                     .WithTownInAddress(town[r.Next(0, 45)].InnerText)

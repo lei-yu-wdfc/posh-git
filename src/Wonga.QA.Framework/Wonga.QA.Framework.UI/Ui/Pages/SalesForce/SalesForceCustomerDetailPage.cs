@@ -10,9 +10,19 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.SalesForce
 {
     public class SalesForceCustomerDetailPage : BaseSfPage
     {
+        private readonly IWebElement _loanStatus;
+        private readonly IWebElement _loanLink;
+
         public SalesForceCustomerDetailPage(UiClient client)
             : base(client)
         {
+            _loanStatus = Client.Driver.FindElement(By.CssSelector(UiMap.Get.SalesForceCustomerDetailPage.LoanStatus));
+            _loanLink = Client.Driver.FindElement(By.CssSelector(UiMap.Get.SalesForceCustomerDetailPage.LoanLink));
+        }
+
+        public String LoanStatus
+        {
+            get { return _loanStatus.GetValue();}
         }
     }
 }
