@@ -81,6 +81,7 @@
     <Compile Include="MoveApplicationToDcaTests.cs" />
     <Compile Include="NaedoRetryTests.cs" />
     <Compile Include="PadRepresentmentOptimization.cs" />
+    <Compile Include="PaymentOperations.cs" />
     <Compile Include="PaymentsCollectionSuppression\BankruptcyCollectionSuppressionTests.cs" />
     <Compile Include="PaymentsCollectionSuppression\FraudPaymentsCollectionSuppressionTests.cs" />
     <Compile Include="PaymentsCollectionSuppression\HardshipCollectionSuppressionTests.cs" />
