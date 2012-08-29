@@ -10,7 +10,7 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.Payments.PaymentsCollectionSuppression
 {
     [TestFixture]
-    [Parallelizable(TestScope.All), Pending("Depends on salesforce tc so will not run reliably on RC")]
+    [Parallelizable(TestScope.All)]
     [AUT(AUT.Uk)]
     public class FraudPaymentsCollectionSuppressionTests
     {
@@ -20,8 +20,11 @@ namespace Wonga.QA.Tests.Payments.PaymentsCollectionSuppression
     	private Application _liveApplication;
     	private Customer _liveCustomer;
     	private int _liveApplicationInternalID;
+    	private Customer _customer;
+    	private Application _application;
+    	private int _applicationId;
 
-        [Test]
+    	[Test]
 		[AUT(AUT.Uk), JIRA("UKOPS-885"), Owner(Owner.AnilKrishnamaneni)]
 		public void LiveApplicationFraud()
 		{
@@ -39,8 +42,9 @@ namespace Wonga.QA.Tests.Payments.PaymentsCollectionSuppression
 		[AUT(AUT.Uk), JIRA("UKOPS-885"), Owner(Owner.AnilKrishnamaneni), DependsOn("LiveApplicationFraud")]
 		public void DueTodayPaymentTakenWhenApllicationIsConfirmedNotFraud()
 		{
+			var amount=_liveApplication.GetDueDateBalance(); 
 			_liveApplication.MakeDueToday();
-			CheckPaymentTransaction(_liveApplicationInternalID, 106.7m);
+			CheckPaymentTransaction(_liveApplicationInternalID, amount);
 		}
 
     	[Test]
@@ -56,6 +60,7 @@ namespace Wonga.QA.Tests.Payments.PaymentsCollectionSuppression
 			CheckPaymentsSupressionTransaction(applicationId);
 			ApplicationOperations.ConfirmNotFraud(application, customer, caseId);
 			TakePayment(application.Id, customer.GetPaymentCard());
+			CheckPaymentTransaction(applicationId, Amount);
 	    }
 
 		[Test]
@@ -80,16 +85,22 @@ namespace Wonga.QA.Tests.Payments.PaymentsCollectionSuppression
 		public void RAApplicationFraud()
 		{
 			var caseId = Guid.NewGuid();
-			var customer = CustomerBuilder.New().Build();
-			var application = ApplicationBuilder.New(customer).Build();
-			var applicationId = ApplicationOperations.GetAppInternalId(application);
-			application.CreateRepaymentArrangement();
-			ApplicationOperations.SuspectFraud(application, customer, caseId);
-			TakePayment(application.Id, customer.GetPaymentCard());
-			CheckPaymentsSupressionTransaction(applicationId);
-			ApplicationOperations.ConfirmNotFraud(application, customer, caseId);
-			TakePayment(application.Id, customer.GetPaymentCard());
-			CheckPaymentTransaction(applicationId, Amount);
+			_customer = CustomerBuilder.New().Build();
+			_application = ApplicationBuilder.New(_customer).Build();
+			_applicationId = ApplicationOperations.GetAppInternalId(_application);
+			_application.CreateRepaymentArrangement();
+			ApplicationOperations.SuspectFraud(_application, _customer, caseId);
+			TakePayment(_application.Id , _customer.GetPaymentCard());
+			CheckPaymentsSupressionTransaction(_applicationId);
+			ApplicationOperations.ConfirmNotFraud(_application, _customer, caseId);
+		}
+
+		[Test]
+		[AUT(AUT.Uk), JIRA("UKOPS-885"), Owner(Owner.AnilKrishnamaneni), DependsOn("RAApplicationFraud"),Pending("bug-943") ]
+		public void RAApplicationcomingfromFraud()
+		{
+			TakePayment(_application.Id, _customer.GetPaymentCard());
+			CheckPaymentTransaction(_applicationId, Amount);	
 		}
 
 		#region Helpers
@@ -106,17 +117,17 @@ namespace Wonga.QA.Tests.Payments.PaymentsCollectionSuppression
     		                       		SalesforceUser = "test.user@wonga.com"
     		                       	});
     	}
-		
+
 		private static void CheckPaymentTransaction(int applicationID,decimal paymentamount)
 		{
 			paymentamount = paymentamount*-1;
-			Do.Until(() => PaymentTransactions.FindBy(ApplicationId:applicationID , Amount:paymentamount).Single());
+			Do.Until<bool>(() => PaymentTransactions.FindAll(PaymentTransactions.ApplicationId==applicationID && PaymentTransactions.Amount==paymentamount).Count()==1);
 		}
 
     	private static void CheckPaymentsSupressionTransaction(int applicationId)
     	{
-    		Do.Until(() => PaymentRequests.FindAll(PaymentRequests.ApplicationId == applicationId &&
-    		                                       PaymentRequests.StatusDescription == "PaymentCollectionsSuppressed" ).Single());
+			Do.Until(() => PaymentRequests.FindAll(PaymentRequests.ApplicationId == applicationId && PaymentRequests.Amount == Amount &&
+												   PaymentRequests.StatusDescription == "Payment Collections Suppressed"));
     	}
 		#endregion
     }
