@@ -177,7 +177,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             _editPhoneMobile.SendKeys(mobilePhone);
 
             _submitButton.Click();
-            var error = Do.Until(()=>Client.Driver.FindElement(By.CssSelector(".messages.error ul"))).Text;
+            var error = Do.Until(()=>Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.EditPhoneError))).Text;
             return error;
         }
 

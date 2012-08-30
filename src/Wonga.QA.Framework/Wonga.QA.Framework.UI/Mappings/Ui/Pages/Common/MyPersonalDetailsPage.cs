@@ -32,5 +32,6 @@ namespace Wonga.QA.Framework.UI.Mappings.Pages
         public String PopupErrorMessage { get; set; }
         public String PopupSuccessTitle { get; set; }
         public String EditPasswordHeader { get; set; }
+        public String EditPhoneError { get; set; }
     }
 }
