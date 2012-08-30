@@ -18,10 +18,9 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 	public class CheckpointSuspiciousActivity
 	{
 		[Test, AUT(AUT.Uk), JIRA("UK-436"), Description("Scenario 1: Declined"), Owner(Owner.RiskTeam)]
-		[Pending("Will fix it soon")]
 		public void LnSuspiciousActivitySumOfLoanAmmountIsGreaterThatCreditLimitApplicationDeclined()
 		{
-			var customer = CustomerBuilder.New().Build();
+            var customer = CustomerBuilder.New().WithMiddleName(RiskMask.TESTNoCheck).WithEmployer(Get.RandomString(3)).Build();
 
 			var l0Application = ApplicationBuilder
 				.New(customer)
@@ -40,10 +39,9 @@ namespace Wonga.QA.Tests.Risk.Checkpoints
 		}
 
 		[Test, AUT(AUT.Uk), JIRA("UK-436"), Description("Scenario 2: Accepted"), Owner(Owner.RiskTeam)]
-		[Pending("Will fix it soon")]
 		public void LnSuspiciousActivitySumOfLoanAmmountIsSmallerThatCreditLimitApplicationAccepted()
 		{
-			var customer = CustomerBuilder.New().Build();
+            var customer = CustomerBuilder.New().WithMiddleName(RiskMask.TESTNoCheck).WithEmployer(Get.RandomString(3)).Build();
 
 			var l0Application = ApplicationBuilder
 				.New(customer)
