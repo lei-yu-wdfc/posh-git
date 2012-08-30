@@ -89,7 +89,7 @@ namespace Wonga.QA.Framework.ThirdParties
             // default
             SalesforceUsername = Config.Salesforce.ApiUsername;
             SalesforcePassword = Config.Salesforce.ApiPassword;
-            SalesforceUrl = Config.Salesforce.Home.ToString();
+            SalesforceUrl = Config.Salesforce.ApiUrl;
         }
 
         /// <summary>
