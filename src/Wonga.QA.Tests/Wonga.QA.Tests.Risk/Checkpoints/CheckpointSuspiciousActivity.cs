@@ -14,121 +14,51 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.Tests.Risk.Checkpoints
 {
-    [Parallelizable(TestScope.All)]
-    public class CheckpointSuspiciousActivity
-    {
-        [Test, AUT(AUT.Uk), JIRA("UK-845"), Description("Scenario 1: Declined")]
-        public void LnSuspiciousActivityDeclined()
-        {
-            var suspiciousDuration = Get.RandomInt(1,
-                Convert.ToInt16(Drive.Db.Ops.ServiceConfigurations.Single(a =>
-                    a.Key == Get.EnumToString(ServiceConfigurationKeys.RiskSuspiciousPrevApplicationDuration)).Value));
+	[Parallelizable(TestScope.All)]
+	public class CheckpointSuspiciousActivity
+	{
+		[Test, AUT(AUT.Uk), JIRA("UK-436"), Description("Scenario 1: Declined"), Owner(Owner.RiskTeam)]
+		[Pending("Will fix it soon")]
+		public void LnSuspiciousActivitySumOfLoanAmmountIsGreaterThatCreditLimitApplicationDeclined()
+		{
+			var customer = CustomerBuilder.New().Build();
 
-            var suspiciousDaysSinceLastLoan = Get.RandomInt(1,
-                Convert.ToInt16(Drive.Db.Ops.ServiceConfigurations.Single(a =>
-                    a.Key == Get.EnumToString(ServiceConfigurationKeys.RiskSuspiciousDaysSinceLastApplication)).Value));
+			var l0Application = ApplicationBuilder
+				.New(customer)
+				.WithLoanAmount(200)
+				.Build();
 
-            var customer = CustomerBuilder.New()
-                .Build();
+			l0Application.RepayOnDueDate();
 
-            var l0Application = ApplicationBuilder.New(customer)
-                .WithLoanTerm(suspiciousDuration)
-                .Build();
+			CustomerOperations.UpdateMiddleNameInRisk(customer.Id, RiskMask.TESTNoSuspiciousApplicationActivity.ToString());
+			CustomerOperations.UpdateCreditLimitInRisk(customer.Id, 200);
 
-            l0Application.RepayOnDueDate();
+			ApplicationBuilder.New(customer)
+				.WithLoanAmount(300)
+				.WithExpectedDecision(ApplicationDecisionStatus.Declined)
+				.Build();
+		}
 
-            Drive.Db.RewindToDayOfLoanTerm(l0Application.Id, suspiciousDaysSinceLastLoan);
+		[Test, AUT(AUT.Uk), JIRA("UK-436"), Description("Scenario 2: Accepted"), Owner(Owner.RiskTeam)]
+		[Pending("Will fix it soon")]
+		public void LnSuspiciousActivitySumOfLoanAmmountIsSmallerThatCreditLimitApplicationAccepted()
+		{
+			var customer = CustomerBuilder.New().Build();
 
-            customer.UpdateEmployer(Get.EnumToString(RiskMask.TESTNoSuspiciousApplicationActivity));
+			var l0Application = ApplicationBuilder
+				.New(customer)
+				.WithLoanAmount(200)
+				.Build();
 
-            Application lnApplication = ApplicationBuilder.New(customer)
-                .WithExpectedDecision(ApplicationDecisionStatus.Declined)
-                .Build();
+			l0Application.RepayOnDueDate();
 
-            Assert.AreEqual(lnApplication.FailedCheckpoint, Get.EnumToString(RiskCheckpointDefinitionEnum.SuspiciousActivityCheck));
-        }
+			CustomerOperations.UpdateMiddleNameInRisk(customer.Id, RiskMask.TESTNoSuspiciousApplicationActivity.ToString());
+			CustomerOperations.UpdateCreditLimitInRisk(customer.Id, 200);
 
-        [Test, AUT(AUT.Uk), JIRA("UK-845"), Description("Scenario 2: Accepted")]
-        public void LnSuspiciousActivityAcceptedDueToUnsuspiciousDuration()
-        {
-            var unsuspiciousDuration = Convert.ToInt16(Drive.Db.Ops.ServiceConfigurations.Single(a =>
-                a.Key == Get.EnumToString(ServiceConfigurationKeys.RiskSuspiciousPrevApplicationDuration)).Value) + 1;
-
-            var suspiciousDaysSinceLastLoan = Get.RandomInt(1,
-                Convert.ToInt16(Drive.Db.Ops.ServiceConfigurations.Single(a =>
-                    a.Key == Get.EnumToString(ServiceConfigurationKeys.RiskSuspiciousDaysSinceLastApplication)).Value));
-
-            var customer = CustomerBuilder.New()
-                .Build();
-
-            var l0Application = ApplicationBuilder.New(customer)
-                .WithLoanTerm(unsuspiciousDuration)
-                .Build();
-
-            l0Application.RepayOnDueDate();
-
-            Drive.Db.RewindToDayOfLoanTerm(l0Application.Id, suspiciousDaysSinceLastLoan);
-
-            customer.UpdateEmployer(Get.EnumToString(RiskMask.TESTNoSuspiciousApplicationActivity));
-
-            var lnApplication = ApplicationBuilder.New(customer)
-                .WithExpectedDecision(ApplicationDecisionStatus.Accepted)
-                .Build();
-        }
-
-        [Test, AUT(AUT.Uk), JIRA("UK-845"), Description("Scenario 3: Accepted"),Category(TestCategories.CoreTest)]
-        public void LnSuspiciousActivityAcceptedDueToUnsuspiciousDaysSinceLastLoan()
-        {
-            var unsuspiciousDuration = Get.RandomInt(1,
-                Convert.ToInt16(Drive.Db.Ops.ServiceConfigurations.Single(a =>
-                    a.Key == Get.EnumToString(ServiceConfigurationKeys.RiskSuspiciousPrevApplicationDuration)).Value));
-
-            var suspiciousDaysSinceLastLoan = Convert.ToInt16(Drive.Db.Ops.ServiceConfigurations.Single(
-                a => a.Key == Get.EnumToString(ServiceConfigurationKeys.RiskSuspiciousDaysSinceLastApplication)).Value) + 2;
-
-            var customer = CustomerBuilder.New()
-                .Build();
-
-            var l0Application = ApplicationBuilder.New(customer)
-                .WithLoanTerm(unsuspiciousDuration)
-                .Build();
-
-            l0Application.RepayOnDueDate();
-
-            Drive.Db.RewindToDayOfLoanTerm(l0Application.Id, suspiciousDaysSinceLastLoan);
-
-            customer.UpdateEmployer(Get.EnumToString(RiskMask.TESTNoSuspiciousApplicationActivity));
-
-            var lnApplication = ApplicationBuilder.New(customer)
-                .WithExpectedDecision(ApplicationDecisionStatus.Accepted)
-                .Build();
-        }
-
-        [Test, AUT(AUT.Uk), JIRA("UK-845"), Description("Scenario 4: Accepted")]
-        public void LnSuspiciousActivityAccepted()
-        {
-            var unsuspiciousDuration = Convert.ToInt16(Drive.Db.Ops.ServiceConfigurations.Single(a =>
-                a.Key == Get.EnumToString(ServiceConfigurationKeys.RiskSuspiciousPrevApplicationDuration)).Value) + 1;
-
-            var suspiciousDaysSinceLastLoan = Convert.ToInt16(Drive.Db.Ops.ServiceConfigurations.Single(a =>
-                a.Key == Get.EnumToString(ServiceConfigurationKeys.RiskSuspiciousDaysSinceLastApplication)).Value) + 1;
-
-            var customer = CustomerBuilder.New()
-                .Build();
-
-            var l0Application = ApplicationBuilder.New(customer)
-                .WithLoanTerm(unsuspiciousDuration)
-                .Build();
-
-            l0Application.RepayOnDueDate();
-
-            Drive.Db.RewindToDayOfLoanTerm(l0Application.Id, suspiciousDaysSinceLastLoan);
-
-            customer.UpdateEmployer(Get.EnumToString(RiskMask.TESTNoSuspiciousApplicationActivity));
-
-            var lnApplication = ApplicationBuilder.New(customer)
-                .WithExpectedDecision(ApplicationDecisionStatus.Accepted)
-                .Build();
-        }
-    }
+			ApplicationBuilder.New(customer)
+				.WithLoanAmount(200)
+				.WithExpectedDecision(ApplicationDecisionStatus.Accepted)
+				.Build();
+		}
+	}
 }

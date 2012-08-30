@@ -341,6 +341,8 @@ namespace Wonga.QA.Framework.Data
         [Description("Risk.RepaymentScoreNewUsersCutOff")] RiskRepaymentScoreNewUsersCutOff,
         [Description("Risk.SuspiciousDaysSinceLastApplication")] RiskSuspiciousDaysSinceLastApplication,
         [Description("Risk.SuspiciousPrevApplicationDuration")] RiskSuspiciousPrevApplicationDuration,
+		[Description("Risk.SuspiciousPriviousDaysNum")] RiskSuspiciousPriviousDaysNum,
+		[Description("Risk.SuspiciousTrustRatingTimes")] RiskSuspiciousTrustRatingTimes,
         [Description("Risk.UserActionTimeoutMinutes")] RiskUserActionTimeoutMinutes,
         [Description("Risk.Wb.Uk.GraydonCompanyAugurScoreThreshold")] RiskWbUkGraydonCompanyAugurScoreThreshold,
         [Description("Risk.Wb.Uk.GraydonCompanyIncorporationMonthsAcceptableThreshold")] RiskWbUkGraydonCompanyIncorporationMonthsAcceptableThreshold,

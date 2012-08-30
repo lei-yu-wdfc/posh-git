@@ -102,6 +102,7 @@
     <Compile Include="CL\Uk\Checkpoints\ApplicationDeviceIsNotOnBlacklist\ApplicationDeviceIsNotOnBlacklistTests.cs" />
     <Compile Include="CL\Uk\Checkpoints\Blacklist\ApplicationElementNotInBlacklist.cs" />
     <Compile Include="CL\Uk\Checkpoints\BureauData\CallValidateTests.cs" />
+    <Compile Include="CL\Uk\Checkpoints\SuspiciousActivity\NoSuspiciousApplicationActivity.cs" />
     <Compile Include="CL\Uk\RiskDecisionsPublishingTests.cs" />
     <Compile Include="CL\Uk\PreparationTests.cs" />
     <Compile Include="CL\Uk\RiskServiceTestClUkBase.cs" />
