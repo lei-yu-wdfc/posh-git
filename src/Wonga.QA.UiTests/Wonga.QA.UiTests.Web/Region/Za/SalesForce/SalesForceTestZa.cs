@@ -8,10 +8,10 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.UiTests.Web.Region.Za.SalesForce
 {
     [Parallelizable(TestScope.All), AUT(AUT.Za)]
-    class SalesForceTest : UiTest
+    class SalesForceTestZa : UiTest
     {
         [Test, JIRA("QA-220"), Pending("Problem with presents customers in SF")]
-        public void CustomerInformationDisplayInSF()
+        public void ZaCustomerInformationDisplayInSF()
         {
             string email = Get.RandomEmail();
 
