@@ -7,25 +7,28 @@ namespace Wonga.QA.PerformanceTests.Core
 {
     public class CustomerCreator
     {
-        public int NumberOfUsersToCreate = 100;
+        public int NumberOfUsersToCreate = 1;
         private int _applicationId;
 
         #region Accounting
         //.Applications
-        private readonly String _externalId; //D4AF1E77-EC86-417A-90BD-A8E02BC6E65C
-        private readonly String _accountId;//F0C16F91-74F6-4460-B721-916126A9F8F9
-        private readonly int _productId;//1
+        //ExternalId used across multiple tables to uniquely idetify the application
+        private readonly String _externalId;
+        //AccountId used across multiple tables to uniquely idetify the account
+        private readonly String _accountId;
+        private readonly int _productId;
         private readonly String _applicationDate;
-        private readonly int _status;//2
+        private readonly int _status;
         
         //SystemTransactions
-        private readonly String _postedOn; //2012-08-24 14:28:11.000
-        private readonly int _scope; //1
-        private readonly int _type; //1
-        private readonly float _amount; //100.0
-        private readonly int _currency; //826
+        private readonly String _postedOn;
+        private readonly int _scope; 
+        private readonly int _type; 
+        private readonly decimal _amount;
+        private readonly decimal _transactionAmount;
+        private readonly int _currency;
         private readonly String _createdOn;
-        private readonly int _paymentStatus; //1
+        private readonly int _paymentStatus;
 
         #endregion
 
@@ -34,7 +37,7 @@ namespace Wonga.QA.PerformanceTests.Core
         private readonly String _postCode;
         
         //ContactPreferences
-        private readonly int _acceptMarketingContact;//0
+        private readonly int _acceptMarketingContact;
         
         //CustomerDetails
         private readonly String _forename;
@@ -42,19 +45,18 @@ namespace Wonga.QA.PerformanceTests.Core
         private readonly String _homePhone;
         private readonly String _mobilePhone;
         private readonly String _workPhone;
-        private readonly int _hasAccount;//1
+        private readonly int _hasAccount;
         
         //CustomerReviewDetails
-        private readonly int _requireReviewDetails;//0
+        private readonly int _requireReviewDetails;
         private readonly String _lastReviewedDetailsOn;
         
         //LegalDocuments
-        private readonly String _commsApplicationId;
-        private readonly int _documentType;//1
+        private readonly int _documentType;
         
         //MobilePhoneVerification
-        private readonly String _verificationId; //5756E273-3581-488C-A343-D7333743DBF7
-        private readonly String _pin; //6166
+        private readonly String _verificationId;
+        private readonly String _pin;
         #endregion
 
         #region Ops
@@ -108,41 +110,44 @@ namespace Wonga.QA.PerformanceTests.Core
         private readonly int _doNotRelend;
         #endregion
 
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
         public CustomerCreator()
         {
             #region Accounting
 
-            var cutomer = CustomerBuilder.New().WithPassword("Passw0rd");
             //.Applications
             _externalId = GetNewGuid();
-            _accountId = "'" + cutomer.Id.ToString() + "'";
+            _accountId = "'" + Get.GetId() + "'";
             _productId = 1;
-            _applicationDate = "'" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") +"'" ;
+            _applicationDate = GetCurrentDateTime();
             _status = 2;
             
             //SystemTransactions
-            _postedOn = "'" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "'";
+            _postedOn = GetCurrentDateTime();
             _scope = 1;
             _type = 1;
-            _amount = 100.0f;
+            _amount = Get.GetLoanAmount();
+            _transactionAmount = (decimal) 5.5;
             _currency = 826;
-            _createdOn = "'" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "'";
+            _createdOn = GetCurrentDateTime();
             _paymentStatus = 1;
             #endregion
 
             #region Comms
             //Addresses
-            _postCode = "'"+ "AA1 1AA" + "'";
+            _postCode = "'"+ Get.GetPostcode() + "'";
             
             //ContactPreferences
             _acceptMarketingContact = 0;
             
             //CustomerDetails
-            _forename = "'"+ cutomer.Forename + "'";
-            _surname = "'"+ cutomer.Surname + "'";
-            _homePhone = "02070707007";
-            _mobilePhone = "07070707007";
-            _workPhone = "02030707007";
+            _forename = "'"+ Get.GetName() + "'";
+            _surname = "'"+ "Bulk User" + "'";
+            _homePhone = Get.GetPhone();
+            _mobilePhone = Get.GetPhone();
+            _workPhone = Get.GetPhone();
             _hasAccount = 1;
             
             //CustomerReviewDetails
@@ -150,16 +155,15 @@ namespace Wonga.QA.PerformanceTests.Core
             _lastReviewedDetailsOn = "'" + DateTime.Now.AddYears(-10).ToString("yyyy-MM-dd HH:mm:ss") + "'";
             
             //LegalDocuments
-            _commsApplicationId = _accountId;
             _documentType = 1;
             
             //MobilePhoneVerification
             _verificationId = GetNewGuid();
-            _pin = "6166";
+            _pin = Get.GetVerificationPin();
             #endregion
 
             #region Ops
-            _login ="'" + cutomer.Email + "'";
+            _login ="'" + Get.GetEmail() + "'";
             #endregion
 
             #region Payments
@@ -169,12 +173,12 @@ namespace Wonga.QA.PerformanceTests.Core
 
             //PaymentBankDetails
             _bankName = "'ABBEY'";
-            _sortCode = "'938600'";
-            _accountNumber = "'42368003'";
-            _holderName = "'Forename Surname '";
-            _accountOpenDate = "'" + DateTime.Now.ToString("yyyy-MM-dd") + "'";
-            _countryCodeStr = "'UK'";
-
+            _sortCode = "'161027'";
+            _accountNumber = "'" + Get.GetBankAccountNumber("161027") + "'";
+            _holderName = "'" + _forename.Replace(@"'", "") + " " + _surname.Replace(@"'", "") + "'";
+            _accountOpenDate = GetCurrentDateTime();
+            _countryCodeStr = "'" + Get.GetCountryCode() + "'";
+            
             //PaymentCardDetails
             _cardType = "'visa'";
             _maskedNumber = "'**** **** **** 1111'";
@@ -205,7 +209,7 @@ namespace Wonga.QA.PerformanceTests.Core
             _usedManualVerification = 0;
 
             _accountRank = 0;
-            _dateOfBirth = "'1980-01-01 00:00:00.000'";
+            _dateOfBirth = "'"+ Get.GetDoB() + "'";
             _isDebtSale = 0;
             _confirmedFraud = 0;
             _isDispute = 0;
@@ -214,7 +218,7 @@ namespace Wonga.QA.PerformanceTests.Core
         }
 
         /// <summary>
-        /// Creates the customer
+        /// Creates a customer
         /// </summary>
         public void CreateCustomer()
         {
@@ -262,7 +266,7 @@ namespace Wonga.QA.PerformanceTests.Core
             accSysTransactInsert.Remove("PaymentStatus");
             accSysTransactInsert.Add("TransactionId", GetNewGuid());
             accSysTransactInsert.Add("Type", 2);
-            accSysTransactInsert.Add("Amount", _amount * 5.5 / 100);
+            accSysTransactInsert.Add("Amount", _transactionAmount);
             accSysTransactInsert.Add("PaymentStatus", 0);
             operations.Insert(accSysTransactInsert);
 
@@ -371,8 +375,8 @@ namespace Wonga.QA.PerformanceTests.Core
             payFixInsert.Add("ApplicationId", _applicationId);
             payFixInsert.Add("LoanAmount", _amount);
             payFixInsert.Add("MonthlyInterestRate", 30);
-            payFixInsert.Add("TransmissionFee", 5.50);
-            payFixInsert.Add("PromiseDate", "'" + DateTime.Now.AddMonths(1).ToString("yyyy-MM-dd HH:mm:ss") +"'");
+            payFixInsert.Add("TransmissionFee", _transactionAmount);
+            payFixInsert.Add("PromiseDate", _promiseDate);
             operations.Insert(payFixInsert);
 
             var payBankBInsert = new Insert("Payments", "payment.BankAccountsBase");
@@ -425,7 +429,7 @@ namespace Wonga.QA.PerformanceTests.Core
             payTransInsert.Remove("Reference");
             payTransInsert.Add("Reference", "'Fixed term loan transamission fee'");
             payTransInsert.Remove("Amount");
-            payTransInsert.Add("Amount", 5.50);
+            payTransInsert.Add("Amount", _transactionAmount);
             operations.Insert(payTransInsert);
         }
 
@@ -471,6 +475,9 @@ namespace Wonga.QA.PerformanceTests.Core
             operations.Insert(opSaEmailInsert);
         }
 
+        /// <summary>
+        /// Insert Customer into Risk Database
+        /// </summary>
         public void InsertRiskDb()
         {
             var operations = new DbOperations();
@@ -518,6 +525,15 @@ namespace Wonga.QA.PerformanceTests.Core
         public String GetNewGuid()
         {
             return "'" + Guid.NewGuid().ToString() + "'";
+        }
+
+        /// <summary>
+        /// Retruns current datetime in yyyy-MM-dd HH:mm:ss format
+        /// </summary>
+        /// <returns></returns>
+        public String GetCurrentDateTime()
+        {
+            return "'" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "'";
         }
 
         [Test]
