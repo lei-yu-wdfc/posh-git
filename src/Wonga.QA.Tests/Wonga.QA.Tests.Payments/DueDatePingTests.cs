@@ -13,6 +13,7 @@ namespace Wonga.QA.Tests.Payments
 {
     [TestFixture(Order = -1)]
     [Parallelizable(TestScope.All)] 
+	[AUT(AUT.Uk)]
 	class DueDatePingTests
 	{
 
