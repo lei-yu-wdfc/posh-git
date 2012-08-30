@@ -42,15 +42,26 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queries\SystemQueries.cs" />
-    <Compile Include="Queries\SystemQueriesBase.cs" />
-    <Compile Include="Queries\Uk\PayLaterSystemQueries.cs" />
-    <Compile Include="Queries\Uk\SystemQueries.cs" />
+    <Compile Include="Queries\PayLater\PayLaterSystemQueries.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Operations\" />
-    <Folder Include="Queries\Ca\" />
-    <Folder Include="Queries\Wb\" />
-    <Folder Include="Queries\Za\" />
+    <Folder Include="Queries\Business\" />
+    <Folder Include="Queries\Consumer\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Wonga.QA.Framework.Data\Wonga.QA.Framework.Data.csproj">
+      <Project>{6DB7E1BD-C5B2-4BEE-A0A3-E2C635768203}</Project>
+      <Name>Wonga.QA.Framework.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wonga.QA.Framework.Db\Wonga.QA.Framework.Db.csproj">
+      <Project>{06D44CDD-9AB7-47EC-8D7A-0E548465EF9D}</Project>
+      <Name>Wonga.QA.Framework.Db</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wonga.QA.Framework\Wonga.QA.Framework.csproj">
+      <Project>{5D8AEAB2-EB00-45CA-86D1-A5B4A7C6ED2F}</Project>
+      <Name>Wonga.QA.Framework</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

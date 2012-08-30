@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountBase.cs" />
+    <Compile Include="WongaAccount.cs" />
     <Compile Include="Queries\AccountQueriesCustomerDetails.cs" />
     <Compile Include="BusinessAccount.cs" />
     <Compile Include="Operations\Business\BusinessAccountOperations.cs" />

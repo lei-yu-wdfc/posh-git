@@ -3,16 +3,16 @@ using Wonga.QA.Framework.Builders;
 using Wonga.QA.Framework.Core;
 using Wonga.QA.Tests.Core;
 
-namespace Wonga.QA.Tests.PayLater.TrustRating
+namespace Wonga.QA.Tests.PayLater.CreditLimit
 {
 	[TestFixture, AUT(AUT.Uk), Parallelizable(TestScope.All)]
-	public class TrustRatingMissedPaymentFeeTests
+	public class CreditLimitMissedPaymentFeeTests
 	{
 		[Test, JIRA("PAYLATER-337"), Pending]
-		public void GivenAnApplicationWithAMissedPaymentCharge_WhenAFullRepaymentIsMade_TheAccountTrustRatingIsIncreased()
+		public void GivenAnApplicationWithAMissedPaymentCharge_WhenAFullRepaymentIsMade_ThePayLaterCreditLimitIsIncreased()
 		{
 			var account = AccountBuilder.PayLater.New().Build();
-			var originalTrustRating = account.TrustRating;
+			var originalTrustRating = account.PayLaterCredit;
 
 			const int purchaseValue = 150;
 			var application = ApplicationBuilder.PayLater.New(account).WithTotalAmount(purchaseValue).Build();
@@ -21,8 +21,8 @@ namespace Wonga.QA.Tests.PayLater.TrustRating
 			application.Repay();
 
 			var expectedTrustRating = originalTrustRating;
-			var postRepaymentTrustRating = account.TrustRating;
-			Assert.AreEqual(expectedTrustRating, postRepaymentTrustRating);
+			var availablePayLaterCredit = account.PayLaterCredit;
+			Assert.AreEqual(expectedTrustRating, availablePayLaterCredit);
 		}
 	}
 }

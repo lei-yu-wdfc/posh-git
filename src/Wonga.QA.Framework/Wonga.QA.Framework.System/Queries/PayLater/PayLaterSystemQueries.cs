@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace Wonga.QA.Framework.System.Queries.Uk
+namespace Wonga.QA.Framework.System.Queries.PayLater
 {
-	public sealed class PayLaterSystemQueries
+	public class PayLaterSystemQueries
 	{
-		public Decimal GetDefaultTrustRating()
+		public Decimal GetDefaultCreditLimit()
 		{
 			throw new NotImplementedException();
 		}

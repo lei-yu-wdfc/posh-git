@@ -6,7 +6,7 @@ namespace Wonga.QA.Framework.Account.Queries.PayLater
 {
 	public sealed class PayLaterAccountQueries : AccountQueriesBase
 	{
-		public Decimal GetTrustRating(Guid accountId)
+		public Decimal AvailableCredit(Guid accountId)
 		{
 			var response = Drive.Api.Queries.Post(new GetAvailableCreditPayLaterUkQuery() {AccountId = accountId.ToString()});
 			return Decimal.Parse(response.Values["AvailableCredit"].Single());

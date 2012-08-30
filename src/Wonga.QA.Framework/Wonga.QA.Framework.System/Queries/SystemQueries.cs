@@ -1,8 +1,9 @@
-﻿
+﻿using Wonga.QA.Framework.System.Queries.PayLater;
+
 namespace Wonga.QA.Framework.System.Queries
 {
 	public static class SystemQueries
 	{
-		public static readonly Uk.SystemQueries Uk = new Uk.SystemQueries();
+		public static readonly PayLaterSystemQueries PayLater = new PayLaterSystemQueries();
 	}
 }

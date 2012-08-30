@@ -3,7 +3,6 @@ using System.Linq;
 using MbUnit.Framework;
 using Wonga.QA.Framework;
 using Wonga.QA.Framework.Account;
-using Wonga.QA.Framework.Account.Consumer;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Builders;
 using Wonga.QA.Framework.Core;
@@ -11,10 +10,10 @@ using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Tests.Core;
 using ApplicationBuilder = Wonga.QA.Framework.Builders.ApplicationBuilder;
 
-namespace Wonga.QA.Tests.PayLater.Checkpoints
+namespace Wonga.QA.Tests.PayLater.RiskDecision.Checkpoints
 {
     [TestFixture]
-    public class CheckPointMonthlyIncomeEnoughForRepaymentTests
+    public class MonthlyIncomeEnoughForRepaymentTests
     {
         private const RiskMask TestMask = RiskMask.TESTMonthlyIncomeEnoughForRepayment;
 

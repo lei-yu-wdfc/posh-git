@@ -41,10 +41,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Wonga.QA.Framework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\Wonga.QA.Framework.dll</HintPath>
-    </Reference>
+    <Reference Include="Wonga.QA.Framework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Wonga.QA.Framework.Account, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Wonga.QA.Framework.Api, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -63,12 +60,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Checkpoints\CheckPointMonthlyIncomeEnoughForRepaymentTests.cs" />
-    <Compile Include="Checkpoints\RiskWorkflows\PayLaterRiskWorkflowTests.cs" />
+    <Compile Include="RiskDecision\Checkpoints\MonthlyIncomeEnoughForRepaymentTests.cs" />
+    <Compile Include="RiskDecision\Workflows\L0Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TrustRating\TrustRatingMissedPaymentFeeTests.cs" />
-    <Compile Include="TrustRating\DefaultTrustRatingTests.cs" />
-    <Compile Include="TrustRating\TrustRatingRepaymentTests.cs" />
+    <Compile Include="CreditLimit\CreditLimitMissedPaymentFeeTests.cs" />
+    <Compile Include="CreditLimit\DefaultCreditLimitTests.cs" />
+    <Compile Include="CreditLimit\CreditLimitRepaymentTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Wonga.QA.Tests.Core\Wonga.QA.Tests.Core.csproj">
@@ -98,7 +95,6 @@
     <Folder Include="Recon\" />
     <Folder Include="Refunds\" />
     <Folder Include="Reporting\" />
-    <Folder Include="RiskDecision\" />
     <Folder Include="Website\" />
     <Folder Include="WongaCustomers\" />
   </ItemGroup>

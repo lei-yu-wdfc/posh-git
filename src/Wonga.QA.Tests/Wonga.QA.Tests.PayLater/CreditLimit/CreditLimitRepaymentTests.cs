@@ -7,43 +7,43 @@ using Wonga.QA.Tests.Core;
 namespace Wonga.QA.Tests.PayLater.TrustRating
 {
 	[TestFixture, AUT(AUT.Uk), Parallelizable(TestScope.All)]
-	public class TrustRatingRepaymentTests
+	public class CreditLimitRepaymentTests
 	{
 		[Test, JIRA("PAYLATER-337"), Pending]
-		public void GivenAnApplication_WhenAFullRepaymentIsMade_TheAccountTrustRatingIncrease()
+		public void GivenAnApplication_WhenAFullRepaymentIsMade_ThePayLaterCreditLimitIncrease()
 		{
 			var account = AccountBuilder.PayLater.New().Build();
-			decimal originalTrustRating = account.TrustRating;
+			decimal originalTrustRating = account.PayLaterCredit;
 
 			const int purchaseValue = 150;
 			var application = ApplicationBuilder.PayLater.New(account).WithTotalAmount(purchaseValue).Build();
 			application.Repay();
 
-			var postRepaymentTrustRating = AccountQueries.PayLater.GetTrustRating(account.Id);
-			Assert.AreEqual(originalTrustRating, postRepaymentTrustRating);
+			var postRepaymentCreditLimit = account.PayLaterCredit;
+			Assert.AreEqual(originalTrustRating, postRepaymentCreditLimit);
 		}
 
 		[Test, JIRA("PAYLATER-337"), Pending]
-		public void GivenAnApplication_WhenAPartialRepaymentIsMade_TheAccountTrustRatingDoesNotChange()
+		public void GivenAnApplication_WhenAPartialRepaymentIsMade_ThePayLaterCreditLimitDoesNotChange()
 		{
 			var account = AccountBuilder.PayLater.New().Build();
 
 			const int purchaseValue = 150;
 			var application = ApplicationBuilder.PayLater.New(account).WithTotalAmount(purchaseValue).Build();
-			var postPurchaseTrustRating = account.TrustRating;
+			var postPurchaseCreditLimit = account.PayLaterCredit;
 
 			const int repaymentAmount = 100;
 			application.Repay(repaymentAmount);
 
-			var postRepaymentTrustRating = AccountQueries.PayLater.GetTrustRating(account.Id);
-			Assert.AreEqual(postPurchaseTrustRating, postRepaymentTrustRating);
+			var postRepaymentCreditLimit = account.PayLaterCredit;
+			Assert.AreEqual(postPurchaseCreditLimit, postRepaymentCreditLimit);
 		}
 
 		[Test, JIRA("PAYLATER-337"), Pending]
-		public void GivenAnAccountWithMultipleApplications_WhenOneApplicationIsPartiallyRepaid_TheAccountTrustRatingDoesNotChange()
+		public void GivenAnAccountWithMultipleApplications_WhenOneApplicationIsPartiallyRepaid_ThePayLaterCreditLimitDoesNotChange()
 		{
 			var account = AccountBuilder.PayLater.New().Build();
-			var originalTrustRating = account.TrustRating;
+			var originalCredit = account.PayLaterCredit;
 
 			const int purchaseValueA = 150;
 			const int purchaseValueB = 100;
@@ -55,9 +55,9 @@ namespace Wonga.QA.Tests.PayLater.TrustRating
 			applicationA.Repay(repaymentAmountA);
 			applicationB.Repay(repaymentAmountB);
 
-			var expectedTrustRating = originalTrustRating - (purchaseValueA + purchaseValueB);
-			var postRepaymentTrustRating = account.TrustRating;
-			Assert.AreEqual(expectedTrustRating, postRepaymentTrustRating);
+			var expectedCreditLimit = originalCredit - (purchaseValueA + purchaseValueB);
+			var postRepaymentCreditLimit = account.PayLaterCredit;
+			Assert.AreEqual(expectedCreditLimit, postRepaymentCreditLimit);
 		}
 	}
 }

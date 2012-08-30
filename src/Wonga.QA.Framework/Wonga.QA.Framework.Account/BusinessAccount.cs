@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Wonga.QA.Framework.Account.Business
+namespace Wonga.QA.Framework.Account
 {
 	class BusinessAccount : AccountBase
 	{

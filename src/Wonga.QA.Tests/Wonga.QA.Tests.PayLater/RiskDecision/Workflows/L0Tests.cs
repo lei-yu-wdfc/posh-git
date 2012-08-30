@@ -8,23 +8,19 @@ using Wonga.QA.Framework.Db.Extensions;
 using Wonga.QA.Tests.Core;
 using ApplicationBuilder = Wonga.QA.Framework.Builders.ApplicationBuilder;
 
-namespace Wonga.QA.Tests.PayLater.Checkpoints.RiskWorkflows
+namespace Wonga.QA.Tests.PayLater.RiskDecision.Workflows
 {
     [TestFixture]
-    public class PayLaterRiskWorkflowTests
+    public class L0Tests
     {
-        private List<string> _expectedPayLaterCheckpointsNames;
-
-        [Test, AUT(AUT.Uk), JIRA("PAYLATER-592"), Ignore("blocked - checkpoints not loading")]
+        [Test, AUT(AUT.Uk), JIRA("PAYLATER-592"), Pending("blocked - checkpoints not loading")]
         public void VerifyExpectedCheckpointsAreLoadedForPayLaterL0()
         {
-            _expectedPayLaterCheckpointsNames = ExpectedPayLaterCheckpointsForL0;
-
             var payLaterAccount = AccountBuilder.PayLater.New().Build();
             var payLaterApplication = ApplicationBuilder.PayLater.New(payLaterAccount).Build();
 
             var actualCheckpointNames = Drive.Db.GetCheckpointDefinitionsForApplication(payLaterApplication.Id).Select(a => a.Name);
-            Assert.AreElementsEqualIgnoringOrder(_expectedPayLaterCheckpointsNames, actualCheckpointNames);
+			Assert.AreElementsEqualIgnoringOrder(ExpectedPayLaterCheckpointsForL0, actualCheckpointNames);
         }
 
         #region CheckpointLists

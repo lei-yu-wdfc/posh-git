@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Wonga.QA.Framework.Account;
-using Wonga.QA.Framework.Account.Consumer;
 using Wonga.QA.Framework.Api;
 using Wonga.QA.Framework.Api.Requests.Payments.PayLater.Commands.Uk;
 using Wonga.QA.Framework.Api.Requests.Risk.Commands;

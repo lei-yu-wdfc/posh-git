@@ -1,6 +1,5 @@
 ﻿using System;
 using Wonga.QA.Framework.Account;
-using Wonga.QA.Framework.Account.Consumer;
 using Wonga.QA.Framework.Builders.Consumer;
 using Wonga.QA.Framework.Builders.PayLater;
 using Wonga.QA.Framework.Core;
