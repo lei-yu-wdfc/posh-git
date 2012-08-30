@@ -36,7 +36,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         public MyPaymentsPage(UiClient client)
             : base(client)
         {
-            _addCardButton = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.AddCardButton));
+           
             switch (Config.AUT)
             {
 
@@ -92,6 +92,7 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public void AddVisaElectronCard(string cardNumber, string cardName = "NewCard", string mounth = "Jun", string year = "2014", string security = "000")
         {
+            _addCardButton = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.AddCardButton));
             _addCardButton.Click();
             Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.AddCardPopupHeader)));
             _editCardType =Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPaymentsPage.EditCardType));

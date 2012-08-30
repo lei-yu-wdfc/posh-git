@@ -8,7 +8,7 @@ namespace Wonga.QA.UiTests.Mobile
 {
     public class SlidersTests : UiMobileTest
     {
-        [Test, AUT(AUT.Za)]
+        [Test, AUT(AUT.Za), Pending("Selenium has a problem with toggling sliders")]
         public void IncreaseThenDecreaseAmountAndDurationValuesUsingSliders()
         {
             var homepage = Client.MobileHome();
@@ -28,7 +28,7 @@ namespace Wonga.QA.UiTests.Mobile
             Assert.GreaterThan(Convert.ToInt32(durationAfterSliderIncrease), Convert.ToInt32(homepage.Sliders.HowLong));
         }
 
-        [Test, AUT(AUT.Za)]
+        [Test, AUT(AUT.Za), Pending("Selenium has a problem with toggling sliders")]
         public void SlideAmountSlidersUntilMaximumValueIsReached()
         {
             var homepage = Client.MobileHome();

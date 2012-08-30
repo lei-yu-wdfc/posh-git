@@ -5,6 +5,7 @@ using Wonga.QA.Framework.Core;
 using Wonga.QA.Framework.UI.Elements;
 using Wonga.QA.Framework.UI.Mappings;
 using Wonga.QA.Framework.UI.Ui.Elements;
+using Wonga.QA.Framework.UI.Ui.Validators;
 
 namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 {
@@ -18,8 +19,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
 
         public Sections.AccountDetailsSection AccountDetailsSection { get; set; }
 
-        public AccountDetailsPage(UiClient client)
-            : base(client)
+        public AccountDetailsPage(UiClient client, Validator validator = null)
+            : base(client, validator)
         {
             _form = Content.FindElement(By.CssSelector(UiMap.Get.AccountDetailsPage.FormId));
             _next = Content.FindElement(By.CssSelector(UiMap.Get.AccountDetailsPage.NextButton));
@@ -32,9 +33,14 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             return new PersonalBankAccountPage(Client);
         }
 
-        public AccountDetailsPage NextClick()
+        public AccountDetailsPage NextClick(bool errorCheck = false)
         {
             _next.Submit();
+            if (errorCheck)
+            {
+                Validator validator = new ValidatorBuilder().Default(Client).WithoutErrorsCheck().Build();
+                return new AccountDetailsPage(Client, validator);
+            }
             return new AccountDetailsPage(Client);
         }
 

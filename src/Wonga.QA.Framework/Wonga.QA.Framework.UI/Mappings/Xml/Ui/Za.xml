@@ -61,6 +61,7 @@
     <Fieldset>#lzero-account-setup-form</Fieldset>
     <PasswordErrorForm>#edit-password-wrapper .form-error .invalid</PasswordErrorForm>
     <PasswordConfirmErrorForm>#edit-password-confirm-wrapper .form-error .invalid</PasswordConfirmErrorForm>
+    <PasswordMeterMessage>.password-meter-message</PasswordMeterMessage>
   </AccountDetailsSection>
 
   <DealDonePage>
