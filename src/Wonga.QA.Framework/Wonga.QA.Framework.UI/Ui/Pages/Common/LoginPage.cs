@@ -17,8 +17,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
         private readonly IWebElement _buttonLogin;
         private readonly IWebElement _forgotPassword;
 
-        public LoginPage(UiClient client)
-            : base(client)
+        public LoginPage(UiClient client, Validator validator = null)
+            : base(client, validator)
         {   
             _username = Content.FindElement(By.CssSelector(UiMap.Get.LoginPage.Username));
             _password = Content.FindElement(By.CssSelector(UiMap.Get.LoginPage.Password));

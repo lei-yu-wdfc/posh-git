@@ -142,7 +142,7 @@ namespace Wonga.QA.UiTests.Web.Region.Za
 
             // Check for Google Ad Services code:
             Assert.IsTrue(page.Client.Source().Contains("<!-- Google Code for Conversion Pages -->"));
-            Assert.IsTrue(page.Client.Source().Contains("https://www.googleadservices.com/pagead/conversion/1017715892/?value=0&label=RSVMCNSNnQIQtLmk5QM&guid=ON&script=0"));
+            Assert.IsTrue(page.Client.Source().Contains("https://www.googleadservices.com/pagead/conversion/"));
 
             // Check that the page contains the correct doubleclick HTML comment identifiers for this AUT:
 

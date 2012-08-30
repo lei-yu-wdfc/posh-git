@@ -14,7 +14,7 @@ using Wonga.QA.Tests.Core;
 
 namespace Wonga.QA.UiTests.Web.Region.Uk
 {
-    [Parallelizable(TestScope.Self), Category(TestCategories.CoreTest)]
+    [Parallelizable(TestScope.Self), AUT(AUT.Uk), Category(TestCategories.CoreTest)]
     public class LzeroFlowTest:UiTest
     {
         [Test, JIRA("UK-1624"), MultipleAsserts]

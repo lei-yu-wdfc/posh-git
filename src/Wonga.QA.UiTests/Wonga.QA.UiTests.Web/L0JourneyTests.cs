@@ -465,6 +465,7 @@ namespace Wonga.QA.UiTests.Web
             string lastName = Get.RandomString(3, 10);
             DateTime date;
             var journey = JourneyFactory.GetL0Journey(Client.Home())
+                .WithDuration(10)
                 .WithEmployerName(Get.EnumToString(RiskMask.TESTEmployedMask))
                 .WithFirstName(firstName)
                 .WithLastName(lastName);
@@ -472,7 +473,7 @@ namespace Wonga.QA.UiTests.Web
             switch (Config.AUT)
             {
                 case AUT.Ca:
-                    date = DateTime.Now.AddDays(DateHelper.GetNumberOfDaysUntilStartOfLoanForCa() + 20);
+                    date = DateTime.Now.AddDays(DateHelper.GetNumberOfDaysUntilStartOfLoanForCa() + 10);
                     mySummary = journey.Teleport<MySummaryPage>() as MySummaryPage;
                     var customerCa = Do.With.Message("There is no sought-for customer in DB").Until(() => Drive.Data.Comms.Db.CustomerDetails.FindBy(Forename: firstName, Surname: lastName));
                     Console.WriteLine(customerCa.Email.ToString());
@@ -484,7 +485,7 @@ namespace Wonga.QA.UiTests.Web
                     Assert.AreEqual(String.Format("{0:dddd MMMM yyyy}", date), String.Format("{0:dddd MMMM yyyy}", fixedTermApplicationCa.PromiseDate));
                     break;
                 case AUT.Za:
-                    date = DateTime.Now.AddDays(20);
+                    date = DateTime.Now.AddDays(10);
                     mySummary = journey.Teleport<MySummaryPage>() as MySummaryPage;
                     var customerZa = Do.With.Message("There is no sought-for customer in DB").Until(() => Drive.Data.Comms.Db.CustomerDetails.FindBy(Forename: firstName, Surname: lastName));
                     Console.WriteLine(customerZa.Email.ToString());
@@ -678,7 +679,7 @@ namespace Wonga.QA.UiTests.Web
                         .FillAndStop();
                     var personalDetailsPageZa = journeyZa.Teleport<PersonalDetailsPage>() as PersonalDetailsPage;
                     personalDetailsPageZa.ClickSubmit();
-                    var loginPageZa = new LoginPage(Client);
+                    var loginPageZa = new LoginPage(Client, new ValidatorBuilder().WithoutErrorsCheck().Build());
                     Assert.IsTrue(loginPageZa.Url.Contains("/login"));
                     break;
                 #endregion
