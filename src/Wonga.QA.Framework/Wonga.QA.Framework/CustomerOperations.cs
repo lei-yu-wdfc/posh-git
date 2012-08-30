@@ -171,10 +171,15 @@ namespace Wonga.QA.Framework
             Do.Until(() => RiskDb.EmploymentDetails.UpdateByAccountId(AccountId: accountId, EmployerName: employerName));
         }
 
-        public static void UpdateMiddleNameInRisk(Guid accountId, string middleName)
-        {
-            Do.Until(() => RiskDb.RiskAccounts.UpdateByAccountId(AccountId: accountId, MiddleName: middleName));
-        }
+		public static void UpdateCreditLimitInRisk(Guid accountId, decimal creditLimit)
+		{
+			Do.Until(() => RiskDb.RiskAccounts.UpdateByAccountId(AccountId: accountId, CreditLimit: creditLimit));
+		}
+
+		public static void UpdateMiddleNameInRisk(Guid accountId, string middleName)
+		{
+			Do.Until(() => RiskDb.RiskAccounts.UpdateByAccountId(AccountId: accountId, MiddleName: middleName));
+		}
 
         public static void RemovePhoneNumberFromRisk(string phoneNumber)
         {
