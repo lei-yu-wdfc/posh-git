@@ -8,14 +8,14 @@ using Wonga.QA.Framework.UI.Mappings;
 
 namespace Wonga.QA.Framework.UI.UiElements.Pages.SalesForce
 {
-    public class SalesForceLoanPage : BaseSfPage
+    public class SalesForceLoanDetailPage : BaseSfPage
     {
         private readonly IWebElement _loanStatus;
 
-        public SalesForceLoanPage(UiClient client)
+        public SalesForceLoanDetailPage(UiClient client)
             : base(client)
         {
-            _loanStatus = Client.Driver.FindElement(By.CssSelector(UiMap.Get.SalesForceLoanPage.LoanStatus));
+            _loanStatus = Client.Driver.FindElement(By.CssSelector(UiMap.Get.SalesForceLoanDedailPage.LoanStatus));
         }
 
         public String LoanStatus

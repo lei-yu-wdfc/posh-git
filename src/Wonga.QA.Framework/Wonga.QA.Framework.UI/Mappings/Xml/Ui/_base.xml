@@ -321,9 +321,9 @@
     <LoanLink></LoanLink>
   </SalesForceCustomerDetailPage>
 
-  <SalesForceLoanPage>
+  <SalesForceLoanDedailPage>
     <LoanStatus>.detailList tr:first-child .dataCol.col02</LoanStatus>
-  </SalesForceLoanPage>
+  </SalesForceLoanDedailPage>
 
   <TabsElement>
     <TabsForm>ul.menu</TabsForm>

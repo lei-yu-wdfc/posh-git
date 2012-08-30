@@ -197,7 +197,7 @@ namespace Wonga.QA.Framework.UI.Mappings
         public virtual SalesForceHomePage SalesForceHomePage { get; set; }
         public virtual SalesForceSearchResultPage SalesForceSearchResultPage { get; set; }
         public virtual SalesForceCustomerDetailPage SalesForceCustomerDetailPage { get; set; }
-        public virtual SalesForceLoanDetailPage SalesForceLoanPage { get; set; }
+        public virtual SalesForceLoanDetailPage SalesForceLoanDedailPage { get; set; }
 
         #endregion
 
