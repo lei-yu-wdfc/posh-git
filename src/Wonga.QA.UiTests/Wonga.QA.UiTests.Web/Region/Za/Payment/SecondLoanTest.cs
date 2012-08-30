@@ -14,7 +14,7 @@ namespace Wonga.QA.UiTests.Web.Region.Za.Payment
     [Parallelizable(TestScope.All), AUT(AUT.Za)]
     class SecondLoanTest : UiTest
     {
-        [Test, JIRA("QA-195"), Category(TestCategories.SmokeTest)] // add AUT.Ca when .RepayOnDueDate() will be work
+        [Test, JIRA("QA-195"), Category(TestCategories.SmokeTest)]
         public void InformationAboutSecondLoanShouldBeDisplayed()
         {
             string actualRepaymentDate;
