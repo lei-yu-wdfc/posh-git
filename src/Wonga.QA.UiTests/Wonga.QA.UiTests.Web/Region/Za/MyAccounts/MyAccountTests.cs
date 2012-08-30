@@ -409,7 +409,7 @@ namespace Wonga.QA.UiTests.Web.Region.Za.MyAccounts
 
         }
 
-        [Test, Category(TestCategories.SmokeTest), JIRA("QA-279")]
+        [Test, Category(TestCategories.SmokeTest),Owner(Owner.MihailPodobivsky), JIRA("QA-279")]
         public void LNCustomerChangesMobilePhoneNumberToTheSameOneButUsingSeparators()
         {
             var loginPage = Client.Login();
@@ -422,10 +422,11 @@ namespace Wonga.QA.UiTests.Web.Region.Za.MyAccounts
             application.RepayOnDueDate();
             var mySummary = loginPage.LoginAs(email);
             var myPersonals = mySummary.Navigation.MyPersonalDetailsButtonClick();
+            myPersonals.PhoneClick();
             foreach (var invaliPhone in invalidPhones)
             {
-                myPersonals.PhoneClick();
-                myPersonals.ChangeMobilePhone(invaliPhone, "0000");
+               var error = myPersonals.AddSeparatorToMobilePhone(invaliPhone);
+               Assert.IsTrue(error.Contains("You have not changed any information"));
             }
         }
 

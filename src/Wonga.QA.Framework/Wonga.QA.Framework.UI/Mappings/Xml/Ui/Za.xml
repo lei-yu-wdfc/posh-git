@@ -134,6 +134,7 @@
     <SubmitButton>input#edit-submit</SubmitButton>
     <PopupErrorMessage>#fancybox-content div.messages.error ul li:first-child</PopupErrorMessage>
     <MobilephoneUpdateSuccessTitle>#content-messages .messages </MobilephoneUpdateSuccessTitle>
+    <EditPhoneError>.messages.error ul</EditPhoneError>
   </MyPersonalDetailsPage>
 
   <PersonalDetailsPage>

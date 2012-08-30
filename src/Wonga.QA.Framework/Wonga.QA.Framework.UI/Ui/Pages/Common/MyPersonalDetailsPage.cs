@@ -167,6 +167,20 @@ namespace Wonga.QA.Framework.UI.UiElements.Pages.Common
             return true;
         }
 
+        public string AddSeparatorToMobilePhone(string mobilePhone)
+        {
+            _editPhoneMobile = Do.Until(() => Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.EditPhoneMobile)));
+            _submitButton = Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.SubmitButton));
+
+            _editPhoneMobile.Click();
+            _editPhoneMobile.Clear();
+            _editPhoneMobile.SendKeys(mobilePhone);
+
+            _submitButton.Click();
+            var error = Do.Until(()=>Client.Driver.FindElement(By.CssSelector(UiMap.Get.MyPersonalDetailsPage.EditPhoneError))).Text;
+            return error;
+        }
+
         public bool DontChangePhone()
         {
             Thread.Sleep(5000);
