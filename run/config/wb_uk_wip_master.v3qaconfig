@@ -4,7 +4,9 @@
 	<AUT>Wb</AUT>
 	<Region>Uk</Region>
 	<Product>Wb</Product>
-	
+	<Ui>
+		<HomePage>http://wip.wb.wongatest.com/</HomePage>
+	</Ui>
 	<Svc>
 		<ServicesHost>WIP8</ServicesHost>
 		<ComponentsHost>WIP8</ComponentsHost>

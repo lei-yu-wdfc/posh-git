@@ -5,6 +5,10 @@
 	<Region>Uk</Region>
 	<Product>Wb</Product>
 	
+	<Ui>
+		<HomePage>http://rc.wb.wongatest.com/</HomePage>
+	</Ui>	
+	
 	<Salesforce>
 		<ApiUsername>v3integration@wonga.com.rc</ApiUsername>
 	</Salesforce>
