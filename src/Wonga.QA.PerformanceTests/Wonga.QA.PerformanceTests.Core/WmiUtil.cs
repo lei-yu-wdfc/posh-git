@@ -76,7 +76,68 @@ namespace Wonga.QA.PerformanceTests.Core
         }
 
         /// <summary>
-        /// Stop the service
+        /// Returns All Wonga services (Wonga*)
+        /// </summary>
+        /// <param name="scope"></param>
+        /// <returns></returns>
+        public List<String> GetAllWongaServices(ManagementScope scope)
+        {
+            var services = new List<String>();
+            try
+            {
+                var query = new ObjectQuery(
+                   "SELECT * FROM Win32_Service");
+
+                var searcher =
+                    new ManagementObjectSearcher(scope, query);
+
+                foreach (ManagementObject queryObj in searcher.Get())
+                {
+                    var service = queryObj["Caption"].ToString();
+
+                    if (service.ToLower().StartsWith("wonga"))
+                    {
+                        services.Add(service);
+                    }
+                }
+            }
+            catch (ManagementException e)
+            {
+                Console.WriteLine("An error occurred while querying for WMI data: " + e.Message);
+            }
+            return services;
+        } 
+
+        /// <summary>
+        /// Stops All Wonga services
+        /// </summary>
+        /// <param name="scope"></param>
+        public void StopAllWongaServices(ManagementScope scope)
+        {
+            var services = GetAllWongaServices(scope);
+
+            foreach (var service in services)
+            {
+                StopService(scope, service);
+            }
+        }
+
+        /// <summary>
+        /// Start All Wonga services
+        /// </summary>
+        /// <param name="scope"></param>
+        public void StartAllWongaServices(ManagementScope scope)
+        {
+            var services = GetAllWongaServices(scope);
+
+            foreach (var service in services)
+            {
+                StartService(scope, service);
+            }
+        }
+
+        /// <summary>
+        /// Stop a service
         /// </summary>
         /// <param name="scope"></param>
         /// <param name="serviceName"></param>
@@ -87,7 +148,7 @@ namespace Wonga.QA.PerformanceTests.Core
         }
 
         /// <summary>
-        /// Start the service
+        /// Start a service
         /// </summary>
         /// <param name="scope"></param>
         /// <param name="serviceName"></param>
@@ -98,7 +159,7 @@ namespace Wonga.QA.PerformanceTests.Core
         }
 
         /// <summary>
-        /// Pause the service
+        /// Pause a service
         /// </summary>
         /// <param name="scope"></param>
         /// <param name="serviceName"></param>
@@ -109,7 +170,7 @@ namespace Wonga.QA.PerformanceTests.Core
         }
 
         /// <summary>
-        /// Delete the service
+        /// Delete a service
         /// </summary>
         /// <param name="scope"></param>
         /// <param name="serviceName"></param>
@@ -120,7 +181,7 @@ namespace Wonga.QA.PerformanceTests.Core
         }
 
         /// <summary>
-        /// Resume the service
+        /// Resume a service
         /// </summary>
         /// <param name="scope"></param>
         /// <param name="serviceName"></param>

@@ -44,6 +44,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\lib\SMO\Microsoft.SqlServer.SmoExtended.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.SqlServer.SqlEnum, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -72,8 +73,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomerCreator.cs" />
     <Compile Include="DbOperations.cs" />
     <Compile Include="Helper.cs" />
+    <Compile Include="Insert.cs" />
     <Compile Include="MsmqOperations.cs" />
     <Compile Include="Status.cs" />
     <Compile Include="TestRunner.cs" />

@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using MbUnit.Framework;
 using Microsoft.SqlServer.Management.Smo;
 
@@ -13,21 +10,31 @@ namespace Wonga.QA.PerformanceTests.Core
 {
     public class DbOperations
     {
-        public String BackupFolder = @"C:\Users\francis.chelladurai\DatabaseBackups";
+        public String BackupFolder = @"C:\Users\francis.chelladurai\DatabaseBackups\";
         public String DatabaseServer = @"localhost";
+        public String BackupExtension = ".bak";
 
-        #region DatabaseNames To be BackedUp
-        public String[] Databases = new[] {"Accounting", "BankValidate",
-                                            "Bi", "BiCustomerManagement", "BlackList", "CardPayment",
-                                            "ColdStorage", "Comms", "Experian", "ExperianBulk",
+        public String AppServer = "localhost";
+        public String Username = null;
+        public String Password = null;
+        public String ManagementPath = null;
+
+        public Database DataBaseObj;
+
+        #region DatabaseNames
+        public String[] Databases = new[] {"Accounting", "BankGateway", "BankValidate",
+                                            "BI", "BlackList", "CallReport",
+                                            "CallValidate", "CardPayment","ColdStorage", "Comms", 
+                                            "Experian", "ExperianBulk", "FileStorage",
                                             "Marketing", "Ops", "OpsLogs", "OpsSagas", "PayLater",
-                                            "Payments", "PrepaidCard", /*"ReportServer",*/ "ReportServerTempDB",
+                                            "Payments", "PrepaidCard", 
                                             "Risk", "SalesForce", "Sms"};
         #endregion
 
         #region Connection Objects
-        readonly OleDbConnection connection = new OleDbConnection();
-        private Server MyServer;
+        readonly OleDbConnection _connection = new OleDbConnection();
+        private Server _myServer;
+        private readonly SqlConnection _sqlConnection = new SqlConnection();
         #endregion
 
         #region Backup/Restore
@@ -36,9 +43,9 @@ namespace Wonga.QA.PerformanceTests.Core
         /// </summary>
         public void EstablishServerConnection()
         {
-            MyServer = new Server(DatabaseServer);
-            MyServer.ConnectionContext.LoginSecure = true;
-            MyServer.ConnectionContext.Connect();
+            _myServer = new Server(DatabaseServer);
+            _myServer.ConnectionContext.LoginSecure = true;
+            _myServer.ConnectionContext.Connect();
         }
 
         /// <summary>
@@ -46,8 +53,8 @@ namespace Wonga.QA.PerformanceTests.Core
         /// </summary>
         public void TerminateServerConnection()
         {
-            if (MyServer.ConnectionContext.IsOpen)
-                MyServer.ConnectionContext.Disconnect();
+            if (_myServer.ConnectionContext.IsOpen)
+                _myServer.ConnectionContext.Disconnect();
         }
 
         /// <summary>
@@ -64,7 +71,7 @@ namespace Wonga.QA.PerformanceTests.Core
             bkpDbFull.BackupSetDescription = databaseName + " database - Full Backup";
             bkpDbFull.Initialize = false;
             
-            bkpDbFull.SqlBackup(MyServer);
+            bkpDbFull.SqlBackup(_myServer);
         }
 
         /// <summary>
@@ -80,7 +87,7 @@ namespace Wonga.QA.PerformanceTests.Core
             restoreDb.ReplaceDatabase = true;
             restoreDb.NoRecovery = false;
 
-            restoreDb.SqlRestore(MyServer);
+            restoreDb.SqlRestore(_myServer);
         }
         #endregion
 
@@ -88,12 +95,12 @@ namespace Wonga.QA.PerformanceTests.Core
         /// <summary>
         /// Connect to Database use this method for doing a Scema check and Retrieve Data
         /// </summary>
-        public void ConnectToDatabase()
+        public void ConnectToDatabase(string dataBase)
         {
             try
             {
-                connection.ConnectionString = "Provider=SQLOLEDB;Data Source=" + DatabaseServer + ";Database=Accounting;Trusted_Connection=yes;";
-                connection.Open();
+                _connection.ConnectionString = "Provider=SQLOLEDB;Data Source=" + DatabaseServer + ";Database="+ dataBase + ";Trusted_Connection=yes;";
+                _connection.Open();
             }
             catch(Exception e)
             {
@@ -106,8 +113,8 @@ namespace Wonga.QA.PerformanceTests.Core
         /// </summary>
         public void DisConnectFromDatabase()
         {
-            if (connection!=null)
-                connection.Close();
+            if (_connection!=null)
+                _connection.Close();
         }
 
         /// <summary>
@@ -141,6 +148,18 @@ namespace Wonga.QA.PerformanceTests.Core
         }
 
         /// <summary>
+        /// Retruns Columns DataTable
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <returns></returns>
+        public DataTable GetTableColumns(string tableName)
+        {
+            var table = GetOleSchemaTable(OleDbSchemaGuid.Columns,
+                                          new Object[] { null, null, tableName, null });
+            return table;
+        }
+
+        /// <summary>
         /// Retruns schema table
         /// </summary>
         /// <param name="schema"></param>
@@ -148,7 +167,7 @@ namespace Wonga.QA.PerformanceTests.Core
         /// <returns></returns>
         public DataTable GetOleSchemaTable(Guid schema, object[] restrictions)
         {
-            return connection.GetOleDbSchemaTable(schema, restrictions);
+            return _connection.GetOleDbSchemaTable(schema, restrictions);
         }
 
         /// <summary>
@@ -166,6 +185,31 @@ namespace Wonga.QA.PerformanceTests.Core
                 }
             }
         }
+
+        /// <summary>
+        /// Returns Tables list
+        /// </summary>
+        /// <param name="schemaTable"></param>
+        /// <returns></returns>
+        public List<string> GetTables(DataTable schemaTable)
+        {
+            var tables = new List<string>();
+
+            for (int j = 0; j < schemaTable.Rows.Count; j++)
+            {
+                var schema = "";
+                for (int i = 0; i < schemaTable.Columns.Count; i++)
+                {
+                    var column = schemaTable.Columns[i].ToString();
+                    
+                    if (column.Equals("TABLE_SCHEMA"))
+                        schema = schemaTable.Rows[j][i].ToString();
+                    else if (column.Equals("TABLE_NAME"))
+                        tables.Add(schema + '.' + schemaTable.Rows[j][i].ToString());
+                }
+            }
+            return tables;
+        } 
         #endregion
 
         #region Database Operations
@@ -175,42 +219,184 @@ namespace Wonga.QA.PerformanceTests.Core
         /// <param name="databaseName"></param>
         public void DropDatabase(String databaseName)
         {
-            var db = new Database(MyServer, databaseName);
-            db.Refresh();
-            db.Drop();
+            DataBaseObj.Drop();
         }
+        #endregion
 
+        #region SQL
         /// <summary>
-        /// Creates a new Snapshot
+        /// Connect to the given Database on the Sql Server
         /// </summary>
         /// <param name="databaseName"></param>
-        /// <param name="snapshotName"></param>
-        public void CreateDatabaseSnapshot(String databaseName, string snapshotName)
+        public void EstablishSqlConnection(string databaseName)
         {
-            SqlConnection myConn = new SqlConnection("Server=localhost;Integrated security=SSPI;database=master");
-            var queryStr =
-                "CREATE DATABASE "+ snapshotName + " ON " +
-                "(NAME = 'datafile', FILENAME = '"+ snapshotName +".snp') " +
-                "AS SNAPSHOT OF " + databaseName;
-            SqlCommand command = new SqlCommand(queryStr, myConn);
+            _sqlConnection.ConnectionString ="integrated security=SSPI;data source="+ DatabaseServer + ";" +
+                                            "persist security info=False;initial catalog=" + databaseName;
 
             try
             {
-                myConn.Open();
-                command.ExecuteNonQuery();
+                _sqlConnection.Open();
             }
-            catch(Exception e)
+            catch(Exception ex)
             {
-                Console.WriteLine("Cannot create snpshot... " + e.Message + e.StackTrace);
-            }
-            finally
-            {
-                if (myConn.State == ConnectionState.Open)
-                {
-                    myConn.Close();
-                }
+                Console.WriteLine("Failed to connect to data source. " + ex.Message + ex.StackTrace);
             }
         }
+
+        /// <summary>
+        /// Close the Sql Connection
+        /// </summary>
+        public void CloseSqlConnection()
+        {
+            _sqlConnection.Close();
+        }
+
+        /// <summary>
+        /// Insert Data in to table
+        /// </summary>
+        /// <param name="insert"></param>
+        public void Insert(Insert insert)
+        {
+            EstablishSqlConnection(insert.DatabaseName);
+            var command = new SqlCommand(insert.ToString(), _sqlConnection);
+
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch (SqlException ae)
+            {
+                Console.WriteLine("Error while inserting in to table " + insert.Table);
+                Console.WriteLine(ae.Message);
+                Console.WriteLine(ae.StackTrace);
+            }
+            CloseSqlConnection();
+        }
+
+        /// <summary>
+        /// Returns the Current Max id in the given Table
+        /// </summary>
+        /// <param name="databaseName"></param>
+        /// <param name="sqlQuery"></param>
+        /// <returns></returns>
+        public int GetMaxId(string databaseName, string sqlQuery)
+        {
+            EstablishSqlConnection(databaseName);
+            int maxId;
+            
+            using (SqlCommand dataCommand =
+                    new SqlCommand(sqlQuery, _sqlConnection))
+            {
+
+                maxId = Convert.ToInt32(dataCommand.ExecuteScalar());
+            }
+
+            CloseSqlConnection();
+            return maxId;
+        }
         #endregion
+
+        [Test]
+        public void ListTablesHasData()
+        {
+            var count = 0;
+            foreach (var database in Databases)
+            {
+                ConnectToDatabase(database);
+                var schema = GetDatabaseSchema();
+                var tables = GetTables(schema);
+
+                foreach (var table in tables)
+                {
+                    EstablishSqlConnection(database);
+                    var counts = 0;
+
+                    using (SqlCommand dataCommand =
+                            new SqlCommand("select count(*) from " + table, _sqlConnection))
+                    {
+
+                        counts = Convert.ToInt32(dataCommand.ExecuteScalar());
+                    }
+
+                    CloseSqlConnection();
+
+                    if (counts > 0)
+                    {
+                        Console.WriteLine(database + "==>" + table);
+                    }
+                }
+                DisConnectFromDatabase();
+            }
+            Console.WriteLine("Total Tables: " + count);
+            
+        }
+
+        [Test]
+        public void ListTablesHasCustomerColumns()
+        {
+            var count = 0;
+            foreach (var database in Databases)
+            {
+                ConnectToDatabase(database);
+                var schema = GetDatabaseSchema();
+                var tables = GetTables(schema);
+
+                foreach (var table in tables)
+                {
+                    var tblSchema = GetTableColumns(table);
+
+                    for (int i = 0; i < tblSchema.Rows.Count; i++)
+                    {
+                        var column = tblSchema.Rows[i].ItemArray[3].ToString();
+
+
+                        if (column.Equals("ApplicationId") || column.Equals("AccountId"))
+                        {
+                            count++;
+                            Console.WriteLine(database + "==>" + table + "==>" + column);
+                            break;
+                        }
+                    }
+                }
+                DisConnectFromDatabase();
+            }
+            Console.WriteLine("Total Tables: " + count);
+
+        }
+
+        [Test]
+        public void BackUpDatabases()
+        {
+            EstablishServerConnection();
+            foreach (var database in Databases)
+            {
+                DoBackupDatabase(database, database + BackupExtension);
+            }
+            TerminateServerConnection();
+        }
+
+        [Test]
+        public void RestoreDatabases()
+        {
+            var wmi = new WmiUtil();
+            var scope = wmi.EstablishConnection(AppServer, Username, Password, ManagementPath);
+
+            wmi.StopAllWongaServices(scope);
+            wmi.StopService(scope, "MSSQLSERVER");
+            System.Threading.Thread.Sleep(10000);
+            wmi.StartService(scope, "MSSQLSERVER");
+            System.Threading.Thread.Sleep(20000);
+
+            EstablishServerConnection();
+            foreach (var database in Databases)
+            {
+                Console.WriteLine("Restoring database " + database);
+                DoRestoreDatabase(database, database + BackupExtension);
+                Console.WriteLine("Restore Database completed successfully for " + database);
+            }
+            TerminateServerConnection();
+
+            wmi.StartAllWongaServices(scope);
+        }
     }
 }
