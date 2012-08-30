@@ -258,7 +258,7 @@ namespace Wonga.QA.UiTests.Web.Region.Za.MyAccounts
             //TODO check SF
         }
 
-        [Test, JIRA("QA-211"), Category(TestCategories.SmokeTest)]
+        [Test, JIRA("QA-211"), Category(TestCategories.SmokeTest), Pending("ZA-2760")]
         public void ChangingPhoneNumberWithWrongPinShouldCauseWarningMessage()
         {
             var loginPage = Client.Login();

@@ -16,12 +16,20 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         private readonly IWebElement _secretQuestion;
         private readonly IWebElement _secretAnswer;
 
-        public String Password { set { _password.SendValue(value); } }
+        public String Password
+        {
+            set
+            {
+                _password.SendValue(value);
+                _password.LostFocus();
+            }
+        }
         public String PasswordConfirm { set { _passwordConfirm.SendValue(value); } }
         public String SecretQuestion { set { _secretQuestion.SendValue(value); } }
         public String SecretAnswer { set { _secretAnswer.SendValue(value); } }
 
-        public AccountDetailsSection(BasePage page) : base(UiMap.Get.AccountDetailsSection.Fieldset, page)
+        public AccountDetailsSection(BasePage page)
+            : base(UiMap.Get.AccountDetailsSection.Fieldset, page)
         {
             _password = Section.FindElement(By.CssSelector(UiMap.Get.AccountDetailsSection.Password));
             _passwordConfirm = Section.FindElement(By.CssSelector(UiMap.Get.AccountDetailsSection.PasswordConfirm));
@@ -40,8 +48,8 @@ namespace Wonga.QA.Framework.UI.UiElements.Sections
         }
         public bool IsPasswordEqualsEmailWarningOccured()
         {
-            var passwordWarning = Section.FindElement(By.CssSelector(UiMap.Get.AccountDetailsSection.PasswordErrorForm));
+            var passwordWarning = Section.FindElement(By.CssSelector(UiMap.Get.AccountDetailsSection.PasswordMeterMessage));
             return passwordWarning.Text.Equals(ContentMap.Get.AccountDetailsSection.PasswordEqualsEmailWarning);
-       }
+        }
     }
 }

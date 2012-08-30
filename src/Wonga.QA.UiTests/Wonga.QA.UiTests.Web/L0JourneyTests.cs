@@ -598,7 +598,7 @@ namespace Wonga.QA.UiTests.Web
             }
         }
 
-        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-184"), Category(TestCategories.SmokeTest)]
+        [Test, AUT(AUT.Ca, AUT.Za, AUT.Wb), JIRA("QA-184"), Category(TestCategories.SmokeTest), Pending ("Can't go through it now, Frontend Allways changing!!")]
         public void CustomerEntersPasswordThatEqualToTheEmailAddressWarningMessageShouldDisplayed()
         {
             var email = Get.RandomEmail();
@@ -634,8 +634,10 @@ namespace Wonga.QA.UiTests.Web
                         .WithEmail(email);
                     var accountDetailsPageZa = journeyZa.Teleport<AccountDetailsPage>() as AccountDetailsPage;
                     accountDetailsPageZa.AccountDetailsSection.Password = email;
+                    //accountDetailsPageZa.NextClick(true);
                     Do.With.Message("Password that equals email is not warning occured").Until(accountDetailsPageZa.AccountDetailsSection.IsPasswordEqualsEmailWarningOccured);
                     accountDetailsPageZa.AccountDetailsSection.Password = "Passw0rd";
+                    //accountDetailsPageZa.NextClick(true);
                     Do.With.Message("Password that not equals email is warning occured").While(accountDetailsPageZa.AccountDetailsSection.IsPasswordEqualsEmailWarningOccured);
                     break;
                 #endregion
