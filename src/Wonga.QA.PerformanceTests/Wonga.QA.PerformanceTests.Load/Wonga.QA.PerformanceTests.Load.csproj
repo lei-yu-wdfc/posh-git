@@ -39,7 +39,10 @@
     <Reference Include="MbUnit, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL" />
     <Reference Include="NServiceBus, Version=2.6.0.1511, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -54,9 +57,17 @@
     <Reference Include="Wonga.QA.Framework.Core">
       <HintPath>..\..\..\bin\Wonga.QA.Framework.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Wonga.QA.Framework.Db, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\bin\Wonga.QA.Framework.Db.dll</HintPath>
+    </Reference>
     <Reference Include="Wonga.QA.Framework.Msmq, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\bin\Wonga.QA.Framework.Msmq.dll</HintPath>
+    </Reference>
+    <Reference Include="Wonga.QA.PerformanceTests.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\bin\Wonga.QA.PerformanceTests.Core.dll</HintPath>
     </Reference>
     <Reference Include="Wonga.QA.Tests.Api">
       <HintPath>..\..\..\bin\Wonga.QA.Tests.Api.dll</HintPath>
@@ -68,10 +79,13 @@
   <ItemGroup>
     <Compile Include="ApiJourneys.cs" />
     <Compile Include="LoadRunner.cs" />
+    <Compile Include="ProcessBatchCollectionInZa.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
